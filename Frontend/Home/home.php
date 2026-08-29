@@ -57,6 +57,55 @@ if (empty($categoriesList)) {
 
 $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
+
+// ── Rich Circular Stories Categories (Coyu Style) ──
+$coyuStories = [
+    [
+        'is_dash' => true,
+        'name'    => '60 Mins',
+        'title'   => 'DT DASH',
+        'link'    => '/shop'
+    ]
+];
+
+$coyuPresetCategories = [
+    ['name' => 'Dresses',      'img' => '/Frontend/Shop/Asset/images/product1.png', 'link' => '/shop?category=Kurtis'],
+    ['name' => 'Co-ord Sets',  'img' => '/Frontend/Shop/Asset/images/product2.png', 'link' => '/shop?category=Co-ord%20Sets'],
+    ['name' => 'Kurta Sets',   'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Kurtis'],
+    ['name' => 'Tops',         'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Tops'],
+    ['name' => 'Shirts',       'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Suits'],
+    ['name' => 'Kaftans',      'img' => '/Frontend/Shop/Asset/images/product6.png', 'link' => '/shop?category=Kaftans'],
+    ['name' => 'Sarees',       'img' => '/Frontend/Shop/Asset/images/product1.png', 'link' => '/shop?category=Sarees'],
+    ['name' => 'Bottomwear',   'img' => '/Frontend/Shop/Asset/images/product2.png', 'link' => '/shop?category=Bottomwear'],
+    ['name' => 'Lehengas',     'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Lehengas'],
+    ['name' => 'Jewellery',    'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Jewellery'],
+    ['name' => 'Dupattas',     'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Dupattas'],
+];
+
+$seenCatNames = [];
+if (!empty($categoriesList)) {
+    foreach ($categoriesList as $cl) {
+        $cName = $cl['name'];
+        $seenCatNames[strtolower($cName)] = true;
+        $coyuStories[] = [
+            'is_dash' => false,
+            'name'    => $cName,
+            'img'     => $cl['img'],
+            'link'    => '/shop?category=' . urlencode($cName)
+        ];
+    }
+}
+
+foreach ($coyuPresetCategories as $preset) {
+    if (empty($seenCatNames[strtolower($preset['name'])])) {
+        $coyuStories[] = [
+            'is_dash' => false,
+            'name'    => $preset['name'],
+            'img'     => $preset['img'],
+            'link'    => $preset['link']
+        ];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +117,7 @@ $total_products = count($products);
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="/Frontend/Home/Asset/css/home.css?v=<?php echo time(); ?>">
 
@@ -89,6 +138,145 @@ $total_products = count($products);
 <?php include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
 
 <div class="page-wrapper">
+
+    <!-- ════════════ SECTION 1.5: COYU LUXURY HERO VIDEO BANNER SLIDER ════════════ -->
+    <section class="coyu-hero-video-section" aria-label="Featured Collection Banner">
+        <div class="coyu-hero-video-container">
+            <div class="coyu-video-slider" id="coyuHeroVideoSlider">
+                <div class="coyu-video-track">
+
+                    <!-- Slide 1: Primary Brand Showcase -->
+                    <div class="coyu-video-slide active" data-slide-index="0">
+                        <div class="coyu-video-slide-media">
+                            <img src="/Frontend/Shop/Asset/images/product1.png" alt="Curated Fresh Always on Trend" class="coyu-video-poster" />
+                            <video class="coyu-video-bg" loop muted playsinline preload="auto">
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-in-a-traditional-indian-dress-walking-41584-large.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="coyu-video-overlay"></div>
+                        <div class="coyu-slide-content">
+                            <span class="coyu-slide-badge">✨ NEW SEASON 2026</span>
+                            <h1 class="coyu-slide-slogan">Curated. Fresh. Always on Trend.</h1>
+                            <p class="coyu-slide-sub">Direct Surat Mill Weaves • Pure Silk, Handloom Korvai & Festive Craftsmanship</p>
+                            <div class="coyu-slide-cta-row">
+                                <a href="/shop" class="coyu-slide-cta-primary">
+                                    <span>Explore Collection</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <button type="button" class="coyu-slide-cta-secondary" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    <span>Watch Live Draping</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Surat Wholesale & Reseller Advantage -->
+                    <div class="coyu-video-slide" data-slide-index="1">
+                        <div class="coyu-video-slide-media">
+                            <img src="/Frontend/Shop/Asset/images/product2.png" alt="Surat Mill Factory Rates" class="coyu-video-poster" />
+                            <video class="coyu-video-bg" loop muted playsinline preload="metadata">
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-orange-and-yellow-dress-41578-large.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="coyu-video-overlay"></div>
+                        <div class="coyu-slide-content">
+                            <span class="coyu-slide-badge">⚡ FACTORY DIRECT B2B</span>
+                            <h2 class="coyu-slide-slogan">Surat Factory Rates. Zero Middlemen.</h2>
+                            <p class="coyu-slide-sub">Buy Single Pieces or Bulk Lots • Resell with 40%+ Profit Margins via WhatsApp</p>
+                            <div class="coyu-slide-cta-row">
+                                <a href="/reseller" class="coyu-slide-cta-primary">
+                                    <span>Start Reselling</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="/wholesale" class="coyu-slide-cta-secondary">
+                                    <span>Wholesale Bulk Lots</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Bridal & Festive Heirlooms -->
+                    <div class="coyu-video-slide" data-slide-index="2">
+                        <div class="coyu-video-slide-media">
+                            <img src="/Frontend/Shop/Asset/images/product3.png" alt="Royal Wedding & Festive Weaves" class="coyu-video-poster" />
+                            <video class="coyu-video-bg" loop muted playsinline preload="metadata">
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-in-traditional-indian-dress-posing-41583-large.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="coyu-video-overlay"></div>
+                        <div class="coyu-slide-content">
+                            <span class="coyu-slide-badge">👑 BRIDAL & FESTIVE</span>
+                            <h2 class="coyu-slide-slogan">Draped in Passion. Crafted with Royalty.</h2>
+                            <p class="coyu-slide-sub">Pure Kanjivaram, Banarasi Zari Silk & Luxury Designer Lehengas</p>
+                            <div class="coyu-slide-cta-row">
+                                <a href="/shop?category=Sarees" class="coyu-slide-cta-primary">
+                                    <span>Shop Sarees</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Namaste%20DT%20Brand%2C%20I%20want%20to%20see%20the%20latest%20Festive%20collection" target="_blank" rel="noopener noreferrer" class="coyu-slide-cta-secondary" style="background:#15803D;border-color:#16A34A;">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                                    <span>WhatsApp VIP Concierge</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Desktop Prev / Next Nav Arrows -->
+                <button type="button" class="coyu-slider-arrow prev" aria-label="Previous Slide">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button type="button" class="coyu-slider-arrow next" aria-label="Next Slide">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                <!-- Sound Mute/Unmute Toggle -->
+                <button type="button" class="coyu-sound-toggle" aria-label="Toggle Video Audio" title="Toggle Sound">
+                    <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                </button>
+
+                <!-- Slider Indicators / Progress Bars -->
+                <div class="coyu-slider-indicators">
+                    <div class="coyu-indicator-bar active" data-index="0"><div class="coyu-indicator-fill"></div></div>
+                    <div class="coyu-indicator-bar" data-index="1"><div class="coyu-indicator-fill"></div></div>
+                    <div class="coyu-indicator-bar" data-index="2"><div class="coyu-indicator-fill"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ SECTION 1.8: CIRCULAR CATEGORY STORIES DISCOVERY RAIL ════════════ -->
+    <section class="coyu-stories-rail-section" aria-label="Explore Categories">
+        <div class="coyu-stories-container">
+            <div class="coyu-stories-track" id="coyuStoriesTrack">
+                <?php foreach ($coyuStories as $cs): ?>
+                    <?php if (!empty($cs['is_dash'])): ?>
+                        <a href="<?= $cs['link'] ?>" class="coyu-story-item">
+                            <div class="coyu-story-avatar-wrap coyu-story-dash-avatar">
+                                <div class="coyu-story-dash-inner">
+                                    <div class="coyu-story-dash-logo">
+                                        <span>DASH</span>
+                                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    </div>
+                                    <span style="font-size:8px;font-weight:700;letter-spacing:0.3px;opacity:0.95;">60 MINS</span>
+                                </div>
+                            </div>
+                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= $cs['link'] ?>" class="coyu-story-item" onclick="if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= addslashes($cs['name']) ?>');}">
+                            <div class="coyu-story-avatar-wrap">
+                                <img src="<?= htmlspecialchars($cs['img']) ?>" alt="<?= htmlspecialchars($cs['name']) ?>" class="coyu-story-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
+                            </div>
+                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
+                        </a>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
     <!-- ════════════ SECTION 2: QUICK ACCESS BAR ════════════ -->
     <section class="home-quick-access-section" aria-label="Quick Access">
