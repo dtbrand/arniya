@@ -5,8 +5,8 @@
  * Preserving DT Brand's Heritage Gold UI, Header, Footer & Architecture as Source of Truth
  */
 
-require_once __DIR__ . '/src/ProductCatalog.php';
-require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
@@ -31,7 +31,7 @@ if (!empty($dbCategories)) {
             'name' => $cName,
             'slug' => $c['slug'] ?? strtolower(str_replace(' ', '-', $cName)),
             'count' => $cCount . ' Designs',
-            'img' => !empty($c['image']) ? $c['image'] : ('/assets/images/product' . (($idx % 6) + 1) . '.png'),
+            'img' => !empty($c['image']) ? $c['image'] : ('/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png'),
             'price_from' => 'Direct Surat Wholesale',
             'badge' => 'Verified Mill',
             'tagline' => !empty($c['description']) ? (strlen($c['description']) > 40 ? substr($c['description'], 0, 40) . '...' : $c['description']) : 'Authentic Collection'
@@ -47,7 +47,7 @@ if (empty($categoriesList)) {
             'name' => $cName,
             'slug' => strtolower(str_replace(' ', '-', $cName)),
             'count' => $cCount . ' Designs',
-            'img' => '/assets/images/product' . (($idx % 6) + 1) . '.png',
+            'img' => '/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png',
             'price_from' => 'Direct Surat Wholesale',
             'badge' => 'Verified Mill',
             'tagline' => 'Handcrafted Authentic Weaves'
@@ -57,55 +57,6 @@ if (empty($categoriesList)) {
 
 $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
-
-// ── Rich Circular Stories Categories (Coyu Style) ──
-$coyuStories = [
-    [
-        'is_dash' => true,
-        'name'    => '60 Mins',
-        'title'   => 'DT DASH',
-        'link'    => '/shop'
-    ]
-];
-
-$coyuPresetCategories = [
-    ['name' => 'Sarees',       'img' => '/assets/images/uploads/dt_20260828_213539_afb8ec67.jpg', 'link' => '/shop?category=Sarees'],
-    ['name' => 'Kurtis',       'img' => '/assets/images/uploads/dt_20260828_213617_6463526c.jpg', 'link' => '/shop?category=Kurtis'],
-    ['name' => 'Lehengas',     'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Lehengas'],
-    ['name' => 'Suits',        'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Suits'],
-    ['name' => 'Co-ord Sets',  'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Co-ord%20Sets'],
-    ['name' => 'Kaftans',      'img' => '/Frontend/Shop/Asset/images/product6.png', 'link' => '/shop?category=Kaftans'],
-    ['name' => 'Dresses',      'img' => '/Frontend/Shop/Asset/images/product1.png', 'link' => '/shop?category=Kurtis'],
-    ['name' => 'Tops',         'img' => '/Frontend/Shop/Asset/images/product2.png', 'link' => '/shop?category=Tops'],
-    ['name' => 'Bottomwear',   'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Bottomwear'],
-    ['name' => 'Jewellery',    'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Jewellery'],
-    ['name' => 'Dupattas',     'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Dupattas'],
-];
-
-$seenCatNames = [];
-if (!empty($categoriesList)) {
-    foreach ($categoriesList as $cl) {
-        $cName = $cl['name'];
-        $seenCatNames[strtolower($cName)] = true;
-        $coyuStories[] = [
-            'is_dash' => false,
-            'name'    => $cName,
-            'img'     => $cl['img'],
-            'link'    => '/shop?category=' . urlencode($cName)
-        ];
-    }
-}
-
-foreach ($coyuPresetCategories as $preset) {
-    if (empty($seenCatNames[strtolower($preset['name'])])) {
-        $coyuStories[] = [
-            'is_dash' => false,
-            'name'    => $preset['name'],
-            'img'     => $preset['img'],
-            'link'    => $preset['link']
-        ];
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +70,7 @@ foreach ($coyuPresetCategories as $preset) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/assets/css/home.css?v=1787019062&v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Home/Asset/css/home.css?v=<?php echo time(); ?>">
 
     <!-- ════════════ GLOBAL DATA BOOTSTRAP ════════════ -->
     <script>
@@ -135,7 +86,7 @@ foreach ($coyuPresetCategories as $preset) {
 <body>
 
 <!-- ════════════ SECTION 1: EXISTING HEADER PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/includes/shophader.php'; ?>
+<?php include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
 
 <div class="page-wrapper">
 
@@ -221,38 +172,7 @@ foreach ($coyuPresetCategories as $preset) {
         </div>
     </section>
 
-    <!-- ════════════ SECTION 1.8: CIRCULAR CATEGORY STORIES DISCOVERY RAIL ════════════ -->
-    <section class="coyu-stories-rail-section" aria-label="Explore Categories">
-        <div class="coyu-stories-container">
-            <div class="coyu-stories-track" id="coyuStoriesTrack">
-                <?php foreach ($coyuStories as $cs): ?>
-                    <?php if (!empty($cs['is_dash'])): ?>
-                        <a href="<?= $cs['link'] ?>" class="coyu-story-item">
-                            <div class="coyu-story-avatar-wrap coyu-story-dash-avatar">
-                                <div class="coyu-story-dash-inner">
-                                    <div class="coyu-story-dash-logo">
-                                        <span>DASH</span>
-                                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                    </div>
-                                    <span style="font-size:8px;font-weight:700;letter-spacing:0.3px;opacity:0.95;">60 MINS</span>
-                                </div>
-                            </div>
-                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
-                        </a>
-                    <?php else: ?>
-                        <a href="<?= $cs['link'] ?>" class="coyu-story-item" onclick="if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= addslashes($cs['name']) ?>');}">
-                            <div class="coyu-story-avatar-wrap">
-                                <img src="<?= htmlspecialchars($cs['img']) ?>" alt="<?= htmlspecialchars($cs['name']) ?>" class="coyu-story-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
-                            </div>
-                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
-                        </a>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════════ SECTION 2: QUICK ACCESS BAR ════════════ -->
+    <!-- ════════════ SECTION 2: QUICK ACCESS BAR (COYU ROUNDED OVERLAP CARD SHEET) ════════════ -->
     <section class="home-quick-access-section" aria-label="Quick Access">
         <div class="home-section-container">
             <div class="quick-access-grid">
@@ -391,22 +311,13 @@ foreach ($coyuPresetCategories as $preset) {
             <?php foreach ($products as $p): ?>
             <?php
                 $badge_class = !empty($p['badge']) ? 'badge-'.strtolower(preg_replace('/[^a-z0-9]/', '', $p['badge'])) : '';
-                // Colours and sizes come from product_variants and are empty when the
-                // product has none.
-                $pCols  = array_values(array_filter(array_map('strval', (array)($p['colors'] ?? [])), static fn($v) => trim($v) !== ''));
-                $pSizes = array_values(array_filter(array_map('strval', (array)($p['size'] ?? [])), static fn($v) => trim($v) !== ''));
-                $pHasPhoto = !empty($p['has_photo']);
-                $pSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
-                $pCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
-                $pPrice      = max(0, $pCustBase - $pSaleDisc);
-                $pOldPrice   = ($pSaleDisc > 0) ? $pCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
-                $pDiscount   = ($pOldPrice > $pPrice && $pOldPrice > 0) ? (int)round((($pOldPrice - $pPrice) / $pOldPrice) * 100) : 0;
-                $pReviews    = (int)($p['reviews_count'] ?? 0);
+                $pCols = !empty($p['colors']) ? $p['colors'] : [$p['color']];
+                $pSizes = !empty($p['size']) ? $p['size'] : ['Free Size'];
             ?>
-            <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $pPrice ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $pDiscount ?>">
+            <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $p['price'] ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $p['discount'] ?>">
                 <div class="card-image-wrap">
-                    <a href="/product.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy"<?= $pHasPhoto ? '' : ' style="object-fit:contain;padding:18%;opacity:.6;"' ?> />
+                    <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
+                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
                     </a>
 
                     <?php if (!empty($p['badge'])): ?>
@@ -430,55 +341,39 @@ foreach ($coyuPresetCategories as $preset) {
                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                     </button>
 
-                    <?php if (trim((string)($p['category'] ?? '')) !== ''): ?>
                     <span class="card-cat-photo-tag"><?= htmlspecialchars($p['category']) ?></span>
-                    <?php endif; ?>
                 </div>
 
                 <div class="card-body">
                     <div class="card-sku-rating-row">
-                        <span class="card-sku-text"><?= htmlspecialchars((string)($p['sku'] ?? '')) ?></span>
-                        <?php if ($pReviews > 0): ?>
-                        <span class="card-rating-badge">★ <?= number_format((float)$p['rating'], 1) ?> (<?= $pReviews ?>)</span>
-                        <?php endif; ?>
+                        <span class="card-sku-text"><?= $p['sku'] ?></span>
+                        <span class="card-rating-badge">★ <?= number_format($p['rating'], 1) ?> (<?= $p['reviews_count'] ?>)</span>
                     </div>
 
                     <h3 class="card-name">
-                        <a href="/product.php?id=<?= $p['id'] ?>">
+                        <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
                             <?= htmlspecialchars($p['name']) ?>
                         </a>
                     </h3>
 
-                    <?php if ($pCols !== [] || $pSizes !== []): ?>
                     <div class="card-info-text-row">
-                        <?php if ($pCols !== []): ?>
-                        <span class="card-colors-text" title="<?= htmlspecialchars(implode(', ', $pCols)) ?>"><?= count($pCols) ?> Colour<?= count($pCols) === 1 ? '' : 's' ?></span>
-                        <?php endif; ?>
-                        <?php if ($pSizes !== []): ?>
+                        <span class="card-colors-text"><?= count($pCols) ?> Colours</span>
                         <span class="card-sizes-text"><?= htmlspecialchars(implode(', ', $pSizes)) ?></span>
-                        <?php endif; ?>
                     </div>
-                    <?php endif; ?>
 
                     <div class="card-price-row">
-                        <?php if ($pPrice > 0): ?>
-                        <span class="card-price">₹<?= number_format($pPrice) ?></span>
-                        <?php else: ?>
-                        <span class="card-price" style="font-size:.82em;">Price on request</span>
+                        <span class="card-price">₹<?= number_format($p['price']) ?></span>
+                        <?php if (!empty($p['old_price'])): ?>
+                        <span class="card-old-price">₹<?= number_format($p['old_price']) ?></span>
                         <?php endif; ?>
-                        <?php if ($pPrice > 0 && $pOldPrice > $pPrice): ?>
-                        <span class="card-old-price">₹<?= number_format($pOldPrice) ?></span>
-                        <?php endif; ?>
-                        <?php if ($pSaleDisc > 0): ?>
-                        <span class="card-price-discount" style="background:#FEF3C7; color:#B45309; font-weight:800; font-size:10px; padding:2px 6px; border-radius:3px;">SAVE ₹<?= (int)$pSaleDisc ?></span>
-                        <?php elseif ($pPrice > 0 && $pOldPrice > $pPrice && !empty($pDiscount)): ?>
-                        <span class="card-price-discount"><?= (int)$pDiscount ?>% OFF</span>
+                        <?php if (!empty($p['discount'])): ?>
+                        <span class="card-price-discount"><?= $p['discount'] ?>% OFF</span>
                         <?php endif; ?>
                     </div>
 
                     <!-- 1-Tap Add To Cart Action Button -->
                     <div class="card-btn-row">
-                        <button type="button" class="card-add-cart-btn" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>); } else { showToast('Added to Cart!'); }">
+                        <button type="button" class="card-add-cart-btn" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); } else { showToast('Added to Cart!'); }">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                             <span>Add to Cart</span>
                         </button>
@@ -487,6 +382,9 @@ foreach ($coyuPresetCategories as $preset) {
             </article>
             <?php endforeach; ?>
             </div>
+        </div>
+    </section>
+
         </div>
     </section>
 
@@ -517,17 +415,10 @@ foreach ($coyuPresetCategories as $preset) {
             <!-- 1 Line Continuous Scroll on Desktop / 2 Lines Synchronized Scroll on Mobile -->
             <div class="home-deals-grid" id="homeDealsGrid">
                 <?php foreach (array_slice($products, 0, 10) as $p): ?>
-                <?php
-                    $dSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
-                    $dCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
-                    $dPrice      = max(0, $dCustBase - $dSaleDisc);
-                    $dOldPrice   = ($dSaleDisc > 0) ? $dCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
-                    $dDiscount   = ($dOldPrice > $dPrice && $dOldPrice > 0) ? (int)round((($dOldPrice - $dPrice) / $dOldPrice) * 100) : 0;
-                ?>
                 <div class="home-deal-card">
                     <div class="deal-card-img-wrap">
-                        <span class="deal-card-badge-top"><?= $dSaleDisc > 0 ? ('SAVE ₹' . (int)$dSaleDisc) : ('SAVE ' . $dDiscount . '%') ?></span>
-                        <a href="/product.php?id=<?= $p['id'] ?>">
+                        <span class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</span>
+                        <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
                             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" loading="lazy" />
                         </a>
                         <button type="button" class="deal-card-wish-btn" onclick="toggleWishlistProduct(<?= $p['id'] ?>)" aria-label="Add to wishlist">
@@ -540,19 +431,17 @@ foreach ($coyuPresetCategories as $preset) {
                             <span class="deal-rating-badge">★ <?= $p['rating'] ?></span>
                         </div>
                         <h4 class="deal-card-title">
-                            <a href="/product.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
+                            <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
                         </h4>
                         <div class="deal-card-prices">
-                            <span class="deal-sale-price">₹<?= number_format($dPrice) ?></span>
-                            <?php if ($dOldPrice > $dPrice): ?>
-                            <span class="deal-mrp">₹<?= number_format($dOldPrice) ?></span>
-                            <?php endif; ?>
+                            <span class="deal-sale-price">₹<?= number_format($p['price']) ?></span>
+                            <span class="deal-mrp">₹<?= number_format($p['old_price']) ?></span>
                         </div>
                         <div class="deal-stock-bar-wrap">
                             <div class="deal-stock-bar" style="width: <?= min(90, max(30, ($p['in_stock'] % 70) + 25)) ?>%;"></div>
                             <span class="deal-stock-text">🔥 Only <?= max(3, $p['in_stock'] % 12) ?> sets left</span>
                         </div>
-                        <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>); }">
+                        <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); }">
                             <span>Claim Deal</span>
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
@@ -652,7 +541,7 @@ foreach ($coyuPresetCategories as $preset) {
                     <article class="rec-card" data-category="<?= htmlspecialchars($p['category']) ?>" data-product-id="<?= $p['id'] ?>">
                         <!-- Pure Luxury Image Showcase with Badges & Action Overlays -->
                         <div class="rec-img-wrap">
-                            <a href="/product.php?id=<?= $p['id'] ?>" class="rec-img-link" title="<?= htmlspecialchars($p['name']) ?>">
+                            <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" class="rec-img-link" title="<?= htmlspecialchars($p['name']) ?>">
                                 <img src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="rec-card-img" loading="lazy" />
                             </a>
                             
@@ -664,10 +553,10 @@ foreach ($coyuPresetCategories as $preset) {
 
                             <!-- Quick Action Buttons Overlay -->
                             <div class="rec-overlay-actions">
-                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="if(typeof window.toggleWishlistProduct==='function'){ window.toggleWishlistProduct(<?= $p['id'] ?>); } event.stopPropagation();" aria-label="Add to Wishlist" title="Add to Wishlist">
+                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist" title="Add to Wishlist">
                                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                                 </button>
-                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='/product.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
+                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                 </button>
                             </div>
@@ -1130,7 +1019,7 @@ foreach ($coyuPresetCategories as $preset) {
         </div>
     </section>
 
-    <!-- ════════════ SECTION 29: PRODUCT VIDEO REELS ════════════ -->
+    <!-- ════════════ SECTION 29: INSTAGRAM REELS & VIDEO FEED ════════════ -->
     <?php
     $homeReelProducts = array_values(array_filter($products ?? [], static function ($rp) {
         return !empty($rp['has_video']) || !empty($rp['video']) || !empty($rp['videos']) || !empty($rp['embed']) || !empty($rp['embeds']);
@@ -1171,20 +1060,20 @@ foreach ($coyuPresetCategories as $preset) {
                 <div class="home-reels-strip" id="homeReelsTrack">
                     <?php foreach ($homeReelProducts as $rIdx => $rp):
                         $rImg = (!empty($rp['image']) && $rp['image'] !== '/assets/images/no-image.svg')
-                            ? $rp['image'] : '/assets/images/no-image.svg';
-                        $rName = trim((string)($rp['name'] ?? ''));
+                            ? $rp['image'] : (!empty($rp['images'][0]) ? $rp['images'][0] : '/assets/images/no-image.svg');
+                        $rName = trim((string)($rp['name'] ?? $rp['title'] ?? ''));
                         $rFabric = trim((string)($rp['fabric'] ?? ''));
                         $rCat = trim((string)($rp['category'] ?? ''));
-                        $rPrice = (float)($rp['price'] ?? 0);
+                        $rPrice = (float)($rp['effective_customer_price'] ?? $rp['price'] ?? $rp['customer_price'] ?? 0);
                         $rReviews = (int)($rp['reviews_count'] ?? 0);
+                        $hasVid = !empty($rp['has_video']) || !empty($rp['video']) || !empty($rp['videos']);
                     ?>
                     <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(<?php echo (int)$rIdx; ?>);" role="button" tabindex="0">
                         <div class="reel-media-box">
                             <img src="<?php echo htmlspecialchars($rImg); ?>" alt="<?php echo htmlspecialchars($rName); ?>" class="reel-img" loading="lazy"<?php echo $rImg === '/assets/images/no-image.svg' ? ' style="opacity:.45;"' : ''; ?> />
                             <div class="reel-top-bar">
-                                <span class="reel-live-tag"><span class="reel-pulse-dot"></span> VIDEO</span>
+                                <span class="reel-live-tag"><span class="reel-pulse-dot<?php echo $hasVid ? '' : ' gold'; ?>"></span> <?php echo $hasVid ? 'LIVE VIDEO' : 'ORIGINAL'; ?></span>
                                 <?php if ($rReviews > 0): ?>
-                                <!-- Real review count. The old "views" pills were invented figures. -->
                                 <span class="reel-views-pill">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                     <?php echo number_format($rReviews); ?>
@@ -1197,7 +1086,7 @@ foreach ($coyuPresetCategories as $preset) {
                                 </div>
                             </div>
                             <div class="reel-info-overlay">
-                                <h4 class="reel-title"><?php echo htmlspecialchars($rName !== '' ? $rName : 'Untitled product'); ?></h4>
+                                <h4 class="reel-title"><?php echo htmlspecialchars($rName !== '' ? $rName : 'DT Brand\'s Attire'); ?></h4>
                                 <div class="reel-meta-row">
                                     <?php $rMeta = $rFabric !== '' ? $rFabric : $rCat; ?>
                                     <?php if ($rMeta !== ''): ?>
@@ -1246,21 +1135,21 @@ foreach ($coyuPresetCategories as $preset) {
 </div><!-- /.page-wrapper -->
 
 <!-- ════════════ SECTION 31: SMART ANIMATED MOBILE BOTTOM FOOTER ════════════ -->
-<?php include_once __DIR__ . '/includes/shopbottomfotoer.php'; ?>
+<?php include_once __DIR__ . '/homebottomfooter.php'; ?>
 
 <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
-<?php include_once __DIR__ . '/shared/quickview.php'; ?>
-<?php include_once __DIR__ . '/shared/smartshare.php'; ?>
-<?php include_once __DIR__ . '/shared/reels.php'; ?>
-<?php include_once __DIR__ . '/shared/cart.php'; ?>
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
-<?php include_once __DIR__ . '/shared/checkout.php'; ?>
-<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/quickview.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/smartshare.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/reels.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/wishlist.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/checkout.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/account.php'; ?>
 
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 
 <!-- ════════════ MASTER ENGINE SCRIPT ════════════ -->
-<script src="/assets/js/home.js?v=1787019062&v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Home/Asset/js/home.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

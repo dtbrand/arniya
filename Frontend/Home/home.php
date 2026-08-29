@@ -57,55 +57,6 @@ if (empty($categoriesList)) {
 
 $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
-
-// ── Rich Circular Stories Categories (Coyu Style) ──
-$coyuStories = [
-    [
-        'is_dash' => true,
-        'name'    => '60 Mins',
-        'title'   => 'DT DASH',
-        'link'    => '/shop'
-    ]
-];
-
-$coyuPresetCategories = [
-    ['name' => 'Sarees',       'img' => '/assets/images/uploads/dt_20260828_213539_afb8ec67.jpg', 'link' => '/shop?category=Sarees'],
-    ['name' => 'Kurtis',       'img' => '/assets/images/uploads/dt_20260828_213617_6463526c.jpg', 'link' => '/shop?category=Kurtis'],
-    ['name' => 'Lehengas',     'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Lehengas'],
-    ['name' => 'Suits',        'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Suits'],
-    ['name' => 'Co-ord Sets',  'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Co-ord%20Sets'],
-    ['name' => 'Kaftans',      'img' => '/Frontend/Shop/Asset/images/product6.png', 'link' => '/shop?category=Kaftans'],
-    ['name' => 'Dresses',      'img' => '/Frontend/Shop/Asset/images/product1.png', 'link' => '/shop?category=Kurtis'],
-    ['name' => 'Tops',         'img' => '/Frontend/Shop/Asset/images/product2.png', 'link' => '/shop?category=Tops'],
-    ['name' => 'Bottomwear',   'img' => '/Frontend/Shop/Asset/images/product3.png', 'link' => '/shop?category=Bottomwear'],
-    ['name' => 'Jewellery',    'img' => '/Frontend/Shop/Asset/images/product4.png', 'link' => '/shop?category=Jewellery'],
-    ['name' => 'Dupattas',     'img' => '/Frontend/Shop/Asset/images/product5.png', 'link' => '/shop?category=Dupattas'],
-];
-
-$seenCatNames = [];
-if (!empty($categoriesList)) {
-    foreach ($categoriesList as $cl) {
-        $cName = $cl['name'];
-        $seenCatNames[strtolower($cName)] = true;
-        $coyuStories[] = [
-            'is_dash' => false,
-            'name'    => $cName,
-            'img'     => $cl['img'],
-            'link'    => '/shop?category=' . urlencode($cName)
-        ];
-    }
-}
-
-foreach ($coyuPresetCategories as $preset) {
-    if (empty($seenCatNames[strtolower($preset['name'])])) {
-        $coyuStories[] = [
-            'is_dash' => false,
-            'name'    => $preset['name'],
-            'img'     => $preset['img'],
-            'link'    => $preset['link']
-        ];
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -221,38 +172,7 @@ foreach ($coyuPresetCategories as $preset) {
         </div>
     </section>
 
-    <!-- ════════════ SECTION 1.8: CIRCULAR CATEGORY STORIES DISCOVERY RAIL ════════════ -->
-    <section class="coyu-stories-rail-section" aria-label="Explore Categories">
-        <div class="coyu-stories-container">
-            <div class="coyu-stories-track" id="coyuStoriesTrack">
-                <?php foreach ($coyuStories as $cs): ?>
-                    <?php if (!empty($cs['is_dash'])): ?>
-                        <a href="<?= $cs['link'] ?>" class="coyu-story-item">
-                            <div class="coyu-story-avatar-wrap coyu-story-dash-avatar">
-                                <div class="coyu-story-dash-inner">
-                                    <div class="coyu-story-dash-logo">
-                                        <span>DASH</span>
-                                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                    </div>
-                                    <span style="font-size:8px;font-weight:700;letter-spacing:0.3px;opacity:0.95;">60 MINS</span>
-                                </div>
-                            </div>
-                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
-                        </a>
-                    <?php else: ?>
-                        <a href="<?= $cs['link'] ?>" class="coyu-story-item" onclick="if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= addslashes($cs['name']) ?>');}">
-                            <div class="coyu-story-avatar-wrap">
-                                <img src="<?= htmlspecialchars($cs['img']) ?>" alt="<?= htmlspecialchars($cs['name']) ?>" class="coyu-story-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
-                            </div>
-                            <span class="coyu-story-label"><?= htmlspecialchars($cs['name']) ?></span>
-                        </a>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════════ SECTION 2: QUICK ACCESS BAR ════════════ -->
+    <!-- ════════════ SECTION 2: QUICK ACCESS BAR (COYU ROUNDED OVERLAP CARD SHEET) ════════════ -->
     <section class="home-quick-access-section" aria-label="Quick Access">
         <div class="home-section-container">
             <div class="quick-access-grid">
