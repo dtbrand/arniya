@@ -88,14 +88,18 @@
                 old_price: p.old_price,
                 discount: p.discount,
                 image: p.image,
-                fabric: p.fabric || 'Pure Silk',
+                gallery: p.gallery || p.images || (p.image ? [p.image] : []),
+                images: p.images || p.gallery || (p.image ? [p.image] : []),
+                video: p.video || (p.videos && p.videos[0]) || '',
+                videos: p.videos || (p.video ? [p.video] : []),
+                fabric: p.fabric || '',
                 colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
-                sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                url: '/Frontend/Single-Product/singleproduct.php?id=' + p.id
+                sizes: Array.isArray(p.size) ? p.size.join(', ') : (p.size || ''),
+                url: '/product.php?id=' + p.id
             };
             window.openSmartShareModal(itemData);
         } else if (p) {
-            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/Frontend/Single-Product/singleproduct.php?id=' + p.id);
+            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/product.php?id=' + p.id);
             window.open(waUrl, '_blank');
         }
     };

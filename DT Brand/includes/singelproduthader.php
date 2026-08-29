@@ -551,6 +551,9 @@
 $shId     = (int)($product['id'] ?? 0);
 $shColors = array_values(array_filter(array_map('strval', (array)($product['colors'] ?? [])), static fn($v) => trim($v) !== ''));
 $shSizes  = array_values(array_filter(array_map('strval', (array)($product['size'] ?? [])), static fn($v) => trim($v) !== ''));
+$shImages = array_values(array_filter(array_map('strval', (array)($product['images'] ?? $product['gallery'] ?? $pdpImages ?? [])), static fn($v) => trim($v) !== ''));
+$shVideos = array_values(array_filter(array_map('strval', (array)($product['videos'] ?? [])), static fn($v) => trim($v) !== ''));
+$shVideo  = (string)($product['video'] ?? ($shVideos[0] ?? ''));
 ?>
 <script>
 /* ── Single Product Header Sync Engine ── */
@@ -568,6 +571,10 @@ $shSizes  = array_values(array_filter(array_map('strval', (array)($product['size
             old_price: <?= json_encode((float)($product['old_price'] ?? 0)) ?>,
             discount: <?= json_encode((int)($product['discount'] ?? 0)) ?>,
             image: <?= json_encode((string)($product['image'] ?? '')) ?>,
+            gallery: <?= json_encode($shImages) ?>,
+            images: <?= json_encode($shImages) ?>,
+            video: <?= json_encode($shVideo) ?>,
+            videos: <?= json_encode($shVideos) ?>,
             fabric: <?= json_encode((string)($product['fabric'] ?? '')) ?>,
             colors: <?= json_encode(implode(', ', $shColors)) ?>,
             sizes: <?= json_encode(implode(', ', $shSizes)) ?>,
