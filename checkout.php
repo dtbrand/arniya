@@ -1,249 +1,100 @@
 <?php
 /**
- * checkout.php — Dedicated Checkout & Payment Preference Engine
+ * checkout.php — Standalone Master Checkout Page & Component
  * DT Brand's & Jai Hanuman Tex
+ * Luxury Ethnic WhatsApp CRM Checkout Flow
  */
-$page_title = "Express Secure Checkout";
+$page_title = "Secure Luxury Checkout";
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
 
 use DTBrand\ProductCatalog;
 
-$catalogProducts = ProductCatalog::getAll();
+$dbProductsForCheckout = ProductCatalog::getAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $page_title ?> ‹ DT Brand's Luxury Handloom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title><?= $page_title ?> ‹ DT Brand's Luxury Couture</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
-    <style>
-        .dt-chk-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .dt-chk-card { background: #FFFFFF; border: 1.5px solid #D4AF37; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
-        .dt-chk-head { border-bottom: 1.5px solid #EAE5D9; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .dt-chk-input { width: 100%; height: 40px; border: 1px solid #CBD5E1; border-radius: 6px; padding: 0 12px; box-sizing: border-box; font-size: 14px; margin-bottom: 12px; }
-        .dt-chk-label { display: block; font-size: 12px; font-weight: 700; color: #181512; margin-bottom: 4px; }
-    </style>
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <script>
+    window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
+    </script>
 </head>
-<body style="background:#FAF8F5; margin:0; padding:0; color:#181512;">
+<body style="background: #14100C; margin: 0; padding: 0; color: #24211C; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
 
-<div class="dt-chk-container">
-    <div class="dt-chk-card">
-        <div class="dt-chk-head">
-            <div>
-                <h1 style="font-family:'Cinzel',serif; font-size:1.6rem; margin:0; color:#8A681F;">Express Secure Checkout</h1>
-                <p style="margin:4px 0 0 0; font-size:0.8rem; color:#78716C;">256-Bit SSL Encrypted • Direct Surat Mill Dispatch</p>
-            </div>
-            <a href="/shop" style="color:#8A681F; font-weight:700; font-size:0.85rem; text-decoration:none;">← Return to Shop</a>
-        </div>
-
-        <form id="expressCheckoutForm" onsubmit="handleDirectCheckout(event)" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-            <div style="grid-column: 1 / -1;">
-                <h3 style="font-size:1.05rem; font-weight:800; margin:0 0 12px 0; color:#181512;">1. Customer &amp; Delivery Information</h3>
-            </div>
-            <div>
-                <label class="dt-chk-label">Full Name *</label>
-                <input type="text" class="dt-chk-input" id="chkName" placeholder="e.g. Priya Sharma" required>
-            </div>
-            <div>
-                <label class="dt-chk-label">WhatsApp Mobile Number *</label>
-                <input type="tel" class="dt-chk-input" id="chkPhone" placeholder="+91 70463 63528" required>
-            </div>
-            <div style="grid-column: 1 / -1;">
-                <label class="dt-chk-label">Complete Shipping Address *</label>
-                <input type="text" class="dt-chk-input" id="chkAddress" placeholder="Flat No., Building, Street, Landmark" required>
-            </div>
-            <div>
-                <label class="dt-chk-label">City *</label>
-                <input type="text" class="dt-chk-input" id="chkCity" placeholder="e.g. Mumbai" required>
-            </div>
-            <div>
-                <label class="dt-chk-label">Pincode *</label>
-                <input type="text" class="dt-chk-input" id="chkPin" placeholder="400001" maxlength="6" required>
-            </div>
-
-            <div style="grid-column: 1 / -1; margin-top:10px;">
-                <h3 style="font-size:1.05rem; font-weight:800; margin:0 0 12px 0; color:#181512;">2. Payment Method</h3>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
-                    <label style="border:2px solid #D4AF37; background:#FAF5E8; border-radius:8px; padding:12px; display:flex; align-items:center; gap:10px; cursor:pointer;">
-                        <input type="radio" name="chkPayment" value="cod" checked>
-                        <div>
-                            <strong style="display:block; font-size:13px; color:#181512;">Cash on Delivery (COD)</strong>
-                            <small style="color:#78716C;">Pay upon parcel delivery</small>
-                        </div>
-                    </label>
-                    <label style="border:1px solid #CBD5E1; background:#FFFFFF; border-radius:8px; padding:12px; display:flex; align-items:center; gap:10px; cursor:pointer;">
-                        <input type="radio" name="chkPayment" value="upi">
-                        <div>
-                            <strong style="display:block; font-size:13px; color:#181512;">UPI / Razorpay</strong>
-                            <small style="color:#78716C;">GPay, PhonePe, Cards</small>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <div style="grid-column: 1 / -1; margin-top:20px; border-top:1.5px solid #EAE5D9; padding-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
-                <div style="font-size:13px; color:#64748B;">
-                    <span>🔒 Safe &amp; Verified Delivery with 3-Day Easy Replacement Guarantee</span>
-                </div>
-                <button type="submit" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; height:46px; padding:0 30px; border-radius:8px; font-size:15px; font-weight:900; border:1px solid #8A681F; cursor:pointer; box-shadow:0 4px 15px rgba(212,175,55,0.35);">
-                    Confirm &amp; Place Order
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+<?php
+// Include the luxury master checkout markup and controller
+include __DIR__ . '/Shared/checkout.php';
+?>
 
 <script>
-/* Same storefront number used by the cart drawer, footer and about page. */
-var BRAND_WHATSAPP_NUMBER = '917046363528';
-
-/* Build the concierge confirmation from the order the SERVER saved. Prices are
-   re-derived server-side from the live catalogue, so the local cart figures are
-   not authoritative and must not be messaged to the mill. */
-function buildCheckoutWaUrl(srvOrder, form) {
-    var o = srvOrder || {};
-    var p = o.pricing || {};
-    var money = function(n) { return Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }); };
-
-    var lines = '';
-    (o.items || []).forEach(function(item, i) {
-        var qty = Number(item.quantity || item.qty) || 1;
-        var lineTotal = Number(item.line_total);
-        if (!(lineTotal > 0)) { lineTotal = (Number(item.price) || 0) * qty; }
-        var label = item.title || item.name || 'Ethnic Product';
-        // The chosen colour/size travels to the mill, otherwise the dispatch team
-        // has to guess which variant of the saree was actually bought.
-        var variant = [item.variant_color || item.color, item.variant_size || item.size]
-            .map(function(v) { return String(v || '').trim(); })
-            .filter(Boolean).join(' / ');
-        lines += (i + 1) + '. *' + label + '*' + (item.sku ? ' (' + item.sku + ')' : '') +
-                 (variant ? '\n   Variant: ' + variant : '') +
-                 '\n   Qty: ' + qty + ' | ₹' + money(lineTotal) + '\n';
-    });
-
-    var gst = Number(p.gst_amount || p.gst) || 0;
-    var discount = Number(p.discount) || 0;
-    var shipping = Number(p.shipping) || 0;
-
-    var msg = "👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n" +
-              '🔖 *Order ID:* #' + (o.order_number || '') + '\n' +
-              '───────────────\n' +
-              '👤 *Customer Name:* ' + form.name + '\n' +
-              '📞 *WhatsApp:* ' + form.phone + '\n' +
-              '📍 *Shipping Address:*\n' + form.address + '\n' +
-              '───────────────\n' +
-              (lines ? '🛍️ *ORDERED ITEMS:*\n' + lines + '───────────────\n' : '') +
-              '💵 *Subtotal:* ₹' + money(p.subtotal) + '\n' +
-              (discount > 0 ? '🎁 *Discount:* -₹' + money(discount) + '\n' : '') +
-              (gst > 0 ? '🧾 *GST:* ₹' + money(gst) + '\n' : '') +
-              (shipping > 0 ? '🚚 *Shipping:* ₹' + money(shipping) + '\n' : '') +
-              '✨ *GRAND TOTAL:* ₹' + money(o.total_amount || p.grand_total) + '\n' +
-              '💳 *Payment Method:* ' + String(form.payment || 'cod').toUpperCase() + '\n' +
-              '───────────────\n' +
-              'Please confirm and share order dispatch tracking. Thank you! 🙏';
-
-    return 'https://api.whatsapp.com/send?phone=' + BRAND_WHATSAPP_NUMBER + '&text=' + encodeURIComponent(msg);
-}
-
-function handleDirectCheckout(e) {
-    e.preventDefault();
-
-    // Build the order from the shopper's REAL cart (localStorage), not a hardcoded item.
+// On standalone checkout page, automatically initialize and present the luxury checkout interface
+document.addEventListener('DOMContentLoaded', function() {
+    // If cart is empty in localStorage, populate with selected demo or initial item for seamless experience if needed
     var cart = [];
-    try { cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]'); } catch (err) { cart = []; }
-
-    if (!Array.isArray(cart) || cart.length === 0) {
-        alert('Your shopping bag is empty. Please add a product before checking out.');
-        window.location.href = '/shop';
-        return;
+    try {
+        cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
+    } catch(e) {
+        cart = [];
     }
 
-    var items = cart.map(function(it) {
-        return {
-            id: it.id,
-            name: it.name,
-            price: Number(it.price) || 0,
-            quantity: Number(it.qty || it.quantity) || 1,
-            // Carried through to order_items.variant_color / variant_size. These
-            // were dropped here, so the colour and size the shopper picked never
-            // reached the order at all.
-            color: String(it.color || '').trim(),
-            size: String(it.size || '').trim(),
-            image: it.image || ''
-        };
-    });
-
-    var name = document.getElementById('chkName').value.trim();
-    var phone = document.getElementById('chkPhone').value.trim();
-    var address = document.getElementById('chkAddress').value.trim();
-    var city = document.getElementById('chkCity').value.trim();
-    var pin = document.getElementById('chkPin').value.trim();
-
-    var payload = {
-        customer_name: name,
-        customer_phone: phone,
-        shipping_address: address + ', ' + city + ' - ' + pin,
-        items: items,
-        channel: 'retail',
-        payment_method: (document.querySelector('input[name="chkPayment"]:checked') || {}).value || 'cod'
-    };
-
-    var btn = e.target.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = true; btn.textContent = 'Placing your order…'; }
-
-    fetch('/api/orders.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-        if (data && data.success) {
-            var num = (data.order && data.order.order_number) ? data.order.order_number : '';
-            // Show the total the SERVER actually charged. It is recalculated from
-            // live catalogue prices, so it can differ from the cart if a price
-            // changed or the shopper is on a B2B tier.
-            var amt = (data.order && data.order.total_amount) ? Number(data.order.total_amount) : 0;
-            var amtText = amt > 0 ? ' Total: ₹' + amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '.' : '';
-
-            // Actually hand the order to WhatsApp instead of only promising it.
-            var waUrl = buildCheckoutWaUrl(data.order, {
-                name: name,
-                phone: phone,
-                address: payload.shipping_address,
-                payment: payload.payment_method
-            });
-
-            localStorage.removeItem('dtbrands_cart');
-            alert('🎉 Order placed successfully!' + (num ? ' Your order number is ' + num + '.' : '') + amtText + ' We are opening WhatsApp so our concierge can confirm dispatch.');
-
-            // If the popup is blocked, navigate there instead of silently
-            // dropping the confirmation we just promised.
-            var waWin = window.open(waUrl, '_blank');
-            if (!waWin) {
-                window.location.href = waUrl;
-            } else {
-                window.location.href = '/shop';
+    // If query string has direct product buy param (e.g. ?buy_id=1&qty=1)
+    var urlParams = new URLSearchParams(window.location.search);
+    var buyId = urlParams.get('buy_id') || urlParams.get('id');
+    if (buyId && window.allProducts && window.allProducts.length) {
+        var pMatch = window.allProducts.find(function(p) { return String(p.id) === String(buyId); });
+        if (pMatch) {
+            var exists = cart.find(function(c) { return String(c.id) === String(buyId); });
+            if (!exists) {
+                cart.push({
+                    id: pMatch.id,
+                    name: pMatch.name || pMatch.title,
+                    price: pMatch.price || pMatch.retail_price || 1149,
+                    qty: parseInt(urlParams.get('qty') || '1', 10),
+                    image: pMatch.image || (pMatch.images && pMatch.images[0]) || '/assets/images/product1.png',
+                    color: urlParams.get('color') || 'Navy Blue',
+                    size: urlParams.get('size') || 'L'
+                });
+                localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
             }
-        } else {
-            if (btn) { btn.disabled = false; btn.textContent = 'Confirm & Place Order'; }
-            alert('We could not place your order: ' + ((data && data.message) ? data.message : 'Please try again.'));
         }
-    })
-    .catch(function() {
-        if (btn) { btn.disabled = false; btn.textContent = 'Confirm & Place Order'; }
-        alert('Network error — your order was not placed. Please check your connection and try again.');
-    });
-}
+    }
+
+    var backdrop = document.getElementById('checkoutBackdrop');
+    if (backdrop) {
+        backdrop.removeAttribute('inert');
+        backdrop.setAttribute('aria-hidden', 'false');
+        backdrop.classList.add('active');
+        backdrop.style.position = 'relative';
+        backdrop.style.minHeight = '100vh';
+        backdrop.style.zIndex = '10';
+        backdrop.style.opacity = '1';
+        backdrop.style.visibility = 'visible';
+        backdrop.style.pointerEvents = 'auto';
+
+        var closeBtn = document.getElementById('closeCheckoutBtn');
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                window.location.href = '/shop';
+            };
+        }
+    }
+
+    if (typeof window.renderCheckoutItems === 'function') {
+        window.renderCheckoutItems();
+    }
+});
 </script>
 
-<?php include_once __DIR__ . '/shared/cart.php'; ?>
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 
 </body>
 </html>
