@@ -405,7 +405,7 @@
             </div>
             <button type="button" class="smart-share-zip-btn" onclick="window.downloadSmartProductMedia('zip');">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                <span>Download as Single ZIP Archive (Optional)</span>
+                <span>Download as Single ZIP Archive (0 Prompts)</span>
             </button>
         </div>
     </div>
@@ -677,7 +677,7 @@
             });
         });
 
-        showShareToast('📥 Downloading ' + media.images.length + ' HD Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' HD Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' directly...');
+        showShareToast('📥 Downloading ' + media.images.length + ' Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' directly... (Click "Allow" once if browser asks)');
 
         var completed = 0;
         return new Promise(function(resolve) {
