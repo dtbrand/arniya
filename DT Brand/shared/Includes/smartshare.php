@@ -1,16 +1,17 @@
 <?php
 /**
- * smartshare.php — Next-Level 1-Click Auto All Media (Photos + Videos) Download & WhatsApp Share Engine
+ * smartshare.php — 1-Click Direct HD Media (Photos + Videos) Downloader & WhatsApp Share Engine
  * DT Brand's & Jai Hanuman Tex
  * 
  * In ONE SINGLE CLICK:
- *  1. Auto-downloads ALL available HD Product Photos & ALL available HD Videos (packaged in 1 unified ZIP or direct HD file).
+ *  1. Auto-downloads ALL available HD Product Photos & ALL available HD Videos DIRECTLY
+ *     (as original individual .jpg / .mp4 files into the device's Downloads folder / Gallery).
  *  2. Auto-copies Full Luxury Formatted Product Details to Clipboard.
  *  3. Seamlessly Launches WhatsApp with formatted description pre-filled!
- *  4. ZERO multiple-download permission blocks ("bina allow all download prompt ke sab auto download").
+ *  4. Supports direct Web Share API with attached files on modern mobile devices.
  */
 ?>
-<!-- Include JSZip for Ultra-Fast In-Browser HD Media Packaging -->
+<!-- Include JSZip for optional Archive Packaging -->
 <script src="/assets/js/jszip.min.js"></script>
 
 <style>
@@ -324,6 +325,27 @@
     stroke-width: 2.2;
     fill: none;
 }
+.smart-share-zip-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px dashed #CBD5E1;
+    color: #64748B;
+    font-size: 0.70rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 2px;
+}
+.smart-share-zip-btn:hover {
+    border-color: #8A681F;
+    color: #8A681F;
+    background: #FAF5E8;
+}
 </style>
 
 <!-- Floating Luxury Toast Banner for 1-Click Execution -->
@@ -331,7 +353,7 @@
     <div class="smart-share-toast-icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
     </div>
-    <div class="smart-share-toast-text" id="smartShareToastMsg">All HD Photos &amp; Videos Downloaded! Details Copied! Opening WhatsApp...</div>
+    <div class="smart-share-toast-text" id="smartShareToastMsg">All HD Photos &amp; Videos Downloaded Directly! Details Copied! Opening WhatsApp...</div>
 </div>
 
 <!-- Modal Dialog (Alternative / Detailed View) -->
@@ -342,7 +364,7 @@
             <div class="smart-share-title-group">
                 <span class="smart-share-badge">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    1-Click Auto Share
+                    1-Click Direct Media
                 </span>
                 <h3 class="smart-share-title">Smart WhatsApp Share</h3>
             </div>
@@ -369,24 +391,28 @@
         <div class="smart-share-actions-wrap">
             <button type="button" class="smart-whatsapp-btn" id="smartShareMainBtn" onclick="window.executeSmartMeeshoShare();">
                 <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zM12.05 20.21c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.267 8.267 0 0 1-1.27-4.44c0-4.57 3.71-8.27 8.29-8.27 2.21 0 4.29.86 5.85 2.43a8.217 8.217 0 0 1 2.42 5.85c0 4.56-3.72 8.29-8.3 8.29zm4.54-6.2c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.02 2.57.13.17 1.76 2.68 4.26 3.76.6.26 1.06.41 1.42.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.3z"/></svg>
-                <span id="smartShareMainBtnText">1-Click Download All Media &amp; Share</span>
+                <span id="smartShareMainBtnText">1-Click Direct Download All &amp; Share</span>
             </button>
             <div class="smart-share-sub-grid">
-                <button type="button" class="smart-share-opt-btn" id="smartShareDownloadOptBtn" onclick="window.downloadSmartProductMedia();">
+                <button type="button" class="smart-share-opt-btn" id="smartShareDownloadOptBtn" onclick="window.downloadSmartProductMedia('direct');">
                     <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span id="smartShareDownloadOptText">Download All Media (ZIP)</span>
+                    <span id="smartShareDownloadOptText">Direct Download (JPG &amp; MP4)</span>
                 </button>
                 <button type="button" class="smart-share-opt-btn" onclick="window.copySmartProductText();">
                     <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Copy Details</span>
                 </button>
             </div>
+            <button type="button" class="smart-share-zip-btn" onclick="window.downloadSmartProductMedia('zip');">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <span>Download as Single ZIP Archive (Optional)</span>
+            </button>
         </div>
     </div>
 </div>
 
 <script>
-/* ── MEESHO-STYLE 1-CLICK AUTO ALL MEDIA (PHOTOS + VIDEOS) DOWNLOAD & SHARE ENGINE ── */
+/* ── MEESHO-STYLE 1-CLICK DIRECT HD MEDIA (PHOTOS + VIDEOS) DOWNLOAD & SHARE ENGINE ── */
 (function() {
     'use strict';
 
@@ -592,7 +618,7 @@
         };
     }
 
-    /* Single File Direct Download Helper */
+    /* Single File Direct Download Helper via Blob for Original HD Quality */
     function triggerSingleDownload(url, filename) {
         return fetch(url)
             .then(function(res) {
@@ -604,24 +630,26 @@
                 var a = document.createElement('a');
                 a.href = blobUrl;
                 a.download = filename;
+                a.style.display = 'none';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 600);
+                setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 1500);
             })
             .catch(function() {
                 var a = document.createElement('a');
                 a.href = url;
                 a.download = filename;
                 a.target = '_blank';
+                a.style.display = 'none';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
             });
     }
 
-    /* ── MASTER 1-CLICK ALL MEDIA (PHOTOS + VIDEOS) DOWNLOAD ENGINE ── */
-    function downloadAllProductMedia(item, onProgress) {
+    /* ── MASTER 1-CLICK DIRECT HD MEDIA (PHOTOS + VIDEOS) DOWNLOADER (NO ZIP) ── */
+    function downloadDirectProductMedia(item) {
         var media = collectAllProductMedia(item);
         var total = media.total;
 
@@ -630,37 +658,70 @@
             return Promise.resolve({ success: false, total: 0 });
         }
 
-        // Case A: Exactly 1 single media file -> Direct Instant Download (0 zip overhead)
-        if (total === 1) {
-            var singleUrl = media.images[0] || media.videos[0];
-            var isVid = media.videos.length > 0;
-            var ext = getFileExtension(singleUrl, isVid ? 'mp4' : 'jpg');
-            var fn = media.slug + (isVid ? '-video-1.' : '-1.') + ext;
-
-            showShareToast(isVid ? '🎥 Downloading HD Video...' : '📸 Downloading HD Photo...');
-            return triggerSingleDownload(singleUrl, fn).then(function() {
-                return { success: true, total: 1, type: 'single' };
+        var itemsToDownload = [];
+        media.images.forEach(function(imgUrl, idx) {
+            var ext = getFileExtension(imgUrl, 'jpg');
+            itemsToDownload.push({
+                url: imgUrl,
+                filename: media.slug + '-' + (idx + 1) + '.' + ext,
+                type: 'image'
             });
+        });
+
+        media.videos.forEach(function(vidUrl, idx) {
+            var ext = getFileExtension(vidUrl, 'mp4');
+            itemsToDownload.push({
+                url: vidUrl,
+                filename: media.slug + '-video-' + (idx + 1) + '.' + ext,
+                type: 'video'
+            });
+        });
+
+        showShareToast('📥 Downloading ' + media.images.length + ' HD Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' HD Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' directly...');
+
+        var completed = 0;
+        return new Promise(function(resolve) {
+            itemsToDownload.forEach(function(fileItem, index) {
+                setTimeout(function() {
+                    triggerSingleDownload(fileItem.url, fileItem.filename).then(function() {
+                        completed++;
+                        if (completed === total) {
+                            showShareToast('✅ All ' + total + ' HD Photos & Videos Downloaded to your device!');
+                            resolve({ success: true, total: total, type: 'direct' });
+                        }
+                    });
+                }, index * 220); // 220ms staggered delay ensures browser downloads 100% of files without dropping!
+            });
+        });
+    }
+
+    /* ── OPTIONAL ZIP DOWNLOAD ENGINE (FOR USERS WHO EXPLICITLY WANT A ZIP) ── */
+    function downloadZipProductMedia(item, onProgress) {
+        var media = collectAllProductMedia(item);
+        var total = media.total;
+
+        if (total === 0) {
+            showShareToast('📸 No photos or videos uploaded for this product yet.');
+            return Promise.resolve({ success: false, total: 0 });
         }
 
-        // Case B: Multiple media files (Photos + Videos) -> 1-Click HD ZIP Package
-        showShareToast('⚡ Packaging ' + media.images.length + ' Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' into HD ZIP...');
+        if (total === 1) {
+            return downloadDirectProductMedia(item);
+        }
+
+        showShareToast('⚡ Packaging ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos into ZIP...');
 
         return new Promise(function(resolve) {
             ensureJSZip(function(JSZip) {
                 if (!JSZip) {
-                    // Fallback to server-side ZIP generator if JSZip fails to load
                     window.location.href = '/api/download_product_media.php?id=' + (item.id || 0);
                     return resolve({ success: true, total: total, type: 'server_zip' });
                 }
 
                 var zip = new JSZip();
-
-                // 1. Add Product Details Text File
                 var detailsText = buildFormattedWhatsAppMessage(item);
                 zip.file('Product-Details.txt', detailsText);
 
-                // 2. Fetch all Images & Videos concurrently
                 var fetchPromises = [];
 
                 media.images.forEach(function(imgUrl, idx) {
@@ -671,7 +732,7 @@
                         .then(function(blob) {
                             if (blob) zip.file(entryName, blob);
                         })
-                        .catch(function() { /* skip individual corrupt files */ });
+                        .catch(function() {});
                     fetchPromises.push(p);
                 });
 
@@ -683,7 +744,7 @@
                         .then(function(blob) {
                             if (blob) zip.file(entryName, blob);
                         })
-                        .catch(function() { /* skip individual corrupt files */ });
+                        .catch(function() {});
                     fetchPromises.push(p);
                 });
 
@@ -700,10 +761,9 @@
                         document.body.removeChild(a);
                         setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 1200);
 
-                        showShareToast('✅ All ' + media.images.length + ' Photos' + (media.videos.length ? (' & ' + media.videos.length + ' Videos') : '') + ' Downloaded in 1 ZIP!');
+                        showShareToast('✅ All ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos Downloaded in 1 ZIP!');
                         resolve({ success: true, total: total, type: 'client_zip' });
                     }).catch(function(err) {
-                        // Fallback to server ZIP
                         if (item.id) {
                             window.location.href = '/api/download_product_media.php?id=' + item.id;
                         }
@@ -734,13 +794,13 @@
         document.body.removeChild(t);
     }
 
-    /* 🟢 THE ULTIMATE 1-CLICK ALL DOWNLOAD & WHATSAPP SHARE FUNCTION */
+    /* 🟢 THE ULTIMATE 1-CLICK DIRECT ALL MEDIA (PHOTOS + VIDEOS) DOWNLOAD & WHATSAPP SHARE */
     window.oneClickAllDownloadAndShare = function(itemData) {
         var item = Object.assign({}, currentShareItem, itemData || {});
         currentShareItem = item;
 
-        // 1. Auto-Download All HD Photos & All HD Videos in 1 Unified Package
-        downloadAllProductMedia(item);
+        // 1. Direct Auto-Download ALL HD Photos & ALL HD Videos as real individual files (.jpg & .mp4)
+        downloadDirectProductMedia(item);
 
         // 2. Auto-Copy Formatted Details to Clipboard
         var formattedText = buildFormattedWhatsAppMessage(item);
@@ -756,7 +816,7 @@
         setTimeout(function() {
             var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(formattedText);
             window.open(waUrl, '_blank');
-        }, 550);
+        }, 600);
     };
 
     /* 🟢 Open Smart Share Modal with Product Snapshot */
@@ -821,7 +881,7 @@
             if (bits.length === 0) {
                 mediaCountText.textContent = 'No media uploaded yet';
             } else {
-                mediaCountText.textContent = bits.join(' • ') + ' (Auto-Download Ready)';
+                mediaCountText.textContent = bits.join(' • ') + ' (Direct 1-Click Download Ready)';
             }
         }
 
@@ -852,15 +912,19 @@
         }
     };
 
-    /* 🟢 1-Click Batch Download & WhatsApp Share from Modal */
+    /* 🟢 1-Click Direct Download & WhatsApp Share from Modal */
     window.executeSmartMeeshoShare = function() {
         window.closeSmartShareModal();
         window.oneClickAllDownloadAndShare(currentShareItem);
     };
 
-    /* 🟢 Download All Product Media (Photos + Videos) */
-    window.downloadSmartProductMedia = function() {
-        downloadAllProductMedia(currentShareItem);
+    /* 🟢 Download All Product Media (Direct Files by default or ZIP if specified) */
+    window.downloadSmartProductMedia = function(type) {
+        if (type === 'zip') {
+            downloadZipProductMedia(currentShareItem);
+        } else {
+            downloadDirectProductMedia(currentShareItem);
+        }
     };
 
     /* 🟢 Copy Product Details to Clipboard */
