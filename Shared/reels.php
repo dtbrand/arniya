@@ -510,25 +510,34 @@ body.reels-open #dtMobileBottomNav {
     function extractProductVideos(p) {
         if (!p) return [];
         var list = [];
+        var parseItem = function(item, defaultKind) {
+            if (!item) return;
+            if (typeof item === 'object' && item !== null) {
+                var src = String(item.src || item.url || item.video || item.embed || item.link || '').trim();
+                var kind = item.kind || (item.embed ? 'embed' : (defaultKind || 'video'));
+                if (src !== '' && !list.some(function(x) { return x.src === src; })) {
+                    list.push({ kind: kind, src: src });
+                }
+            } else if (typeof item === 'string') {
+                var s = item.trim();
+                if (s !== '' && !list.some(function(x) { return x.src === s; })) {
+                    var isEmbed = s.indexOf('youtube') !== -1 || s.indexOf('youtu.be') !== -1 || s.indexOf('vimeo') !== -1 || s.indexOf('instagram.com/reel') !== -1;
+                    list.push({ kind: isEmbed ? 'embed' : (defaultKind || 'video'), src: s });
+                }
+            }
+        };
+
         if (Array.isArray(p.videos)) {
-            p.videos.forEach(function(v) {
-                var s = String(v || '').trim();
-                if (s !== '' && !list.some(function(x) { return x.src === s; })) list.push({ kind: 'video', src: s });
-            });
+            p.videos.forEach(function(v) { parseItem(v, 'video'); });
         }
         if (p.video) {
-            var sv = String(p.video || '').trim();
-            if (sv !== '' && !list.some(function(x) { return x.src === sv; })) list.push({ kind: 'video', src: sv });
+            parseItem(p.video, 'video');
         }
         if (Array.isArray(p.embeds)) {
-            p.embeds.forEach(function(e) {
-                var se = String(e || '').trim();
-                if (se !== '' && !list.some(function(x) { return x.src === se; })) list.push({ kind: 'embed', src: se });
-            });
+            p.embeds.forEach(function(e) { parseItem(e, 'embed'); });
         }
         if (p.embed) {
-            var sem = String(p.embed || '').trim();
-            if (sem !== '' && !list.some(function(x) { return x.src === sem; })) list.push({ kind: 'embed', src: sem });
+            parseItem(p.embed, 'embed');
         }
         return list;
     }

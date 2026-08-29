@@ -2635,19 +2635,19 @@ $catalogHasProducts = $catalogProducts !== [];
     <script src="/assets/js/profile-save.js?v=<?= time() ?>"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
-    <?php include_once __DIR__ . '/shared/cart.php'; ?>
+    <?php include_once __DIR__ . '/Shared/cart.php'; ?>
 
     <!-- ════════════ CHECKOUT MODAL PARTIAL ════════════ -->
-    <?php include_once __DIR__ . '/shared/checkout.php'; ?>
+    <?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 
     <!-- ════════════ QUICK VIEW PARTIAL ════════════ -->
-    <?php include_once __DIR__ . '/shared/quickview.php'; ?>
+    <?php include_once __DIR__ . '/Shared/quickview.php'; ?>
 
     <!-- ════════════ SMART WHATSAPP SHARE MODAL ════════════ -->
-    <?php include_once __DIR__ . '/shared/smartshare.php'; ?>
+    <?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 
     <!-- ════════════ WISHLIST PARTIAL ════════════ -->
-    <?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+    <?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 
     <!-- ════════════ WHOLESALE DRAWER GLOBAL BRIDGE ════════════ -->
     <script>
@@ -2704,7 +2704,7 @@ $catalogHasProducts = $catalogProducts !== [];
         }
     })();
     </script>
-<?php include_once __DIR__ . '/shared/reels.php'; ?>
-<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/Shared/reels.php'; ?>
+<?php include_once __DIR__ . '/Shared/account.php'; ?>
 </body>
 </html>

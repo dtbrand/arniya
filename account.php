@@ -1980,11 +1980,11 @@
     </script>
 
     <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
-    <?php include_once __DIR__ . '/shared/quickview.php'; ?>
-    <?php include_once __DIR__ . '/shared/smartshare.php'; ?>
-    <?php include_once __DIR__ . '/shared/reels.php'; ?>
-    <?php include_once __DIR__ . '/shared/cart.php'; ?>
-    <?php include_once __DIR__ . '/shared/wishlist.php'; ?>
-    <?php include_once __DIR__ . '/shared/checkout.php'; ?>
+    <?php include_once __DIR__ . '/Shared/quickview.php'; ?>
+    <?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
+    <?php include_once __DIR__ . '/Shared/reels.php'; ?>
+    <?php include_once __DIR__ . '/Shared/cart.php'; ?>
+    <?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
+    <?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 </body>
 </html>

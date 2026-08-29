@@ -149,10 +149,11 @@
         restartGalleryAutoTimer();
     };
 
-    window.openProductVideosReel = function(productData) {
+    window.openProductVideosReel = function(productData, videoIndex) {
         var p = productData || window.currentProductData;
+        var vIdx = typeof videoIndex === 'number' ? videoIndex : 0;
         if (typeof window.openReelsModal === 'function') {
-            window.openReelsModal(p, 0);
+            window.openReelsModal(p, vIdx);
         }
     };
 

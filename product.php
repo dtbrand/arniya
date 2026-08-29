@@ -305,7 +305,7 @@ function pdp_relative_date(string $ts): string
 
                 <!-- 3D Luxury HD Video Pill (Compact & Sleek Sizing) -->
                 <?php if ($pdpHasVideos): ?>
-                <button type="button" class="pdp-3d-reel-btn" id="pdp3dVideoBtn" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" aria-label="Watch HD Video">
+                <button type="button" class="pdp-3d-reel-btn" id="pdp3dVideoBtn" onclick="if(typeof window.openProductVideosReel==='function'){window.openProductVideosReel(window.currentProductData);}else if(typeof window.openReelsModal==='function'){window.openReelsModal(window.currentProductData, 0);}" aria-label="Watch HD Video">
                     <div class="pdp-3d-pulse-glow"></div>
                     <div class="pdp-3d-btn-capsule">
                         <div class="pdp-3d-icon-disc">
@@ -334,7 +334,7 @@ function pdp_relative_date(string $ts): string
                 <?php endforeach; ?>
                 <?php if ($pdpHasVideos): ?>
                 <?php foreach ($pdpVideos as $vIdx => $vItem): ?>
-                <div class="pdp-thumb-item pdp-thumb-video" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" title="Watch Video <?= $vIdx + 1 ?>" aria-label="Watch Video <?= $vIdx + 1 ?>">
+                <div class="pdp-thumb-item pdp-thumb-video" onclick="if(typeof window.openProductVideosReel==='function'){window.openProductVideosReel(window.currentProductData, <?= (int)$vIdx ?>);}else if(typeof window.openReelsModal==='function'){window.openReelsModal(window.currentProductData, <?= (int)$vIdx ?>);}" title="Watch Video <?= $vIdx + 1 ?>" aria-label="Watch Video <?= $vIdx + 1 ?>">
                     <img src="<?= htmlspecialchars($pdpPoster) ?>" alt="Video <?= $vIdx + 1 ?>" />
                     <div class="pdp-thumb-play-overlay">
                         <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
@@ -1111,14 +1111,14 @@ function pdp_relative_date(string $ts): string
 <?php include_once __DIR__ . '/includes/singelprodutbottomfotoer.php'; ?>
 
 <!-- ════ CART DRAWER PARTIAL ════ -->
-<?php include_once __DIR__ . '/shared/quickview.php'; ?>
-    <?php include_once __DIR__ . '/shared/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/quickview.php'; ?>
+    <?php include_once __DIR__ . '/Shared/cart.php'; ?>
 
 <!-- ════ WISHLIST DRAWER PARTIAL ════ -->
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 
 <!-- ════ CHECKOUT MODAL PARTIAL ════ -->
-<?php include_once __DIR__ . '/shared/checkout.php'; ?>
+<?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 
 <!-- ══════════════════════════════════════════════════════════════
      NEXT-LEVEL LUXURY FULLSCREEN MEDIA VIEWER (LIGHTBOX)
@@ -1170,16 +1170,17 @@ function pdp_relative_date(string $ts): string
 <!-- ════════════ SCRIPT ENGINE ════════════ -->
 <script>
         window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+        window.allProducts = <?= json_encode(array_values($catalogProducts), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.totalSlidesCount = <?= max(1, count($pdpImages)) ?>;
         window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.pdpWhatsAppNumber = <?= json_encode($pdpWaNumber) ?>;
     </script>
-    <script src="/assets/js/singleproduct.js?v=1787022222"></script>
+    <script src="/assets/js/singleproduct.js?v=<?= time() ?>"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
-<?php include_once __DIR__ . '/shared/smartshare.php'; ?>
+<?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 
-<?php include_once __DIR__ . '/shared/reels.php'; ?>
-<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/Shared/reels.php'; ?>
+<?php include_once __DIR__ . '/Shared/account.php'; ?>
 </body>
 </html>

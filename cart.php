@@ -87,9 +87,9 @@ $catalogProducts = ProductCatalog::getAll();
     </div>
 </div>
 
-<?php include_once __DIR__ . '/shared/cart.php'; ?>
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
-<?php include_once __DIR__ . '/shared/checkout.php'; ?>
+<?php include_once __DIR__ . '/Shared/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 
 <script>
 /* Render the dedicated /cart page from the shopper's real localStorage bag. */

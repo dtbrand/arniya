@@ -49,8 +49,8 @@ $page_title = "About Us ‹ Royal Surat Silk Handloom Heritage";
 </div>
 
 <?php include_once __DIR__ . '/includes/singelprodutbottomfotoer.php'; ?>
-<?php include_once __DIR__ . '/shared/cart.php'; ?>
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 
 </body>
 </html>

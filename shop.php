@@ -486,10 +486,10 @@ $total_products = count($products);
 </div><!-- /.page-wrapper -->
 
 <!-- ════════════ QUICK VIEW PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/shared/quickview.php'; ?>
+<?php include_once __DIR__ . '/Shared/quickview.php'; ?>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL ════════════ -->
-<?php include_once __DIR__ . '/shared/smartshare.php'; ?>
+<?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 
 <!-- ════════════ TOAST ════════════ -->
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
@@ -504,19 +504,19 @@ $total_products = count($products);
     <script src="/assets/js/shop.js?v=1787019062"></script>
 
 <!-- ════════════ INSTAGRAM REELS VIDEO FEED PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/shared/reels.php'; ?>
+<?php include_once __DIR__ . '/Shared/reels.php'; ?>
 
 <!-- ════════════ CART PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/shared/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/cart.php'; ?>
 
 <!-- ════════════ WISHLIST PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 
 <!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
-<?php include_once __DIR__ . '/shared/checkout.php'; ?>
+<?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 
 <!-- ════════════ ACCOUNT & AUTH MODAL SYSTEM ════════════ -->
-<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/Shared/account.php'; ?>
 
 </body>
 </html>
