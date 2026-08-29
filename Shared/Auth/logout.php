@@ -18,5 +18,10 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
-header("Location: /Frontend/Admin/adminlogin.php?logged_out=1");
+$target = isset($_GET['type']) ? $_GET['type'] : '';
+if ($target === 'admin' || (isset($_GET['admin']) && $_GET['admin'] == '1')) {
+    header("Location: /Frontend/Admin/adminlogin.php?logged_out=1");
+} else {
+    header("Location: /?logged_out=1");
+}
 exit;

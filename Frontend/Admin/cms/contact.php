@@ -51,7 +51,7 @@ $active_nav = "cms";
                 </div>
                 <div class="adm-form-group">
                     <label class="adm-form-label">WhatsApp Helpline</label>
-                    <input type="text" class="adm-form-input" value="+91 98220 19283">
+                    <input type="text" class="adm-form-input" value="+91 70463 63528">
                 </div>
             </div>
         </div>

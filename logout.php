@@ -21,7 +21,11 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 $target = isset($_GET['type']) ? $_GET['type'] : '';
-if ($target === 'admin' || strpos($_SERVER['REQUEST_URI'] ?? '', 'admin') !== false) {
+$customRedirect = isset($_GET['redirect']) ? trim($_GET['redirect']) : '';
+
+if (!empty($customRedirect) && (strpos($customRedirect, '/') === 0 || strpos($customRedirect, 'https://') === 0 || strpos($customRedirect, 'http://') === 0)) {
+    header("Location: " . $customRedirect);
+} elseif ($target === 'admin' || (isset($_GET['admin']) && $_GET['admin'] == '1')) {
     header("Location: /Frontend/Admin/adminlogin.php?logged_out=1");
 } else {
     header("Location: /?logged_out=1");

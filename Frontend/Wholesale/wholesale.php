@@ -2828,8 +2828,8 @@ $catalogProducts = [
                     <a href="../../Shared/Auth/myaccount.php?tab=login" class="ws-btn ws-btn-secondary">
                         Sign In with Other Account
                     </a>
-                    <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
-                        ← Return to Retail Store
+                    <a href="/" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
+                        ← Return to Main Store
                     </a>
                 </div>
             </div>

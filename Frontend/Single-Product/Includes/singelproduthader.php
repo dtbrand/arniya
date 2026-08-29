@@ -479,21 +479,21 @@
     <div class="pdp-header-main">
         <!-- Left: Back Button & Royal Seal -->
         <div class="pdp-header-left">
-            <a href="/shop.php" class="pdp-back-btn" aria-label="Shop">
+            <a href="/Frontend/Shop/shop.php" class="pdp-back-btn" aria-label="Shop">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Shop</span>
             </a>
 
-        <a href="/shop" class="pdp-brand-seal" title="Return to DT Brand's Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
+        <a href="/" class="pdp-brand-seal" title="Return to DT Brand's Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
             <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
         </a>
         </div>
 
         <!-- Center: Breadcrumbs -->
         <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
-            <a href="/shop.php">Home</a>
+            <a href="/">Home</a>
             <span class="sep">›</span>
-            <a href="/shop.php?cat=<?= urlencode($product['category'] ?? 'Sarees') ?>"><?= htmlspecialchars($product['category'] ?? 'Sarees') ?></a>
+            <a href="/Frontend/Shop/shop.php?cat=<?= urlencode($product['category'] ?? 'Sarees') ?>"><?= htmlspecialchars($product['category'] ?? 'Sarees') ?></a>
             <span class="sep">›</span>
             <span class="current"><?= htmlspecialchars($product['name'] ?? 'Luxury Outfit') ?></span>
         </nav>

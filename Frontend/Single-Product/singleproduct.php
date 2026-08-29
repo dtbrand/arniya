@@ -1180,6 +1180,7 @@ $colorHex = [
     window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
     window.totalSlidesCount = <?= max(1, count($pdpImages)) ?>;
     window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.pdpWhatsAppNumber = '917046363528';
 </script>
 <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=<?= time() ?>"></script>
 

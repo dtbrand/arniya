@@ -86,7 +86,7 @@ $active_nav = "settings";
                     </div>
                     <div class="adm-kpi-val">Meta Connected</div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up">Phone: 919800000000</span>
+                        <span class="adm-kpi-delta up">Phone: 917046363528</span>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@ $active_nav = "settings";
                     </div>
                     <div class="adm-form-group">
                         <label class="adm-form-label">WhatsApp Business Number</label>
-                        <input type="text" class="adm-form-input" value="+91 98220 19283">
+                        <input type="text" class="adm-form-input" value="+91 70463 63528">
                     </div>
                     <div class="adm-form-group">
                         <label class="adm-form-label">GSTIN Registration</label>

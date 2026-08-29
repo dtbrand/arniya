@@ -2865,12 +2865,14 @@
         };
 
         /* ── Wholesaler Logout ── */
-        window.handleWholesalerLogout = function() {
-            if (confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
-                localStorage.removeItem('dtbrands_user');
-                window.location.href = '/shop.php';
+        window.handleWholesalerLogout = function(skipConfirm) {
+            if (skipConfirm === true || confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
+                try { localStorage.removeItem('dtbrands_user'); } catch(e) {}
+                try { sessionStorage.clear(); } catch(e) {}
+                window.location.href = '/logout.php';
             }
         };
+        window.handleLogout = window.handleWholesalerLogout;
 
         /* ── Initialize Application ── */
         function initWholesalerApp() {

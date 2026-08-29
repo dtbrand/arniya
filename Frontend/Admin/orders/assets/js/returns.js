@@ -469,7 +469,7 @@
             const data = RMA_DATA[returnId] || { customer: 'Valued Consignee', amount: '0', orderId: returnId };
             const msgText = customNote || `Namaste ${data.customer},\n\nRegarding your Return Request *${returnId}* for Order *${data.orderId}* (Amount: ₹${data.amount}):\n\nYour evidence photos and unboxing proof have been audited by DT Brand's & Jai Hanuman Tex Surat Central Depot.\n\nFor questions, reply to this official wholesale support channel.\n\n*DT BRAND'S & JAI HANUMAN TEX*`;
             const cleanPhone = (data.contact || '').replace(/[^0-9]/g, '');
-            const targetUrl = `https://api.whatsapp.com/send?phone=${cleanPhone || '919822100192'}&text=${encodeURIComponent(msgText)}`;
+            const targetUrl = `https://api.whatsapp.com/send?phone=${cleanPhone || '917046363528'}&text=${encodeURIComponent(msgText)}`;
             window.open(targetUrl, '_blank');
         },
 
