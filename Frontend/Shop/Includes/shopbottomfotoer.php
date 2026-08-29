@@ -1316,7 +1316,7 @@ input[type=range].mf-range::-moz-range-thumb {
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
     if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('🔗 Page link copied to clipboard'); });
-    if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
+    if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
 
     function syncShopBottomFooterBadges() {
         try {

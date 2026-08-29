@@ -666,7 +666,7 @@ body.sort-open .home-smart-bottom-footer {
 
         <!-- Footer Action (WhatsApp Concierge) -->
         <div class="home-menu-footer">
-            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="home-menu-wa-btn">
+            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="home-menu-wa-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFFFFF"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                 <span>WhatsApp Stylist Concierge</span>
             </a>

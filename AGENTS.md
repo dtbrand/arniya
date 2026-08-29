@@ -247,6 +247,11 @@ Every future AI agent and developer modifying this codebase MUST strictly adhere
 - **Database Host**: `localhost` (Port `3306`)
 - **Website URL**: `https://jaihanumantex.in/`
 
+### 📱 Official DT Brand WhatsApp Master Contact
+- **Official WhatsApp Number**: `917046363528` (Formatting: `+91 70463 63528`)
+- **Direct WhatsApp API Link**: `https://api.whatsapp.com/send?phone=917046363528&text=...` / `https://wa.me/917046363528`
+- **Rule**: ALWAYS use `917046363528` across all product pages, reels, quickviews, checkout, wholesale/reseller/retailer concierge, and customer support. NEVER use dummy/placeholder phone numbers.
+
 ---
 
 ## 📋 8. Master Quality Control Checklist (Run on Every Task)

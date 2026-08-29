@@ -24,7 +24,7 @@
             `New festive bridal saree arrivals are exclusively open for our *${segmentName}* members.\n` +
             `Explore now at https://jaihanumantex.in/`
         );
-        window.open(`https://api.whatsapp.com/send?phone=919876543210&text=${msg}`, '_blank');
+        window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${msg}`, '_blank');
         window.showToast(`🚀 Dispatched WhatsApp Campaign to ${count} ${segmentName} customers!`);
     };
 

@@ -922,7 +922,7 @@ body.reels-open #dtMobileBottomNav {
                     var pName = p.name || p.title || waBtn.dataset.name || 'Ethnic Saree / Attire';
                     var pPrice = Number(p.effective_customer_price || p.price || waBtn.dataset.price || 0);
                     var msg = 'Hello DT Brand\'s, I am watching your Live Draping Video for ' + pName + (pPrice > 0 ? ' (₹' + pPrice.toLocaleString('en-IN') + ')' : '') + '. Please share wholesale/lot availability and catalog details.';
-                    window.open('https://api.whatsapp.com/send?phone=919006000000&text=' + encodeURIComponent(msg), '_blank');
+                    window.open('https://api.whatsapp.com/send?phone=917046363528&text=' + encodeURIComponent(msg), '_blank');
                 });
             }
 

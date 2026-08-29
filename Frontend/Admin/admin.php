@@ -629,7 +629,7 @@ $activeCheckouts = 2;
                                             <?php foreach (array_slice($recentOrdersList, 0, 6) as $ord): 
                                                 $ordNum = $ord['order_number'] ?? ('ORD-' . $ord['id']);
                                                 $custName = $ord['customer_name'] ?? 'B2B Partner';
-                                                $custPhone = preg_replace('/[^0-9]/', '', $ord['customer_phone'] ?? '919876543210');
+                                                $custPhone = preg_replace('/[^0-9]/', '', $ord['customer_phone'] ?? '917046363528');
                                                 $channel = ucfirst($ord['channel'] ?? 'wholesale');
                                                 $totalAmt = (float)($ord['total_amount'] ?? 0);
                                                 $payStatus = strtolower($ord['payment_status'] ?? 'paid');

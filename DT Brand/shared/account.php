@@ -1375,7 +1375,7 @@
         var input = inputEl ? inputEl.value.trim() : '';
         if (!input) return;
 
-        var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
+        var waUrl = 'https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {

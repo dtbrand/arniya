@@ -118,7 +118,7 @@ $active_nav = "whatsapp";
                     <div class="adm-wa-lead-list" style="display:flex; flex-direction:column; gap:8px; max-height:480px; overflow-y:auto;">
                         <?php foreach (array_slice($allCustomers, 0, 10) as $c): 
                             $cName = $c['name'] ?? 'Partner';
-                            $cPhone = preg_replace('/[^0-9]/', '', $c['phone'] ?? '919876543210');
+                            $cPhone = preg_replace('/[^0-9]/', '', $c['phone'] ?? '917046363528');
                             $cType = ucfirst($c['type'] ?? 'Wholesale');
                             $initial = strtoupper(substr($cName, 0, 1));
                             $waText = urlencode("Namaste {$cName} ji! 🙏 DT Brand's & Jai Hanuman Tex Surat team is here with our latest wholesale pure silk catalog. How may we assist your bulk purchase today?");

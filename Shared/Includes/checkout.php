@@ -1027,7 +1027,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
     var appliedCouponCode = '';
 
     /* WhatsApp Business Number for Order Routing */
-    var BRAND_WHATSAPP_NUMBER = '919876543210'; 
+    var BRAND_WHATSAPP_NUMBER = '917046363528'; 
 
     /* Expose Global Controller */
     window.openCheckout = function() {
