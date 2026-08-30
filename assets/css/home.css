@@ -9103,9 +9103,30 @@ input[type=range].sf-range::-moz-range-thumb {
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.dt-sub-dot.gold {
-    background: #FACC15;
-    box-shadow: 0 0 8px #FACC15;
+.dt-cat-name {
+    font-weight: 600;
+    color: #E2E8F0;
+    transition: color 0.2s ease;
+}
+
+.dt-subcat-hint {
+    font-size: 0.65rem;
+    color: #94A3B8;
+    font-weight: 500;
+    margin-left: 2px;
+    opacity: 0.85;
+}
+
+.dt-cat-badge {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: #8A681F;
+    background: #FAF5E8;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 1px 6px;
+    border-radius: 10px;
+    line-height: 1.2;
+    flex-shrink: 0;
 }
 
 .dt-sub-chevron {

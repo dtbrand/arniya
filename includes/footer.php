@@ -161,7 +161,24 @@
                 </div>
             </div>
 
-            <!-- Col 2: Royal Collections (Mobile Accordion) -->
+            <!-- Col 2: Royal Collections (Real Category & Sub-Category Mapping) -->
+            <?php
+            $realCategories = [];
+            if (class_exists('\DTBrand\ProductCatalog')) {
+                $realCategories = \DTBrand\ProductCatalog::getCategoriesWithDetails();
+            }
+            if (empty($realCategories)) {
+                $realCategories = [
+                    ['name' => 'Designer Kurti Sets', 'slug' => 'kurti', 'sub' => 'Anarkali & Straight', 'products_count' => 0],
+                    ['name' => 'Banarasi Kadwa Weaves', 'slug' => 'banarasi-silk', 'sub' => 'Katan & Georgette', 'products_count' => 0],
+                    ['name' => 'Kanjivaram Silk Sarees', 'slug' => 'kanjivaram-silk', 'sub' => 'Korvai Pure Zari', 'products_count' => 0],
+                    ['name' => 'Yeola Paithani Handlooms', 'slug' => 'paithani-handloom', 'sub' => 'Muniya & Peacock Border', 'products_count' => 0],
+                    ['name' => 'Chanderi & Organza Tissue', 'slug' => 'chanderi-silk', 'sub' => 'Pastel Floral Zari', 'products_count' => 0],
+                    ['name' => 'Bridal & Festive Lehengas', 'slug' => 'bridal-lehengas', 'sub' => 'Velvet & Zardozi', 'products_count' => 0],
+                    ['name' => 'Patola Silk Heritage', 'slug' => 'patola-heritage', 'sub' => 'Double Ikat Weaves', 'products_count' => 0],
+                ];
+            }
+            ?>
             <div class="dt-footer-col dt-footer-accordion">
                 <button type="button" class="dt-footer-acc-head" onclick="toggleDtFooterAcc(this)" aria-expanded="false">
                     <span class="dt-footer-title-text">
@@ -172,42 +189,34 @@
                 </button>
                 <div class="dt-footer-acc-body">
                     <ul class="dt-footer-links">
+                        <?php 
+                        $catLimit = 7;
+                        $i = 0;
+                        foreach ($realCategories as $rc): 
+                            if ($i >= $catLimit) break;
+                            $cName = $rc['name'] ?? '';
+                            if ($cName === '' || strtolower($cName) === 'all') continue;
+                            $cSub = !empty($rc['sub']) ? $rc['sub'] : (!empty($rc['description']) ? $rc['description'] : '');
+                            $cCount = (int)($rc['products_count'] ?? 0);
+                            $i++;
+                        ?>
                         <li>
-                            <a href="/shop.php?category=Kurti">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Designer Kurti Sets</span>
+                            <a href="/shop.php?category=<?= urlencode($cName) ?>">
+                                <span class="dt-sub-label">
+                                    <span class="dt-sub-dot"></span>
+                                    <span class="dt-cat-name"><?= htmlspecialchars($cName) ?></span>
+                                    <?php if (!empty($cSub)): ?>
+                                    <span class="dt-subcat-hint">• <?= htmlspecialchars($cSub) ?></span>
+                                    <?php endif; ?>
+                                </span>
+                                <?php if ($cCount > 0): ?>
+                                <span class="dt-cat-badge"><?= $cCount ?></span>
+                                <?php else: ?>
                                 <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <?php endif; ?>
                             </a>
                         </li>
-                        <li>
-                            <a href="/shop.php?category=Banarasi+Silk">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Banarasi Kadwa Weaves</span>
-                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/shop.php?category=Kanjivaram+Silk">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Kanjivaram Silk Sarees</span>
-                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/shop.php?category=Paithani">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Yeola Paithani Handlooms</span>
-                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/shop.php?category=Organza+Tissue">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Pastel Organza &amp; Tissue</span>
-                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/shop.php?category=Bridal+Lehengas">
-                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Bridal &amp; Festive Lehengas</span>
-                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                        </li>
+                        <?php endforeach; ?>
                         <li>
                             <a href="/shop.php" class="dt-view-all-link">
                                 <span class="dt-sub-label"><span class="dt-sub-dot gold"></span>Browse All 2026 Collections</span>
