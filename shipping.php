@@ -163,7 +163,7 @@ $pageTitle = "Shipping & Logistics Policy — DT Brand's & Jai Hanuman Tex";
                     <p>Stay informed about every milestone of your parcel's journey:</p>
                     <p>Track your shipment directly via our automated WhatsApp concierge or speak with our dedicated Surat transport coordinator:</p>
 
-                    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:14px;">
+                    <div class="dt-card-btn-row">
                         <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Logistics,%20please%20track%20my%20order." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
                             <span>Live WhatsApp LR Track</span>

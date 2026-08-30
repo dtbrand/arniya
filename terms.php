@@ -171,7 +171,7 @@ $pageTitle = "Terms of Wholesale & Supply — DT Brand's & Jai Hanuman Tex";
                     </div>
                     <p>All contracts, supply orders, dealer agreements, and financial transactions entered into with <strong>DT Brand's &amp; Jai Hanuman Tex</strong> are subject to the exclusive jurisdiction of the competent courts in <strong>Surat, Gujarat, India</strong>.</p>
                     
-                    <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <div class="dt-card-btn-row">
                         <a href="/wholesale.php" class="dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             <span>Explore Wholesale Catalog</span>
