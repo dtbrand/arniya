@@ -12,6 +12,16 @@ class Database
     private static bool $isMockMode = false;
 
     /**
+     * True once a connection has been attempted, successfully or not.
+     *
+     * Without this the null $pdo of a failed connection is indistinguishable
+     * from "not connected yet", so every getConnection()/isMockMode()/query()
+     * call re-dialled all three host candidates. A page that asks the catalogue
+     * a dozen questions paid a dozen TCP timeouts before rendering.
+     */
+    private static bool $attempted = false;
+
+    /**
      * Get or initialize PDO connection with fallback support
      */
     public static function getConnection(): ?\PDO
@@ -19,6 +29,11 @@ class Database
         if (self::$pdo !== null) {
             return self::$pdo;
         }
+        if (self::$attempted) {
+            // Already tried and failed — stay in mock mode, do not re-dial.
+            return null;
+        }
+        self::$attempted = true;
 
         $host = getenv('DB_HOST') ?: 'localhost';
         $port = getenv('DB_PORT') ?: '3306';
@@ -59,10 +74,21 @@ class Database
      */
     public static function isMockMode(): bool
     {
-        if (self::$pdo === null) {
+        if (self::$pdo === null && !self::$attempted) {
             self::getConnection();
         }
         return self::$isMockMode;
+    }
+
+    /**
+     * Force the next call to re-dial. Only useful after credentials or the
+     * server state have changed inside one request (migrations, health checks).
+     */
+    public static function reset(): void
+    {
+        self::$pdo = null;
+        self::$isMockMode = false;
+        self::$attempted = false;
     }
 
     /**
