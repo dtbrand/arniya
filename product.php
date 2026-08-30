@@ -842,14 +842,14 @@ function pdp_relative_date(string $ts): string
         <?php endif; ?>
     </section>
 
-    <!-- ════ RELATED PRODUCTS & ATELIER DISCOVERY ════ -->
+    <!-- ════ RELATED PRODUCTS (Auto-rendered only when related items exist) ════ -->
+    <?php if (!empty($relatedItems)): ?>
     <section class="pdp-bottom-section" id="pdpRelatedSection">
         <div class="pdp-section-header-centered">
             <h2 class="pdp-section-title-large">You May Also Admire</h2>
             <p class="pdp-section-subtitle">Curated coordinating royal ethnic wear from our atelier</p>
         </div>
 
-        <?php if (!empty($relatedItems)): ?>
         <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
             <!-- Navigation Arrows (Desktop) -->
             <button class="pdp-rel-arrow prev" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
@@ -898,42 +898,8 @@ function pdp_relative_date(string $ts): string
             <!-- Dots -->
             <div class="pdp-rel-dots" id="pdpRelDots"></div>
         </div>
-        <?php else: ?>
-        <!-- Distinct Luxury Atelier Discovery Strip (Non-repetitive design) -->
-        <div class="pdp-atelier-discovery-banner">
-            <div class="pdp-atelier-banner-glow"></div>
-            <div class="pdp-atelier-content-wrap">
-                <div class="pdp-atelier-crown-badge">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
-                    </svg>
-                </div>
-                <div class="pdp-atelier-info">
-                    <span class="pdp-atelier-eyebrow">DT BRAND'S HAUTE COUTURE ATELIER</span>
-                    <h3 class="pdp-atelier-heading">Discover More Royal Ethnic Silhouettes</h3>
-                    <p class="pdp-atelier-desc">
-                        Explore our complete boutique collection of designer festive kurtis, handwoven silk suit sets, bridal lehengas, and daily comfort wear.
-                    </p>
-                    <div class="pdp-atelier-tags">
-                        <span class="pdp-atelier-tag">✨ Designer Kurtis</span>
-                        <span class="pdp-atelier-tag">👑 Festive Suit Sets</span>
-                        <span class="pdp-atelier-tag">🌿 Pure Rayon &amp; Silk</span>
-                        <span class="pdp-atelier-tag">📦 Wholesale Full Sets</span>
-                    </div>
-                </div>
-                <div class="pdp-atelier-action">
-                    <a href="/shop.php" class="pdp-explore-boutique-btn">
-                        <span>Explore Full Boutique</span>
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
     </section>
+    <?php endif; ?>
 </main>
 
 <!-- ════ SIZE GUIDE MODAL ════ -->
