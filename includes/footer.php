@@ -5,36 +5,36 @@
  */
 ?>
 <footer class="dt-master-footer" id="dtMasterFooter">
-    <!-- ════ TOP LUXURY TRUST USP RIBBON ════ -->
+    <!-- ════ TOP LUXURY TRUST USP RIBBON (1-Line Auto-Scroll on Mobile) ════ -->
     <div class="dt-footer-perks-ribbon">
-        <div class="dt-footer-perks-container">
+        <div class="dt-footer-perks-track" id="dtFooterPerksTrack">
             <div class="dt-footer-perk-card">
                 <div class="dt-perk-icon-wrap">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>
                     </svg>
                 </div>
                 <div class="dt-perk-text">
                     <h4 class="dt-perk-title">Direct Surat Loom Pricing</h4>
-                    <p class="dt-perk-desc">Direct mill manufacturing prices with zero middleman commissions</p>
+                    <p class="dt-perk-desc">Direct mill manufacturing rates</p>
                 </div>
             </div>
 
             <div class="dt-footer-perk-card">
                 <div class="dt-perk-icon-wrap">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
                 </div>
                 <div class="dt-perk-text">
                     <h4 class="dt-perk-title">100% Certified Handlooms</h4>
-                    <p class="dt-perk-desc">Pure tested gold zari, pure silk &amp; premium rayon fabrics</p>
+                    <p class="dt-perk-desc">Tested gold zari &amp; pure fabrics</p>
                 </div>
             </div>
 
             <div class="dt-footer-perk-card">
                 <div class="dt-perk-icon-wrap">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="1" y="3" width="15" height="13"></rect>
                         <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
                         <circle cx="5.5" cy="18.5" r="2.5"></circle>
@@ -43,19 +43,19 @@
                 </div>
                 <div class="dt-perk-text">
                     <h4 class="dt-perk-title">Pan-India Insured Dispatch</h4>
-                    <p class="dt-perk-desc">Swift transport parcel &amp; express courier delivery across all pin codes</p>
+                    <p class="dt-perk-desc">Express courier to all pin codes</p>
                 </div>
             </div>
 
             <div class="dt-footer-perk-card">
                 <div class="dt-perk-icon-wrap">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                     </svg>
                 </div>
                 <div class="dt-perk-text">
                     <h4 class="dt-perk-title">VIP WhatsApp Concierge</h4>
-                    <p class="dt-perk-desc">Live styling advice, video call inspections &amp; custom lot quotes</p>
+                    <p class="dt-perk-desc">Live styling advice &amp; custom quotes</p>
                 </div>
             </div>
         </div>
@@ -210,4 +210,34 @@
             </div>
         </div>
     </div>
+
+    <!-- ════ MOBILE 1-LINE PERKS AUTO-SCROLL ENGINE ════ -->
+    <script>
+    (function() {
+        var track = document.getElementById('dtFooterPerksTrack');
+        if (!track) return;
+        var isPaused = false;
+        var scrollSpeed = 0.65;
+        var rafId = null;
+
+        track.addEventListener('mouseenter', function() { isPaused = true; });
+        track.addEventListener('mouseleave', function() { isPaused = false; });
+        track.addEventListener('touchstart', function() { isPaused = true; }, {passive: true});
+        track.addEventListener('touchend', function() {
+            setTimeout(function() { isPaused = false; }, 2500);
+        }, {passive: true});
+
+        function autoScroll() {
+            if (!isPaused && window.innerWidth <= 1024) {
+                if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) {
+                    track.scrollLeft = 0;
+                } else {
+                    track.scrollLeft += scrollSpeed;
+                }
+            }
+            rafId = requestAnimationFrame(autoScroll);
+        }
+        rafId = requestAnimationFrame(autoScroll);
+    })();
+    </script>
 </footer>

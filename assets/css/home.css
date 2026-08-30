@@ -8488,29 +8488,71 @@ input[type=range].sf-range::-moz-range-thumb {
     z-index: 10;
 }
 
-/* Top Perks Trust Ribbon */
+/* Top Perks Trust Ribbon (1-Line Auto-Scroll on Mobile) */
 .dt-footer-perks-ribbon {
-    background: rgba(24, 21, 18, 0.95);
+    background: rgba(24, 21, 18, 0.98);
     border-bottom: 1px solid rgba(212, 175, 55, 0.22);
-    padding: 20px 16px;
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative;
 }
-.dt-footer-perks-container {
+
+/* Gradient Fade Edges on Mobile */
+.dt-footer-perks-ribbon::before,
+.dt-footer-perks-ribbon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 24px;
+    z-index: 3;
+    pointer-events: none;
+}
+.dt-footer-perks-ribbon::before {
+    left: 0;
+    background: linear-gradient(90deg, #1C1814 0%, transparent 100%);
+}
+.dt-footer-perks-ribbon::after {
+    right: 0;
+    background: linear-gradient(-90deg, #1C1814 0%, transparent 100%);
+}
+
+.dt-footer-perks-track {
     max-width: 1280px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 0 16px;
 }
-@media (max-width: 768px) {
-    .dt-footer-perks-container {
-        grid-template-columns: 1fr;
-        gap: 12px;
+
+@media (max-width: 1024px) {
+    .dt-footer-perks-track {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 10px !important;
+        padding: 4px 16px !important;
+    }
+    .dt-footer-perks-track::-webkit-scrollbar {
+        display: none !important;
+    }
+    .dt-footer-perk-card {
+        flex: 0 0 auto !important;
+        width: 215px !important;
+        min-width: 215px !important;
+        scroll-snap-align: start !important;
+        padding: 8px 10px !important;
     }
 }
+
 .dt-footer-perk-card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     padding: 10px 14px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(212, 175, 55, 0.2);
@@ -8523,9 +8565,9 @@ input[type=range].sf-range::-moz-range-thumb {
     transform: translateY(-2px);
 }
 .dt-perk-icon-wrap {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(138, 104, 31, 0.35) 100%);
     border: 1.2px solid #D4AF37;
     display: flex;
