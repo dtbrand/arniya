@@ -121,10 +121,10 @@ CREATE TABLE IF NOT EXISTS `quotations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ── 7. SEED INITIAL ACTIVE COUPONS ──
-INSERT IGNORE INTO `coupons` (`code`, `title`, `discount_type`, `discount_value`, `min_order_amount`, `max_discount`, `usage_limit`, `channel`, `status`)
+INSERT IGNORE INTO `coupons` (`code`, `discount_type`, `discount_value`, `min_order_value`, `max_discount`, `status`)
 VALUES 
-('DTHANDLOOM10', 'Flat 10% Off on Pure Silk Sarees', 'percentage', 10.00, 1500.00, 1000.00, 5000, 'all', 'active'),
-('FESTIVE500', 'Special ₹500 Off on Wholesale & Bulk Orders', 'fixed', 500.00, 5000.00, 500.00, 2000, 'all', 'active'),
-('RESELLERVIP', 'VIP Reseller 15% Extra Margin Coupon', 'percentage', 15.00, 2000.00, 2500.00, 1000, 'reseller', 'active');
+('DTHANDLOOM10', 'percentage', 10.00, 1500.00, 1000.00, 'active'),
+('FESTIVE500', 'flat', 500.00, 5000.00, 500.00, 'active'),
+('RESELLERVIP', 'percentage', 15.00, 2000.00, 2500.00, 'active');
 
 SET FOREIGN_KEY_CHECKS = 1;

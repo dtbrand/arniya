@@ -27,7 +27,7 @@ if (empty($rawPayload)) {
 $expectedSignature = hash_hmac('sha256', $rawPayload, $webhookSecret);
 $signatureValid = hash_equals($expectedSignature, $signature) || Database::isMockMode();
 
-if (!$signatureValid && !empty($webhookSecret) && $webhookSecret !== 'rzp_sec_webhook_dtbrand_8892') {
+if (!$signatureValid && $webhookSecret !== 'rzp_sec_webhook_dtbrand_8892') {
     http_response_code(401);
     echo json_encode(['success' => false, 'error' => 'Invalid webhook signature']);
     exit;

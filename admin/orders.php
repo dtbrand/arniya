@@ -12,7 +12,7 @@ require_once __DIR__ . '/../src/OrderManager.php';
 use DTBrand\OrderManager;
 use DTBrand\Database;
 
-$orders = OrderManager::getAll(['limit' => 50]);
+$orders = OrderManager::getAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">

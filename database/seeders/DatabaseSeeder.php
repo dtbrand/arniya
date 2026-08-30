@@ -63,8 +63,8 @@ class DatabaseSeeder
         if ($checkAdmin->fetch() === false) {
             $hash = password_hash('DtBrand@Admin2026', PASSWORD_BCRYPT);
             $insUser = $pdo->prepare(
-                "INSERT INTO users (name, email, password, role, status, created_at)
-                 VALUES ('DT Brand Admin', ?, ?, 'superadmin', 'active', NOW())"
+                "INSERT INTO users (name, email, password_hash, role, status, created_at)
+                 VALUES ('DT Brand Admin', ?, ?, 'super_admin', 'active', NOW())"
             );
             $insUser->execute([$adminEmail, $hash]);
             $report['seeded_customers']++;
@@ -77,8 +77,8 @@ class DatabaseSeeder
             ['code' => 'FLAT500',    'type' => 'flat',       'value' => 500.0, 'min' => 2000.0, 'max' => 0.0],
         ];
         $insCoupon = $pdo->prepare(
-            'INSERT INTO coupons (code, discount_type, discount_value, min_order_value, max_discount, status, created_at)
-             VALUES (?, ?, ?, ?, ?, "active", NOW())
+            'INSERT INTO coupons (code, discount_type, discount_value, min_order_value, max_discount, status)
+             VALUES (?, ?, ?, ?, ?, "active")
              ON DUPLICATE KEY UPDATE discount_value = VALUES(discount_value)'
         );
         foreach ($coupons as $cp) {
@@ -88,8 +88,8 @@ class DatabaseSeeder
 
         // ── 4. Banner rows ──
         $bannerStmt = $pdo->prepare(
-            'INSERT INTO banners (title, subtitle, image, cta_text, cta_url, status, display_order, created_at)
-             VALUES (?, ?, ?, ?, ?, "active", ?, NOW())'
+            'INSERT INTO banners (title, subtitle, image_url, cta_text, cta_link, status, display_order)
+             VALUES (?, ?, ?, ?, ?, "active", ?)'
         );
         $bannerStmt->execute([
             'Luxury Handloom Sarees Direct from Surat',
