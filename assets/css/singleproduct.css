@@ -1863,18 +1863,20 @@ cursor: zoom-in;
 }
 
 /* ════════════════════════════════════════════════════
-   CUSTOMER REVIEWS & BREAKDOWN SECTION
-════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════
-   CUSTOMER REVIEWS & BREAKDOWN SECTION
+   REVIEWS & RATINGS SECTION
 ════════════════════════════════════════════════════ */
 .pdp-reviews-section {
-    margin-top: clamp(36px, 5vw, 60px);
-    background: #FFFFFF;
-    border: 1.5px solid var(--gold-border);
-    border-radius: 16px;
-    padding: clamp(20px, 4vw, 36px);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.03);
+    margin-top: clamp(28px, 4vw, 48px);
+}
+.pdp-section-header-centered {
+    text-align: center;
+    margin-bottom: 16px;
+}
+.pdp-section-subtitle {
+    font-size: 0.72rem;
+    color: #64748B;
+    font-weight: 500;
+    margin: 3px 0 0;
 }
 
 .pdp-rev-header-grid {

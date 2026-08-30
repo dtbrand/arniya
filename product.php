@@ -733,22 +733,20 @@ function pdp_relative_date(string $ts): string
 
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
-        <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
+        <div class="pdp-section-header-centered">
+            <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
+            <p class="pdp-section-subtitle">Real feedback &amp; styling impressions from our boutique clientele</p>
+        </div>
         
+        <?php if ($reviewTotal > 0): ?>
         <div class="pdp-rev-header-grid">
             <div class="pdp-overall-score">
-                <?php if ($reviewTotal > 0): ?>
                 <div class="pdp-big-rating"><?= number_format($pRating, 1) ?></div>
                 <div class="pdp-big-stars"><?= str_repeat('★', max(1, min(5, (int)round($pRating)))) ?></div>
                 <div class="pdp-score-sub">Based on <?= (int)$reviewTotal ?> published review<?= $reviewTotal === 1 ? '' : 's' ?></div>
-                <?php else: ?>
-                <div class="pdp-big-rating">—</div>
-                <div class="pdp-score-sub">No reviews published yet</div>
-                <?php endif; ?>
             </div>
 
-            <!-- Star histogram. This was a fixed 88 / 9 / 2 / 1 / 0 split printed on
-                 every product; it is now GROUP BY rating over approved reviews. -->
+            <!-- Star histogram -->
             <div class="pdp-bars-wrap">
                 <?php for ($star = 5; $star >= 1; $star--):
                     $starCount = (int)($reviewBreakdown[$star] ?? 0);
@@ -758,9 +756,13 @@ function pdp_relative_date(string $ts): string
                 <?php endfor; ?>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
-                <button class="pdp-write-rev-btn" onclick="openWriteReviewModal()">
-                    <span>✍️ Write a Review</span>
+            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; justify-content:center;">
+                <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <span>Write a Review</span>
                 </button>
             </div>
         </div>
@@ -775,11 +777,6 @@ function pdp_relative_date(string $ts): string
             </button>
 
             <div class="pdp-reviews-track" id="pdpReviewsTrack">
-                <?php if ($customerReviews === []): ?>
-                <article class="pdp-review-card pdp-review-empty">
-                    <p class="pdp-rc-text">No reviews have been published for this product yet. If you have bought it, yours would be the first — use “Write a Review” above and it will appear here once our team has checked it.</p>
-                </article>
-                <?php else: ?>
                 <?php foreach ($customerReviews as $rev):
                     $revName    = trim((string)$rev['name']) !== '' ? trim((string)$rev['name']) : 'Verified shopper';
                     $initial    = strtoupper(mb_substr($revName, 0, 1));
@@ -794,8 +791,6 @@ function pdp_relative_date(string $ts): string
                                 <span><?= htmlspecialchars($revName) ?></span>
                             </div>
                             <?php if ($revWhen !== ''): ?>
-                            <!-- The reviews table has no city column; this used to print
-                                 an invented city beside every name. -->
                             <span class="pdp-rc-loc-date"><?= htmlspecialchars($revWhen) ?></span>
                             <?php endif; ?>
                         </div>
@@ -816,21 +811,42 @@ function pdp_relative_date(string $ts): string
                         “<?= htmlspecialchars((string)$rev['text']) ?>”
                     </p>
                     <?php endif; ?>
-                    <!-- The "Helpful? 👍 (N)" button counted nothing: there is no helpful
-                         column and the click only incremented a number in the DOM. -->
                 </article>
                 <?php endforeach; ?>
-                <?php endif; ?>
             </div>
 
             <!-- Dots -->
             <div class="pdp-rev-dots" id="pdpRevDots"></div>
         </div>
+        <?php else: ?>
+        <!-- Luxury Reviews Empty Invitation Hero Card -->
+        <div class="pdp-reviews-empty-hero">
+            <div class="pdp-rev-empty-badge">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </div>
+            <h3 class="pdp-rev-empty-heading">Be the First to Review This Royal Creation</h3>
+            <p class="pdp-rev-empty-text">
+                Have you purchased or worn this design? Share your feedback on fabric richness, comfort, and silhouette with fellow shoppers.
+            </p>
+            <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <span>Write a Customer Review</span>
+            </button>
+        </div>
+        <?php endif; ?>
     </section>
 
     <!-- ════ RELATED PRODUCTS CAROUSEL ════ -->
     <section class="pdp-bottom-section" id="pdpRelatedSection">
-        <h2 class="pdp-section-title-large">You May Also Admire</h2>
+        <div class="pdp-section-header-centered">
+            <h2 class="pdp-section-title-large">You May Also Admire</h2>
+            <p class="pdp-section-subtitle">Curated coordinating royal ethnic wear from our atelier</p>
+        </div>
 
         <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
             <!-- Navigation Arrows (Desktop) -->
@@ -878,7 +894,12 @@ function pdp_relative_date(string $ts): string
                 </a>
                 <?php endforeach; ?>
                 <?php if ($relatedItems === []): ?>
-                <p style="font-size:0.82rem; color:var(--mid-text); margin:0; padding:8px 2px;">No other products are published yet.</p>
+                <div class="pdp-rel-empty-box">
+                    <p style="font-size:0.80rem; color:var(--mid-text); margin:0 0 10px;">Explore our signature bridal, festive, and ethnic kurti collections in the full boutique catalog.</p>
+                    <a href="/shop.php" class="pdp-explore-catalog-link">
+                        <span>Browse All Collections</span> &rarr;
+                    </a>
+                </div>
                 <?php endif; ?>
             </div>
 
@@ -963,14 +984,27 @@ function pdp_relative_date(string $ts): string
 <div class="pdp-modal-overlay" id="pdpWriteReviewModal" role="dialog" aria-modal="true" aria-label="Write a Review">
     <div class="pdp-modal-box" style="max-width: 520px;">
         <div class="pdp-modal-header">
-            <h3 class="pdp-modal-title">✍️ Write a Customer Review</h3>
-            <button class="pdp-modal-close-btn" onclick="closeWriteReviewModal()">&times;</button>
+            <div class="pdp-modal-header-left" style="display:flex; align-items:center; gap:10px;">
+                <div class="pdp-modal-icon-badge gold">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="pdp-modal-title">Write a Customer Review</h3>
+                    <p class="pdp-modal-subtitle">Your genuine review helps other shoppers choose the perfect piece</p>
+                </div>
+            </div>
+            <button type="button" class="pdp-modal-close-btn" onclick="closeWriteReviewModal()" aria-label="Close write review modal">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
         <div class="pdp-modal-body">
-            <form id="pdpReviewForm" onsubmit="submitCustomerReview(event)" style="display:flex; flex-direction:column; gap:14px;">
+            <form id="pdpReviewForm" onsubmit="submitCustomerReview(event)" style="display:flex; flex-direction:column; gap:12px;">
                 <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:6px;">Your Overall Rating</label>
-                    <div id="pdpStarRatingSelector" style="display:flex; gap:6px; font-size:1.6rem; color:#F59E0B; cursor:pointer;">
+                    <label style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Your Overall Rating *</label>
+                    <div id="pdpStarRatingSelector" style="display:flex; gap:6px; font-size:1.5rem; color:#F59E0B; cursor:pointer;">
                         <span data-val="1" onclick="setReviewRating(1)">★</span>
                         <span data-val="2" onclick="setReviewRating(2)">★</span>
                         <span data-val="3" onclick="setReviewRating(3)">★</span>
@@ -980,30 +1014,27 @@ function pdp_relative_date(string $ts): string
                 </div>
 
                 <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revName">Full Name *</label>
-                    <input type="text" id="revName" required placeholder="e.g. Radhika Sharma" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
-                </div>
-
-                <?php /* The City / State and "Occasion Worn" inputs were removed: the
-                         reviews table has no column for either, so whatever the shopper
-                         typed was thrown away after being painted into a DOM card. The
-                         review_title column, which the admin moderation screens do show,
-                         had no input at all. */ ?>
-                <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revTitle">Review Headline</label>
-                    <input type="text" id="revTitle" maxlength="150" placeholder="e.g. Beautiful zari work, true to the photos" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
+                    <label style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revName">Full Name *</label>
+                    <input type="text" id="revName" required placeholder="e.g. Radhika Sharma" class="pdp-review-input" />
                 </div>
 
                 <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revText">Your Review Narrative *</label>
-                    <textarea id="revText" required rows="3" placeholder="Describe the fabric, the zari, the fit and the packaging..." style="width:100%; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:10px 12px; font-family:var(--font-sans); font-size:0.85rem; resize:vertical;"></textarea>
+                    <label style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revTitle">Review Headline</label>
+                    <input type="text" id="revTitle" maxlength="150" placeholder="e.g. Beautiful zari work, true to the photos" class="pdp-review-input" />
                 </div>
 
-                <p style="margin:0; font-size:0.72rem; color:var(--mid-text); line-height:1.5;">
-                    Reviews are checked by our team before they appear on the page.
-                </p>
+                <div>
+                    <label style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revText">Your Review Comments *</label>
+                    <textarea id="revText" required rows="3" placeholder="Describe the fabric quality, sizing fit and overall satisfaction..." class="pdp-review-textarea"></textarea>
+                </div>
 
-                <button type="submit" id="revSubmitBtn" class="pdp-buy-btn" style="width:100%; padding:12px; border-radius:8px; font-size:0.82rem;">Submit Review</button>
+                <button type="submit" id="revSubmitBtn" class="pdp-submit-rev-btn">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span>Submit Verified Review</span>
+                </button>
             </form>
         </div>
     </div>
