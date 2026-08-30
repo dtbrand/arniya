@@ -994,61 +994,66 @@ cursor: zoom-in;
     letter-spacing: 0.06em;
 }
 
-/* ════ Price Card (Next-Level Luxury Design & Clear Visibility) ════ */
+/* ════ Price Card (Next-Level Clean Smart Luxury UI & Clear Visibility) ════ */
 .pdp-price-card {
-    background: #FFFFFF;
-    border: 1px solid rgba(138, 104, 31, 0.24);
-    border-left: 4px solid var(--dark-gold, #8A681F);
-    border-radius: 12px;
-    padding: 12px 16px;
-    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.05);
+    background: linear-gradient(145deg, #FFFFFF 0%, #FDFCF9 60%, #FAF6EE 100%);
+    border: 1.2px solid rgba(212, 175, 55, 0.40);
+    border-left: 3.5px solid var(--dark-gold, #8A681F);
+    border-radius: 10px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 12px rgba(138, 104, 31, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 6px;
 }
 .pdp-price-main-row {
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 .pdp-price-val {
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: clamp(1.7rem, 4.5vw, 2.2rem);
+    font-size: clamp(1.45rem, 4vw, 1.85rem);
     font-weight: 900;
-    color: var(--dark-text, #1E1B18);
+    color: var(--dark-text, #111827);
     line-height: 1;
     letter-spacing: -0.02em;
 }
 .pdp-mrp-val {
-    font-size: 0.88rem;
-    color: var(--light-text, #8E8883);
+    font-size: 0.82rem;
+    color: var(--light-text, #78716C);
     text-decoration: line-through;
     font-weight: 500;
 }
 .pdp-discount-badge {
-    font-size: 0.70rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    color: #15803D;
-    background: #DCFCE7;
-    border: 1px solid #BBF7D0;
-    padding: 2.5px 8px;
-    border-radius: 6px;
+    color: #92400E;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    padding: 2px 7px;
+    border-radius: 5px;
     letter-spacing: 0.02em;
     white-space: nowrap;
 }
 .pdp-tax-line {
-    font-size: 0.65rem;
-    color: var(--mid-text, #5A5348);
+    font-size: 0.66rem;
+    color: var(--mid-text, #64748B);
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    flex-wrap: wrap;
     margin-top: -1px;
 }
 .pdp-tax-line span.green {
     color: #15803D;
     font-weight: 700;
+    background: #DCFCE7;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #BBF7D0;
 }
 
 /* Animated Luxury Perks Badge Strip */
@@ -1059,8 +1064,8 @@ cursor: zoom-in;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     margin-top: 2px;
-    padding-top: 8px;
-    border-top: 1px dashed rgba(138, 104, 31, 0.22);
+    padding-top: 6px;
+    border-top: 1px dashed rgba(212, 175, 55, 0.25);
     width: 100%;
     max-width: 100%;
 }
@@ -1075,31 +1080,32 @@ cursor: zoom-in;
 .pdp-perk-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 9px;
-    border-radius: 8px;
-    font-size: 0.68rem;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.64rem;
     font-weight: 700;
     line-height: 1.2;
     white-space: nowrap;
     flex-shrink: 0;
     transition: all 0.2s ease;
-    border: 1px solid var(--soft-platinum, #E5E3DE);
-    background: #FAF8F4;
-    color: var(--dark-text, #24211C);
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    background: #FAF5E8;
+    color: #5A4210;
     position: relative;
     overflow: hidden;
 }
 .pdp-perk-badge:hover {
     border-color: var(--dark-gold);
-    background: #FFFFFF;
+    background: #F5ECCE;
+    color: #42300B;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(138, 104, 31, 0.12);
 }
 
 .pdp-perk-svg {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
     display: inline-block;
     color: var(--dark-gold, #8A681F);
@@ -1138,10 +1144,10 @@ cursor: zoom-in;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 800;
     color: var(--dark-text);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-bottom: 6px;
     flex-wrap: wrap;
@@ -1156,7 +1162,7 @@ cursor: zoom-in;
 
 .pdp-color-swatches {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 .pdp-color-btn {
@@ -1182,23 +1188,23 @@ cursor: zoom-in;
 /* Size Options & Mobile Fluid Grid */
 .pdp-size-grid {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     align-items: center;
 }
 .pdp-size-btn {
-    min-width: 46px;
-    height: 38px;
-    border-radius: 8px;
-    border: 1.5px solid rgba(212, 175, 55, 0.7);
+    min-width: 44px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(212, 175, 55, 0.65);
     background: #FFFFFF;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--dark-text, #111827);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 14px;
+    padding: 0 12px;
     transition: all 0.2s ease;
     cursor: pointer;
     user-select: none;
@@ -1220,17 +1226,17 @@ cursor: zoom-in;
 }
 
 .pdp-size-guide-link {
-    font-size: 0.74rem;
+    font-size: 0.70rem;
     font-weight: 700;
     color: var(--dark-gold, #8A681F);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 8px;
-    border-radius: 6px;
+    padding: 2.5px 7px;
+    border-radius: 5px;
     background: #FAF5E8;
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     transition: all 0.2s;
 }
 .pdp-size-guide-link:hover {
