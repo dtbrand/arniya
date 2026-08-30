@@ -87,19 +87,22 @@ foreach ($iter as $file) {
     $totalBytes += $file->getSize();
 }
 
-// Ensure the must-ship files are present even if a dotfile filter skipped them.
+// Ensure the must-ship files are present even if a dotfile filter skipped
+// them. Compare on realpath so mixed separators cannot dodge the check.
 $mustShip = ['composer.lock', '.env.example', 'README.md', 'install.php', '.htaccess'];
-$have = array_fill_keys($files, true);
+$have = [];
+foreach ($files as $f) {
+    $have[str_replace('\\', '/', strtolower(realpath($f) ?: $f))] = true;
+}
 foreach ($mustShip as $must) {
     $p = $root . '/' . $must;
-    if (is_file($p) && !isset($have[$p])) {
+    $key = str_replace('\\', '/', strtolower(realpath($p) ?: $p));
+    if (is_file($p) && !isset($have[$key])) {
         $files[] = $p;
-        $have[$p] = true;
+        $have[$key] = true;
         $totalBytes += filesize($p);
     }
 }
-// Hard de-dupe — 7z and Compress-Archive both reject duplicate paths.
-$files = array_values(array_unique($files));
 
 if (extension_loaded('zip')) {
     $zip = new ZipArchive();
@@ -112,18 +115,22 @@ if (extension_loaded('zip')) {
         $zip->addFile($path, $rel);
     }
     $zip->close();
-} elseif (is_executable('/c/Users/sai/scoop/shims/7z') || shell_exec('where 7z 2>nul') !== null) {
-    // 7-Zip CLI: read the manifest as a list file (-sp@ preserves relative dirs).
+} elseif (shell_exec('where 7z 2>nul') !== null || is_executable('/c/Users/sai/scoop/shims/7z')) {
+    // 7-Zip CLI: read the manifest as a list file. Absolute paths with -spf2
+    // keep the drive-relative nesting stable.
     $manifest = $distDir . '/package-manifest.txt';
     file_put_contents($manifest, implode("\n", $files));
     $listArg = str_replace('/', '\\', $manifest);
     $zipArg = str_replace('/', '\\', $zipPath);
-    exec("7z a -tzip -y \"{$zipArg}\" @\"{$listArg}\" -spf2", $out, $ret);
-    unlink($manifest);
-    if ($ret !== 0) {
-        fwrite(STDERR, "7z packaging failed (exit {$ret})\n" . implode("\n", array_slice($out, -10)) . "\n");
+    $cmd = "7z a -tzip -y \"{$zipArg}\" @\"{$listArg}\" -spf2 2>&1";
+    exec($cmd, $out, $ret);
+    if ($ret !== 0 || !file_exists($zipPath)) {
+        // Keep the manifest around for diagnosis, and show the tail.
+        fwrite(STDERR, "7z packaging failed (exit {$ret}). Manifest kept at {$manifest}\n");
+        fwrite(STDERR, implode("\n", array_slice($out, -15)) . "\n");
         exit(1);
     }
+    unlink($manifest);
 } else {
     // Fallback: hand the manifest to PowerShell Compress-Archive.
     $manifest = $distDir . '/package-manifest.txt';
