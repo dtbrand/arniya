@@ -392,9 +392,15 @@ function pdp_relative_date(string $ts): string
                     <span class="pdp-mrp-val">MRP ₹<?= number_format($pMrp) ?></span>
                     <?php endif; ?>
                     <?php if ($pSaleDisc > 0 && !$isFullSetProduct): ?>
-                    <span class="pdp-discount-badge" style="background:#FEF3C7; color:#B45309; font-weight:800;">SAVE ₹<?= (int)$pSaleDisc ?></span>
+                    <span class="pdp-discount-badge save-amount">
+                        <svg class="pdp-save-tag-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        SAVE ₹<?= number_format((int)$pSaleDisc) ?>
+                    </span>
                     <?php elseif ($pDiscount > 0 && $pMrp > $pPrice && !$isFullSetProduct): ?>
-                    <span class="pdp-discount-badge"><?= (int)$pDiscount ?>% OFF</span>
+                    <span class="pdp-discount-badge percent-off">
+                        <svg class="pdp-save-tag-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        <?= (int)$pDiscount ?>% OFF
+                    </span>
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
