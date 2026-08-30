@@ -125,8 +125,8 @@ if ($cur_brand === null) {
         border-bottom: none;
     }
     .dt-brand-avatar-lg {
-        width: 64px;
-        height: 64px;
+        width: 68px;
+        height: 68px;
         border-radius: 50%;
         background: linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%);
         color: #FFE57F;
@@ -206,7 +206,7 @@ if ($cur_brand === null) {
                                         <option <?php if($cur_brand['tier']=='Primary Flagship') echo 'selected'; ?>>Primary Flagship</option>
                                         <option <?php if($cur_brand['tier']=='Heritage Brocade') echo 'selected'; ?>>Heritage Brocade</option>
                                         <option <?php if($cur_brand['tier']=='Bridal Luxury') echo 'selected'; ?>>Bridal Luxury</option>
-                                        <option>Mill Volume B2B</option>
+                                        <option <?php if($cur_brand['tier']=='Mill Volume B2B') echo 'selected'; ?>>Mill Volume B2B</option>
                                     </select>
                                 </div>
 
@@ -260,13 +260,18 @@ if ($cur_brand === null) {
                             </div>
                             <div class="dt-card-body" style="text-align:center;">
                                 <div style="display:flex; justify-content:center; margin-bottom:12px;">
-                                    <div class="dt-brand-avatar-lg" id="editPageAvatarPreview">DT</div>
+                                    <?php if (!empty($cur_brand['logo_url'])): ?>
+                                        <div class="dt-brand-avatar-lg" id="editPageAvatarPreview"><img src="<?php echo htmlspecialchars($cur_brand['logo_url']); ?>" style="width:100%; height:100%; object-fit:cover;"></div>
+                                    <?php else: ?>
+                                        <div class="dt-brand-avatar-lg" id="editPageAvatarPreview"><?php echo htmlspecialchars(strtoupper(substr(preg_replace('/\s+/', '', (string)$cur_brand['name']), 0, 2)) ?: 'DT'); ?></div>
+                                    <?php endif; ?>
                                 </div>
                                 <input type="file" id="editPageEmblemInput" style="display:none;" accept="image/*" onchange="handleEditPageLogoUpload(this)">
-                                <button type="button" class="wp-button" onclick="document.getElementById('editPageEmblemInput').click()" style="height:32px; font-size:11.5px; font-weight:700; width:100%; justify-content:center; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:flex; align-items:center; gap:6px;">
+                                <button type="button" class="wp-button" onclick="document.getElementById('editPageEmblemInput').click()" style="height:32px; font-size:11.5px; font-weight:700; width:100%; justify-content:center; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:flex; align-items:center; gap:6px; cursor:pointer;">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                     <span>Upload New Emblem Logo</span>
                                 </button>
+                                <div style="font-size:11px; color:#64748B; margin-top:6px;">PNG, JPG, WebP, SVG accepted</div>
                             </div>
                         </div>
 
@@ -353,7 +358,7 @@ function handleEditPageLogoUpload(input) {
             if (preview) {
                 preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
             }
-            if (typeof window.showToast === 'function') window.showToast('📷 Brand emblem updated successfully!');
+            if (typeof window.showToast === 'function') window.showToast('📷 Brand emblem preview updated!');
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -386,16 +391,20 @@ function handleSaveBrand() {
         return;
     }
 
-    const params = new URLSearchParams();
-    params.append('action', 'update');
-    params.append('id', id);
-    params.append('name', name);
-    params.append('slug', slug);
-    params.append('description', desc);
-    if (tier) { params.append('tier', tier); }
-    params.append('credentials', 'same-origin');
+    const formData = new FormData();
+    formData.append('action', 'update');
+    formData.append('id', id);
+    formData.append('name', name);
+    formData.append('slug', slug);
+    formData.append('description', desc);
+    if (tier) { formData.append('tier', tier); }
 
-    fetch('/api/brands.php', { method: 'POST', body: params, credentials: 'same-origin' })
+    const fileInput = document.getElementById('editPageEmblemInput');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+        formData.append('logo', fileInput.files[0]);
+    }
+
+    fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated and saved to database!`);

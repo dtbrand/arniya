@@ -4,12 +4,6 @@
 /**
  * brands/index.php — DT Brand's House Labels & Brand Suite (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
- *
- * Loads brand rows from the live `product_brands` table. The pre-migration
- * version of this page hard-coded three demo brands (DT Signature, Arniya
- * Heritage, DT Couture) in the HTML — they never reached the database and
- * the "Save" buttons silently failed. Everything on this page is now a
- * real write through /api/brands.php against the same table.
  */
 require_once __DIR__ . '/../../../src/Database.php';
 use DTBrand\Database;
@@ -182,7 +176,7 @@ foreach ($brands as $b) {
 
                 <div class="dt-kpi-card">
                     <div style="width:36px; height:36px; border-radius:6px; background:#DCFCE7; border:1px solid #86EFAC; display:flex; align-items:center; justify-content:center; color:#15803D;">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0-3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">CATALOG ASSIGNED SKUS</div>
@@ -253,7 +247,7 @@ foreach ($brands as $b) {
                                 <td style="padding:12px 10px;">
                                     <div class="dt-brand-avatar" id="brand-avatar-<?= (int)$b['id'] ?>">
                                         <?php if ($b['logo_url'] !== ''): ?>
-                                            <img src="<?= htmlspecialchars($b['logo_url']) ?>" alt="">
+                                            <img src="<?= htmlspecialchars($b['logo_url']) ?>" alt="<?= htmlspecialchars($b['name']) ?>">
                                         <?php else: ?>
                                             <?= htmlspecialchars($b['initials']) ?>
                                         <?php endif; ?>
@@ -273,7 +267,7 @@ foreach ($brands as $b) {
                                 </td>
                                 <td style="padding:12px 12px; text-align:right;">
                                     <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                        <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(<?= (int)$b['id'] ?>, '<?= htmlspecialchars(addslashes($b['name'])) ?>', '<?= htmlspecialchars(addslashes($b['tier'])) ?>', '<?= htmlspecialchars(addslashes($b['description'])) ?>', '<?= htmlspecialchars($b['initials']) ?>')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                                        <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(<?= (int)$b['id'] ?>, '<?= htmlspecialchars(addslashes($b['name'])) ?>', '<?= htmlspecialchars(addslashes($b['tier'])) ?>', '<?= htmlspecialchars(addslashes($b['description'])) ?>', '<?= htmlspecialchars($b['initials']) ?>', '<?= htmlspecialchars(addslashes($b['logo_url'])) ?>')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
                                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                             <span>Edit</span>
                                         </button>
@@ -306,8 +300,26 @@ foreach ($brands as $b) {
             </div>
             <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:18px 22px;">
+        <div style="padding:18px 22px; max-height:calc(90vh - 120px); overflow-y:auto;">
             <input type="hidden" id="editModalBrandId" value="">
+
+            <!-- Brand Logo Upload & Preview Section -->
+            <div style="margin-bottom:14px; padding:12px 14px; background:#FAF5E8; border:1px dashed #D4AF37; border-radius:8px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:8px;">Brand Logo / House Emblem</label>
+                <div style="display:flex; align-items:center; gap:14px;">
+                    <div id="editBrandLogoPreview" style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel', serif; font-weight:800; font-size:17px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; box-shadow:0 2px 8px rgba(212,175,55,0.3); flex-shrink:0; overflow:hidden;">
+                        DT
+                    </div>
+                    <div style="flex:1;">
+                        <input type="file" id="editBrandLogoFile" accept="image/*" style="display:none;" onchange="previewBrandLogoUpload(this, 'editBrandLogoPreview')">
+                        <button type="button" class="wp-button" onclick="document.getElementById('editBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span>Change Brand Logo</span>
+                        </button>
+                        <div style="font-size:11px; color:#64748B; margin-top:4px;">Upload PNG, JPG, WebP or SVG emblem</div>
+                    </div>
+                </div>
+            </div>
 
             <div style="margin-bottom:14px;">
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Name <span style="color:#b32d2e;">*</span></label>
@@ -351,7 +363,26 @@ foreach ($brands as $b) {
             </div>
             <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:18px 22px;">
+        <div style="padding:18px 22px; max-height:calc(90vh - 120px); overflow-y:auto;">
+
+            <!-- Brand Logo Upload & Preview Section -->
+            <div style="margin-bottom:14px; padding:12px 14px; background:#FAF5E8; border:1px dashed #D4AF37; border-radius:8px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:8px;">Brand Logo / House Emblem</label>
+                <div style="display:flex; align-items:center; gap:14px;">
+                    <div id="newBrandLogoPreview" style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel', serif; font-weight:800; font-size:17px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; box-shadow:0 2px 8px rgba(212,175,55,0.3); flex-shrink:0; overflow:hidden;">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </div>
+                    <div style="flex:1;">
+                        <input type="file" id="newBrandLogoFile" accept="image/*" style="display:none;" onchange="previewBrandLogoUpload(this, 'newBrandLogoPreview')">
+                        <button type="button" class="wp-button" onclick="document.getElementById('newBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span>Upload Brand Logo</span>
+                        </button>
+                        <div style="font-size:11px; color:#64748B; margin-top:4px;">Upload PNG, JPG, WebP or SVG emblem</div>
+                    </div>
+                </div>
+            </div>
+
             <div style="margin-bottom:14px;">
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Name <span style="color:#b32d2e;">*</span></label>
                 <input type="text" id="newBrandName" placeholder="e.g. Jai Hanuman Fab" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;" required>
@@ -381,12 +412,37 @@ foreach ($brands as $b) {
 </div>
 
 <script>
-function openEditBrandModal(id, name, tier, tagline, initials) {
+function previewBrandLogoUpload(input, previewId) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const el = document.getElementById(previewId);
+            if (el) {
+                el.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function openEditBrandModal(id, name, tier, tagline, initials, logoUrl) {
     document.getElementById('editModalBrandId').value = id;
     document.getElementById('modalBrandTitleName').textContent = name;
     document.getElementById('modalBrandName').value = name;
     document.getElementById('modalBrandTier').value = tier;
     document.getElementById('modalBrandTagline').value = tagline;
+
+    const previewEl = document.getElementById('editBrandLogoPreview');
+    if (previewEl) {
+        if (logoUrl && logoUrl !== '') {
+            previewEl.innerHTML = `<img src="${logoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+        } else {
+            previewEl.innerHTML = initials || 'DT';
+        }
+    }
+    const fileInput = document.getElementById('editBrandLogoFile');
+    if (fileInput) fileInput.value = '';
+
     const m = document.getElementById('editBrandModal');
     if (m) m.style.display = 'flex';
 }
@@ -401,18 +457,36 @@ function submitEditBrandModal() {
     const name = document.getElementById('modalBrandName').value.trim();
     const tier = document.getElementById('modalBrandTier').value;
     const tagline = document.getElementById('modalBrandTagline').value.trim();
-    if (!name) { return; }
+    if (!name) { 
+        alert('Brand name is required');
+        return; 
+    }
 
-    const params = new URLSearchParams();
-    params.append('action', 'update');
-    params.append('id', id);
-    params.append('name', name);
-    params.append('description', tagline);
-    params.append('tier', tier);
-    fetch('/api/brands.php', { method: 'POST', body: params, credentials: 'same-origin' })
+    const formData = new FormData();
+    formData.append('action', 'update');
+    formData.append('id', id);
+    formData.append('name', name);
+    formData.append('description', tagline);
+    formData.append('tier', tier);
+
+    const fileInput = document.getElementById('editBrandLogoFile');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+        formData.append('logo', fileInput.files[0]);
+    }
+
+    fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
         .then(r => r.json())
-        .then(() => window.location.reload())
-        .catch(() => window.location.reload());
+        .then(res => {
+            if (res.success) {
+                window.location.reload();
+            } else {
+                alert(res.message || 'Error updating brand');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            window.location.reload();
+        });
 }
 
 function closeAddBrandModal() {
@@ -429,25 +503,43 @@ function submitNewBrand() {
     const name = document.getElementById('newBrandName').value.trim();
     const tier = document.getElementById('newBrandTier').value;
     const tagline = document.getElementById('newBrandTagline').value.trim();
-    if (!name) { return; }
+    if (!name) { 
+        alert('Brand name is required');
+        return; 
+    }
 
-    const params = new URLSearchParams();
-    params.append('action', 'create');
-    params.append('name', name);
-    params.append('description', tagline);
-    params.append('tier', tier);
-    fetch('/api/brands.php', { method: 'POST', body: params, credentials: 'same-origin' })
+    const formData = new FormData();
+    formData.append('action', 'create');
+    formData.append('name', name);
+    formData.append('description', tagline);
+    formData.append('tier', tier);
+
+    const fileInput = document.getElementById('newBrandLogoFile');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+        formData.append('logo', fileInput.files[0]);
+    }
+
+    fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
         .then(r => r.json())
-        .then(() => window.location.reload())
-        .catch(() => window.location.reload());
+        .then(res => {
+            if (res.success) {
+                window.location.reload();
+            } else {
+                alert(res.message || 'Error creating brand');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            window.location.reload();
+        });
 }
 
 function deleteBrandRow(id) {
     if (!confirm('Permanently delete this brand from the database?')) return;
-    const params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-    fetch('/api/brands.php', { method: 'POST', body: params, credentials: 'same-origin' })
+    const formData = new FormData();
+    formData.append('action', 'delete');
+    formData.append('id', id);
+    fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
         .then(() => window.location.reload())
         .catch(() => window.location.reload());
 }
