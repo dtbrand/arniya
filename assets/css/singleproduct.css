@@ -1056,84 +1056,106 @@ cursor: zoom-in;
     border: 1px solid #BBF7D0;
 }
 
-/* Animated Luxury Perks Badge Strip */
-.pdp-animated-perks-strip {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-top: 2px;
-    padding-top: 6px;
-    border-top: 1px dashed rgba(212, 175, 55, 0.25);
+/* ════════════════════════════════════════════════════
+   2-BADGE ULTRA-PREMIUM TRUST STRIP (CLEAN SMART UI)
+════════════════════════════════════════════════════ */
+.pdp-trust-dual-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 3px;
+    padding-top: 7px;
+    border-top: 1px dashed rgba(212, 175, 55, 0.28);
     width: 100%;
-    max-width: 100%;
 }
-.pdp-animated-perks-strip::-webkit-scrollbar { display: none; }
-@media (min-width: 900px) {
-    .pdp-animated-perks-strip {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        overflow-x: visible;
+@media (max-width: 420px) {
+    .pdp-trust-dual-strip {
+        gap: 6px;
     }
 }
-.pdp-perk-badge {
-    display: inline-flex;
+
+.pdp-trust-badge {
+    display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.64rem;
-    font-weight: 700;
-    line-height: 1.2;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-    border: 1px solid rgba(212, 175, 55, 0.28);
-    background: #FAF5E8;
-    color: #5A4210;
-    position: relative;
+    gap: 7px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: #FAF8F4;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.22s ease;
     overflow: hidden;
 }
-.pdp-perk-badge:hover {
-    border-color: var(--dark-gold);
-    background: #F5ECCE;
-    color: #42300B;
+.pdp-trust-badge:hover {
+    background: #FFFFFF;
+    border-color: var(--dark-gold, #8A681F);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(138, 104, 31, 0.12);
 }
 
-.pdp-perk-svg {
-    width: 12px;
-    height: 12px;
+.pdp-trust-icon-box {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    display: inline-block;
-    color: var(--dark-gold, #8A681F);
 }
-.pdp-perk-svg.pulse {
-    animation: pdpIconPulse 2s infinite ease-in-out;
+.pdp-trust-icon-box.gold {
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    color: #8A681F;
 }
-@keyframes pdpIconPulse {
+.pdp-trust-icon-box.emerald {
+    background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%);
+    border: 1px solid #86EFAC;
+    color: #15803D;
+}
+
+.pdp-trust-svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+}
+
+/* Animations */
+@keyframes pdpGentlePulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.22); }
+    50% { transform: scale(1.15); }
 }
-.pdp-perk-svg.flash {
-    animation: pdpIconFlash 1.6s infinite ease-in-out;
+.pulse-gentle {
+    animation: pdpGentlePulse 2.2s infinite ease-in-out;
 }
-@keyframes pdpIconFlash {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.65; transform: scale(1.2); }
+
+@keyframes pdpTruckBounce {
+    0%, 100% { transform: translateX(0); }
+    30% { transform: translateX(2px); }
+    60% { transform: translateX(-1px); }
 }
-.pdp-perk-svg.spin {
-    animation: pdpIconWiggle 3.5s infinite ease-in-out;
+.truck-bounce {
+    animation: pdpTruckBounce 2s infinite ease-in-out;
 }
-@keyframes pdpIconWiggle {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-20deg); }
-    60% { transform: rotate(20deg); }
-    80% { transform: rotate(0deg); }
+
+.pdp-trust-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.15;
 }
-.pdp-perk-text {
+.pdp-trust-title {
+    font-size: 0.67rem;
+    font-weight: 800;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+.pdp-trust-sub {
+    font-size: 0.57rem;
+    font-weight: 600;
+    color: #64748B;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

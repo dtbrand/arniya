@@ -398,27 +398,35 @@ function pdp_relative_date(string $ts): string
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
-                    <span>Inclusive of all taxes</span> • <span class="green">⚡ Fast Delivery in 3–5 Days</span>
+                    <span>Inclusive of all taxes</span> • <span class="green">✓ In Stock &amp; Ready to Ship</span>
                 </div>
-                <!-- Animated Luxury Perks Strip. -->
-                <div class="pdp-animated-perks-strip">
-                    <?php if ($pFabric !== ''): ?>
-                    <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg pulse" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
-                        <span class="pdp-perk-text"><?= htmlspecialchars($pFabric) ?></span>
+                <!-- ════════════ 2-BADGE ULTRA-PREMIUM TRUST STRIP ════════════ -->
+                <div class="pdp-trust-dual-strip">
+                    <div class="pdp-trust-badge">
+                        <div class="pdp-trust-icon-box gold">
+                            <svg class="pdp-trust-svg pulse-gentle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="pdp-trust-content">
+                            <span class="pdp-trust-title">100% Premium Quality</span>
+                            <span class="pdp-trust-sub"><?= $pFabric !== '' ? htmlspecialchars($pFabric) . ' • ' : '' ?>Authentic Fabric</span>
+                        </div>
                     </div>
-                    <?php endif; ?>
-                    <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span class="pdp-perk-text">Fast 24-48h Dispatch</span>
-                    </div>
-                    <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg spin" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                        <span class="pdp-perk-text">7-Day Easy Exchange</span>
-                    </div>
-                    <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M19 12H5"/><path d="M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/></svg>
-                        <span class="pdp-perk-text">Royal Gift Packaging</span>
+
+                    <div class="pdp-trust-badge">
+                        <div class="pdp-trust-icon-box emerald">
+                            <svg class="pdp-trust-svg truck-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                        </div>
+                        <div class="pdp-trust-content">
+                            <span class="pdp-trust-title">Fast Express Delivery</span>
+                            <span class="pdp-trust-sub">Dispatch in 24–48h</span>
+                        </div>
                     </div>
                 </div>
             </div>
