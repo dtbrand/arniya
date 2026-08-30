@@ -3334,3 +3334,196 @@ padding: 6px 2px 14px;
     from { transform: scaleX(1); }
     to { transform: scaleX(0); }
 }
+
+/* ════════════════════════════════════════════════════
+   👑 LUXURY VERIFIED REVIEWS & RELATED PRODUCTS ARCHITECTURE
+════════════════════════════════════════════════════ */
+.pdp-section-header-centered {
+    text-align: center !important;
+    margin-bottom: 18px !important;
+}
+.pdp-section-subtitle {
+    font-size: 0.74rem !important;
+    color: #64748B !important;
+    font-weight: 500 !important;
+    margin: 4px 0 0 !important;
+}
+
+/* Luxury Reviews 0-State Hero Box */
+.pdp-reviews-empty-hero {
+    background: linear-gradient(145deg, #FFFFFF 0%, #FDFCF8 50%, #FAF5E8 100%) !important;
+    border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+    border-radius: 14px !important;
+    padding: 24px 20px !important;
+    text-align: center !important;
+    max-width: 560px !important;
+    margin: 10px auto 0 !important;
+    box-shadow: 0 4px 20px rgba(138, 104, 31, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.pdp-rev-empty-badge {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%) !important;
+    border: 1.2px solid rgba(212, 175, 55, 0.55) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.18) !important;
+}
+.pdp-rev-empty-heading {
+    font-family: var(--font-serif, 'Cinzel', serif) !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    letter-spacing: 0.02em !important;
+}
+.pdp-rev-empty-text {
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+    line-height: 1.45 !important;
+    max-width: 440px !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+}
+.pdp-write-rev-gold-btn {
+    padding: 9px 18px !important;
+    border-radius: 7px !important;
+    border: 1px solid #8A681F !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 10px rgba(184, 134, 11, 0.30) !important;
+    margin-top: 4px !important;
+    transition: all 0.2s ease !important;
+}
+.pdp-write-rev-gold-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1.5px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(184, 134, 11, 0.42) !important;
+}
+
+/* Luxury Related Products 0-State Hero Box */
+.pdp-rel-empty-hero {
+    background: linear-gradient(145deg, #FFFFFF 0%, #FDFCF8 50%, #FAF5E8 100%) !important;
+    border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+    border-radius: 14px !important;
+    padding: 24px 20px !important;
+    text-align: center !important;
+    max-width: 560px !important;
+    margin: 10px auto 0 !important;
+    box-shadow: 0 4px 20px rgba(138, 104, 31, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.pdp-rel-empty-badge {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%) !important;
+    border: 1.2px solid rgba(212, 175, 55, 0.55) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.18) !important;
+}
+.pdp-rel-empty-heading {
+    font-family: var(--font-serif, 'Cinzel', serif) !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    letter-spacing: 0.02em !important;
+}
+.pdp-rel-empty-text {
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+    line-height: 1.45 !important;
+    max-width: 440px !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+}
+.pdp-explore-catalog-btn {
+    padding: 9px 20px !important;
+    border-radius: 7px !important;
+    border: 1px solid #8A681F !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 10px rgba(184, 134, 11, 0.30) !important;
+    margin-top: 4px !important;
+    transition: all 0.2s ease !important;
+}
+.pdp-explore-catalog-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1.5px) !important;
+    color: #111827 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(184, 134, 11, 0.42) !important;
+}
+
+/* Modal Form Elements */
+.pdp-review-input, .pdp-review-textarea {
+    width: 100% !important;
+    border: 1.5px solid #E2E8F0 !important;
+    border-radius: 7px !important;
+    padding: 8px 12px !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    color: #111827 !important;
+    background: #FFFFFF !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+}
+.pdp-submit-rev-btn {
+    width: 100% !important;
+    height: 38px !important;
+    border-radius: 8px !important;
+    border: 1px solid #8A681F !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
+    font-size: 0.76rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 10px rgba(184, 134, 11, 0.30) !important;
+    margin-top: 4px !important;
+    transition: all 0.2s ease !important;
+}
+.pdp-submit-rev-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(184, 134, 11, 0.42) !important;
+}

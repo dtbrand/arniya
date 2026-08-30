@@ -848,6 +848,7 @@ function pdp_relative_date(string $ts): string
             <p class="pdp-section-subtitle">Curated coordinating royal ethnic wear from our atelier</p>
         </div>
 
+        <?php if (!empty($relatedItems)): ?>
         <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
             <!-- Navigation Arrows (Desktop) -->
             <button class="pdp-rel-arrow prev" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
@@ -857,9 +858,7 @@ function pdp_relative_date(string $ts): string
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <!-- Scrollable Track (2-show on mobile). $relatedItems is built in the
-                 controller from the live catalogue; this used to re-filter $products,
-                 which no longer exists here, with a loose !== on mixed-type ids. -->
+            <!-- Scrollable Track (2-show on mobile) -->
             <div class="pdp-rel-track" id="pdpRelTrack">
                 <?php foreach ($relatedItems as $rel):
                     $relName  = trim((string)($rel['name'] ?? ''));
@@ -893,19 +892,28 @@ function pdp_relative_date(string $ts): string
                     </div>
                 </a>
                 <?php endforeach; ?>
-                <?php if ($relatedItems === []): ?>
-                <div class="pdp-rel-empty-box">
-                    <p style="font-size:0.80rem; color:var(--mid-text); margin:0 0 10px;">Explore our signature bridal, festive, and ethnic kurti collections in the full boutique catalog.</p>
-                    <a href="/shop.php" class="pdp-explore-catalog-link">
-                        <span>Browse All Collections</span> &rarr;
-                    </a>
-                </div>
-                <?php endif; ?>
             </div>
 
             <!-- Dots -->
             <div class="pdp-rel-dots" id="pdpRelDots"></div>
         </div>
+        <?php else: ?>
+        <div class="pdp-rel-empty-hero">
+            <div class="pdp-rel-empty-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2.2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </div>
+            <h3 class="pdp-rel-empty-heading">Explore Our Royal Boutique Collection</h3>
+            <p class="pdp-rel-empty-text">
+                Discover matching designer kurtis, suit sets, and handloom lehengas in the full catalogue.
+            </p>
+            <a href="/shop.php" class="pdp-explore-catalog-btn">
+                <span>Browse All Collections</span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+        <?php endif; ?>
     </section>
 </main>
 
