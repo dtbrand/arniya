@@ -70,3 +70,13 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `value` TEXT NULL,
     `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Store-owner reply shown under each customer review (used by
+-- api/reviews.php action=reply). Gated on information_schema for idempotency.
+SET @reply_exists = (SELECT COUNT(*) FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'reviews' AND COLUMN_NAME = 'store_reply');
+SET @ddl_reply = IF(@reply_exists = 0,
+    'ALTER TABLE `reviews` ADD COLUMN `store_reply` TEXT NULL AFTER `review_text`',
+    'SELECT 1');
+PREPARE stmt_reply FROM @ddl_reply;
+EXECUTE stmt_reply;
+DEALLOCATE PREPARE stmt_reply;

@@ -41,6 +41,84 @@ try {
         $action = trim($data['action'] ?? ($method === 'DELETE' ? 'delete' : 'create'));
         $targetId = (int)($data['id'] ?? ($_GET['id'] ?? 0));
 
+        if ($action === 'create_subcategory') {
+            $name = trim((string)($data['name'] ?? ''));
+            $categoryId = (int)($data['category_id'] ?? 0);
+            if ($name === '' || $categoryId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Subcategory name and parent category are required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            // The parent must exist — a dangling category_id would break the
+            // foreign key on strict engines and silently orphan the row on
+            // lenient ones.
+            $parent = Database::fetchOne('SELECT id FROM categories WHERE id = ? LIMIT 1', [$categoryId]);
+            if (!$parent) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Parent category #' . $categoryId . ' does not exist.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $slug = strtolower(trim((string)preg_replace('/[^a-z0-9]+/i', '-', $name), '-'));
+            if ($slug === '') {
+                $slug = 'subcat-' . time();
+            }
+            // De-dupe the slug the same way categories do.
+            $suffix = 2;
+            $candidate = $slug;
+            while (Database::fetchOne('SELECT id FROM subcategories WHERE slug = ? LIMIT 1', [$candidate])) {
+                $candidate = $slug . '-' . $suffix++;
+            }
+            $ok = Database::execute(
+                'INSERT INTO subcategories (category_id, name, slug, status) VALUES (?, ?, ?, "active")',
+                [$categoryId, $name, $candidate]
+            );
+            echo json_encode([
+                'success' => (bool)$ok,
+                'id' => $ok ? (int)Database::getConnection()->lastInsertId() : 0,
+                'message' => $ok ? 'Subcategory created.' : 'Could not create the subcategory.'
+            ], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        if ($action === 'update_subcategory') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Subcategory ID required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $name = trim((string)($data['name'] ?? ''));
+            $status = strtolower(trim((string)($data['status'] ?? '')));
+            $categoryId = (int)($data['category_id'] ?? 0);
+
+            $sets = [];
+            $params = [];
+            if ($name !== '') {
+                $sets[] = 'name = ?';
+                $params[] = $name;
+            }
+            if ($categoryId > 0) {
+                $sets[] = 'category_id = ?';
+                $params[] = $categoryId;
+            }
+            if (in_array($status, ['active', 'inactive'], true)) {
+                $sets[] = 'status = ?';
+                $params[] = $status;
+            }
+            if (empty($sets)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Nothing to update.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $params[] = $targetId;
+            $ok = Database::execute('UPDATE subcategories SET ' . implode(', ', $sets) . ' WHERE id = ?', $params);
+            echo json_encode([
+                'success' => (bool)$ok,
+                'id' => $targetId,
+                'message' => $ok ? 'Subcategory updated.' : 'The subcategory was not changed.'
+            ], JSON_PRETTY_PRINT);
+            exit;
+        }
+
         if ($action === 'create') {
             $res = ProductCatalog::createCategory($data);
             echo json_encode($res, JSON_PRETTY_PRINT);
