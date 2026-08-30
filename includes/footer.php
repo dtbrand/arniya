@@ -172,13 +172,48 @@
                 </button>
                 <div class="dt-footer-acc-body">
                     <ul class="dt-footer-links">
-                        <li><a href="/shop.php?category=Kurti">Designer Kurti Sets</a></li>
-                        <li><a href="/shop.php?category=Banarasi+Silk">Banarasi Kadwa Weaves</a></li>
-                        <li><a href="/shop.php?category=Kanjivaram+Silk">Kanjivaram Silk Sarees</a></li>
-                        <li><a href="/shop.php?category=Paithani">Yeola Paithani Handlooms</a></li>
-                        <li><a href="/shop.php?category=Organza+Tissue">Pastel Organza &amp; Tissue</a></li>
-                        <li><a href="/shop.php?category=Bridal+Lehengas">Bridal &amp; Festive Lehengas</a></li>
-                        <li><a href="/shop.php" class="dt-view-all-link">Browse All 2026 Collections &rarr;</a></li>
+                        <li>
+                            <a href="/shop.php?category=Kurti">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Designer Kurti Sets</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php?category=Banarasi+Silk">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Banarasi Kadwa Weaves</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php?category=Kanjivaram+Silk">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Kanjivaram Silk Sarees</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php?category=Paithani">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Yeola Paithani Handlooms</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php?category=Organza+Tissue">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Pastel Organza &amp; Tissue</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php?category=Bridal+Lehengas">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Bridal &amp; Festive Lehengas</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shop.php" class="dt-view-all-link">
+                                <span class="dt-sub-label"><span class="dt-sub-dot gold"></span>Browse All 2026 Collections</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -194,13 +229,48 @@
                 </button>
                 <div class="dt-footer-acc-body">
                     <ul class="dt-footer-links">
-                        <li><a href="/wholesale.php">Wholesale B2B Catalog</a></li>
-                        <li><a href="/reseller.php">Zero-Investment Reseller Hub</a></li>
-                        <li><a href="/retailer.php">Boutique &amp; Retailer Portal</a></li>
-                        <li><a href="/wholesale.php#bale-pricing">Bale Lot Volume Slab Rates</a></li>
-                        <li><a href="/account.php">Partner Account Login</a></li>
-                        <li><a href="/shipping.php">GST Billing &amp; Transport Logistics</a></li>
-                        <li><a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20want%20to%20register%20as%20a%20wholesale%20buyer." target="_blank" rel="noopener noreferrer" class="dt-view-all-link">Request Mill Dealership &rarr;</a></li>
+                        <li>
+                            <a href="/wholesale.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Wholesale B2B Catalog</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/reseller.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Zero-Investment Reseller Hub</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/retailer.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Boutique &amp; Retailer Portal</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/wholesale.php#bale-pricing">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Bale Lot Volume Slab Rates</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/account.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Partner Account Login</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/shipping.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>GST Billing &amp; Transport Logistics</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20want%20to%20register%20as%20a%20wholesale%20buyer." target="_blank" rel="noopener noreferrer" class="dt-view-all-link">
+                                <span class="dt-sub-label"><span class="dt-sub-dot gold"></span>Request Mill Dealership</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

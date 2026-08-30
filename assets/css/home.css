@@ -8851,39 +8851,102 @@ input[type=range].sf-range::-moz-range-thumb {
     }
     
     .dt-footer-links {
-        border-left: 2px solid rgba(212, 175, 55, 0.3);
-        padding-left: 10px;
-    }
-    .dt-footer-links li a {
-        padding: 4px 0;
-        font-size: 0.82rem;
-        display: block;
-    }
-    .dt-view-all-link {
-        color: #D4AF37 !important;
-        font-weight: 700 !important;
+        border-left: 2px solid rgba(212, 175, 55, 0.35);
+        padding-left: 8px;
     }
 }
 
+/* Sub-Menu List & Designer Divider Lines */
 .dt-footer-links {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
+
+.dt-footer-links li {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+    margin: 0;
+    padding: 0;
+    transition: background 0.2s ease;
+}
+
+.dt-footer-links li:last-child {
+    border-bottom: none;
+}
+
 .dt-footer-links li a {
     text-decoration: none;
     font-size: 0.78rem;
     font-weight: 500;
-    color: #94A3B8;
-    transition: all 0.2s ease;
-    display: inline-block;
+    color: #CBD5E1;
+    transition: all 0.22s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 8px;
+    border-radius: 6px;
+    -webkit-tap-highlight-color: transparent;
 }
-.dt-footer-links li a:hover {
-    color: #D4AF37;
-    transform: translateX(4px);
+
+.dt-sub-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex: 1;
+}
+
+.dt-sub-dot {
+    width: 4.5px;
+    height: 4.5px;
+    border-radius: 50%;
+    background: #D4AF37;
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.6);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dt-sub-dot.gold {
+    background: #FACC15;
+    box-shadow: 0 0 8px #FACC15;
+}
+
+.dt-sub-chevron {
+    stroke: rgba(212, 175, 55, 0.5);
+    flex-shrink: 0;
+    transition: transform 0.22s ease, stroke 0.22s ease;
+}
+
+.dt-footer-links li a:hover,
+.dt-footer-links li a:active {
+    color: #F5D77F;
+    background: rgba(212, 175, 55, 0.08);
+    transform: translateX(3px);
+}
+
+.dt-footer-links li a:hover .dt-sub-dot {
+    transform: scale(1.4);
+    background: #FACC15;
+}
+
+.dt-footer-links li a:hover .dt-sub-chevron {
+    stroke: #F5D77F;
+    transform: translateX(2px);
+}
+
+.dt-view-all-link {
+    margin-top: 4px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(138, 104, 31, 0.22) 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.35) !important;
+    color: #F5D77F !important;
+    font-weight: 700 !important;
+    padding: 8px 10px !important;
+}
+
+.dt-view-all-link:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.22) 0%, rgba(138, 104, 31, 0.35) 100%) !important;
+    border-color: #D4AF37 !important;
 }
 
 /* Contact Info & WhatsApp CTA */
@@ -8897,6 +8960,12 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    padding-bottom: 8px;
+}
+.dt-contact-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 .dt-contact-icon {
     margin-top: 2px;
