@@ -410,7 +410,7 @@ function pdp_relative_date(string $ts): string
                         </div>
                         <div class="pdp-trust-content">
                             <span class="pdp-trust-title">100% Premium Quality</span>
-                            <span class="pdp-trust-sub"><?= $pFabric !== '' ? htmlspecialchars($pFabric) . ' • ' : '' ?>Authentic Fabric</span>
+                            <span class="pdp-trust-sub"><?= $pFabric !== '' ? htmlspecialchars($pFabric) : 'Authentic Fabric' ?></span>
                         </div>
                     </div>
 

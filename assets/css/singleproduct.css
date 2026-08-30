@@ -1067,8 +1067,9 @@ cursor: zoom-in;
     padding-top: 7px;
     border-top: 1px dashed rgba(212, 175, 55, 0.28);
     width: 100%;
+    box-sizing: border-box;
 }
-@media (max-width: 420px) {
+@media (max-width: 480px) {
     .pdp-trust-dual-strip {
         gap: 6px;
     }
@@ -1077,13 +1078,14 @@ cursor: zoom-in;
 .pdp-trust-badge {
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 5px 8px;
+    gap: 6px;
+    padding: 5px 6px;
     border-radius: 7px;
     background: #FAF8F4;
     border: 1px solid rgba(212, 175, 55, 0.25);
     transition: all 0.22s ease;
-    overflow: hidden;
+    min-width: 0;
+    box-sizing: border-box;
 }
 .pdp-trust-badge:hover {
     background: #FFFFFF;
@@ -1093,8 +1095,8 @@ cursor: zoom-in;
 }
 
 .pdp-trust-icon-box {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -1113,8 +1115,8 @@ cursor: zoom-in;
 }
 
 .pdp-trust-svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     stroke: currentColor;
     stroke-width: 2.2;
 }
@@ -1141,24 +1143,25 @@ cursor: zoom-in;
     display: flex;
     flex-direction: column;
     min-width: 0;
-    line-height: 1.15;
+    line-height: 1.18;
+    flex: 1;
 }
 .pdp-trust-title {
-    font-size: 0.67rem;
+    font-size: clamp(0.60rem, 2.2vw, 0.70rem);
     font-weight: 800;
     color: #111827;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: -0.01em;
+    white-space: normal;
+    word-break: normal;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
 }
 .pdp-trust-sub {
-    font-size: 0.57rem;
+    font-size: clamp(0.52rem, 1.8vw, 0.60rem);
     font-weight: 600;
     color: #64748B;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: normal;
+    line-height: 1.15;
 }
 
 /* Color & Size Section Headers */
