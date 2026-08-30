@@ -54,6 +54,47 @@ try {
         // Moderation is admin-only. Without this, any visitor could approve
         // their own review, reject a genuine one, or delete the whole table's
         // worth of feedback one id at a time.
+        if ($action === 'reply') {
+            dt_api_require_admin('reply to reviews');
+
+            if ($reviewId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'A valid review id is required.']);
+                exit;
+            }
+            $reply = trim((string)($data['reply'] ?? ''));
+            if ($reply === '') {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Reply text cannot be empty.']);
+                exit;
+            }
+            if ($pdo === null || Database::isMockMode()) {
+                http_response_code(503);
+                echo json_encode(['success' => false, 'message' => 'Database unavailable — the reply was not saved.']);
+                exit;
+            }
+            // store_reply must exist; older installs get it on first use.
+            try {
+                $col = $pdo->query("SHOW COLUMNS FROM reviews LIKE 'store_reply'")->fetch();
+                if (!$col) {
+                    $pdo->exec("ALTER TABLE reviews ADD COLUMN store_reply TEXT NULL AFTER review_text");
+                }
+                $stmt = $pdo->prepare("UPDATE reviews SET store_reply = ? WHERE id = ?");
+                $stmt->execute([$reply, $reviewId]);
+            } catch (\Throwable $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Could not save the reply: ' . $e->getMessage()]);
+                exit;
+            }
+            if ($stmt->rowCount() === 0) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'No review found with id ' . $reviewId . '.']);
+                exit;
+            }
+            echo json_encode(['success' => true, 'id' => $reviewId, 'message' => 'Store reply published.']);
+            exit;
+        }
+
         if (in_array($action, ['delete', 'approve', 'reject', 'unpublish'], true)) {
             dt_api_require_admin('moderate reviews');
 
