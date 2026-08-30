@@ -249,7 +249,9 @@ function pdp_relative_date(string $ts): string
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
-        window.allProducts = <?php echo json_encode($catalogProducts, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+        window.currentProductData = <?php echo json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+        window.currentPdpProduct = window.currentProductData;
+        window.allProducts = <?php echo json_encode(array_values($catalogProducts), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
