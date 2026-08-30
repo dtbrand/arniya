@@ -8488,64 +8488,90 @@ input[type=range].sf-range::-moz-range-thumb {
     z-index: 10;
 }
 
-/* Top Perks Trust Ribbon (1-Line Auto-Scroll on Mobile) */
+/* Top Perks Trust Ribbon (Seamless Hardware-Accelerated 60fps Marquee) */
 .dt-footer-perks-ribbon {
-    background: rgba(24, 21, 18, 0.98);
+    background: #181512;
+    background: linear-gradient(180deg, #1F1A15 0%, #15120F 100%);
     border-bottom: 1px solid rgba(212, 175, 55, 0.22);
-    padding: 14px 0;
+    padding: 12px 0;
     overflow: hidden;
     position: relative;
+    width: 100%;
 }
 
-/* Gradient Fade Edges on Mobile */
+/* Gradient Glaze Edges on Mobile */
 .dt-footer-perks-ribbon::before,
 .dt-footer-perks-ribbon::after {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 24px;
-    z-index: 3;
+    width: 36px;
+    z-index: 4;
     pointer-events: none;
 }
 .dt-footer-perks-ribbon::before {
     left: 0;
-    background: linear-gradient(90deg, #1C1814 0%, transparent 100%);
+    background: linear-gradient(90deg, #181512 0%, transparent 100%);
 }
 .dt-footer-perks-ribbon::after {
     right: 0;
-    background: linear-gradient(-90deg, #1C1814 0%, transparent 100%);
+    background: linear-gradient(-90deg, #181512 0%, transparent 100%);
 }
 
-.dt-footer-perks-track {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    padding: 0 16px;
-}
-
-@media (max-width: 1024px) {
-    .dt-footer-perks-track {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        gap: 10px !important;
-        padding: 4px 16px !important;
+/* Desktop: Static 4-column centered grid, clone hidden */
+@media (min-width: 1025px) {
+    .dt-footer-perks-marquee {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
-    .dt-footer-perks-track::-webkit-scrollbar {
+    .dt-footer-perks-group {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+    .dt-footer-perks-group[aria-hidden="true"] {
         display: none !important;
+    }
+}
+
+/* Mobile & Tablet: Seamless 60fps CSS Marquee (ZERO vibration / jitter) */
+@media (max-width: 1024px) {
+    .dt-footer-perks-ribbon {
+        padding: 10px 0;
+    }
+    .dt-footer-perks-marquee {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: dtPerksMarqueeLoop 24s linear infinite;
+    }
+    .dt-footer-perks-ribbon:hover .dt-footer-perks-marquee,
+    .dt-footer-perks-ribbon:active .dt-footer-perks-marquee {
+        animation-play-state: paused;
+    }
+    .dt-footer-perks-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 5px;
+        flex-shrink: 0;
     }
     .dt-footer-perk-card {
         flex: 0 0 auto !important;
-        width: 215px !important;
-        min-width: 215px !important;
-        scroll-snap-align: start !important;
-        padding: 8px 10px !important;
+        width: 220px !important;
+        min-width: 220px !important;
+        padding: 8px 12px !important;
+    }
+}
+
+@keyframes dtPerksMarqueeLoop {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
     }
 }
 
