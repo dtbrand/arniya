@@ -51,7 +51,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-layout-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(16px, 3vw, 40px);
+    gap: clamp(16px, 2.5vw, 32px);
     align-items: start;
     width: 100%;
     max-width: 100%;
@@ -59,7 +59,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 @media (min-width: 900px) {
     .pdp-layout-grid {
-        grid-template-columns: 48% 52%;
+        grid-template-columns: 42% 58%;
     }
 }
 .pdp-gallery-column, .pdp-details-column {
@@ -75,32 +75,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-gallery-column {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     position: relative;
-    max-width: 500px;
+    max-width: 450px;
     width: 100%;
     margin: 0 auto;
 }
 @media (min-width: 900px) {
     .pdp-gallery-column {
         position: sticky;
-        top: 80px;
+        top: 76px;
         margin: 0 0 0 auto;
     }
 }
 
-/* Main Image Slider Viewport (Normal Full Fashion Portrait Proportions) */
+/* Main Image Slider Viewport (Elegant Tailored Fashion Portrait) */
 .pdp-gallery-slider {
     position: relative;
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
     background: #FAF8F4;
-    aspect-ratio: 3 / 4;
-    max-height: 600px;
+    aspect-ratio: 3 / 3.75;
+    max-height: 480px;
     width: 100%;
     margin: 0 auto;
     border: 1px solid rgba(138, 104, 31, 0.22);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.06);
 }
 
 @media (max-width: 767px) {
@@ -109,21 +109,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
     .pdp-gallery-column {
         max-width: 100%;
-        gap: 10px;
+        gap: 8px;
     }
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 4;
-        max-height: 520px;
+        aspect-ratio: 3 / 3.75;
+        max-height: 440px;
         border-radius: 12px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     }
 }
 
 @media (max-width: 480px) {
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 4;
-        max-height: 480px;
-        border-radius: 12px;
+        aspect-ratio: 3 / 3.6;
+        max-height: 400px;
+        border-radius: 10px;
     }
 }
 
@@ -944,7 +944,7 @@ cursor: zoom-in;
 .pdp-details-column {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
 }
 
 .pdp-brand-tag {
@@ -956,10 +956,11 @@ cursor: zoom-in;
 }
 .pdp-title {
     font-family: var(--font-serif);
-    font-size: clamp(1.35rem, 3.5vw, 1.95rem);
+    font-size: clamp(1.22rem, 2.2vw, 1.65rem);
     font-weight: 800;
     color: var(--dark-text);
-    line-height: 1.25;
+    line-height: 1.22;
+    margin: 1px 0 2px;
 }
 
 /* Ratings Badge & SKU Row */
