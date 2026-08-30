@@ -1,0 +1,707 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   👑 DT BRAND'S & JAI HANUMAN TEX — MASTER POLICY & CONTACT LUXURY DESIGN SYSTEM
+   TailAdmin Sharp Inter & Plus Jakarta Sans Typography + Heritage Gold (#8A681F / #D4AF37)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --dt-gold: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-light: #F5D77F;
+    --dt-gold-pale: #FAF5E8;
+    --dt-cream-bg: #FDFBF7;
+    --dt-dark-obsidian: #14110E;
+    --dt-dark-velvet: #1C1814;
+    --dt-text-main: #1F2937;
+    --dt-text-dark: #111827;
+    --dt-text-muted: #64748B;
+    --dt-emerald: #15803D;
+    --dt-emerald-glow: #16A34A;
+    --dt-border-subtle: rgba(212, 175, 55, 0.22);
+    --dt-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumRun {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtAdminAmbientGlow {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
+    }
+    50% {
+        background-position: 100% 50%, 0% 50%, 0% 100%, 0% 0%;
+    }
+    100% {
+        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
+    }
+}
+
+body {
+    background-color: var(--dt-cream-bg, #FDFBF7);
+    color: var(--dt-text-main, #1F2937);
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    margin: 0;
+    padding: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🏛️ 1. MASTER LUXURY HERO BANNER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-policy-hero {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.4) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(28, 22, 14, 0.98) 0%, rgba(42, 32, 18, 0.96) 50%, rgba(20, 16, 10, 0.98) 100%);
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    animation: dtAdminAmbientGlow 10s ease-in-out infinite alternate;
+    border-bottom: 2px solid #8A681F;
+    padding: 44px 20px 48px;
+    text-align: center;
+    color: #FAF5E8;
+    overflow: hidden;
+}
+
+.dt-policy-hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.dt-policy-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #CBD5E1;
+    margin-bottom: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+}
+
+.dt-policy-breadcrumb a {
+    color: #F5D77F;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.dt-policy-breadcrumb a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.dt-policy-breadcrumb span.sep {
+    color: rgba(212, 175, 55, 0.5);
+    font-size: 0.65rem;
+}
+
+.dt-policy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(138, 104, 31, 0.4) 100%);
+    border: 1px solid #D4AF37;
+    color: #F5D77F;
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 30px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.dt-policy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    margin: 0 0 10px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+}
+
+.dt-policy-title span.gold {
+    background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 50%, #B8860B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dt-policy-subtitle {
+    font-size: 0.90rem;
+    color: #CBD5E1;
+    max-width: 680px;
+    margin: 0 auto 16px;
+    line-height: 1.55;
+    font-weight: 400;
+}
+
+.dt-policy-meta-strip {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    font-size: 0.72rem;
+    color: #94A3B8;
+}
+
+.dt-policy-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #FAF5E8;
+}
+
+.dt-policy-meta-item svg {
+    stroke: #D4AF37;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📄 2. MAIN LAYOUT & SIDEBAR QUICK JUMP
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-policy-main-wrap {
+    max-width: 1200px;
+    margin: 36px auto 60px;
+    padding: 0 20px;
+}
+
+.dt-policy-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* Sidebar Quick Nav */
+.dt-policy-sidebar {
+    position: sticky;
+    top: 90px;
+    background: #FFFFFF;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+    padding: 20px 16px;
+    box-shadow: var(--dt-card-shadow);
+}
+
+.dt-sidebar-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dt-sidebar-heading svg {
+    stroke: #8A681F;
+}
+
+.dt-sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dt-sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.dt-sidebar-nav li a:hover,
+.dt-sidebar-nav li a.active {
+    background: var(--dt-gold-pale, #FAF5E8);
+    color: #8A681F;
+    font-weight: 700;
+    transform: translateX(3px);
+}
+
+.dt-sidebar-nav li a svg {
+    stroke: rgba(212, 175, 55, 0.5);
+    transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.dt-sidebar-nav li a:hover svg,
+.dt-sidebar-nav li a.active svg {
+    stroke: #8A681F;
+    transform: translateX(2px);
+}
+
+/* Sidebar Concierge Box */
+.dt-sidebar-concierge {
+    margin-top: 18px;
+    padding: 14px;
+    background: linear-gradient(135deg, #1C1814 0%, #14110E 100%);
+    border: 1px solid #8A681F;
+    border-radius: 10px;
+    color: #FAF5E8;
+    text-align: center;
+}
+
+.dt-sidebar-concierge h4 {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #D4AF37;
+    margin: 0 0 4px;
+}
+
+.dt-sidebar-concierge p {
+    font-size: 0.70rem;
+    color: #94A3B8;
+    margin: 0 0 10px;
+    line-height: 1.35;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📦 3. STRUCTURED POLICY CONTENT CARDS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-policy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dt-policy-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 12px;
+    padding: 28px 26px;
+    box-shadow: var(--dt-card-shadow);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    scroll-margin-top: 100px;
+}
+
+.dt-policy-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 8px 28px rgba(138, 104, 31, 0.09);
+}
+
+.dt-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.dt-card-num-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    border: 1.2px solid #D4AF37;
+    color: #705114;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.15);
+}
+
+.dt-card-title {
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.dt-policy-card p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #334155;
+    margin: 0 0 12px;
+}
+
+.dt-policy-card p:last-child {
+    margin-bottom: 0;
+}
+
+.dt-policy-card ul, .dt-policy-card ol {
+    margin: 10px 0 14px 18px;
+    padding: 0;
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.dt-policy-card li {
+    margin-bottom: 6px;
+}
+
+/* Callout Highlight Box */
+.dt-policy-callout {
+    background: var(--dt-gold-pale, #FAF5E8);
+    border-left: 3.5px solid #D4AF37;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin: 14px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.dt-callout-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #8A681F;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.dt-callout-icon svg {
+    stroke: #FFFFFF;
+}
+
+.dt-callout-text {
+    font-size: 0.82rem;
+    color: #5A4210;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.dt-callout-text strong {
+    color: #2A1D06;
+    font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   💬 4. BUTTONS & ACTIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827;
+    font-weight: 800;
+    letter-spacing: -0.011em;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.82rem;
+    transition: all 0.25s ease;
+}
+
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
+}
+
+.dt-btn-emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
+    border: 1.2px solid #D4AF37;
+    color: #FFFFFF;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.82rem;
+    transition: all 0.25s ease;
+}
+
+.dt-btn-emerald:hover {
+    background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.55);
+    color: #FFFFFF;
+}
+
+.dt-btn-pale {
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dt-btn-pale:hover {
+    background: #F5ECCE;
+    color: #5A4210;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🏛️ 5. CONTACT ATELIER SPECIAL STYLING
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.dt-contact-hub-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: var(--dt-card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: all 0.25s ease;
+}
+
+.dt-contact-hub-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(138, 104, 31, 0.12);
+}
+
+.dt-hub-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    border: 1.5px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.15);
+}
+
+.dt-hub-icon-wrap svg {
+    stroke: #8A681F;
+}
+
+.dt-hub-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 0 6px;
+}
+
+.dt-hub-desc {
+    font-size: 0.82rem;
+    color: #64748B;
+    line-height: 1.45;
+    margin: 0 0 14px;
+    flex: 1;
+}
+
+.dt-hub-value {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #8A681F;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.dt-hub-value:hover {
+    color: #B8860B;
+    text-decoration: underline;
+}
+
+/* Contact Form Card */
+.dt-contact-form-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: var(--dt-card-shadow);
+}
+
+.dt-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+    .dt-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dt-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dt-form-group.full {
+    grid-column: 1 / -1;
+}
+
+.dt-form-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-form-input,
+.dt-form-textarea,
+.dt-form-select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: #111827;
+    background: #FFFFFF;
+    border: 1.2px solid #CBD5E1;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ✨ 6. FORM FOCUS STANDARD (ANIMATED GOLD & PLATINUM RUNNING LINE)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dt-form-input:focus,
+.dt-form-textarea:focus,
+.dt-form-select:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtGoldPlatinumRun 2s linear infinite !important;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important;
+    color: #111827 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📱 7. FLUID MOBILE & TABLET AUTO-SIZING
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .dt-policy-hero {
+        padding: 32px 16px 36px;
+    }
+    .dt-policy-title {
+        font-size: 1.65rem;
+    }
+    .dt-policy-subtitle {
+        font-size: 0.80rem;
+    }
+    .dt-policy-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .dt-policy-sidebar {
+        position: static;
+        padding: 14px 12px;
+    }
+    .dt-sidebar-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .dt-sidebar-nav li {
+        flex-shrink: 0;
+    }
+    .dt-sidebar-nav li a {
+        padding: 6px 10px;
+        font-size: 0.74rem;
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+    }
+    .dt-sidebar-concierge {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .dt-policy-main-wrap {
+        padding: 0 12px;
+        margin: 20px auto 40px;
+    }
+    .dt-policy-card {
+        padding: 18px 16px;
+        border-radius: 10px;
+    }
+    .dt-card-title {
+        font-size: 0.98rem;
+    }
+    .dt-policy-card p {
+        font-size: 0.82rem;
+        line-height: 1.55;
+    }
+    .dt-contact-form-card {
+        padding: 20px 16px;
+    }
+}
