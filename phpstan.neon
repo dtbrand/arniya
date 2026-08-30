@@ -1,9 +1,10 @@
 parameters:
-    level: 0
+    level: 1
     paths:
         - src
-        - Frontend
-        - Shared
+        - api
+        - admin
+        - database
     excludePaths:
         - node_modules
         - vendor
@@ -11,4 +12,7 @@ parameters:
         - .uix
         - backups
         - build
+        - tests
+        - scripts
     treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
