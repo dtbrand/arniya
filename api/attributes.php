@@ -113,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete') {
 
 // Terms live inside the attribute's values_json column as
 // [{"name":"Crimson Red","hex":"#991b1b"}, …]. Add/remove rewrite that JSON.
+$db = Database::getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($action === 'add_term' || $action === 'remove_term')) {
     $id = (int)($_POST['id'] ?? 0);
     if ($id <= 0) {
