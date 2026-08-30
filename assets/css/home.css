@@ -8945,74 +8945,171 @@ input[type=range].sf-range::-moz-range-thumb {
     border-color: #D4AF37 !important;
 }
 
-/* Contact Info & WhatsApp CTA */
+/* Contact Cards & Atelier Concierge */
 .dt-footer-contact-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 14px;
 }
-.dt-contact-item {
+
+.dt-contact-card {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-    padding-bottom: 8px;
-}
-.dt-contact-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-.dt-contact-icon {
-    margin-top: 2px;
-    flex-shrink: 0;
-}
-.dt-contact-text {
-    font-size: 0.75rem;
-    color: #94A3B8;
-    line-height: 1.4;
-}
-.dt-contact-text strong {
-    color: #FAF5E8;
-    display: block;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-}
-.dt-contact-link {
-    color: #D4AF37;
+    padding: 9px 10px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(212, 175, 55, 0.16);
+    border-radius: 8px;
     text-decoration: none;
-    font-weight: 700;
-}
-.dt-contact-link:hover {
-    text-decoration: underline;
+    transition: all 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
+.dt-contact-card:hover,
+.dt-contact-card:active {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+}
+
+.dt-contact-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(138, 104, 31, 0.3) 100%);
+    border: 1px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dt-contact-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.dt-contact-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #FAF5E8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+}
+
+.dt-contact-val {
+    font-size: 0.74rem;
+    color: #94A3B8;
+    line-height: 1.35;
+    display: block;
+}
+
+.dt-contact-val.highlight {
+    color: #D4AF37;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+}
+
+.dt-contact-arrow {
+    stroke: rgba(212, 175, 55, 0.5);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.dt-contact-card:hover .dt-contact-arrow {
+    stroke: #F5D77F;
+    transform: translateX(3px);
+}
+
+.dt-call-badge {
+    background: #15803D;
+    color: #FFFFFF;
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(21, 128, 61, 0.4);
+}
+
+/* 👑 Master Luxury WhatsApp Concierge CTA Button */
 .dt-footer-wa-btn {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: 1px solid #16A34A;
-    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1.5px solid #D4AF37;
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
     color: #FFFFFF;
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.76rem;
+    font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 0.03em;
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
-    transition: all 0.25s ease;
-    margin-top: 4px;
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-top: 6px;
+    position: relative;
+    overflow: hidden;
 }
-.dt-footer-wa-btn:hover {
+
+.dt-footer-wa-btn:hover,
+.dt-footer-wa-btn:active {
     background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+    border-color: #F5D77F;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
+    box-shadow: 0 8px 26px rgba(22, 163, 74, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     color: #FFFFFF;
+}
+
+.dt-wa-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dt-wa-btn-label {
+    flex: 1;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.dt-wa-live-pill {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: 0.05em;
+}
+
+.dt-wa-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ADE80;
+    box-shadow: 0 0 6px #4ADE80;
+    animation: dtLivePulse 1.5s infinite alternate;
+}
+
+@keyframes dtLivePulse {
+    0% { transform: scale(0.85); opacity: 0.7; }
+    100% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 10px #4ADE80; }
 }
 
 /* Bottom Strip (Copyright + Links + Pay Pills) */
