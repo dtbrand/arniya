@@ -12,6 +12,10 @@
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    box-sizing: border-box;
     z-index: 1000;
     background: #FFFFFF;
     border-bottom: 1.5px solid var(--soft-platinum, #E5E3DE);
@@ -347,6 +351,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
     .pdp-top-ticker {
         height: 26px;

@@ -17,34 +17,56 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+    max-width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
+}
 body {
     background: var(--off-white);
     font-family: var(--font-sans);
     color: var(--dark-text);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    max-width: 100vw;
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
-img { display: block; max-width: 100%; }
+img { display: block; max-width: 100%; height: auto; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
 /* ── Main Layout ── */
 .pdp-main-wrapper {
     max-width: 1240px;
+    width: 100%;
     margin: 0 auto;
     padding: clamp(14px, 3vw, 32px) clamp(12px, 3vw, 28px);
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .pdp-layout-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(20px, 4vw, 48px);
+    gap: clamp(16px, 3vw, 40px);
     align-items: start;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 @media (min-width: 900px) {
     .pdp-layout-grid {
         grid-template-columns: 48% 52%;
     }
+}
+.pdp-gallery-column, .pdp-details-column {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* ════════════════════════════════════════════════════
@@ -1031,27 +1053,36 @@ cursor: zoom-in;
 
 /* Animated Luxury Perks Badge Strip */
 .pdp-animated-perks-strip {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
     margin-top: 2px;
     padding-top: 8px;
     border-top: 1px dashed rgba(138, 104, 31, 0.22);
+    width: 100%;
+    max-width: 100%;
 }
+.pdp-animated-perks-strip::-webkit-scrollbar { display: none; }
 @media (min-width: 900px) {
     .pdp-animated-perks-strip {
+        display: grid;
         grid-template-columns: repeat(4, 1fr);
+        overflow-x: visible;
     }
 }
 .pdp-perk-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 9px;
+    padding: 5px 9px;
     border-radius: 8px;
-    font-size: 0.66rem;
+    font-size: 0.68rem;
     font-weight: 700;
     line-height: 1.2;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition: all 0.2s ease;
     border: 1px solid var(--soft-platinum, #E5E3DE);
     background: #FAF8F4;
@@ -1102,7 +1133,7 @@ cursor: zoom-in;
     text-overflow: ellipsis;
 }
 
-/* Color Options */
+/* Color & Size Section Headers */
 .pdp-section-header {
     display: flex;
     align-items: center;
@@ -1110,9 +1141,13 @@ cursor: zoom-in;
     font-size: 0.74rem;
     font-weight: 800;
     color: var(--dark-text);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
 }
 .pdp-selected-txt {
     color: var(--dark-gold);
