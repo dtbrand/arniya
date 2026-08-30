@@ -484,19 +484,23 @@ function pdp_relative_date(string $ts): string
             <?php else: ?>
                 <!-- Single Piece Mode: Colour Swatches -->
                 <?php if ($pColors !== []): ?>
-                <div>
+                <div class="pdp-color-section">
                     <div class="pdp-section-header">
-                        <span>SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($pColors[0]) ?></strong></span>
+                        <span class="pdp-label-head">SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($pColors[0]) ?></strong></span>
                     </div>
                     <div class="pdp-color-swatches" id="pdpColorSwatches">
                         <?php foreach ($pColors as $idx => $c): ?>
                         <button
+                            type="button"
                             class="pdp-color-btn <?= $idx === 0 ? 'active' : '' ?>"
                             data-color="<?= htmlspecialchars($c) ?>"
                             style="background-color: <?= htmlspecialchars($pdpSwatch($c)) ?>;"
                             title="<?= htmlspecialchars($c) ?>"
+                            aria-label="<?= htmlspecialchars($c) ?>"
                             onclick="selectPdpColor(this)"
-                        ></button>
+                        >
+                            <span class="pdp-color-inner-dot"></span>
+                        </button>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -504,14 +508,23 @@ function pdp_relative_date(string $ts): string
 
                 <!-- Single Piece Mode: Size Selector -->
                 <?php if ($pSizes !== []): ?>
-                <div>
+                <div class="pdp-size-section">
                     <div class="pdp-section-header">
-                        <span>SELECT SIZE</span>
-                        <span class="pdp-size-guide-link" onclick="openSizeGuideModal()">📏 View Size Chart</span>
+                        <span class="pdp-label-head">SELECT SIZE</span>
+                        <button type="button" class="pdp-size-guide-link" onclick="openSizeGuideModal()">
+                            <svg class="pdp-ruler-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.3 8.7 8.7 21.3c-1 1-2.6 1-3.6 0l-2.4-2.4c-1-1-1-2.6 0-3.6L15.3 2.7c1-1 2.6-1 3.6 0l2.4 2.4c1 1 1 2.6 0 3.6Z"></path>
+                                <path d="m14.5 5.5-2.5 2.5"></path>
+                                <path d="m11.5 8.5-1.5 1.5"></path>
+                                <path d="m8.5 11.5-2.5 2.5"></path>
+                                <path d="m5.5 14.5-1.5 1.5"></path>
+                            </svg>
+                            <span>VIEW SIZE CHART</span>
+                        </button>
                     </div>
                     <div class="pdp-size-grid" id="pdpSizeGrid">
                         <?php foreach ($pSizes as $idx => $s): ?>
-                        <button class="pdp-size-btn <?= $idx === 0 ? 'active' : '' ?>" data-size="<?= htmlspecialchars($s) ?>" onclick="selectPdpSize(this)">
+                        <button type="button" class="pdp-size-btn <?= $idx === 0 ? 'active' : '' ?>" data-size="<?= htmlspecialchars($s) ?>" onclick="selectPdpSize(this)">
                             <?= htmlspecialchars($s) ?>
                         </button>
                         <?php endforeach; ?>

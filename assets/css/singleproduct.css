@@ -1203,105 +1203,176 @@ cursor: zoom-in;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.68rem;
+    font-size: 0.70rem;
     font-weight: 800;
-    color: var(--dark-text);
+    color: var(--dark-text, #111827);
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
     width: 100%;
     max-width: 100%;
 }
-.pdp-selected-txt {
-    color: var(--dark-gold);
+.pdp-label-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4B5563;
     font-weight: 800;
+    font-size: 0.68rem;
+}
+.pdp-selected-txt {
+    color: #8A681F;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    padding: 1.5px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    letter-spacing: 0.03em;
+    box-shadow: 0 1px 3px rgba(138, 104, 31, 0.08);
+    text-transform: uppercase;
 }
 
+/* ════════════════════════════════════════════════════
+   LUXURY COLOR SWATCHES (INTERACTIVE GOLD RINGS)
+════════════════════════════════════════════════════ */
 .pdp-color-swatches {
     display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-.pdp-color-btn {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    border: 2px solid #FFFFFF;
-    outline: 1.5px solid var(--soft-platinum);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-.pdp-color-btn:hover {
-    outline-color: var(--dark-gold);
-    transform: scale(1.1);
-}
-.pdp-color-btn.active {
-    outline: 2px solid var(--dark-gold);
-    box-shadow: 0 0 0 2px rgba(138,104,31,0.25), 0 2px 6px rgba(0,0,0,0.15);
-    transform: scale(1.1);
-}
-
-/* Size Options & Mobile Fluid Grid */
-.pdp-size-grid {
-    display: flex;
-    gap: 5px;
+    gap: 8px;
     flex-wrap: wrap;
     align-items: center;
+    padding: 2px 0;
 }
-.pdp-size-btn {
-    min-width: 38px;
-    height: 30px;
-    border-radius: 5px;
-    border: 1.5px solid rgba(212, 175, 55, 0.65);
-    background: #FFFFFF;
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: var(--dark-text, #111827);
+.pdp-color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2.5px solid #FFFFFF;
+    outline: 1.5px solid rgba(212, 175, 55, 0.40);
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    user-select: none;
+    padding: 0;
     -webkit-tap-highlight-color: transparent;
 }
-.pdp-size-btn:hover {
-    border-color: var(--dark-gold, #8A681F);
-    color: var(--dark-gold, #8A681F);
-    background: #FAF5E8;
-    transform: translateY(-1px);
+.pdp-color-btn:hover {
+    outline-color: var(--dark-gold, #8A681F);
+    outline-width: 2px;
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.25);
 }
-.pdp-size-btn.active {
-    border-color: #8A681F !important;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
-    color: #111827 !important;
-    font-weight: 800 !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.30) !important;
-    transform: scale(1.02);
+.pdp-color-btn.active {
+    outline: 2.5px solid var(--dark-gold, #8A681F);
+    outline-offset: 1px;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.35), 0 4px 12px rgba(0, 0, 0, 0.20);
+    transform: scale(1.12);
+}
+.pdp-color-btn .pdp-color-inner-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+.pdp-color-btn.active .pdp-color-inner-dot {
+    opacity: 1;
+    transform: scale(1);
 }
 
+/* ════════════════════════════════════════════════════
+   LUXURY SIZE SELECTOR & SIZE GUIDE PILL
+════════════════════════════════════════════════════ */
 .pdp-size-guide-link {
-    font-size: 0.66rem;
-    font-weight: 700;
-    color: var(--dark-gold, #8A681F);
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #705114;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    padding: 2px 6px;
-    border-radius: 4px;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 6px;
     background: #FAF5E8;
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    transition: all 0.2s;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    box-shadow: 0 1px 3px rgba(138, 104, 31, 0.08);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 .pdp-size-guide-link:hover {
     background: #F5ECCE;
     border-color: #8A681F;
     color: #5A4210;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.16);
+}
+.pdp-ruler-svg {
+    width: 13px;
+    height: 13px;
+    stroke: #8A681F;
+    flex-shrink: 0;
+}
+
+.pdp-size-grid {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2px 0;
+}
+.pdp-size-btn {
+    min-width: 44px;
+    height: 33px;
+    border-radius: 7px;
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    background: #FFFFFF;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #1F2937;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    letter-spacing: 0.02em;
+    -webkit-tap-highlight-color: transparent;
+}
+.pdp-size-btn:hover {
+    border-color: var(--dark-gold, #8A681F);
+    color: var(--dark-gold, #8A681F);
+    background: #FAF8F2;
+    transform: translateY(-1.5px);
+    box-shadow: 0 3px 8px rgba(138, 104, 31, 0.16);
+}
+.pdp-size-btn.active {
+    border-color: #8A681F !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    font-weight: 900 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 3px 10px rgba(184,134,11,0.35) !important;
+    transform: translateY(-1px) scale(1.03);
+}
+.pdp-size-btn:disabled, .pdp-size-btn[disabled] {
+    background: #F8FAFC !important;
+    border-color: #E2E8F0 !important;
+    color: #94A3B8 !important;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 /* Quantity & Action CTAs */
