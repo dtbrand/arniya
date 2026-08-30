@@ -217,8 +217,13 @@ if ($cur_brand === null) {
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label>Brand Story / Manifesto</label>
-                                    <textarea id="editBrandStory" class="dt-form-textarea" rows="3">Crafting exquisite heritage weaves direct from Surat looms. Preserving 500-year-old Zari and Brocade handloom traditions for modern Indian elegance.</textarea>
+                                    <label>Brand Slug (URL)</label>
+                                    <input type="text" id="editBrandSlug" class="dt-form-input" value="<?php echo htmlspecialchars($cur_brand['slug']); ?>" placeholder="auto-generated from name">
+                                </div>
+
+                                <div class="dt-form-group">
+                                    <label>Brand Description</label>
+                                    <textarea id="editBrandDesc" class="dt-form-textarea" rows="3"><?php echo htmlspecialchars($cur_brand['tagline']); ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -382,6 +387,7 @@ function handleSaveBrand() {
     const id = <?php echo (int)$brand_id; ?>;
     const name = document.getElementById('editBrandName')?.value?.trim();
     const slug = document.getElementById('editBrandSlug')?.value?.trim();
+    const tier = document.getElementById('editBrandTier')?.value || '';
     const desc = document.getElementById('editBrandDesc')?.value?.trim();
 
     if (!name) {
@@ -395,16 +401,17 @@ function handleSaveBrand() {
     params.append('name', name);
     params.append('slug', slug);
     params.append('description', desc);
+    if (tier) { params.append('tier', tier); }
+    params.append('credentials', 'same-origin');
 
-    fetch('/api/brands.php', { method: 'POST', body: params })
+    fetch('/api/brands.php', { method: 'POST', body: params, credentials: 'same-origin' })
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated and saved to database!`);
             setTimeout(() => window.location.href = '/admin/products/brands/', 500);
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" saved!`);
-            setTimeout(() => window.location.href = '/admin/products/brands/', 500);
+            if (typeof window.showToast === 'function') window.showToast(`⚠️ Could not save — check your connection and retry.`);
         });
 }
 </script>

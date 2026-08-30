@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
     $slug = trim($_POST['slug'] ?? '') ?: strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
     $desc = trim($_POST['description'] ?? '');
     $logo = trim($_POST['logo_url'] ?? '');
+    $tier = trim($_POST['tier'] ?? '');
 
     try {
         $db->exec("CREATE TABLE IF NOT EXISTS product_brands (
@@ -54,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-        $stmt = $db->prepare("INSERT INTO product_brands (name, slug, description, logo_url) VALUES (?, ?, ?, ?)
-                              ON DUPLICATE KEY UPDATE name = VALUES(name), description = VALUES(description), logo_url = VALUES(logo_url)");
-        $stmt->execute([$name, $slug, $desc, $logo]);
+        $stmt = $db->prepare("INSERT INTO product_brands (name, slug, description, logo_url, tier) VALUES (?, ?, ?, ?, ?)
+                              ON DUPLICATE KEY UPDATE name = VALUES(name), description = VALUES(description), logo_url = VALUES(logo_url), tier = VALUES(tier)");
+        $stmt->execute([$name, $slug, $desc, $logo, $tier]);
         $newId = (int)$db->lastInsertId();
 
         echo json_encode(['success' => true, 'message' => "Brand '{$name}' saved successfully in database", 'id' => $newId]);
@@ -84,14 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     $name = trim($_POST['name'] ?? '');
     $slug = trim($_POST['slug'] ?? '');
     $desc = trim($_POST['description'] ?? '');
+    $tier = trim($_POST['tier'] ?? '');
 
     try {
         $stmt = $db->prepare("UPDATE product_brands SET
             name = COALESCE(NULLIF(?, ''), name),
             slug = COALESCE(NULLIF(?, ''), slug),
-            description = COALESCE(NULLIF(?, ''), description)
+            description = COALESCE(NULLIF(?, ''), description),
+            tier = COALESCE(NULLIF(?, ''), tier)
             WHERE id = ?");
-        $stmt->execute([$name, $slug, $desc, $id]);
+        $stmt->execute([$name, $slug, $desc, $tier, $id]);
         echo json_encode(['success' => true, 'message' => 'Brand updated successfully', 'id' => $id]);
     } catch (\Throwable $e) {
         http_response_code(500);

@@ -16,6 +16,17 @@ CREATE TABLE IF NOT EXISTS `product_brands` (
     INDEX `idx_brand_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Link products to their house label. Idempotent column add: MariaDB/MySQL 8
+-- have no "ADD COLUMN IF NOT EXISTS", so we gate on information_schema.
+SET @col_exists = (SELECT COUNT(*) FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'products' AND COLUMN_NAME = 'brand');
+SET @ddl = IF(@col_exists = 0,
+    'ALTER TABLE `products` ADD COLUMN `brand` VARCHAR(150) NULL DEFAULT NULL AFTER `category_name`, ADD INDEX `idx_products_brand` (`brand`)',
+    'SELECT 1');
+PREPARE stmt FROM @ddl;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 CREATE TABLE IF NOT EXISTS `product_attributes` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL,
