@@ -1011,10 +1011,31 @@
         }, 250);
     };
 
-    // Size Guide Modal
+    // Size Guide Modal with Dynamic Highlight & Unit Switcher
+    window.switchSizeUnits = function(unit) {
+        var isCm = (unit === 'cm');
+        var tabIn = document.getElementById('unitTabIn');
+        var tabCm = document.getElementById('unitTabCm');
+        if (tabIn) tabIn.classList.toggle('active', !isCm);
+        if (tabCm) tabCm.classList.toggle('active', isCm);
+
+        document.querySelectorAll('#pdpSizeTable tbody tr td[data-in]').forEach(function(cell) {
+            cell.textContent = isCm ? cell.getAttribute('data-cm') : cell.getAttribute('data-in');
+        });
+    };
+
     window.openSizeGuideModal = function() {
         var modal = document.getElementById('pdpSizeChartModal') || document.getElementById('pdpSizeGuideModal');
         if (modal) {
+            // Highlight current chosen size row
+            var curSel = (typeof window.pdpSelection === 'function') ? window.pdpSelection() : { size: '' };
+            var activeSize = String(curSel.size || '').toLowerCase().trim();
+            document.querySelectorAll('#pdpSizeTable tbody tr').forEach(function(row) {
+                var rowSize = String(row.getAttribute('data-size') || '').toLowerCase().trim();
+                var isMatch = activeSize && (rowSize === activeSize || activeSize.indexOf(rowSize) === 0 || rowSize.indexOf(activeSize) === 0);
+                row.classList.toggle('highlight-selected', !!isMatch);
+            });
+
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
             document.body.classList.add('pdp-popup-active');

@@ -890,34 +890,71 @@ function pdp_relative_date(string $ts): string
 
 <!-- ════ SIZE GUIDE MODAL ════ -->
 <div class="pdp-modal-overlay" id="pdpSizeChartModal" role="dialog" aria-modal="true" aria-label="Size Guide">
-    <div class="pdp-modal-box">
+    <div class="pdp-modal-box pdp-size-modal-box">
         <div class="pdp-modal-header">
-            <h3 class="pdp-modal-title">📏 Royal Size & Measurement Guide</h3>
-            <button class="pdp-modal-close-btn" onclick="closeSizeGuideModal()">&times;</button>
+            <div class="pdp-modal-header-left" style="display:flex; align-items:center; gap:10px;">
+                <div class="pdp-modal-icon-badge gold">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.3 8.7 8.7 21.3c-1 1-2.6 1-3.6 0l-2.4-2.4c-1-1-1-2.6 0-3.6L15.3 2.7c1-1 2.6-1 3.6 0l2.4 2.4c1 1 1 2.6 0 3.6Z"></path>
+                        <path d="m14.5 5.5-2.5 2.5"></path>
+                        <path d="m11.5 8.5-1.5 1.5"></path>
+                        <path d="m8.5 11.5-2.5 2.5"></path>
+                        <path d="m5.5 14.5-1.5 1.5"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="pdp-modal-title">Royal Size &amp; Measurement Guide</h3>
+                    <p class="pdp-modal-subtitle">Find your exact fit with standard Indian ethnic comfort allowances</p>
+                </div>
+            </div>
+            <button type="button" class="pdp-modal-close-btn" onclick="closeSizeGuideModal()" aria-label="Close size guide">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
         <div class="pdp-modal-body">
-            <p style="font-size:0.8rem; color:var(--mid-text); line-height:1.5;">
-                All measurements are tailored with standard Indian ethnic comfort allowances. Custom sizing adjustments can also be requested via our WhatsApp stylist.
-            </p>
-            <table class="pdp-size-table">
-                <thead>
-                    <tr>
-                        <th>Size</th>
-                        <th>Bust (Inches)</th>
-                        <th>Waist (Inches)</th>
-                        <th>Hip (Inches)</th>
-                        <th>Garment Length</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>XS</strong></td><td>32" - 34"</td><td>26" - 28"</td><td>36"</td><td>Standard 54"</td></tr>
-                    <tr><td><strong>S</strong></td><td>34" - 36"</td><td>28" - 30"</td><td>38"</td><td>Standard 54"</td></tr>
-                    <tr><td><strong>M</strong></td><td>36" - 38"</td><td>30" - 32"</td><td>40"</td><td>Standard 55"</td></tr>
-                    <tr><td><strong>L</strong></td><td>38" - 40"</td><td>32" - 34"</td><td>42"</td><td>Standard 55"</td></tr>
-                    <tr><td><strong>XL</strong></td><td>40" - 42"</td><td>34" - 36"</td><td>44"</td><td>Standard 56"</td></tr>
-                    <tr><td><strong>Free Size</strong></td><td>34" - 44"</td><td>Adjustable</td><td>Free</td><td>Saree 5.5m + 0.8m Blouse</td></tr>
-                </tbody>
-            </table>
+            <!-- Unit Switcher Tabs (INCHES / CM) -->
+            <div class="pdp-size-unit-tabs">
+                <button type="button" class="pdp-unit-tab active" id="unitTabIn" onclick="switchSizeUnits('in')">INCHES (in)</button>
+                <button type="button" class="pdp-unit-tab" id="unitTabCm" onclick="switchSizeUnits('cm')">CENTIMETERS (cm)</button>
+            </div>
+
+            <!-- Responsive Table Container -->
+            <div class="pdp-size-table-container">
+                <table class="pdp-size-table" id="pdpSizeTable">
+                    <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Bust</th>
+                            <th>Waist</th>
+                            <th>Hip</th>
+                            <th>Garment Length</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-size="XS"><td><span class="pdp-size-code-badge">XS</span></td><td class="m-bust" data-in="32&quot; - 34&quot;" data-cm="81 - 86 cm">32" - 34"</td><td class="m-waist" data-in="26&quot; - 28&quot;" data-cm="66 - 71 cm">26" - 28"</td><td class="m-hip" data-in="36&quot;" data-cm="91 cm">36"</td><td class="m-len" data-in="Standard 54&quot;" data-cm="Standard 137 cm">Standard 54"</td></tr>
+                        <tr data-size="S"><td><span class="pdp-size-code-badge">S (36)</span></td><td class="m-bust" data-in="34&quot; - 36&quot;" data-cm="86 - 91 cm">34" - 36"</td><td class="m-waist" data-in="28&quot; - 30&quot;" data-cm="71 - 76 cm">28" - 30"</td><td class="m-hip" data-in="38&quot;" data-cm="96 cm">38"</td><td class="m-len" data-in="Standard 54&quot;" data-cm="Standard 137 cm">Standard 54"</td></tr>
+                        <tr data-size="M"><td><span class="pdp-size-code-badge">M (38)</span></td><td class="m-bust" data-in="36&quot; - 38&quot;" data-cm="91 - 96 cm">36" - 38"</td><td class="m-waist" data-in="30&quot; - 32&quot;" data-cm="76 - 81 cm">30" - 32"</td><td class="m-hip" data-in="40&quot;" data-cm="101 cm">40"</td><td class="m-len" data-in="Standard 55&quot;" data-cm="Standard 140 cm">Standard 55"</td></tr>
+                        <tr data-size="L"><td><span class="pdp-size-code-badge">L (40)</span></td><td class="m-bust" data-in="38&quot; - 40&quot;" data-cm="96 - 101 cm">38" - 40"</td><td class="m-waist" data-in="32&quot; - 34&quot;" data-cm="81 - 86 cm">32" - 34"</td><td class="m-hip" data-in="42&quot;" data-cm="106 cm">42"</td><td class="m-len" data-in="Standard 55&quot;" data-cm="Standard 140 cm">Standard 55"</td></tr>
+                        <tr data-size="XL"><td><span class="pdp-size-code-badge">XL (42)</span></td><td class="m-bust" data-in="40&quot; - 42&quot;" data-cm="101 - 106 cm">40" - 42"</td><td class="m-waist" data-in="34&quot; - 36&quot;" data-cm="86 - 91 cm">34" - 36"</td><td class="m-hip" data-in="44&quot;" data-cm="111 cm">44"</td><td class="m-len" data-in="Standard 56&quot;" data-cm="Standard 142 cm">Standard 56"</td></tr>
+                        <tr data-size="XXL"><td><span class="pdp-size-code-badge">XXL (44)</span></td><td class="m-bust" data-in="42&quot; - 44&quot;" data-cm="106 - 111 cm">42" - 44"</td><td class="m-waist" data-in="36&quot; - 38&quot;" data-cm="91 - 96 cm">36" - 38"</td><td class="m-hip" data-in="46&quot;" data-cm="116 cm">46"</td><td class="m-len" data-in="Standard 56&quot;" data-cm="Standard 142 cm">Standard 56"</td></tr>
+                        <tr data-size="Free Size"><td><span class="pdp-size-code-badge">Free</span></td><td class="m-bust" data-in="34&quot; - 44&quot;" data-cm="86 - 111 cm">34" - 44"</td><td class="m-waist" data-in="Adjustable" data-cm="Adjustable">Adjustable</td><td class="m-hip" data-in="Free" data-cm="Free">Free</td><td class="m-len" data-in="Saree 5.5m + 0.8m Blouse" data-cm="Saree 5.5m + 0.8m Blouse">Saree 5.5m + 0.8m Blouse</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- WhatsApp Master Tailor Concierge Assistance Banner -->
+            <div class="pdp-size-concierge-strip">
+                <div class="pdp-concierge-left" style="display:flex; align-items:center; gap:8px;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A681F" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                    <div style="font-size:0.72rem; color:#4B5563; line-height:1.35;">
+                        Need custom alterations or sizing advice?
+                    </div>
+                </div>
+                <a href="https://wa.me/917046363528?text=<?= urlencode('Hello DT Brand Stylist, I need sizing assistance for product ID: ' . $pId) ?>" target="_blank" rel="noopener noreferrer" class="pdp-size-wa-btn">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
+                    <span>Chat with Stylist</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
