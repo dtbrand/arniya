@@ -43,3 +43,13 @@ coverage/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Legacy / Sandbox / Staging Trees (kept locally, never deployed)
+DT Brand/
+DT Brand New/
+DT%20Brand/
+DT+Brand/
+_shared_legacy/
+_legacy/
+_sandbox/
+_scratch/
