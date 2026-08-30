@@ -8846,21 +8846,17 @@ input[type=range].sf-range::-moz-range-thumb {
         max-height: 520px;
         opacity: 1;
         transform: translateY(0);
-        padding: 8px 14px 14px;
+        padding: 8px 6px 14px;
         border-top: 1px solid rgba(212, 175, 55, 0.15);
-    }
-    
-    .dt-footer-links {
-        border-left: 2px solid rgba(212, 175, 55, 0.35);
-        padding-left: 8px;
     }
 }
 
-/* Sub-Menu List & Designer Divider Lines */
+/* Sub-Menu List & Clean Designer Dividers */
 .dt-footer-links {
     list-style: none;
     padding: 0;
     margin: 0;
+    border-left: none !important;
     display: flex;
     flex-direction: column;
 }
