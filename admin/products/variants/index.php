@@ -237,9 +237,9 @@ if (empty($variants_matrix)) {
                     </thead>
                     <tbody id="variantsTableBody">
                         <?php foreach($variants_matrix as $v): ?>
-                        <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                        <tr id="variant-row-<?= (int)$v['id'] ?>" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:10px 8px;">
-                                <input type="checkbox" class="variant-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                <input type="checkbox" class="variant-row-check" value="<?= (int)$v['id'] ?>" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:8px 8px;">
                                 <img src="<?php echo htmlspecialchars($v['img']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
@@ -330,12 +330,30 @@ function toggleSelectAllVariants(master) {
 function handleVariantBulkAction() {
     const action = document.getElementById('variantBulkActionSelect')?.value;
     if (!action) return;
-    const selected = document.querySelectorAll('.variant-row-check:checked');
+    const selected = Array.from(document.querySelectorAll('.variant-row-check:checked')).map(c => c.value);
     if (selected.length === 0) {
         if (typeof window.showToast === 'function') window.showToast('Select at least one variant');
         return;
     }
-    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied!`);
+    if (action === 'export') {
+        const rows = [];
+        selected.forEach(id => {
+            const tr = document.getElementById('variant-row-' + id);
+            if (tr) rows.push(tr.innerText.replace(/\s+/g, ' ').trim());
+        });
+        const blob = new Blob([rows.join("\n")], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'variant-barcodes.csv';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        return;
+    }
+    /* action === 'sync': the matrix reads live stock from product_variants on
+       every page load, so there is nothing to push — say what happened. */
+    if (typeof window.showToast === 'function') {
+        window.showToast(`✓ ${selected.length} variant(s) already reflect current depot stock.`);
+    }
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

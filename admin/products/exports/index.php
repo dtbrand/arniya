@@ -205,9 +205,15 @@ $active_subnav = "exports";
 
 <script>
 function triggerExport(scope, format) {
-    if (typeof window.showToast === 'function') {
-        window.showToast(`📊 Generating ${scope.toUpperCase()} export in ${format.toUpperCase()} format...`);
+    /* PDF/XLSX need libraries the host does not carry, so only CSV streams a
+       real file; the other formats say so instead of pretending. */
+    if (format !== 'csv') {
+        if (typeof window.showToast === 'function') {
+            window.showToast(`⚠️ ${format.toUpperCase()} export is not available — use CSV.`);
+        }
+        return;
     }
+    window.location.href = '/api/products/export.php?scope=' + encodeURIComponent(scope);
 }
 </script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>

@@ -18,7 +18,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? 'list';
 // filters keep working. Before this guard existed, any visitor could POST to
 // this endpoint and rewrite or wipe the taxonomy.
 require_once __DIR__ . '/_guard.php';
-if ($_SERVER['REQUEST_METHOD'] !== 'GET' || in_array($action, ['create', 'update', 'delete'], true)) {
+if ($_SERVER['REQUEST_METHOD'] !== 'GET' || in_array($action, ['create', 'update', 'delete', 'add_term', 'remove_term'], true)) {
     dt_api_require_admin('change product attributes');
 }
 
@@ -62,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
         }
     }
 
-    echo json_encode(['success' => true, 'message' => "Attribute '{$name}' saved"]);
+    http_response_code(503);
+    echo json_encode(['success' => false, 'error' => 'database_unavailable', 'message' => 'The database is unreachable, so the attribute was not saved.']);
     exit;
 }
 
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
             exit;
         }
     }
-    echo json_encode(['success' => true, 'message' => 'Attribute updated', 'id' => $id]);
+    echo json_encode(['success' => false, 'error' => 'database_unavailable', 'message' => 'The database is unreachable, so the attribute was not updated.']);
     exit;
 }
 
@@ -106,7 +107,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete') {
             exit;
         }
     }
-    echo json_encode(['success' => true, 'message' => 'Attribute deleted', 'id' => $id]);
+    echo json_encode(['success' => false, 'error' => 'database_unavailable', 'message' => 'The database is unreachable, so the attribute was not deleted.']);
+    exit;
+}
+
+// Terms live inside the attribute's values_json column as
+// [{"name":"Crimson Red","hex":"#991b1b"}, …]. Add/remove rewrite that JSON.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($action === 'add_term' || $action === 'remove_term')) {
+    $id = (int)($_POST['id'] ?? 0);
+    if ($id <= 0) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Attribute id is required']);
+        exit;
+    }
+    if ($db === null || Database::isMockMode()) {
+        http_response_code(503);
+        echo json_encode(['success' => false, 'error' => 'database_unavailable', 'message' => 'The database is unreachable, so the term was not changed.']);
+        exit;
+    }
+
+    try {
+        $row = Database::fetchOne('SELECT values_json FROM product_attributes WHERE id = ? LIMIT 1', [$id]);
+        if (!$row) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'No attribute found with id ' . $id . '.']);
+            exit;
+        }
+        $terms = json_decode((string)($row['values_json'] ?? '[]'), true);
+        if (!is_array($terms)) {
+            $terms = [];
+        }
+
+        if ($action === 'add_term') {
+            $termName = trim((string)($_POST['term_name'] ?? ''));
+            if ($termName === '') {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Term name is required.']);
+                exit;
+            }
+            $hex = trim((string)($_POST['hex'] ?? ''));
+            // A term may be a swatch (hex) or a plain value — both are valid.
+            $terms[] = ['name' => $termName, 'hex' => $hex !== '' ? $hex : null];
+            $msg = 'Term "' . $termName . '" added.';
+        } else {
+            $termName = trim((string)($_POST['term_name'] ?? ''));
+            $hex = trim((string)($_POST['hex'] ?? ''));
+            $before = count($terms);
+            $terms = array_values(array_filter($terms, static function (array $t) use ($termName, $hex): bool {
+                $sameName = strcasecmp((string)($t['name'] ?? ''), $termName) === 0;
+                $sameHex = $hex === '' || strcasecmp((string)($t['hex'] ?? ''), $hex) === 0;
+                return !($sameName && $sameHex);
+            }));
+            if (count($terms) === $before) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'No matching term found to remove.']);
+                exit;
+            }
+            $msg = 'Term removed.';
+        }
+
+        $stmt = $db->prepare('UPDATE product_attributes SET values_json = ? WHERE id = ?');
+        $stmt->execute([json_encode($terms, JSON_UNESCAPED_UNICODE), $id]);
+        echo json_encode(['success' => true, 'id' => $id, 'terms' => $terms, 'message' => $msg]);
+    } catch (\Throwable $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
     exit;
 }
 
@@ -120,15 +186,6 @@ if ($db !== null && !Database::isMockMode()) {
             $list = $rows;
         }
     } catch (\Exception $e) {}
-}
-
-if (empty($list)) {
-    $list = [
-        ['id' => 1, 'name' => 'Color Variations', 'slug' => 'pa_color', 'type' => 'Color Swatch / Hex', 'terms_count' => 14],
-        ['id' => 2, 'name' => 'Fabric & Material', 'slug' => 'pa_fabric', 'type' => 'Text Badge / Pill', 'terms_count' => 18],
-        ['id' => 3, 'name' => 'Zari & Weaving Technique', 'slug' => 'pa_zari', 'type' => 'Text Badge / Pill', 'terms_count' => 8],
-        ['id' => 4, 'name' => 'Saree Length & Blouse', 'slug' => 'pa_size_saree', 'type' => 'Size Specification', 'terms_count' => 5]
-    ];
 }
 
 echo json_encode(['success' => true, 'count' => count($list), 'data' => $list]);

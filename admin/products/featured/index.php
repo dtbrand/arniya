@@ -558,17 +558,41 @@ function toggleSelectAllCurated(master) {
 function handleCuratedBulkAction() {
     const action = document.getElementById('curatedBulkActionSelect')?.value;
     if (!action) return;
-    const selected = document.querySelectorAll('.curated-row-check:checked');
+    const selected = Array.from(document.querySelectorAll('.curated-row-check:checked')).map(c => c.value);
     if (selected.length === 0) {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one product');
         return;
     }
-    /* This used to toast "Bulk action applied to N products!" while doing
-       nothing at all - no request was sent, no flag changed, no CSV was
-       produced. Until the endpoint exists it has to say so. */
-    if (typeof window.showToast === 'function') {
-        window.showToast(`Bulk "${action}" is not wired up yet - ${selected.length} selected, nothing changed. Use Edit on a row.`);
+    if (action === 'remove') {
+        if (!confirm('Remove ' + selected.length + ' product(s) from the featured list? This clears their featured flag.')) return;
+        let done = 0;
+        selected.forEach(id => {
+            const params = new URLSearchParams();
+            params.append('action', 'quick_edit');
+            params.append('id', id);
+            params.append('is_featured', '0');
+            fetch('/api/products.php', { method: 'POST', body: params, credentials: 'same-origin' })
+                .then(() => { if (++done === selected.length) window.location.reload(); })
+                .catch(() => { if (++done === selected.length) window.location.reload(); });
+        });
+        return;
     }
+    if (action === 'export') {
+        const rows = [];
+        document.querySelectorAll('.curated-row-check:checked').forEach(c => {
+            const tr = c.closest('tr');
+            if (tr) rows.push(tr.innerText.replace(/\s+/g, ' ').trim());
+        });
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'featured-products.csv';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        return;
+    }
+    /* action === 'featured' (Keep in List) is a no-op by definition. */
+    if (typeof window.showToast === 'function') window.showToast('Selected products are already in this list.');
 }
 
 /* A local window.shareProductWhatsApp stub stood here. It only raised a toast

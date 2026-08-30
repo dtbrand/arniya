@@ -239,9 +239,9 @@ $active_subnav = "imports";
                         <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                     </div>
                     <h3 style="font-size:15px; font-weight:800; color:#181512; margin:0 0 6px 0;" id="dropzoneTitle">Drag &amp; Drop CSV / Excel Spreadsheet Here</h3>
-                    <p style="font-size:12px; color:#646970; margin:0 0 14px 0;">Supported formats: <strong>.csv, .xlsx, .xls</strong> (Max 25MB per file)</p>
+                    <p style="font-size:12px; color:#646970; margin:0 0 14px 0;">Supported format: <strong>.csv</strong> (Max 25MB per file). Required columns: <code>title</code>, <code>retail_price</code>.</p>
                     
-                    <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls" style="display:none;" onchange="handleFileSelected(this)">
+                    <input type="file" id="csvFileInput" accept=".csv" style="display:none;" onchange="handleFileSelected(this)">
                     
                     <button type="button" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:36px; display:inline-flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
@@ -253,8 +253,8 @@ $active_subnav = "imports";
                     <div style="font-size:12px; color:#646970;">
                         Download Sample Template: <a href="#" onclick="downloadSampleTemplate(); return false;" style="color:#8A681F; font-weight:700; text-decoration:none;">📄 DT_Brand_Wholesale_Template.csv</a>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="goToStep(2)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; display:inline-flex; align-items:center; gap:6px;">
-                        <span>Proceed to Step 2: Column Mapping</span>
+                    <button type="button" class="wp-button primary" onclick="uploadAndImport()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; display:inline-flex; align-items:center; gap:6px;">
+                        <span>Upload &amp; Import Now</span>
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
                 </div>
@@ -283,7 +283,7 @@ $active_subnav = "imports";
                             <td style="padding:10px 12px;">
                                 <select class="dt-mapping-select"><option selected>Product Title *</option></select>
                             </td>
-                            <td style="padding:10px 12px; color:#181512; font-weight:600;">Kanjivaram Pure Silk Gold Zari Saree</td>
+                            <td style="padding:10px 12px; color:#181512; font-weight:600;">(from your file)</td>
                         </tr>
                         <tr style="border-bottom:1px solid #f0f0f1;">
                             <td style="padding:10px 12px;"><code>SKU_Code</code></td>
@@ -334,15 +334,15 @@ $active_subnav = "imports";
                 <div class="dt-kpi-ribbon">
                     <div style="background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; padding:14px;">
                         <span style="font-size:11px; color:#646970; font-weight:700;">TOTAL ROWS DETECTED</span>
-                        <div style="font-size:22px; font-weight:800; color:#181512; margin-top:2px;">250 Products</div>
+                        <div style="font-size:22px; font-weight:800; color:#181512; margin-top:2px;">counted from your file at import</div>
                     </div>
                     <div style="background:#DCFCE7; border:1px solid #86EFAC; border-radius:6px; padding:14px;">
                         <span style="font-size:11px; color:#15803D; font-weight:700;">VALIDATED &amp; READY</span>
-                        <div style="font-size:22px; font-weight:800; color:#15803D; margin-top:2px;">248 Valid SKUs</div>
+                        <div style="font-size:22px; font-weight:800; color:#15803D; margin-top:2px;">reported by the importer</div>
                     </div>
                     <div style="background:#FEF3C7; border:1px solid #FCD34D; border-radius:6px; padding:14px;">
                         <span style="font-size:11px; color:#B45309; font-weight:700;">OPTIONAL WARNINGS</span>
-                        <div style="font-size:22px; font-weight:800; color:#B45309; margin-top:2px;">2 Minor Tags</div>
+                        <div style="font-size:22px; font-weight:800; color:#B45309; margin-top:2px;">listed row-by-row on failure</div>
                     </div>
                 </div>
 
@@ -406,7 +406,7 @@ $active_subnav = "imports";
 
                 <div style="background:#DCFCE7; border:1px solid #86EFAC; border-radius:6px; padding:14px; margin-bottom:16px;">
                     <strong style="color:#15803D; font-size:13px; display:block; margin-bottom:4px;">✓ Zero Critical Blocking Errors</strong>
-                    <span style="font-size:12px; color:#166534;">All 248 products meet DT Brand's database schema requirements.</span>
+                    <span style="font-size:12px; color:#166534;">The result message lists exactly which rows were imported and which were rejected.</span>
                 </div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
@@ -428,11 +428,11 @@ $active_subnav = "imports";
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <div>
                             <span style="font-size:11px; color:#646970; font-weight:700;">BATCH IDENTIFIER</span>
-                            <div style="font-size:14px; font-weight:800; color:#181512;">BATCH-SURAT-2026-08</div>
+                            <div style="font-size:14px; font-weight:800; color:#181512;">assigned by the server at import time</div>
                         </div>
                         <div>
                             <span style="font-size:11px; color:#646970; font-weight:700;">TOTAL SKUS TO INSERT</span>
-                            <div style="font-size:14px; font-weight:800; color:#15803D;">248 Textile Items</div>
+                            <div style="font-size:14px; font-weight:800; color:#15803D;">total shown after import</div>
                         </div>
                     </div>
                 </div>
@@ -454,11 +454,11 @@ $active_subnav = "imports";
                     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#15803D" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <h2 style="font-size:20px; font-weight:800; color:#181512; margin:0 0 6px 0;">Import Completed Successfully!</h2>
-                <p style="font-size:13px; color:#646970; margin:0 0 22px 0;">248 new products have been inserted into your catalog with active stock and wholesale MOQ pricing.</p>
+                <p style="font-size:13px; color:#646970; margin:0 0 22px 0;">The import result above lists exactly how many rows were created and which rows need attention.</p>
                 
                 <div style="display:flex; justify-content:center; gap:12px;">
                     <a href="/admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-                        <span>View Products Catalog (1,488 SKUs)</span>
+                        <span>View Products Catalog</span>
                     </a>
                     <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 16px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -501,16 +501,48 @@ function handleFileSelected(input) {
 }
 
 function downloadSampleTemplate() {
-    if (typeof window.showToast === 'function') window.showToast('📄 Downloading DT Brand Wholesale Catalog Template...');
+    const csv = [
+        'title,sku,category,retail_price,mrp,wholesale_price,reseller_price,stock_qty,fabric,occasion,description,status',
+        'Kanjivaram Pure Silk Gold Zari Saree,KLN-SR-111,Kanjivaram Silk,4899,5990,3850,4400,25,Pure Silk,Bridal & Festive,Handloom kanjivaram with tested gold zari,in_stock',
+        'Banarasi Katan Brocade Saree,BNR-SR-204,Banarasi Silk,5499,6499,4200,4800,18,Katan Silk,Festive,Royal Varanasi brocade weave,in_stock'
+    ].join("\n");
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'DT_Brand_Wholesale_Template.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
 }
 
-function executeImportNow() {
-    if (typeof window.showToast === 'function') window.showToast('🚀 Executing batch import...');
-    setTimeout(() => {
-        goToStep(7);
-        if (typeof window.showToast === 'function') window.showToast('🎉 248 Products imported successfully!');
-    }, 600);
+function uploadAndImport() {
+    const input = document.getElementById('csvFileInput');
+    if (!input.files || !input.files[0]) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Choose a .csv file first');
+        return;
+    }
+    const fd = new FormData();
+    fd.append('file', input.files[0]);
+    if (typeof window.showToast === 'function') window.showToast('🚀 Uploading and importing…');
+    fetch('/api/products/import.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+        .then(r => r.json().then(d => ({ status: r.status, data: d })))
+        .then(({ status, data }) => {
+            if (status !== 200 || !data || data.success === false) {
+                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + ((data && data.message) || 'Import failed'));
+                return;
+            }
+            const doneTitle = document.querySelector('#stepPane7 h2');
+            const doneText = document.querySelector('#stepPane7 p');
+            if (doneTitle) doneTitle.textContent = data.failed > 0 ? 'Import finished with warnings' : 'Import Completed Successfully!';
+            if (doneText) doneText.textContent = data.message + (data.errors && data.errors.length ? ' First issues: ' + data.errors.slice(0, 5).join(' | ') : '');
+            goToStep(7);
+            if (typeof window.showToast === 'function') window.showToast('✓ ' + data.message);
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+        });
 }
+
+function executeImportNow() { uploadAndImport(); }
 </script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
