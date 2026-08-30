@@ -67,15 +67,28 @@ body.sort-open .home-smart-bottom-footer {
     }
 }
 
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtGoldPlatinumRun {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
 .smart-nav-wrapper {
     position: relative;
     max-width: 440px;
     margin: 0 auto;
-    background: #181512;
-    background: linear-gradient(180deg, #221D18 0%, #14110E 100%);
-    border: 1.5px solid rgba(212, 175, 55, 0.38);
-    border-radius: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48), 0 2px 10px rgba(212, 175, 55, 0.18);
+    border: 2px solid transparent !important;
+    border-radius: 30px !important;
+    background: linear-gradient(180deg, #221D18 0%, #14110E 100%) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtGoldPlatinumRun 2.5s linear infinite !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 16px rgba(212, 175, 55, 0.35) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     pointer-events: auto;

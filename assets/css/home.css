@@ -2,6 +2,18 @@
 /* ════════════════════════════════════════════════════
    DESIGN TOKENS & UTILITIES
 ════════════════════════════════════════════════════ */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtGoldPlatinumRun {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
 :root {
     --off-white:      #F8F6F0;
     --off-white-2:    #F2EFE8;
