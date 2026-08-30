@@ -59,8 +59,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 @media (min-width: 900px) {
     .pdp-layout-grid {
-        grid-template-columns: 380px 1fr;
-        gap: 24px;
+        grid-template-columns: 400px 1fr;
+        gap: 28px;
     }
 }
 .pdp-gallery-column, .pdp-details-column {
@@ -78,7 +78,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     flex-direction: column;
     gap: 8px;
     position: relative;
-    max-width: 380px;
+    max-width: 400px;
     width: 100%;
     margin: 0 auto;
 }
@@ -90,14 +90,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Main Image Slider Viewport (Elegant Tailored Fashion Portrait) */
+/* Main Image Slider Viewport (Normal Standard 3:4 Fashion Portrait) */
 .pdp-gallery-slider {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
     background: #FAF8F4;
-    aspect-ratio: 3 / 3.65;
-    max-height: 400px;
+    aspect-ratio: 3 / 4;
+    max-height: 490px;
     width: 100%;
     margin: 0 auto;
     border: 1px solid rgba(138, 104, 31, 0.22);
@@ -113,8 +113,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         gap: 8px;
     }
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 3.65;
-        max-height: 420px;
+        aspect-ratio: 3 / 4;
+        max-height: 480px;
         border-radius: 12px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     }
@@ -122,8 +122,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (max-width: 480px) {
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 3.5;
-        max-height: 380px;
+        aspect-ratio: 3 / 4;
+        max-height: 450px;
         border-radius: 10px;
     }
 }
@@ -894,16 +894,16 @@ cursor: zoom-in;
 .pdp-thumbnails-strip {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
-    padding: 4px 2px;
+    padding: 3px 2px;
     scrollbar-width: none;
 }
 .pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
 .pdp-thumb-item {
-    width: 56px;
-    height: 70px;
-    border-radius: 8px;
+    width: 48px;
+    height: 64px;
+    border-radius: 6px;
     overflow: hidden;
     border: 1.5px solid var(--soft-platinum);
     background: #FAF8F4;
@@ -934,8 +934,8 @@ cursor: zoom-in;
 }
 @media (max-width: 767px) {
     .pdp-thumb-item {
-        width: 48px;
-        height: 60px;
+        width: 44px;
+        height: 58px;
     }
 }
 
