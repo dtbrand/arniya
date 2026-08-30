@@ -125,59 +125,77 @@ $pageTitle = "Contact Atelier & Concierge — DT Brand's & Jai Hanuman Tex";
 
         <!-- Interactive Direct Message Form -->
         <div class="dt-contact-form-card">
-            <div class="dt-card-head" style="margin-bottom:20px;">
+            <div class="dt-card-head" style="margin-bottom:18px;">
                 <div class="dt-card-num-badge">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 </div>
-                <div>
-                    <h2 class="dt-card-title">Send Direct Inquiry to Atelier</h2>
-                    <p style="font-size:0.80rem; color:#64748B; margin:2px 0 0;">Fill in your details below and our team will get in touch with product catalogs and custom volume pricing.</p>
+                <div style="flex:1;">
+                    <h2 class="dt-card-title" style="font-family:'Cinzel',serif; font-size:1.15rem; color:#111827;">Send Direct Inquiry to Atelier</h2>
+                    <p style="font-size:0.75rem; color:#64748B; margin:2px 0 0; line-height:1.4;">Submit your requirements and our Surat master weavers will connect with volume catalog quotes.</p>
                 </div>
             </div>
 
             <form id="dtContactForm" onsubmit="handleDtContactSubmit(event)">
                 <div class="dt-form-grid">
+                    <!-- Full Name -->
                     <div class="dt-form-group">
-                        <label class="dt-form-label" for="contactName">Your Full Name *</label>
-                        <input type="text" id="contactName" name="name" class="dt-form-input" placeholder="e.g. Ramesh Patel" required />
+                        <label class="dt-form-label" for="contactName">Your Full Name <span class="dt-req-star">*</span></label>
+                        <div class="dt-input-icon-wrap">
+                            <svg class="dt-field-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <input type="text" id="contactName" name="name" class="dt-form-input with-icon" placeholder="e.g. Ramesh Patel" required />
+                        </div>
                     </div>
 
+                    <!-- Phone -->
                     <div class="dt-form-group">
-                        <label class="dt-form-label" for="contactPhone">WhatsApp / Mobile Number *</label>
-                        <input type="tel" id="contactPhone" name="phone" class="dt-form-input" placeholder="e.g. 98765 43210" required />
+                        <label class="dt-form-label" for="contactPhone">WhatsApp / Mobile Number <span class="dt-req-star">*</span></label>
+                        <div class="dt-input-icon-wrap">
+                            <svg class="dt-field-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <input type="tel" id="contactPhone" name="phone" class="dt-form-input with-icon" placeholder="e.g. 98765 43210" required />
+                        </div>
                     </div>
 
+                    <!-- Business Name -->
                     <div class="dt-form-group">
                         <label class="dt-form-label" for="contactBusiness">Business / Firm / Shop Name</label>
-                        <input type="text" id="contactBusiness" name="business" class="dt-form-input" placeholder="e.g. Patel Sarees &amp; Boutique" />
+                        <div class="dt-input-icon-wrap">
+                            <svg class="dt-field-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <input type="text" id="contactBusiness" name="business" class="dt-form-input with-icon" placeholder="e.g. Patel Sarees &amp; Boutique" />
+                        </div>
                     </div>
 
+                    <!-- Trade Category -->
                     <div class="dt-form-group">
-                        <label class="dt-form-label" for="contactType">Your Trade Category *</label>
-                        <select id="contactType" name="type" class="dt-form-select" required>
-                            <option value="Wholesale Bulk Lots">Wholesale Bale / Lot Buyer</option>
-                            <option value="Reseller Hub">Zero-Investment Reseller</option>
-                            <option value="Boutique & Retailer">Boutique &amp; Retail Shop Owner</option>
-                            <option value="Personal Festive Order">Personal Festive &amp; Bridal Buyer</option>
-                            <option value="Other Inquiry">Other Manufacturing Inquiry</option>
-                        </select>
+                        <label class="dt-form-label" for="contactType">Your Trade Category <span class="dt-req-star">*</span></label>
+                        <div class="dt-input-icon-wrap">
+                            <svg class="dt-field-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <select id="contactType" name="type" class="dt-form-select with-icon" required>
+                                <option value="Wholesale Bulk Lots">Wholesale Bale / Lot Buyer</option>
+                                <option value="Reseller Hub">Zero-Investment Reseller</option>
+                                <option value="Boutique & Retailer">Boutique &amp; Retail Shop Owner</option>
+                                <option value="Personal Festive Order">Personal Festive &amp; Bridal Buyer</option>
+                                <option value="Other Inquiry">Other Manufacturing Inquiry</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Message -->
                     <div class="dt-form-group full">
-                        <label class="dt-form-label" for="contactMessage">Message / Products Required *</label>
-                        <textarea id="contactMessage" name="message" rows="4" class="dt-form-textarea" placeholder="Tell us about the sarees, fabrics, or bale lots you are interested in..." required></textarea>
+                        <label class="dt-form-label" for="contactMessage">Message / Products Required <span class="dt-req-star">*</span></label>
+                        <textarea id="contactMessage" name="message" rows="3" class="dt-form-textarea" placeholder="Tell us about the sarees, fabrics, or bale lots you are interested in..." required></textarea>
                     </div>
                 </div>
 
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;">
-                    <button type="submit" class="dt-btn-gold" id="dtSubmitBtn">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <div class="dt-form-actions-wrap">
+                    <button type="submit" class="dt-btn-emerald dt-form-submit-btn" id="dtSubmitBtn">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
                         <span>Send Message via WhatsApp</span>
                     </button>
 
-                    <span style="font-size:0.75rem; color:#64748B;">
-                        🔒 100% Confidential • Direct Factory Desk Response within 15 Minutes
-                    </span>
+                    <div class="dt-form-trust-pill">
+                        <span class="dt-trust-dot"></span>
+                        <span>100% Confidential • Instant Surat Factory Desk Response</span>
+                    </div>
                 </div>
             </form>
         </div>

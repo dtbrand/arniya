@@ -649,12 +649,12 @@ body {
     text-decoration: underline;
 }
 
-/* Contact Form Card */
+/* Contact Form Card & Field Icons */
 .dt-contact-form-card {
     background: #FFFFFF;
     border: 1px solid rgba(212, 175, 55, 0.28);
     border-radius: 12px;
-    padding: 24px 20px;
+    padding: 22px 18px;
     box-shadow: var(--dt-card-shadow);
     width: 100%;
     box-sizing: border-box;
@@ -663,8 +663,8 @@ body {
 .dt-form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    margin-bottom: 14px;
+    gap: 12px;
+    margin-bottom: 12px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -672,7 +672,7 @@ body {
 .dt-form-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -682,26 +682,127 @@ body {
 }
 
 .dt-form-label {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: #374151;
+    color: #334155;
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.dt-req-star {
+    color: #B8860B;
+    font-weight: 800;
+}
+
+.dt-input-icon-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dt-field-icon {
+    position: absolute;
+    left: 12px;
+    pointer-events: none;
+    z-index: 2;
+    stroke: #8A681F;
+    opacity: 0.85;
 }
 
 .dt-form-input,
 .dt-form-textarea,
 .dt-form-select {
     width: 100%;
-    padding: 9px 12px;
-    font-size: 0.84rem;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
     color: #111827;
     background: #FFFFFF;
-    border: 1.2px solid #CBD5E1;
+    border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 8px;
     box-sizing: border-box;
     font-family: inherit;
     transition: all 0.2s ease;
+}
+
+.dt-form-input.with-icon,
+.dt-form-select.with-icon {
+    padding-left: 36px;
+}
+
+.dt-form-textarea {
+    height: auto;
+    min-height: 80px;
+    resize: vertical;
+    line-height: 1.45;
+}
+
+.dt-form-input::placeholder,
+.dt-form-textarea::placeholder {
+    color: #94A3B8;
+    font-size: 0.78rem;
+}
+
+/* Actions & Full-Width Submit Button */
+.dt-form-actions-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dt-form-submit-btn {
+    width: 100%;
+    height: 44px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    border-radius: 10px;
+    border: 1.5px solid #D4AF37;
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(22, 163, 74, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dt-form-submit-btn:hover {
+    background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5);
+}
+
+.dt-form-trust-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    color: #64748B;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+    padding: 6px 12px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dt-trust-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16A34A;
+    box-shadow: 0 0 6px #16A34A;
+    flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
