@@ -161,83 +161,97 @@
                 </div>
             </div>
 
-            <!-- Col 2: Royal Collections -->
-            <div class="dt-footer-col">
-                <h4 class="dt-footer-title">
-                    <span>Royal Collections</span>
-                    <span class="dt-footer-title-line"></span>
-                </h4>
-                <ul class="dt-footer-links">
-                    <li><a href="/shop.php?category=Kurti">Designer Kurti Sets</a></li>
-                    <li><a href="/shop.php?category=Banarasi+Silk">Banarasi Kadwa Weaves</a></li>
-                    <li><a href="/shop.php?category=Kanjivaram+Silk">Kanjivaram Silk Sarees</a></li>
-                    <li><a href="/shop.php?category=Paithani">Yeola Paithani Handlooms</a></li>
-                    <li><a href="/shop.php?category=Organza+Tissue">Pastel Organza &amp; Tissue</a></li>
-                    <li><a href="/shop.php?category=Bridal+Lehengas">Bridal &amp; Festive Lehengas</a></li>
-                    <li><a href="/shop.php">Browse All 2026 Collections &rarr;</a></li>
-                </ul>
-            </div>
-
-            <!-- Col 3: Business, Reseller & Wholesale -->
-            <div class="dt-footer-col">
-                <h4 class="dt-footer-title">
-                    <span>B2B &amp; Partner Desk</span>
-                    <span class="dt-footer-title-line"></span>
-                </h4>
-                <ul class="dt-footer-links">
-                    <li><a href="/wholesale.php">Wholesale B2B Catalog</a></li>
-                    <li><a href="/reseller.php">Zero-Investment Reseller Hub</a></li>
-                    <li><a href="/retailer.php">Boutique &amp; Retailer Portal</a></li>
-                    <li><a href="/wholesale.php#bale-pricing">Bale Lot Volume Slab Rates</a></li>
-                    <li><a href="/account.php">Partner Account Login</a></li>
-                    <li><a href="/shipping.php">GST Billing &amp; Transport Logistics</a></li>
-                    <li><a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20want%20to%20register%20as%20a%20wholesale%20buyer." target="_blank" rel="noopener noreferrer">Request Mill Dealership &rarr;</a></li>
-                </ul>
-            </div>
-
-            <!-- Col 4: Atelier Concierge & Direct Contact -->
-            <div class="dt-footer-col contact-col">
-                <h4 class="dt-footer-title">
-                    <span>Atelier Concierge</span>
-                    <span class="dt-footer-title-line"></span>
-                </h4>
-                
-                <div class="dt-footer-contact-list">
-                    <div class="dt-contact-item">
-                        <div class="dt-contact-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        </div>
-                        <div class="dt-contact-text">
-                            <strong>Manufacturing Atelier:</strong>
-                            <span>Ring Road, Surat Textile Market, Surat, Gujarat 395002</span>
-                        </div>
-                    </div>
-
-                    <div class="dt-contact-item">
-                        <div class="dt-contact-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        </div>
-                        <div class="dt-contact-text">
-                            <strong>Helpline Desk:</strong>
-                            <a href="tel:+917046363528" class="dt-contact-link">+91 70463 63528</a>
-                        </div>
-                    </div>
-
-                    <div class="dt-contact-item">
-                        <div class="dt-contact-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        </div>
-                        <div class="dt-contact-text">
-                            <strong>Official Email:</strong>
-                            <span>care@jaihanumantex.in</span>
-                        </div>
-                    </div>
+            <!-- Col 2: Royal Collections (Mobile Accordion) -->
+            <div class="dt-footer-col dt-footer-accordion">
+                <button type="button" class="dt-footer-acc-head" onclick="toggleDtFooterAcc(this)" aria-expanded="false">
+                    <span class="dt-footer-title-text">
+                        <span class="dt-acc-title-main">Royal Collections</span>
+                        <span class="dt-footer-title-line"></span>
+                    </span>
+                    <svg class="dt-acc-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="dt-footer-acc-body">
+                    <ul class="dt-footer-links">
+                        <li><a href="/shop.php?category=Kurti">Designer Kurti Sets</a></li>
+                        <li><a href="/shop.php?category=Banarasi+Silk">Banarasi Kadwa Weaves</a></li>
+                        <li><a href="/shop.php?category=Kanjivaram+Silk">Kanjivaram Silk Sarees</a></li>
+                        <li><a href="/shop.php?category=Paithani">Yeola Paithani Handlooms</a></li>
+                        <li><a href="/shop.php?category=Organza+Tissue">Pastel Organza &amp; Tissue</a></li>
+                        <li><a href="/shop.php?category=Bridal+Lehengas">Bridal &amp; Festive Lehengas</a></li>
+                        <li><a href="/shop.php" class="dt-view-all-link">Browse All 2026 Collections &rarr;</a></li>
+                    </ul>
                 </div>
+            </div>
 
-                <a href="https://wa.me/917046363528?text=<?= urlencode('Hello DT Brand Stylist, I need assistance with catalog products.') ?>" target="_blank" rel="noopener noreferrer" class="dt-footer-wa-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
-                    <span>Chat with Master Stylist</span>
-                </a>
+            <!-- Col 3: Business, Reseller & Wholesale (Mobile Accordion) -->
+            <div class="dt-footer-col dt-footer-accordion">
+                <button type="button" class="dt-footer-acc-head" onclick="toggleDtFooterAcc(this)" aria-expanded="false">
+                    <span class="dt-footer-title-text">
+                        <span class="dt-acc-title-main">B2B &amp; Partner Desk</span>
+                        <span class="dt-footer-title-line"></span>
+                    </span>
+                    <svg class="dt-acc-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="dt-footer-acc-body">
+                    <ul class="dt-footer-links">
+                        <li><a href="/wholesale.php">Wholesale B2B Catalog</a></li>
+                        <li><a href="/reseller.php">Zero-Investment Reseller Hub</a></li>
+                        <li><a href="/retailer.php">Boutique &amp; Retailer Portal</a></li>
+                        <li><a href="/wholesale.php#bale-pricing">Bale Lot Volume Slab Rates</a></li>
+                        <li><a href="/account.php">Partner Account Login</a></li>
+                        <li><a href="/shipping.php">GST Billing &amp; Transport Logistics</a></li>
+                        <li><a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20want%20to%20register%20as%20a%20wholesale%20buyer." target="_blank" rel="noopener noreferrer" class="dt-view-all-link">Request Mill Dealership &rarr;</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Col 4: Atelier Concierge & Direct Contact (Mobile Accordion) -->
+            <div class="dt-footer-col contact-col dt-footer-accordion">
+                <button type="button" class="dt-footer-acc-head" onclick="toggleDtFooterAcc(this)" aria-expanded="false">
+                    <span class="dt-footer-title-text">
+                        <span class="dt-acc-title-main">Atelier Concierge</span>
+                        <span class="dt-footer-title-line"></span>
+                    </span>
+                    <svg class="dt-acc-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="dt-footer-acc-body">
+                    <div class="dt-footer-contact-list">
+                        <div class="dt-contact-item">
+                            <div class="dt-contact-icon">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <div class="dt-contact-text">
+                                <strong>Manufacturing Atelier:</strong>
+                                <span>Ring Road, Surat Textile Market, Surat, Gujarat 395002</span>
+                            </div>
+                        </div>
+
+                        <div class="dt-contact-item">
+                            <div class="dt-contact-icon">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </div>
+                            <div class="dt-contact-text">
+                                <strong>Helpline Desk:</strong>
+                                <a href="tel:+917046363528" class="dt-contact-link">+91 70463 63528</a>
+                            </div>
+                        </div>
+
+                        <div class="dt-contact-item">
+                            <div class="dt-contact-icon">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </div>
+                            <div class="dt-contact-text">
+                                <strong>Official Email:</strong>
+                                <span>care@jaihanumantex.in</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/917046363528?text=<?= urlencode('Hello DT Brand Stylist, I need assistance with catalog products.') ?>" target="_blank" rel="noopener noreferrer" class="dt-footer-wa-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
+                        <span>Chat with Master Stylist</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -267,4 +281,27 @@
             </div>
         </div>
     </div>
+
+    <!-- ════ MOBILE ACCORDION INTERACTION ENGINE ════ -->
+    <script>
+    function toggleDtFooterAcc(btn) {
+        if (window.innerWidth > 1024) return;
+        var col = btn.closest('.dt-footer-accordion');
+        if (!col) return;
+        var isOpen = col.classList.contains('is-open');
+        
+        // Optional: close other accordions for sleek single-open behavior on mobile
+        var allAccs = document.querySelectorAll('.dt-footer-accordion');
+        allAccs.forEach(function(item) {
+            if (item !== col) {
+                item.classList.remove('is-open');
+                var h = item.querySelector('.dt-footer-acc-head');
+                if (h) h.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        col.classList.toggle('is-open', !isOpen);
+        btn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+    }
+    </script>
 </footer>
