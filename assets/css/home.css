@@ -8805,15 +8805,8 @@ input[type=range].sf-range::-moz-range-thumb {
 
 /* Mobile & Tablet: Interactive Luxury Collapsible Accordions & Compact Sizing */
 @media (max-width: 1024px) {
-    html {
-        background-color: #0E0C0A !important;
-    }
     body {
-        background-color: #0E0C0A !important;
         padding-bottom: 0 !important;
-    }
-    .page-wrapper {
-        background-color: var(--off-white, #FDFBF7);
     }
     .dt-master-footer {
         margin-top: 24px;

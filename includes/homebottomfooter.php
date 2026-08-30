@@ -55,10 +55,6 @@ body.sort-open .home-smart-bottom-footer {
     }
     body {
         padding-bottom: 0 !important;
-        background-color: #0E0C0A !important;
-    }
-    html {
-        background-color: #0E0C0A !important;
     }
 }
 @media (min-width: 1025px) {
