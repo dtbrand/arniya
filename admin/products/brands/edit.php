@@ -160,7 +160,6 @@ if ($cur_brand === null) {
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Edit Brand</h1>
                     <span class="adm-badge gold" style="font-weight:700; font-size:11px;">ID: #<?php echo $brand_id; ?></span>
                     <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;"><?php echo htmlspecialchars($cur_brand['name']); ?></span>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;"><?= htmlspecialchars($skuCountTxt) ?></span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -277,35 +276,27 @@ if ($cur_brand === null) {
                                 <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Wholesale B2B Insights</h3>
                             </div>
                             <div class="dt-card-body" style="padding:12px 16px;">
+                                <?php
+                                $brandSkuCount = 0;
+                                $brandValuation = 0.0;
+                                if ($pdoBrand !== null && !Database::isMockMode()) {
+                                    try {
+                                        $cnt = Database::fetchOne('SELECT COUNT(*) AS c FROM products WHERE brand = ?', [$cur_brand['name']]);
+                                        $brandSkuCount = (int)($cnt['c'] ?? 0);
+                                        $val = Database::fetchOne('SELECT COALESCE(SUM(stock_qty * wholesale_price),0) AS v FROM products WHERE brand = ?', [$cur_brand['name']]);
+                                        $brandValuation = (float)($val['v'] ?? 0);
+                                    } catch (\Throwable $e) {
+                                        // keep zeros
+                                    }
+                                }
+                                $skuCountTxt = $brandSkuCount . ' SKUs';
+                                $valuationTxt = $brandValuation >= 100000
+                                    ? ('₹' . number_format($brandValuation / 100000, 2) . ' Lakhs')
+                                    : ('₹' . number_format($brandValuation, 2));
+                                ?>
                                 <div class="dt-kpi-item">
                                     <span style="color:#646970;">Catalog SKUs</span>
                                     <strong style="color:#181512; font-size:13px;"><?= htmlspecialchars($skuCountTxt) ?></strong>
-                                </div>
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">B2B Valuation</span>
-                                    <strong style="color:#15803D; font-size:13px;"><?= htmlspecialchars($valuationTxt) ?></strong>
-                                </div>
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">Surat Mill Stock</span>
-                                    <?php
-                                    $brandSkuCount = 0;
-                                    $brandValuation = 0.0;
-                                    if ($pdoBrand !== null && !Database::isMockMode()) {
-                                        try {
-                                            $cnt = Database::fetchOne('SELECT COUNT(*) AS c FROM products WHERE brand = ?', [$cur_brand['name']]);
-                                            $brandSkuCount = (int)($cnt['c'] ?? 0);
-                                            $val = Database::fetchOne('SELECT COALESCE(SUM(stock_qty * wholesale_price),0) AS v FROM products WHERE brand = ?', [$cur_brand['name']]);
-                                            $brandValuation = (float)($val['v'] ?? 0);
-                                        } catch (\Throwable $e) {
-                                            // keep zeros
-                                        }
-                                    }
-                                    $skuCountTxt = $brandSkuCount . ' SKUs';
-                                    $valuationTxt = $brandValuation >= 100000
-                                        ? ('₹' . number_format($brandValuation / 100000, 2) . ' Lakhs')
-                                        : ('₹' . number_format($brandValuation, 2));
-                                    ?>
-                                    <strong style="color:#1D4ED8; font-size:13px;"><?= htmlspecialchars($skuCountTxt) ?></strong>
                                 </div>
                                 <div class="dt-kpi-item">
                                     <span style="color:#646970;">B2B Valuation</span>
