@@ -8,15 +8,37 @@
 $page_title = "Edit Brand";
 $active_nav = "products";
 $active_subnav = "brands";
-$brand_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+$brand_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$brand_data = [
-    1 => ['name' => 'DT Signature', 'tier' => 'Primary Flagship', 'skus' => '680 SKUs', 'valuation' => '₹28.40 Lakhs', 'tagline' => 'Primary Flagship Handloom & Pure Silk Sarees Collection'],
-    2 => ['name' => 'Arniya Heritage', 'tier' => 'Heritage Brocade', 'skus' => '420 SKUs', 'valuation' => '₹14.20 Lakhs', 'tagline' => 'Authentic Varanasi Brocades & Traditional Katan Silks'],
-    3 => ['name' => 'DT Couture', 'tier' => 'Bridal Luxury', 'skus' => '140 SKUs', 'valuation' => '₹6.00 Lakhs', 'tagline' => 'Handcrafted Bridal Zardosi Lehengas & Luxury Reception Wear'],
-];
+require_once __DIR__ . '/../../../src/Database.php';
+use DTBrand\Database;
 
-$cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_data[1];
+$cur_brand = null;
+$pdoBrand = Database::getConnection();
+if ($pdoBrand !== null && !Database::isMockMode() && $brand_id > 0) {
+    try {
+        $rows = Database::query(
+            'SELECT id, name, slug, description, logo_url, tier, status FROM product_brands WHERE id = ? LIMIT 1',
+            [$brand_id]
+        );
+        if (!empty($rows)) {
+            $r = $rows[0];
+            $cur_brand = [
+                'name' => (string)$r['name'],
+                'slug' => (string)($r['slug'] ?? ''),
+                'tier' => (string)($r['tier'] ?? 'Primary Flagship'),
+                'tagline' => (string)($r['description'] ?? ''),
+                'logo_url' => (string)($r['logo_url'] ?? ''),
+                'status' => (string)($r['status'] ?? 'active'),
+            ];
+        }
+    } catch (\Throwable $e) {
+        $cur_brand = null;
+    }
+}
+if ($cur_brand === null) {
+    $cur_brand = ['name' => 'Unknown brand', 'slug' => '', 'tier' => 'Primary Flagship', 'tagline' => '', 'logo_url' => '', 'status' => 'inactive'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -138,7 +160,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Edit Brand</h1>
                     <span class="adm-badge gold" style="font-weight:700; font-size:11px;">ID: #<?php echo $brand_id; ?></span>
                     <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;"><?php echo htmlspecialchars($cur_brand['name']); ?></span>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;"><?php echo htmlspecialchars($cur_brand['skus']); ?></span>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;"><?= htmlspecialchars($skuCountTxt) ?></span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -252,19 +274,41 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                             <div class="dt-card-body" style="padding:12px 16px;">
                                 <div class="dt-kpi-item">
                                     <span style="color:#646970;">Catalog SKUs</span>
-                                    <strong style="color:#181512; font-size:13px;"><?php echo htmlspecialchars($cur_brand['skus']); ?></strong>
+                                    <strong style="color:#181512; font-size:13px;"><?= htmlspecialchars($skuCountTxt) ?></strong>
                                 </div>
                                 <div class="dt-kpi-item">
                                     <span style="color:#646970;">B2B Valuation</span>
-                                    <strong style="color:#15803D; font-size:13px;"><?php echo htmlspecialchars($cur_brand['valuation']); ?></strong>
+                                    <strong style="color:#15803D; font-size:13px;"><?= htmlspecialchars($valuationTxt) ?></strong>
                                 </div>
                                 <div class="dt-kpi-item">
                                     <span style="color:#646970;">Surat Mill Stock</span>
-                                    <strong style="color:#1D4ED8; font-size:13px;">4,800 Units Ready</strong>
+                                    <?php
+                                    $brandSkuCount = 0;
+                                    $brandValuation = 0.0;
+                                    if ($pdoBrand !== null && !Database::isMockMode()) {
+                                        try {
+                                            $cnt = Database::fetchOne('SELECT COUNT(*) AS c FROM products WHERE brand = ?', [$cur_brand['name']]);
+                                            $brandSkuCount = (int)($cnt['c'] ?? 0);
+                                            $val = Database::fetchOne('SELECT COALESCE(SUM(stock_qty * wholesale_price),0) AS v FROM products WHERE brand = ?', [$cur_brand['name']]);
+                                            $brandValuation = (float)($val['v'] ?? 0);
+                                        } catch (\Throwable $e) {
+                                            // keep zeros
+                                        }
+                                    }
+                                    $skuCountTxt = $brandSkuCount . ' SKUs';
+                                    $valuationTxt = $brandValuation >= 100000
+                                        ? ('₹' . number_format($brandValuation / 100000, 2) . ' Lakhs')
+                                        : ('₹' . number_format($brandValuation, 2));
+                                    ?>
+                                    <strong style="color:#1D4ED8; font-size:13px;"><?= htmlspecialchars($skuCountTxt) ?></strong>
                                 </div>
                                 <div class="dt-kpi-item">
-                                    <span style="color:#646970;">Average Resale Margin</span>
-                                    <strong style="color:#8A681F; font-size:13px;">+38% Wholesale</strong>
+                                    <span style="color:#646970;">B2B Valuation</span>
+                                    <strong style="color:#15803D; font-size:13px;"><?= htmlspecialchars($valuationTxt) ?></strong>
+                                </div>
+                                <div class="dt-kpi-item">
+                                    <span style="color:#646970;">Status</span>
+                                    <strong style="color:#181512; font-size:13px;"><?= htmlspecialchars(ucfirst((string)($cur_brand['status'] ?? 'active'))) ?></strong>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +329,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                                 </button>
                                 <a href="/admin/products/?brand=<?php echo urlencode($cur_brand['name']); ?>" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; display:flex; align-items:center; gap:6px;">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                                    <span>View Products in Label (<?php echo htmlspecialchars($cur_brand['skus']); ?>)</span>
+                                    <span>View Products in Label (<?= htmlspecialchars($skuCountTxt) ?>)</span>
                                 </a>
                                 <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand from database?')) { fetch('/api/brands.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$brand_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('🗑️ Brand deleted from database'); setTimeout(() => window.location.href = '/admin/products/brands/', 400); }); }">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
