@@ -89,14 +89,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Main Image Slider Viewport (Elegant Vertical Fashion Portrait) */
+/* Main Image Slider Viewport (Normal Full Fashion Portrait Proportions) */
 .pdp-gallery-slider {
     position: relative;
     border-radius: 16px;
     overflow: hidden;
     background: #FAF8F4;
-    aspect-ratio: 3 / 3.85;
-    max-height: 580px;
+    aspect-ratio: 3 / 4;
+    max-height: 600px;
     width: 100%;
     margin: 0 auto;
     border: 1px solid rgba(138, 104, 31, 0.22);
@@ -105,15 +105,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (max-width: 767px) {
     .pdp-main-wrapper {
-        padding: 6px 10px 24px;
+        padding: 6px 12px 24px;
     }
     .pdp-gallery-column {
         max-width: 100%;
-        gap: 8px;
+        gap: 10px;
     }
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 3.4;
-        max-height: 380px;
+        aspect-ratio: 3 / 4;
+        max-height: 520px;
         border-radius: 12px;
         box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     }
@@ -121,9 +121,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (max-width: 480px) {
     .pdp-gallery-slider {
-        aspect-ratio: 3 / 3.2;
-        max-height: 320px;
-        border-radius: 10px;
+        aspect-ratio: 3 / 4;
+        max-height: 480px;
+        border-radius: 12px;
     }
 }
 
