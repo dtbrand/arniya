@@ -819,19 +819,20 @@ function pdp_relative_date(string $ts): string
             <div class="pdp-rev-dots" id="pdpRevDots"></div>
         </div>
         <?php else: ?>
-        <!-- Luxury Reviews Empty Invitation Hero Card -->
+        <!-- Luxury Reviews Invitation Card -->
         <div class="pdp-reviews-empty-hero">
             <div class="pdp-rev-empty-badge">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    <path d="M12 7v5l3 2"></path>
                 </svg>
             </div>
-            <h3 class="pdp-rev-empty-heading">Be the First to Review This Royal Creation</h3>
+            <h3 class="pdp-rev-empty-heading">Be the First to Review This Royal Piece</h3>
             <p class="pdp-rev-empty-text">
-                Have you purchased or worn this design? Share your feedback on fabric richness, comfort, and silhouette with fellow shoppers.
+                Have you purchased or worn this design? Share your thoughts on fabric softness, stitching perfection, and silhouette comfort with fellow shoppers.
             </p>
             <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 20h9"></path>
                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                 </svg>
@@ -841,7 +842,7 @@ function pdp_relative_date(string $ts): string
         <?php endif; ?>
     </section>
 
-    <!-- ════ RELATED PRODUCTS CAROUSEL ════ -->
+    <!-- ════ RELATED PRODUCTS & ATELIER DISCOVERY ════ -->
     <section class="pdp-bottom-section" id="pdpRelatedSection">
         <div class="pdp-section-header-centered">
             <h2 class="pdp-section-title-large">You May Also Admire</h2>
@@ -898,20 +899,38 @@ function pdp_relative_date(string $ts): string
             <div class="pdp-rel-dots" id="pdpRelDots"></div>
         </div>
         <?php else: ?>
-        <div class="pdp-rel-empty-hero">
-            <div class="pdp-rel-empty-badge">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2.2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
+        <!-- Distinct Luxury Atelier Discovery Strip (Non-repetitive design) -->
+        <div class="pdp-atelier-discovery-banner">
+            <div class="pdp-atelier-banner-glow"></div>
+            <div class="pdp-atelier-content-wrap">
+                <div class="pdp-atelier-crown-badge">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+                    </svg>
+                </div>
+                <div class="pdp-atelier-info">
+                    <span class="pdp-atelier-eyebrow">DT BRAND'S HAUTE COUTURE ATELIER</span>
+                    <h3 class="pdp-atelier-heading">Discover More Royal Ethnic Silhouettes</h3>
+                    <p class="pdp-atelier-desc">
+                        Explore our complete boutique collection of designer festive kurtis, handwoven silk suit sets, bridal lehengas, and daily comfort wear.
+                    </p>
+                    <div class="pdp-atelier-tags">
+                        <span class="pdp-atelier-tag">✨ Designer Kurtis</span>
+                        <span class="pdp-atelier-tag">👑 Festive Suit Sets</span>
+                        <span class="pdp-atelier-tag">🌿 Pure Rayon &amp; Silk</span>
+                        <span class="pdp-atelier-tag">📦 Wholesale Full Sets</span>
+                    </div>
+                </div>
+                <div class="pdp-atelier-action">
+                    <a href="/shop.php" class="pdp-explore-boutique-btn">
+                        <span>Explore Full Boutique</span>
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <h3 class="pdp-rel-empty-heading">Explore Our Royal Boutique Collection</h3>
-            <p class="pdp-rel-empty-text">
-                Discover matching designer kurtis, suit sets, and handloom lehengas in the full catalogue.
-            </p>
-            <a href="/shop.php" class="pdp-explore-catalog-btn">
-                <span>Browse All Collections</span>
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
         </div>
         <?php endif; ?>
     </section>

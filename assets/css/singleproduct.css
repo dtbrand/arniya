@@ -3417,74 +3417,142 @@ padding: 6px 2px 14px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(184, 134, 11, 0.42) !important;
 }
 
-/* Luxury Related Products 0-State Hero Box */
-.pdp-rel-empty-hero {
-    background: linear-gradient(145deg, #FFFFFF 0%, #FDFCF8 50%, #FAF5E8 100%) !important;
-    border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+/* ════════════════════════════════════════════════════
+   👑 DISTINCT LUXURY ATELIER DISCOVERY BANNER (You May Also Admire)
+════════════════════════════════════════════════════ */
+.pdp-atelier-discovery-banner {
+    position: relative !important;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #181512 100%) !important;
+    border: 1.5px solid #D4AF37 !important;
     border-radius: 14px !important;
-    padding: 24px 20px !important;
-    text-align: center !important;
-    max-width: 560px !important;
-    margin: 10px auto 0 !important;
-    box-shadow: 0 4px 20px rgba(138, 104, 31, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
+    padding: 24px 28px !important;
+    margin: 12px auto 0 !important;
+    max-width: 860px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    overflow: hidden !important;
 }
-.pdp-rel-empty-badge {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 12px !important;
-    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%) !important;
-    border: 1.2px solid rgba(212, 175, 55, 0.55) !important;
+.pdp-atelier-banner-glow {
+    position: absolute !important;
+    top: -50% !important;
+    right: -20% !important;
+    width: 300px !important;
+    height: 300px !important;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%) !important;
+    pointer-events: none !important;
+}
+.pdp-atelier-content-wrap {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+}
+@media (max-width: 820px) {
+    .pdp-atelier-discovery-banner {
+        padding: 20px 16px !important;
+    }
+    .pdp-atelier-content-wrap {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 14px !important;
+    }
+}
+.pdp-atelier-crown-badge {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(138, 104, 31, 0.45) 100%) !important;
+    border: 1.5px solid #D4AF37 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.18) !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25) !important;
 }
-.pdp-rel-empty-heading {
-    font-family: var(--font-serif, 'Cinzel', serif) !important;
-    font-size: 1.05rem !important;
+.pdp-atelier-info {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+.pdp-atelier-eyebrow {
+    font-size: 0.64rem !important;
     font-weight: 800 !important;
-    color: #111827 !important;
+    color: #E6CA65 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+}
+.pdp-atelier-heading {
+    font-family: var(--font-serif, 'Cinzel', serif) !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
     margin: 0 !important;
     letter-spacing: 0.02em !important;
+    line-height: 1.25 !important;
 }
-.pdp-rel-empty-text {
-    font-size: 0.75rem !important;
-    color: #64748B !important;
+@media (max-width: 600px) {
+    .pdp-atelier-heading {
+        font-size: 1.0rem !important;
+    }
+}
+.pdp-atelier-desc {
+    font-size: 0.76rem !important;
+    color: #D1D5DB !important;
     line-height: 1.45 !important;
-    max-width: 440px !important;
-    margin: 0 !important;
-    font-weight: 500 !important;
+    margin: 2px 0 6px !important;
+    font-weight: 400 !important;
 }
-.pdp-explore-catalog-btn {
-    padding: 9px 20px !important;
-    border-radius: 7px !important;
+.pdp-atelier-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+}
+@media (max-width: 820px) {
+    .pdp-atelier-tags {
+        justify-content: center !important;
+    }
+}
+.pdp-atelier-tag {
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    color: #FAF5E8 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(212, 175, 55, 0.35) !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.02em !important;
+}
+.pdp-atelier-action {
+    flex-shrink: 0 !important;
+}
+.pdp-explore-boutique-btn {
+    padding: 11px 22px !important;
+    border-radius: 8px !important;
     border: 1px solid #8A681F !important;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
     color: #111827 !important;
     font-family: var(--font-sans, 'Inter', sans-serif) !important;
-    font-size: 0.74rem !important;
-    font-weight: 800 !important;
+    font-size: 0.78rem !important;
+    font-weight: 900 !important;
     letter-spacing: 0.04em !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 7px !important;
+    gap: 8px !important;
     cursor: pointer !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 10px rgba(184, 134, 11, 0.30) !important;
-    margin-top: 4px !important;
-    transition: all 0.2s ease !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 16px rgba(184, 134, 11, 0.4) !important;
+    transition: all 0.25s ease !important;
+    white-space: nowrap !important;
 }
-.pdp-explore-catalog-btn:hover {
+.pdp-explore-boutique-btn:hover {
     background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
-    transform: translateY(-1.5px) !important;
+    transform: translateY(-2px) !important;
     color: #111827 !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 5px 14px rgba(184, 134, 11, 0.42) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 20px rgba(184, 134, 11, 0.55) !important;
 }
 
 /* Modal Form Elements */
