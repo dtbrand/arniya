@@ -8473,5 +8473,384 @@ input[type=range].sf-range::-moz-range-thumb {
     font-weight: 700;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   👑 MASTER LUXURY DESIGNER FOOTER (DESKTOP + TABLET + MOBILE)
+   DT Brand's & Jai Hanuman Tex — Surat Handloom Atelier
+══════════════════════════════════════════════════════════════════ */
+.dt-master-footer {
+    position: relative;
+    background: #14110E;
+    background: linear-gradient(180deg, #1C1814 0%, #14110E 40%, #0E0C0A 100%);
+    border-top: 2px solid #8A681F;
+    color: #E2E8F0;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    margin-top: 36px;
+    z-index: 10;
+}
+
+/* Top Perks Trust Ribbon */
+.dt-footer-perks-ribbon {
+    background: rgba(24, 21, 18, 0.95);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+    padding: 20px 16px;
+}
+.dt-footer-perks-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .dt-footer-perks-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+.dt-footer-perk-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+.dt-footer-perk-card:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+}
+.dt-perk-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(138, 104, 31, 0.35) 100%);
+    border: 1.2px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.dt-perk-text {
+    flex: 1;
+    min-width: 0;
+}
+.dt-perk-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #FAF5E8;
+    margin: 0 0 2px;
+    letter-spacing: 0.01em;
+}
+.dt-perk-desc {
+    font-size: 0.68rem;
+    color: #94A3B8;
+    margin: 0;
+    line-height: 1.35;
+}
+
+/* Main 4-Column Container */
+.dt-footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 44px 20px 24px;
+}
+@media (max-width: 1024px) {
+    .dt-footer-container {
+        padding: 32px 16px 85px; /* Extra bottom clearance for mobile bottom bar */
+    }
+}
+
+.dt-footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 36px;
+    margin-bottom: 36px;
+}
+@media (max-width: 1024px) {
+    .dt-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+    }
+}
+@media (max-width: 600px) {
+    .dt-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+/* Col 1: Brand */
+.dt-footer-col {
+    display: flex;
+    flex-direction: column;
+}
+.dt-footer-brand-wrap {
+    margin-bottom: 14px;
+}
+.dt-footer-logo-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+.dt-footer-logo-main {
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #D4AF37;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+.dt-footer-logo-sub {
+    font-size: 0.62rem;
+    color: #E6CA65;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+.dt-footer-desc {
+    font-size: 0.76rem;
+    color: #94A3B8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.dt-footer-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.dt-trust-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #FAF5E8;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Social Follow Links */
+.dt-footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.dt-social-link {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #FAF5E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+.dt-social-link:hover {
+    background: #D4AF37;
+    color: #181512;
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+.dt-social-link.wa:hover {
+    background: #16A34A;
+    color: #FFFFFF;
+    border-color: #16A34A;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+}
+
+/* Column Headings & Links */
+.dt-footer-title {
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 14px;
+    letter-spacing: 0.03em;
+    display: flex;
+    flex-direction: column;
+}
+.dt-footer-title-line {
+    width: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, #D4AF37 0%, #8A681F 100%);
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+.dt-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dt-footer-links li a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #94A3B8;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+.dt-footer-links li a:hover {
+    color: #D4AF37;
+    transform: translateX(4px);
+}
+
+/* Contact Info & WhatsApp CTA */
+.dt-footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.dt-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.dt-contact-icon {
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+.dt-contact-text {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    line-height: 1.4;
+}
+.dt-contact-text strong {
+    color: #FAF5E8;
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.dt-contact-link {
+    color: #D4AF37;
+    text-decoration: none;
+    font-weight: 700;
+}
+.dt-contact-link:hover {
+    text-decoration: underline;
+}
+
+.dt-footer-wa-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #16A34A;
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    color: #FFFFFF;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+    transition: all 0.25s ease;
+    margin-top: 4px;
+}
+.dt-footer-wa-btn:hover {
+    background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
+    color: #FFFFFF;
+}
+
+/* Bottom Strip (Copyright + Links + Pay Pills) */
+.dt-footer-bottom-strip {
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding-top: 20px;
+}
+.dt-footer-bottom-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+@media (max-width: 820px) {
+    .dt-footer-bottom-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+.dt-footer-copy {
+    font-size: 0.72rem;
+    color: #94A3B8;
+    margin: 0;
+}
+.dt-footer-copy strong {
+    color: #D4AF37;
+}
+
+.dt-footer-bottom-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+@media (max-width: 820px) {
+    .dt-footer-bottom-links {
+        justify-content: center;
+    }
+}
+.dt-footer-bottom-links a {
+    color: #94A3B8;
+    font-size: 0.72rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.dt-footer-bottom-links a:hover {
+    color: #D4AF37;
+}
+.dt-sep {
+    color: rgba(212, 175, 55, 0.4);
+    font-size: 0.65rem;
+}
+
+.dt-footer-pay-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+@media (max-width: 820px) {
+    .dt-footer-pay-badges {
+        justify-content: center;
+    }
+}
+.dt-pay-pill {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #FAF5E8;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 3px 7px;
+    border-radius: 4px;
+}
+
+
 
 

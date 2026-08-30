@@ -1132,6 +1132,9 @@ $total_products = count($products);
         </div>
     </section>
 
+    <!-- ════════════ SECTION 30.5: MASTER LUXURY DESIGNER FOOTER ════════════ -->
+    <?php include_once __DIR__ . '/includes/footer.php'; ?>
+
 </div><!-- /.page-wrapper -->
 
 <!-- ════════════ SECTION 31: SMART ANIMATED MOBILE BOTTOM FOOTER ════════════ -->
