@@ -53,7 +53,7 @@ body.drawer-open .shop-smart-bottom-footer {
         display: block;
     }
     body {
-        padding-bottom: clamp(75px, 18vw, 90px) !important;
+        padding-bottom: 0 !important;
     }
 }
 @media (min-width: 1024px) {
