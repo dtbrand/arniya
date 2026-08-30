@@ -69,6 +69,24 @@ try {
         }
 
         if ($action === 'delete') {
+            // Subcategory deletion routes through the same guarded block; the
+            // subcategories list passes action=delete_subcategory so we never
+            // delete a parent category by mistake from that screen.
+            if (($data['action'] ?? '') === 'delete_subcategory') {
+                if ($targetId <= 0) {
+                    http_response_code(400);
+                    echo json_encode(['success' => false, 'message' => 'Subcategory ID required.'], JSON_PRETTY_PRINT);
+                    exit;
+                }
+                $ok = Database::execute('DELETE FROM subcategories WHERE id = ?', [$targetId]);
+                echo json_encode([
+                    'success' => (bool)$ok,
+                    'id' => $targetId,
+                    'message' => $ok ? 'Subcategory deleted.' : 'The subcategory was not deleted.'
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+
             if ($targetId <= 0) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Category ID required.'], JSON_PRETTY_PRINT);
