@@ -409,7 +409,7 @@ function pdp_relative_date(string $ts): string
                             </svg>
                         </div>
                         <div class="pdp-trust-content">
-                            <span class="pdp-trust-title">100% Premium Quality</span>
+                            <span class="pdp-trust-title">100% Quality</span>
                             <span class="pdp-trust-sub"><?= $pFabric !== '' ? htmlspecialchars($pFabric) : 'Authentic Fabric' ?></span>
                         </div>
                     </div>
@@ -424,7 +424,7 @@ function pdp_relative_date(string $ts): string
                             </svg>
                         </div>
                         <div class="pdp-trust-content">
-                            <span class="pdp-trust-title">Fast Express Delivery</span>
+                            <span class="pdp-trust-title">Fast Delivery</span>
                             <span class="pdp-trust-sub">Dispatch in 24–48h</span>
                         </div>
                     </div>
