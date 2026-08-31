@@ -557,21 +557,29 @@ $isHomePage = (
     margin: 4px 0;
 }
 
-/* ── Mobile Full-Header Search Bar Overlay (Takes 100% Header Width) ── */
+/* ── Mobile Full-Screen Luxury Search Drawer (<768px) ── */
 .mobile-full-search-bar {
-    display: none;
-    align-items: center;
-    width: 100%;
-    height: clamp(44px, 12vw, 52px);
-    padding: 0 clamp(6px, 2vw, 14px);
-    gap: clamp(6px, 2vw, 10px);
-    background: #FFFFFF;
-    box-sizing: border-box;
-    animation: mobileSearchFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background: #FFFFFF !important;
+    z-index: 10000000 !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    animation: mobileSearchSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-@keyframes mobileSearchFadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
+@keyframes mobileSearchSlideDown {
+    from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -582,23 +590,116 @@ $isHomePage = (
     display: flex !important;
 }
 
+/* 1. Top Fixed Search Header Bar */
+.mobile-search-top-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 56px;
+    padding: 0 12px;
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--dark-gold, #8A681F);
+    box-shadow: 0 2px 8px rgba(138,104,31,0.08);
+    flex-shrink: 0;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.mobile-search-back-btn,
+.mobile-search-close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #D4AF37;
+    background: #FAF5E8;
+    color: #705114;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+    padding: 0;
+}
+
+.mobile-search-back-btn:hover,
+.mobile-search-close-btn:hover {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    color: #111827;
+    border-color: #8A681F;
+}
+
+.mobile-search-back-btn svg,
+.mobile-search-close-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    fill: none;
+}
+
 .mobile-search-input-wrap {
     flex: 1;
-    position: relative;
-    height: clamp(32px, 9vw, 38px);
+    height: 38px;
     display: flex;
     align-items: center;
     background: #FAF8F4;
     border: 1.5px solid var(--dark-gold, #8A681F);
     border-radius: 20px;
-    padding: 0 clamp(8px, 2.5vw, 14px);
+    padding: 0 12px;
+    box-sizing: border-box;
     box-shadow: 0 1px 6px rgba(138,104,31,0.08);
     transition: all 0.2s ease;
 }
+
 .mobile-search-input-wrap:focus-within {
     border-color: var(--deep-gold, #6F5218);
-    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.2);
+    box-shadow: 0 0 0 2px rgba(212,175,55,0.3);
     background: #FFFFFF;
+}
+
+.mobile-search-input-field {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: clamp(0.78rem, 2.9vw, 0.88rem);
+    font-weight: 600;
+    color: var(--dark-text, #24211C);
+}
+.mobile-search-input-field::placeholder {
+    color: var(--light-text, #9A9490);
+    font-weight: 500;
+    font-size: clamp(0.72rem, 2.7vw, 0.84rem);
+}
+
+.mobile-search-clear-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.08);
+    color: var(--mid-text, #5A5348);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+.mobile-search-clear-btn:hover {
+    background: var(--dark-gold, #8A681F);
+    color: #FFFFFF;
+}
+.mobile-search-clear-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
 }
 
 .mobile-search-submit-icon-btn {
@@ -619,63 +720,11 @@ $isHomePage = (
     transform: scale(1.1);
 }
 .mobile-search-submit-icon-btn svg {
-    width: clamp(14px, 4vw, 17px);
-    height: clamp(14px, 4vw, 17px);
+    width: clamp(15px, 4.2vw, 18px);
+    height: clamp(15px, 4.2vw, 18px);
     stroke: currentColor;
-    stroke-width: 2.2;
+    stroke-width: 2.4;
     fill: none;
-}
-
-.mobile-search-input-field {
-    width: 100%; height: 100%;
-    border: none; outline: none; background: transparent;
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: clamp(0.72rem, 2.8vw, 0.85rem);
-    color: var(--dark-text, #24211C);
-}
-.mobile-search-input-field::placeholder {
-    color: var(--light-text, #9A9490);
-    font-size: clamp(0.68rem, 2.6vw, 0.82rem);
-}
-
-.mobile-search-clear-btn {
-    width: 20px; height: 20px;
-    border-radius: 50%; border: none;
-    background: rgba(0,0,0,0.08);
-    color: var(--mid-text, #5A5348);
-    display: none; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0; margin-left: 4px;
-}
-.mobile-search-clear-btn:hover {
-    background: var(--dark-gold, #8A681F);
-    color: #FFFFFF;
-}
-.mobile-search-clear-btn svg {
-    width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2;
-}
-
-/* Right Close '✕' Button on Mobile Search Bar */
-.mobile-search-close-btn {
-    width: clamp(28px, 8vw, 36px);
-    height: clamp(28px, 8vw, 36px);
-    border-radius: 50%;
-    border: 1.5px solid var(--soft-platinum, #E5E3DE);
-    background: #FAF8F4;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--dark-gold, #8A681F);
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-}
-.mobile-search-close-btn:hover {
-    background: var(--dark-gold, #8A681F);
-    color: #FFFFFF;
-    border-color: var(--dark-gold, #8A681F);
-}
-.mobile-search-close-btn svg {
-    width: clamp(12px, 3.2vw, 15px);
-    height: clamp(12px, 3.2vw, 15px);
-    stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -904,61 +953,64 @@ $isHomePage = (
 /* ══════════════════════════════════════════════════════════
    MOBILE NEXT-LEVEL LUXURY SEARCH DRAWER (<768px)
    ══════════════════════════════════════════════════════════ */
-.mobile-search-suggestions-dropdown {
-    display: none;
-    position: fixed;
-    top: 38px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: calc(100vh - 38px);
-    background: #FFFFFF;
-    z-index: 99999;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px 12px 90px 12px;
-    box-sizing: border-box;
-    animation: mobileSuggSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
-}
-@keyframes mobileSuggSlideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.shop-header.mobile-search-active .mobile-search-suggestions-dropdown {
-    display: block !important;
-}
-
-/* Mobile Quick Category Chips Row */
 .mobile-sugg-cats-ribbon {
     display: flex;
     gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: #FAF8F4;
     border-bottom: 1px solid #F1ECE1;
+    overflow-x: auto;
+    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
 }
 .mobile-sugg-cats-ribbon::-webkit-scrollbar { display: none; }
 .mobile-sugg-cat-chip {
-    padding: 4px 10px;
-    background: #FAF8F4;
-    border: 1px solid #E5E3DE;
-    border-radius: 14px;
-    font-size: 0.72rem;
-    font-weight: 700;
+    padding: 5px 12px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    font-size: 0.76rem;
+    font-weight: 600;
     color: #4B5563;
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.15s ease;
 }
-.mobile-sugg-cat-chip.active {
+.mobile-sugg-cat-chip.active,
+.mobile-sugg-cat-chip:hover {
     background: #FAF5E8;
-    border-color: #8A681F;
-    color: #8A681F;
+    border-color: #D4AF37;
+    color: #705114;
+    font-weight: 700;
     box-shadow: 0 1px 4px rgba(138,104,31,0.15);
+}
+
+.mobile-sugg-content-body {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 12px 60px 12px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+}
+
+/* Auto-hide mobile bottom navigation when search drawer is active */
+body.mobile-search-open .shop-smart-bottom-footer,
+body.mobile-search-open #shopSmartBottomFooter,
+body.mobile-search-open .home-smart-bottom-footer,
+body.mobile-search-open #homeSmartBottomFooter,
+body.mobile-search-open .dt-mobile-bottom-nav,
+body.mobile-search-open #dtMobileBottomNav,
+body.mobile-search-open .mobile-bottom-nav,
+body.mobile-search-open .mobile-nav-bar,
+body.mobile-search-open #mobileStickyNav,
+body.mobile-search-open #mobileBottomBar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(100%) !important;
 }
 
 /* Mobile Suggestion Product Card */
@@ -1337,47 +1389,53 @@ $isHomePage = (
         </div>
     </div>
 
-    <!-- ═══ Mobile Full-Header Search Bar Overlay (Clean 100% Width with Right Close Button) ═══ -->
+    <!-- ═══ Mobile Full-Screen Luxury Search Drawer ═══ -->
     <div class="mobile-full-search-bar" id="mobileFullSearchBar">
-        <!-- Input Box with Right Search Icon -->
-        <div class="mobile-search-input-wrap">
-            <input
-                type="text"
-                class="mobile-search-input-field"
-                id="mobileSearchInput"
-                placeholder="Search sarees, kurtis, lehengas..."
-                autocomplete="off"
-                aria-label="Search items"
-            />
-            <button class="mobile-search-clear-btn" id="mobileSearchClearBtn" aria-label="Clear search text">
+        <!-- 1. Top Fixed Search Header -->
+        <div class="mobile-search-top-bar">
+            <!-- Back Arrow Button -->
+            <button type="button" class="mobile-search-back-btn" id="mobileSearchBackBtn" aria-label="Go back">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <!-- Input Box with Clear & Submit Icons -->
+            <div class="mobile-search-input-wrap">
+                <input
+                    type="text"
+                    class="mobile-search-input-field"
+                    id="mobileSearchInput"
+                    placeholder="Search sarees, lehengas, kurtis, gowns..."
+                    autocomplete="off"
+                    aria-label="Search ethnic wear"
+                />
+                <button type="button" class="mobile-search-clear-btn" id="mobileSearchClearBtn" aria-label="Clear search text">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Right Close '✕' Button -->
+            <button type="button" class="mobile-search-close-btn" id="mobileSearchCloseBtn" aria-label="Close search">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
-            <button class="mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
         </div>
 
-        <!-- Right Close '✕' Button -->
-        <button class="mobile-search-close-btn" id="mobileSearchCloseBtn" aria-label="Close search">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-
-        <!-- ═══ Mobile Full-Screen Luxury Search Suggestions & Live Products Drawer ═══ -->
-        <div class="mobile-search-suggestions-dropdown" id="mobileSearchSuggestionsDropdown">
-            <!-- Quick Category Chips Row -->
-            <div class="mobile-sugg-cats-ribbon" id="mobileSuggCatsRibbon">
-                <button type="button" class="mobile-sugg-cat-chip active" data-cat="All">✦ All</button>
-                <button type="button" class="mobile-sugg-cat-chip" data-cat="Saree">🥻 Sarees</button>
-                <button type="button" class="mobile-sugg-cat-chip" data-cat="Lehenga">👗 Lehengas</button>
-                <button type="button" class="mobile-sugg-cat-chip" data-cat="Gown">✨ Gowns</button>
-                <button type="button" class="mobile-sugg-cat-chip" data-cat="Kurti">🌸 Kurtis</button>
-            </div>
-            <!-- Dynamic Content (Trending + Live Products) -->
-            <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
+        <!-- 2. Sticky Category Chips Bar -->
+        <div class="mobile-sugg-cats-ribbon" id="mobileSuggCatsRibbon">
+            <button type="button" class="mobile-sugg-cat-chip active" data-cat="All">✦ All</button>
+            <button type="button" class="mobile-sugg-cat-chip" data-cat="Saree">🥻 Sarees</button>
+            <button type="button" class="mobile-sugg-cat-chip" data-cat="Lehenga">👗 Lehengas</button>
+            <button type="button" class="mobile-sugg-cat-chip" data-cat="Gown">✨ Gowns</button>
+            <button type="button" class="mobile-sugg-cat-chip" data-cat="Kurti">🌸 Kurtis</button>
         </div>
+
+        <!-- 3. Dynamic Scrollable Suggestions & Products Body -->
+        <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
     </div>
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
@@ -1464,6 +1522,7 @@ window.closeWishlistDrawer = function() {
 
     /* Mobile Search Elements */
     var mobileSearchBtn    = document.getElementById('mobileSearchTriggerBtn');
+    var mobileSearchBack   = document.getElementById('mobileSearchBackBtn');
     var mobileSearchClose  = document.getElementById('mobileSearchCloseBtn');
     var mobileSearchInput  = document.getElementById('mobileSearchInput');
     var mobileSearchClear  = document.getElementById('mobileSearchClearBtn');
@@ -1511,16 +1570,16 @@ window.closeWishlistDrawer = function() {
             if (isSubmit) {
                 var grid = document.getElementById('productsGrid') || document.querySelector('.products-section');
                 if (grid) {
-                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    var offset = grid.getBoundingClientRect().top + window.pageYOffset - 110;
+                    window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
                 }
             }
         } else if (isSubmit) {
-            var url = '/shop.php?';
+            var targetUrl = '/shop.php?search=' + encodeURIComponent(query);
             if (cat && cat !== 'All') {
-                url += 'category=' + encodeURIComponent(cat) + '&';
+                targetUrl += '&category=' + encodeURIComponent(cat);
             }
-            url += 'search=' + encodeURIComponent(query);
-            window.location.href = url;
+            window.location.href = targetUrl;
         }
     }
 
@@ -1592,18 +1651,48 @@ window.closeWishlistDrawer = function() {
     /* Mobile Search Open / Close Controllers */
     var userManuallyClosedMobileSearch = false;
 
+    function openMobileSearchDrawer() {
+        userManuallyClosedMobileSearch = false;
+        if (header) header.classList.add('mobile-search-active');
+        document.body.classList.add('mobile-search-open');
+        var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
+        fetchSuggestions(q, currentMobileCat, true);
+        if (mobileSearchInput) {
+            setTimeout(function() {
+                mobileSearchInput.focus();
+            }, 80);
+        }
+    }
+
+    function closeMobileSearchDrawer(resetText) {
+        userManuallyClosedMobileSearch = true;
+        if (header) header.classList.remove('mobile-search-active');
+        document.body.classList.remove('mobile-search-open');
+        if (resetText) {
+            if (mobileSearchInput) mobileSearchInput.value = '';
+            if (searchInput) searchInput.value = '';
+            performSearch('mobile', false);
+        }
+    }
+
     if (mobileSearchBtn) {
         mobileSearchBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            userManuallyClosedMobileSearch = false;
-            if (header) header.classList.add('mobile-search-active');
-            var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
-            fetchSuggestions(q, currentMobileCat, true);
-            if (mobileSearchInput) {
-                setTimeout(function() {
-                    mobileSearchInput.focus();
-                }, 100);
-            }
+            openMobileSearchDrawer();
+        });
+    }
+
+    if (mobileSearchBack) {
+        mobileSearchBack.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeMobileSearchDrawer(true);
+        });
+    }
+
+    if (mobileSearchClose) {
+        mobileSearchClose.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeMobileSearchDrawer(true);
         });
     }
 
@@ -1611,18 +1700,8 @@ window.closeWishlistDrawer = function() {
         mobileSearchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
             performSearch('mobile', true);
+            closeMobileSearchDrawer(false);
             if (mobileSearchInput) mobileSearchInput.blur();
-        });
-    }
-
-    if (mobileSearchClose) {
-        mobileSearchClose.addEventListener('click', function(e) {
-            e.preventDefault();
-            userManuallyClosedMobileSearch = true;
-            if (header) header.classList.remove('mobile-search-active');
-            if (mobileSearchInput) mobileSearchInput.value = '';
-            if (searchInput) searchInput.value = '';
-            performSearch('mobile', false);
         });
     }
 
@@ -1644,10 +1723,10 @@ window.closeWishlistDrawer = function() {
         mobileSearchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 performSearch('mobile', true);
+                closeMobileSearchDrawer(false);
                 mobileSearchInput.blur();
             } else if (e.key === 'Escape') {
-                userManuallyClosedMobileSearch = true;
-                if (header) header.classList.remove('mobile-search-active');
+                closeMobileSearchDrawer(true);
             }
         });
     }

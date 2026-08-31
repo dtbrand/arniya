@@ -41,11 +41,15 @@ body.wishlist-open .shop-smart-bottom-footer,
 body.modal-open .shop-smart-bottom-footer,
 body.reels-open .shop-smart-bottom-footer,
 body.reels-modal-open .shop-smart-bottom-footer,
+body.mobile-search-open .shop-smart-bottom-footer,
+body.mobile-search-open #shopSmartBottomFooter,
+body.dt-search-active .shop-smart-bottom-footer,
 body.drawer-open .shop-smart-bottom-footer {
     transform: translateY(140%) !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+    display: none !important;
 }
 
 @media (max-width: 1023px) {
