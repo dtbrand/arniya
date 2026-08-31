@@ -545,6 +545,161 @@ body.sort-open .home-smart-bottom-footer {
     color: #FFFFFF;
 }
 
+/* ── Category Accordions (Nested Sub-Category Style) ── */
+.home-menu-accordions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.home-menu-accordion-item {
+    border-radius: 10px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    background: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+}
+
+.home-menu-accordion-item.open {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.home-menu-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    color: #E2DBD2;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.home-menu-accordion-header:hover,
+.home-menu-accordion-header.active,
+.home-menu-accordion-item.open .home-menu-accordion-header {
+    color: #F5D77F;
+}
+
+.home-menu-accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.home-menu-accordion-title svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.home-menu-accordion-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.home-menu-accordion-arrow {
+    width: 15px;
+    height: 15px;
+    stroke: #D4AF37;
+    stroke-width: 2.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: rotate(0deg);
+}
+
+.home-menu-accordion-item.open .home-menu-accordion-arrow {
+    transform: rotate(180deg);
+    stroke: #F5D77F;
+}
+
+.home-menu-accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 10px 0 20px;
+}
+
+.home-menu-accordion-item.open .home-menu-accordion-panel {
+    max-height: 520px;
+    padding: 2px 10px 10px 18px;
+}
+
+.home-menu-sub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-left: 2px solid rgba(212, 175, 55, 0.35);
+    padding-left: 8px;
+}
+
+.home-menu-sub-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #C8C0B5;
+    font-size: 0.74rem;
+    font-weight: 600;
+    transition: all 0.18s ease;
+}
+
+.home-menu-sub-link:hover,
+.home-menu-sub-link.active {
+    color: #F5D77F;
+    background: rgba(212, 175, 55, 0.14);
+    transform: translateX(3px);
+}
+
+.home-menu-sub-viewall {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #F5D77F;
+    font-size: 0.70rem;
+    font-weight: 800;
+    background: rgba(212, 175, 55, 0.10);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.18s ease;
+}
+
+.home-menu-sub-viewall:hover {
+    background: rgba(212, 175, 55, 0.22);
+    border-color: #F5D77F;
+    transform: translateX(3px);
+}
+
 /* Footer Action */
 .home-menu-footer {
     padding: 12px 14px;
@@ -587,18 +742,60 @@ if (class_exists('\DTBrand\ProductCatalog')) {
 }
 if (empty($drawerCategories)) {
     $drawerCategories = [
-        ['name' => 'Silk Sarees', 'slug' => 'saree', 'badge' => '450+', 'badge_cls' => 'hot', 'icon' => 'saree'],
-        ['name' => 'Banarasi Kadwa Weaves', 'slug' => 'banarasi-silk', 'badge' => 'ROYAL', 'badge_cls' => 'gold', 'icon' => 'banarasi'],
-        ['name' => 'Kanjivaram Silk Sarees', 'slug' => 'kanjivaram-silk', 'badge' => 'PURE ZARI', 'badge_cls' => 'gold', 'icon' => 'kanjivaram'],
-        ['name' => 'Yeola Paithani Handlooms', 'slug' => 'paithani-handloom', 'badge' => 'HERITAGE', 'badge_cls' => 'green', 'icon' => 'paithani'],
-        ['name' => 'Designer Kurti Sets', 'slug' => 'kurti', 'badge' => 'TRENDING', 'badge_cls' => 'gold', 'icon' => 'kurti'],
-        ['name' => 'Chanderi & Organza Tissue', 'slug' => 'organza-tissue', 'badge' => 'NEW', 'badge_cls' => 'green', 'icon' => 'organza'],
-        ['name' => 'Bridal & Festive Lehengas', 'slug' => 'bridal-lehengas', 'badge' => 'BRIDAL', 'badge_cls' => 'gold', 'icon' => 'lehenga'],
-        ['name' => 'Patola Heritage Weaves', 'slug' => 'patola-heritage', 'badge' => 'DOUBLE IKAT', 'badge_cls' => 'gold', 'icon' => 'patola']
+        ['name' => 'Saree', 'slug' => 'saree', 'products_count' => '450'],
+        ['name' => 'Lehenga', 'slug' => 'lehenga', 'products_count' => '120'],
+        ['name' => 'Gown', 'slug' => 'gown', 'products_count' => '85'],
+        ['name' => 'Kurti', 'slug' => 'kurti', 'products_count' => '160']
     ];
 }
+
+$drawerSubcategories = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getSubcategories() : [];
+$categorySubMap = [];
+if (!empty($drawerSubcategories)) {
+    foreach ($drawerSubcategories as $dsc) {
+        $cName = strtolower(trim((string)($dsc['category_name'] ?? '')));
+        $cId = (int)($dsc['category_id'] ?? 0);
+        if ($cName !== '') {
+            $categorySubMap[$cName][] = $dsc;
+        }
+        if ($cId > 0) {
+            $categorySubMap['id_' . $cId][] = $dsc;
+        }
+    }
+}
+
+$defaultCategorySubs = [
+    'saree' => [
+        ['name' => 'Banarasi Kadwa Silk', 'badge' => 'ROYAL', 'badge_cls' => 'gold'],
+        ['name' => 'Bandhani & Patola Heritage', 'badge' => 'HERITAGE', 'badge_cls' => 'gold'],
+        ['name' => 'Chanderi Cotton Silk', 'badge' => 'HANDLOOM', 'badge_cls' => 'green'],
+        ['name' => 'Kanjivaram Pure Zari', 'badge' => 'PURE ZARI', 'badge_cls' => 'gold'],
+        ['name' => 'Pure Organza Tissue', 'badge' => 'TRENDING', 'badge_cls' => 'gold'],
+        ['name' => 'Yeola Paithani Brocade', 'badge' => 'CLASSIC', 'badge_cls' => 'green'],
+    ],
+    'lehenga' => [
+        ['name' => 'Bridal Velvet Lehengas', 'badge' => 'BRIDAL', 'badge_cls' => 'gold'],
+        ['name' => 'Organza Floral Lehengas', 'badge' => 'FLORAL', 'badge_cls' => 'green'],
+        ['name' => 'Georgette Festive Lehengas', 'badge' => 'FESTIVE', 'badge_cls' => 'gold'],
+        ['name' => 'Silk Heritage Chaniya Choli', 'badge' => 'HERITAGE', 'badge_cls' => 'green'],
+    ],
+    'gown' => [
+        ['name' => 'Anarkali Silhouette Gowns', 'badge' => 'ROYAL', 'badge_cls' => 'gold'],
+        ['name' => 'Floor-Length Georgette Gowns', 'badge' => 'ELEGANT', 'badge_cls' => 'green'],
+        ['name' => 'Indo-Western Drape Gowns', 'badge' => 'PARTY', 'badge_cls' => 'gold'],
+        ['name' => 'Embroidered Silk Gowns', 'badge' => 'NEW', 'badge_cls' => 'green'],
+    ],
+    'kurti' => [
+        ['name' => '3-Piece Festive Kurti Sets', 'badge' => 'SETS', 'badge_cls' => 'gold'],
+        ['name' => 'Flared Anarkali & Angrakha', 'badge' => 'FLARED', 'badge_cls' => 'gold'],
+        ['name' => 'Pure Cotton Daily Kurtis', 'badge' => 'COMFORT', 'badge_cls' => 'green'],
+        ['name' => 'Straight Cut Office Wear', 'badge' => 'DAILY', 'badge_cls' => 'green'],
+    ]
+];
+
 $currentScript = basename($_SERVER['PHP_SELF'] ?? '');
 $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
+$currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
 ?>
 <div class="home-menu-drawer-backdrop" id="homeMenuDrawerBackdrop" onclick="toggleHomeMobileMenu(false)">
     <aside class="home-menu-drawer" id="homeMenuDrawer" onclick="event.stopPropagation()">
@@ -630,7 +827,7 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
 
             <!-- SECTION 1: STOREFRONT & WEAVES -->
             <div class="home-menu-cat-title">
-                <span>ETHNIC PILLARS &amp; WEAVES</span>
+                <span>STOREFRONT &amp; ALL PRODUCTS</span>
                 <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">CATALOG</span>
             </div>
             <ul class="home-menu-list">
@@ -647,6 +844,14 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
                         <span class="home-menu-link-badge gold">ALL</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- CATEGORY-WISE ACCORDION MODULE -->
+            <div class="home-menu-cat-title" style="margin-top:14px;">
+                <span>SHOP BY CATEGORY &amp; WEAVE</span>
+                <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">TAP TO EXPAND</span>
+            </div>
+            <div class="home-menu-accordions-group">
                 <?php 
                 $catIconMap = [
                     'saree' => '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
@@ -658,18 +863,62 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
                 foreach ($drawerCategories as $dc): 
                     $dcName = $dc['name'] ?? '';
                     if ($dcName === '' || strtolower($dcName) === 'all') continue;
+                    $dcSlug = strtolower($dc['slug'] ?? $dcName);
                     $isDActive = (strtolower($currentCatParam) === strtolower($dcName) || strtolower(str_replace('-', ' ', $currentCatParam)) === strtolower($dcName));
                     $dcBadge = (int)($dc['products_count'] ?? 0) > 0 ? (int)$dc['products_count'] . '+' : 'COLLECTION';
-                    $iconSvg = $catIconMap[strtolower($dc['slug'] ?? $dcName)] ?? '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+                    $iconSvg = $catIconMap[$dcSlug] ?? '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+                    
+                    // Match subcategories
+                    $subs = $categorySubMap[$dcSlug] ?? ($categorySubMap[strtolower($dcName)] ?? ($defaultCategorySubs[$dcSlug] ?? []));
+                    $hasSubs = !empty($subs);
                 ?>
-                <li>
-                    <a href="/shop.php?category=<?= urlencode($dcName) ?>" class="home-menu-link <?= $isDActive ? 'active' : '' ?>">
-                        <?= $iconSvg ?>
-                        <span><?= htmlspecialchars($dcName) ?> Collection</span>
-                        <span class="home-menu-link-badge gold"><?= htmlspecialchars($dcBadge) ?></span>
-                    </a>
-                </li>
+                <div class="home-menu-accordion-item <?= ($isDActive && $hasSubs) ? 'open' : '' ?>">
+                    <div class="home-menu-accordion-header <?= $isDActive ? 'active' : '' ?>" onclick="<?= $hasSubs ? 'toggleMenuAccordion(this)' : 'window.location.href=\'/shop.php?category=' . urlencode($dcName) . '\'' ?>">
+                        <div class="home-menu-accordion-title">
+                            <?= $iconSvg ?>
+                            <span><?= htmlspecialchars($dcName) ?> Collection</span>
+                        </div>
+                        <div class="home-menu-accordion-meta">
+                            <span class="home-menu-link-badge gold"><?= htmlspecialchars($dcBadge) ?></span>
+                            <?php if ($hasSubs): ?>
+                            <svg class="home-menu-accordion-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php if ($hasSubs): ?>
+                    <div class="home-menu-accordion-panel">
+                        <ul class="home-menu-sub-list">
+                            <li>
+                                <a href="/shop.php?category=<?= urlencode($dcName) ?>" class="home-menu-sub-viewall">
+                                    <span>✦ View All <?= htmlspecialchars($dcName) ?> Designs</span>
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </li>
+                            <?php foreach ($subs as $subItem): 
+                                $subName = $subItem['name'] ?? '';
+                                if ($subName === '') continue;
+                                $isSubActive = (strtolower($currentSubParam) === strtolower($subName));
+                                $subBadge = $subItem['badge'] ?? '';
+                                $subBadgeCls = $subItem['badge_cls'] ?? 'gold';
+                            ?>
+                            <li>
+                                <a href="/shop.php?category=<?= urlencode($dcName) ?>&subcategory=<?= urlencode($subName) ?>" class="home-menu-sub-link <?= $isSubActive ? 'active' : '' ?>">
+                                    <span>• <?= htmlspecialchars($subName) ?></span>
+                                    <?php if ($subBadge !== ''): ?>
+                                    <span class="home-menu-link-badge <?= $subBadgeCls ?>" style="font-size:0.50rem; padding:1px 5px;"><?= htmlspecialchars($subBadge) ?></span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
+                </div>
                 <?php endforeach; ?>
+            </div>
+
+            <!-- VIDEO REELS LINK -->
+            <ul class="home-menu-list" style="margin-top:10px;">
                 <li>
                     <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openReelsModal==='function') window.openReelsModal(0);" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="4"></rect><line x1="2" y1="8" x2="22" y2="8"></line><polygon points="10 12 15 15 10 18" fill="currentColor"></polygon></svg>
@@ -678,37 +927,6 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
                     </a>
                 </li>
             </ul>
-
-            <!-- SECTION: POPULAR SUB-CATEGORIES -->
-            <?php 
-            $drawerSubcategories = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getSubcategories() : [];
-            if (!empty($drawerSubcategories)): 
-            ?>
-            <div class="home-menu-cat-title">
-                <span>CURATED WEAVES &amp; SILHOUETTES</span>
-                <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">SUB-CATEGORY</span>
-            </div>
-            <ul class="home-menu-list">
-                <?php 
-                $subLimit = 8;
-                $sCount = 0;
-                foreach ($drawerSubcategories as $dsc):
-                    if ($sCount >= $subLimit) break;
-                    $dscName = $dsc['name'] ?? '';
-                    $dscCat = $dsc['category_name'] ?? '';
-                    $isSubActive = (strtolower($currentCatParam) === strtolower($dscName));
-                    $sCount++;
-                ?>
-                <li>
-                    <a href="/shop.php?subcategory=<?= urlencode($dscName) ?>" class="home-menu-link <?= $isSubActive ? 'active' : '' ?>" style="font-size:0.75rem; padding:8px 12px;">
-                        <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="4"></circle></svg>
-                        <span><?= htmlspecialchars($dscName) ?></span>
-                        <span class="home-menu-link-badge green" style="font-size:0.50rem;"><?= htmlspecialchars($dscCat) ?></span>
-                    </a>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
 
             <!-- SECTION 2: B2B & PARTNER HUB -->
             <div class="home-menu-cat-title">
@@ -883,6 +1101,15 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
             backdrop.classList.remove('active');
             document.body.style.overflow = '';
         }
+    };
+
+    // Toggle Category Accordion Submenu
+    window.toggleMenuAccordion = function(headerElem) {
+        if (!headerElem) return;
+        var item = headerElem.closest('.home-menu-accordion-item');
+        if (!item) return;
+        var isOpen = item.classList.contains('open');
+        item.classList.toggle('open', !isOpen);
     };
 
     window.handleSmartFooterAction = function(e, targetUrl, actionKey) {
