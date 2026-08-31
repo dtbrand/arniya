@@ -643,24 +643,37 @@ $isHomePage = (
 /* ── Mobile Search Suggestions Dropdown (Opens below header on click/type) ── */
 .mobile-search-suggestions-dropdown {
     display: none;
-    position: fixed;
-    top: 66px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: calc(100vh - 66px);
-    height: calc(100dvh - 66px);
-    background: #FFFFFF;
-    z-index: 999999;
-    flex-direction: column;
-    overflow: hidden;
-    box-sizing: border-box;
+    position: fixed !important;
+    top: 38px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: calc(100vh - 38px) !important;
+    height: calc(100dvh - 38px) !important;
+    background: #FFFFFF !important;
+    z-index: 9999999 !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    overscroll-behavior: contain !important;
     animation: dtSuggFadeIn 0.2s ease;
+}
+
+body.mobile-search-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none !important;
 }
 
 body.mobile-search-open .mobile-search-suggestions-dropdown {
     display: flex !important;
+}
+
+body.mobile-search-open .header-attached-subnav {
+    display: none !important;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -927,13 +940,15 @@ body.mobile-search-open {
 }
 
 .mobile-sugg-content-body {
-    flex: 1;
-    width: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px 12px 60px 12px;
-    box-sizing: border-box;
-    background: #FFFFFF;
+    flex: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: contain !important;
+    padding: 10px 12px 100px 12px !important;
+    box-sizing: border-box !important;
+    background: #FFFFFF !important;
 }
 
 /* 1-Line Smooth Horizontal Scrolling for Trending Ethnic Wear on Mobile */
@@ -1622,11 +1637,16 @@ window.closeWishlistDrawer = function() {
 
     /* Mobile Search Open / Close Controllers */
     var mobileSearchSuggestionsClose = document.getElementById('mobileSearchSuggestionsCloseBtn');
+    var savedScrollY = 0;
 
     function openMobileSearchDrawer() {
+        if (!document.body.classList.contains('mobile-search-open')) {
+            savedScrollY = window.scrollY || window.pageYOffset || 0;
+        }
         if (header) header.classList.add('mobile-search-active');
         document.body.classList.add('mobile-search-open');
-        document.body.style.overflow = 'hidden';
+        document.body.style.top = '-' + savedScrollY + 'px';
+
         var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
         fetchSuggestions(q, currentMobileCat, true);
         if (mobileSearchInput) {
@@ -1637,8 +1657,13 @@ window.closeWishlistDrawer = function() {
     }
 
     function closeMobileSearchDrawer(resetText) {
+        var hadOpen = document.body.classList.contains('mobile-search-open');
         document.body.classList.remove('mobile-search-open');
-        document.body.style.overflow = '';
+        document.body.style.top = '';
+        if (hadOpen) {
+            window.scrollTo(0, savedScrollY);
+        }
+
         var sy = window.scrollY || window.pageYOffset || 0;
         if (sy < 45 && header) {
             header.classList.remove('mobile-search-active');
@@ -1676,8 +1701,11 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchInput) {
         mobileSearchInput.addEventListener('input', function() {
             var q = mobileSearchInput.value.trim();
+            if (!document.body.classList.contains('mobile-search-open')) {
+                savedScrollY = window.scrollY || window.pageYOffset || 0;
+            }
             document.body.classList.add('mobile-search-open');
-            document.body.style.overflow = 'hidden';
+            document.body.style.top = '-' + savedScrollY + 'px';
             performSearch('mobile', false);
             clearTimeout(searchDebounceTimer);
             searchDebounceTimer = setTimeout(function () {
@@ -1686,15 +1714,21 @@ window.closeWishlistDrawer = function() {
         });
 
         mobileSearchInput.addEventListener('focus', function() {
+            if (!document.body.classList.contains('mobile-search-open')) {
+                savedScrollY = window.scrollY || window.pageYOffset || 0;
+            }
             document.body.classList.add('mobile-search-open');
-            document.body.style.overflow = 'hidden';
+            document.body.style.top = '-' + savedScrollY + 'px';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
 
         mobileSearchInput.addEventListener('click', function() {
+            if (!document.body.classList.contains('mobile-search-open')) {
+                savedScrollY = window.scrollY || window.pageYOffset || 0;
+            }
             document.body.classList.add('mobile-search-open');
-            document.body.style.overflow = 'hidden';
+            document.body.style.top = '-' + savedScrollY + 'px';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
@@ -1714,8 +1748,7 @@ window.closeWishlistDrawer = function() {
     document.addEventListener('click', function(e) {
         if (!e.target.closest('#mobileFullSearchBar') && !e.target.closest('#mobileSearchSuggestionsDropdown') && !e.target.closest('#mobileSearchTriggerBtn')) {
             if (document.body.classList.contains('mobile-search-open')) {
-                document.body.classList.remove('mobile-search-open');
-                document.body.style.overflow = '';
+                closeMobileSearchDrawer(false);
             }
         }
     });
