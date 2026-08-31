@@ -251,21 +251,85 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 .cd-rec-price { font-size: 0.82rem !important; font-weight: 800 !important; color: var(--dark-gold, #8A681F) !important; }
 .cd-rec-add-btn {
     padding: 5px 10px !important;
-    border-radius: 6px !important;
+    border-radius: 20px !important;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
     border: 1px solid #8A681F !important;
     color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
     font-size: 0.65rem !important;
     font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25) !important;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+.cd-rec-add-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) scale(1.04) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 10px rgba(184,134,11,0.4) !important;
+}
+.cd-rec-add-btn svg {
+    width: 10px !important;
+    height: 10px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.8 !important;
+    fill: none !important;
+}
+
+.cd-qty-btn {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 6px !important;
+    border: 1px solid #8A681F !important;
+    background: #FAF5E8 !important;
+    color: #111827 !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+.cd-qty-btn:hover {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    border-color: #8A681F !important;
+    transform: scale(1.08) !important;
+}
+
+.cd-remove-btn {
+    padding: 4px 10px !important;
+    border-radius: 14px !important;
+    background: #FEF2F2 !important;
+    color: #DC2626 !important;
+    border: 1px solid #FECACA !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 3px !important;
+    gap: 4px !important;
+    text-decoration: none !important;
+    margin-left: auto !important;
 }
-.cd-rec-add-btn:hover {
-    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
-    transform: scale(1.05) !important;
+.cd-remove-btn:hover {
+    background: #FEE2E2 !important;
+    border-color: #F87171 !important;
+    color: #B91C1C !important;
+    transform: translateY(-1px) !important;
+}
+.cd-remove-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    fill: none !important;
 }
 </style>
 
@@ -442,12 +506,12 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 var imgSrc = p.image || p.img || '/assets/images/product1.png';
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + imgSrc + '" alt="' + (p.name || 'Ethnic Attire') + '" class="cd-rec-img" onerror="this.src=\'/assets/images/product1.png\';" />' +
+                        '<img src="' + imgSrc + '" alt="' + (p.name || 'Ethnic Attire') + '" class="cd-rec-img" onerror="this.onerror=null; this.src=\'/assets/images/product1.png\';" />' +
                     '</div>' +
                     '<h5 class="cd-rec-title">' + (p.name || 'Ethnic Attire') + '</h5>' +
                     '<div class="cd-price-row">' +
                         '<span class="cd-rec-price">₹' + Number(p.price || 2999).toLocaleString('en-IN') + '</span>' +
-                        '<button class="cd-rec-add-btn" onclick="window.addRecToCart(' + p.id + ')">+ ADD</button>' +
+                        '<button class="cd-rec-add-btn" onclick="window.addRecToCart(' + p.id + ')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> <span>ADD</span></button>' +
                     '</div>' +
                 '</div>';
             }).join('');
@@ -465,7 +529,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                     '<h4 class="cd-empty-title">YOUR BAG IS EMPTY</h4>' +
                     '<p class="cd-empty-desc">Discover our handcrafted ethnic luxury collection & elevate your wardrobe.</p>' +
                     '<button class="cd-explore-btn" onclick="window.closeCartDrawer(); window.location.href=\'/shop\';">' +
-                        'EXPLORE COLLECTION &rarr;' +
+                        '<span>EXPLORE COLLECTION</span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
                     '</button>' +
 
                     '<div class="cd-recommend-section">' +
@@ -496,7 +560,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 var imgUrl = item.image || item.img || '/assets/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + (item.name || 'Product') + '" class="cd-item-img" onerror="this.src=\'/assets/images/product1.png\';" />' +
+                    '<img src="' + imgUrl + '" alt="' + (item.name || 'Product') + '" class="cd-item-img" onerror="this.onerror=null; this.src=\'/assets/images/product1.png\';" />' +
                     '<div class="cd-item-info">' +
                         '<h4 class="cd-item-title">' + (item.name || 'Ethnic Wear') + '</h4>' +
                         '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +
@@ -505,10 +569,10 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                             (item.old_price ? '<span class="cd-item-old">₹' + Number(item.old_price * qty).toLocaleString('en-IN') + '</span>' : '') +
                         '</div>' +
                         '<div class="cd-qty-wrap">' +
-                            '<button class="cd-qty-btn cd-minus-btn" onclick="window.updateCartQty(' + idx + ', -1)">-</button>' +
+                            '<button class="cd-qty-btn cd-minus-btn" onclick="window.updateCartQty(' + idx + ', -1)" title="Decrease Quantity"><svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" stroke-width="3" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>' +
                             '<span class="cd-qty-num">' + qty + '</span>' +
-                            '<button class="cd-qty-btn cd-plus-btn" onclick="window.updateCartQty(' + idx + ', 1)">+</button>' +
-                            '<button class="cd-remove-btn" onclick="window.removeFromCart(' + idx + ')">&times; Remove</button>' +
+                            '<button class="cd-qty-btn cd-plus-btn" onclick="window.updateCartQty(' + idx + ', 1)" title="Increase Quantity"><svg viewBox="0 0 24 24" width="10" height="10" stroke="currentColor" stroke-width="3" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>' +
+                            '<button class="cd-remove-btn" onclick="window.removeFromCart(' + idx + ')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span>Remove</span></button>' +
                         '</div>' +
                     '</div>' +
                 '</div>';

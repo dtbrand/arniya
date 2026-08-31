@@ -209,35 +209,91 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 .wd-rec-price { font-size: 0.82rem !important; font-weight: 800 !important; color: var(--dark-gold, #8A681F) !important; }
 .wd-rec-add-btn {
     padding: 5px 10px !important;
-    border-radius: 6px !important;
+    border-radius: 20px !important;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
     border: 1px solid #8A681F !important;
     color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
     font-size: 0.65rem !important;
     font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25) !important;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+.wd-rec-add-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) scale(1.04) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 10px rgba(184,134,11,0.4) !important;
+}
+.wd-rec-add-btn svg {
+    width: 10px !important;
+    height: 10px !important;
+    stroke: currentColor !important;
+    fill: currentColor !important;
+}
+
+.wd-move-bag-btn {
+    padding: 7px 14px !important;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    border: 1px solid #8A681F !important;
+    color: #111827 !important;
+    font-family: var(--font-sans, 'Inter', sans-serif) !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25) !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+.wd-move-bag-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(184,134,11,0.38) !important;
+}
+.wd-move-bag-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    fill: none !important;
+}
+
+.wd-remove-btn {
+    padding: 4px 10px !important;
+    border-radius: 14px !important;
+    background: #FEF2F2 !important;
+    color: #DC2626 !important;
+    border: 1px solid #FECACA !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 3px !important;
+    gap: 4px !important;
+    text-decoration: none !important;
+    margin-left: auto !important;
 }
-.wd-rec-add-btn:hover {
-    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
-    transform: scale(1.05) !important;
+.wd-remove-btn:hover {
+    background: #FEE2E2 !important;
+    border-color: #F87171 !important;
+    color: #B91C1C !important;
+    transform: translateY(-1px) !important;
 }
-
-.wd-move-bag-btn {
-    padding: 7px 14px; border-radius: 7px;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
-    border: 1px solid #8A681F;
-    color: #111827; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25);
-    transition: all 0.2s ease;
-}
-.wd-move-bag-btn:hover {
-    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
-    transform: translateY(-1px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(184,134,11,0.38);
+.wd-remove-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    fill: none !important;
 }
 </style>
 
@@ -391,7 +447,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                     '<h5 class="wd-rec-title">' + (p.name || 'Ethnic Wear') + '</h5>' +
                     '<div class="wd-rec-price-row">' +
                         '<span class="wd-rec-price">₹' + Number(p.price || 2999).toLocaleString('en-IN') + '</span>' +
-                        '<button class="wd-rec-add-btn" onclick="window.addRecToWishlist(' + p.id + ')">♡ SAVE</button>' +
+                        '<button class="wd-rec-add-btn" onclick="window.addRecToWishlist(' + p.id + ')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> <span>SAVE</span></button>' +
                     '</div>' +
                 '</div>';
             }).join('');
@@ -407,7 +463,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                     '<h4 class="wd-empty-title">YOUR WISHLIST IS EMPTY</h4>' +
                     '<p class="wd-empty-desc">Save your favorite ethnic luxury sarees, kurtis & lehengas to shop anytime.</p>' +
                     '<button class="wd-explore-btn" onclick="window.closeWishlistDrawer(); window.scrollTo({top: 500, behavior: \'smooth\'});">' +
-                        'EXPLORE CATALOGUE &rarr;' +
+                        '<span>EXPLORE CATALOGUE</span> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
                     '</button>' +
 
                     '<div class="wd-recommend-section">' +
@@ -438,8 +494,8 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                         '<span class="wd-item-meta">' + (item.category || 'Ethnic Wear') + ' &bull; ' + (item.fabric || 'Pure Silk') + ' &bull; ' + (item.color || 'Standard') + '</span>' +
                         '<span class="wd-item-price">₹' + Number(item.price).toLocaleString('en-IN') + (item.old_price ? ' <span class="wd-item-old">₹' + Number(item.old_price).toLocaleString('en-IN') + '</span>' : '') + '</span>' +
                         '<div class="wd-actions">' +
-                            '<button class="wd-move-bag-btn" onclick="window.moveToBag(' + idx + ')">MOVE TO BAG</button>' +
-                            '<button class="wd-remove-btn" onclick="window.removeFromWishlist(' + idx + ')">&times; Remove</button>' +
+                            '<button class="wd-move-bag-btn" onclick="window.moveToBag(' + idx + ')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> <span>MOVE TO BAG</span></button>' +
+                            '<button class="wd-remove-btn" onclick="window.removeFromWishlist(' + idx + ')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span>Remove</span></button>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
