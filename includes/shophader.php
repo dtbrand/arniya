@@ -1568,14 +1568,14 @@ body.mobile-search-open #mobileBottomBar {
     <?php if (empty($hideHeaderSubnav)): ?>
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
         <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
-            <button class="subnav-item main-cat-tab <?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('All');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('All');}else{window.location.href='/shop?category=all';}">
+            <button class="subnav-item main-cat-tab <?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'true' : 'false' ?>" onclick="<?= $isHomePage ? 'window.location.href=\'/shop.php?category=all\';' : 'if(typeof window.filterByBanner===\'function\'){window.filterByBanner(\'All\');}else{window.location.href=\'/shop.php?category=all\';}' ?>">
                 <svg class="subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 <span>All Categories</span>
             </button>
             <?php foreach ($headerCategories as $hCat): 
                 $isCatActive = isset($selectedCategory) && (strtolower($selectedCategory) === strtolower($hCat) || strtolower(str_replace('-', ' ', $selectedCategory)) === strtolower($hCat));
             ?>
-            <button class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" role="tab" data-cat="<?= htmlspecialchars($hCat) ?>" aria-selected="<?= $isCatActive ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('<?= htmlspecialchars(addslashes($hCat)) ?>');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>');}else{window.location.href='/shop?category=<?= urlencode($hCat) ?>';}"><?= htmlspecialchars($hCat) ?></button>
+            <button class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" role="tab" data-cat="<?= htmlspecialchars($hCat) ?>" aria-selected="<?= $isCatActive ? 'true' : 'false' ?>" onclick="<?= $isHomePage ? 'window.location.href=\'/shop.php?category=' . urlencode($hCat) . '\';' : 'if(typeof window.filterByBanner===\'function\'){window.filterByBanner(\'' . htmlspecialchars(addslashes($hCat)) . '\');}else{window.location.href=\'/shop.php?category=' . urlencode($hCat) . '\';}' ?>"><?= htmlspecialchars($hCat) ?></button>
             <?php endforeach; ?>
             <button class="subnav-item subnav-reels-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
                 <span class="reel-3d-icon-wrap">

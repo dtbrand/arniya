@@ -125,6 +125,7 @@ $total_products = count($products);
         window.shopProductsData = window.allProducts;
         window.allCategories = <?php echo json_encode($categoriesDetails); ?>;
         window.initialCategory = <?php echo json_encode($selectedCategory ?: 'All'); ?>;
+        window.initialSubCategory = <?php echo json_encode($selectedSubCategory ?: ''); ?>;
         window.initialSearchQuery = <?php echo json_encode($initialSearch); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };

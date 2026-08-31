@@ -112,7 +112,7 @@
         searchQuery: window.initialSearchQuery || '',
         colors: [],
         sizes: [],
-        fabrics: [],
+        fabrics: (window.initialSubCategory && window.initialSubCategory !== 'All') ? [window.initialSubCategory] : [],
         minPrice: 500,
         maxPrice: 30000,
         minDiscount: 0,
@@ -197,12 +197,18 @@
         if (!track) return;
 
         var currentSelected = (window.masterFilterState && window.masterFilterState.category) ? window.masterFilterState.category.toLowerCase() : 'all';
+        var currentFabrics = (window.masterFilterState && window.masterFilterState.fabrics) ? window.masterFilterState.fabrics.map(function(f){ return f.toLowerCase(); }) : [];
         var list = subCategoryData[mainCat] || subCategoryData['All'];
         track.innerHTML = list.map(function(item, idx) {
             var itemVal = (item.val || '').toLowerCase();
-            var isAct = (item.type === 'all' && (currentSelected === 'all' || currentSelected === '')) ||
+            var isAct = false;
+            if (currentFabrics.length > 0 && item.type === 'fabric') {
+                isAct = currentFabrics.indexOf(itemVal) !== -1;
+            } else if (currentFabrics.length === 0) {
+                isAct = (item.type === 'all' && (currentSelected === 'all' || currentSelected === '')) ||
                         (item.type === 'category' && itemVal === currentSelected) ||
                         (idx === 0 && currentSelected === 'all');
+            }
             var circleContent = '';
             if (item.img) {
                 // No stock-photo onerror: a broken path shows the shared
@@ -876,7 +882,27 @@
         if (sClr) sClr.style.display = 'flex';
         if (mClr) mClr.style.display = 'flex';
     }
+
+    // Sync subnav tabs
+    document.querySelectorAll('.main-cat-tab').forEach(function(t){
+        var tCat = (t.dataset.cat || '').toLowerCase();
+        var isMatch = (initialCategory.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === initialCategory.toLowerCase());
+        t.classList.toggle('active', isMatch);
+        t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+
     window.renderSubCategories(initialCategory);
     window.applyMasterFilters();
+
+    // If navigated with category/subcategory/search parameter, smooth scroll to storefront
+    if ((initialCategory && initialCategory !== 'All') || window.initialSubCategory || window.initialSearchQuery) {
+        setTimeout(function() {
+            var grid = document.getElementById('productsGrid') || document.querySelector('.products-section') || document.querySelector('.shop-layout');
+            if (grid) {
+                var offset = grid.getBoundingClientRect().top + window.pageYOffset - 90;
+                window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
+            }
+        }, 150);
+    }
 
 })();

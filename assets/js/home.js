@@ -231,10 +231,10 @@
     enableDragScroll('.coyu-stories-track');
 
     window.filterHomeCategory = function(catName) {
-        if (!catName) return;
-        if (window.masterFilterState) {
-            window.masterFilterState.category = catName;
-            if (typeof window.applyMasterFilters === 'function') window.applyMasterFilters();
+        if (!catName || catName.toLowerCase() === 'all') {
+            window.location.href = '/shop.php?category=all';
+        } else {
+            window.location.href = '/shop.php?category=' + encodeURIComponent(catName);
         }
     };
 
@@ -768,33 +768,12 @@
        HOME PAGE 31-SECTION CONTROLLERS
     ═════════════════════════════════════════════════════════════════ */
 
-    /* 1. Category Navigation Filter & Smooth Scroll */
+    /* 1. Category Navigation Filter & Redirect to Shop */
     window.filterHomeCategory = function(catName) {
-        var pills = document.querySelectorAll('.home-cat-pill');
-        pills.forEach(function(p) {
-            var text = p.textContent.trim();
-            if (catName === 'All' && text.indexOf('All') !== -1) {
-                p.classList.add('active');
-            } else if (text.indexOf(catName) !== -1) {
-                p.classList.add('active');
-            } else {
-                p.classList.remove('active');
-            }
-        });
-
-        var st = window.masterFilterState;
-        if (st) {
-            st.category = catName;
-            window.applyMasterFilters();
-        }
-
-        var trendSec = document.getElementById('section-trending');
-        if (trendSec) {
-            trendSec.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        if (typeof showToast === 'function') {
-            showToast('Showing category: ' + catName, 'filter');
+        if (!catName || catName.toLowerCase() === 'all') {
+            window.location.href = '/shop.php?category=all';
+        } else {
+            window.location.href = '/shop.php?category=' + encodeURIComponent(catName);
         }
     };
 

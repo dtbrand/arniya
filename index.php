@@ -260,7 +260,7 @@ $total_products = count($products);
             <div class="home-cat-carousel-wrap">
                 <div class="home-cat-scroll-track" id="homeCatScrollTrack">
                     <?php foreach ($categoriesList as $cat): ?>
-                    <article class="home-cat-card" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= $cat['name'] ?>');" role="button" tabindex="0">
+                    <article class="home-cat-card" onclick="window.location.href='/shop.php?category=<?= urlencode($cat['name']) ?>';" role="button" tabindex="0">
                         <div class="home-cat-card-img-wrap">
                             <img src="<?= $cat['img'] ?>" alt="<?= $cat['name'] ?>" loading="lazy" class="home-cat-card-img" />
                         </div>
@@ -463,7 +463,7 @@ $total_products = count($products);
             </div>
 
             <div class="collections-banner-grid">
-                <div class="col-banner-card col-bridal" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Lehengas');">
+                <div class="col-banner-card col-bridal" onclick="window.location.href='/shop.php?category=Lehengas';">
                     <div class="col-banner-content">
                         <span class="col-tag">BRIDAL COUTURE</span>
                         <h3 class="col-title">Royal Velvet & Zardozi Lehengas</h3>
@@ -471,7 +471,7 @@ $total_products = count($products);
                     </div>
                 </div>
 
-                <div class="col-banner-card col-festive" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Sarees');">
+                <div class="col-banner-card col-festive" onclick="window.location.href='/shop.php?category=Sarees';">
                     <div class="col-banner-content">
                         <span class="col-tag">FESTIVE SILKS</span>
                         <h3 class="col-title">Heritage Banarasi & Kanjivaram</h3>
@@ -479,7 +479,7 @@ $total_products = count($products);
                     </div>
                 </div>
 
-                <div class="col-banner-card col-party" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Kurtis');">
+                <div class="col-banner-card col-party" onclick="window.location.href='/shop.php?category=Kurtis';">
                     <div class="col-banner-content">
                         <span class="col-tag">PARTY WEAR</span>
                         <h3 class="col-title">Anarkali & Sharara Sets</h3>
