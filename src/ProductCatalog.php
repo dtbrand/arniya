@@ -514,6 +514,36 @@ class ProductCatalog
         return $out;
     }
 
+    /**
+     * Get subcategories, optionally filtered by category_id.
+     */
+    public static function getSubcategories(int $categoryId = 0, bool $activeOnly = true): array
+    {
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return [];
+        }
+
+        $sql = "SELECT s.id, s.category_id, s.name, s.slug, s.description, s.status, c.name AS category_name
+                FROM subcategories s
+                LEFT JOIN categories c ON c.id = s.category_id";
+        $where = [];
+        $params = [];
+        if ($categoryId > 0) {
+            $where[] = "s.category_id = :cid";
+            $params['cid'] = $categoryId;
+        }
+        if ($activeOnly) {
+            $where[] = "s.status = 'active'";
+        }
+        if (!empty($where)) {
+            $sql .= " WHERE " . implode(" AND ", $where);
+        }
+        $sql .= " ORDER BY s.name ASC";
+
+        return Database::query($sql, $params);
+    }
+
     public static function getRecommendations(int $currentProductId = 0, int $limit = 4): array
     {
         $all = self::getAll();

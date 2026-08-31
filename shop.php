@@ -14,21 +14,44 @@ use DTBrand\Database;
 // ── Dynamic Database-First Catalog Loader ──
 $products = ProductCatalog::getAll();
 
-$selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : '';
+$selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : (isset($_GET['cat']) ? trim($_GET['cat']) : '');
+$selectedSubCategory = isset($_GET['subcategory']) ? trim($_GET['subcategory']) : (isset($_GET['subcat']) ? trim($_GET['subcat']) : '');
 $shopNoImage = ProductCatalog::NO_IMAGE;
+
 if ($selectedCategory !== '' && strtolower($selectedCategory) !== 'all') {
     $filtered = [];
     foreach ($products as $p) {
         $catName = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
+        $subCatName = strtolower($p['sub_category'] ?? ($p['subcategory'] ?? ''));
         $catSlug = strtolower(str_replace(' ', '-', $catName));
+        $subCatSlug = strtolower(str_replace(' ', '-', $subCatName));
         $targetSlug = strtolower(str_replace(' ', '-', $selectedCategory));
-        if ($catName !== '' && ($catName === strtolower($selectedCategory) || $catSlug === $targetSlug || strpos($catSlug, $targetSlug) !== false || strpos($targetSlug, $catSlug) !== false)) {
+        if (
+            $catName === strtolower($selectedCategory) ||
+            $subCatName === strtolower($selectedCategory) ||
+            $catSlug === $targetSlug ||
+            $subCatSlug === $targetSlug ||
+            strpos($catSlug, $targetSlug) !== false ||
+            strpos($targetSlug, $catSlug) !== false ||
+            strpos($subCatSlug, $targetSlug) !== false ||
+            strpos($targetSlug, $subCatSlug) !== false
+        ) {
             $filtered[] = $p;
         }
     }
-    // The filter is applied even when it matches nothing. This used to keep the
-    // unfiltered list whenever $filtered was empty, so asking for a category
-    // with no products showed the whole catalogue as if it belonged to it.
+    $products = $filtered;
+}
+
+if ($selectedSubCategory !== '' && strtolower($selectedSubCategory) !== 'all') {
+    $filtered = [];
+    foreach ($products as $p) {
+        $subCatName = strtolower($p['sub_category'] ?? ($p['subcategory'] ?? ''));
+        $subCatSlug = strtolower(str_replace(' ', '-', $subCatName));
+        $targetSlug = strtolower(str_replace(' ', '-', $selectedSubCategory));
+        if ($subCatName === strtolower($selectedSubCategory) || $subCatSlug === $targetSlug || strpos($subCatSlug, $targetSlug) !== false || strpos($targetSlug, $subCatSlug) !== false) {
+            $filtered[] = $p;
+        }
+    }
     $products = $filtered;
 }
 

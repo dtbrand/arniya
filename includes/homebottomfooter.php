@@ -630,7 +630,7 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
 
             <!-- SECTION 1: STOREFRONT & WEAVES -->
             <div class="home-menu-cat-title">
-                <span>STOREFRONT &amp; WEAVES</span>
+                <span>ETHNIC PILLARS &amp; WEAVES</span>
                 <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">CATALOG</span>
             </div>
             <ul class="home-menu-list">
@@ -643,29 +643,30 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
                 <li>
                     <a href="/shop.php" class="home-menu-link <?= ($currentScript === 'shop.php' && empty($currentCatParam)) ? 'active' : '' ?>">
                         <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        <span>All Masterpieces Shop</span>
+                        <span>All Products Shop</span>
                         <span class="home-menu-link-badge gold">ALL</span>
                     </a>
                 </li>
                 <?php 
-                $drawerCatLimit = 7;
-                $dCount = 0;
+                $catIconMap = [
+                    'saree' => '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+                    'lehenga' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>',
+                    'gown' => '<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>',
+                    'kurti' => '<svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>'
+                ];
+
                 foreach ($drawerCategories as $dc): 
-                    if ($dCount >= $drawerCatLimit) break;
                     $dcName = $dc['name'] ?? '';
                     if ($dcName === '' || strtolower($dcName) === 'all') continue;
                     $isDActive = (strtolower($currentCatParam) === strtolower($dcName) || strtolower(str_replace('-', ' ', $currentCatParam)) === strtolower($dcName));
-                    $dcBadge = !empty($dc['badge']) ? $dc['badge'] : ((int)($dc['products_count'] ?? 0) > 0 ? (int)$dc['products_count'] . '+' : '');
-                    $dcBadgeCls = !empty($dc['badge_cls']) ? $dc['badge_cls'] : 'gold';
-                    $dCount++;
+                    $dcBadge = (int)($dc['products_count'] ?? 0) > 0 ? (int)$dc['products_count'] . '+' : 'COLLECTION';
+                    $iconSvg = $catIconMap[strtolower($dc['slug'] ?? $dcName)] ?? '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
                 ?>
                 <li>
                     <a href="/shop.php?category=<?= urlencode($dcName) ?>" class="home-menu-link <?= $isDActive ? 'active' : '' ?>">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span><?= htmlspecialchars($dcName) ?></span>
-                        <?php if (!empty($dcBadge)): ?>
-                        <span class="home-menu-link-badge <?= $dcBadgeCls ?>"><?= htmlspecialchars($dcBadge) ?></span>
-                        <?php endif; ?>
+                        <?= $iconSvg ?>
+                        <span><?= htmlspecialchars($dcName) ?> Collection</span>
+                        <span class="home-menu-link-badge gold"><?= htmlspecialchars($dcBadge) ?></span>
                     </a>
                 </li>
                 <?php endforeach; ?>
@@ -677,6 +678,37 @@ $currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
                     </a>
                 </li>
             </ul>
+
+            <!-- SECTION: POPULAR SUB-CATEGORIES -->
+            <?php 
+            $drawerSubcategories = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getSubcategories() : [];
+            if (!empty($drawerSubcategories)): 
+            ?>
+            <div class="home-menu-cat-title">
+                <span>CURATED WEAVES &amp; SILHOUETTES</span>
+                <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">SUB-CATEGORY</span>
+            </div>
+            <ul class="home-menu-list">
+                <?php 
+                $subLimit = 8;
+                $sCount = 0;
+                foreach ($drawerSubcategories as $dsc):
+                    if ($sCount >= $subLimit) break;
+                    $dscName = $dsc['name'] ?? '';
+                    $dscCat = $dsc['category_name'] ?? '';
+                    $isSubActive = (strtolower($currentCatParam) === strtolower($dscName));
+                    $sCount++;
+                ?>
+                <li>
+                    <a href="/shop.php?subcategory=<?= urlencode($dscName) ?>" class="home-menu-link <?= $isSubActive ? 'active' : '' ?>" style="font-size:0.75rem; padding:8px 12px;">
+                        <svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="4"></circle></svg>
+                        <span><?= htmlspecialchars($dscName) ?></span>
+                        <span class="home-menu-link-badge green" style="font-size:0.50rem;"><?= htmlspecialchars($dscCat) ?></span>
+                    </a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
 
             <!-- SECTION 2: B2B & PARTNER HUB -->
             <div class="home-menu-cat-title">
