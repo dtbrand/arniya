@@ -1858,37 +1858,36 @@ window.closeWishlistDrawer = function() {
 
     /* Smooth Zero-Jitter Scroll Engine */
     var isShopHeaderScrolled = false;
-    var scrollTicking = false;
 
-    window.addEventListener('scroll', function() {
-        if (!scrollTicking) {
-            window.requestAnimationFrame(function() {
-                var sy = window.scrollY || window.pageYOffset || 0;
-                if (header) {
-                    var isMobile = window.innerWidth <= 767;
-                    if (sy > 45) {
-                        if (!isShopHeaderScrolled) {
-                            isShopHeaderScrolled = true;
-                            header.classList.add('scrolled');
-                        }
-                        if (isMobile && !header.classList.contains('mobile-search-active')) {
-                            header.classList.add('mobile-search-active');
-                        }
-                    } else if (sy < 10) {
-                        if (isShopHeaderScrolled) {
-                            isShopHeaderScrolled = false;
-                            header.classList.remove('scrolled');
-                        }
-                        if (isMobile && !document.body.classList.contains('mobile-search-open') && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
-                            header.classList.remove('mobile-search-active');
-                        }
-                    }
-                }
-                scrollTicking = false;
-            });
-            scrollTicking = true;
+    function handleShopHeaderScroll() {
+        var sy = window.scrollY || window.pageYOffset || (document.documentElement ? document.documentElement.scrollTop : 0) || (document.body ? document.body.scrollTop : 0) || 0;
+        if (!header) return;
+        var isMobile = (window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches);
+
+        if (sy > 20) {
+            if (!isShopHeaderScrolled) {
+                isShopHeaderScrolled = true;
+                header.classList.add('scrolled');
+            }
+            if (isMobile && !header.classList.contains('mobile-search-active')) {
+                header.classList.add('mobile-search-active');
+            }
+        } else if (sy <= 10) {
+            if (isShopHeaderScrolled) {
+                isShopHeaderScrolled = false;
+                header.classList.remove('scrolled');
+            }
+            if (isMobile && !document.body.classList.contains('mobile-search-open') && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
+                header.classList.remove('mobile-search-active');
+            }
         }
-    }, { passive: true });
+    }
+
+    window.addEventListener('scroll', handleShopHeaderScroll, { passive: true });
+    document.addEventListener('scroll', handleShopHeaderScroll, { passive: true });
+    window.addEventListener('touchmove', handleShopHeaderScroll, { passive: true });
+    window.addEventListener('resize', handleShopHeaderScroll, { passive: true });
+    handleShopHeaderScroll();
 
     syncHeaderAccountState();
     window.addEventListener('storage', syncHeaderAccountState);
