@@ -2678,10 +2678,10 @@ cursor: zoom-in;
 }
 .pdp-rel-card:hover .pdp-rel-img-wrap img { transform: scale(1.08); }
 
-/* Photo Top-Left Corner Luxury Gold Available Tag */
+/* Photo Bottom-Left Footer Corner Luxury Gold Available Tag */
 .pdp-rel-avail-tag {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     left: 8px;
     display: inline-flex;
     align-items: center;
@@ -2700,7 +2700,7 @@ cursor: zoom-in;
 }
 @media (max-width: 600px) {
     .pdp-rel-avail-tag {
-        top: 6px;
+        bottom: 6px;
         left: 6px;
         font-size: 0.52rem;
         padding: 2px 6px;
