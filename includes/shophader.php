@@ -2005,9 +2005,8 @@ window.closeWishlistDrawer = function() {
         restartShopTickerTimer();
     }
 
-    /* Smooth Zero-Jitter Scroll & Auto-Open Search Bar Engine */
+    /* Smooth Zero-Jitter Scroll Engine */
     var isShopHeaderScrolled = false;
-    var userManuallyClosedMobileSearch = false;
     var scrollTicking = false;
 
     window.addEventListener('scroll', function() {
@@ -2015,25 +2014,15 @@ window.closeWishlistDrawer = function() {
             window.requestAnimationFrame(function() {
                 var sy = window.scrollY || window.pageYOffset || 0;
                 if (header) {
-                    var isMobile = window.innerWidth <= 767;
-
-                    if (sy > 45) {
+                    if (sy > 20) {
                         if (!isShopHeaderScrolled) {
                             isShopHeaderScrolled = true;
                             header.classList.add('scrolled');
                         }
-                        // Auto-open mobile search bar on scroll
-                        if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
-                            header.classList.add('mobile-search-active');
-                        }
-                    } else if (sy < 10) {
+                    } else {
                         if (isShopHeaderScrolled) {
                             isShopHeaderScrolled = false;
                             header.classList.remove('scrolled');
-                        }
-                        userManuallyClosedMobileSearch = false;
-                        if (isMobile && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
-                            header.classList.remove('mobile-search-active');
                         }
                     }
                 }
