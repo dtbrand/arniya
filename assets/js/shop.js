@@ -247,9 +247,11 @@
         var displayName = (typeof origCat === 'string') ? origCat : (origCat.name || origCat.title || cName);
         var cImg = catCircleImage(origCat);
 
-        // 1st circle: All <Category>
+        // 1st circle: All Categories (Return to all categories)
+        // 2nd circle: All <Category> (View all items in this category)
         var list = [
-            { label: 'All ' + displayName, img: cImg, icon: '✦', type: 'cat_all', val: displayName }
+            { label: 'All Categories', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' },
+            { label: 'All ' + displayName, img: cImg, icon: '👑', type: 'cat_all', val: displayName }
         ];
 
         // Gather curated + live DB subcategories
@@ -320,7 +322,7 @@
             if (item.type === 'all') {
                 isAct = (currentSelectedCat === 'all' || currentSelectedCat === '') && currentSubs.length === 0 && currentFabrics.length === 0;
             } else if (item.type === 'cat_all') {
-                isAct = (currentSubs.length === 0 && currentFabrics.length === 0);
+                isAct = (currentSelectedCat !== 'all' && currentSelectedCat !== '') && (currentSubs.length === 0 && currentFabrics.length === 0);
             } else if (item.type === 'category') {
                 isAct = (itemVal === currentSelectedCat);
             } else if (item.type === 'subcategory') {
