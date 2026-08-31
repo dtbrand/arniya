@@ -921,6 +921,11 @@ body.mobile-search-open .mobile-search-suggestions-dropdown {
     box-shadow: 0 1px 4px rgba(138,104,31,0.15);
 }
 
+/* Lock background page scrolling when search drawer is open */
+body.mobile-search-open {
+    overflow: hidden !important;
+}
+
 .mobile-sugg-content-body {
     flex: 1;
     width: 100%;
@@ -929,6 +934,46 @@ body.mobile-search-open .mobile-search-suggestions-dropdown {
     padding: 10px 12px 60px 12px;
     box-sizing: border-box;
     background: #FFFFFF;
+}
+
+/* 1-Line Smooth Horizontal Scrolling for Trending Ethnic Wear on Mobile */
+.mobile-sugg-content-body .dt-sugg-trending-wrap {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding: 4px 12px 10px 12px !important;
+    margin: 0 -12px 8px -12px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+}
+.mobile-sugg-content-body .dt-sugg-trending-wrap::-webkit-scrollbar {
+    display: none !important;
+}
+.mobile-sugg-content-body .dt-sugg-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 5px 12px !important;
+    background: #FAF8F4 !important;
+    border: 1px solid #D4AF37 !important;
+    border-radius: 16px !important;
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #5A4210 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 3px rgba(138,104,31,0.08) !important;
+    transition: all 0.15s ease !important;
+}
+.mobile-sugg-content-body .dt-sugg-tag:hover,
+.mobile-sugg-content-body .dt-sugg-tag:active {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%) !important;
+    color: #111827 !important;
+    font-weight: 700 !important;
+    border-color: #8A681F !important;
 }
 
 /* Auto-hide mobile bottom navigation when search drawer is active */
@@ -1581,6 +1626,7 @@ window.closeWishlistDrawer = function() {
     function openMobileSearchDrawer() {
         if (header) header.classList.add('mobile-search-active');
         document.body.classList.add('mobile-search-open');
+        document.body.style.overflow = 'hidden';
         var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
         fetchSuggestions(q, currentMobileCat, true);
         if (mobileSearchInput) {
@@ -1592,6 +1638,7 @@ window.closeWishlistDrawer = function() {
 
     function closeMobileSearchDrawer(resetText) {
         document.body.classList.remove('mobile-search-open');
+        document.body.style.overflow = '';
         var sy = window.scrollY || window.pageYOffset || 0;
         if (sy < 45 && header) {
             header.classList.remove('mobile-search-active');
@@ -1630,6 +1677,7 @@ window.closeWishlistDrawer = function() {
         mobileSearchInput.addEventListener('input', function() {
             var q = mobileSearchInput.value.trim();
             document.body.classList.add('mobile-search-open');
+            document.body.style.overflow = 'hidden';
             performSearch('mobile', false);
             clearTimeout(searchDebounceTimer);
             searchDebounceTimer = setTimeout(function () {
@@ -1639,12 +1687,14 @@ window.closeWishlistDrawer = function() {
 
         mobileSearchInput.addEventListener('focus', function() {
             document.body.classList.add('mobile-search-open');
+            document.body.style.overflow = 'hidden';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
 
         mobileSearchInput.addEventListener('click', function() {
             document.body.classList.add('mobile-search-open');
+            document.body.style.overflow = 'hidden';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
@@ -1665,6 +1715,7 @@ window.closeWishlistDrawer = function() {
         if (!e.target.closest('#mobileFullSearchBar') && !e.target.closest('#mobileSearchSuggestionsDropdown') && !e.target.closest('#mobileSearchTriggerBtn')) {
             if (document.body.classList.contains('mobile-search-open')) {
                 document.body.classList.remove('mobile-search-open');
+                document.body.style.overflow = '';
             }
         }
     });
