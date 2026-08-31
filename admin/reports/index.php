@@ -157,8 +157,8 @@ $netProfit = round($grossRevenue * 0.27, 2);
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         </div>
                         <div style="font-weight:800; font-size:13px; color:#181512;">Reseller Commission Sheet</div>
-                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 14px;">Weekly reseller payout audit log with margin and wallet calculations.</p>
-                        <a href="/admin/resellers/export.php" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; justify-content:center; width:100%; height:32px; font-size:12px; font-weight:700;">Download Sheet</a>
+                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 14px;">Reseller commission rates and lifetime spend, straight from the customers table.</p>
+                        <a href="/admin/customers/export.php?scope=reseller" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; justify-content:center; width:100%; height:32px; font-size:12px; font-weight:700;">Download Sheet</a>
                     </div>
                 </div>
             </div>
