@@ -59,20 +59,40 @@ $initialSearch = isset($_GET['search']) ? trim($_GET['search']) : (isset($_GET['
 
 if ($initialSearch !== '') {
     $filtered = [];
-    $sq = strtolower($initialSearch);
+    $normalizedSq = strtolower($initialSearch);
+    $normalizedSq = str_replace(['sarees', 'lehengas', 'gowns', 'kurtis'], ['saree', 'lehenga', 'gown', 'kurti'], $normalizedSq);
+    $searchTokens = array_values(array_filter(preg_split('/[\s,\-\+]+/', $normalizedSq), fn($t) => strlen($t) > 0));
+
     foreach ($products as $p) {
-        $pName = strtolower($p['name'] ?? ($p['title'] ?? ''));
+        $pTitle = strtolower($p['title'] ?? ($p['name'] ?? ''));
+        $pSku = strtolower($p['sku'] ?? '');
         $pCat = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
         $pSub = strtolower($p['sub_category'] ?? ($p['subcategory'] ?? ''));
-        $pFab = strtolower($p['fabric'] ?? '');
-        $pSku = strtolower($p['sku'] ?? '');
-        if (
-            strpos($pName, $sq) !== false ||
-            strpos($pCat, $sq) !== false ||
-            strpos($pSub, $sq) !== false ||
-            strpos($pFab, $sq) !== false ||
-            strpos($pSku, $sq) !== false
-        ) {
+        $pFabric = strtolower($p['fabric'] ?? '');
+        $pColor = strtolower($p['color'] ?? '');
+        $pDesc = strtolower($p['description'] ?? '');
+
+        $corpus = "{$pTitle} {$pSku} {$pCat} {$pSub} {$pFabric} {$pColor} {$pDesc}";
+        if (strpos($corpus, 'varanasi') !== false || strpos($corpus, 'kadwa') !== false || strpos($corpus, 'katan') !== false) {
+            $corpus .= ' banarasi banaras';
+        }
+        if (strpos($corpus, 'kanjivaram') !== false || strpos($corpus, 'brocade') !== false) {
+            $corpus .= ' kanchipuram zari silk';
+        }
+        if (strpos($corpus, 'paithani') !== false) {
+            $corpus .= ' yeola silk maharashtra';
+        }
+
+        $matchedCount = 0;
+        foreach ($searchTokens as $token) {
+            $tokenBase = (strlen($token) > 3 && substr($token, -1) === 's') ? substr($token, 0, -1) : $token;
+            if (strpos($corpus, $token) !== false || strpos($corpus, $tokenBase) !== false) {
+                $matchedCount++;
+            }
+        }
+
+        $minRequired = count($searchTokens) === 1 ? 1 : max(1, (int)ceil(count($searchTokens) * 0.5));
+        if ($matchedCount >= $minRequired) {
             $filtered[] = $p;
         }
     }

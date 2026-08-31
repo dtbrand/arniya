@@ -326,7 +326,12 @@
 
             var searchMatch = true;
             if (st.searchQuery && st.searchQuery.trim().length > 0) {
-                var q = st.searchQuery.toLowerCase().trim();
+                var rawQ = st.searchQuery.toLowerCase().trim();
+                rawQ = rawQ.replace(/\b(sarees|lehengas|gowns|kurtis)\b/g, function(m){
+                    return m.slice(0, -1);
+                });
+                var tokens = rawQ.split(/[\s,\-\+]+/).filter(function(t){ return t.length > 0; });
+
                 var cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
                 var cardAria = (card.getAttribute('aria-label') || '').toLowerCase();
                 var cardCatText = (card.dataset.category || '').toLowerCase();
@@ -334,13 +339,28 @@
                 var cardFabricText = (card.dataset.fabric || '').toLowerCase();
                 var cardColorText = (card.dataset.color || '').toLowerCase();
                 var cardSku = (card.dataset.sku || '').toLowerCase();
-                searchMatch = cardName.indexOf(q) !== -1 ||
-                              cardAria.indexOf(q) !== -1 ||
-                              cardCatText.indexOf(q) !== -1 ||
-                              cardSubText.indexOf(q) !== -1 ||
-                              cardFabricText.indexOf(q) !== -1 ||
-                              cardColorText.indexOf(q) !== -1 ||
-                              cardSku.indexOf(q) !== -1;
+
+                var corpus = cardName + ' ' + cardAria + ' ' + cardCatText + ' ' + cardSubText + ' ' + cardFabricText + ' ' + cardColorText + ' ' + cardSku;
+                if (corpus.indexOf('varanasi') !== -1 || corpus.indexOf('kadwa') !== -1 || corpus.indexOf('katan') !== -1) {
+                    corpus += ' banarasi banaras';
+                }
+                if (corpus.indexOf('kanjivaram') !== -1 || corpus.indexOf('brocade') !== -1) {
+                    corpus += ' kanchipuram zari silk';
+                }
+                if (corpus.indexOf('paithani') !== -1) {
+                    corpus += ' yeola silk maharashtra';
+                }
+
+                var matchCount = 0;
+                tokens.forEach(function(token) {
+                    var tokenBase = (token.length > 3 && token.slice(-1) === 's') ? token.slice(0, -1) : token;
+                    if (corpus.indexOf(token) !== -1 || corpus.indexOf(tokenBase) !== -1) {
+                        matchCount++;
+                    }
+                });
+
+                var minReq = tokens.length === 1 ? 1 : Math.max(1, Math.ceil(tokens.length * 0.5));
+                searchMatch = matchCount >= minReq;
             }
 
             var isMatch = catMatch && priceMatch && colorMatch && sizeMatch && fabricMatch && discountMatch && stockMatch && searchMatch;

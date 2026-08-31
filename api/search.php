@@ -50,18 +50,55 @@ if ($pdo !== null && !Database::isMockMode()) {
 $all = ProductCatalog::getAll();
 $matchedProducts = [];
 
+$searchTokens = [];
+if (!empty($q)) {
+    $normalizedQ = strtolower($q);
+    $normalizedQ = str_replace(['sarees', 'lehengas', 'gowns', 'kurtis'], ['saree', 'lehenga', 'gown', 'kurti'], $normalizedQ);
+    $searchTokens = array_values(array_filter(preg_split('/[\s,\-\+]+/', $normalizedQ), fn($t) => strlen($t) > 0));
+}
+
 foreach ($all as $p) {
     if (!empty($category) && strtolower($category) !== 'all') {
         $pCat = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
         $targetCat = strtolower($category);
+        $targetCat = str_replace(['sarees', 'lehengas', 'gowns', 'kurtis'], ['saree', 'lehenga', 'gown', 'kurti'], $targetCat);
         if ($pCat !== $targetCat && strpos($pCat, $targetCat) === false && strpos($targetCat, $pCat) === false) {
             continue;
         }
     }
 
-    if (!empty($q)) {
-        $searchSpace = strtolower(($p['title'] ?? '') . ' ' . ($p['name'] ?? '') . ' ' . ($p['sku'] ?? '') . ' ' . ($p['category'] ?? '') . ' ' . ($p['sub_category'] ?? '') . ' ' . ($p['fabric'] ?? '') . ' ' . ($p['color'] ?? '') . ' ' . ($p['description'] ?? ''));
-        if (strpos($searchSpace, strtolower($q)) === false) {
+    if (!empty($searchTokens)) {
+        $pTitle = strtolower($p['title'] ?? ($p['name'] ?? ''));
+        $pSku = strtolower($p['sku'] ?? '');
+        $pCat = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
+        $pSub = strtolower($p['sub_category'] ?? ($p['subcategory'] ?? ''));
+        $pFabric = strtolower($p['fabric'] ?? '');
+        $pColor = strtolower($p['color'] ?? '');
+        $pDesc = strtolower($p['description'] ?? '');
+
+        // Build comprehensive search corpus including synonyms like banarasi <-> varanasi, silk, zari, katan, kadwa
+        $corpus = "{$pTitle} {$pSku} {$pCat} {$pSub} {$pFabric} {$pColor} {$pDesc}";
+        if (strpos($corpus, 'varanasi') !== false || strpos($corpus, 'kadwa') !== false || strpos($corpus, 'katan') !== false) {
+            $corpus .= ' banarasi banaras';
+        }
+        if (strpos($corpus, 'kanjivaram') !== false || strpos($corpus, 'brocade') !== false) {
+            $corpus .= ' kanchipuram zari silk';
+        }
+        if (strpos($corpus, 'paithani') !== false) {
+            $corpus .= ' yeola silk maharashtra';
+        }
+
+        // Token match: check how many tokens match
+        $matchedCount = 0;
+        foreach ($searchTokens as $token) {
+            $tokenBase = (strlen($token) > 3 && substr($token, -1) === 's') ? substr($token, 0, -1) : $token;
+            if (strpos($corpus, $token) !== false || strpos($corpus, $tokenBase) !== false) {
+                $matchedCount++;
+            }
+        }
+
+        $minRequired = count($searchTokens) === 1 ? 1 : max(1, (int)ceil(count($searchTokens) * 0.5));
+        if ($matchedCount < $minRequired) {
             continue;
         }
     }
@@ -98,16 +135,18 @@ foreach ($all as $p) {
 $results['products'] = array_slice($matchedProducts, 0, 15);
 $results['total'] = count($matchedProducts);
 
-// 3. Generate predictive & trending query suggestions
+// 3. Generate predictive & trending query suggestions from real catalog
 $trendingTags = [
-    'Banarasi Silk Saree',
-    'Bridal Velvet Lehenga',
-    'Pure Kanjivaram Zari',
-    'Floor-Length Gown',
-    '3-Piece Festive Kurti',
-    'Yeola Paithani Handloom',
-    'Organza Pastel Saree',
-    'Wholesale Factory Lots'
+    'Kanjivaram Pure Zari Saree',
+    'Banarasi Katan Silk Saree',
+    'Yeola Paithani Silk Saree',
+    'Maharani Velvet Bridal Lehenga',
+    'Organza Floral Bridal Lehenga',
+    'Floor-Length Evening Gown',
+    'Indo-Western Drape Gown',
+    'Chanderi Silk 3-Piece Kurti',
+    'Pure Muslin Kurti Set',
+    'Organza Tissue Handloom Saree'
 ];
 
 $suggestions = [];

@@ -1688,6 +1688,20 @@ window.closeWishlistDrawer = function() {
     var searchDebounceTimer = null;
     var currentMobileCat = 'All';
 
+    function highlightKeywords(text, q) {
+        if (!q || !text) return text;
+        var rawQ = q.toLowerCase().trim();
+        rawQ = rawQ.replace(/\b(sarees|lehengas|gowns|kurtis)\b/g, function(m){ return m.slice(0,-1); });
+        var words = rawQ.split(/[\s,\-\+]+/).filter(function(w){ return w.length > 1; });
+        if (words.length === 0) return text;
+
+        var regex = new RegExp('(' + words.map(function(w){
+            return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }).join('|') + ')', 'gi');
+
+        return text.replace(regex, '<mark class="dt-search-highlight">$1</mark>');
+    }
+
     function renderSuggestionsHTML(data, query, isMobile) {
         var html = '';
         var q = (query || '').trim().toLowerCase();
@@ -1709,13 +1723,7 @@ window.closeWishlistDrawer = function() {
             html += '<div class="dt-sugg-section-header">📁 Matching Categories</div>';
             data.categories.forEach(function (c) {
                 var cName = c.name;
-                var highlightedName = cName;
-                if (q) {
-                    var idx = cName.toLowerCase().indexOf(q);
-                    if (idx !== -1) {
-                        highlightedName = cName.substring(0, idx) + '<mark class="dt-search-highlight">' + cName.substring(idx, idx + q.length) + '</mark>' + cName.substring(idx + q.length);
-                    }
-                }
+                var highlightedName = highlightKeywords(cName, q);
                 html += '<a href="/shop.php?category=' + encodeURIComponent(c.name) + '" class="dt-sugg-cat-item">' +
                         '<div style="display:flex;align-items:center;gap:8px;">' +
                         '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;stroke-width:2.2;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
@@ -1733,13 +1741,7 @@ window.closeWishlistDrawer = function() {
             if (isMobile) {
                 data.products.forEach(function (p) {
                     var pTitle = p.title || p.name;
-                    var highlightedTitle = pTitle;
-                    if (q) {
-                        var idx = pTitle.toLowerCase().indexOf(q);
-                        if (idx !== -1) {
-                            highlightedTitle = pTitle.substring(0, idx) + '<mark class="dt-search-highlight">' + pTitle.substring(idx, idx + q.length) + '</mark>' + pTitle.substring(idx + q.length);
-                        }
-                    }
+                    var highlightedTitle = highlightKeywords(pTitle, q);
                     html += '<a href="' + p.url + '" class="mobile-sugg-product-card">' +
                             '<img src="' + p.image + '" class="mobile-sugg-thumb" alt="' + pTitle + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\';" />' +
                             '<div class="mobile-sugg-details">' +
@@ -1760,13 +1762,7 @@ window.closeWishlistDrawer = function() {
             } else {
                 data.products.forEach(function (p) {
                     var pTitle = p.title || p.name;
-                    var highlightedTitle = pTitle;
-                    if (q) {
-                        var idx = pTitle.toLowerCase().indexOf(q);
-                        if (idx !== -1) {
-                            highlightedTitle = pTitle.substring(0, idx) + '<mark class="dt-search-highlight">' + pTitle.substring(idx, idx + q.length) + '</mark>' + pTitle.substring(idx + q.length);
-                        }
-                    }
+                    var highlightedTitle = highlightKeywords(pTitle, q);
                     html += '<a href="' + p.url + '" class="dt-sugg-product-item">' +
                             '<img src="' + p.image + '" class="dt-sugg-thumb" alt="' + pTitle + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\';" />' +
                             '<div class="dt-sugg-info">' +
