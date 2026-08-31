@@ -908,19 +908,29 @@ function pdp_relative_date(string $ts): string
                         <span class="pdp-rel-badge"><?= htmlspecialchars((string)$rel['badge']) ?></span>
                         <?php endif; ?>
                         <img src="<?= htmlspecialchars($relImg !== '' ? $relImg : $pdpNoImage) ?>" alt="<?= htmlspecialchars($relName) ?>" loading="lazy" />
+                        
+                        <!-- Available Tag in Left Side Photo Footer Corner -->
+                        <div class="pdp-rel-avail-tag">
+                            <span class="pdp-rel-avail-dot"></span>
+                            <span>Available</span>
+                        </div>
                     </div>
                     <div class="pdp-rel-body">
-                        <?php if (trim((string)($rel['category'] ?? '')) !== ''): ?>
-                        <span class="pdp-rel-cat"><?= htmlspecialchars((string)$rel['category']) ?></span>
-                        <?php endif; ?>
+                        <div class="pdp-rel-cat-row">
+                            <?php if (trim((string)($rel['category'] ?? '')) !== ''): ?>
+                            <span class="pdp-rel-cat"><?= htmlspecialchars((string)$rel['category']) ?></span>
+                            <?php else: ?>
+                            <span class="pdp-rel-cat">ETHNIC WEAR</span>
+                            <?php endif; ?>
+                            <?php if ($relDisc > 0 && $relMrp > $relPrice): ?>
+                            <span class="pdp-rel-disc-pill"><?= $relDisc ?>% OFF</span>
+                            <?php endif; ?>
+                        </div>
                         <h3 class="pdp-rel-title"><?= htmlspecialchars($relName) ?></h3>
                         <div class="pdp-rel-price-row">
                             <span class="pdp-rel-price"><?= $relPrice > 0 ? '₹' . number_format($relPrice) : 'Price on request' ?></span>
                             <?php if ($relMrp > $relPrice && $relPrice > 0): ?>
                             <span class="pdp-rel-mrp">₹<?= number_format($relMrp) ?></span>
-                            <?php endif; ?>
-                            <?php if ($relDisc > 0 && $relMrp > $relPrice): ?>
-                            <span class="pdp-rel-disc"><?= $relDisc ?>% OFF</span>
                             <?php endif; ?>
                         </div>
                     </div>
