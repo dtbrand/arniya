@@ -49,6 +49,184 @@ $isHomePage = (
     gap: 20px;
 }
 
+/* ── Amazon-Style Attached Sub-Navigation Bar (Royal Gold Luxury Gradient) ── */
+.header-attached-subnav {
+    width: 100%;
+    background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
+    border-top: 1px solid rgba(255, 235, 180, 0.35);
+    border-bottom: 1.5px solid #5C4310;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
+    position: relative;
+    z-index: 10;
+}
+
+.subnav-scroll-track {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: 100%;
+}
+.subnav-scroll-track::-webkit-scrollbar { display: none; }
+
+.subnav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 10px;
+    height: 22px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #FFF8EB;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.subnav-item:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.2);
+}
+.subnav-item.active {
+    background: #FFFFFF;
+    color: #7A5B18;
+    border-color: #FFFFFF;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+.subnav-icon {
+    width: 13px; height: 13px;
+    stroke: currentColor; stroke-width: 2.2; fill: none;
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   3D LUXURY ANIMATED REELS BUTTON & 3D REEL ICON
+   ═════════════════════════════════════════════════════════════════ */
+@keyframes reelIconSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes reelGlowPulse {
+    0%, 100% {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                    inset 0 0 10px rgba(212, 175, 55, 0.35),
+                    0 0 12px rgba(212, 175, 55, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                    inset 0 0 16px rgba(245, 208, 92, 0.6),
+                    0 0 20px rgba(245, 208, 92, 0.7);
+    }
+}
+
+@keyframes reelBadgeShimmer {
+    0% { background-position: -150% 0; }
+    100% { background-position: 250% 0; }
+}
+
+.subnav-reels-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px 3px 10px;
+    height: 24px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #181512 100%);
+    border: 1.2px solid #D4AF37;
+    color: #FAF5E8;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(400px) translateZ(0);
+    transform-style: preserve-3d;
+    animation: reelGlowPulse 2.8s ease-in-out infinite;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.subnav-reels-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: reelBadgeShimmer 3s infinite linear;
+    pointer-events: none;
+}
+
+.subnav-reels-btn:hover {
+    background: linear-gradient(135deg, #0A0908 0%, #3D3325 50%, #0A0908 100%);
+    border-color: #FFF2A8;
+    transform: perspective(400px) translateY(-1.5px) scale(1.06);
+    color: #FFFFFF;
+}
+
+.subnav-reels-btn:active {
+    transform: perspective(400px) translateY(1px) scale(0.98);
+}
+
+/* 3D Animated Film Reel Icon */
+.reel-3d-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.6));
+}
+
+.reel-3d-svg {
+    width: 14px;
+    height: 14px;
+    animation: reelIconSpin 4s linear infinite;
+    display: block;
+}
+
+.subnav-reels-btn:hover .reel-3d-svg {
+    animation-duration: 1.5s;
+}
+
+.reel-live-dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #E53935;
+    box-shadow: 0 0 6px #E53935;
+    animation: pulseDot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(0.85); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+
 /* ── Left Section: Stylish Plus Button + Brand Logo ── */
 .header-left-group {
     display: flex;
@@ -550,6 +728,10 @@ body.mobile-search-open .mobile-search-suggestions-dropdown {
     display: flex !important;
 }
 
+body.mobile-search-open .header-attached-subnav {
+    display: none !important;
+}
+
 /* ══════════════════════════════════════════════════════════
    LUXURY PREDICTIVE AUTOCOMPLETE & PRODUCT SUGGESTIONS DROPDOWN
    ══════════════════════════════════════════════════════════ */
@@ -1036,6 +1218,35 @@ body.mobile-search-open #mobileBottomBar {
     .shop-header.mobile-search-active .header-normal-view {
         display: none !important;
     }
+
+    /* Permanently Visible Ultra-Compact Category Subnav (Royal Gold Luxury Gradient) */
+    .header-attached-subnav {
+        height: 28px;
+        min-height: 28px;
+        max-height: 28px;
+        padding: 0 8px;
+        box-sizing: border-box;
+        background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
+        border-top: 1px solid rgba(255, 235, 180, 0.35);
+        border-bottom: 1.5px solid #5C4310;
+        box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
+    }
+    .subnav-item {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        height: 20px;
+        gap: 4px;
+        border-radius: 4px;
+    }
+    .subnav-icon {
+        width: 11px;
+        height: 11px;
+    }
+    .subnav-reels-btn {
+        height: 22px;
+        padding: 2px 8px;
+        font-size: 0.62rem;
+    }
 }
 </style>
 
@@ -1213,6 +1424,41 @@ body.mobile-search-open #mobileBottomBar {
         <!-- Dynamic Scrollable Suggestions & Products Body -->
         <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
     </div>
+
+    <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
+    <?php 
+    require_once __DIR__ . '/../src/ProductCatalog.php';
+    $headerCategories = \DTBrand\ProductCatalog::getCategories();
+    ?>
+    <?php if (empty($hideHeaderSubnav)): ?>
+    <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
+        <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
+            <button class="subnav-item main-cat-tab <?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('All');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('All');}else{window.location.href='/shop?category=all';}">
+                <svg class="subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <span>All Categories</span>
+            </button>
+            <?php foreach ($headerCategories as $hCat): 
+                $isCatActive = isset($selectedCategory) && (strtolower($selectedCategory) === strtolower($hCat) || strtolower(str_replace('-', ' ', $selectedCategory)) === strtolower($hCat));
+            ?>
+            <button class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" role="tab" data-cat="<?= htmlspecialchars($hCat) ?>" aria-selected="<?= $isCatActive ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('<?= htmlspecialchars(addslashes($hCat)) ?>');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>');}else{window.location.href='/shop?category=<?= urlencode($hCat) ?>';}"><?= htmlspecialchars($hCat) ?></button>
+            <?php endforeach; ?>
+            <button class="subnav-item subnav-reels-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
+                <span class="reel-3d-icon-wrap">
+                    <svg class="reel-3d-svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="3" fill="#D4AF37"></circle>
+                        <circle cx="12" cy="6" r="1.5" fill="#D4AF37"></circle>
+                        <circle cx="12" cy="18" r="1.5" fill="#D4AF37"></circle>
+                        <circle cx="6" cy="12" r="1.5" fill="#D4AF37"></circle>
+                        <circle cx="18" cy="12" r="1.5" fill="#D4AF37"></circle>
+                    </svg>
+                    <span class="reel-live-dot"></span>
+                </span>
+                <span>Reels</span>
+            </button>
+        </div>
+    </nav>
+    <?php endif; ?>
 </header>
 
 <script>

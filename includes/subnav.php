@@ -9,14 +9,6 @@ $currentCat = isset($selectedCategory) ? $selectedCategory : (isset($_GET['categ
 ?>
 <nav class="dt-attached-subnav" id="dtAttachedSubnav" aria-label="Attached categories navigation">
     <div class="dt-subnav-scroll-track" id="dtMainCatSliderTrack" role="tablist">
-        <a href="/" class="dt-subnav-item <?= (empty($currentCat) || strtolower($currentCat) === 'all') && basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">
-            <svg class="dt-subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
-        </a>
-        <a href="/shop.php" class="dt-subnav-item <?= (empty($currentCat) || strtolower($currentCat) === 'all') && basename($_SERVER['PHP_SELF']) === 'shop.php' ? 'active' : '' ?>">
-            <svg class="dt-subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            <span>Shop All</span>
-        </a>
         <button type="button" class="dt-subnav-item main-cat-tab <?= empty($currentCat) || strtolower($currentCat) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($currentCat) || strtolower($currentCat) === 'all' ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('All');}else{window.location.href='/shop.php?category=all';}">
             <svg class="dt-subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             <span>All Categories</span>
@@ -33,7 +25,18 @@ $currentCat = isset($selectedCategory) ? $selectedCategory : (isset($_GET['categ
             <span>💰 Reseller Portal</span>
         </a>
         <button type="button" class="dt-subnav-item subnav-reels-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
-            <span>🎥 Reels Feed</span>
+            <span class="reel-3d-icon-wrap">
+                <svg class="reel-3d-svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="3" fill="#D4AF37"></circle>
+                    <circle cx="12" cy="6" r="1.5" fill="#D4AF37"></circle>
+                    <circle cx="12" cy="18" r="1.5" fill="#D4AF37"></circle>
+                    <circle cx="6" cy="12" r="1.5" fill="#D4AF37"></circle>
+                    <circle cx="18" cy="12" r="1.5" fill="#D4AF37"></circle>
+                </svg>
+                <span class="reel-live-dot"></span>
+            </span>
+            <span>Reels</span>
         </button>
     </div>
 </nav>
