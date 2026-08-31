@@ -457,7 +457,7 @@ let currentFormat = 'csv';
  * functional -- so the admin ended up with a real file full of strangers.
  *
  * JSON_HEX_TAG matters: a customer registers their own name, and without it a
- * name containing </script> would break out of this block.
+ * name containing a closing script tag would break out of this block.
  */
 const exportRows = <?php echo json_encode($exportRows, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE); ?>;
 
