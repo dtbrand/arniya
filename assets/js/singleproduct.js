@@ -1436,12 +1436,31 @@
     var relResumeTimeout = null;
 
     window.rebuildRelDots = function() {
-        if (!relDotsWrap || !relTrack) return;
+        if (!relTrack) return;
+        var prevBtn = document.getElementById('pdpRelPrev');
+        var nextBtn = document.getElementById('pdpRelNext');
+        var needsScroll = relTrack.scrollWidth > (relTrack.clientWidth + 10);
+
+        if (window.innerWidth > 900) {
+            if (prevBtn) prevBtn.style.display = needsScroll ? 'flex' : 'none';
+            if (nextBtn) nextBtn.style.display = needsScroll ? 'flex' : 'none';
+        } else {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+        }
+
+        if (!relDotsWrap) return;
         relDotsWrap.innerHTML = '';
         var cards = relTrack.querySelectorAll('.pdp-rel-card');
         var step = window.innerWidth <= 767 ? 2 : 4;
         var totalDots = Math.ceil(cards.length / step);
 
+        if (!needsScroll || totalDots <= 1) {
+            relDotsWrap.style.display = 'none';
+            return;
+        }
+
+        relDotsWrap.style.display = 'flex';
         for (var i = 0; i < totalDots; i++) {
             (function(idx) {
                 var dot = document.createElement('div');
@@ -1602,7 +1621,7 @@
         setTimeout(updateRelScrollShadows, 300);
         window.addEventListener('resize', updateRelScrollShadows);
 
-        // Sync related dots and transition shadows on scroll
+        // Sync related dots, active center card, and transition shadows on scroll
         var relScrollEndTimer = null;
         relTrack.addEventListener('scroll', function() {
             updateRelScrollShadows();
@@ -1612,14 +1631,32 @@
                 relTrack.classList.remove('is-scrolling');
             }, 180);
 
-            var firstCard = relTrack.querySelector('.pdp-rel-card');
-            if (!firstCard) return;
-            var cardWidth = firstCard.clientWidth + 12;
+            var cards = relTrack.querySelectorAll('.pdp-rel-card');
+            var trackCenter = relTrack.scrollLeft + (relTrack.clientWidth / 2);
+            var closestCard = null;
+            var minDiff = Infinity;
+            var closestIdx = 0;
+
+            cards.forEach(function(card, idx) {
+                var cardCenter = card.offsetLeft + (card.clientWidth / 2);
+                var diff = Math.abs(trackCenter - cardCenter);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closestCard = card;
+                    closestIdx = idx;
+                }
+                card.classList.remove('is-active-card');
+            });
+
+            if (closestCard) {
+                closestCard.classList.add('is-active-card');
+            }
+
             var step = window.innerWidth <= 767 ? 2 : 4;
-            var activeIdx = Math.round(relTrack.scrollLeft / (cardWidth * step));
+            var activeDotIdx = Math.floor(closestIdx / step);
             var dots = document.querySelectorAll('.pdp-rel-dot');
             dots.forEach(function(d, i) {
-                d.classList.toggle('active', i === activeIdx);
+                d.classList.toggle('active', i === activeDotIdx);
             });
         }, { passive: true });
 
