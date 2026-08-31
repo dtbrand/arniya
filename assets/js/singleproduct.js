@@ -1370,8 +1370,32 @@
             restartRevAutoSlide();
         });
 
-        // Sync review dots on scroll
+        function updateRevScrollShadows() {
+            var wrap = document.getElementById('pdpRevCarouselWrap');
+            if (!wrap || !revTrack) return;
+            var maxScroll = revTrack.scrollWidth - revTrack.clientWidth;
+            if (maxScroll <= 6) {
+                wrap.classList.remove('has-left-shadow', 'has-right-shadow');
+                return;
+            }
+            if (revTrack.scrollLeft > 10) {
+                wrap.classList.add('has-left-shadow');
+            } else {
+                wrap.classList.remove('has-left-shadow');
+            }
+            if (revTrack.scrollLeft < maxScroll - 10) {
+                wrap.classList.add('has-right-shadow');
+            } else {
+                wrap.classList.remove('has-right-shadow');
+            }
+        }
+
+        setTimeout(updateRevScrollShadows, 300);
+        window.addEventListener('resize', updateRevScrollShadows);
+
+        // Sync review dots and transition shadows on scroll
         revTrack.addEventListener('scroll', function() {
+            updateRevScrollShadows();
             var firstCard = revTrack.querySelector('.pdp-review-card');
             if (!firstCard) return;
             var cardWidth = firstCard.clientWidth + 16;
@@ -1539,8 +1563,32 @@
             restartRelAutoSlide();
         });
 
-        // Sync related dots on scroll
+        function updateRelScrollShadows() {
+            var wrap = document.getElementById('pdpRelCarouselWrap');
+            if (!wrap || !relTrack) return;
+            var maxScroll = relTrack.scrollWidth - relTrack.clientWidth;
+            if (maxScroll <= 6) {
+                wrap.classList.remove('has-left-shadow', 'has-right-shadow');
+                return;
+            }
+            if (relTrack.scrollLeft > 10) {
+                wrap.classList.add('has-left-shadow');
+            } else {
+                wrap.classList.remove('has-left-shadow');
+            }
+            if (relTrack.scrollLeft < maxScroll - 10) {
+                wrap.classList.add('has-right-shadow');
+            } else {
+                wrap.classList.remove('has-right-shadow');
+            }
+        }
+
+        setTimeout(updateRelScrollShadows, 300);
+        window.addEventListener('resize', updateRelScrollShadows);
+
+        // Sync related dots and transition shadows on scroll
         relTrack.addEventListener('scroll', function() {
+            updateRelScrollShadows();
             var firstCard = relTrack.querySelector('.pdp-rel-card');
             if (!firstCard) return;
             var cardWidth = firstCard.clientWidth + 12;
