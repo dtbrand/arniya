@@ -1298,76 +1298,72 @@
             carouselWrap.addEventListener('mouseleave', startReviewAutoSlide);
         }
 
-        // Smart Touch Hand Scrolling
-        var isRevTouch = false;
-        var revTouchStartX = 0, revTouchStartY = 0;
-        var revTouchCurrentX = 0;
-        var revTouchStartScroll = 0;
-        var isRevHorizontal = false;
-
-        revTrack.addEventListener('touchstart', function(e) {
+        // Native Smooth Touch Scrolling on Mobile
+        revTrack.addEventListener('touchstart', function() {
             pauseReviewAutoSlide();
-            isRevTouch = true;
-            revTouchStartX = e.touches[0].clientX;
-            revTouchStartY = e.touches[0].clientY;
-            revTouchCurrentX = revTouchStartX;
-            revTouchStartScroll = revTrack.scrollLeft;
-            isRevHorizontal = false;
         }, { passive: true });
 
-        revTrack.addEventListener('touchmove', function(e) {
-            if (!isRevTouch) return;
-            revTouchCurrentX = e.touches[0].clientX;
-            var diffX = revTouchCurrentX - revTouchStartX;
-            var diffY = e.touches[0].clientY - revTouchStartY;
-
-            if (!isRevHorizontal) {
-                if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
-                    if (Math.abs(diffX) >= Math.abs(diffY)) {
-                        isRevHorizontal = true;
-                    } else {
-                        isRevTouch = false;
-                        return;
-                    }
-                }
-            }
-
-            if (isRevHorizontal) {
-                if (e.cancelable) e.preventDefault();
-                revTrack.scrollLeft = revTouchStartScroll - diffX;
-            }
-        }, { passive: false });
-
         revTrack.addEventListener('touchend', function() {
-            isRevTouch = false;
-            isRevHorizontal = false;
             restartRevAutoSlide();
         }, { passive: true });
 
-        // Mouse Drag on Desktop
-        var isRevMouse = false;
-        var revMouseStartX = 0;
-        var revMouseStartScroll = 0;
+        // Physics-Based Momentum Drag on Desktop
+        var isRevMouseDown = false;
+        var revStartX = 0;
+        var revStartScrollLeft = 0;
+        var revVelocity = 0;
+        var revLastX = 0;
+        var revLastTime = 0;
+        var revMomentumId = null;
 
         revTrack.addEventListener('mousedown', function(e) {
             pauseReviewAutoSlide();
-            isRevMouse = true;
-            revMouseStartX = e.clientX;
-            revMouseStartScroll = revTrack.scrollLeft;
+            if (revMomentumId) cancelAnimationFrame(revMomentumId);
+            isRevMouseDown = true;
+            revStartX = e.pageX - revTrack.offsetLeft;
+            revStartScrollLeft = revTrack.scrollLeft;
+            revLastX = e.pageX;
+            revLastTime = Date.now();
+            revVelocity = 0;
             revTrack.classList.add('dragging');
         });
 
         window.addEventListener('mousemove', function(e) {
-            if (!isRevMouse) return;
-            var diffX = e.clientX - revMouseStartX;
-            revTrack.scrollLeft = revMouseStartScroll - diffX;
+            if (!isRevMouseDown) return;
+            e.preventDefault();
+            var x = e.pageX - revTrack.offsetLeft;
+            var walk = (x - revStartX) * 1.35;
+            revTrack.scrollLeft = revStartScrollLeft - walk;
+
+            var now = Date.now();
+            var dt = now - revLastTime;
+            if (dt > 0) {
+                revVelocity = (e.pageX - revLastX) / dt;
+                revLastX = e.pageX;
+                revLastTime = now;
+            }
         });
 
         window.addEventListener('mouseup', function() {
-            if (!isRevMouse) return;
-            isRevMouse = false;
+            if (!isRevMouseDown) return;
+            isRevMouseDown = false;
             revTrack.classList.remove('dragging');
-            restartRevAutoSlide();
+
+            if (Math.abs(revVelocity) > 0.2) {
+                var currentVelocity = revVelocity * 15;
+                function applyMomentum() {
+                    if (Math.abs(currentVelocity) < 0.4) {
+                        restartRevAutoSlide();
+                        return;
+                    }
+                    revTrack.scrollLeft -= currentVelocity;
+                    currentVelocity *= 0.92;
+                    revMomentumId = requestAnimationFrame(applyMomentum);
+                }
+                revMomentumId = requestAnimationFrame(applyMomentum);
+            } else {
+                restartRevAutoSlide();
+            }
         });
 
         function updateRevScrollShadows() {
@@ -1393,16 +1389,40 @@
         setTimeout(updateRevScrollShadows, 300);
         window.addEventListener('resize', updateRevScrollShadows);
 
-        // Sync review dots and transition shadows on scroll
+        // Real-Time Active Center Card & Scroll Kinetic Effects
+        var revScrollEndTimer = null;
         revTrack.addEventListener('scroll', function() {
             updateRevScrollShadows();
-            var firstCard = revTrack.querySelector('.pdp-review-card');
-            if (!firstCard) return;
-            var cardWidth = firstCard.clientWidth + 16;
-            var activeIdx = Math.round(revTrack.scrollLeft / cardWidth);
+            revTrack.classList.add('is-scrolling');
+            if (revScrollEndTimer) clearTimeout(revScrollEndTimer);
+            revScrollEndTimer = setTimeout(function() {
+                revTrack.classList.remove('is-scrolling');
+            }, 180);
+
+            var cards = revTrack.querySelectorAll('.pdp-review-card');
+            var trackCenter = revTrack.scrollLeft + (revTrack.clientWidth / 2);
+            var closestCard = null;
+            var minDiff = Infinity;
+            var closestIdx = 0;
+
+            cards.forEach(function(card, idx) {
+                var cardCenter = card.offsetLeft + (card.clientWidth / 2);
+                var diff = Math.abs(trackCenter - cardCenter);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closestCard = card;
+                    closestIdx = idx;
+                }
+                card.classList.remove('is-active-card');
+            });
+
+            if (closestCard) {
+                closestCard.classList.add('is-active-card');
+            }
+
             var dots = document.querySelectorAll('.pdp-rev-dot');
             dots.forEach(function(d, i) {
-                d.classList.toggle('active', i === activeIdx);
+                d.classList.toggle('active', i === closestIdx);
             });
         }, { passive: true });
     }
@@ -1491,76 +1511,72 @@
             relWrap.addEventListener('mouseleave', startRelAutoSlide);
         }
 
-        // Smart Touch Hand Scrolling
-        var isRelTouch = false;
-        var relTouchStartX = 0, relTouchStartY = 0;
-        var relTouchCurrentX = 0;
-        var relTouchStartScroll = 0;
-        var isRelHorizontal = false;
-
-        relTrack.addEventListener('touchstart', function(e) {
+        // Native Smooth Touch on Mobile
+        relTrack.addEventListener('touchstart', function() {
             pauseRelAutoSlide();
-            isRelTouch = true;
-            relTouchStartX = e.touches[0].clientX;
-            relTouchStartY = e.touches[0].clientY;
-            relTouchCurrentX = relTouchStartX;
-            relTouchStartScroll = relTrack.scrollLeft;
-            isRelHorizontal = false;
         }, { passive: true });
 
-        relTrack.addEventListener('touchmove', function(e) {
-            if (!isRelTouch) return;
-            relTouchCurrentX = e.touches[0].clientX;
-            var diffX = relTouchCurrentX - relTouchStartX;
-            var diffY = e.touches[0].clientY - relTouchStartY;
-
-            if (!isRelHorizontal) {
-                if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
-                    if (Math.abs(diffX) >= Math.abs(diffY)) {
-                        isRelHorizontal = true;
-                    } else {
-                        isRelTouch = false;
-                        return;
-                    }
-                }
-            }
-
-            if (isRelHorizontal) {
-                if (e.cancelable) e.preventDefault();
-                relTrack.scrollLeft = relTouchStartScroll - diffX;
-            }
-        }, { passive: false });
-
         relTrack.addEventListener('touchend', function() {
-            isRelTouch = false;
-            isRelHorizontal = false;
             restartRelAutoSlide();
         }, { passive: true });
 
-        // Mouse Drag on Desktop
-        var isRelMouse = false;
-        var relMouseStartX = 0;
-        var relMouseStartScroll = 0;
+        // Physics-Based Momentum Drag on Desktop
+        var isRelMouseDown = false;
+        var relStartX = 0;
+        var relStartScrollLeft = 0;
+        var relVelocity = 0;
+        var relLastX = 0;
+        var relLastTime = 0;
+        var relMomentumId = null;
 
         relTrack.addEventListener('mousedown', function(e) {
             pauseRelAutoSlide();
-            isRelMouse = true;
-            relMouseStartX = e.clientX;
-            relMouseStartScroll = relTrack.scrollLeft;
+            if (relMomentumId) cancelAnimationFrame(relMomentumId);
+            isRelMouseDown = true;
+            relStartX = e.pageX - relTrack.offsetLeft;
+            relStartScrollLeft = relTrack.scrollLeft;
+            relLastX = e.pageX;
+            relLastTime = Date.now();
+            relVelocity = 0;
             relTrack.classList.add('dragging');
         });
 
         window.addEventListener('mousemove', function(e) {
-            if (!isRelMouse) return;
-            var diffX = e.clientX - relMouseStartX;
-            relTrack.scrollLeft = relMouseStartScroll - diffX;
+            if (!isRelMouseDown) return;
+            e.preventDefault();
+            var x = e.pageX - relTrack.offsetLeft;
+            var walk = (x - relStartX) * 1.35;
+            relTrack.scrollLeft = relStartScrollLeft - walk;
+
+            var now = Date.now();
+            var dt = now - relLastTime;
+            if (dt > 0) {
+                relVelocity = (e.pageX - relLastX) / dt;
+                relLastX = e.pageX;
+                relLastTime = now;
+            }
         });
 
         window.addEventListener('mouseup', function() {
-            if (!isRelMouse) return;
-            isRelMouse = false;
+            if (!isRelMouseDown) return;
+            isRelMouseDown = false;
             relTrack.classList.remove('dragging');
-            restartRelAutoSlide();
+
+            if (Math.abs(relVelocity) > 0.2) {
+                var currentVelocity = relVelocity * 15;
+                function applyRelMomentum() {
+                    if (Math.abs(currentVelocity) < 0.4) {
+                        restartRelAutoSlide();
+                        return;
+                    }
+                    relTrack.scrollLeft -= currentVelocity;
+                    currentVelocity *= 0.92;
+                    relMomentumId = requestAnimationFrame(applyRelMomentum);
+                }
+                relMomentumId = requestAnimationFrame(applyRelMomentum);
+            } else {
+                restartRelAutoSlide();
+            }
         });
 
         function updateRelScrollShadows() {
@@ -1587,8 +1603,15 @@
         window.addEventListener('resize', updateRelScrollShadows);
 
         // Sync related dots and transition shadows on scroll
+        var relScrollEndTimer = null;
         relTrack.addEventListener('scroll', function() {
             updateRelScrollShadows();
+            relTrack.classList.add('is-scrolling');
+            if (relScrollEndTimer) clearTimeout(relScrollEndTimer);
+            relScrollEndTimer = setTimeout(function() {
+                relTrack.classList.remove('is-scrolling');
+            }, 180);
+
             var firstCard = relTrack.querySelector('.pdp-rel-card');
             if (!firstCard) return;
             var cardWidth = firstCard.clientWidth + 12;

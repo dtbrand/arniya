@@ -2117,25 +2117,48 @@ cursor: zoom-in;
     opacity: 1;
 }
 
-.pdp-reviews-track {
+.pdp-reviews-track,
+.pdp-rel-track {
     display: flex;
     gap: 18px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 14px 6px 24px 6px;
-    touch-action: pan-y pinch-zoom;
+    padding: 14px 6px 26px 6px;
+    touch-action: pan-x pan-y pinch-zoom;
     overscroll-behavior-x: contain;
     transform-style: preserve-3d;
     scroll-behavior: smooth;
+    cursor: grab;
+    user-select: none;
 }
-.pdp-reviews-track::-webkit-scrollbar { display: none; }
+.pdp-reviews-track::-webkit-scrollbar,
+.pdp-rel-track::-webkit-scrollbar { display: none; }
+
+.pdp-reviews-track.dragging,
+.pdp-rel-track.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
+}
+
+/* Kinetic Scrolling State Visual Feedback */
+.pdp-reviews-track.is-scrolling .pdp-review-card {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease;
+    transform: scale(0.985) translateY(-2px);
+}
+
+.pdp-reviews-track.dragging .pdp-review-card {
+    transition: none !important;
+    animation-play-state: paused !important;
+}
 
 /* Luxury 3D Review Card */
 .pdp-review-card {
     flex: 0 0 360px;
     max-width: 440px;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: normal;
     background: linear-gradient(175deg, #FFFFFF 0%, #FDFBF7 60%, #FAF5E8 100%);
     border-radius: 16px;
@@ -2185,6 +2208,20 @@ cursor: zoom-in;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
     z-index: -1;
+}
+
+/* Active Center Card Highlight on Scroll */
+.pdp-review-card.is-active-card {
+    border-color: #D4AF37;
+    box-shadow: 
+        0 18px 38px -8px rgba(138, 104, 31, 0.22),
+        0 6px 16px rgba(0, 0, 0, 0.05),
+        0 0 0 1.5px rgba(212, 175, 55, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    transform: translateY(-4px) scale(1.015);
+}
+.pdp-review-card.is-active-card::before {
+    opacity: 0.9;
 }
 
 @media (max-width: 600px) {
