@@ -563,6 +563,16 @@ $isHomePage = (
     stroke: #8A681F;
 }
 
+#mobileSearchTriggerBtn:hover svg,
+#mobileSearchTriggerBtn:active svg {
+    transform: scale(1.08) rotate(6deg);
+    stroke: #8A681F;
+}
+
+.mobile-search-trigger-btn {
+    display: none;
+}
+
 /* Luxury Gold Notification Badge with Animated Micro-Pulse */
 @keyframes badgePopPulse {
     0%, 100% { transform: scale(1); }
@@ -1307,6 +1317,9 @@ body.mobile-search-open #mobileBottomBar {
     .search-amazon-bar {
         display: none !important; /* Hidden on mobile by default */
     }
+    .mobile-search-trigger-btn {
+        display: inline-flex !important;
+    }
     #wishlistBtn {
         display: none !important;
     }
@@ -1477,6 +1490,14 @@ body.mobile-search-open #mobileBottomBar {
                     </a>
                 </div>
             </div>
+
+            <!-- Mobile Search Icon Trigger Button (Single Clean Search Trigger) -->
+            <button type="button" class="header-icon-btn mobile-search-trigger-btn" id="mobileSearchTriggerBtn" aria-label="Search items" onclick="if(typeof openMobileSearchDrawer==='function'){openMobileSearchDrawer();}">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
 
             <!-- Wishlist -->
             <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
