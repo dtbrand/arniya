@@ -261,12 +261,11 @@ body.qv-modal-open #dtMobileBottomNav {
 
 @media (max-width: 767px) {
     .qv-slider-container {
-        aspect-ratio: 1 / 1;
-        max-height: 250px;
+        aspect-ratio: 3 / 4;
         width: 100%;
-        max-width: 250px;
+        max-height: 400px;
         margin: 0 auto;
-        border-radius: 12px;
+        border-radius: 14px;
     }
     .qv-arrow {
         opacity: 0.85;
@@ -281,147 +280,338 @@ body.qv-modal-open #dtMobileBottomNav {
     .qv-prev-arrow { left: 8px; }
     .qv-next-arrow { right: 8px; }
     .qv-thumbnails-wrap {
-        gap: 6px;
+        gap: 8px;
         margin-top: 6px;
         justify-content: center;
     }
     .qv-thumb {
-        width: 44px;
-        height: 56px;
+        width: 48px;
+        height: 64px;
         border-radius: 6px;
     }
 }
 
 .modal-details { display: flex; flex-direction: column; gap: 10px; }
-.modal-brand-name { font-size: 0.65rem; font-weight: 700; color: var(--dark-gold, #8A681F); letter-spacing: 0.16em; text-transform: uppercase; }
-.modal-name { font-family: var(--font-serif, 'Cinzel', serif); font-size: 1.25rem; font-weight: 700; color: var(--dark-text, #24211C); margin: 0; line-height: 1.3; }
+.modal-brand-name { font-size: 0.65rem; font-weight: 800; color: var(--dark-gold, #8A681F); letter-spacing: 0.16em; text-transform: uppercase; }
+.modal-name { font-family: var(--font-serif, 'Cinzel', serif); font-size: 1.25rem; font-weight: 800; color: var(--dark-text, #111827); margin: 0; line-height: 1.25; }
 
-.modal-price-block { display: flex; flex-direction: column; gap: 2px; }
-.modal-price-row { display: flex; align-items: baseline; gap: 10px; }
-.modal-price { font-size: 1.35rem; font-weight: 800; color: var(--dark-gold, #8A681F); }
-.modal-mrp { font-size: 0.78rem; color: var(--light-text, #9A9490); }
-.modal-old-price { text-decoration: line-through; }
-.modal-discount-tag { font-size: 0.75rem; font-weight: 700; color: #8A681F; margin-left: 4px; }
-.modal-tax-note { font-size: 0.68rem; color: var(--light-text, #9A9490); }
-
-/* ── Colour Option Swatches Styles ── */
-.modal-color-section { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-.modal-color-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--dark-text, #24211C); letter-spacing: 0.08em; text-transform: uppercase; }
-.qv-color-name-text { color: var(--dark-gold, #8A681F); font-weight: 800; }
-
-.modal-color-swatches { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.m-color-btn {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 2px solid #FFFFFF; outline: 1.5px solid var(--soft-platinum, #E5E3DE);
-    cursor: pointer; transition: all 0.2s ease; position: relative;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+/* Price Card (Exact PDP Match) */
+.qv-price-card {
+    background: linear-gradient(145deg, #FFFFFF 0%, #FDFCF9 60%, #FAF6EE 100%);
+    border: 1.2px solid rgba(212, 175, 55, 0.40);
+    border-left: 3.5px solid var(--dark-gold, #8A681F);
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 10px rgba(138, 104, 31, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    box-sizing: border-box;
 }
-.m-color-btn:hover {
-    outline-color: var(--dark-gold, #8A681F); transform: scale(1.12);
+.qv-price-main-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
-.m-color-btn.active {
+.qv-price-val {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: clamp(1.30rem, 2vw, 1.55rem);
+    font-weight: 900;
+    color: var(--dark-text, #111827);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.qv-mrp-val {
+    font-size: 0.78rem;
+    color: #78716C;
+    text-decoration: line-through;
+    font-weight: 500;
+}
+.qv-discount-badge {
+    background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%);
+    color: #15803D;
+    border: 1px solid rgba(22, 163, 74, 0.45);
+    box-shadow: 0 2px 5px rgba(22, 163, 74, 0.12);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 5px;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+.qv-tax-line {
+    font-size: 0.63rem;
+    color: var(--mid-text, #64748B);
+    font-weight: 600;
+}
+
+/* Colour Option Swatches (Exact PDP Match) */
+.pdp-color-section { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+.pdp-section-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--dark-text, #24211C); letter-spacing: 0.08em; text-transform: uppercase; }
+.pdp-label-head { display: flex; align-items: center; gap: 6px; color: #4B5563; font-weight: 800; font-size: 0.68rem; }
+.pdp-selected-txt {
+    color: #8A681F;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    padding: 1.5px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    letter-spacing: 0.03em;
+    box-shadow: 0 1px 3px rgba(138, 104, 31, 0.08);
+    text-transform: uppercase;
+}
+.pdp-color-swatches {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2px 0;
+}
+.pdp-color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2.5px solid #FFFFFF;
+    outline: 1.5px solid rgba(212, 175, 55, 0.40);
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+.pdp-color-btn:hover {
+    outline-color: var(--dark-gold, #8A681F);
+    outline-width: 2px;
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.25);
+}
+.pdp-color-btn.active {
     outline: 2.5px solid var(--dark-gold, #8A681F);
-    box-shadow: 0 0 0 2px rgba(138,104,31,0.25), 0 3px 8px rgba(0,0,0,0.2);
-    transform: scale(1.15);
+    outline-offset: 1px;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.35), 0 4px 12px rgba(0, 0, 0, 0.20);
+    transform: scale(1.12);
 }
-.m-color-btn.active::after {
-    content: '';
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 6px; height: 6px; border-radius: 50%;
+.pdp-color-btn .pdp-color-inner-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
     background: #FFFFFF;
-    box-shadow: 0 0 2px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+.pdp-color-btn.active .pdp-color-inner-dot {
+    opacity: 1;
+    transform: scale(1);
 }
 
-/* ── Size Section Styles ── */
-.modal-size-section { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
-.modal-size-header { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--dark-text, #24211C); letter-spacing: 0.08em; }
-.modal-product-details-btn { color: var(--dark-gold, #8A681F); cursor: pointer; transition: text-decoration 0.2s; }
-.modal-product-details-btn:hover { text-decoration: underline; }
-
-.modal-size-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-.m-size-btn {
-    min-width: 40px; height: 36px; border-radius: 8px;
-    border: 1.5px solid var(--soft-platinum, #E5E3DE); background: var(--off-white, #F8F6F0);
-    font-size: 0.75rem; font-weight: 700; color: var(--dark-text, #24211C);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s; padding: 0 10px;
+/* Size Selector & Guide Pill (Exact PDP Match) */
+.pdp-size-section { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+.pdp-size-guide-link {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #705114;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #FAF5E8;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    box-shadow: 0 1px 3px rgba(138, 104, 31, 0.08);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
-.m-size-btn:hover { border-color: var(--dark-gold, #8A681F); color: var(--dark-gold, #8A681F); }
-.m-size-btn.active { border-color: var(--dark-gold, #8A681F); background: var(--dark-gold, #8A681F); color: #FFFFFF; box-shadow: 0 2px 8px rgba(138,104,31,0.25); }
-
-.modal-actions-myntra { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-.modal-actions-btn-row { display: flex; gap: 8px; width: 100%; }
-
-.modal-add-bag-btn {
-    flex: 1.2; padding: 11px 14px; border-radius: 9px;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
-    border: 1px solid #8A681F;
-    color: #111827;
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.78rem; font-weight: 800;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    transition: all 0.22s ease; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 10px rgba(184,134,11,0.28);
-}
-.modal-add-bag-btn:hover {
-    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+.pdp-size-guide-link:hover {
+    background: #F5ECCE;
+    border-color: #8A681F;
+    color: #5A4210;
     transform: translateY(-1px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 5px 14px rgba(184,134,11,0.4);
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.16);
 }
-.modal-add-bag-btn svg { width: 15px; height: 15px; stroke: #111827; fill: none; stroke-width: 2.2; flex-shrink: 0; }
+.pdp-ruler-svg {
+    width: 13px;
+    height: 13px;
+    stroke: #8A681F;
+    flex-shrink: 0;
+}
+.pdp-size-grid {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2px 0;
+}
+.pdp-size-btn {
+    min-width: 44px;
+    height: 33px;
+    border-radius: 7px;
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    background: #FFFFFF;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #1F2937;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    letter-spacing: 0.02em;
+    -webkit-tap-highlight-color: transparent;
+}
+.pdp-size-btn:hover {
+    border-color: var(--dark-gold, #8A681F);
+    color: var(--dark-gold, #8A681F);
+    background: #FAF8F2;
+    transform: translateY(-1.5px);
+    box-shadow: 0 3px 8px rgba(138, 104, 31, 0.16);
+}
+.pdp-size-btn.active {
+    border-color: #8A681F !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    font-weight: 900 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 3px 10px rgba(184,134,11,0.35) !important;
+    transform: translateY(-1px) scale(1.03);
+}
 
-.modal-buy-now-btn {
-    flex: 1.2; padding: 11px 14px; border-radius: 9px;
-    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
-    border: 1.2px solid #8A681F;
-    color: #FAF5E8;
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.78rem; font-weight: 800;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    transition: all 0.22s ease; cursor: pointer;
+/* Action Buttons (Exact PDP Match) */
+.pdp-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+.pdp-btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.pdp-atc-btn {
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: 1.8px solid var(--dark-gold, #8A681F);
+    background: #FFFFFF;
+    color: var(--dark-gold, #8A681F);
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     display: flex; align-items: center; justify-content: center; gap: 6px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
-.modal-buy-now-btn:hover {
-    border-color: #D4AF37;
-    background: linear-gradient(135deg, #241F1A 0%, #383028 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(0,0,0,0.35);
+.pdp-atc-btn:hover, .pdp-atc-btn:active {
+    background: #FAF3E0;
+    transform: scale(0.98);
 }
-.modal-buy-now-btn svg { width: 14px; height: 14px; fill: currentColor; stroke: currentColor; stroke-width: 1; flex-shrink: 0; }
+.pdp-atc-btn svg {
+    width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.2; flex-shrink: 0;
+}
+.pdp-buy-btn {
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(135deg, #947124 0%, #684E17 100%);
+    color: #FFFFFF;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    box-shadow: 0 2px 8px rgba(138,104,31,0.30);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.pdp-buy-btn:hover, .pdp-buy-btn:active {
+    background: linear-gradient(135deg, #7A5C1B 0%, #4D390E 100%);
+    transform: scale(0.98);
+}
+.pdp-buy-btn svg {
+    width: 14px; height: 14px; fill: currentColor; stroke: currentColor; stroke-width: 1; flex-shrink: 0;
+}
 
-.modal-actions-sub-row { display: flex; gap: 8px; width: 100%; }
-
-.modal-wishlist-btn {
-    flex: 1; padding: 9px 12px; border-radius: 8px;
-    background: #FAF8F4; color: var(--dark-text, #24211C);
-    border: 1px solid var(--soft-platinum, #E5E3DE);
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    transition: all 0.2s; cursor: pointer;
+.pdp-sub-btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8px;
+}
+.pdp-wishlist-btn {
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background: #FAF8F4;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #1F2937;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     display: flex; align-items: center; justify-content: center; gap: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
-.modal-wishlist-btn:hover { border-color: var(--dark-gold, #8A681F); color: var(--dark-gold, #8A681F); background: #FAF3E0; }
-.modal-wishlist-btn.active { border-color: #E53935; color: #E53935; background: #FDE8E8; }
-.modal-wishlist-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
-.modal-wishlist-btn.active svg { fill: #E53935; }
+.pdp-wishlist-btn:hover {
+    border-color: #8A681F;
+    color: #8A681F;
+    background: #FAF3E0;
+}
+.pdp-wishlist-btn.active {
+    border-color: #E53935;
+    color: #E53935;
+    background: #FDE8E8;
+}
+.pdp-wishlist-btn svg {
+    width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0;
+}
+.pdp-wishlist-btn.active svg { fill: #E53935; }
 
-.modal-wa-btn {
-    flex: 1.2; padding: 9px 12px; border-radius: 8px;
+.pdp-wa-order-btn {
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 6px;
     background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
     border: 1px solid #166534;
     color: #FFFFFF;
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    transition: all 0.2s; cursor: pointer;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     display: flex; align-items: center; justify-content: center; gap: 5px;
     text-decoration: none;
+    box-shadow: 0 2px 6px rgba(22,163,74,0.25);
+    transition: all 0.2s;
+    cursor: pointer;
 }
-.modal-wa-btn:hover {
+.pdp-wa-order-btn:hover {
     background: linear-gradient(135deg, #166534 0%, #15803D 100%);
     transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(22,163,74,0.3);
+    box-shadow: 0 4px 10px rgba(22,163,74,0.35);
 }
-.modal-wa-btn svg { width: 14px; height: 14px; fill: #FFFFFF; flex-shrink: 0; }
+.pdp-wa-order-btn svg {
+    width: 14px; height: 14px; fill: #FFFFFF; flex-shrink: 0;
+}
 
 .modal-perks { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed var(--soft-platinum, #E5E3DE); }
 .m-perk-item { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--mid-text, #5A5348); font-weight: 500; }
@@ -673,7 +863,7 @@ body.qv-modal-open #dtMobileBottomNav {
         /* Sizes list */
         var sizeArr = Array.isArray(p.size) ? p.size : ['Free Size'];
         var sizeBtnsHtml = sizeArr.map(function(s, idx) {
-            return '<button class="m-size-btn ' + (idx === 0 ? 'active' : '') + '" data-sz="' + s + '">' + s + '</button>';
+            return '<button type="button" class="pdp-size-btn ' + (idx === 0 ? 'active' : '') + '" data-sz="' + s + '">' + s + '</button>';
         }).join('');
 
         /* Colours list */
@@ -682,7 +872,7 @@ body.qv-modal-open #dtMobileBottomNav {
 
         var colorSwatchesHtml = colorArr.map(function(c, idx) {
             var hex = colorHexMap[c] || '#8A681F';
-            return '<button class="m-color-btn ' + (idx === 0 ? 'active' : '') + '" data-color="' + c + '" style="background-color: ' + hex + ';" title="' + c + '" aria-label="' + c + '"></button>';
+            return '<button type="button" class="pdp-color-btn ' + (idx === 0 ? 'active' : '') + '" data-color="' + c + '" style="background-color: ' + hex + ';" title="' + c + '" aria-label="' + c + '"><span class="pdp-color-inner-dot"></span></button>';
         }).join('');
 
         var isWish = false;
@@ -734,55 +924,60 @@ body.qv-modal-open #dtMobileBottomNav {
                 '<div class="modal-brand-name">DT BRAND\'S ETHNIC LUXURY</div>' +
                 '<h2 class="modal-name">' + p.name + '</h2>' +
 
-                '<div class="modal-price-block">' +
-                    '<div class="modal-price-row">' +
-                        '<span class="modal-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
-                        (p.old_price ? '<span class="modal-mrp">MRP <span class="modal-old-price">₹' + Number(p.old_price).toLocaleString('en-IN') + '</span></span>' : '') +
-                        (p.discount ? '<span class="modal-discount-tag">(' + p.discount + '% OFF)</span>' : '') +
+                '<!-- Exact PDP Matching Price Card -->' +
+                '<div class="qv-price-card">' +
+                    '<div class="qv-price-main-row">' +
+                        '<span class="qv-price-val">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
+                        (p.old_price ? '<span class="qv-mrp-val">MRP ₹' + Number(p.old_price).toLocaleString('en-IN') + '</span>' : '') +
+                        (p.discount ? '<span class="qv-discount-badge">' + p.discount + '% OFF</span>' : '') +
                     '</div>' +
-                    '<span class="modal-tax-note">Exclusive of all taxes</span>' +
+                    '<span class="qv-tax-line">Inclusive of all taxes &bull; 100% Authentic Silk Craftsmanship</span>' +
                 '</div>' +
 
-                '<!-- Colour Option Swatches -->' +
-                '<div class="modal-color-section">' +
-                    '<div class="modal-color-header">' +
-                        '<span>SELECT COLOUR: <strong id="qvSelectedColorName" class="qv-color-name-text">' + defaultColor + '</strong></span>' +
+                '<!-- Single Piece Mode: Colour Swatches -->' +
+                '<div class="pdp-color-section">' +
+                    '<div class="pdp-section-header">' +
+                        '<span class="pdp-label-head">SELECT COLOUR: <strong id="qvSelectedColorName" class="pdp-selected-txt">' + defaultColor + '</strong></span>' +
                     '</div>' +
-                    '<div class="modal-color-swatches" id="qvColorWrap">' +
+                    '<div class="pdp-color-swatches" id="qvColorWrap">' +
                         colorSwatchesHtml +
                     '</div>' +
                 '</div>' +
 
-                '<!-- Size Selection -->' +
-                '<div class="modal-size-section">' +
-                    '<div class="modal-size-header">' +
-                        '<span>SELECT SIZE</span>' +
-                        '<span class="modal-product-details-btn" id="qvPdBtn">PRODUCT DETAILS ›</span>' +
+                '<!-- Single Piece Mode: Size Selector -->' +
+                '<div class="pdp-size-section">' +
+                    '<div class="pdp-section-header">' +
+                        '<span class="pdp-label-head">SELECT SIZE</span>' +
+                        '<button type="button" class="pdp-size-guide-link" id="qvPdBtn">' +
+                            '<svg class="pdp-ruler-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.6 1-3.6 0l-2.4-2.4c-1-1-1-2.6 0-3.6L15.3 2.7c1-1 2.6-1 3.6 0l2.4 2.4c1 1 1 2.6 0 3.6Z"></path><path d="m14.5 5.5-2.5 2.5"></path><path d="m11.5 8.5-1.5 1.5"></path><path d="m8.5 11.5-2.5 2.5"></path><path d="m5.5 14.5-1.5 1.5"></path></svg>' +
+                            '<span>VIEW SIZE CHART</span>' +
+                        '</button>' +
                     '</div>' +
-                    '<div class="modal-size-pills" id="qvSizeWrap">' +
+                    '<div class="pdp-size-grid" id="qvSizeWrap">' +
                         sizeBtnsHtml +
                     '</div>' +
                 '</div>' +
 
-                '<div class="modal-actions-myntra">' +
-                    '<div class="modal-actions-btn-row">' +
-                        '<button class="modal-add-bag-btn" id="qvAtc">' +
-                            '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
+                '<!-- Exact PDP Matching Action Buttons -->' +
+                '<div class="pdp-actions-container">' +
+                    '<div class="pdp-btn-row">' +
+                        '<button type="button" class="pdp-atc-btn" id="qvAtc">' +
+                            '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
                             '<span>ADD TO BAG</span>' +
                         '</button>' +
-                        '<button class="modal-buy-now-btn" id="qvBuyNow">' +
-                            '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+                        '<button type="button" class="pdp-buy-btn" id="qvBuyNow">' +
+                            '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
                             '<span>BUY NOW</span>' +
                         '</button>' +
                     '</div>' +
-                    '<div class="modal-actions-sub-row">' +
-                        '<button class="modal-wishlist-btn ' + (isWish ? 'active' : '') + '" id="qvWishlist">' +
+                    '<div class="pdp-sub-btn-row">' +
+                        '<button type="button" class="pdp-wishlist-btn ' + (isWish ? 'active' : '') + '" id="qvWishlist">' +
                             '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
                             '<span>WISHLIST</span>' +
                         '</button>' +
-                        '<a href="https://api.whatsapp.com/send?phone=917046363528&text=' + encodeURIComponent('Hi DT Brand, I am interested in ' + (p.name || 'this product') + ' (₹' + (p.price || 0) + '). Please share details.') + '" target="_blank" class="modal-wa-btn" id="qvWaBtn">' +
+                        '<a href="https://api.whatsapp.com/send?phone=917046363528&text=' + encodeURIComponent('Hi DT Brand, I am interested in ' + (p.name || 'this product') + ' (₹' + (p.price || 0) + '). Please share details.') + '" target="_blank" class="pdp-wa-order-btn" id="qvWaBtn">' +
                             '<svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>' +
-                            '<span>WHATSAPP</span>' +
+                            '<span>WHATSAPP ORDER</span>' +
                         '</a>' +
                     '</div>' +
                 '</div>' +
@@ -931,9 +1126,9 @@ body.qv-modal-open #dtMobileBottomNav {
         startAutoSlide();
 
         /* Colour Swatches Binding */
-        content.querySelectorAll('.m-color-btn').forEach(function(btn) {
+        content.querySelectorAll('.pdp-color-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                content.querySelectorAll('.m-color-btn').forEach(function(b) { b.classList.remove('active'); });
+                content.querySelectorAll('.pdp-color-btn').forEach(function(b) { b.classList.remove('active'); });
                 btn.classList.add('active');
                 var colorNameEl = document.getElementById('qvSelectedColorName');
                 if (colorNameEl) colorNameEl.textContent = btn.dataset.color;
@@ -941,9 +1136,9 @@ body.qv-modal-open #dtMobileBottomNav {
         });
 
         /* Size Pill binding */
-        content.querySelectorAll('.m-size-btn').forEach(function(btn) {
+        content.querySelectorAll('.pdp-size-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                content.querySelectorAll('.m-size-btn').forEach(function(b) { b.classList.remove('active'); });
+                content.querySelectorAll('.pdp-size-btn').forEach(function(b) { b.classList.remove('active'); });
                 btn.classList.add('active');
             });
         });
@@ -952,14 +1147,36 @@ body.qv-modal-open #dtMobileBottomNav {
         var qvClose = document.getElementById('qvClose');
         if (qvClose) qvClose.addEventListener('click', window.closeQV);
 
+        /* View Size Chart trigger */
+        var qvPdBtn = document.getElementById('qvPdBtn');
+        if (qvPdBtn) {
+            qvPdBtn.addEventListener('click', function() {
+                window.openProductDetails(p.id);
+            });
+        }
+
+        /* Wishlist Toggle button */
+        var qvWishlist = document.getElementById('qvWishlist');
+        if (qvWishlist) {
+            qvWishlist.addEventListener('click', function() {
+                if (typeof window.toggleWishlistProduct === 'function') {
+                    window.toggleWishlistProduct(p.id);
+                    qvWishlist.classList.toggle('active');
+                } else if (typeof window.toggleWishlist === 'function') {
+                    window.toggleWishlist(p.id);
+                    qvWishlist.classList.toggle('active');
+                }
+            });
+        }
+
         /* Add To Bag with selected size and color */
         var qvAtc = document.getElementById('qvAtc');
         if (qvAtc) {
             qvAtc.addEventListener('click', function() {
-                var activeSizeBtn = content.querySelector('.m-size-btn.active');
+                var activeSizeBtn = content.querySelector('.pdp-size-btn.active');
                 var selSize = activeSizeBtn ? activeSizeBtn.dataset.sz : 'Free Size';
 
-                var activeColorBtn = content.querySelector('.m-color-btn.active');
+                var activeColorBtn = content.querySelector('.pdp-color-btn.active');
                 var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
 
                 if (typeof window.addToCart === 'function') {
@@ -973,10 +1190,10 @@ body.qv-modal-open #dtMobileBottomNav {
         var qvBuyNow = document.getElementById('qvBuyNow');
         if (qvBuyNow) {
             qvBuyNow.addEventListener('click', function() {
-                var activeSizeBtn = content.querySelector('.m-size-btn.active');
+                var activeSizeBtn = content.querySelector('.pdp-size-btn.active');
                 var selSize = activeSizeBtn ? activeSizeBtn.dataset.sz : 'Free Size';
 
-                var activeColorBtn = content.querySelector('.m-color-btn.active');
+                var activeColorBtn = content.querySelector('.pdp-color-btn.active');
                 var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
 
                 if (typeof window.addToCart === 'function') {
