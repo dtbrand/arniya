@@ -2,6 +2,8 @@
 
 namespace DTBrand;
 
+require_once __DIR__ . '/Database.php';
+
 /**
  * Auth — Enterprise Customer & Admin Authentication Engine
  * DT Brand's & Jai Hanuman Tex — Live Production Standard

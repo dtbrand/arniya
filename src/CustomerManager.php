@@ -2,6 +2,8 @@
 
 namespace DTBrand;
 
+require_once __DIR__ . '/Database.php';
+
 /**
  * CustomerManager — B2B Partner, Wholesale & Retail Identity Engine
  * DT Brand's & Jai Hanuman Tex — Live Production Standard
