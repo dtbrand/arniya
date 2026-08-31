@@ -1314,21 +1314,19 @@ body.mobile-search-open #mobileBottomBar {
         </div>
     </div>
 
-    <!-- ═══ Mobile In-Header Sticky Search Bar (Replaces normal logo on scroll or search click) ═══ -->
+    <!-- ═══ Mobile In-Header Sticky Search Bar (Wide & Clean Full-Width, No Home Button) ═══ -->
     <div class="mobile-full-search-bar" id="mobileFullSearchBar">
-        <!-- Left: Back Button / Home Button -->
-        <a href="/" class="shop-back-btn" id="mobileSearchBackBtn" aria-label="Back to Home">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            <span>Home</span>
-        </a>
-
-        <!-- Center: Input Box with Clear & Submit Icons -->
+        <!-- Center: Full-Width Search Input Bar with Gold Search Icon & Clear '✕' -->
         <div class="mobile-search-input-wrap">
+            <svg class="mobile-search-lead-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" style="color:var(--dark-gold, #8A681F); flex-shrink:0; margin-right:4px;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
             <input
                 type="text"
                 class="mobile-search-input-field"
                 id="mobileSearchInput"
-                placeholder="Search sarees, lehengas, kurtis..."
+                placeholder="Search sarees, lehengas, kurtis, gowns..."
                 autocomplete="off"
                 aria-label="Search ethnic wear"
             />
@@ -1344,7 +1342,7 @@ body.mobile-search-open #mobileBottomBar {
         </div>
 
         <!-- Right: Cart Icon -->
-        <div class="header-actions" style="gap:4px;">
+        <div class="header-actions" style="gap:4px; flex-shrink:0;">
             <a href="javascript:void(0)" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer();" class="header-icon-btn" aria-label="Shopping cart">
                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span class="header-badge" id="mobileCartBadge" style="display:none;">0</span>
@@ -1354,13 +1352,14 @@ body.mobile-search-open #mobileBottomBar {
 
     <!-- ═══ Mobile Search Suggestions & Products Dropdown (Opens on click/type) ═══ -->
     <div class="mobile-search-suggestions-dropdown" id="mobileSearchSuggestionsDropdown">
-        <!-- Quick Category Chips Row -->
+        <!-- Quick Category Chips Row with Close '✕' Button -->
         <div class="mobile-sugg-cats-ribbon" id="mobileSuggCatsRibbon">
             <button type="button" class="mobile-sugg-cat-chip active" data-cat="All">✦ All</button>
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Saree">🥻 Sarees</button>
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Lehenga">👗 Lehengas</button>
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Gown">✨ Gowns</button>
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Kurti">🌸 Kurtis</button>
+            <button type="button" class="mobile-sugg-close-pill" id="mobileSearchSuggestionsCloseBtn" aria-label="Close search" style="margin-left:auto; background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; font-size:0.72rem; font-weight:700; padding:3px 8px; border-radius:12px; cursor:pointer;">✕ Close</button>
         </div>
 
         <!-- Dynamic Scrollable Suggestions & Products Body -->
@@ -1578,22 +1577,8 @@ window.closeWishlistDrawer = function() {
     });
 
     /* Mobile Search Open / Close Controllers */
-    var userManuallyClosedMobileSearch = false;
+    var mobileSearchSuggestionsClose = document.getElementById('mobileSearchSuggestionsCloseBtn');
 
-    function openMobileSearchDrawer() {
-        userManuallyClosedMobileSearch = false;
-        if (header) header.classList.add('mobile-search-active');
-        document.body.classList.add('mobile-search-open');
-        var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
-        fetchSuggestions(q, currentMobileCat, true);
-        if (mobileSearchInput) {
-            setTimeout(function() {
-                mobileSearchInput.focus();
-            }, 80);
-        }
-    }
-
-    /* Mobile Search Open / Close Controllers */
     function openMobileSearchDrawer() {
         if (header) header.classList.add('mobile-search-active');
         document.body.classList.add('mobile-search-open');
@@ -1626,19 +1611,10 @@ window.closeWishlistDrawer = function() {
         });
     }
 
-    if (mobileSearchBack) {
-        mobileSearchBack.addEventListener('click', function(e) {
-            if (document.body.classList.contains('mobile-search-open')) {
-                e.preventDefault();
-                closeMobileSearchDrawer(false);
-            }
-        });
-    }
-
-    if (mobileSearchClose) {
-        mobileSearchClose.addEventListener('click', function(e) {
+    if (mobileSearchSuggestionsClose) {
+        mobileSearchSuggestionsClose.addEventListener('click', function(e) {
             e.preventDefault();
-            closeMobileSearchDrawer(true);
+            closeMobileSearchDrawer(false);
         });
     }
 
