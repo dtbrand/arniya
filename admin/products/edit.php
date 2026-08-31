@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * edit.php — Dynamic Product Edit Studio (WordPress & WooCommerce Style)
@@ -24,7 +24,7 @@ if (!$prod) {
     http_response_code(404);
     echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
         . '<title>Product not found</title>'
-        . '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>'
+        . '<link rel="stylesheet" href="/admin/assets/css/admin.css"></head><body>'
         . '<div style="max-width:520px;margin:80px auto;padding:22px;border:1px solid #c3c4c7;background:#fff;'
         . 'font-family:system-ui,sans-serif;">'
         . '<h1 style="font-size:18px;margin:0 0 8px;">Product not found</h1>'
@@ -47,7 +47,7 @@ $edit_sku = $prod['sku'] ?? '';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/product-form.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/variants.css?v=<?php echo time(); ?>">
@@ -108,7 +108,7 @@ $edit_sku = $prod['sku'] ?? '';
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/variants.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>

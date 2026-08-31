@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * view.php — Premium Single Order Details Page
@@ -144,7 +144,7 @@ if (!$order) {
     $dbDown = ($pdo === null || Database::isMockMode());
     http_response_code($dbDown ? 503 : 404);
     echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Order not found</title>';
-    echo '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>';
+    echo '<link rel="stylesheet" href="/admin/assets/css/admin.css"></head><body>';
     echo '<div style="max-width:560px;margin:80px auto;padding:28px;border:1.5px solid #D4AF37;border-radius:10px;font-family:system-ui,sans-serif;">';
     echo '<h1 style="font-size:20px;margin:0 0 10px;">Order not found</h1>';
     echo '<p style="color:#646970;">' . htmlspecialchars($dt_order_error ?: 'This order could not be loaded.') . '</p>';
@@ -166,7 +166,7 @@ $active_subnav = "";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/orders/assets/css/order-view.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">

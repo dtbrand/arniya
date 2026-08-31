@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * admin.php — Luxury Executive Admin Dashboard & WhatsApp CRM Control Center
@@ -462,7 +462,7 @@ $dashPayload = [
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Admin CSS Stylesheet -->
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -3140,7 +3140,7 @@ _Special 15% VIP Discount Applied!_</textarea>
 <script>window.DT_DASH = <?php echo json_encode($dashPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;</script>
 
 <!-- Admin JavaScript Engine -->
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

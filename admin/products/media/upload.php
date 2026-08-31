@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * media/upload.php — Real media upload screen
@@ -22,7 +22,7 @@ $active_subnav = "media";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Media ‹ DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <style>
     .upload-result { font-size: 12px; padding: 6px 10px; border-radius: 4px; margin-top: 6px; }
     .upload-result.ok { background: #DCFCE7; color: #15803D; }
@@ -107,6 +107,6 @@ function uploadOne(file) {
         });
 }
 </script>
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

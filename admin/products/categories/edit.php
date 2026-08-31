@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * edit.php — Edit Category
@@ -64,7 +64,7 @@ if (!$category) {
             ? 'Category #' . $cat_id . ' does not exist. It may already have been deleted.'
             : 'No category id was given, so there is nothing to edit.');
     echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Category not found</title>';
-    echo '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>';
+    echo '<link rel="stylesheet" href="/admin/assets/css/admin.css"></head><body>';
     echo '<div style="max-width:560px;margin:80px auto;padding:28px;border:1.5px solid #D4AF37;border-radius:10px;font-family:system-ui,sans-serif;">';
     echo '<h1 style="font-size:20px;margin:0 0 10px;">Category not found</h1>';
     echo '<p style="color:#646970;">' . htmlspecialchars($ceMsg) . '</p>';
@@ -104,7 +104,7 @@ $catCount = ProductCatalog::categoryProductCount($cat_id);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Category &lsaquo; <?php echo htmlspecialchars($catName); ?> &lsaquo; DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-edit-grid { display:grid; grid-template-columns:1fr 340px; gap:18px; align-items:start; }
@@ -269,7 +269,7 @@ $catCount = ProductCatalog::categoryProductCount($cat_id);
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -34,7 +34,7 @@ if ($pdoAdd !== null && !Database::isMockMode()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Subcategory ‹ DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <style>
     .dt-form-input:focus, .dt-form-select:focus {
         border-color: #D4AF37 !important;
@@ -106,6 +106,6 @@ function submitAddSubcat(ev) {
     return false;
 }
 </script>
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

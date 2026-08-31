@@ -59,6 +59,10 @@ Options -Indexes -MultiViews
     RewriteRule ^Frontend/[^/]+/Asset/css/(.*)$ /assets/css/$1 [R=301,L,NC]
     RewriteRule ^Frontend/[^/]+/Asset/js/(.*)$ /assets/js/$1 [R=301,L,NC]
 
+    # Admin Asset & Includes Case-Insensitive Aliases
+    RewriteRule ^admin/Asset/(.*)$ admin/assets/$1 [L,NC]
+    RewriteRule ^admin/Includes/(.*)$ admin/includes/$1 [L,NC]
+
     # ── 5. STOREFRONT CLEAN URL ROUTING (.php optional / pretty URLs) ──
     # Product PDP
     RewriteRule ^product/?$ product.php [QSA,L]
