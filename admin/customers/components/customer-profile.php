@@ -168,5 +168,66 @@ $initials = strtoupper(
             <?php endif; ?>
         </div>
     </div>
+
+    <?php
+    // ── Trade Identity Panel ──
+    // Wholesale / reseller / retailer accounts carry business fields a retail
+    // shopper never has: GSTIN, PAN, commission rate, credit line and KYC
+    // state. Showing them only for trade types keeps a retail dossier clean
+    // while giving an admin everything needed to verify a B2B account.
+    $cGstin = $found ? trim((string)($custData['gstin'] ?? '')) : '';
+    $cPan   = $found ? trim((string)($custData['pan'] ?? '')) : '';
+    $cComm  = $found ? (float)($custData['commission_rate'] ?? 0) : 0.0;
+    $cCredit = $found ? (float)($custData['credit_limit'] ?? 0) : 0.0;
+    $cOutstanding = $found ? (float)($custData['outstanding_balance'] ?? 0) : 0.0;
+    $cKyc = $found ? strtolower((string)($custData['kyc_status'] ?? 'unverified')) : '';
+    $isTradeAccount = in_array(strtolower((string)$custData['type'] ?? ''), ['wholesale', 'reseller', 'retailer'], true);
+    ?>
+    <?php if ($isTradeAccount): ?>
+    <div style="border-top:1.5px solid #F1ECE1; padding-top:12px; margin-top:4px;">
+        <div style="font-size:0.72rem; font-weight:800; color:#78716C; text-transform:uppercase; margin-bottom:8px;">Trade &amp; Compliance (<?= htmlspecialchars($cType) ?>)</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:0.72rem; color:#78716C; font-weight:600;">GSTIN</span>
+                <?php if ($cGstin !== ''): ?>
+                    <code style="font-size:0.7rem; color:#8A681F; font-weight:800; background:#FAF5E8; padding:2px 6px; border-radius:4px;"><?= htmlspecialchars($cGstin) ?></code>
+                <?php else: ?>
+                    <span style="font-size:0.7rem; color:#B45309; font-weight:700;">Not on file</span>
+                <?php endif; ?>
+            </div>
+            <?php if ($cPan !== ''): ?>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:0.72rem; color:#78716C; font-weight:600;">PAN</span>
+                <code style="font-size:0.7rem; color:#8A681F; font-weight:800; background:#FAF5E8; padding:2px 6px; border-radius:4px;"><?= htmlspecialchars($cPan) ?></code>
+            </div>
+            <?php endif; ?>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:0.72rem; color:#78716C; font-weight:600;">KYC Status</span>
+                <?php
+                $kycClass = $cKyc === 'verified' ? 'active' : ($cKyc === 'pending' ? 'vip' : ($cKyc === 'rejected' ? 'suspended' : 'inactive'));
+                $kycText  = $cKyc === 'verified' ? 'Verified' : ($cKyc === 'pending' ? 'Pending' : ($cKyc === 'rejected' ? 'Rejected' : 'Unverified'));
+                ?>
+                <span class="dt-status-pill <?= $kycClass ?>" style="font-size:0.62rem;"><?= $kycText ?></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:0.72rem; color:#78716C; font-weight:600;">Commission Rate</span>
+                <strong style="font-size:0.72rem; color:#181512;"><?= number_format($cComm, 2) ?>%</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:0.72rem; color:#78716C; font-weight:600;">Credit Line</span>
+                <strong style="font-size:0.72rem; color:<?= $cOutstanding >= $cCredit && $cCredit > 0 ? '#B45309' : '#181512'; ?>;">
+                    ₹<?php echo number_format($cOutstanding); ?> / ₹<?php echo number_format($cCredit); ?>
+                </strong>
+            </div>
+        </div>
+        <?php if ($cGstin === '' || $cKyc !== 'verified'): ?>
+        <div style="background:#FEF3C7; border:1px solid #FCD34D; border-radius:6px; padding:8px 10px; margin-top:10px;">
+            <span style="font-size:0.68rem; color:#92400E; font-weight:700;">
+                ⚠ <?= $cGstin === '' ? 'GSTIN missing — capture it before invoicing B2B orders.' : 'KYC not verified — trade pricing stays locked until verification.' ?>
+            </span>
+        </div>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
 </div>
 <?php endif; ?>

@@ -30,7 +30,10 @@ class Auth
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
         // The tier the visitor ASKED for. It is not granted here — see below.
-        $requestedType = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        // 'retailer' is a trade tier (own price column, MOQ rules, portal), so a
+        // retailer application follows the same admin-approval path as
+        // wholesale/reseller instead of being silently downgraded to retail.
+        $requestedType = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller', 'retailer']) ? $data['type'] : 'retail';
         $isB2BRequest = ($requestedType !== 'retail');
         $city = trim($data['city'] ?? '');
         $state = trim($data['state'] ?? '');
@@ -75,7 +78,7 @@ class Auth
                 // the trade details and approves it. Retail signup is unchanged and
                 // still works immediately.
                 $alreadyApprovedB2B = $existing
-                    && in_array(($existing['type'] ?? 'retail'), ['wholesale', 'reseller'], true)
+                    && in_array(($existing['type'] ?? 'retail'), ['wholesale', 'reseller', 'retailer'], true)
                     && ($existing['status'] ?? '') === 'active';
 
                 if ($alreadyApprovedB2B) {
@@ -120,7 +123,12 @@ class Auth
                 // handing back a session that prices at retail while the account
                 // is labelled "wholesale".
                 if ($needsApproval) {
-                    $label = ($grantType === 'wholesale') ? 'wholesale' : 'reseller';
+                    $labels = [
+                        'wholesale' => 'wholesale',
+                        'reseller'  => 'reseller',
+                        'retailer'  => 'retailer',
+                    ];
+                    $label = $labels[$grantType] ?? 'trade';
                     return [
                         'success' => true,
                         'pending_approval' => true,

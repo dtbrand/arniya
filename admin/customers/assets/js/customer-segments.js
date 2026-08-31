@@ -90,7 +90,7 @@
 
     function matches(c, r) {
         if (c.type === 'trade') {
-            if (r.type !== 'wholesale' && r.type !== 'reseller') return false;
+            if (r.type !== 'wholesale' && r.type !== 'reseller' && r.type !== 'retailer') return false;
         } else if (c.type && r.type !== c.type) {
             return false;
         }
@@ -124,7 +124,7 @@
 
     function describe(c) {
         var parts = [];
-        if (c.type === 'trade') parts.push('wholesale or reseller');
+        if (c.type === 'trade') parts.push('wholesale, reseller or retailer');
         else if (c.type) parts.push('type = ' + c.type);
         if (c.status) parts.push('status = ' + c.status);
         if (c.state) parts.push('state = ' + c.state);

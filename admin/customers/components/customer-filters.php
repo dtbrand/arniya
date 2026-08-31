@@ -53,6 +53,7 @@
                         <option value="retail">Retail</option>
                         <option value="wholesale">Wholesale</option>
                         <option value="reseller">Reseller</option>
+                        <option value="retailer">Retailer / Boutique</option>
                     </select>
                 </div>
             </div>

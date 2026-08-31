@@ -30,7 +30,7 @@ foreach ($segRows as $r) {
     if ($r['orders'] === 0)   $presetCounts['never']++;
     $st = strtoupper($r['state']);
     if ($st === 'GJ' || $st === 'GUJARAT') $presetCounts['gujarat']++;
-    if ($r['type'] === 'wholesale' || $r['type'] === 'reseller') $presetCounts['trade']++;
+    if ($r['type'] === 'wholesale' || $r['type'] === 'reseller' || $r['type'] === 'retailer') $presetCounts['trade']++;
     $lo = $r['last'] !== '' ? strtotime($r['last']) : false;
     if ($lo === false || $lo < $cut60) $presetCounts['dormant']++;
 }
@@ -41,7 +41,7 @@ $presets = [
     ['key' => 'never',   'name' => 'Registered, No Order','sub' => 'Signed up but never bought',               'count' => $presetCounts['never'],   'icon' => 'cart'],
     ['key' => 'dormant', 'name' => 'Dormant 60+ Days',    'sub' => 'No order in the last 60 days',             'count' => $presetCounts['dormant'], 'icon' => 'clock'],
     ['key' => 'gujarat', 'name' => 'Gujarat Buyers',      'sub' => 'State recorded as Gujarat / GJ',           'count' => $presetCounts['gujarat'], 'icon' => 'pin'],
-    ['key' => 'trade',   'name' => 'Trade Accounts',      'sub' => 'Wholesale and reseller accounts',          'count' => $presetCounts['trade'],   'icon' => 'box'],
+    ['key' => 'trade',   'name' => 'Trade Accounts',      'sub' => 'Wholesale, reseller and retailer accounts', 'count' => $presetCounts['trade'],   'icon' => 'box'],
 ];
 
 $presetIcons = [
@@ -125,7 +125,8 @@ $labelStyle = 'display:block; font-size:0.73rem; font-weight:800; color:#181512;
                     <option value="retail">Retail</option>
                     <option value="wholesale">Wholesale</option>
                     <option value="reseller">Reseller</option>
-                    <option value="trade">Trade (wholesale + reseller)</option>
+                    <option value="retailer">Retailer / Boutique</option>
+                    <option value="trade">Trade (wholesale + reseller + retailer)</option>
                 </select>
             </div>
 

@@ -1851,7 +1851,10 @@
                 return;
             }
 
-            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : 'retail');
+            /* 'Retailer' is a genuine trade tier in this store (own pricing column,
+               MOQ rules, /retailer.php portal) — distinct from plain 'retail'
+               shoppers. The other two pills map directly. */
+            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : (selectedRole === 'Retailer' ? 'retailer' : 'retail'));
             var fullPhone = selectedCountry.dial + ' ' + phone;
 
             var params = new URLSearchParams();
