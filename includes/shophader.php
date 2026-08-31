@@ -1088,16 +1088,12 @@ body.mobile-search-open #mobileBottomBar {
         transition: box-shadow 0.25s ease;
     }
 
-    /* Fixed Ultra-Compact 38px Slot for Normal View and Search Bar */
-    .header-normal-view,
-    .mobile-full-search-bar {
+    /* Fixed Ultra-Compact 38px Slot for Normal View */
+    .header-normal-view {
         height: 38px;
         min-height: 38px;
         max-height: 38px;
         box-sizing: border-box;
-    }
-
-    .header-normal-view {
         position: relative;
         padding: 0 10px;
         gap: 8px;
@@ -1105,6 +1101,7 @@ body.mobile-search-open #mobileBottomBar {
         align-items: center;
         justify-content: space-between;
     }
+
     .header-left-group {
         position: static;
         display: flex;
@@ -1180,29 +1177,29 @@ body.mobile-search-open #mobileBottomBar {
         display: none !important;
     }
 
-    /* Open Mobile Search Bar (Exact 38px Height) */
+    /* Mobile Full-Screen Luxury Search Drawer (<768px) */
     .mobile-full-search-bar {
-        padding: 0 8px;
-        gap: 6px;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: 100vh !important;
+        max-height: 100vh !important;
+        background: #FFFFFF !important;
+        z-index: 10000000 !important;
+        display: none !important;
+        flex-direction: column !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
-    .mobile-search-input-wrap {
-        height: 28px;
-        padding: 0 10px;
-    }
-    .mobile-search-input-field {
-        font-size: 0.76rem;
-    }
-    .mobile-search-submit-icon-btn svg {
-        width: 13px;
-        height: 13px;
-    }
-    .mobile-search-close-btn {
-        width: 28px;
-        height: 28px;
-    }
-    .mobile-search-close-btn svg {
-        width: 12px;
-        height: 12px;
+    .shop-header.mobile-search-active .mobile-full-search-bar {
+        display: flex !important;
     }
 
     /* Permanently Visible Ultra-Compact Category Subnav (Royal Gold Luxury Gradient) */
