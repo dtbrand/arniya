@@ -161,16 +161,23 @@
         window.goToSlide(currentSlideIdx + delta);
     };
 
+    function isElementInViewport(el) {
+        if (!el) return false;
+        var rect = el.getBoundingClientRect();
+        return (
+            rect.bottom > 0 &&
+            rect.top < (window.innerHeight || document.documentElement.clientHeight)
+        );
+    }
+
     function updateActiveThumbnail(idx) {
+        var strip = document.getElementById('pdpThumbnailsStrip');
         document.querySelectorAll('.pdp-thumb-item').forEach(function(item, i) {
             var isActive = (i === idx);
             item.classList.toggle('active', isActive);
-            if (isActive) {
-                try {
-                    item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                } catch {
-                    // Ignore scroll errors on detached elements
-                }
+            if (isActive && strip) {
+                var offset = item.offsetLeft - (strip.clientWidth / 2) + (item.clientWidth / 2);
+                strip.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
             }
         });
     }
@@ -185,8 +192,10 @@
     function startGalleryAutoTimer() {
         if (galleryAutoTimer) clearInterval(galleryAutoTimer);
         galleryAutoTimer = setInterval(function() {
+            var sliderBox = document.getElementById('pdpGallerySlider');
+            if (sliderBox && !isElementInViewport(sliderBox)) return;
             window.slidePdpGallery(1);
-        }, 3800);
+        }, 4000);
     }
 
     function pauseGalleryAutoTimer() {
@@ -689,9 +698,8 @@
                 var isActive = (i === lbCurrentIdx);
                 th.classList.toggle('active', isActive);
                 if (isActive) {
-                    try { th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } catch {
-                        // Ignore scroll errors on detached elements
-                    }
+                    var offset = th.offsetLeft - (lbThumbs.clientWidth / 2) + (th.clientWidth / 2);
+                    lbThumbs.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
                 }
             });
         }
@@ -1241,8 +1249,10 @@
         if (revAutoSlideTimer) clearInterval(revAutoSlideTimer);
         if (!revTrack || revTrack.scrollWidth <= (revTrack.clientWidth + 10)) return;
         revAutoSlideTimer = setInterval(function() {
+            var carouselWrap = document.getElementById('pdpRevCarouselWrap');
+            if (carouselWrap && !isElementInViewport(carouselWrap)) return;
             window.slidePdpReviews(1);
-        }, 4500);
+        }, 5500);
     }
 
     function pauseReviewAutoSlide() {
@@ -1408,9 +1418,12 @@
 
     function startRelAutoSlide() {
         if (relAutoSlideTimer) clearInterval(relAutoSlideTimer);
+        if (!relTrack || relTrack.scrollWidth <= (relTrack.clientWidth + 10)) return;
         relAutoSlideTimer = setInterval(function() {
+            var relWrap = document.getElementById('pdpRelCarouselWrap');
+            if (relWrap && !isElementInViewport(relWrap)) return;
             window.slidePdpRelated(1);
-        }, 4600);
+        }, 5500);
     }
 
     function pauseRelAutoSlide() {
