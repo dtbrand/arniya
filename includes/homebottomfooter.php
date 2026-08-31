@@ -402,15 +402,31 @@ body.sort-open .home-smart-bottom-footer {
 .home-menu-user-card:hover {
     transform: translateY(-1px);
     border-color: #F5D77F;
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.2);
 }
 
-.home-menu-user-avatar {
-    width: 36px;
-    height: 36px;
+.home-menu-user-avatar-wrap {
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     border: 1.5px solid #D4AF37;
+    background: linear-gradient(135deg, #2A241E 0%, #181512 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+    overflow: hidden;
+}
+
+.home-menu-user-avatar-wrap img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    background: #2A241E;
+}
+
+.home-menu-user-default-icon {
+    stroke: #D4AF37;
 }
 
 .home-menu-user-info {
@@ -564,68 +580,95 @@ body.sort-open .home-smart-bottom-footer {
 </style>
 
 <!-- ════════════ RESELLER-STYLE HOME MEGA MENU DRAWER OVERLAY ════════════ -->
+<?php
+$drawerCategories = [];
+if (class_exists('\DTBrand\ProductCatalog')) {
+    $drawerCategories = \DTBrand\ProductCatalog::getCategoriesWithDetails();
+}
+if (empty($drawerCategories)) {
+    $drawerCategories = [
+        ['name' => 'Silk Sarees', 'slug' => 'saree', 'badge' => '450+', 'badge_cls' => 'hot', 'icon' => 'saree'],
+        ['name' => 'Banarasi Kadwa Weaves', 'slug' => 'banarasi-silk', 'badge' => 'ROYAL', 'badge_cls' => 'gold', 'icon' => 'banarasi'],
+        ['name' => 'Kanjivaram Silk Sarees', 'slug' => 'kanjivaram-silk', 'badge' => 'PURE ZARI', 'badge_cls' => 'gold', 'icon' => 'kanjivaram'],
+        ['name' => 'Yeola Paithani Handlooms', 'slug' => 'paithani-handloom', 'badge' => 'HERITAGE', 'badge_cls' => 'green', 'icon' => 'paithani'],
+        ['name' => 'Designer Kurti Sets', 'slug' => 'kurti', 'badge' => 'TRENDING', 'badge_cls' => 'gold', 'icon' => 'kurti'],
+        ['name' => 'Chanderi & Organza Tissue', 'slug' => 'organza-tissue', 'badge' => 'NEW', 'badge_cls' => 'green', 'icon' => 'organza'],
+        ['name' => 'Bridal & Festive Lehengas', 'slug' => 'bridal-lehengas', 'badge' => 'BRIDAL', 'badge_cls' => 'gold', 'icon' => 'lehenga'],
+        ['name' => 'Patola Heritage Weaves', 'slug' => 'patola-heritage', 'badge' => 'DOUBLE IKAT', 'badge_cls' => 'gold', 'icon' => 'patola']
+    ];
+}
+$currentScript = basename($_SERVER['PHP_SELF'] ?? '');
+$currentCatParam = $_GET['category'] ?? ($_GET['cat'] ?? '');
+?>
 <div class="home-menu-drawer-backdrop" id="homeMenuDrawerBackdrop" onclick="toggleHomeMobileMenu(false)">
     <aside class="home-menu-drawer" id="homeMenuDrawer" onclick="event.stopPropagation()">
         <!-- Header with Brand Logo & Close Button -->
         <div class="home-menu-header">
             <a href="/" style="display:flex; align-items:center;">
-                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
             </a>
-            <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">✕</button>
+            <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
 
         <!-- Scrollable Navigation Area -->
         <div class="home-menu-scroll">
-            <!-- VIP User Card (Reseller Desktop Menu Inspired) -->
-            <div class="home-menu-user-card" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}">
-                <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product2.png';" alt="Member" class="home-menu-user-avatar">
+            <!-- Dynamic VIP User Card -->
+            <div class="home-menu-user-card" id="homeMenuUserCard" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof openAuthModal==='function'){openAuthModal('profile');}else if(typeof openAccountModal==='function'){openAccountModal('login');}else{window.location.href='/account.php';}">
+                <div class="home-menu-user-avatar-wrap">
+                    <svg class="home-menu-user-default-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
                 <div class="home-menu-user-info">
-                    <div class="home-menu-user-name" id="homeMenuUserName">VIP Member / Reseller</div>
-                    <div class="home-menu-user-tier">
-                        <span>★ Verified Club</span>
+                    <div class="home-menu-user-name" id="homeMenuUserName">Welcome Guest Shopper</div>
+                    <div class="home-menu-user-tier" id="homeMenuUserTier">
+                        <span>★ Tap to Sign In / Register</span>
                     </div>
                 </div>
-                <span class="home-menu-tier-badge">GOLD</span>
+                <span class="home-menu-tier-badge" id="homeMenuTierBadge">SIGN IN</span>
             </div>
 
-            <!-- SECTION 1: STOREFRONT CATALOG -->
+            <!-- SECTION 1: STOREFRONT & WEAVES -->
             <div class="home-menu-cat-title">
-                <span>STOREFRONT MENU</span>
-                <span style="font-size:0.50rem; color:#A89F91;">EXPLORE</span>
+                <span>STOREFRONT &amp; WEAVES</span>
+                <span style="font-size:0.52rem; color:#D4AF37; font-weight:800;">CATALOG</span>
             </div>
             <ul class="home-menu-list">
                 <li>
-                    <a href="/" class="home-menu-link active">
+                    <a href="/" class="home-menu-link <?= ($currentScript === 'index.php' || $currentScript === 'home.php' || $currentScript === '') ? 'active' : '' ?>">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>Home Storefront</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/shop" class="home-menu-link">
-                        <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5"></path><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path><path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path><path d="M10 22v-6h4v6"></path></svg>
-                        <span>All Products Shop</span>
+                    <a href="/shop.php" class="home-menu-link <?= ($currentScript === 'shop.php' && empty($currentCatParam)) ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <span>All Masterpieces Shop</span>
                         <span class="home-menu-link-badge gold">ALL</span>
                     </a>
                 </li>
+                <?php 
+                $drawerCatLimit = 7;
+                $dCount = 0;
+                foreach ($drawerCategories as $dc): 
+                    if ($dCount >= $drawerCatLimit) break;
+                    $dcName = $dc['name'] ?? '';
+                    if ($dcName === '' || strtolower($dcName) === 'all') continue;
+                    $isDActive = (strtolower($currentCatParam) === strtolower($dcName) || strtolower(str_replace('-', ' ', $currentCatParam)) === strtolower($dcName));
+                    $dcBadge = !empty($dc['badge']) ? $dc['badge'] : ((int)($dc['products_count'] ?? 0) > 0 ? (int)$dc['products_count'] . '+' : '');
+                    $dcBadgeCls = !empty($dc['badge_cls']) ? $dc['badge_cls'] : 'gold';
+                    $dCount++;
+                ?>
                 <li>
-                    <a href="/shop.php?cat=Sarees" class="home-menu-link">
+                    <a href="/shop.php?category=<?= urlencode($dcName) ?>" class="home-menu-link <?= $isDActive ? 'active' : '' ?>">
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Silk Sarees</span>
-                        <span class="home-menu-link-badge hot">450+</span>
+                        <span><?= htmlspecialchars($dcName) ?></span>
+                        <?php if (!empty($dcBadge)): ?>
+                        <span class="home-menu-link-badge <?= $dcBadgeCls ?>"><?= htmlspecialchars($dcBadge) ?></span>
+                        <?php endif; ?>
                     </a>
                 </li>
-                <li>
-                    <a href="/shop.php?cat=Kurtis" class="home-menu-link">
-                        <svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
-                        <span>Designer Kurtis</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/shop.php?cat=Lehengas" class="home-menu-link">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
-                        <span>Bridal Lehengas & Gowns</span>
-                    </a>
-                </li>
+                <?php endforeach; ?>
                 <li>
                     <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openReelsModal==='function') window.openReelsModal(0);" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="4"></rect><line x1="2" y1="8" x2="22" y2="8"></line><polygon points="10 12 15 15 10 18" fill="currentColor"></polygon></svg>
@@ -635,43 +678,76 @@ body.sort-open .home-smart-bottom-footer {
                 </li>
             </ul>
 
-            <!-- SECTION 2: B2B & RESELLER HUB -->
+            <!-- SECTION 2: B2B & PARTNER HUB -->
             <div class="home-menu-cat-title">
-                <span>B2B & RESELLER HUB</span>
-                <span style="font-size:0.50rem; color:#D4AF37;">EARN ₹₹₹</span>
+                <span>B2B &amp; WHOLESALE DESK</span>
+                <span style="font-size:0.52rem; color:#10B981; font-weight:800;">DIRECT MILL</span>
             </div>
             <ul class="home-menu-list">
                 <li>
-                    <a href="/reseller" class="home-menu-link">
-                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span>Reseller Partner Portal</span>
-                        <span class="home-menu-link-badge gold">VIP</span>
+                    <a href="/wholesale.php" class="home-menu-link <?= ($currentScript === 'wholesale.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>Wholesale Bulk Factory Hub</span>
+                        <span class="home-menu-link-badge green">SLABS</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/wholesale" class="home-menu-link">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>Wholesale Bulk Factory</span>
-                        <span class="home-menu-link-badge green">SLABS</span>
+                    <a href="/reseller.php" class="home-menu-link <?= ($currentScript === 'reseller.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>Zero-Investment Reseller Hub</span>
+                        <span class="home-menu-link-badge gold">VIP EARN</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/retailer.php" class="home-menu-link <?= ($currentScript === 'retailer.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>Boutique &amp; Retailer Desk</span>
+                        <span class="home-menu-link-badge gold">GST BILL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/contact.php" class="home-menu-link <?= ($currentScript === 'contact.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Contact Atelier &amp; Factory</span>
+                        <span class="home-menu-link-badge green">SURAT</span>
                     </a>
                 </li>
             </ul>
 
-            <!-- SECTION 3: ACCOUNT & ASSISTANCE -->
+            <!-- SECTION 3: ACCOUNT & POLICIES -->
             <div class="home-menu-cat-title">
-                <span>ACCOUNT & ASSISTANCE</span>
+                <span>ACCOUNT &amp; SUPPORT</span>
             </div>
             <ul class="home-menu-list">
                 <li>
-                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();" class="home-menu-link">
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof openWishlistDrawer==='function') openWishlistDrawer();" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        <span>My Wishlist</span>
+                        <span>Saved Masterpieces</span>
+                        <span class="home-menu-link-badge gold" id="homeDrawerWishlistBadge" style="display:none;">0</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}" class="home-menu-link">
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof openCartDrawer==='function') openCartDrawer();" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <span>My Shopping Bag</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof openAuthModal==='function'){openAuthModal('profile');}else if(typeof openAccountModal==='function'){openAccountModal('login');}else{window.location.href='/account.php';}" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>My Account & Orders</span>
+                        <span>My Account &amp; Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/shipping.php" class="home-menu-link <?= ($currentScript === 'shipping.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <span>Shipping &amp; Logistics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/terms.php" class="home-menu-link <?= ($currentScript === 'terms.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Terms of Wholesale</span>
                     </a>
                 </li>
             </ul>
@@ -682,6 +758,7 @@ body.sort-open .home-smart-bottom-footer {
             <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="home-menu-wa-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFFFFF"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                 <span>WhatsApp Stylist Concierge</span>
+                <span style="font-size:0.52rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:8px; font-weight:900;">LIVE 24/7</span>
             </a>
         </div>
     </aside>
@@ -848,22 +925,27 @@ body.sort-open .home-smart-bottom-footer {
 
     // Sync Drawer User Name, Role & Tier
     function syncDrawerUserState() {
-        var userRaw = localStorage.getItem('dtbrands_user');
+        var userRaw = localStorage.getItem('dtbrands_user') || localStorage.getItem('dt_user');
         var nameEl = document.getElementById('homeMenuUserName');
-        var tierEl = document.querySelector('.home-menu-user-tier span');
-        var badgeEl = document.querySelector('.home-menu-tier-badge');
+        var tierEl = document.getElementById('homeMenuUserTier');
+        var badgeEl = document.getElementById('homeMenuTierBadge');
+        var avatarWrap = document.querySelector('.home-menu-user-avatar-wrap');
         if (userRaw && nameEl) {
             try {
                 var user = JSON.parse(userRaw);
-                nameEl.textContent = user.name || 'VIP Member';
-                var role = user.role || 'Reseller';
-                if (tierEl) tierEl.textContent = '★ Verified ' + role;
+                var uName = user.name || user.full_name || 'VIP Member';
+                nameEl.textContent = uName;
+                var role = user.role || 'Member';
+                if (tierEl) tierEl.innerHTML = '<span>★ Verified ' + (role.charAt(0).toUpperCase() + role.slice(1)) + '</span>';
                 if (badgeEl) badgeEl.textContent = role.toUpperCase();
+                if (avatarWrap && user.avatar) {
+                    avatarWrap.innerHTML = '<img src="' + user.avatar + '" alt="' + uName + '" onerror="this.onerror=null; this.src=\'/assets/images/product1.png\';">';
+                }
             } catch(e) {}
         } else if (nameEl) {
-            nameEl.textContent = 'Guest / Sign In';
-            if (tierEl) tierEl.textContent = '★ Tap to Login';
-            if (badgeEl) badgeEl.textContent = 'LOGIN';
+            nameEl.textContent = 'Welcome Guest Shopper';
+            if (tierEl) tierEl.innerHTML = '<span>★ Tap to Sign In / Register</span>';
+            if (badgeEl) badgeEl.textContent = 'SIGN IN';
         }
     }
 
