@@ -1507,13 +1507,22 @@ window.closeWishlistDrawer = function() {
     var searchCat     = document.getElementById('searchCatSelect');
     var searchClear   = document.getElementById('searchClearBtn');
     var searchSubmit  = document.getElementById('searchSubmitBtn');
+    var suggDropdown  = document.getElementById('searchSuggestionsDropdown');
 
     /* Mobile Search Elements */
-    var mobileSearchBtn    = document.getElementById('mobileSearchTriggerBtn');
-    var mobileSearchClose  = document.getElementById('mobileSearchCloseBtn');
-    var mobileSearchInput  = document.getElementById('mobileSearchInput');
-    var mobileSearchClear  = document.getElementById('mobileSearchClearBtn');
-    var mobileSearchSubmit = document.getElementById('mobileSearchSubmitIconBtn');
+    var mobileSearchBtn              = document.getElementById('mobileSearchTriggerBtn');
+    var mobileSearchClose            = document.getElementById('mobileSearchCloseBtn');
+    var mobileSearchInput            = document.getElementById('mobileSearchInput');
+    var mobileSearchClear            = document.getElementById('mobileSearchClearBtn');
+    var mobileSearchSubmit           = document.getElementById('mobileSearchSubmitIconBtn');
+    var mobileSuggDropdown           = document.getElementById('mobileSearchSuggestionsDropdown');
+    var mobileSuggContent            = document.getElementById('mobileSuggContentBody');
+    var mobileSuggCatChips           = document.querySelectorAll('.mobile-sugg-cat-chip');
+    var mobileSearchSuggestionsClose = document.getElementById('mobileSearchSuggestionsCloseBtn');
+
+    var searchDebounceTimer = null;
+    var currentMobileCat = 'All';
+    var savedScrollY = 0;
 
     function performSearch(source, isSubmit) {
         var query = '';
@@ -1636,9 +1645,6 @@ window.closeWishlistDrawer = function() {
     });
 
     /* Mobile Search Open / Close Controllers */
-    var mobileSearchSuggestionsClose = document.getElementById('mobileSearchSuggestionsCloseBtn');
-    var savedScrollY = 0;
-
     function openMobileSearchDrawer() {
         if (!document.body.classList.contains('mobile-search-open')) {
             savedScrollY = window.scrollY || window.pageYOffset || 0;
@@ -1781,13 +1787,6 @@ window.closeWishlistDrawer = function() {
     /* ══════════════════════════════════════════════════════════
        PREDICTIVE SEARCH & SUGGESTIONS ENGINE (DESKTOP & MOBILE)
        ══════════════════════════════════════════════════════════ */
-    var suggDropdown = document.getElementById('searchSuggestionsDropdown');
-    var mobileSuggDropdown = document.getElementById('mobileSearchSuggestionsDropdown');
-    var mobileSuggContent = document.getElementById('mobileSuggContentBody');
-    var mobileSuggCatChips = document.querySelectorAll('.mobile-sugg-cat-chip');
-
-    var searchDebounceTimer = null;
-    var currentMobileCat = 'All';
 
     function highlightKeywords(text, q) {
         if (!q || !text) return text;
