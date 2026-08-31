@@ -57,12 +57,34 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
                     <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← System Suite</a>
-                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="window.showToast('✨ Health audit re-verified: All core subsystems 100% operational!')">
+                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="reverifyHealth(this)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                         <span>Re-Verify Health</span>
                     </button>
                 </div>
             </div>
+            <div id="dtHealthResult" style="display:none; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:12.5px; color:#181512;"></div>
+            <script>
+            function reverifyHealth(btn) {
+                btn.disabled = true;
+                var out = document.getElementById('dtHealthResult');
+                out.style.display = 'block';
+                out.textContent = 'Running live database diagnostics…';
+                fetch('/api/db_health.php', { credentials: 'same-origin' })
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        btn.disabled = false;
+                        var dbOk = d && (d.database === 'connected' || d.connection === 'ok' || d.status === 'ok' || d.success);
+                        out.textContent = dbOk
+                            ? '✓ Database connected. Diagnostics: ' + JSON.stringify(d).slice(0, 400)
+                            : '⚠ Diagnostics returned: ' + JSON.stringify(d).slice(0, 400);
+                    })
+                    .catch(function () {
+                        btn.disabled = false;
+                        out.textContent = '⚠ Could not reach /api/db_health.php — check the server logs.';
+                    });
+            }
+            </script>
 
             <!-- 4-Card Health Grid -->
             <div class="dt-health-grid">

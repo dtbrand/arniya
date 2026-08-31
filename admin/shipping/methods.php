@@ -76,8 +76,8 @@ $active_nav = "shipping";
                             </div>
                         </div>
                         <div style="display:flex; justify-content:flex-end; gap:6px;">
-                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('Testing Delhivery API connection... Status: 200 OK')">Test Webhook</button>
-                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('Delhivery settings synced!')">Configure</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="testCourierWebhook('delhivery', this)">Test Webhook</button>
+                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="showToastSafe('Configuration lives in .env (DELHIVERY_API_TOKEN) and the webhook route — nothing to sync from the browser.')">Configure</button>
                         </div>
                     </div>
 
@@ -94,8 +94,8 @@ $active_nav = "shipping";
                             </div>
                         </div>
                         <div style="display:flex; justify-content:flex-end; gap:6px;">
-                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('Testing BlueDart API connection... Status: 200 OK')">Test Webhook</button>
-                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('BlueDart settings synced!')">Configure</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="testCourierWebhook('bluedart', this)">Test Webhook</button>
+                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="showToastSafe('Configuration lives in .env (BLUEDART_CLIENT_ID / SECRET) — nothing to sync from the browser.')">Configure</button>
                         </div>
                     </div>
 
@@ -112,8 +112,8 @@ $active_nav = "shipping";
                             </div>
                         </div>
                         <div style="display:flex; justify-content:flex-end; gap:6px;">
-                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('Testing TCI Freight connection... Status: 200 OK')">Test Webhook</button>
-                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('TCI Freight settings synced!')">Configure</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="testCourierWebhook('tci', this)">Test Webhook</button>
+                            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="showToastSafe('Configuration lives in .env (TCI_ACCOUNT_ID) — nothing to sync from the browser.')">Configure</button>
                         </div>
                     </div>
                 </div>
@@ -122,6 +122,20 @@ $active_nav = "shipping";
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+function testCourierWebhook(courier, btn) {
+    btn.disabled = true;
+    fetch("/api/shipping/test.php?courier=" + encodeURIComponent(courier), { credentials: "same-origin" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            btn.disabled = false;
+            var msg = d.message || ("HTTP " + d.http_code);
+            if (typeof window.showToast === "function") window.showToast((d.success ? "OK " : "! ") + msg); else alert(msg);
+        })
+        .catch(function () { btn.disabled = false; showToastSafe("Could not reach /api/shipping/test.php"); });
+}
+</script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

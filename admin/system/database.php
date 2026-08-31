@@ -92,12 +92,32 @@ if (empty($tables)) {
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
                     <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← System Suite</a>
-                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="window.showToast('⚡ All <?= count($tables) ?> database tables optimized &amp; defragmented!')">
+                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="optimizeTables(this)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         <span>⚡ Optimize Tables</span>
                     </button>
                 </div>
             </div>
+            <div id="dtOptResult" style="display:none; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:12.5px; color:#181512;"></div>
+            <script>
+            function optimizeTables(btn) {
+                btn.disabled = true;
+                var out = document.getElementById('dtOptResult');
+                out.style.display = 'block';
+                out.textContent = 'Running OPTIMIZE TABLE on every table…';
+                fetch('/api/db_optimize.php', { credentials: 'same-origin' })
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        btn.disabled = false;
+                        if (d && d.success === false) { out.textContent = '⚠ ' + (d.message || 'Optimize failed'); return; }
+                        out.textContent = '✓ ' + (d.message || ('Optimized ' + (d.optimized || 0) + ' tables.')) + (d.details ? '\n' + d.details.join('\n') : '');
+                    })
+                    .catch(function () {
+                        btn.disabled = false;
+                        out.textContent = '⚠ Could not reach /api/db_optimize.php.';
+                    });
+            }
+            </script>
 
             <!-- 4-Card DB KPI Strip -->
             <div class="dt-db-kpi-grid">

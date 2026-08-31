@@ -164,7 +164,7 @@ if (empty($shipmentsList)) {
                                     <td><span class="adm-badge gold"><?= strtoupper(htmlspecialchars($sh['channel'] ?? 'RETAIL')) ?></span></td>
                                     <td><span class="adm-badge <?= $badgeClass ?>"><?= ucfirst($fStatus) ?></span></td>
                                     <td>
-                                        <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="window.showToast('📍 Tracking AWB <?= htmlspecialchars($tracking) ?> via <?= htmlspecialchars($courier) ?> (Status: <?= ucfirst($fStatus) ?>)')">📍 Track</button>
+                                        <a class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none;" target="_blank" rel="noopener" href="https://track.delhivery.com/?wbn=<?= htmlspecialchars($tracking) ?>">📍 Track</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
