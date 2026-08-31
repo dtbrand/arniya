@@ -478,11 +478,15 @@ $isHomePage = (
     z-index: 10000000 !important;
 }
 
-.shop-header.mobile-search-active .header-normal-view {
-    display: none !important;
-}
-.shop-header.mobile-search-active .mobile-full-search-bar {
-    display: flex !important;
+@media (max-width: 1024px) {
+    .shop-header.scrolled .header-normal-view,
+    .shop-header.mobile-search-active .header-normal-view {
+        display: none !important;
+    }
+    .shop-header.scrolled .mobile-full-search-bar,
+    .shop-header.mobile-search-active .mobile-full-search-bar {
+        display: flex !important;
+    }
 }
 
 .mobile-search-input-wrap {
@@ -1102,8 +1106,13 @@ body.mobile-search-open #mobileBottomBar {
         box-sizing: border-box !important;
         background: #FFFFFF !important;
     }
+    .shop-header.scrolled .mobile-full-search-bar,
     .shop-header.mobile-search-active .mobile-full-search-bar {
         display: flex !important;
+    }
+    .shop-header.scrolled .header-normal-view,
+    .shop-header.mobile-search-active .header-normal-view {
+        display: none !important;
     }
 
     /* Permanently Visible Ultra-Compact Category Subnav (Royal Gold Luxury Gradient) */
@@ -1862,9 +1871,9 @@ window.closeWishlistDrawer = function() {
     function handleShopHeaderScroll() {
         var sy = window.scrollY || window.pageYOffset || (document.documentElement ? document.documentElement.scrollTop : 0) || (document.body ? document.body.scrollTop : 0) || 0;
         if (!header) return;
-        var isMobile = (window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches);
+        var isMobile = (window.innerWidth <= 1024 || window.matchMedia('(max-width: 1024px)').matches || (mobileSearchBtn && window.getComputedStyle(mobileSearchBtn).display !== 'none'));
 
-        if (sy > 20) {
+        if (sy > 10) {
             if (!isShopHeaderScrolled) {
                 isShopHeaderScrolled = true;
                 header.classList.add('scrolled');
@@ -1872,7 +1881,7 @@ window.closeWishlistDrawer = function() {
             if (isMobile && !header.classList.contains('mobile-search-active')) {
                 header.classList.add('mobile-search-active');
             }
-        } else if (sy <= 10) {
+        } else {
             if (isShopHeaderScrolled) {
                 isShopHeaderScrolled = false;
                 header.classList.remove('scrolled');
