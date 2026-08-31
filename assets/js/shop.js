@@ -109,6 +109,7 @@
     ════════════════════════════════════════════════════ */
     window.masterFilterState = {
         category: window.initialCategory || 'All',
+        searchQuery: window.initialSearchQuery || '',
         colors: [],
         sizes: [],
         fabrics: [],
@@ -324,13 +325,22 @@
             }
 
             var searchMatch = true;
-            if (st.searchQuery && st.searchQuery.length > 0) {
+            if (st.searchQuery && st.searchQuery.trim().length > 0) {
                 var q = st.searchQuery.toLowerCase().trim();
                 var cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
+                var cardAria = (card.getAttribute('aria-label') || '').toLowerCase();
                 var cardCatText = (card.dataset.category || '').toLowerCase();
+                var cardSubText = (card.dataset.subcategory || '').toLowerCase();
                 var cardFabricText = (card.dataset.fabric || '').toLowerCase();
                 var cardColorText = (card.dataset.color || '').toLowerCase();
-                searchMatch = cardName.indexOf(q) !== -1 || cardCatText.indexOf(q) !== -1 || cardFabricText.indexOf(q) !== -1 || cardColorText.indexOf(q) !== -1;
+                var cardSku = (card.dataset.sku || '').toLowerCase();
+                searchMatch = cardName.indexOf(q) !== -1 ||
+                              cardAria.indexOf(q) !== -1 ||
+                              cardCatText.indexOf(q) !== -1 ||
+                              cardSubText.indexOf(q) !== -1 ||
+                              cardFabricText.indexOf(q) !== -1 ||
+                              cardColorText.indexOf(q) !== -1 ||
+                              cardSku.indexOf(q) !== -1;
             }
 
             var isMatch = catMatch && priceMatch && colorMatch && sizeMatch && fabricMatch && discountMatch && stockMatch && searchMatch;
@@ -394,6 +404,9 @@
         var st = window.masterFilterState;
         var tags = [];
 
+        if (st.searchQuery && st.searchQuery.trim().length > 0) {
+            tags.push({ label: 'Search: &ldquo;' + st.searchQuery + '&rdquo;', type: 'search' });
+        }
         if (st.category && st.category !== 'All') {
             tags.push({ label: st.category, type: 'category', val: st.category });
         }
@@ -422,7 +435,17 @@
 
     window.removeFilterTag = function(type, val) {
         var st = window.masterFilterState;
-        if (type === 'category') {
+        if (type === 'search') {
+            st.searchQuery = '';
+            var sInput = document.getElementById('searchInput');
+            var mInput = document.getElementById('mobileSearchInput');
+            if (sInput) sInput.value = '';
+            if (mInput) mInput.value = '';
+            var sClr = document.getElementById('searchClearBtn');
+            var mClr = document.getElementById('mobileSearchClearBtn');
+            if (sClr) sClr.style.display = 'none';
+            if (mClr) mClr.style.display = 'none';
+        } else if (type === 'category') {
             st.category = 'All';
             document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
                 ci.classList.toggle('active', ci.dataset.sfVal === 'All');
@@ -823,6 +846,16 @@
 
     /* Initial Sub-Categories and Master Filter Execution */
     var initialCategory = window.masterFilterState.category || 'All';
+    if (window.initialSearchQuery) {
+        var sInput = document.getElementById('searchInput');
+        var mInput = document.getElementById('mobileSearchInput');
+        if (sInput) sInput.value = window.initialSearchQuery;
+        if (mInput) mInput.value = window.initialSearchQuery;
+        var sClr = document.getElementById('searchClearBtn');
+        var mClr = document.getElementById('mobileSearchClearBtn');
+        if (sClr) sClr.style.display = 'flex';
+        if (mClr) mClr.style.display = 'flex';
+    }
     window.renderSubCategories(initialCategory);
     window.applyMasterFilters();
 

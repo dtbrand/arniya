@@ -55,6 +55,30 @@ if ($selectedSubCategory !== '' && strtolower($selectedSubCategory) !== 'all') {
     $products = $filtered;
 }
 
+$initialSearch = isset($_GET['search']) ? trim($_GET['search']) : (isset($_GET['q']) ? trim($_GET['q']) : '');
+
+if ($initialSearch !== '') {
+    $filtered = [];
+    $sq = strtolower($initialSearch);
+    foreach ($products as $p) {
+        $pName = strtolower($p['name'] ?? ($p['title'] ?? ''));
+        $pCat = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
+        $pSub = strtolower($p['sub_category'] ?? ($p['subcategory'] ?? ''));
+        $pFab = strtolower($p['fabric'] ?? '');
+        $pSku = strtolower($p['sku'] ?? '');
+        if (
+            strpos($pName, $sq) !== false ||
+            strpos($pCat, $sq) !== false ||
+            strpos($pSub, $sq) !== false ||
+            strpos($pFab, $sq) !== false ||
+            strpos($pSku, $sq) !== false
+        ) {
+            $filtered[] = $p;
+        }
+    }
+    $products = $filtered;
+}
+
 $categories = array_unique(array_merge(['All'], ProductCatalog::getCategories()));
 $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
@@ -81,6 +105,7 @@ $total_products = count($products);
         window.shopProductsData = window.allProducts;
         window.allCategories = <?php echo json_encode($categoriesDetails); ?>;
         window.initialCategory = <?php echo json_encode($selectedCategory ?: 'All'); ?>;
+        window.initialSearchQuery = <?php echo json_encode($initialSearch); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
     </script>
@@ -412,7 +437,9 @@ $total_products = count($products);
                 class="product-card"
                 role="listitem"
                 data-product-id="<?= (int)$p['id'] ?>"
-                data-category="<?= htmlspecialchars((string)($p['category'] ?? '')) ?>"
+                data-sku="<?= htmlspecialchars((string)($p['sku'] ?? '')) ?>"
+                data-category="<?= htmlspecialchars((string)($p['category'] ?? ($p['category_name'] ?? ''))) ?>"
+                data-subcategory="<?= htmlspecialchars((string)($p['sub_category'] ?? ($p['subcategory'] ?? ''))) ?>"
                 data-price="<?= (float)$pDispPrice ?>"
                 data-color="<?= htmlspecialchars((string)($p['color'] ?? '')) ?>"
                 data-size="<?= htmlspecialchars($size_str) ?>"

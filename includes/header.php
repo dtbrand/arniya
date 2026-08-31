@@ -51,14 +51,14 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
         <!-- Center: Amazon-Style Always-Open Desktop Search Bar -->
         <div class="dt-search-amazon" id="dtSearchAmazon">
             <div class="dt-search-cat-dropdown">
+                <?php
+                $hdrCategories = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getCategories() : ['Saree', 'Lehenga', 'Gown', 'Kurti'];
+                ?>
                 <select class="dt-search-cat-select" id="dtSearchCatSelect" aria-label="Select Category">
                     <option value="All">All Categories</option>
-                    <option value="Kanjivaram Silk">Kanjivaram</option>
-                    <option value="Banarasi Silk">Banarasi</option>
-                    <option value="Paithani">Paithani</option>
-                    <option value="Designer Kurtis">Kurtis</option>
-                    <option value="Organza Sarees">Organza</option>
-                    <option value="Georgette & Chiffon">Georgette</option>
+                    <?php foreach ($hdrCategories as $catName): ?>
+                    <option value="<?= htmlspecialchars($catName) ?>"><?= htmlspecialchars($catName) ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <svg class="dt-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>

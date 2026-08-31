@@ -875,14 +875,14 @@ $isHomePage = (
         <!-- Center: Amazon-Style Always-Open Search Bar (Visible on Desktop) -->
         <div class="search-amazon-bar" id="searchAmazonBar">
             <div class="search-cat-dropdown-wrap">
+                <?php
+                $shCategories = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getCategories() : ['Saree', 'Lehenga', 'Gown', 'Kurti'];
+                ?>
                 <select class="search-cat-select" id="searchCatSelect" aria-label="Select category">
                     <option value="All">All Categories</option>
-                    <option value="Sarees">Silk Sarees</option>
-                    <option value="Kurtis">Designer Kurtis</option>
-                    <option value="Men's Ethnic Wear">Men's Ethnic Wear</option>
-                    <option value="Lehengas">Bridal Lehengas</option>
-                    <option value="Organza Sarees">Organza Sarees</option>
-                    <option value="Gowns">Gowns</option>
+                    <?php foreach ($shCategories as $catName): ?>
+                    <option value="<?= htmlspecialchars($catName) ?>" <?= (isset($selectedCategory) && strtolower($selectedCategory) === strtolower($catName)) ? 'selected' : '' ?>><?= htmlspecialchars($catName) ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <svg class="search-cat-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
@@ -1103,7 +1103,7 @@ window.closeWishlistDrawer = function() {
     var mobileSearchClear  = document.getElementById('mobileSearchClearBtn');
     var mobileSearchSubmit = document.getElementById('mobileSearchSubmitIconBtn');
 
-    function performSearch(source) {
+    function performSearch(source, isSubmit) {
         var query = '';
         if (source === 'mobile' && mobileSearchInput) {
             query = mobileSearchInput.value.trim();
@@ -1119,38 +1119,65 @@ window.closeWishlistDrawer = function() {
         if (searchClear) searchClear.style.display = query.length > 0 ? 'flex' : 'none';
         if (mobileSearchClear) mobileSearchClear.style.display = query.length > 0 ? 'flex' : 'none';
 
-        if (window.masterFilterState) {
-            if (cat !== 'All') {
+        if (typeof window.applyMasterFilters === 'function') {
+            if (!window.masterFilterState) {
+                window.masterFilterState = {
+                    category: 'All',
+                    colors: [],
+                    sizes: [],
+                    fabrics: [],
+                    minPrice: 500,
+                    maxPrice: 30000,
+                    minDiscount: 0,
+                    availability: [],
+                    sortBy: 'recommended',
+                    searchQuery: ''
+                };
+            }
+            if (cat && cat !== 'All') {
                 window.masterFilterState.category = cat;
+            } else if (cat === 'All' && isSubmit) {
+                window.masterFilterState.category = 'All';
             }
             window.masterFilterState.searchQuery = query;
+            window.applyMasterFilters();
 
-            if (typeof window.applyMasterFilters === 'function') {
-                window.applyMasterFilters();
+            if (isSubmit) {
+                var grid = document.getElementById('productsGrid') || document.querySelector('.products-section');
+                if (grid) {
+                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
+        } else if (isSubmit) {
+            var url = '/shop.php?';
+            if (cat && cat !== 'All') {
+                url += 'category=' + encodeURIComponent(cat) + '&';
+            }
+            url += 'search=' + encodeURIComponent(query);
+            window.location.href = url;
         }
     }
 
     /* Desktop Events */
     if (searchInput) {
-        searchInput.addEventListener('input', function() { performSearch('desktop'); });
+        searchInput.addEventListener('input', function() { performSearch('desktop', false); });
         searchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
-                performSearch('desktop');
+                performSearch('desktop', true);
                 searchInput.blur();
             }
         });
     }
 
     if (searchCat) {
-        searchCat.addEventListener('change', function() { performSearch('desktop'); });
+        searchCat.addEventListener('change', function() { performSearch('desktop', true); });
     }
 
     if (searchClear) {
         searchClear.addEventListener('click', function() {
             if (searchInput) searchInput.value = '';
             if (mobileSearchInput) mobileSearchInput.value = '';
-            performSearch('desktop');
+            performSearch('desktop', false);
             if (searchInput) searchInput.focus();
         });
     }
@@ -1158,7 +1185,7 @@ window.closeWishlistDrawer = function() {
     if (searchSubmit) {
         searchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
-            performSearch('desktop');
+            performSearch('desktop', true);
         });
     }
 
@@ -1181,7 +1208,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchSubmit) {
         mobileSearchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
-            performSearch('mobile');
+            performSearch('mobile', true);
             if (mobileSearchInput) mobileSearchInput.blur();
         });
     }
@@ -1193,15 +1220,15 @@ window.closeWishlistDrawer = function() {
             if (header) header.classList.remove('mobile-search-active');
             if (mobileSearchInput) mobileSearchInput.value = '';
             if (searchInput) searchInput.value = '';
-            performSearch('mobile');
+            performSearch('mobile', false);
         });
     }
 
     if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('input', function() { performSearch('mobile'); });
+        mobileSearchInput.addEventListener('input', function() { performSearch('mobile', false); });
         mobileSearchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
-                performSearch('mobile');
+                performSearch('mobile', true);
                 mobileSearchInput.blur();
             } else if (e.key === 'Escape') {
                 userManuallyClosedMobileSearch = true;
@@ -1217,7 +1244,7 @@ window.closeWishlistDrawer = function() {
                 mobileSearchInput.focus();
             }
             if (searchInput) searchInput.value = '';
-            performSearch('mobile');
+            performSearch('mobile', false);
         });
     }
 

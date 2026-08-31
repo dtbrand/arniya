@@ -20,8 +20,8 @@ require_once __DIR__ . '/../src/ProductCatalog.php';
 use DTBrand\Database;
 use DTBrand\ProductCatalog;
 
-$q = trim($_GET['q'] ?? $_GET['query'] ?? '');
-$category = trim($_GET['category'] ?? '');
+$q = trim($_GET['q'] ?? ($_GET['query'] ?? ($_GET['search'] ?? '')));
+$category = trim($_GET['category'] ?? ($_GET['cat'] ?? ''));
 
 $results = [
     'query' => $q,
@@ -52,14 +52,15 @@ $matchedProducts = [];
 
 foreach ($all as $p) {
     if (!empty($category) && strtolower($category) !== 'all') {
-        $pCat = strtolower($p['category'] ?? '');
-        if ($pCat !== strtolower($category) && strpos($pCat, strtolower($category)) === false) {
+        $pCat = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
+        $targetCat = strtolower($category);
+        if ($pCat !== $targetCat && strpos($pCat, $targetCat) === false && strpos($targetCat, $pCat) === false) {
             continue;
         }
     }
 
     if (!empty($q)) {
-        $searchSpace = strtolower(($p['title'] ?? '') . ' ' . ($p['sku'] ?? '') . ' ' . ($p['category'] ?? '') . ' ' . ($p['fabric'] ?? '') . ' ' . ($p['color'] ?? '') . ' ' . ($p['description'] ?? ''));
+        $searchSpace = strtolower(($p['title'] ?? '') . ' ' . ($p['name'] ?? '') . ' ' . ($p['sku'] ?? '') . ' ' . ($p['category'] ?? '') . ' ' . ($p['sub_category'] ?? '') . ' ' . ($p['fabric'] ?? '') . ' ' . ($p['color'] ?? '') . ' ' . ($p['description'] ?? ''));
         if (strpos($searchSpace, strtolower($q)) === false) {
             continue;
         }
@@ -70,7 +71,7 @@ foreach ($all as $p) {
         'sku' => $p['sku'],
         'title' => $p['title'] ?? ($p['name'] ?? ''),
         'name' => $p['title'] ?? ($p['name'] ?? ''),
-        'category' => $p['category'],
+        'category' => $p['category'] ?? ($p['category_name'] ?? ''),
         'price' => (float)$p['price'],
         'old_price' => (float)($p['old_price'] ?? ($p['mrp'] ?? $p['price'] * 1.3)),
         'wholesale_price' => (float)($p['wholesale_price'] ?? round($p['price'] * 0.45)),
@@ -78,7 +79,7 @@ foreach ($all as $p) {
         'rating' => (float)($p['rating'] ?? 4.8),
         'in_stock' => (bool)($p['in_stock'] ?? true),
         'stock_qty' => (int)($p['stock_qty'] ?? 50),
-        'url' => '/product/' . $p['id']
+        'url' => '/product.php?id=' . $p['id']
     ];
 }
 
