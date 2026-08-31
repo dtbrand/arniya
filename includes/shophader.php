@@ -49,80 +49,6 @@ $isHomePage = (
     gap: 20px;
 }
 
-/* ── Amazon-Style Attached Sub-Navigation Bar (Royal Gold Luxury Gradient) ── */
-.header-attached-subnav {
-    width: 100%;
-    background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
-    border-top: 1px solid rgba(255, 235, 180, 0.35);
-    border-bottom: 1.5px solid #5C4310;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
-}
-
-.subnav-scroll-track {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    height: 100%;
-}
-.subnav-scroll-track::-webkit-scrollbar { display: none; }
-
-.subnav-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 2px 10px;
-    height: 22px;
-    border-radius: 4px;
-    background: transparent;
-    border: 1px solid transparent;
-    color: #FFF8EB;
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: capitalize;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-.subnav-item:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.2);
-}
-.subnav-item.active {
-    background: #FFFFFF;
-    color: #7A5B18;
-    border-color: #FFFFFF;
-    font-weight: 800;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-}
-.subnav-icon {
-    width: 13px; height: 13px;
-    stroke: currentColor; stroke-width: 2.2; fill: none;
-}
-.subnav-reels-btn {
-    background: #1C1814;
-    color: #F8D67A;
-    border: 1px solid rgba(248, 214, 122, 0.4);
-    font-weight: 800;
-    margin-left: auto;
-}
-.subnav-reels-btn:hover {
-    background: #000000;
-    color: #FFFFFF;
-    border-color: #FFFFFF;
-}
-
 /* ── Left Section: Stylish Plus Button + Brand Logo ── */
 .header-left-group {
     display: flex;
@@ -624,10 +550,6 @@ body.mobile-search-open .mobile-search-suggestions-dropdown {
     display: flex !important;
 }
 
-body.mobile-search-open .header-attached-subnav {
-    display: none !important;
-}
-
 /* ══════════════════════════════════════════════════════════
    LUXURY PREDICTIVE AUTOCOMPLETE & PRODUCT SUGGESTIONS DROPDOWN
    ══════════════════════════════════════════════════════════ */
@@ -1114,30 +1036,6 @@ body.mobile-search-open #mobileBottomBar {
     .shop-header.mobile-search-active .header-normal-view {
         display: none !important;
     }
-
-    /* Permanently Visible Ultra-Compact Category Subnav (Royal Gold Luxury Gradient) */
-    .header-attached-subnav {
-        height: 28px;
-        min-height: 28px;
-        max-height: 28px;
-        padding: 0 8px;
-        box-sizing: border-box;
-        background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
-        border-top: 1px solid rgba(255, 235, 180, 0.35);
-        border-bottom: 1.5px solid #5C4310;
-        box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
-    }
-    .subnav-item {
-        font-size: 0.65rem;
-        padding: 2px 8px;
-        height: 20px;
-        gap: 4px;
-        border-radius: 4px;
-    }
-    .subnav-icon {
-        width: 11px;
-        height: 11px;
-    }
 }
 </style>
 
@@ -1315,39 +1213,6 @@ body.mobile-search-open #mobileBottomBar {
         <!-- Dynamic Scrollable Suggestions & Products Body -->
         <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
     </div>
-
-    <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
-    <?php 
-    require_once __DIR__ . '/../src/ProductCatalog.php';
-    $headerCategories = \DTBrand\ProductCatalog::getCategories();
-    ?>
-    <?php if (empty($hideHeaderSubnav)): ?>
-    <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
-        <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
-            <a href="/" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
-                <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span>Home</span>
-            </a>
-            <a href="/shop" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
-                <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                <span>Shop All</span>
-            </a>
-            <button class="subnav-item main-cat-tab <?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('All');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('All');}else{window.location.href='/shop?category=all';}">
-                <svg class="subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                <span>All Categories</span>
-            </button>
-            <?php foreach ($headerCategories as $hCat): 
-                $isCatActive = isset($selectedCategory) && (strtolower($selectedCategory) === strtolower($hCat) || strtolower(str_replace('-', ' ', $selectedCategory)) === strtolower($hCat));
-            ?>
-            <button class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" role="tab" data-cat="<?= htmlspecialchars($hCat) ?>" aria-selected="<?= $isCatActive ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('<?= htmlspecialchars(addslashes($hCat)) ?>');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>');}else{window.location.href='/shop?category=<?= urlencode($hCat) ?>';}"><?= htmlspecialchars($hCat) ?></button>
-            <?php endforeach; ?>
-            <button class="subnav-item subnav-reels-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
-                <span>🎥 Reels</span>
-            </button>
-        </div>
-    </nav>
-    <?php endif; ?>
-
 </header>
 
 <script>
