@@ -48,34 +48,40 @@
 
         function performSearch(q) {
             var cat = catSelect ? catSelect.value : 'All';
-            if (!q && (!cat || cat === 'All')) {
-                suggestionsBox.style.display = 'none';
-                return;
-            }
 
-            fetch('/api/search.php?q=' + encodeURIComponent(q) + '&cat=' + encodeURIComponent(cat))
+            fetch('/api/search.php?q=' + encodeURIComponent(q || '') + '&cat=' + encodeURIComponent(cat || 'All'))
                 .then(function (r) { return r.json(); })
                 .then(function (res) {
-                    if (!res.success || !res.results || (!res.results.products.length && !res.results.categories.length)) {
+                    var data = (res.data || res.results || {});
+                    if (!data || (!data.products.length && !data.categories.length && !data.trending.length)) {
                         suggestionsBox.innerHTML = '<div style="padding:12px; font-size:0.8rem; color:#6B7280; text-align:center;">No matching products found.</div>';
                         suggestionsBox.style.display = 'block';
                         return;
                     }
 
                     var html = '';
-                    if (res.results.categories && res.results.categories.length) {
-                        html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F;">CATEGORIES</div>';
-                        res.results.categories.forEach(function (c) {
+                    if (!q && data.trending && data.trending.length) {
+                        html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F; border-bottom:1px solid #F1ECE1;">🔥 TRENDING SEARCHES</div>';
+                        html += '<div style="display:flex; flex-wrap:wrap; gap:6px; padding:8px 12px;">';
+                        data.trending.forEach(function(t) {
+                            html += '<a href="/shop.php?search=' + encodeURIComponent(t) + '" style="font-size:0.75rem; background:#FAF5E8; border:1px solid #D4AF37; padding:3px 8px; border-radius:12px; color:#705114; text-decoration:none; font-weight:600;">' + t + '</a>';
+                        });
+                        html += '</div>';
+                    }
+
+                    if (data.categories && data.categories.length) {
+                        html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F; border-top:1px solid #F1ECE1; border-bottom:1px solid #F1ECE1;">CATEGORIES</div>';
+                        data.categories.forEach(function (c) {
                             html += '<a href="/shop.php?category=' + encodeURIComponent(c.name) + '" class="dt-suggestion-item">' +
-                                '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
+                                '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;stroke-width:2;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
                                 '<span>' + c.name + '</span>' +
                                 '</a>';
                         });
                     }
 
-                    if (res.results.products && res.results.products.length) {
-                        html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F;">PRODUCTS</div>';
-                        res.results.products.forEach(function (p) {
+                    if (data.products && data.products.length) {
+                        html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F; border-top:1px solid #F1ECE1; border-bottom:1px solid #F1ECE1;">' + (q ? 'MATCHING PRODUCTS' : 'FEATURED ENSEMBLES') + '</div>';
+                        data.products.forEach(function (p) {
                             html += '<a href="' + p.url + '" class="dt-suggestion-item">' +
                                 '<img src="' + p.image + '" class="dt-suggestion-thumb" alt="' + p.name + '" />' +
                                 '<div style="flex:1; overflow:hidden;">' +
@@ -101,7 +107,15 @@
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(function () {
                 performSearch(val);
-            }, 250);
+            }, 120);
+        });
+
+        searchInput.addEventListener('focus', function () {
+            performSearch(this.value.trim());
+        });
+
+        searchInput.addEventListener('click', function () {
+            performSearch(this.value.trim());
         });
 
         if (clearBtn) {
@@ -124,6 +138,8 @@
         searchInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 if (submitBtn) submitBtn.click();
+            } else if (e.key === 'Escape') {
+                suggestionsBox.style.display = 'none';
             }
         });
 

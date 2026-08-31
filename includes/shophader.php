@@ -678,6 +678,355 @@ $isHomePage = (
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
+/* ══════════════════════════════════════════════════════════
+   LUXURY PREDICTIVE AUTOCOMPLETE & PRODUCT SUGGESTIONS DROPDOWN
+   ══════════════════════════════════════════════════════════ */
+.dt-search-suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1.5px solid var(--dark-gold, #8A681F);
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.18), 0 2px 10px rgba(184,134,11,0.15);
+    max-height: 480px;
+    overflow-y: auto;
+    z-index: 9999;
+    padding: 10px 0;
+    box-sizing: border-box;
+    animation: dtSuggFadeIn 0.2s ease;
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+@keyframes dtSuggFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dt-sugg-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 14px 4px 14px;
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--dark-gold, #8A681F);
+    text-transform: uppercase;
+    background: #FAF8F4;
+    border-top: 1px solid #F1ECE1;
+    border-bottom: 1px solid #F1ECE1;
+    margin: 6px 0 4px 0;
+}
+.dt-sugg-section-header:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+/* Trending Chips Container */
+.dt-sugg-trending-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 14px;
+}
+.dt-sugg-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    border-radius: 16px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #705114;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-decoration: none;
+}
+.dt-sugg-tag:hover {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    color: #111827;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(184,134,11,0.25);
+}
+
+/* Category Suggestions List */
+.dt-sugg-cat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 14px;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: #1F2937;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+.dt-sugg-cat-item:hover {
+    background: #FAF6ED;
+    color: #8A681F;
+}
+
+/* Product Suggestions List */
+.dt-sugg-product-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #F7F5F0;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.dt-sugg-product-item:hover {
+    background: #FAF6ED;
+}
+.dt-sugg-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+.dt-sugg-product-item:hover .dt-sugg-thumb {
+    transform: scale(1.06);
+    border-color: #D4AF37;
+}
+.dt-sugg-info {
+    flex: 1;
+    min-width: 0;
+}
+.dt-sugg-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dt-sugg-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    color: #6B7280;
+}
+.dt-sugg-badge {
+    background: #FAF5E8;
+    color: #8A681F;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 0.5px solid #D4AF37;
+}
+.dt-sugg-pricing {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+}
+.dt-sugg-price {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #8A681F;
+}
+.dt-sugg-mrp {
+    font-size: 0.72rem;
+    color: #9CA3AF;
+    text-decoration: line-through;
+}
+.dt-sugg-disc {
+    font-size: 0.68rem;
+    font-weight: 800;
+    background: #FEF3C7;
+    color: #92400E;
+    padding: 0 4px;
+    border-radius: 3px;
+}
+.dt-sugg-view-btn {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 14px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+.dt-sugg-product-item:hover .dt-sugg-view-btn {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    color: #111827;
+    border-color: #8A681F;
+}
+
+/* Master Bottom View All Button */
+.dt-sugg-footer-btn {
+    display: block;
+    margin: 8px 14px 4px 14px;
+    padding: 8px 14px;
+    text-align: center;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    border-radius: 6px;
+    font-size: 0.80rem;
+    font-weight: 800;
+    color: #111827;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25);
+    transition: all 0.15s ease;
+}
+.dt-sugg-footer-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 10px rgba(184,134,11,0.35);
+}
+
+.dt-search-highlight {
+    background: #FEF08A;
+    color: #854D0E;
+    font-weight: 800;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE NEXT-LEVEL LUXURY SEARCH DRAWER (<768px)
+   ══════════════════════════════════════════════════════════ */
+.mobile-search-suggestions-dropdown {
+    display: none;
+    position: fixed;
+    top: 38px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: calc(100vh - 38px);
+    background: #FFFFFF;
+    z-index: 99999;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 12px 90px 12px;
+    box-sizing: border-box;
+    animation: mobileSuggSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+@keyframes mobileSuggSlideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.shop-header.mobile-search-active .mobile-search-suggestions-dropdown {
+    display: block !important;
+}
+
+/* Mobile Quick Category Chips Row */
+.mobile-sugg-cats-ribbon {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #F1ECE1;
+}
+.mobile-sugg-cats-ribbon::-webkit-scrollbar { display: none; }
+.mobile-sugg-cat-chip {
+    padding: 4px 10px;
+    background: #FAF8F4;
+    border: 1px solid #E5E3DE;
+    border-radius: 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #4B5563;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.mobile-sugg-cat-chip.active {
+    background: #FAF5E8;
+    border-color: #8A681F;
+    color: #8A681F;
+    box-shadow: 0 1px 4px rgba(138,104,31,0.15);
+}
+
+/* Mobile Suggestion Product Card */
+.mobile-sugg-product-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #FFFFFF;
+    border: 1px solid #F1ECE1;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s ease;
+}
+.mobile-sugg-product-card:active {
+    background: #FAF6ED;
+    border-color: #D4AF37;
+}
+.mobile-sugg-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #F9FAFB;
+    border: 0.5px solid #E5E7EB;
+    flex-shrink: 0;
+}
+.mobile-sugg-details {
+    flex: 1;
+    min-width: 0;
+}
+.mobile-sugg-title {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.mobile-sugg-pricing {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+}
+.mobile-sugg-price {
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #8A681F;
+}
+.mobile-sugg-mrp {
+    font-size: 0.70rem;
+    color: #9CA3AF;
+    text-decoration: line-through;
+}
+.mobile-sugg-disc {
+    font-size: 0.65rem;
+    font-weight: 800;
+    background: #FEF3C7;
+    color: #92400E;
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
 /* ── Mobile Layout & Ultra-Compact Zero-Vibration Layout (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
@@ -907,6 +1256,9 @@ $isHomePage = (
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </button>
+
+            <!-- ═══ Luxury Predictive Autocomplete & Product Suggestions Dropdown (Desktop) ═══ -->
+            <div class="dt-search-suggestions-dropdown" id="searchSuggestionsDropdown" style="display:none;" role="listbox" aria-label="Search suggestions"></div>
         </div>
 
         <!-- Right Actions: Mobile Search Trigger, Wishlist, Cart -->
@@ -1012,6 +1364,20 @@ $isHomePage = (
         <button class="mobile-search-close-btn" id="mobileSearchCloseBtn" aria-label="Close search">
             <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
+
+        <!-- ═══ Mobile Full-Screen Luxury Search Suggestions & Live Products Drawer ═══ -->
+        <div class="mobile-search-suggestions-dropdown" id="mobileSearchSuggestionsDropdown">
+            <!-- Quick Category Chips Row -->
+            <div class="mobile-sugg-cats-ribbon" id="mobileSuggCatsRibbon">
+                <button type="button" class="mobile-sugg-cat-chip active" data-cat="All">✦ All</button>
+                <button type="button" class="mobile-sugg-cat-chip" data-cat="Saree">🥻 Sarees</button>
+                <button type="button" class="mobile-sugg-cat-chip" data-cat="Lehenga">👗 Lehengas</button>
+                <button type="button" class="mobile-sugg-cat-chip" data-cat="Gown">✨ Gowns</button>
+                <button type="button" class="mobile-sugg-cat-chip" data-cat="Kurti">🌸 Kurtis</button>
+            </div>
+            <!-- Dynamic Content (Trending + Live Products) -->
+            <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
+        </div>
     </div>
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
@@ -1160,17 +1526,42 @@ window.closeWishlistDrawer = function() {
 
     /* Desktop Events */
     if (searchInput) {
-        searchInput.addEventListener('input', function() { performSearch('desktop', false); });
+        searchInput.addEventListener('input', function() {
+            var q = searchInput.value.trim();
+            performSearch('desktop', false);
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function () {
+                fetchSuggestions(q, (searchCat ? searchCat.value : 'All'), false);
+            }, 120);
+        });
+
+        searchInput.addEventListener('focus', function() {
+            var q = searchInput.value.trim();
+            fetchSuggestions(q, (searchCat ? searchCat.value : 'All'), false);
+        });
+
+        searchInput.addEventListener('click', function() {
+            var q = searchInput.value.trim();
+            fetchSuggestions(q, (searchCat ? searchCat.value : 'All'), false);
+        });
+
         searchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 performSearch('desktop', true);
+                if (suggDropdown) suggDropdown.style.display = 'none';
                 searchInput.blur();
+            } else if (e.key === 'Escape') {
+                if (suggDropdown) suggDropdown.style.display = 'none';
             }
         });
     }
 
     if (searchCat) {
-        searchCat.addEventListener('change', function() { performSearch('desktop', true); });
+        searchCat.addEventListener('change', function() {
+            performSearch('desktop', true);
+            var q = (searchInput ? searchInput.value.trim() : '');
+            fetchSuggestions(q, searchCat.value, false);
+        });
     }
 
     if (searchClear) {
@@ -1178,6 +1569,7 @@ window.closeWishlistDrawer = function() {
             if (searchInput) searchInput.value = '';
             if (mobileSearchInput) mobileSearchInput.value = '';
             performSearch('desktop', false);
+            fetchSuggestions('', (searchCat ? searchCat.value : 'All'), false);
             if (searchInput) searchInput.focus();
         });
     }
@@ -1186,8 +1578,16 @@ window.closeWishlistDrawer = function() {
         searchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
             performSearch('desktop', true);
+            if (suggDropdown) suggDropdown.style.display = 'none';
         });
     }
+
+    // Close desktop suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#searchAmazonBar') && suggDropdown) {
+            suggDropdown.style.display = 'none';
+        }
+    });
 
     /* Mobile Search Open / Close Controllers */
     var userManuallyClosedMobileSearch = false;
@@ -1197,6 +1597,8 @@ window.closeWishlistDrawer = function() {
             e.preventDefault();
             userManuallyClosedMobileSearch = false;
             if (header) header.classList.add('mobile-search-active');
+            var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
+            fetchSuggestions(q, currentMobileCat, true);
             if (mobileSearchInput) {
                 setTimeout(function() {
                     mobileSearchInput.focus();
@@ -1225,7 +1627,20 @@ window.closeWishlistDrawer = function() {
     }
 
     if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('input', function() { performSearch('mobile', false); });
+        mobileSearchInput.addEventListener('input', function() {
+            var q = mobileSearchInput.value.trim();
+            performSearch('mobile', false);
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function () {
+                fetchSuggestions(q, currentMobileCat, true);
+            }, 120);
+        });
+
+        mobileSearchInput.addEventListener('focus', function() {
+            var q = mobileSearchInput.value.trim();
+            fetchSuggestions(q, currentMobileCat, true);
+        });
+
         mobileSearchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 performSearch('mobile', true);
@@ -1245,7 +1660,185 @@ window.closeWishlistDrawer = function() {
             }
             if (searchInput) searchInput.value = '';
             performSearch('mobile', false);
+            fetchSuggestions('', currentMobileCat, true);
         });
+    }
+
+    // Mobile Category Chips Filter
+    if (mobileSuggCatChips && mobileSuggCatChips.length > 0) {
+        mobileSuggCatChips.forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                mobileSuggCatChips.forEach(function (c) { c.classList.remove('active'); });
+                this.classList.add('active');
+                currentMobileCat = this.dataset.cat || 'All';
+                var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
+                fetchSuggestions(q, currentMobileCat, true);
+            });
+        });
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       PREDICTIVE SEARCH & SUGGESTIONS ENGINE (DESKTOP & MOBILE)
+       ══════════════════════════════════════════════════════════ */
+    var suggDropdown = document.getElementById('searchSuggestionsDropdown');
+    var mobileSuggDropdown = document.getElementById('mobileSearchSuggestionsDropdown');
+    var mobileSuggContent = document.getElementById('mobileSuggContentBody');
+    var mobileSuggCatChips = document.querySelectorAll('.mobile-sugg-cat-chip');
+
+    var searchDebounceTimer = null;
+    var currentMobileCat = 'All';
+
+    function renderSuggestionsHTML(data, query, isMobile) {
+        var html = '';
+        var q = (query || '').trim().toLowerCase();
+
+        // 1. Trending searches
+        if (data.trending && data.trending.length > 0) {
+            html += '<div class="dt-sugg-section-header">🔥 Trending in Ethnic Wear</div>';
+            html += '<div class="dt-sugg-trending-wrap">';
+            data.trending.forEach(function (tag) {
+                html += '<a href="javascript:void(0)" class="dt-sugg-tag" data-tag="' + tag + '">' +
+                        '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:#8A681F;fill:none;stroke-width:2.2;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>' +
+                        tag + '</a>';
+            });
+            html += '</div>';
+        }
+
+        // 2. Matching Categories
+        if (data.categories && data.categories.length > 0) {
+            html += '<div class="dt-sugg-section-header">📁 Matching Categories</div>';
+            data.categories.forEach(function (c) {
+                var cName = c.name;
+                var highlightedName = cName;
+                if (q) {
+                    var idx = cName.toLowerCase().indexOf(q);
+                    if (idx !== -1) {
+                        highlightedName = cName.substring(0, idx) + '<mark class="dt-search-highlight">' + cName.substring(idx, idx + q.length) + '</mark>' + cName.substring(idx + q.length);
+                    }
+                }
+                html += '<a href="/shop.php?category=' + encodeURIComponent(c.name) + '" class="dt-sugg-cat-item">' +
+                        '<div style="display:flex;align-items:center;gap:8px;">' +
+                        '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;stroke-width:2.2;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
+                        '<span>' + highlightedName + '</span>' +
+                        '</div>' +
+                        '<span style="font-size:0.70rem;color:#8A681F;font-weight:700;">Explore Category ➔</span>' +
+                        '</a>';
+            });
+        }
+
+        // 3. Matching Live Products
+        if (data.products && data.products.length > 0) {
+            html += '<div class="dt-sugg-section-header">💎 ' + (q ? 'Matching Ensembles (' + (data.total || data.products.length) + ')' : 'Popular Handpicked Ensembles') + '</div>';
+
+            if (isMobile) {
+                data.products.forEach(function (p) {
+                    var pTitle = p.title || p.name;
+                    var highlightedTitle = pTitle;
+                    if (q) {
+                        var idx = pTitle.toLowerCase().indexOf(q);
+                        if (idx !== -1) {
+                            highlightedTitle = pTitle.substring(0, idx) + '<mark class="dt-search-highlight">' + pTitle.substring(idx, idx + q.length) + '</mark>' + pTitle.substring(idx + q.length);
+                        }
+                    }
+                    html += '<a href="' + p.url + '" class="mobile-sugg-product-card">' +
+                            '<img src="' + p.image + '" class="mobile-sugg-thumb" alt="' + pTitle + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\';" />' +
+                            '<div class="mobile-sugg-details">' +
+                            '<div class="mobile-sugg-title">' + highlightedTitle + '</div>' +
+                            '<div style="display:flex;gap:4px;margin-top:3px;align-items:center;">' +
+                            '<span style="font-size:0.68rem;color:#8A681F;font-weight:700;background:#FAF5E8;padding:1px 5px;border-radius:3px;border:0.5px solid #D4AF37;">' + p.category + '</span>' +
+                            (p.fabric ? '<span style="font-size:0.68rem;color:#6B7280;">• ' + p.fabric + '</span>' : '') +
+                            '</div>' +
+                            '<div class="mobile-sugg-pricing">' +
+                            '<span class="mobile-sugg-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
+                            (p.old_price > p.price ? '<span class="mobile-sugg-mrp">₹' + Number(p.old_price).toLocaleString('en-IN') + '</span>' : '') +
+                            (p.discount_pct > 0 ? '<span class="mobile-sugg-disc">' + p.discount_pct + '% OFF</span>' : '') +
+                            '</div>' +
+                            '</div>' +
+                            '<div style="font-size:0.70rem;color:#8A681F;font-weight:800;padding:4px 8px;background:#FAF5E8;border:1px solid #D4AF37;border-radius:12px;flex-shrink:0;">View ➔</div>' +
+                            '</a>';
+                });
+            } else {
+                data.products.forEach(function (p) {
+                    var pTitle = p.title || p.name;
+                    var highlightedTitle = pTitle;
+                    if (q) {
+                        var idx = pTitle.toLowerCase().indexOf(q);
+                        if (idx !== -1) {
+                            highlightedTitle = pTitle.substring(0, idx) + '<mark class="dt-search-highlight">' + pTitle.substring(idx, idx + q.length) + '</mark>' + pTitle.substring(idx + q.length);
+                        }
+                    }
+                    html += '<a href="' + p.url + '" class="dt-sugg-product-item">' +
+                            '<img src="' + p.image + '" class="dt-sugg-thumb" alt="' + pTitle + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\';" />' +
+                            '<div class="dt-sugg-info">' +
+                            '<div class="dt-sugg-title">' + highlightedTitle + '</div>' +
+                            '<div class="dt-sugg-meta">' +
+                            '<span class="dt-sugg-badge">' + p.category + '</span>' +
+                            (p.fabric ? '<span>' + p.fabric + '</span>' : '') +
+                            (p.sku ? '<span style="font-family:monospace;font-size:0.68rem;color:#9CA3AF;">' + p.sku + '</span>' : '') +
+                            '</div>' +
+                            '<div class="dt-sugg-pricing">' +
+                            '<span class="dt-sugg-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
+                            (p.old_price > p.price ? '<span class="dt-sugg-mrp">₹' + Number(p.old_price).toLocaleString('en-IN') + '</span>' : '') +
+                            (p.discount_pct > 0 ? '<span class="dt-sugg-disc">' + p.discount_pct + '% OFF</span>' : '') +
+                            '</div>' +
+                            '</div>' +
+                            '<span class="dt-sugg-view-btn">View Product ➔</span>' +
+                            '</a>';
+                });
+            }
+
+            // Master Bottom View All Button
+            html += '<a href="javascript:void(0)" class="dt-sugg-footer-btn" onclick="if(typeof performSearch===\'function\'){performSearch(\'' + (isMobile ? 'mobile' : 'desktop') + '\', true);}">' +
+                    '<span>Explore All ' + (data.total || data.products.length) + ' Results ' + (query ? 'for &ldquo;' + query + '&rdquo;' : '') + ' ➔</span>' +
+                    '</a>';
+        } else if (q) {
+            html += '<div style="padding:24px 16px;text-align:center;color:#6B7280;font-size:0.82rem;">' +
+                    '<div style="font-size:1.4rem;margin-bottom:6px;">🔍</div>' +
+                    '<div style="font-weight:700;color:#111827;margin-bottom:4px;">No matching ethnic wear found for &ldquo;' + query + '&rdquo;</div>' +
+                    '<div>Try searching for <strong>Silk Sarees</strong>, <strong>Bridal Lehengas</strong>, or <strong>Kurtis</strong></div>' +
+                    '</div>';
+        }
+
+        return html;
+    }
+
+    function fetchSuggestions(query, cat, isMobile) {
+        var targetContainer = isMobile ? mobileSuggContent : suggDropdown;
+        if (!targetContainer) return;
+
+        var url = '/api/search.php?q=' + encodeURIComponent(query || '') + '&cat=' + encodeURIComponent(cat || 'All');
+        fetch(url)
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                var data = (res.data || res.results || {});
+                var html = renderSuggestionsHTML(data, query, isMobile);
+                targetContainer.innerHTML = html;
+                if (!isMobile && suggDropdown) {
+                    suggDropdown.style.display = 'block';
+                }
+
+                // Bind click event on trending tags
+                targetContainer.querySelectorAll('.dt-sugg-tag').forEach(function (tagEl) {
+                    tagEl.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var tagVal = this.dataset.tag;
+                        if (isMobile && mobileSearchInput) {
+                            mobileSearchInput.value = tagVal;
+                            if (searchInput) searchInput.value = tagVal;
+                            performSearch('mobile', false);
+                            fetchSuggestions(tagVal, currentMobileCat, true);
+                        } else if (searchInput) {
+                            searchInput.value = tagVal;
+                            if (mobileSearchInput) mobileSearchInput.value = tagVal;
+                            performSearch('desktop', false);
+                            fetchSuggestions(tagVal, (searchCat ? searchCat.value : 'All'), false);
+                        }
+                    });
+                });
+            })
+            .catch(function (err) {
+                console.error('Search suggestions error:', err);
+            });
     }
 
     /* Sync Desktop Account Button with Logged In User State */
