@@ -2,11 +2,33 @@
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * admins.php - DT Brand's Admin Administrator Accounts Roster
+ * admins.php — Administrator Accounts Roster
  * DT Brand's & Jai Hanuman Tex
+ *
+ * Was a single hardcoded "Gautam Sethi" row plus a toast-only Invite button.
+ * Now lists the real staff accounts from the users table and routes account
+ * creation through the working modal on users/index.php.
  */
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\Database;
+
 $page_title = "Administrator Accounts Roster";
 $active_nav = "users";
+
+$admins = [];
+$pdoAdm = Database::getConnection();
+if ($pdoAdm !== null && !Database::isMockMode()) {
+    try {
+        $admins = Database::query(
+            "SELECT id, name, email, role, status, last_login
+             FROM users
+             ORDER BY (role = 'super_admin') DESC, id ASC"
+        );
+    } catch (\Throwable $e) {
+        $admins = [];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,45 +51,50 @@ $active_nav = "users";
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
                         <span>Administrator Accounts Roster</span>
-                        <span class="adm-badge gold">Admins</span>
+                        <span class="adm-badge gold"><?php echo count($admins); ?> Accounts</span>
                     </h1>
-                    <p class="adm-page-subtitle">Super Admin accounts with full management privileges.</p>
+                    <p class="adm-page-subtitle">All staff accounts, highest privilege first.</p>
                 </div>
                 <div class="adm-page-actions">
                     <a href="/admin/users/" class="adm-btn-secondary">← Back to Users Suite</a>
-                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 
-            <!-- Page Specific Content -->
-            
-        <div class="adm-table-card">
-            <div class="adm-table-toolbar">
-                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Admin Accounts</h3></div>
-                <button class="adm-btn-primary" onclick="window.showToast('Invite Admin...')">+ Invite Admin</button>
+            <div class="adm-table-card">
+                <div class="adm-table-toolbar">
+                    <div><h3 style="font-size:1.05rem; font-weight:800;">Admin Accounts</h3></div>
+                    <a class="adm-btn-primary" href="/admin/users/">+ Invite Admin</a>
+                </div>
+                <div class="adm-table-responsive">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($admins)): ?>
+                                <tr><td colspan="5" style="padding:20px; text-align:center; color:#64748B;">No accounts on file. Add one from the Users page.</td></tr>
+                            <?php else: ?>
+                                <?php foreach ($admins as $a): ?>
+                                <tr>
+                                    <td><strong><?= htmlspecialchars((string)$a['name']) ?></strong></td>
+                                    <td><?= htmlspecialchars((string)$a['email']) ?></td>
+                                    <td><span class="adm-badge <?= $a['role'] === 'super_admin' ? 'gold' : 'info' ?>"><?= htmlspecialchars(ucfirst((string)$a['role'])) ?></span></td>
+                                    <td><?= !empty($a['last_login']) ? htmlspecialchars(date('d M Y, h:i A', strtotime((string)$a['last_login']))) : 'Never' ?></td>
+                                    <td><span class="adm-badge <?= ($a['status'] ?? '') === 'active' ? 'success' : '' ?>"><?= htmlspecialchars(ucfirst((string)$a['status'])) ?></span></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="adm-table-responsive">
-                <table class="adm-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Gautam Sethi</strong></td>
-                            <td>gautam@jaihanumantex.in</td>
-                            <td><span class="adm-badge gold">Super Admin</span></td>
-                            <td><span class="adm-badge success">Active</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
+
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
