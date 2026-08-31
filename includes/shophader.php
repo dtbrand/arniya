@@ -568,6 +568,8 @@ $isHomePage = (
     gap: 8px;
     background: #FFFFFF;
     box-sizing: border-box;
+    position: relative !important;
+    z-index: 10000000 !important;
 }
 
 .shop-header.mobile-search-active .header-normal-view {
@@ -588,6 +590,9 @@ $isHomePage = (
     padding: 0 8px;
     box-sizing: border-box;
     box-shadow: 0 1px 4px rgba(138,104,31,0.08);
+    position: relative !important;
+    z-index: 10000001 !important;
+    pointer-events: auto !important;
 }
 .mobile-search-input-wrap:focus-within {
     border-color: var(--deep-gold, #6F5218);
@@ -606,6 +611,10 @@ $isHomePage = (
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--dark-text, #24211C);
+    position: relative !important;
+    z-index: 10000002 !important;
+    pointer-events: auto !important;
+    cursor: text !important;
 }
 .mobile-search-input-field::placeholder {
     color: var(--light-text, #9A9490);
@@ -624,6 +633,9 @@ $isHomePage = (
     justify-content: center;
     cursor: pointer;
     margin-left: 2px;
+    position: relative !important;
+    z-index: 10000003 !important;
+    pointer-events: auto !important;
 }
 .mobile-search-clear-btn svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
@@ -637,6 +649,9 @@ $isHomePage = (
     justify-content: center;
     cursor: pointer;
     color: var(--dark-gold, #8A681F);
+    position: relative !important;
+    z-index: 10000003 !important;
+    pointer-events: auto !important;
 }
 .mobile-search-submit-icon-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.4; fill: none; }
 
@@ -652,7 +667,7 @@ $isHomePage = (
     height: calc(100vh - 38px) !important;
     height: calc(100dvh - 38px) !important;
     background: #FFFFFF !important;
-    z-index: 9999999 !important;
+    z-index: 9999998 !important;
     flex-direction: column !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
@@ -662,10 +677,6 @@ $isHomePage = (
 
 body.mobile-search-open {
     overflow: hidden !important;
-    position: fixed !important;
-    width: 100% !important;
-    height: 100% !important;
-    touch-action: none !important;
 }
 
 body.mobile-search-open .mobile-search-suggestions-dropdown {
@@ -1646,30 +1657,18 @@ window.closeWishlistDrawer = function() {
 
     /* Mobile Search Open / Close Controllers */
     function openMobileSearchDrawer() {
-        if (!document.body.classList.contains('mobile-search-open')) {
-            savedScrollY = window.scrollY || window.pageYOffset || 0;
-        }
         if (header) header.classList.add('mobile-search-active');
         document.body.classList.add('mobile-search-open');
-        document.body.style.top = '-' + savedScrollY + 'px';
 
         var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
         fetchSuggestions(q, currentMobileCat, true);
         if (mobileSearchInput) {
-            setTimeout(function() {
-                mobileSearchInput.focus();
-            }, 80);
+            mobileSearchInput.focus();
         }
     }
 
     function closeMobileSearchDrawer(resetText) {
-        var hadOpen = document.body.classList.contains('mobile-search-open');
         document.body.classList.remove('mobile-search-open');
-        document.body.style.top = '';
-        if (hadOpen) {
-            window.scrollTo(0, savedScrollY);
-        }
-
         var sy = window.scrollY || window.pageYOffset || 0;
         if (sy < 45 && header) {
             header.classList.remove('mobile-search-active');
@@ -1684,6 +1683,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchBtn) {
         mobileSearchBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             openMobileSearchDrawer();
         });
     }
@@ -1691,6 +1691,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchSuggestionsClose) {
         mobileSearchSuggestionsClose.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             closeMobileSearchDrawer(false);
         });
     }
@@ -1698,6 +1699,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchSubmit) {
         mobileSearchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             performSearch('mobile', true);
             closeMobileSearchDrawer(false);
             if (mobileSearchInput) mobileSearchInput.blur();
@@ -1707,34 +1709,26 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchInput) {
         mobileSearchInput.addEventListener('input', function() {
             var q = mobileSearchInput.value.trim();
-            if (!document.body.classList.contains('mobile-search-open')) {
-                savedScrollY = window.scrollY || window.pageYOffset || 0;
-            }
+            if (header) header.classList.add('mobile-search-active');
             document.body.classList.add('mobile-search-open');
-            document.body.style.top = '-' + savedScrollY + 'px';
             performSearch('mobile', false);
             clearTimeout(searchDebounceTimer);
             searchDebounceTimer = setTimeout(function () {
                 fetchSuggestions(q, currentMobileCat, true);
-            }, 120);
+            }, 100);
         });
 
         mobileSearchInput.addEventListener('focus', function() {
-            if (!document.body.classList.contains('mobile-search-open')) {
-                savedScrollY = window.scrollY || window.pageYOffset || 0;
-            }
+            if (header) header.classList.add('mobile-search-active');
             document.body.classList.add('mobile-search-open');
-            document.body.style.top = '-' + savedScrollY + 'px';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
 
-        mobileSearchInput.addEventListener('click', function() {
-            if (!document.body.classList.contains('mobile-search-open')) {
-                savedScrollY = window.scrollY || window.pageYOffset || 0;
-            }
+        mobileSearchInput.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (header) header.classList.add('mobile-search-active');
             document.body.classList.add('mobile-search-open');
-            document.body.style.top = '-' + savedScrollY + 'px';
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
@@ -1752,7 +1746,10 @@ window.closeWishlistDrawer = function() {
 
     // Close suggestions dropdown on outside click
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('#mobileFullSearchBar') && !e.target.closest('#mobileSearchSuggestionsDropdown') && !e.target.closest('#mobileSearchTriggerBtn')) {
+        if (!e.target.closest('#mobileFullSearchBar') && 
+            !e.target.closest('#mobileSearchSuggestionsDropdown') && 
+            !e.target.closest('#mobileSearchTriggerBtn') &&
+            !e.target.closest('#searchAmazonBar')) {
             if (document.body.classList.contains('mobile-search-open')) {
                 closeMobileSearchDrawer(false);
             }
@@ -1760,7 +1757,8 @@ window.closeWishlistDrawer = function() {
     });
 
     if (mobileSearchClear) {
-        mobileSearchClear.addEventListener('click', function() {
+        mobileSearchClear.addEventListener('click', function(e) {
+            e.stopPropagation();
             if (mobileSearchInput) {
                 mobileSearchInput.value = '';
                 mobileSearchInput.focus();
