@@ -97,9 +97,9 @@ $attr_name = (string)$attr['name'];
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
@@ -151,7 +151,7 @@ $attr_name = (string)$attr['name'];
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminfooter.php'; ?>
     </div>
 </div>
 

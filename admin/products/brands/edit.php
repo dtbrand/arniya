@@ -149,9 +149,9 @@ if ($cur_brand === null) {
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
             <!-- 1. Header Toolbar with Luxury Brand Gold Buttons -->
@@ -345,7 +345,7 @@ if ($cur_brand === null) {
             </form>
 
         </main>
-        <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminfooter.php'; ?>
     </div>
 </div>
 

@@ -470,13 +470,13 @@ $dashPayload = [
 <div class="adm-layout">
 
     <!-- ══ LEFT SIDEBAR NAVIGATION ══ -->
-    <?php include_once __DIR__ . '/Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/includes/adminsidebar.php'; ?>
 
     <!-- ══ MAIN CONTENT WRAPPER ══ -->
     <div class="adm-main">
 
         <!-- ══ TOP HEADER ══ -->
-        <?php include_once __DIR__ . '/Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/includes/adminheader.php'; ?>
 
         <!-- ══ WHOLESALER-STYLE DESKTOP SUBNAV QUICK TABS STRIP ══ -->
         <nav class="adm-subnav-strip" id="admSubnavStrip">
@@ -2988,7 +2988,7 @@ _Special 15% VIP Discount Applied!_</textarea>
         </main>
 
         <!-- ══ BOTTOM STATUS FOOTER ══ -->
-        <?php include_once __DIR__ . '/Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/includes/adminfooter.php'; ?>
 
     </div>
 </div>

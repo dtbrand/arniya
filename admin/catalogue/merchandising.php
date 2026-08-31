@@ -25,9 +25,9 @@ $active_subnav = "merchandising";
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
             
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
@@ -40,7 +40,7 @@ $active_subnav = "merchandising";
             <?php include_once __DIR__ . '/components/merchandising-panel.php'; ?>
 
         </main>
-        <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 

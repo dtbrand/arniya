@@ -45,9 +45,9 @@ if ($pdoAdd !== null && !Database::isMockMode()) {
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding:16px 20px; max-width:760px;">
             <form id="addSubcatForm" onsubmit="return submitAddSubcat(event);">
                 <div class="dt-prod-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
@@ -79,7 +79,7 @@ if ($pdoAdd !== null && !Database::isMockMode()) {
                 </div>
             </form>
         </main>
-        <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminfooter.php'; ?>
     </div>
 </div>
 <script>

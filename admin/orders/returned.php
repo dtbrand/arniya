@@ -27,9 +27,9 @@ $filter_status = "returned";
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
             
             <div class="dt-orders-container">
@@ -62,7 +62,7 @@ $filter_status = "returned";
             <?php include __DIR__ . '/components/order-actions.php'; ?>
 
         </main>
-        <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 

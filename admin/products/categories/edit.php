@@ -124,9 +124,9 @@ $catCount = ProductCatalog::categoryProductCount($cat_id);
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminheader.php'; ?>
         <main class="adm-content" style="padding:16px 20px;">
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -266,7 +266,7 @@ $catCount = ProductCatalog::categoryProductCount($cat_id);
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/adminfooter.php'; ?>
     </div>
 </div>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

@@ -68,7 +68,7 @@ $out .= "| **Storefront Hub** | `shop.php`, `product.php`, `wholesale.php`, `res
 $out .= "| **Unified REST API** | `api/*.php` | `api/` + `api/` (Union) | Complete endpoint coverage, `_guard.php` security, JSON responses |\n";
 $out .= "| **Core Business Classes** | `src/*.php` | `src/` -> `src/` | Preserve complete `Auth.php` (32KB), `OrderManager.php` (42KB), `DiscountEngine.php` (5.4KB) |\n";
 $out .= "| **Admin Panel Suite** | `admin/**` | `admin/` + `admin/` + `admin/` | Full modern admin dashboard, products matrix, variants, order manager |\n";
-$out .= "| **Shared Modals & Partials** | `shared/includes/**` | `Shared/Includes/` + `shared/` | Single canonical source for QuickView, SmartShare, Reels, Cart, Wishlist |\n\n";
+$out .= "| **Shared Modals & Partials** | `shared/includes/**` | `Shared/includes/` + `shared/` | Single canonical source for QuickView, SmartShare, Reels, Cart, Wishlist |\n\n";
 
 $out .= "---\n\n";
 $out .= "## 2. Byte-for-Byte Identical Duplicate Files\n\n";

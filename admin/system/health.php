@@ -43,9 +43,9 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
                 <div class="adm-page-title-group">
@@ -134,7 +134,7 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
                 </div>
             </div>
         </main>
-        <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

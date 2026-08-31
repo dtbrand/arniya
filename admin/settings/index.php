@@ -77,9 +77,9 @@ if ($pdo !== null && !Database::isMockMode()) {
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
+    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -181,7 +181,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                 </form>
             </div>
         </main>
-        <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
+        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 <?php if (!empty($message)): ?>

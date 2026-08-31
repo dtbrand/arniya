@@ -1177,13 +1177,13 @@ $total_products = count($products);
 <?php include_once __DIR__ . '/includes/homebottomfooter.php'; ?>
 
 <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
-<?php include_once __DIR__ . '/Shared/Includes/quickview.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/smartshare.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/reels.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/cart.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/wishlist.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/checkout.php'; ?>
-<?php include_once __DIR__ . '/Shared/Includes/account.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/quickview.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/smartshare.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/reels.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/cart.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/wishlist.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/checkout.php'; ?>
+<?php include_once __DIR__ . '/Shared/includes/account.php'; ?>
 
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 
