@@ -112,7 +112,8 @@
         searchQuery: window.initialSearchQuery || '',
         colors: [],
         sizes: [],
-        fabrics: (window.initialSubCategory && window.initialSubCategory !== 'All') ? [window.initialSubCategory] : [],
+        fabrics: [],
+        subcategories: (window.initialSubCategory && window.initialSubCategory !== 'All') ? [window.initialSubCategory] : [],
         minPrice: 500,
         maxPrice: 30000,
         minDiscount: 0,
@@ -120,10 +121,37 @@
         sortBy: 'recommended'
     };
 
-    /* ── Sub-Category Data for Round Circles (Dynamically Built from Live DB) ── */
-    var subCategoryData = {
-        'All': [
-            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' }
+    /* ── Master Sub-Category Curated Dictionary & Keyword Map ── */
+    var defaultSubCategoryMap = {
+        'saree': [
+            { label: 'Banarasi Kadwa Silk', val: 'Banarasi Kadwa Silk', keywords: ['banarasi', 'kadwa', 'varanasi', 'katan', 'silk'] },
+            { label: 'Bandhani & Patola', val: 'Bandhani & Patola', keywords: ['bandhani', 'patola', 'gharchola', 'heritage'] },
+            { label: 'Chanderi Cotton Silk', val: 'Chanderi Cotton Silk', keywords: ['chanderi', 'cotton silk', 'handloom'] },
+            { label: 'Kanjivaram Pure Zari', val: 'Kanjivaram Pure Zari', keywords: ['kanjivaram', 'kanchipuram', 'zari', 'brocade'] },
+            { label: 'Pure Organza Tissue', val: 'Pure Organza Tissue', keywords: ['organza', 'tissue', 'sheer'] },
+            { label: 'Yeola Paithani Brocade', val: 'Yeola Paithani Brocade', keywords: ['paithani', 'yeola', 'maharashtra'] },
+            { label: 'Georgette & Chiffon', val: 'Georgette & Chiffon', keywords: ['georgette', 'chiffon', 'daily'] }
+        ],
+        'lehenga': [
+            { label: 'Bridal Velvet Lehengas', val: 'Bridal Velvet Lehengas', keywords: ['bridal', 'velvet', 'zardozi', 'heavy'] },
+            { label: 'Organza Floral Lehengas', val: 'Organza Floral Lehengas', keywords: ['organza', 'floral', 'printed'] },
+            { label: 'Georgette Festive Lehengas', val: 'Georgette Festive Lehengas', keywords: ['georgette', 'festive', 'sequin'] },
+            { label: 'Silk Chaniya Choli', val: 'Silk Chaniya Choli', keywords: ['chaniya', 'choli', 'navratri', 'patola'] },
+            { label: 'Party Wear Lehengas', val: 'Party Wear Lehengas', keywords: ['party', 'crop top', 'designer', 'mirror'] }
+        ],
+        'gown': [
+            { label: 'Anarkali Silhouette', val: 'Anarkali Silhouette', keywords: ['anarkali', 'flared', 'silhouette', 'flair'] },
+            { label: 'Floor-Length Georgette', val: 'Floor-Length Georgette', keywords: ['georgette', 'floor', 'drape', 'maxi'] },
+            { label: 'Indo-Western Drape', val: 'Indo-Western Drape', keywords: ['indo-western', 'drape', 'fusion', 'cape'] },
+            { label: 'Embroidered Silk Gowns', val: 'Embroidered Silk Gowns', keywords: ['embroidered', 'silk', 'handwork', 'zari'] },
+            { label: 'Evening Party Gowns', val: 'Evening Party Gowns', keywords: ['party', 'evening', 'cocktail', 'glam'] }
+        ],
+        'kurti': [
+            { label: '3-Piece Festive Sets', val: '3-Piece Festive Sets', keywords: ['3-piece', 'set', 'festive', 'dupatta', 'pant', 'suit'] },
+            { label: 'Flared Anarkali & Angrakha', val: 'Flared Anarkali & Angrakha', keywords: ['anarkali', 'angrakha', 'flared', 'long'] },
+            { label: 'Pure Cotton Daily', val: 'Pure Cotton Daily', keywords: ['cotton', 'daily', 'comfort', 'pure cotton'] },
+            { label: 'Straight Cut Office Wear', val: 'Straight Cut Office Wear', keywords: ['straight', 'office', 'formal', 'tunic'] },
+            { label: 'Party Wear Kurtis', val: 'Party Wear Kurtis', keywords: ['party', 'sequin', 'embroidered', 'heavy', 'festive'] }
         ]
     };
 
@@ -138,53 +166,131 @@
 
     var DT_NO_IMAGE = '/assets/images/no-image.svg';
 
-    /** Real photo for a category, or '' so the circle falls back to an icon. */
+    /** Real photo for a category */
     function catCircleImage(c) {
         var img = (c && typeof c === 'object') ? String(c.image || '') : '';
         if (!img || img === DT_NO_IMAGE || c.has_image === false) { img = ''; }
         if (!img) {
-            // Borrow the first product photo actually filed under this category
-            // instead of cycling /assets/images/product1..6.png by index, which
-            // gave every unphotographed category someone else's saree.
             var cn = String((c && (c.name || c.title)) || '').toLowerCase();
             var hit = (window.allProducts || []).find(function (p) {
-                return p && p.has_photo && String(p.category || '').toLowerCase() === cn;
+                return p && p.has_photo && String(p.category || p.category_name || '').toLowerCase() === cn;
             });
             img = hit ? hit.image : '';
         }
         return img;
     }
 
-    /** Distinct fabrics really recorded against the products in one category. */
-    function fabricsIn(catName) {
-        var cn = String(catName || '').toLowerCase();
-        var seen = {};
-        var out = [];
-        (window.allProducts || []).forEach(function (p) {
-            if (!p || String(p.category || '').toLowerCase() !== cn) { return; }
-            var f = String(p.fabric || '').trim();
-            if (!f || seen[f.toLowerCase()]) { return; }
-            seen[f.toLowerCase()] = true;
-            out.push({ label: f, img: (p.has_photo ? p.image : ''), type: 'fabric', val: f });
+    /** Intelligent photo finder for subcategories */
+    function getSubcategoryImage(catName, subItem) {
+        var cn = String(catName || '').toLowerCase().trim();
+        var subVal = String((subItem && (subItem.val || subItem.label || subItem.name)) || '').toLowerCase().trim();
+        var keywords = (subItem && subItem.keywords) ? subItem.keywords : [];
+        if (keywords.length === 0) {
+            keywords = subVal.split(/[\s,\-\+&]+/).filter(function(k){ return k.length > 2; });
+        }
+
+        // 1. Try finding a product with photo that belongs to this category and matches subcategory
+        var hit = (window.allProducts || []).find(function(p) {
+            if (!p || !p.has_photo || !p.image || p.image === DT_NO_IMAGE) return false;
+            var pCat = String(p.category || p.category_name || '').toLowerCase();
+            if (pCat !== cn && pCat.indexOf(cn) === -1 && cn.indexOf(pCat) === -1) return false;
+            
+            var pSub = String(p.sub_category || p.subcategory || '').toLowerCase();
+            var pFab = String(p.fabric || '').toLowerCase();
+            var pName = String(p.name || p.title || '').toLowerCase();
+            var pDesc = String(p.description || '').toLowerCase();
+            var pAll = pSub + ' ' + pFab + ' ' + pName + ' ' + pDesc;
+
+            if (pSub && (pSub === subVal || pSub.indexOf(subVal) !== -1 || subVal.indexOf(pSub) !== -1)) return true;
+            if (pFab && (pFab === subVal || pFab.indexOf(subVal) !== -1 || subVal.indexOf(pFab) !== -1)) return true;
+            return keywords.some(function(kw){ return pAll.indexOf(kw.toLowerCase()) !== -1; });
         });
-        return out;
+
+        if (hit && hit.image) return hit.image;
+
+        // 2. Fallback to first product in this category
+        var catHit = (window.allProducts || []).find(function(p) {
+            if (!p || !p.has_photo || !p.image || p.image === DT_NO_IMAGE) return false;
+            var pCat = String(p.category || p.category_name || '').toLowerCase();
+            return (pCat === cn || pCat.indexOf(cn) !== -1 || cn.indexOf(pCat) !== -1);
+        });
+
+        if (catHit && catHit.image) return catHit.image;
+        return '';
     }
 
+    /* ── Build Master Sub-Category Dictionary ── */
+    var subCategoryData = {
+        'All': [
+            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' }
+        ]
+    };
+
     var uniqueCatMap = {};
+
+    // 1. Populate 'All' with main categories
     catSource.forEach(function (c) {
         var cName = (typeof c === 'string') ? c.trim() : String((c && (c.name || c.title)) || '').trim();
         if (!cName || cName.toLowerCase() === 'all' || uniqueCatMap[cName.toLowerCase()]) { return; }
         uniqueCatMap[cName.toLowerCase()] = true;
-
         var cImg = (typeof c === 'string') ? catCircleImage({ name: cName }) : catCircleImage(c);
-
         subCategoryData['All'].push({ label: cName, img: cImg, type: 'category', val: cName });
+    });
 
-        // Only fabrics that exist. This list used to be a fixed
-        // Pure Silk / Handloom Korvai / Zari / Festive strip appended to every
-        // category, so tapping one filtered the grid down to nothing.
-        subCategoryData[cName] = [{ label: 'All ' + cName, img: cImg, type: 'category', val: cName }]
-            .concat(fabricsIn(cName));
+    // 2. Populate subcategories for each category
+    Object.keys(uniqueCatMap).forEach(function (catKey) {
+        var cName = catKey.charAt(0).toUpperCase() + catKey.slice(1);
+        var origCat = (catSource.find(function(c){
+            var n = (typeof c === 'string') ? c : (c.name || c.title || '');
+            return n.toLowerCase() === catKey;
+        }) || {});
+        var displayName = (typeof origCat === 'string') ? origCat : (origCat.name || origCat.title || cName);
+        var cImg = catCircleImage(origCat);
+
+        // 1st circle: All <Category>
+        var list = [
+            { label: 'All ' + displayName, img: cImg, icon: '✦', type: 'cat_all', val: displayName }
+        ];
+
+        // Gather curated + live DB subcategories
+        var baseSlug = catKey.replace(/s$/, '');
+        var curatedSubs = defaultSubCategoryMap[baseSlug] || defaultSubCategoryMap[catKey] || [];
+        var addedMap = {};
+
+        curatedSubs.forEach(function(s) {
+            addedMap[s.val.toLowerCase()] = true;
+            var sImg = getSubcategoryImage(displayName, s);
+            list.push({ label: s.label, val: s.val, img: sImg, type: 'subcategory', keywords: s.keywords });
+        });
+
+        // Add any distinct sub_category or fabric from live products in this category
+        (window.allProducts || []).forEach(function(p) {
+            if (!p) return;
+            var pCat = String(p.category || p.category_name || '').toLowerCase();
+            if (pCat !== catKey && pCat.indexOf(catKey) === -1 && catKey.indexOf(pCat) === -1) return;
+
+            var pSub = String(p.sub_category || p.subcategory || '').trim();
+            if (pSub && !addedMap[pSub.toLowerCase()]) {
+                addedMap[pSub.toLowerCase()] = true;
+                list.push({ label: pSub, val: pSub, img: (p.has_photo ? p.image : ''), type: 'subcategory', keywords: [pSub.toLowerCase()] });
+            }
+
+            var pFab = String(p.fabric || '').trim();
+            if (pFab && !addedMap[pFab.toLowerCase()]) {
+                addedMap[pFab.toLowerCase()] = true;
+                list.push({ label: pFab, val: pFab, img: (p.has_photo ? p.image : ''), type: 'fabric', keywords: [pFab.toLowerCase()] });
+            }
+        });
+
+        subCategoryData[displayName] = list;
+        subCategoryData[displayName.toLowerCase()] = list;
+        if (displayName.slice(-1) === 's') {
+            subCategoryData[displayName.slice(0, -1)] = list;
+            subCategoryData[displayName.slice(0, -1).toLowerCase()] = list;
+        } else {
+            subCategoryData[displayName + 's'] = list;
+            subCategoryData[(displayName + 's').toLowerCase()] = list;
+        }
     });
 
     function dtEsc(s) {
@@ -192,30 +298,42 @@
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    /* ── Render Round Sub-Categories Slider with Auto-Conversion ── */
     window.renderSubCategories = function(mainCat) {
         var track = document.getElementById('catSliderTrack');
         if (!track) return;
 
-        var currentSelected = (window.masterFilterState && window.masterFilterState.category) ? window.masterFilterState.category.toLowerCase() : 'all';
+        var currentSelectedCat = (window.masterFilterState && window.masterFilterState.category) ? window.masterFilterState.category.toLowerCase().trim() : 'all';
+        var currentSubs = (window.masterFilterState && window.masterFilterState.subcategories) ? window.masterFilterState.subcategories.map(function(s){ return s.toLowerCase(); }) : [];
         var currentFabrics = (window.masterFilterState && window.masterFilterState.fabrics) ? window.masterFilterState.fabrics.map(function(f){ return f.toLowerCase(); }) : [];
-        var list = subCategoryData[mainCat] || subCategoryData['All'];
+
+        var list = [];
+        if (!mainCat || mainCat.toLowerCase() === 'all') {
+            list = subCategoryData['All'] || [];
+        } else {
+            list = subCategoryData[mainCat] || subCategoryData[mainCat.toLowerCase()] || subCategoryData['All'] || [];
+        }
+
         track.innerHTML = list.map(function(item, idx) {
             var itemVal = (item.val || '').toLowerCase();
             var isAct = false;
-            if (currentFabrics.length > 0 && item.type === 'fabric') {
+            if (item.type === 'all') {
+                isAct = (currentSelectedCat === 'all' || currentSelectedCat === '') && currentSubs.length === 0 && currentFabrics.length === 0;
+            } else if (item.type === 'cat_all') {
+                isAct = (currentSubs.length === 0 && currentFabrics.length === 0);
+            } else if (item.type === 'category') {
+                isAct = (itemVal === currentSelectedCat);
+            } else if (item.type === 'subcategory') {
+                isAct = currentSubs.indexOf(itemVal) !== -1;
+            } else if (item.type === 'fabric') {
                 isAct = currentFabrics.indexOf(itemVal) !== -1;
-            } else if (currentFabrics.length === 0) {
-                isAct = (item.type === 'all' && (currentSelected === 'all' || currentSelected === '')) ||
-                        (item.type === 'category' && itemVal === currentSelected) ||
-                        (idx === 0 && currentSelected === 'all');
             }
+
             var circleContent = '';
             if (item.img) {
-                // No stock-photo onerror: a broken path shows the shared
-                // no-image placeholder rather than an unrelated product.
                 circleContent = '<img src="' + dtEsc(item.img) + '" alt="' + dtEsc(item.label) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + DT_NO_IMAGE + '\';this.style.opacity=\'.5\';" />';
             } else {
-                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '●') + '</span>';
+                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '✦') + '</span>';
             }
 
             return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
@@ -229,29 +347,73 @@
         // Bind clicks on round sub-category items
         track.querySelectorAll('.cat-item').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                track.querySelectorAll('.cat-item').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-                btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-
                 var type = btn.dataset.type;
                 var val  = btn.dataset.val;
                 var st   = window.masterFilterState;
 
-                if (type === 'fabric') {
-                    st.fabrics = [val];
-                } else if (type === 'category') {
-                    st.category = val;
-                    st.fabrics = [];
-                } else if (type === 'all') {
+                if (type === 'all') {
+                    // Clicked 'All Items'
                     st.category = 'All';
+                    st.subcategories = [];
                     st.fabrics = [];
-                } else {
+                    window.renderSubCategories('All');
+                } else if (type === 'category') {
+                    // Clicked a main category circle from the All view (e.g. Saree, Lehenga, Gown, Kurti)
+                    st.category = val;
+                    st.subcategories = [];
                     st.fabrics = [];
+                    // AUTO-CONVERT SLIDER TO THAT CATEGORY'S SUBCATEGORIES!
+                    window.renderSubCategories(val);
+                } else if (type === 'cat_all') {
+                    // Clicked 'All <Category>' circle inside a category sub-view
+                    st.subcategories = [];
+                    st.fabrics = [];
+                    track.querySelectorAll('.cat-item').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+                    btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+                } else if (type === 'subcategory') {
+                    // Clicked a specific subcategory circle
+                    var idx = st.subcategories.indexOf(val);
+                    if (idx !== -1) {
+                        st.subcategories.splice(idx, 1);
+                    } else {
+                        st.subcategories = [val]; // select this subcategory
+                    }
+                    st.fabrics = [];
+                    track.querySelectorAll('.cat-item').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+                    if (st.subcategories.length > 0) {
+                        btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+                    } else {
+                        var firstBtn = track.querySelector('.cat-item');
+                        if (firstBtn) { firstBtn.classList.add('active'); firstBtn.setAttribute('aria-pressed','true'); }
+                    }
+                } else if (type === 'fabric') {
+                    // Clicked a specific fabric circle
+                    var fIdx = st.fabrics.indexOf(val);
+                    if (fIdx !== -1) {
+                        st.fabrics.splice(fIdx, 1);
+                    } else {
+                        st.fabrics = [val];
+                    }
+                    st.subcategories = [];
+                    track.querySelectorAll('.cat-item').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+                    if (st.fabrics.length > 0) {
+                        btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+                    }
                 }
+
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
                 // Sync header subnav tabs
                 document.querySelectorAll('.main-cat-tab').forEach(function(t){
-                    t.classList.toggle('active', (t.dataset.cat || '').toLowerCase() === (st.category || 'All').toLowerCase());
+                    var tCat = (t.dataset.cat || '').toLowerCase();
+                    var isMatch = (st.category.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === st.category.toLowerCase());
+                    t.classList.toggle('active', isMatch);
+                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                });
+
+                // Sync sidebar category chips
+                document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
+                    ci.classList.toggle('active', ci.dataset.sfVal.toLowerCase() === st.category.toLowerCase());
                 });
 
                 window.applyMasterFilters();
@@ -322,6 +484,27 @@
                 });
             }
 
+            var subcatMatch = true;
+            if (st.subcategories && st.subcategories.length > 0) {
+                var cardSub = (card.dataset.subcategory || '').toLowerCase();
+                var cardFab = (card.dataset.fabric || '').toLowerCase();
+                var cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
+                var cardAria = (card.getAttribute('aria-label') || '').toLowerCase();
+                var cardAllText = cardName + ' ' + cardAria + ' ' + cardSub + ' ' + cardFab;
+
+                subcatMatch = st.subcategories.some(function(subVal) {
+                    var sVal = String(subVal || '').toLowerCase().trim();
+                    if (!sVal) return true;
+                    if (cardSub && (cardSub === sVal || cardSub.indexOf(sVal) !== -1 || sVal.indexOf(cardSub) !== -1)) return true;
+                    if (cardFab && (cardFab === sVal || cardFab.indexOf(sVal) !== -1 || sVal.indexOf(cardFab) !== -1)) return true;
+                    
+                    var tokens = sVal.split(/[\s,\-\+&]+/).filter(function(k){ return k.length > 2 && ['and', 'pure', 'sets', 'wear'].indexOf(k) === -1; });
+                    return tokens.some(function(t) {
+                        return cardAllText.indexOf(t) !== -1;
+                    });
+                });
+            }
+
             var discount = parseInt(card.dataset.discount || '0');
             var discountMatch = (discount >= st.minDiscount);
 
@@ -369,7 +552,7 @@
                 searchMatch = matchCount >= minReq;
             }
 
-            var isMatch = catMatch && priceMatch && colorMatch && sizeMatch && fabricMatch && discountMatch && stockMatch && searchMatch;
+            var isMatch = catMatch && subcatMatch && priceMatch && colorMatch && sizeMatch && fabricMatch && discountMatch && stockMatch && searchMatch;
 
             if (isMatch) {
                 card.style.display = '';
@@ -439,9 +622,18 @@
         if (st.minPrice > 500 || st.maxPrice < 30000) {
             tags.push({ label: '₹' + st.minPrice.toLocaleString('en-IN') + ' - ₹' + st.maxPrice.toLocaleString('en-IN'), type: 'price' });
         }
-        st.colors.forEach(function(c){ tags.push({ label: c, type: 'color', val: c }); });
-        st.sizes.forEach(function(s){ tags.push({ label: 'Size: ' + s, type: 'size', val: s }); });
-        st.fabrics.forEach(function(f){ tags.push({ label: f, type: 'fabric', val: f }); });
+        if (st.colors && st.colors.length > 0) {
+            st.colors.forEach(function(c){ tags.push({ label: c, type: 'color', val: c }); });
+        }
+        if (st.sizes && st.sizes.length > 0) {
+            st.sizes.forEach(function(s){ tags.push({ label: 'Size: ' + s, type: 'size', val: s }); });
+        }
+        if (st.subcategories && st.subcategories.length > 0) {
+            st.subcategories.forEach(function(sc){ tags.push({ label: sc, type: 'subcategory', val: sc }); });
+        }
+        if (st.fabrics && st.fabrics.length > 0) {
+            st.fabrics.forEach(function(f){ tags.push({ label: f, type: 'fabric', val: f }); });
+        }
         if (st.minDiscount > 0) {
             tags.push({ label: st.minDiscount + '%+ Off', type: 'discount' });
         }
@@ -473,12 +665,26 @@
             if (mClr) mClr.style.display = 'none';
         } else if (type === 'category') {
             st.category = 'All';
+            st.subcategories = [];
+            st.fabrics = [];
+            window.renderSubCategories('All');
             document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
                 ci.classList.toggle('active', ci.dataset.sfVal === 'All');
             });
             document.querySelectorAll('.main-cat-tab').forEach(function(t){
                 t.classList.toggle('active', (t.dataset.cat || '').toLowerCase() === 'all');
             });
+        } else if (type === 'subcategory') {
+            st.subcategories = st.subcategories.filter(function(x){ return x !== val; });
+            var track = document.getElementById('catSliderTrack');
+            if (track) {
+                var btn = track.querySelector('.cat-item[data-val="' + val + '"]');
+                if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); }
+                if (st.subcategories.length === 0) {
+                    var firstBtn = track.querySelector('.cat-item');
+                    if (firstBtn) { firstBtn.classList.add('active'); firstBtn.setAttribute('aria-pressed', 'true'); }
+                }
+            }
         } else if (type === 'price') {
             st.minPrice = 500; st.maxPrice = 30000;
             var sfMin = document.getElementById('sfPriceMin'), sfMax = document.getElementById('sfPriceMax');
@@ -489,6 +695,11 @@
             st.sizes = st.sizes.filter(function(x){ return x !== val; });
         } else if (type === 'fabric') {
             st.fabrics = st.fabrics.filter(function(x){ return x !== val; });
+            var trackF = document.getElementById('catSliderTrack');
+            if (trackF) {
+                var btnF = trackF.querySelector('.cat-item[data-val="' + val + '"]');
+                if (btnF) { btnF.classList.remove('active'); btnF.setAttribute('aria-pressed', 'false'); }
+            }
         } else if (type === 'discount') {
             st.minDiscount = 0;
         } else if (type === 'availability') {
@@ -558,7 +769,8 @@
 
             var cat = tab.dataset.cat;
             window.masterFilterState.category = cat;
-            window.masterFilterState.fabrics = []; // reset sub-filter on main category switch
+            window.masterFilterState.subcategories = [];
+            window.masterFilterState.fabrics = [];
             window.renderSubCategories(cat);
             window.applyMasterFilters();
             if (typeof window.syncMobileFilterUI === 'function') window.syncMobileFilterUI();
@@ -583,9 +795,13 @@
 
             if (type === 'category') {
                 st.category = val;
+                st.subcategories = [];
                 st.fabrics = [];
                 document.querySelectorAll('.main-cat-tab').forEach(function(t){
-                    t.classList.toggle('active', t.dataset.cat === val);
+                    var tCat = (t.dataset.cat || '').toLowerCase();
+                    var isMatch = (val.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === val.toLowerCase());
+                    t.classList.toggle('active', isMatch);
+                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
                 });
                 window.renderSubCategories(val);
             } else if (type === 'size') {
@@ -694,6 +910,7 @@
             category: 'All',
             colors: [],
             sizes: [],
+            subcategories: [],
             fabrics: [],
             minPrice: 500,
             maxPrice: 30000,
@@ -861,9 +1078,16 @@
     window.filterByBanner = function(catName) {
         var st = window.masterFilterState;
         st.category = catName;
+        st.subcategories = [];
         st.fabrics = [];
         document.querySelectorAll('.main-cat-tab').forEach(function(t){
-            t.classList.toggle('active', t.dataset.cat === catName);
+            var tCat = (t.dataset.cat || '').toLowerCase();
+            var isMatch = (catName.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === catName.toLowerCase());
+            t.classList.toggle('active', isMatch);
+            t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        });
+        document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
+            ci.classList.toggle('active', ci.dataset.sfVal.toLowerCase() === catName.toLowerCase());
         });
         window.renderSubCategories(catName);
         window.applyMasterFilters();

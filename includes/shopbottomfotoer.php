@@ -1030,6 +1030,7 @@ input[type=range].mf-range::-moz-range-thumb {
                 category: 'All',
                 colors: [],
                 sizes: [],
+                subcategories: [],
                 fabrics: [],
                 minPrice: 500,
                 maxPrice: 30000,
@@ -1037,6 +1038,7 @@ input[type=range].mf-range::-moz-range-thumb {
                 availability: [],
                 sortBy: 'recommended'
             };
+            if (typeof window.renderSubCategories === 'function') window.renderSubCategories('All');
             if (typeof window.applyMasterFilters === 'function') window.applyMasterFilters();
             window.syncMobileFilterUI();
         });
@@ -1066,8 +1068,15 @@ input[type=range].mf-range::-moz-range-thumb {
 
             if (type === 'category') {
                 st.category = val;
-                var catItems = document.querySelectorAll('.cat-item');
-                catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === val); });
+                st.subcategories = [];
+                st.fabrics = [];
+                if (typeof window.renderSubCategories === 'function') window.renderSubCategories(val);
+                document.querySelectorAll('.main-cat-tab').forEach(function(t){
+                    var tCat = (t.dataset.cat || '').toLowerCase();
+                    var isMatch = (val.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === val.toLowerCase());
+                    t.classList.toggle('active', isMatch);
+                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                });
             } else if (type === 'size') {
                 var idx = st.sizes.indexOf(val);
                 if (idx === -1) st.sizes.push(val); else st.sizes.splice(idx, 1);
