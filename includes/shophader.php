@@ -563,19 +563,6 @@ $isHomePage = (
     stroke: #8A681F;
 }
 
-#mobileSearchTriggerBtn:hover svg,
-#mobileSearchTriggerBtn:active svg {
-    transform: scale(1.08) rotate(6deg);
-    stroke: #8A681F;
-}
-
-#wishlistBtn:hover svg,
-#wishlistBtn:active svg {
-    transform: scale(1.12);
-    stroke: #E53935;
-    fill: rgba(229, 57, 53, 0.15);
-}
-
 /* Luxury Gold Notification Badge with Animated Micro-Pulse */
 @keyframes badgePopPulse {
     0%, 100% { transform: scale(1); }
@@ -602,11 +589,6 @@ $isHomePage = (
     box-shadow: 0 2px 6px rgba(138, 104, 31, 0.4);
     animation: badgePopPulse 2.5s ease-in-out infinite;
     pointer-events: none;
-}
-
-/* Mobile search trigger button */
-.mobile-search-trigger-btn {
-    display: none;
 }
 
 /* ── Header Account Dropdown (Desktop) ── */
@@ -1325,9 +1307,6 @@ body.mobile-search-open #mobileBottomBar {
     .search-amazon-bar {
         display: none !important; /* Hidden on mobile by default */
     }
-    .mobile-search-trigger-btn {
-        display: inline-flex !important;
-    }
     #wishlistBtn {
         display: none !important;
     }
@@ -1389,8 +1368,9 @@ body.mobile-search-open #mobileBottomBar {
 
     <!-- ═══ Normal Header Bar (shown on desktop, and mobile default) ═══ -->
     <div class="header-normal-view" id="headerNormalView">
-        <!-- Left: Animated Mobile Menu Button, Back Button & Brand Logo -->
+        <!-- Left: Animated Mobile Menu Button (Home only), Back Button (Shop only) & Brand Logo -->
         <div class="header-left-group">
+            <?php if ($isHomePage): ?>
             <button type="button" class="header-mobile-menu-btn" id="headerMobileMenuBtn" onclick="if(typeof window.toggleHomeMobileMenu==='function'){window.toggleHomeMobileMenu(true);}else if(typeof window.handleSmartFooterAction==='function'){window.handleSmartFooterAction(event,'','menu');}" aria-label="Open Navigation Menu">
                 <span class="mobile-menu-bars">
                     <span class="bar bar-top"></span>
@@ -1398,8 +1378,7 @@ body.mobile-search-open #mobileBottomBar {
                     <span class="bar bar-bot"></span>
                 </span>
             </button>
-
-            <?php if (!$isHomePage): ?>
+            <?php else: ?>
             <a href="/" class="shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
@@ -1451,16 +1430,8 @@ body.mobile-search-open #mobileBottomBar {
             <div class="dt-search-suggestions-dropdown" id="searchSuggestionsDropdown" style="display:none;" role="listbox" aria-label="Search suggestions"></div>
         </div>
 
-        <!-- Right Actions: Mobile Search Trigger, Wishlist, Cart -->
+        <!-- Right Actions: Account, Wishlist, Cart -->
         <div class="header-actions">
-            <!-- Mobile Search Icon Trigger Button (Shown on mobile only) -->
-            <button class="header-icon-btn mobile-search-trigger-btn" id="mobileSearchTriggerBtn" aria-label="Open Search">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
-
             <!-- Desktop Account Dropdown Button -->
             <div class="header-account-wrap" id="headerAccountWrap">
                 <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/account.php?tab=login';}" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
@@ -1506,14 +1477,6 @@ body.mobile-search-open #mobileBottomBar {
                     </a>
                 </div>
             </div>
-
-            <!-- Mobile Search Icon Trigger Button -->
-            <button type="button" class="header-icon-btn mobile-search-trigger-btn" id="mobileSearchTriggerBtn" aria-label="Search products">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </button>
 
             <!-- Wishlist -->
             <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
