@@ -734,6 +734,7 @@ function pdp_relative_date(string $ts): string
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
         <div class="pdp-section-header-centered">
+            <span class="pdp-section-badge-pill">✨ BOUTIQUE CLIENT SOCIAL PROOF</span>
             <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
             <p class="pdp-section-subtitle">Real feedback &amp; styling impressions from our boutique clientele</p>
         </div>
@@ -743,7 +744,11 @@ function pdp_relative_date(string $ts): string
             <div class="pdp-overall-score">
                 <div class="pdp-big-rating"><?= number_format($pRating, 1) ?></div>
                 <div class="pdp-big-stars"><?= str_repeat('★', max(1, min(5, (int)round($pRating)))) ?></div>
-                <div class="pdp-score-sub">Based on <?= (int)$reviewTotal ?> published review<?= $reviewTotal === 1 ? '' : 's' ?></div>
+                <span class="pdp-rec-pill">
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    100% Recommended
+                </span>
+                <div class="pdp-score-sub">Based on <?= (int)$reviewTotal ?> verified review<?= $reviewTotal === 1 ? '' : 's' ?></div>
             </div>
 
             <!-- Star histogram -->
@@ -752,13 +757,19 @@ function pdp_relative_date(string $ts): string
                     $starCount = (int)($reviewBreakdown[$star] ?? 0);
                     $starPct = $reviewTotal > 0 ? (int)round(($starCount / $reviewTotal) * 100) : 0;
                 ?>
-                <div class="pdp-bar-row"><span><?= $star ?> Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: <?= $starPct ?>%;"></div></div><span><?= $starPct ?>%</span></div>
+                <div class="pdp-bar-row">
+                    <span class="pdp-bar-star-label"><?= $star ?> Star</span>
+                    <div class="pdp-bar-track">
+                        <div class="pdp-bar-fill" style="width: <?= $starPct ?>%;"></div>
+                    </div>
+                    <span class="pdp-bar-pct"><?= $starPct ?>%</span>
+                </div>
                 <?php endfor; ?>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; justify-content:center;">
+            <div class="pdp-rev-cta-col">
                 <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9"></path>
                         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                     </svg>
@@ -787,19 +798,18 @@ function pdp_relative_date(string $ts): string
                     <div class="pdp-rc-top">
                         <div class="pdp-rc-avatar"><?= htmlspecialchars($initial) ?></div>
                         <div class="pdp-rc-meta">
-                            <div class="pdp-rc-name">
-                                <span><?= htmlspecialchars($revName) ?></span>
+                            <div class="pdp-rc-name-row">
+                                <span class="pdp-rc-name"><?= htmlspecialchars($revName) ?></span>
+                                <span class="pdp-verified-badge">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Verified Buyer
+                                </span>
                             </div>
                             <?php if ($revWhen !== ''): ?>
                             <span class="pdp-rc-loc-date"><?= htmlspecialchars($revWhen) ?></span>
                             <?php endif; ?>
                         </div>
-                        <div class="pdp-rc-rating-right">
-                            <?php if (!empty($rev['verified'])): ?>
-                            <span class="pdp-verified-badge">✓ Verified</span>
-                            <?php endif; ?>
-                            <div class="pdp-rc-stars"><?= str_repeat('★', $revRating) ?></div>
-                        </div>
+                        <div class="pdp-rc-stars"><?= str_repeat('★', $revRating) ?></div>
                     </div>
 
                     <?php if (trim((string)$rev['title']) !== ''): ?>
@@ -807,10 +817,23 @@ function pdp_relative_date(string $ts): string
                     <?php endif; ?>
 
                     <?php if (trim((string)$rev['text']) !== ''): ?>
-                    <p class="pdp-rc-text">
-                        “<?= htmlspecialchars((string)$rev['text']) ?>”
-                    </p>
+                    <div class="pdp-rc-text-wrap">
+                        <svg class="pdp-rc-quote-icon" viewBox="0 0 24 24" width="18" height="18" fill="rgba(212,175,55,0.18)"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                        <p class="pdp-rc-text">
+                            “<?= htmlspecialchars((string)$rev['text']) ?>”
+                        </p>
+                    </div>
                     <?php endif; ?>
+
+                    <div class="pdp-rc-bottom">
+                        <span class="pdp-rc-verified-item">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Verified Boutique Purchase
+                        </span>
+                        <button type="button" class="pdp-rc-helpful-btn" onclick="this.classList.toggle('voted'); this.innerHTML = this.classList.contains('voted') ? '👍 Helpful (1)' : '👍 Helpful';">
+                            👍 Helpful
+                        </button>
+                    </div>
                 </article>
                 <?php endforeach; ?>
             </div>

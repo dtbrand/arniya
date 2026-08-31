@@ -1187,12 +1187,26 @@
     var revResumeTimeout = null;
 
     window.rebuildReviewDots = function() {
-        if (!revDotsWrap || !revTrack) return;
+        if (!revTrack) return;
+        var prevBtn = document.getElementById('pdpRevPrev');
+        var nextBtn = document.getElementById('pdpRevNext');
+        var needsScroll = revTrack.scrollWidth > (revTrack.clientWidth + 10);
+
+        if (prevBtn) prevBtn.style.display = needsScroll ? 'flex' : 'none';
+        if (nextBtn) nextBtn.style.display = needsScroll ? 'flex' : 'none';
+
+        if (!revDotsWrap) return;
         revDotsWrap.innerHTML = '';
         var visibleCards = Array.from(revTrack.querySelectorAll('.pdp-review-card')).filter(function(c) {
             return c.style.display !== 'none';
         });
 
+        if (!needsScroll || visibleCards.length <= 1) {
+            revDotsWrap.style.display = 'none';
+            return;
+        }
+
+        revDotsWrap.style.display = 'flex';
         visibleCards.forEach(function(_, idx) {
             var dot = document.createElement('div');
             dot.className = 'pdp-rev-dot ' + (idx === 0 ? 'active' : '');
@@ -1225,9 +1239,10 @@
 
     function startReviewAutoSlide() {
         if (revAutoSlideTimer) clearInterval(revAutoSlideTimer);
+        if (!revTrack || revTrack.scrollWidth <= (revTrack.clientWidth + 10)) return;
         revAutoSlideTimer = setInterval(function() {
             window.slidePdpReviews(1);
-        }, 4200);
+        }, 4500);
     }
 
     function pauseReviewAutoSlide() {
@@ -1247,7 +1262,8 @@
     }
 
     if (revTrack) {
-        window.rebuildReviewDots();
+        setTimeout(window.rebuildReviewDots, 200);
+        window.addEventListener('resize', window.rebuildReviewDots);
         startReviewAutoSlide();
 
         // Pause on hover
