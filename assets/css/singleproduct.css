@@ -2047,50 +2047,105 @@ cursor: zoom-in;
     stroke: #111827;
 }
 
+/* ═════════════════════════════════════════════════════════════
+   3D LUXURY PERSPECTIVE & UP-DOWN FLOATING MOTION (REVIEWS)
+   ═════════════════════════════════════════════════════════════ */
+
+@keyframes pdpFloat3dOdd {
+    0%, 100% {
+        transform: translateY(0px) rotateX(0deg) rotateZ(0deg);
+    }
+    50% {
+        transform: translateY(-6px) rotateX(1.5deg) rotateZ(0.3deg);
+    }
+}
+
+@keyframes pdpFloat3dEven {
+    0%, 100% {
+        transform: translateY(-4px) rotateX(1deg) rotateZ(-0.2deg);
+    }
+    50% {
+        transform: translateY(2px) rotateX(0deg) rotateZ(0deg);
+    }
+}
+
 /* Auto-Sliding Carousel Wrapper */
 .pdp-reviews-carousel-wrap {
     position: relative;
     margin-top: 24px;
+    perspective: 1200px;
 }
 .pdp-reviews-track {
     display: flex;
-    gap: 16px;
+    gap: 18px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    padding: 8px 4px 20px;
+    padding: 14px 6px 24px 6px;
     touch-action: pan-y pinch-zoom;
     overscroll-behavior-x: contain;
+    transform-style: preserve-3d;
+    scroll-behavior: smooth;
 }
 .pdp-reviews-track::-webkit-scrollbar { display: none; }
 
-/* Luxury Review Card */
+/* Luxury 3D Review Card */
 .pdp-review-card {
     flex: 0 0 360px;
     max-width: 440px;
     scroll-snap-align: start;
-    background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%);
-    border-radius: 14px;
-    padding: 20px 22px;
-    border: 1.5px solid rgba(212, 175, 55, 0.28);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.04), 0 1px 3px rgba(138,104,31,0.06);
+    scroll-snap-stop: normal;
+    background: linear-gradient(175deg, #FFFFFF 0%, #FDFBF7 60%, #FAF5E8 100%);
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: 1.5px solid rgba(212, 175, 55, 0.32);
+    box-shadow: 
+        0 10px 28px -6px rgba(138, 104, 31, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
     gap: 12px;
     position: relative;
-    transition: all 0.25s ease;
+    transform-style: preserve-3d;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    box-sizing: border-box;
+    animation: pdpFloat3dOdd 6s ease-in-out infinite;
+}
+.pdp-review-card:nth-child(even) {
+    animation: pdpFloat3dEven 6.5s ease-in-out infinite 0.5s;
+}
+.pdp-review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3.5px;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(90deg, transparent, #D4AF37 25%, #FFFFFF 50%, #B8860B 75%, transparent);
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 @media (max-width: 600px) {
     .pdp-review-card {
         flex: 0 0 88vw;
         max-width: 330px;
-        padding: 16px 18px;
+        padding: 18px 18px;
+        animation: none !important;
     }
 }
 .pdp-review-card:hover {
+    animation-play-state: paused;
     border-color: #D4AF37;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(138,104,31,0.14);
+    transform: translateY(-8px) scale(1.02) rotateX(2deg) !important;
+    box-shadow: 
+        0 20px 42px -8px rgba(138, 104, 31, 0.24),
+        0 8px 18px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+.pdp-review-card:hover::before {
+    opacity: 1;
 }
 
 .pdp-rc-top {
@@ -2360,16 +2415,19 @@ cursor: zoom-in;
 .pdp-rel-carousel-wrap {
     position: relative;
     margin-top: 14px;
+    perspective: 1200px;
 }
 .pdp-rel-track {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-padding: 6px 2px 14px;
+    padding: 10px 4px 20px;
     touch-action: pan-y pinch-zoom;
     overscroll-behavior-x: contain;
+    transform-style: preserve-3d;
+    scroll-behavior: smooth;
 }
 .pdp-rel-track::-webkit-scrollbar { display: none; }
 
@@ -2379,10 +2437,17 @@ padding: 6px 2px 14px;
     max-width: 240px;
     scroll-snap-align: start;
     background: #FFFFFF;
-    border-radius: 12px;
-    border: 1.2px solid var(--soft-platinum);
+    border-radius: 14px;
+    border: 1.2px solid rgba(212, 175, 55, 0.22);
     overflow: hidden;
-    transition: all 0.25s ease;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+.pdp-rel-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #D4AF37;
+    box-shadow: 0 16px 32px -6px rgba(138, 104, 31, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
     display: flex;
     flex-direction: column;
     text-decoration: none;
