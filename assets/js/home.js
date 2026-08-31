@@ -1285,6 +1285,16 @@
         activeTrack.scrollBy({ left: scrollDelta, behavior: 'smooth' });
     };
 
+    window.toggleReviewCard = function(btn) {
+        var card = btn.closest('.review-card');
+        if (!card) return;
+        var isExpanded = card.classList.toggle('expanded');
+        var span = btn.querySelector('span');
+        if (span) {
+            span.textContent = isExpanded ? 'Show Less' : '... Read Full';
+        }
+    };
+
     window.syncReviewsScrollbar = function() {
         var activeTrack = document.querySelector('.reviews-track.active') || document.querySelector('.reviews-track');
         var thumb = document.getElementById('revScrollbarThumb');

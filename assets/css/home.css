@@ -6306,20 +6306,20 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .review-card {
-    flex: 0 0 calc((100% - 36px) / 3);
-    min-width: 0;
+    flex: 0 0 calc((100% - 32px) / 3);
+    min-width: 250px;
     scroll-snap-align: start;
     background: #FFFFFF;
-    border: 1.5px solid rgba(138, 104, 31, 0.16);
-    border-radius: 20px;
-    padding: 24px 22px 20px 22px;
+    border: 1.2px solid rgba(138, 104, 31, 0.16);
+    border-radius: 16px;
+    padding: 18px 18px 14px 18px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-    transition: all 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-sizing: border-box;
 }
 
 .review-card::before {
@@ -6335,9 +6335,9 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .review-card:hover {
-    transform: translateY(-8px) scale(1.01);
+    transform: translateY(-4px);
     border-color: #C5A859;
-    box-shadow: 0 18px 40px rgba(138, 104, 31, 0.16);
+    box-shadow: 0 12px 30px rgba(138, 104, 31, 0.12);
 }
 
 .review-card:hover::before {
@@ -6348,29 +6348,29 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .rev-stars-box {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .rev-stars {
     color: #F59E0B;
-    letter-spacing: 2px;
-    font-size: 1rem;
+    letter-spacing: 1.5px;
+    font-size: 0.88rem;
     line-height: 1;
 }
 
 .rev-score-badge {
     background: #FEF3C7;
     color: #B45309;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 6px;
+    padding: 1px 5px;
+    border-radius: 4px;
     border: 1px solid #FDE68A;
 }
 
@@ -6380,16 +6380,16 @@ input[type=range].sf-range::-moz-range-thumb {
     gap: 4px;
     background: #D1FAE5;
     color: #065F46;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 20px;
     border: 1px solid #A7F3D0;
 }
 
 .rev-verified-badge svg {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     fill: #059669;
 }
 
@@ -6426,15 +6426,15 @@ input[type=range].sf-range::-moz-range-thumb {
 .rev-product-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     background: #F8F6F0;
     border: 1px solid rgba(138, 104, 31, 0.12);
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.68rem;
     font-weight: 600;
     color: #574F44;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6442,8 +6442,8 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .rev-product-pill svg {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
     stroke: #8A681F;
     fill: none;
     stroke-width: 2;
@@ -6470,38 +6470,97 @@ input[type=range].sf-range::-moz-range-thumb {
     stroke: #0284C7;
 }
 
+.rev-text-wrap {
+    margin-bottom: 8px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .rev-text {
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.84rem;
-    line-height: 1.55;
+    font-size: 0.80rem;
+    line-height: 1.45;
     color: #2D2823;
     font-style: italic;
-    margin: 0 0 20px 0;
-    flex-grow: 1;
+    margin: 0 0 3px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+
+.review-card.expanded .rev-text {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.rev-read-more-btn {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 6px 0;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.70rem;
+    font-weight: 800;
+    color: #8A681F;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+}
+
+.rev-read-more-btn:hover {
+    color: #B8860B;
+    text-decoration: underline;
+}
+
+.rev-read-more-btn svg {
+    width: 10px;
+    height: 10px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform 0.25s ease;
+}
+
+.review-card.expanded .rev-read-more-btn svg {
+    transform: rotate(180deg);
+}
+
+.review-card.expanded .rev-read-more-btn {
+    color: #DC2626;
 }
 
 .rev-author-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
-    padding-top: 14px;
+    padding-top: 10px;
+    margin-top: auto;
     position: relative;
 }
 
 .rev-avatar {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-sans, 'Inter', sans-serif);
     font-weight: 800;
-    font-size: 0.88rem;
+    font-size: 0.76rem;
     color: #FFFFFF;
     flex-shrink: 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.10);
 }
 
 .rev-av-gold { background: linear-gradient(135deg, #F59E0B, #B45309); }
@@ -6519,17 +6578,17 @@ input[type=range].sf-range::-moz-range-thumb {
 
 .rev-name {
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     font-weight: 800;
     color: #1E1B18;
-    margin: 0 0 2px 0;
+    margin: 0 0 1px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .rev-location {
-    font-size: 0.70rem;
+    font-size: 0.66rem;
     color: #7A7267;
     display: block;
     white-space: nowrap;
@@ -6538,7 +6597,7 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .rev-quote-watermark {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     line-height: 1;
     color: rgba(138, 104, 31, 0.12);
     font-family: serif;
@@ -6548,7 +6607,7 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .review-card:hover .rev-quote-watermark {
-    transform: scale(1.15) rotate(-6deg);
+    transform: scale(1.1) rotate(-6deg);
     color: rgba(138, 104, 31, 0.22);
 }
 
@@ -6557,7 +6616,7 @@ input[type=range].sf-range::-moz-range-thumb {
     height: 4px;
     background: rgba(138, 104, 31, 0.15);
     border-radius: 4px;
-    margin: 20px auto 0 auto;
+    margin: 16px auto 0 auto;
     overflow: hidden;
     position: relative;
 }
@@ -6572,7 +6631,8 @@ input[type=range].sf-range::-moz-range-thumb {
 
 @media (max-width: 991px) and (min-width: 768px) {
     .review-card {
-        flex: 0 0 calc((100% - 18px) / 2) !important;
+        flex: 0 0 calc((100% - 16px) / 2) !important;
+        padding: 14px 14px 12px 14px !important;
     }
 }
 
@@ -6580,7 +6640,7 @@ input[type=range].sf-range::-moz-range-thumb {
     .rev-header-flex {
         flex-direction: column;
         align-items: flex-start;
-        gap: 14px;
+        gap: 12px;
     }
     .rev-header-controls {
         width: 100%;
@@ -6594,36 +6654,61 @@ input[type=range].sf-range::-moz-range-thumb {
         overflow-x: auto;
     }
     .rev-tab-pill {
-        padding: 6px 12px;
-        font-size: 0.74rem;
+        padding: 5px 10px;
+        font-size: 0.70rem;
     }
     .rev-nav-arrows {
         display: none;
     }
     .reviews-track {
-        gap: 12px;
-        padding: 6px 2px 14px 2px;
+        gap: 10px;
+        padding: 4px 2px 12px 2px;
     }
     .review-card {
-        flex: 0 0 calc((100% - 16px) / 1.16) !important;
-        padding: 16px 14px 14px 14px;
-        border-radius: 16px;
+        flex: 0 0 280px !important;
+        max-width: 300px !important;
+        min-width: 240px !important;
+        padding: 12px 12px 10px 12px !important;
+        border-radius: 12px !important;
+    }
+    .rev-card-top {
+        margin-bottom: 6px !important;
+    }
+    .rev-product-pill {
+        font-size: 0.65rem !important;
+        padding: 2px 6px !important;
+        margin-bottom: 6px !important;
+    }
+    .rev-product-pill svg {
+        width: 11px !important;
+        height: 11px !important;
     }
     .rev-text {
-        font-size: 0.78rem;
-        margin-bottom: 14px;
-        line-height: 1.45;
+        font-size: 0.75rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 2px !important;
+    }
+    .rev-read-more-btn {
+        font-size: 0.66rem !important;
+        margin-bottom: 6px !important;
+    }
+    .rev-author-row {
+        padding-top: 8px !important;
+        gap: 8px !important;
     }
     .rev-avatar {
-        width: 36px;
-        height: 36px;
-        font-size: 0.78rem;
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 0.70rem !important;
     }
     .rev-name {
-        font-size: 0.82rem;
+        font-size: 0.78rem !important;
     }
     .rev-location {
-        font-size: 0.65rem;
+        font-size: 0.62rem !important;
+    }
+    .rev-quote-watermark {
+        font-size: 1.4rem !important;
     }
 }
 

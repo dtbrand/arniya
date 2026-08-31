@@ -662,7 +662,10 @@ $total_products = count($products);
                             <span>Small Batch 4pc Trial Lot • Silk Sarees</span>
                         </div>
 
-                        <p class="rev-text">"I run a home boutique in Mumbai. DT Brand's 4-piece low MOQ lots let me curate fresh Surat silk sarees every 10 days without blocking huge capital. My boutique clients are thrilled with the rich zari finish!"</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"I run a home boutique in Mumbai. DT Brand's 4-piece low MOQ lots let me curate fresh Surat silk sarees every 10 days without blocking huge capital. My boutique clients are thrilled with the rich zari finish!"</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-gold">PS</div>
@@ -692,7 +695,10 @@ $total_products = count($products);
                             <span>100% GST ITC Invoices • Direct Surat Rates</span>
                         </div>
 
-                        <p class="rev-text">"Opening our small saree shop in Ahmedabad was made completely hassle-free with DT Brand. Authentic manufacturer pricing, fast 48-hour door delivery, and genuine GST ITC bills for full input tax credit."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"Opening our small saree shop in Ahmedabad was made completely hassle-free with DT Brand. Authentic manufacturer pricing, fast 48-hour door delivery, and genuine GST ITC bills for full input tax credit."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-amber">AP</div>
@@ -722,7 +728,10 @@ $total_products = count($products);
                             <span>Mix & Match Lots • Bridal Velvet Lehengas</span>
                         </div>
 
-                        <p class="rev-text">"We stock bridal lehengas and festive kurti sets for our boutique clients. The craftsmanship and heavy zardozi embroidery are flawless. 9 out of 10 walk-in customers buy on their first visit!"</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"We stock bridal lehengas and festive kurti sets for our boutique clients. The craftsmanship and heavy zardozi embroidery are flawless. 9 out of 10 walk-in customers buy on their first visit!"</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-emerald">RK</div>
@@ -748,11 +757,14 @@ $total_products = count($products);
                         </div>
                         
                         <div class="rev-product-pill">
-                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/></svg>
                             <span>Express Courier • Door Counter Delivery</span>
                         </div>
 
-                        <p class="rev-text">"For our town retail counter, ordering 8 to 16 sarees weekly has doubled our profit margins. The packaging is sturdy with zero damage, and the margin gives us a huge edge over local traders."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"For our town retail counter, ordering 8 to 16 sarees weekly has doubled our profit margins. The packaging is sturdy with zero damage, and the margin gives us a huge edge over local traders."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-indigo">MS</div>
@@ -782,7 +794,10 @@ $total_products = count($products);
                             <span>HD Draping Videos • Advance Client Bookings</span>
                         </div>
 
-                        <p class="rev-text">"As a home boutique seller, having HD model draping videos and zero-watermark photos lets me take advance pre-orders effortlessly. DT Brand is our most reliable sourcing partner."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"As a home boutique seller, having HD model draping videos and zero-watermark photos lets me take advance pre-orders effortlessly. DT Brand is our most reliable sourcing partner."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-purple">SM</div>
@@ -815,7 +830,10 @@ $total_products = count($products);
                             <span>Monthly Margin: ₹48,200 Pure Profit</span>
                         </div>
 
-                        <p class="rev-text">"I started reselling DT Brand's sarees on WhatsApp 4 months ago. Last month I earned ₹48,200 pure margin! Customers love the unbranded white-label packaging."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"I started reselling DT Brand's sarees on WhatsApp 4 months ago. Last month I earned ₹48,200 pure margin! Customers love the unbranded white-label packaging."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-emerald">SM</div>
@@ -845,7 +863,10 @@ $total_products = count($products);
                             <span>1-Tap Social Smart Share</span>
                         </div>
 
-                        <p class="rev-text">"1-tap WhatsApp sharing makes it effortless. The photos have zero watermarks, so my clients believe I stock everything in my own boutique."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"1-tap WhatsApp sharing makes it effortless. The photos have zero watermarks, so my clients believe I stock everything in my own boutique."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-rose">KG</div>
@@ -875,7 +896,10 @@ $total_products = count($products);
                             <span>Weekly Direct Bank Payouts</span>
                         </div>
 
-                        <p class="rev-text">"Payouts are credited directly to my bank account every Monday without fail. I have made over ₹1.4 Lakh total profit in 6 months."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"Payouts are credited directly to my bank account every Monday without fail. I have made over ₹1.4 Lakh total profit in 6 months."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-cyan">DN</div>
@@ -905,7 +929,10 @@ $total_products = count($products);
                             <span>HD Live Video Reels Media</span>
                         </div>
 
-                        <p class="rev-text">"High-definition video reels and model draping clips help me close 8-10 saree orders every single day on Facebook Marketplace."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"High-definition video reels and model draping clips help me close 8-10 saree orders every single day on Facebook Marketplace."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-gold">PV</div>
@@ -938,7 +965,10 @@ $total_products = count($products);
                             <span>Monthly 100+ Pieces Lot • GST Invoices</span>
                         </div>
 
-                        <p class="rev-text">"We order 50–100 pieces monthly for our 3 retail boutiques in Hyderabad. The tiered volume slabs save us over 20% compared to local middleman traders."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"We order 50–100 pieces monthly for our 3 retail boutiques in Hyderabad. The tiered volume slabs save us over 20% compared to local middleman traders."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-indigo">VR</div>
@@ -968,7 +998,10 @@ $total_products = count($products);
                             <span>Pan-India Transport Parcel Delivery</span>
                         </div>
 
-                        <p class="rev-text">"Best factory pricing straight from the Surat loom. GST billing is prompt, and transit parcel delivery to Kolkata is 100% insured and reliable."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"Best factory pricing straight from the Surat loom. GST billing is prompt, and transit parcel delivery to Kolkata is 100% insured and reliable."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-amber">MS</div>
@@ -998,7 +1031,10 @@ $total_products = count($products);
                             <span>Low MOQ Trial Packs (4-8 Pcs)</span>
                         </div>
 
-                        <p class="rev-text">"Mix & match catalog trial lots allow us to test trending bridal colors with zero inventory risk. Our boutique sales doubled within 90 days."</p>
+                        <div class="rev-text-wrap">
+                            <p class="rev-text">"Mix & match catalog trial lots allow us to test trending bridal colors with zero inventory risk. Our boutique sales doubled within 90 days."</p>
+                            <button type="button" class="rev-read-more-btn" onclick="toggleReviewCard(this)"><span>... Read Full</span> <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-purple">SD</div>
