@@ -1450,7 +1450,6 @@ window.closeWishlistDrawer = function() {
 
     /* Mobile Search Elements */
     var mobileSearchBtn    = document.getElementById('mobileSearchTriggerBtn');
-    var mobileSearchBack   = document.getElementById('mobileSearchBackBtn');
     var mobileSearchClose  = document.getElementById('mobileSearchCloseBtn');
     var mobileSearchInput  = document.getElementById('mobileSearchInput');
     var mobileSearchClear  = document.getElementById('mobileSearchClearBtn');
