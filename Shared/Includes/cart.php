@@ -182,36 +182,90 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 .cd-rec-track::-webkit-scrollbar { display: none; }
 
 .cd-rec-card {
-    flex: 0 0 152px;
-    background: #FFFFFF; border: 1.5px solid rgba(138,104,31,0.22);
-    border-radius: 12px; padding: 9px; display: flex; flex-direction: column; gap: 8px;
-    transition: all 0.25s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative;
+    flex: 0 0 148px !important;
+    width: 148px !important;
+    min-width: 148px !important;
+    max-width: 148px !important;
+    height: 245px !important;
+    min-height: 245px !important;
+    max-height: 245px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid rgba(138,104,31,0.22) !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
 }
-.cd-rec-card:hover { border-color: var(--dark-gold, #8A681F); box-shadow: 0 6px 18px rgba(138,104,31,0.2); transform: translateY(-2px); }
+.cd-rec-card:hover { border-color: var(--dark-gold, #8A681F) !important; box-shadow: 0 6px 18px rgba(138,104,31,0.2) !important; transform: translateY(-2px) !important; }
 
 .cd-rec-img-wrap {
-    width: 100%; aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden;
-    background: #F8F5EE; position: relative;
+    width: 100% !important;
+    height: 155px !important;
+    min-height: 155px !important;
+    max-height: 155px !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: #F8F5EE !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 .cd-rec-img {
-    width: 100%; height: 100%; object-fit: cover; object-position: top center;
-    display: block; pointer-events: none; transition: transform 0.35s ease;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    object-position: top center !important;
+    display: block !important;
+    pointer-events: none !important;
+    transition: transform 0.35s ease !important;
 }
-.cd-rec-card:hover .cd-rec-img { transform: scale(1.05); }
+.cd-rec-card:hover .cd-rec-img { transform: scale(1.05) !important; }
 
-.cd-rec-title { font-size: 0.74rem; font-weight: 700; color: var(--dark-text, #24211C); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
-.cd-rec-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
-.cd-rec-price { font-size: 0.82rem; font-weight: 800; color: var(--dark-gold, #8A681F); }
+.cd-rec-title {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: var(--dark-text, #24211C) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 6px 0 2px !important;
+    line-height: 1.2 !important;
+}
+.cd-rec-price-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: auto !important;
+    padding-top: 4px !important;
+}
+.cd-rec-price { font-size: 0.82rem !important; font-weight: 800 !important; color: var(--dark-gold, #8A681F) !important; }
 .cd-rec-add-btn {
-    padding: 5px 10px; border-radius: 6px;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
-    border: 1px solid #8A681F;
-    color: #111827; font-size: 0.65rem; font-weight: 800; cursor: pointer;
-    transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 3px;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    border: 1px solid #8A681F !important;
+    color: #111827 !important;
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
 }
 .cd-rec-add-btn:hover {
-    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: scale(1.05) !important;
 }
 </style>
 

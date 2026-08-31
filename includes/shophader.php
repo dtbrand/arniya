@@ -1645,18 +1645,6 @@ window.closeWishlistDrawer = function() {
         });
     }
 
-    // Mobile Category Chips Filter
-    if (mobileSuggCatChips && mobileSuggCatChips.length > 0) {
-        mobileSuggCatChips.forEach(function (chip) {
-            chip.addEventListener('click', function () {
-                mobileSuggCatChips.forEach(function (c) { c.classList.remove('active'); });
-                this.classList.add('active');
-                currentMobileCat = this.dataset.cat || 'All';
-                var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
-                fetchSuggestions(q, currentMobileCat, true);
-            });
-        });
-    }
 
     /* ══════════════════════════════════════════════════════════
        PREDICTIVE SEARCH & SUGGESTIONS ENGINE (DESKTOP & MOBILE)
