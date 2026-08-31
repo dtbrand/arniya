@@ -557,30 +557,17 @@ $isHomePage = (
     margin: 4px 0;
 }
 
-/* ── Mobile Full-Screen Luxury Search Drawer (<768px) ── */
+/* ── Mobile In-Header Sticky Search Bar (<768px) ── */
 .mobile-full-search-bar {
-    display: none !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    background: #FFFFFF !important;
-    z-index: 10000000 !important;
-    flex-direction: column !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-    animation: mobileSearchSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-@keyframes mobileSearchSlideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 38px;
+    padding: 0 8px;
+    gap: 8px;
+    background: #FFFFFF;
+    box-sizing: border-box;
 }
 
 .shop-header.mobile-search-active .header-normal-view {
@@ -590,95 +577,44 @@ $isHomePage = (
     display: flex !important;
 }
 
-/* 1. Top Fixed Search Header Bar */
-.mobile-search-top-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    height: 56px;
-    padding: 0 12px;
-    background: #FFFFFF;
-    border-bottom: 1.5px solid var(--dark-gold, #8A681F);
-    box-shadow: 0 2px 8px rgba(138,104,31,0.08);
-    flex-shrink: 0;
-    box-sizing: border-box;
-    z-index: 10;
-}
-
-.mobile-search-back-btn,
-.mobile-search-close-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid #D4AF37;
-    background: #FAF5E8;
-    color: #705114;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.18s ease;
-    padding: 0;
-}
-
-.mobile-search-back-btn:hover,
-.mobile-search-close-btn:hover {
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
-    color: #111827;
-    border-color: #8A681F;
-}
-
-.mobile-search-back-btn svg,
-.mobile-search-close-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2.4;
-    fill: none;
-}
-
 .mobile-search-input-wrap {
     flex: 1;
-    height: 38px;
+    height: 28px;
     display: flex;
     align-items: center;
     background: #FAF8F4;
     border: 1.5px solid var(--dark-gold, #8A681F);
-    border-radius: 20px;
-    padding: 0 12px;
+    border-radius: 14px;
+    padding: 0 8px;
     box-sizing: border-box;
-    box-shadow: 0 1px 6px rgba(138,104,31,0.08);
-    transition: all 0.2s ease;
+    box-shadow: 0 1px 4px rgba(138,104,31,0.08);
 }
-
 .mobile-search-input-wrap:focus-within {
     border-color: var(--deep-gold, #6F5218);
-    box-shadow: 0 0 0 2px rgba(212,175,55,0.3);
     background: #FFFFFF;
+    box-shadow: 0 0 0 2px rgba(212,175,55,0.3);
 }
 
 .mobile-search-input-field {
+    flex: 1;
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
     background: transparent;
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: clamp(0.78rem, 2.9vw, 0.88rem);
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--dark-text, #24211C);
 }
 .mobile-search-input-field::placeholder {
     color: var(--light-text, #9A9490);
-    font-weight: 500;
-    font-size: clamp(0.72rem, 2.7vw, 0.84rem);
+    font-size: 0.72rem;
 }
 
 .mobile-search-clear-btn {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     border: none;
     background: rgba(0,0,0,0.08);
@@ -687,44 +623,44 @@ $isHomePage = (
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    flex-shrink: 0;
-    margin-left: 4px;
+    margin-left: 2px;
 }
-.mobile-search-clear-btn:hover {
-    background: var(--dark-gold, #8A681F);
-    color: #FFFFFF;
-}
-.mobile-search-clear-btn svg {
-    width: 12px;
-    height: 12px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2.2;
-}
+.mobile-search-clear-btn svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
 .mobile-search-submit-icon-btn {
     background: none;
     border: none;
     padding: 0;
-    margin-left: 6px;
+    margin-left: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: var(--dark-gold, #8A681F);
-    flex-shrink: 0;
-    transition: transform 0.15s ease, color 0.15s ease;
 }
-.mobile-search-submit-icon-btn:hover {
-    color: var(--deep-gold, #6F5218);
-    transform: scale(1.1);
+.mobile-search-submit-icon-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.4; fill: none; }
+
+/* ── Mobile Search Suggestions Dropdown (Opens below header on click/type) ── */
+.mobile-search-suggestions-dropdown {
+    display: none;
+    position: fixed;
+    top: 66px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: calc(100vh - 66px);
+    height: calc(100dvh - 66px);
+    background: #FFFFFF;
+    z-index: 999999;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    animation: dtSuggFadeIn 0.2s ease;
 }
-.mobile-search-submit-icon-btn svg {
-    width: clamp(15px, 4.2vw, 18px);
-    height: clamp(15px, 4.2vw, 18px);
-    stroke: currentColor;
-    stroke-width: 2.4;
-    fill: none;
+
+body.mobile-search-open .mobile-search-suggestions-dropdown {
+    display: flex !important;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1177,26 +1113,18 @@ body.mobile-search-open #mobileBottomBar {
         display: none !important;
     }
 
-    /* Mobile Full-Screen Luxury Search Drawer (<768px) */
+    /* Mobile In-Header Sticky Search Bar (<768px) */
     .mobile-full-search-bar {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        height: 100dvh !important;
-        min-height: 100vh !important;
-        max-height: 100vh !important;
-        background: #FFFFFF !important;
-        z-index: 10000000 !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        padding: 0 8px !important;
+        gap: 6px !important;
         display: none !important;
-        flex-direction: column !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        overflow: hidden !important;
+        align-items: center !important;
+        justify-content: space-between !important;
         box-sizing: border-box !important;
+        background: #FFFFFF !important;
     }
     .shop-header.mobile-search-active .mobile-full-search-bar {
         display: flex !important;
@@ -1386,43 +1314,47 @@ body.mobile-search-open #mobileBottomBar {
         </div>
     </div>
 
-    <!-- ═══ Mobile Full-Screen Luxury Search Drawer ═══ -->
+    <!-- ═══ Mobile In-Header Sticky Search Bar (Replaces normal logo on scroll or search click) ═══ -->
     <div class="mobile-full-search-bar" id="mobileFullSearchBar">
-        <!-- 1. Top Fixed Search Header -->
-        <div class="mobile-search-top-bar">
-            <!-- Back Arrow Button -->
-            <button type="button" class="mobile-search-back-btn" id="mobileSearchBackBtn" aria-label="Go back">
-                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
+        <!-- Left: Back Button / Home Button -->
+        <a href="/" class="shop-back-btn" id="mobileSearchBackBtn" aria-label="Back to Home">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>Home</span>
+        </a>
 
-            <!-- Input Box with Clear & Submit Icons -->
-            <div class="mobile-search-input-wrap">
-                <input
-                    type="text"
-                    class="mobile-search-input-field"
-                    id="mobileSearchInput"
-                    placeholder="Search sarees, lehengas, kurtis, gowns..."
-                    autocomplete="off"
-                    aria-label="Search ethnic wear"
-                />
-                <button type="button" class="mobile-search-clear-btn" id="mobileSearchClearBtn" aria-label="Clear search text">
-                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <button type="button" class="mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Right Close '✕' Button -->
-            <button type="button" class="mobile-search-close-btn" id="mobileSearchCloseBtn" aria-label="Close search">
+        <!-- Center: Input Box with Clear & Submit Icons -->
+        <div class="mobile-search-input-wrap">
+            <input
+                type="text"
+                class="mobile-search-input-field"
+                id="mobileSearchInput"
+                placeholder="Search sarees, lehengas, kurtis..."
+                autocomplete="off"
+                aria-label="Search ethnic wear"
+            />
+            <button type="button" class="mobile-search-clear-btn" id="mobileSearchClearBtn" aria-label="Clear search text">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <button type="button" class="mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
             </button>
         </div>
 
-        <!-- 2. Sticky Category Chips Bar -->
+        <!-- Right: Cart Icon -->
+        <div class="header-actions" style="gap:4px;">
+            <a href="javascript:void(0)" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer();" class="header-icon-btn" aria-label="Shopping cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="header-badge" id="mobileCartBadge" style="display:none;">0</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ═══ Mobile Search Suggestions & Products Dropdown (Opens on click/type) ═══ -->
+    <div class="mobile-search-suggestions-dropdown" id="mobileSearchSuggestionsDropdown">
+        <!-- Quick Category Chips Row -->
         <div class="mobile-sugg-cats-ribbon" id="mobileSuggCatsRibbon">
             <button type="button" class="mobile-sugg-cat-chip active" data-cat="All">✦ All</button>
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Saree">🥻 Sarees</button>
@@ -1431,7 +1363,7 @@ body.mobile-search-open #mobileBottomBar {
             <button type="button" class="mobile-sugg-cat-chip" data-cat="Kurti">🌸 Kurtis</button>
         </div>
 
-        <!-- 3. Dynamic Scrollable Suggestions & Products Body -->
+        <!-- Dynamic Scrollable Suggestions & Products Body -->
         <div class="mobile-sugg-content-body" id="mobileSuggContentBody"></div>
     </div>
 
@@ -1661,10 +1593,25 @@ window.closeWishlistDrawer = function() {
         }
     }
 
+    /* Mobile Search Open / Close Controllers */
+    function openMobileSearchDrawer() {
+        if (header) header.classList.add('mobile-search-active');
+        document.body.classList.add('mobile-search-open');
+        var q = (mobileSearchInput ? mobileSearchInput.value.trim() : '');
+        fetchSuggestions(q, currentMobileCat, true);
+        if (mobileSearchInput) {
+            setTimeout(function() {
+                mobileSearchInput.focus();
+            }, 80);
+        }
+    }
+
     function closeMobileSearchDrawer(resetText) {
-        userManuallyClosedMobileSearch = true;
-        if (header) header.classList.remove('mobile-search-active');
         document.body.classList.remove('mobile-search-open');
+        var sy = window.scrollY || window.pageYOffset || 0;
+        if (sy < 45 && header) {
+            header.classList.remove('mobile-search-active');
+        }
         if (resetText) {
             if (mobileSearchInput) mobileSearchInput.value = '';
             if (searchInput) searchInput.value = '';
@@ -1681,8 +1628,10 @@ window.closeWishlistDrawer = function() {
 
     if (mobileSearchBack) {
         mobileSearchBack.addEventListener('click', function(e) {
-            e.preventDefault();
-            closeMobileSearchDrawer(true);
+            if (document.body.classList.contains('mobile-search-open')) {
+                e.preventDefault();
+                closeMobileSearchDrawer(false);
+            }
         });
     }
 
@@ -1705,6 +1654,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchInput) {
         mobileSearchInput.addEventListener('input', function() {
             var q = mobileSearchInput.value.trim();
+            document.body.classList.add('mobile-search-open');
             performSearch('mobile', false);
             clearTimeout(searchDebounceTimer);
             searchDebounceTimer = setTimeout(function () {
@@ -1713,6 +1663,13 @@ window.closeWishlistDrawer = function() {
         });
 
         mobileSearchInput.addEventListener('focus', function() {
+            document.body.classList.add('mobile-search-open');
+            var q = mobileSearchInput.value.trim();
+            fetchSuggestions(q, currentMobileCat, true);
+        });
+
+        mobileSearchInput.addEventListener('click', function() {
+            document.body.classList.add('mobile-search-open');
             var q = mobileSearchInput.value.trim();
             fetchSuggestions(q, currentMobileCat, true);
         });
@@ -1723,10 +1680,19 @@ window.closeWishlistDrawer = function() {
                 closeMobileSearchDrawer(false);
                 mobileSearchInput.blur();
             } else if (e.key === 'Escape') {
-                closeMobileSearchDrawer(true);
+                closeMobileSearchDrawer(false);
             }
         });
     }
+
+    // Close suggestions dropdown on outside click
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#mobileFullSearchBar') && !e.target.closest('#mobileSearchSuggestionsDropdown') && !e.target.closest('#mobileSearchTriggerBtn')) {
+            if (document.body.classList.contains('mobile-search-open')) {
+                document.body.classList.remove('mobile-search-open');
+            }
+        }
+    });
 
     if (mobileSearchClear) {
         mobileSearchClear.addEventListener('click', function() {
@@ -2014,15 +1980,22 @@ window.closeWishlistDrawer = function() {
             window.requestAnimationFrame(function() {
                 var sy = window.scrollY || window.pageYOffset || 0;
                 if (header) {
-                    if (sy > 20) {
+                    var isMobile = window.innerWidth <= 767;
+                    if (sy > 45) {
                         if (!isShopHeaderScrolled) {
                             isShopHeaderScrolled = true;
                             header.classList.add('scrolled');
                         }
-                    } else {
+                        if (isMobile && !header.classList.contains('mobile-search-active')) {
+                            header.classList.add('mobile-search-active');
+                        }
+                    } else if (sy < 10) {
                         if (isShopHeaderScrolled) {
                             isShopHeaderScrolled = false;
                             header.classList.remove('scrolled');
+                        }
+                        if (isMobile && !document.body.classList.contains('mobile-search-open') && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
+                            header.classList.remove('mobile-search-active');
                         }
                     }
                 }
