@@ -816,12 +816,21 @@ function pdp_relative_date(string $ts): string
                     <strong class="pdp-rc-title"><?= htmlspecialchars((string)$rev['title']) ?></strong>
                     <?php endif; ?>
 
-                    <?php if (trim((string)$rev['text']) !== ''): ?>
-                    <div class="pdp-rc-text-wrap">
+                    <?php if (trim((string)$rev['text']) !== ''):
+                        $revText = trim((string)$rev['text']);
+                        $isLong = mb_strlen($revText) > 85;
+                    ?>
+                    <div class="pdp-rc-text-wrap <?= $isLong ? 'has-read-more' : '' ?>">
                         <svg class="pdp-rc-quote-icon" viewBox="0 0 24 24" width="18" height="18" fill="rgba(212,175,55,0.18)"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                         <p class="pdp-rc-text">
-                            “<?= htmlspecialchars((string)$rev['text']) ?>”
+                            “<?= htmlspecialchars($revText) ?>”
                         </p>
+                        <?php if ($isLong): ?>
+                        <button type="button" class="pdp-rev-read-more-btn" onclick="togglePdpReviewCard(this)" aria-label="Read full review">
+                            <span>... Read Full</span>
+                            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                        <?php endif; ?>
                     </div>
                     <?php endif; ?>
 

@@ -1194,14 +1194,29 @@
     var revAutoSlideTimer = null;
     var revResumeTimeout = null;
 
+    window.togglePdpReviewCard = function(btn) {
+        var card = btn.closest('.pdp-review-card');
+        if (!card) return;
+        card.classList.toggle('expanded');
+        var span = btn.querySelector('span');
+        if (span) {
+            span.textContent = card.classList.contains('expanded') ? 'Show Less' : '... Read Full';
+        }
+    };
+
     window.rebuildReviewDots = function() {
         if (!revTrack) return;
         var prevBtn = document.getElementById('pdpRevPrev');
         var nextBtn = document.getElementById('pdpRevNext');
         var needsScroll = revTrack.scrollWidth > (revTrack.clientWidth + 10);
 
-        if (prevBtn) prevBtn.style.display = needsScroll ? 'flex' : 'none';
-        if (nextBtn) nextBtn.style.display = needsScroll ? 'flex' : 'none';
+        if (window.innerWidth > 900) {
+            if (prevBtn) prevBtn.style.display = needsScroll ? 'flex' : 'none';
+            if (nextBtn) nextBtn.style.display = needsScroll ? 'flex' : 'none';
+        } else {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+        }
 
         if (!revDotsWrap) return;
         revDotsWrap.innerHTML = '';
