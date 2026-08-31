@@ -2678,58 +2678,40 @@ cursor: zoom-in;
 }
 .pdp-rel-card:hover .pdp-rel-img-wrap img { transform: scale(1.08); }
 
-.pdp-rel-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
-    color: #FFFFFF;
-    font-size: 0.58rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    z-index: 2;
-    box-shadow: 0 2px 8px rgba(184,134,11,0.35);
-    border: 1px solid rgba(255,255,255,0.4);
-}
-
-/* Photo Bottom Left Corner Available Tag */
+/* Photo Top-Left Corner Luxury Gold Available Tag */
 .pdp-rel-avail-tag {
     position: absolute;
-    bottom: 8px;
+    top: 8px;
     left: 8px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: rgba(18, 15, 12, 0.76);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #FFFFFF;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827;
     font-size: 0.58rem;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 12px;
+    font-weight: 800;
+    padding: 2.5px 7px;
+    border-radius: 6px;
     z-index: 2;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.02em;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 8px rgba(184, 134, 11, 0.35);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 }
 @media (max-width: 600px) {
     .pdp-rel-avail-tag {
-        bottom: 6px;
+        top: 6px;
         left: 6px;
         font-size: 0.52rem;
-        padding: 1.5px 6px;
+        padding: 2px 6px;
     }
 }
 .pdp-rel-avail-dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #10B981;
-    box-shadow: 0 0 6px #10B981;
+    background: #15803D;
+    box-shadow: 0 0 5px #15803D;
     display: inline-block;
 }
 

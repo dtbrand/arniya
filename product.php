@@ -904,16 +904,12 @@ function pdp_relative_date(string $ts): string
                 ?>
                 <a href="/product.php?id=<?= (int)($rel['id'] ?? 0) ?>" class="pdp-rel-card">
                     <div class="pdp-rel-img-wrap">
-                        <?php if (!empty($rel['badge'])): ?>
-                        <span class="pdp-rel-badge"><?= htmlspecialchars((string)$rel['badge']) ?></span>
-                        <?php endif; ?>
-                        <img src="<?= htmlspecialchars($relImg !== '' ? $relImg : $pdpNoImage) ?>" alt="<?= htmlspecialchars($relName) ?>" loading="lazy" />
-                        
-                        <!-- Available Tag in Left Side Photo Footer Corner -->
+                        <!-- Luxury Gold Available Tag in Top-Left Corner -->
                         <div class="pdp-rel-avail-tag">
                             <span class="pdp-rel-avail-dot"></span>
                             <span>Available</span>
                         </div>
+                        <img src="<?= htmlspecialchars($relImg !== '' ? $relImg : $pdpNoImage) ?>" alt="<?= htmlspecialchars($relName) ?>" loading="lazy" />
                     </div>
                     <div class="pdp-rel-body">
                         <div class="pdp-rel-cat-row">
