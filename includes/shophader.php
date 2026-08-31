@@ -499,53 +499,109 @@ $isHomePage = (
     fill: none;
 }
 
-/* ── Right Actions (Wishlist & Cart Buttons) ── */
+/* ── Right Actions (Search Trigger, Wishlist & Cart Buttons) ── */
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .header-icon-btn {
     position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 42px; height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    border: 1.5px solid var(--soft-platinum, #E5E3DE);
-    background: #FAF8F4;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     cursor: pointer;
-    transition: all 0.2s ease;
+    padding: 0;
+    margin: 0;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-decoration: none;
-    color: var(--dark-gold, #8A681F);
+    color: #111827;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
-.header-icon-btn:hover {
-    background: #FFFFFF;
-    border-color: var(--dark-gold, #8A681F);
-    transform: translateY(-1px);
+
+.header-icon-btn:hover,
+.header-icon-btn:focus {
+    background: transparent !important;
+    outline: none !important;
+    transform: scale(1.1);
+    color: #8A681F;
 }
+
+.header-icon-btn:active {
+    transform: scale(0.92);
+}
+
 .header-icon-btn svg {
-    width: 20px; height: 20px;
-    stroke: var(--dark-gold, #8A681F);
-    stroke-width: 2;
+    width: 20px;
+    height: 20px;
+    stroke: #111827;
+    stroke-width: 2.2;
     fill: none;
+    transition: stroke 0.22s ease, transform 0.22s ease;
+    display: block;
 }
+
+.header-icon-btn:hover svg,
+.header-icon-btn:focus svg,
+.header-icon-btn:active svg {
+    stroke: #8A681F;
+}
+
+/* Specific animated micro-interactions for Cart & Search */
+#cartBtn:hover svg,
+#cartBtn:active svg {
+    transform: rotate(-6deg);
+    stroke: #8A681F;
+}
+
+#mobileSearchTriggerBtn:hover svg,
+#mobileSearchTriggerBtn:active svg {
+    transform: scale(1.08) rotate(6deg);
+    stroke: #8A681F;
+}
+
+#wishlistBtn:hover svg,
+#wishlistBtn:active svg {
+    transform: scale(1.12);
+    stroke: #E53935;
+    fill: rgba(229, 57, 53, 0.15);
+}
+
+/* Luxury Gold Notification Badge with Animated Micro-Pulse */
+@keyframes badgePopPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
 .header-badge {
     position: absolute;
-    top: -4px; right: -4px;
-    min-width: 19px; height: 19px;
+    top: 0;
+    right: 0;
+    min-width: 17px;
+    height: 17px;
     padding: 0 4px;
-    background: var(--dark-gold, #8A681F);
+    background: linear-gradient(135deg, #B8860B 0%, #8A681F 100%);
     color: #FFFFFF;
-    font-size: 0.65rem;
-    font-weight: 700;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.62rem;
+    font-weight: 800;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #FFFFFF;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.4);
+    animation: badgePopPulse 2.5s ease-in-out infinite;
+    pointer-events: none;
 }
 
 /* Mobile search trigger button */
@@ -1249,28 +1305,28 @@ body.mobile-search-open #mobileBottomBar {
     .header-actions {
         position: relative;
         z-index: 2;
-        gap: 6px;
+        gap: 4px;
     }
     .header-icon-btn {
-        width: 30px;
-        height: 30px;
+        width: 34px !important;
+        height: 34px !important;
     }
     .header-icon-btn svg {
-        width: 15px;
-        height: 15px;
+        width: 18px !important;
+        height: 18px !important;
     }
     .header-badge {
-        min-width: 14px;
-        height: 14px;
-        font-size: 0.50rem;
-        top: -3px;
-        right: -3px;
+        min-width: 15px;
+        height: 15px;
+        font-size: 0.55rem;
+        top: -1px;
+        right: -1px;
     }
     .search-amazon-bar {
         display: none !important; /* Hidden on mobile by default */
     }
     .mobile-search-trigger-btn {
-        display: flex !important;
+        display: inline-flex !important;
     }
     #wishlistBtn {
         display: none !important;
@@ -1450,6 +1506,14 @@ body.mobile-search-open #mobileBottomBar {
                     </a>
                 </div>
             </div>
+
+            <!-- Mobile Search Icon Trigger Button -->
+            <button type="button" class="header-icon-btn mobile-search-trigger-btn" id="mobileSearchTriggerBtn" aria-label="Search products">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
 
             <!-- Wishlist -->
             <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
