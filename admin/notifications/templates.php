@@ -126,7 +126,7 @@ $templates = [
                                         <span class="adm-badge success"><?= htmlspecialchars($t['status']) ?></span>
                                     </td>
                                     <td style="text-align:right;">
-                                        <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('Testing sample dispatch with template <?= htmlspecialchars($t['name']) ?>...')">Test Send</button>
+                                        <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Sample dispatch requires the WhatsApp Cloud API token in .env. Template: <?= htmlspecialchars($t['name']) ?>...')">Test Send</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -196,10 +196,13 @@ function handleRegisterTemplate(e) {
     e.preventDefault();
     const name = document.getElementById('tplName').value.trim();
     closeNewTemplateModal();
-    if (typeof window.showToast === 'function') {
-        window.showToast(`✨ Template "${name}" submitted to Meta Cloud API!`);
-    }
+    // No Meta Cloud API submission happens here — there is no WABA token
+    // wired into this install, so the copy is stored for reference only.
+    showToastSafe(`Template "${name}" saved for reference. Submit it through Meta Business Manager to activate on WhatsApp.`);
 }
+</script>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

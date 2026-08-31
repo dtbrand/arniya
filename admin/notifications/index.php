@@ -26,40 +26,10 @@ if ($pdo !== null && !Database::isMockMode()) {
     } catch (\Exception $e) {}
 }
 
-if ($dispatchedToday <= 0) {
-    $dispatchedToday = 142;
-}
-
-$triggerRules = [
-    [
-        'event' => 'Order Confirmation',
-        'channel' => 'WhatsApp Cloud API',
-        'template' => 'dt_order_placed_v1',
-        'condition' => 'Instant trigger on successful checkout',
-        'status' => 'Active'
-    ],
-    [
-        'event' => 'Order Dispatched (AWB)',
-        'channel' => 'WhatsApp + SMS',
-        'template' => 'dt_dispatch_tracking_v2',
-        'condition' => 'When courier tracking number is assigned',
-        'status' => 'Active'
-    ],
-    [
-        'event' => 'Low Stock Warning',
-        'channel' => 'Admin Internal Alert',
-        'template' => 'admin_stock_replenish',
-        'condition' => 'When SKU inventory falls below 15 pcs',
-        'status' => 'Active'
-    ],
-    [
-        'event' => 'Wholesale MOQ Quotation',
-        'channel' => 'WhatsApp Direct PDF',
-        'template' => 'b2b_wholesale_quote',
-        'condition' => 'When bulk wholesale inquiry is submitted',
-        'status' => 'Active'
-    ]
-];
+$triggerRules = []; // No editable rules table exists in the schema yet — the four automated
+// flows (order confirmation, dispatch AWB, low stock, MOQ quote) fire from
+// code paths (OrderManager, ProductCatalog) rather than DB-stored rules.
+// See admin/notifications/templates.php for the message templates they use.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +120,7 @@ $triggerRules = [
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Automated Trigger Notification Rules</span></h3>
-                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800;" onclick="window.showToast('✨ Trigger notification rule saved!');">+ Add Rule</button>
+                    <span style="font-size:11px; color:#94A3B8; font-weight:600;">Rules are defined in code (OrderManager / ProductCatalog triggers)</span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">

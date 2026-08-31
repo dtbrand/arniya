@@ -99,7 +99,7 @@ $active_nav = "notifications";
                         </div>
 
                         <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
-                            <button type="button" class="dt-btn dt-btn-pale" onclick="window.showToast('Test push notification dispatched to current device!')">Test on My Device</button>
+                            <button type="button" class="dt-btn dt-btn-pale" onclick="showToastSafe('Push delivery requires FCM/APNs server keys in .env. Without them this console records templates only — nothing is claimed as sent.')">Test on My Device</button>
                             <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 <span>🚀 Broadcast Push Notification</span>
@@ -145,6 +145,9 @@ function handleSendPush(e) {
         window.showToast(`🚀 Push Broadcast "${title}" dispatched successfully!`);
     }
 }
+</script>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
