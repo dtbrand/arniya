@@ -1565,24 +1565,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 </div>
                             </div>
 
-                            <!-- Mobile Number Input -->
-                            <div class="ac-field-group">
-                                <label class="ac-field-label" for="regPhone">
-                                    <span class="ac-field-label-text">WhatsApp Number <span class="req">*</span></span>
-                                    <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
-                                </label>
-                                <div class="ac-phone-input-group">
-                                    <div class="ac-phone-prefix">
-                                        <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
-                                        <span id="waDialCode">+91</span>
-                                    </div>
-                                    <input type="tel" id="regPhone" class="ac-phone-input" placeholder="e.g. 70463*****" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
-                                </div>
-                                <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
-                                    ⚠️ Please enter a valid 10-digit WhatsApp number.
-                                </div>
-                            </div>
-
                             <!-- City & State Row -->
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                                 <div class="ac-field-group">
@@ -1646,6 +1628,24 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             <!-- Trade Application Notice -->
                             <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
                                 Trade accounts get direct instant activation with mill pricing.
+                            </div>
+
+                            <!-- Mobile / WhatsApp Number Input (Positioned before Password) -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="regPhone">
+                                    <span class="ac-field-label-text">WhatsApp Number <span class="req">*</span></span>
+                                    <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
+                                </label>
+                                <div class="ac-phone-input-group">
+                                    <div class="ac-phone-prefix">
+                                        <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
+                                        <span id="waDialCode">+91</span>
+                                    </div>
+                                    <input type="tel" id="regPhone" class="ac-phone-input" placeholder="e.g. 70463*****" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
+                                </div>
+                                <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
+                                    ⚠️ Please enter a valid 10-digit WhatsApp number.
+                                </div>
                             </div>
 
                             <!-- Password -->
