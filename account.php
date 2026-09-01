@@ -732,104 +732,161 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             box-shadow: 0 4px 14px rgba(21,128,61,0.42);
         }
 
-        /* ── Choice Cards for Create Account Step 1 ── */
-        .ac-choice-card {
-            background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F4 100%);
-            border: 1.5px solid var(--dt-gold-border);
-            border-radius: 12px;
-            padding: 13px 14px;
-            cursor: pointer;
-            transition: all 0.22s cubic-bezier(0.34, 1.25, 0.64, 1);
-            position: relative;
+        /* ── Master Luxury Profile Selection Tiles (Step 1) ── */
+        .ac-choice-pane-wrap {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 2px 8px rgba(138,104,31,0.06);
-            text-align: left;
+            gap: 12px;
+            padding: 4px 0;
         }
-        .ac-choice-card:hover {
-            border-color: var(--dt-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138,104,31,0.15);
-            background: #FFFFFF;
-        }
-        .ac-choice-card.business {
-            border-color: #CBD5E1;
-            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        }
-        .ac-choice-card.business:hover {
-            border-color: #1E293B;
-            box-shadow: 0 6px 20px rgba(15,23,42,0.12);
-        }
-        .ac-choice-top {
+        .ac-profile-tile {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 11px;
+            gap: 14px;
+            padding: 14px 16px;
+            background: #FFFFFF;
+            border: 1.5px solid var(--dt-gold-border);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.22s cubic-bezier(0.34, 1.25, 0.64, 1);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.06);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        .ac-choice-icon-wrap {
+        .ac-profile-tile:hover {
+            border-color: var(--dt-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138,104,31,0.16);
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F4 100%);
+        }
+        .ac-profile-tile:active {
+            transform: translateY(0) scale(0.99);
+        }
+        .ac-profile-tile.business-tile {
+            border-color: #E2E8F0;
+        }
+        .ac-profile-tile.business-tile:hover {
+            border-color: #1E293B;
+            box-shadow: 0 6px 20px rgba(15,23,42,0.12);
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        }
+        .ac-tile-accent {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4.5px;
+            border-radius: 12px 0 0 12px;
+        }
+        .ac-tile-accent.gold-accent {
+            background: linear-gradient(180deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+        }
+        .ac-tile-accent.dark-accent {
+            background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+        }
+        .ac-tile-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
-        .ac-choice-icon-gold {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
+        .ac-tile-icon-wrap.gold-icon-wrap {
             background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
             border: 1.2px solid var(--dt-gold);
             color: var(--dt-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             box-shadow: 0 2px 6px rgba(138,104,31,0.12);
         }
-        .ac-choice-icon-dark {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
+        .ac-tile-icon-wrap.dark-icon-wrap {
             background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
             border: 1.2px solid #334155;
             color: #FAF5E8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(15,23,42,0.20);
+            box-shadow: 0 2px 6px rgba(15,23,42,0.18);
         }
-        .ac-choice-meta {
+        .ac-profile-tile:hover .ac-tile-icon-wrap.gold-icon-wrap {
+            transform: scale(1.06);
+            border-color: #8A681F;
+        }
+        .ac-profile-tile:hover .ac-tile-icon-wrap.dark-icon-wrap {
+            transform: scale(1.06);
+            border-color: #D4AF37;
+        }
+        .ac-tile-content {
             flex: 1;
             min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
-        .ac-choice-title-row {
+        .ac-tile-top-line {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 8px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
-        .ac-choice-title {
-            font-size: clamp(0.92rem, 2vw, 0.98rem);
+        .ac-tile-title {
+            font-size: clamp(0.92rem, 2.2vw, 1rem);
             font-weight: 800;
             color: #111827;
-            margin: 0;
             letter-spacing: -0.015em;
+            white-space: nowrap;
         }
-        .ac-choice-badge {
-            font-size: 0.62rem;
+        .ac-tile-badge {
+            font-size: 0.60rem;
             font-weight: 800;
-            color: #15803D;
-            background: #DCFCE7;
-            border: 1px solid #86EFAC;
-            padding: 2.5px 8px;
-            border-radius: 10px;
+            padding: 2px 6px;
+            border-radius: 6px;
             letter-spacing: 0.02em;
             text-transform: uppercase;
             white-space: nowrap;
         }
-        .ac-choice-badge.biz {
+        .ac-tile-badge.gold-badge {
+            color: #15803D;
+            background: #DCFCE7;
+            border: 1px solid #86EFAC;
+        }
+        .ac-tile-badge.blue-badge {
             color: #1D4ED8;
             background: #EFF6FF;
-            border-color: #BFDBFE;
+            border: 1px solid #BFDBFE;
+        }
+        .ac-tile-desc {
+            font-size: clamp(0.72rem, 1.6vw, 0.76rem);
+            color: #64748B;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ac-tile-arrow-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.34, 1.25, 0.64, 1);
+        }
+        .ac-tile-arrow-btn.gold-arrow-btn {
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+            color: #111827;
+            box-shadow: 0 2px 6px rgba(184,134,11,0.30);
+        }
+        .ac-tile-arrow-btn.dark-arrow-btn {
+            background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+            color: #FAF5E8;
+            border: 1px solid #334155;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .ac-profile-tile:hover .ac-tile-arrow-btn {
+            transform: translateX(4px);
         }
 
         /* Dark Obsidian Master Button for Business Card */
@@ -1267,50 +1324,58 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                         <!-- 2A. CHOOSE ACCOUNT PROFILE PANE (FIRST STEP) -->
                         <div id="regProfileChoicePane" class="ac-form-pane">
-                            <div style="text-align:center; margin-bottom: 4px;">
-                                <h3 style="font-size: 1.02rem; font-weight: 800; color: #111827; margin: 0;">Select Account Type</h3>
+                            <div style="text-align:center; margin-bottom: 6px;">
+                                <h3 style="font-size: 1.02rem; font-weight: 800; color: #111827; margin: 0 0 2px 0;">Select Account Type</h3>
+                                <p style="font-size: 0.76rem; color: #64748B; margin: 0; font-weight: 500;">Choose how you want to shop or partner with DT Brand's</p>
                             </div>
 
-                            <!-- Option 1: Customer (Retail Shopper) -->
-                            <div class="ac-choice-card" onclick="selectRegFlow('customer')">
-                                <div class="ac-choice-top">
-                                    <div class="ac-choice-icon-wrap">
-                                        <div class="ac-choice-icon-gold">
-                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        </div>
+                            <div class="ac-choice-pane-wrap">
+                                <!-- Option 1: Customer (Retail Shopper) -->
+                                <div class="ac-profile-tile customer-tile" onclick="selectRegFlow('customer')" role="button" tabindex="0">
+                                    <div class="ac-tile-accent gold-accent"></div>
+                                    <div class="ac-tile-icon-wrap gold-icon-wrap">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
                                     </div>
-                                    <div class="ac-choice-meta">
-                                        <div class="ac-choice-title-row">
-                                            <h4 class="ac-choice-title">Customer Account</h4>
-                                            <span class="ac-choice-badge">Instant Activation</span>
+                                    <div class="ac-tile-content">
+                                        <div class="ac-tile-top-line">
+                                            <span class="ac-tile-title">Customer Account</span>
+                                            <span class="ac-tile-badge gold-badge">Instant</span>
                                         </div>
+                                        <span class="ac-tile-desc">Personal retail shopping &amp; order tracking</span>
+                                    </div>
+                                    <div class="ac-tile-arrow-btn gold-arrow-btn">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
                                     </div>
                                 </div>
-                                <button type="button" class="dt-btn-gold">
-                                    <span>Continue as Customer</span>
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                </button>
-                            </div>
 
-                            <!-- Option 2: For Business (Wholesale, Retailer, Reseller) -->
-                            <div class="ac-choice-card business" onclick="selectRegFlow('business')">
-                                <div class="ac-choice-top">
-                                    <div class="ac-choice-icon-wrap">
-                                        <div class="ac-choice-icon-dark">
-                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M12 3l9 4H3l9-4z"></path></svg>
-                                        </div>
+                                <!-- Option 2: For Business (Wholesale, Retailer, Reseller) -->
+                                <div class="ac-profile-tile business-tile" onclick="selectRegFlow('business')" role="button" tabindex="0">
+                                    <div class="ac-tile-accent dark-accent"></div>
+                                    <div class="ac-tile-icon-wrap dark-icon-wrap">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M12 3l9 4H3l9-4z"></path>
+                                        </svg>
                                     </div>
-                                    <div class="ac-choice-meta">
-                                        <div class="ac-choice-title-row">
-                                            <h4 class="ac-choice-title">For Business</h4>
-                                            <span class="ac-choice-badge biz">B2B Trade Portal</span>
+                                    <div class="ac-tile-content">
+                                        <div class="ac-tile-top-line">
+                                            <span class="ac-tile-title">For Business</span>
+                                            <span class="ac-tile-badge blue-badge">B2B Trade</span>
                                         </div>
+                                        <span class="ac-tile-desc">Wholesale, B2B retailers &amp; resellers hub</span>
+                                    </div>
+                                    <div class="ac-tile-arrow-btn dark-arrow-btn">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
                                     </div>
                                 </div>
-                                <button type="button" class="dt-btn-dark">
-                                    <span>Continue for Business</span>
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                </button>
                             </div>
                         </div>
 
