@@ -1625,11 +1625,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 </div>
                             </div>
 
-                            <!-- Trade Application Notice -->
-                            <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
-                                Trade accounts get direct instant activation with mill pricing.
-                            </div>
-
                             <!-- Mobile / WhatsApp Number Input (Positioned before Password) -->
                             <div class="ac-field-group">
                                 <label class="ac-field-label" for="regPhone">
@@ -2001,11 +1996,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             });
             var roleInput = document.getElementById('regRole');
             if (roleInput) roleInput.value = role;
-
-            var note = document.getElementById('regTradeNoteGroup');
-            if (note) {
-                note.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
-            }
         };
 
         window.togglePwdVisibility = function(inputId, btn) {
