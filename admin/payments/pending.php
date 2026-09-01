@@ -11,6 +11,7 @@ require_once __DIR__ . '/../../src/Database.php';
 require_once __DIR__ . '/../../src/PaymentManager.php';
 
 use DTBrand\Database;
+use DTBrand\PaymentManager;
 
 $page_title = "Pending Payments & UTR Verification";
 $active_nav = "payments";
@@ -23,15 +24,18 @@ $pendingTransactions = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'approve_utr') {
     $txId = (int)($_POST['tx_id'] ?? 0);
     $orderNum = trim((string)($_POST['order_number'] ?? ''));
+    $utrRef = trim((string)($_POST['utr_ref'] ?? ''));
+
     if ($pdo && $txId > 0 && !empty($orderNum)) {
         try {
+            // 1. Update Transaction
             $stmt1 = $pdo->prepare("UPDATE `payment_transactions` SET `status` = 'captured', `notes` = 'Manually approved by admin', `updated_at` = NOW() WHERE `id` = :id");
             $stmt1->execute([':id' => $txId]);
 
-            $stmt2 = $pdo->prepare("UPDATE `orders` SET `payment_status` = 'paid', `updated_at` = NOW() WHERE `order_number` = :ord");
-            $stmt2->execute([':ord' => $orderNum]);
+            // 2. Mark order paid & adjust inventory stock
+            PaymentManager::markOrderPaidAndAdjustStock($orderNum, 'direct_upi', $utrRef ?: 'APPROVED_BY_ADMIN');
 
-            $successMsg = "Order #{$orderNum} has been verified and marked as Paid!";
+            $successMsg = "Order #{$orderNum} has been verified, marked as Paid, and inventory stock decremented!";
         } catch (\Throwable $e) {
             $errorMsg = "Error approving payment: " . $e->getMessage();
         }
@@ -55,7 +59,7 @@ if ($pdo !== null && !Database::isMockMode()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pending Payments & UTR Verification - DT Brand's Admin</title>
+    <title>Pending Payments &amp; UTR Verification - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -123,21 +127,22 @@ if ($pdo !== null && !Database::isMockMode()) {
                                                 <?= strtoupper(htmlspecialchars($tx['gateway'])) ?>
                                             </span>
                                         </td>
-                                        <td><strong>₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
+                                        <td><strong style="color:#8A681F;">₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
                                         <td>
                                             <?php if (!empty($tx['utr_reference'])): ?>
-                                                <code style="background:#FAF5E8; padding:3px 6px; border-radius:4px; color:#8A681F; font-weight:700;"><?= htmlspecialchars($tx['utr_reference']) ?></code>
+                                                <code style="background:#FAF5E8; padding:3px 8px; border-radius:4px; font-weight:800; color:#8A681F;"><?= htmlspecialchars($tx['utr_reference']) ?></code>
                                             <?php else: ?>
-                                                <span style="color:#94A3B8; font-style:italic;">Awaiting Submission</span>
+                                                <span style="color:#94A3B8; font-size:0.75rem;">Awaiting UTR</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td style="font-size:0.78rem; color:#64748B;"><?= date('d M Y, h:i A', strtotime($tx['created_at'])) ?></td>
+                                        <td style="font-size:0.75rem; color:#64748B;"><?= date('d M Y, h:i A', strtotime($tx['created_at'])) ?></td>
                                         <td>
-                                            <form method="POST" style="display:inline;" onsubmit="return confirm('Confirm receipt of payment for Order #<?= htmlspecialchars($tx['order_number']) ?>?');">
+                                            <form method="POST" style="margin:0;" onsubmit="return confirm('Confirm approval for Order #<?= htmlspecialchars($tx['order_number']) ?>?');">
                                                 <input type="hidden" name="action" value="approve_utr">
                                                 <input type="hidden" name="tx_id" value="<?= $tx['id'] ?>">
                                                 <input type="hidden" name="order_number" value="<?= htmlspecialchars($tx['order_number']) ?>">
-                                                <button type="submit" class="adm-btn-primary adm-btn-sm" style="padding:4px 10px; font-size:0.75rem;">
+                                                <input type="hidden" name="utr_ref" value="<?= htmlspecialchars($tx['utr_reference'] ?? '') ?>">
+                                                <button type="submit" class="adm-btn-primary" style="padding:4px 10px; font-size:0.75rem;">
                                                     ✓ Approve &amp; Mark Paid
                                                 </button>
                                             </form>
@@ -146,8 +151,8 @@ if ($pdo !== null && !Database::isMockMode()) {
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="8" style="text-align:center; padding:30px; color:#64748B;">
-                                        ✨ All payments are up to date! Zero pending verifications in queue.
+                                    <td colspan="8" style="text-align:center; padding:35px; color:#64748B;">
+                                        ✨ All payments verified! Zero pending items in queue.
                                     </td>
                                 </tr>
                             <?php endif; ?>

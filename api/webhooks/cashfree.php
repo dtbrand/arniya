@@ -50,16 +50,13 @@ $paymentStatus = $paymentData['payment_status'] ?? ($event['type'] ?? '');
 
 $db = Database::getConnection();
 
-if ($db && !empty($orderNumber)) {
+if (!empty($orderNumber)) {
     try {
         if ($paymentStatus === 'SUCCESS' || $paymentStatus === 'PAYMENT_SUCCESS_WEBHOOK') {
-            $stmtOrder = $db->prepare("
-                UPDATE `orders` 
-                SET `payment_status` = 'paid', `payment_gateway` = 'cashfree', `gateway_payment_id` = :pid, `updated_at` = NOW()
-                WHERE `order_number` = :ord
-            ");
-            $stmtOrder->execute([':pid' => $cfPaymentId, ':ord' => $orderNumber]);
+            // 1. Mark order paid and adjust stock
+            PaymentManager::markOrderPaidAndAdjustStock($orderNumber, 'cashfree', $cfPaymentId, $event);
 
+            // 2. Record transaction ledger
             PaymentManager::recordTransaction([
                 'order_number'        => $orderNumber,
                 'gateway'             => 'cashfree',

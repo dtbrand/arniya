@@ -22,6 +22,8 @@ $orderNumber = trim((string)($input['order_number'] ?? ('ORD-' . time())));
 $customerName = trim((string)($input['customer_name'] ?? ''));
 $customerPhone = trim((string)($input['customer_phone'] ?? ''));
 $customerEmail = trim((string)($input['customer_email'] ?? ''));
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
 
 if ($amount <= 0) {
     http_response_code(400);
@@ -33,7 +35,7 @@ try {
     switch ($gateway) {
         case 'direct_upi':
             $payload = PaymentManager::generateUpiPayload($orderNumber, $amount, $customerName);
-            // Log pending transaction
+            // Log pending transaction with full audit metadata
             PaymentManager::recordTransaction([
                 'order_number'    => $orderNumber,
                 'customer_name'   => $customerName,
@@ -43,6 +45,12 @@ try {
                 'amount'          => $amount,
                 'currency'        => 'INR',
                 'status'          => 'pending',
+                'webhook_payload' => [
+                    'ip'         => $clientIp,
+                    'user_agent' => $userAgent,
+                    'timestamp'  => time(),
+                    'intent'     => 'direct_upi_created'
+                ],
                 'notes'           => 'Direct UPI Intent Generated'
             ]);
             echo json_encode([
@@ -65,6 +73,11 @@ try {
                     'currency'         => 'INR',
                     'status'           => 'pending',
                     'gateway_order_id' => $res['gateway_order_id'] ?? null,
+                    'webhook_payload'  => [
+                        'ip'         => $clientIp,
+                        'user_agent' => $userAgent,
+                        'timestamp'  => time()
+                    ],
                     'notes'            => 'Razorpay Order Created'
                 ]);
                 echo json_encode([
@@ -94,6 +107,11 @@ try {
                     'currency'         => 'INR',
                     'status'           => 'pending',
                     'gateway_order_id' => $res['cf_order_id'] ?? null,
+                    'webhook_payload'  => [
+                        'ip'         => $clientIp,
+                        'user_agent' => $userAgent,
+                        'timestamp'  => time()
+                    ],
                     'notes'            => 'Cashfree Session Created'
                 ]);
                 echo json_encode([
@@ -124,6 +142,11 @@ try {
                 'amount'          => $totalWithFee,
                 'currency'        => 'INR',
                 'status'          => 'pending',
+                'webhook_payload' => [
+                    'ip'           => $clientIp,
+                    'user_agent'   => $userAgent,
+                    'handling_fee' => $fee
+                ],
                 'notes'           => 'Cash on Delivery Booking'
             ]);
 
@@ -133,6 +156,50 @@ try {
                 'order_number' => $orderNumber,
                 'handling_fee' => $fee,
                 'total_amount' => $totalWithFee
+            ]);
+            break;
+
+        case 'whatsapp':
+        case 'whatsapp_pay':
+            PaymentManager::recordTransaction([
+                'order_number'    => $orderNumber,
+                'customer_name'   => $customerName,
+                'customer_phone'  => $customerPhone,
+                'gateway'         => 'whatsapp_pay',
+                'payment_method'  => 'whatsapp',
+                'amount'          => $amount,
+                'currency'        => 'INR',
+                'status'          => 'pending',
+                'notes'           => 'Direct WhatsApp Order Initiated'
+            ]);
+
+            echo json_encode([
+                'success'      => true,
+                'gateway'      => 'whatsapp_pay',
+                'order_number' => $orderNumber,
+                'amount'       => $amount
+            ]);
+            break;
+
+        case 'bank_wire':
+        case 'neft':
+            PaymentManager::recordTransaction([
+                'order_number'    => $orderNumber,
+                'customer_name'   => $customerName,
+                'customer_phone'  => $customerPhone,
+                'gateway'         => 'direct_upi',
+                'payment_method'  => 'bank_wire',
+                'amount'          => $amount,
+                'currency'        => 'INR',
+                'status'          => 'pending',
+                'notes'           => 'B2B Bank Wire / NEFT Booking'
+            ]);
+
+            echo json_encode([
+                'success'      => true,
+                'gateway'      => 'bank_wire',
+                'order_number' => $orderNumber,
+                'amount'       => $amount
             ]);
             break;
 

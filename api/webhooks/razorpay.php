@@ -47,18 +47,13 @@ $status = $payload['status'] ?? '';
 
 $db = Database::getConnection();
 
-if ($db && !empty($receipt)) {
+if (!empty($receipt)) {
     try {
         if ($eventType === 'payment.captured' || $eventType === 'order.paid') {
-            // Mark order paid
-            $stmtOrder = $db->prepare("
-                UPDATE `orders` 
-                SET `payment_status` = 'paid', `payment_gateway` = 'razorpay', `gateway_payment_id` = :pid, `updated_at` = NOW()
-                WHERE `order_number` = :ord
-            ");
-            $stmtOrder->execute([':pid' => $paymentId, ':ord' => $receipt]);
+            // 1. Mark order paid and adjust stock
+            PaymentManager::markOrderPaidAndAdjustStock($receipt, 'razorpay', $paymentId, $payload);
 
-            // Log / Update transaction
+            // 2. Log / Update transaction audit ledger
             PaymentManager::recordTransaction([
                 'order_number'        => $receipt,
                 'gateway'             => 'razorpay',

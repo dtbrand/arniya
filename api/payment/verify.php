@@ -51,19 +51,14 @@ try {
                         WHERE `order_number` = :ord AND `gateway` = 'razorpay'
                     ");
                     $stmt->execute([':pid' => $rzpPaymentId, ':sig' => $rzpSignature, ':ord' => $orderNumber]);
-
-                    // Update order
-                    $stmtOrder = $db->prepare("
-                        UPDATE `orders` 
-                        SET `payment_status` = 'paid', `payment_gateway` = 'razorpay', `gateway_payment_id` = :pid
-                        WHERE `order_number` = :ord
-                    ");
-                    $stmtOrder->execute([':pid' => $rzpPaymentId, ':ord' => $orderNumber]);
                 }
+
+                // Mark order paid & decrement inventory stock safely
+                PaymentManager::markOrderPaidAndAdjustStock($orderNumber, 'razorpay', $rzpPaymentId, $input);
 
                 echo json_encode([
                     'success'            => true,
-                    'message'            => 'Razorpay payment verified and captured successfully',
+                    'message'            => 'Razorpay payment verified, captured, and stock adjusted successfully',
                     'gateway_payment_id' => $rzpPaymentId
                 ]);
             } else {
@@ -104,9 +99,7 @@ try {
             break;
 
         case 'cashfree':
-            $cfOrderId = trim((string)($input['cf_order_id'] ?? ''));
             $cfPaymentId = trim((string)($input['cf_payment_id'] ?? ''));
-            $status = trim((string)($input['status'] ?? 'captured'));
 
             if ($db) {
                 $stmt = $db->prepare("
@@ -115,18 +108,14 @@ try {
                     WHERE `order_number` = :ord AND `gateway` = 'cashfree'
                 ");
                 $stmt->execute([':pid' => $cfPaymentId, ':ord' => $orderNumber]);
-
-                $stmtOrder = $db->prepare("
-                    UPDATE `orders` 
-                    SET `payment_status` = 'paid', `payment_gateway` = 'cashfree', `gateway_payment_id` = :pid
-                    WHERE `order_number` = :ord
-                ");
-                $stmtOrder->execute([':pid' => $cfPaymentId, ':ord' => $orderNumber]);
             }
+
+            // Mark order paid & decrement inventory stock
+            PaymentManager::markOrderPaidAndAdjustStock($orderNumber, 'cashfree', $cfPaymentId, $input);
 
             echo json_encode([
                 'success' => true,
-                'message' => 'Cashfree payment recorded successfully'
+                'message' => 'Cashfree payment recorded and stock adjusted successfully'
             ]);
             break;
 
