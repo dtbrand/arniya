@@ -3,29 +3,29 @@
  * account.php — Dedicated Ultra-Luxury Customer Account & VIP Hub
  * DT Brand's & Jai Hanuman Tex — Master Architecture Standard
  * 100% Fluid Responsive with Editorial Split-Hero Layout, Next-Gen Auth Studio,
- * Dynamic Real-Time Live Order History, and Universal Header/Footer Integration.
+ * Dynamic Real-Time Live Order History, and Official Shop Header/Footer Integration.
  */
 
 require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/Auth.php';
 require_once __DIR__ . '/src/ProductCatalog.php';
 
-$page_title = "My Account & VIP Lounge ‹ DT Brand's";
+$page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title><?php echo $page_title; ?></title>
+    <title><?php echo htmlspecialchars($page_title); ?></title>
     
     <!-- Google Fonts: Inter & Plus Jakarta Sans & Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Core Brand Styles -->
-    <link rel="stylesheet" href="/assets/css/shop.css?v=<?php echo time(); ?>">
+    <!-- Master Brand Theme CSS -->
+    <link rel="stylesheet" href="/assets/css/home.css?v=<?php echo time(); ?>">
 
     <style>
         :root {
@@ -75,9 +75,13 @@ $page_title = "My Account & VIP Lounge ‹ DT Brand's";
             padding: 0;
         }
 
+        .page-wrapper {
+            flex: 1;
+            width: 100%;
+        }
+
         /* ── Main Canvas Wrapper ── */
         .ac-main-canvas {
-            flex: 1;
             width: 100%;
             max-width: 1240px;
             margin: 0 auto;
@@ -171,15 +175,6 @@ $page_title = "My Account & VIP Lounge ‹ DT Brand's";
             top: 0; left: 0; right: 0;
             height: 4px;
             background: linear-gradient(90deg, #8A681F, #D4AF37, #FFFFFF, #D4AF37, #8A681F);
-        }
-        .ac-hero-showcase::after {
-            content: '👑';
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-            font-size: clamp(6rem, 15vw, 10rem);
-            opacity: 0.04;
-            pointer-events: none;
         }
         .ac-showcase-badge {
             display: inline-flex;
@@ -917,385 +912,387 @@ $page_title = "My Account & VIP Lounge ‹ DT Brand's";
 </head>
 <body>
 
-    <!-- ════════════ MASTER UNIVERSAL HEADER ════════════ -->
-    <?php include_once __DIR__ . '/includes/header.php'; ?>
+    <!-- ════════════ OFFICIAL MASTER SHOP HEADER ════════════ -->
+    <?php include_once __DIR__ . '/includes/shophader.php'; ?>
 
-    <!-- ════════════ MAIN CONTENT CANVAS ════════════ -->
-    <main class="ac-main-canvas">
-        
-        <!-- Breadcrumb & Return Bar -->
-        <div class="ac-breadcrumb-bar">
-            <div class="ac-breadcrumb-list">
-                <a href="/">Home</a>
-                <span class="ac-breadcrumb-sep">/</span>
-                <span class="ac-breadcrumb-current" id="acBreadcrumbTitle">My Account</span>
-            </div>
-            <a href="/shop.php" class="ac-back-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                <span>Back to Shop</span>
-            </a>
-        </div>
-
-        <!-- ════════════ VIEW 1: AUTHENTICATION FOR GUESTS ════════════ -->
-        <div id="authCardWrap" class="ac-auth-split-grid">
+    <div class="page-wrapper">
+        <!-- ════════════ MAIN CONTENT CANVAS ════════════ -->
+        <main class="ac-main-canvas">
             
-            <!-- Left Editorial Privilege Showcase -->
-            <div class="ac-hero-showcase">
-                <div>
-                    <div class="ac-showcase-badge">👑 Royal Privilege Club</div>
-                    <h1 class="ac-showcase-title">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
-                    <p class="ac-showcase-subtitle">Surat Central Handloom Depot &amp; B2B Wholesale Textile Hub. Access pure silk collections, verified trade margins, and concierge fulfillment.</p>
-
-                    <div class="ac-benefits-list">
-                        <div class="ac-benefit-card">
-                            <div class="ac-benefit-icon">
-                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                            </div>
-                            <div>
-                                <div class="ac-benefit-title">100% Handloom Silk Mark Certified</div>
-                                <div class="ac-benefit-desc">Authentic Banarasi, Kanjeevaram, and Paithani silks woven by master artisans with pure tested zari.</div>
-                            </div>
-                        </div>
-
-                        <div class="ac-benefit-card">
-                            <div class="ac-benefit-icon">
-                                <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                            </div>
-                            <div>
-                                <div class="ac-benefit-title">Real-Time Dispatch &amp; Courier Tracking</div>
-                                <div class="ac-benefit-desc">Instant live AWB tracking via VRL Logistics, BlueDart, and Delhivery with automated WhatsApp alerts.</div>
-                            </div>
-                        </div>
-
-                        <div class="ac-benefit-card">
-                            <div class="ac-benefit-icon">
-                                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                            </div>
-                            <div>
-                                <div class="ac-benefit-title">Wholesale &amp; Reseller Trade Tiers</div>
-                                <div class="ac-benefit-desc">Unlock direct mill-rate bulk pricing, GST tax invoices, catalog downloads, and godown dispatches.</div>
-                            </div>
-                        </div>
-
-                        <div class="ac-benefit-card">
-                            <div class="ac-benefit-icon">
-                                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            </div>
-                            <div>
-                                <div class="ac-benefit-title">Personal Fashion Stylist on WhatsApp</div>
-                                <div class="ac-benefit-desc">1-on-1 concierge assistance for custom blouse tailoring, bridal trousseau, and bulk lot video calls.</div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Breadcrumb & Return Bar -->
+            <div class="ac-breadcrumb-bar">
+                <div class="ac-breadcrumb-list">
+                    <a href="/">Home</a>
+                    <span class="ac-breadcrumb-sep">/</span>
+                    <span class="ac-breadcrumb-current" id="acBreadcrumbTitle">My Account</span>
                 </div>
-
-                <div class="ac-showcase-footer">
-                    <div><span class="ac-trust-dot"></span> 25,000+ Verified Customers • 1,400+ Active Boutiques</div>
-                    <div style="font-weight: 700; color: #E6CA65;">Surat Depot Dock 1</div>
-                </div>
+                <a href="/shop.php" class="ac-back-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Back to Shop</span>
+                </a>
             </div>
 
-            <!-- Right Auth Studio Form Card -->
-            <div class="ac-auth-card">
-                <div class="ac-auth-card-head">
-                    <div class="ac-brand-lockup">
-                        <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
-                        <span class="ac-security-badge">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span>256-Bit SSL</span>
-                        </span>
+            <!-- ════════════ VIEW 1: AUTHENTICATION FOR GUESTS ════════════ -->
+            <div id="authCardWrap" class="ac-auth-split-grid">
+                
+                <!-- Left Editorial Privilege Showcase -->
+                <div class="ac-hero-showcase">
+                    <div>
+                        <div class="ac-showcase-badge">👑 Royal Privilege Club</div>
+                        <h1 class="ac-showcase-title">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
+                        <p class="ac-showcase-subtitle">Surat Central Handloom Depot &amp; B2B Wholesale Textile Hub. Access pure silk collections, verified trade margins, and concierge fulfillment.</p>
+
+                        <div class="ac-benefits-list">
+                            <div class="ac-benefit-card">
+                                <div class="ac-benefit-icon">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-benefit-title">100% Handloom Silk Mark Certified</div>
+                                    <div class="ac-benefit-desc">Authentic Banarasi, Kanjeevaram, and Paithani silks woven by master artisans with pure tested zari.</div>
+                                </div>
+                            </div>
+
+                            <div class="ac-benefit-card">
+                                <div class="ac-benefit-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-benefit-title">Real-Time Dispatch &amp; Courier Tracking</div>
+                                    <div class="ac-benefit-desc">Instant live AWB tracking via VRL Logistics, BlueDart, and Delhivery with automated WhatsApp alerts.</div>
+                                </div>
+                            </div>
+
+                            <div class="ac-benefit-card">
+                                <div class="ac-benefit-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-benefit-title">Wholesale &amp; Reseller Trade Tiers</div>
+                                    <div class="ac-benefit-desc">Unlock direct mill-rate bulk pricing, GST tax invoices, catalog downloads, and godown dispatches.</div>
+                                </div>
+                            </div>
+
+                            <div class="ac-benefit-card">
+                                <div class="ac-benefit-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-benefit-title">Personal Fashion Stylist on WhatsApp</div>
+                                    <div class="ac-benefit-desc">1-on-1 concierge assistance for custom blouse tailoring, bridal trousseau, and bulk lot video calls.</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Smooth Segmented Pill Switcher -->
-                    <div class="ac-pill-switcher">
-                        <button type="button" class="ac-pill-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
-                        <button type="button" class="ac-pill-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
+                    <div class="ac-showcase-footer">
+                        <div><span class="ac-trust-dot"></span> 25,000+ Verified Customers • 1,400+ Active Boutiques</div>
+                        <div style="font-weight: 700; color: #E6CA65;">Surat Depot Dock 1</div>
                     </div>
                 </div>
 
-                <div class="ac-auth-card-body">
-                    
-                    <!-- 1. SIGN IN FORM -->
-                    <form id="loginForm" class="ac-form-pane active" onsubmit="event.preventDefault(); handleLoginSubmit();">
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
-                            <div class="ac-input-wrapper">
-                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                <input type="text" id="loginPhone" class="ac-text-input" placeholder="e.g. 7046363528 or client@example.com" required autocomplete="username">
-                            </div>
+                <!-- Right Auth Studio Form Card -->
+                <div class="ac-auth-card">
+                    <div class="ac-auth-card-head">
+                        <div class="ac-brand-lockup">
+                            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
+                            <span class="ac-security-badge">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>256-Bit SSL</span>
+                            </span>
                         </div>
 
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="loginPass">
-                                <span>Password <span class="req">*</span></span>
-                                <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="color:var(--dt-gold); font-weight:700; text-decoration:underline; font-size:0.75rem;">Forgot Password?</a>
-                            </label>
-                            <div class="ac-input-wrapper">
-                                <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input type="password" id="loginPass" class="ac-text-input" placeholder="Enter your secret password" required autocomplete="current-password">
-                                <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('loginPass', this)" title="Show/Hide Password">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-                            </div>
+                        <!-- Smooth Segmented Pill Switcher -->
+                        <div class="ac-pill-switcher">
+                            <button type="button" class="ac-pill-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+                            <button type="button" class="ac-pill-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
                         </div>
+                    </div>
 
-                        <button type="submit" class="dt-btn-gold" id="loginSubmitBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                            <span>Sign In to VIP Lounge</span>
-                        </button>
-
-                        <div style="display:flex; align-items:center; gap:10px; margin: 4px 0;">
-                            <div style="flex:1; height:1px; background:#E2DFD7;"></div>
-                            <span style="font-size:0.74rem; color:#94A3B8; font-weight:700; text-transform:uppercase;">Or Instant Connect</span>
-                            <div style="flex:1; height:1px; background:#E2DFD7;"></div>
-                        </div>
-
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20sign%20in%20to%20my%20account" target="_blank" class="dt-btn-emerald">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>Sign In via WhatsApp Concierge</span>
-                        </a>
-                    </form>
-
-                    <!-- 2. CREATE ACCOUNT FORM -->
-                    <form id="registerForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleRegisterSubmit();">
+                    <div class="ac-auth-card-body">
                         
-                        <!-- Full Name -->
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="regName">Full Name <span class="req">*</span></label>
-                            <div class="ac-input-wrapper">
-                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                <input type="text" id="regName" class="ac-text-input" placeholder="e.g. Radhika Sharma" required autocomplete="name">
-                            </div>
-                        </div>
-
-                        <!-- Country Selection Dropdown -->
-                        <div class="ac-field-group">
-                            <label class="ac-field-label">Country <span class="req">*</span></label>
-                            <div class="ac-custom-select" id="countrySelectBox">
-                                <div class="ac-select-trigger" onclick="toggleDropdown('countrySelectBox')">
-                                    <div style="display:flex; align-items:center; gap:8px;">
-                                        <img src="https://flagcdn.com/w40/in.png" alt="India" class="ac-flag-img" id="displayCountryFlag">
-                                        <span id="displayCountryText">India (+91)</span>
-                                    </div>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </div>
-                                <div class="ac-select-menu" id="countryDropdownMenu">
-                                    <div class="ac-select-search">
-                                        <input type="text" id="countrySearchInput" placeholder="🔍 Search world countries..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
-                                    </div>
-                                    <div class="ac-select-options" id="countryOptionsList">
-                                        <!-- Dynamically Populated -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Mobile Number Input -->
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="regPhone">
-                                <span>WhatsApp Number <span class="req">*</span></span>
-                                <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
-                            </label>
-                            <div class="ac-phone-input-group">
-                                <div class="ac-phone-prefix">
-                                    <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
-                                    <span id="waDialCode">+91</span>
-                                </div>
-                                <input type="tel" id="regPhone" class="ac-phone-input" placeholder="10-digit WhatsApp number" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
-                            </div>
-                            <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
-                                ⚠️ Please enter a valid 10-digit WhatsApp number.
-                            </div>
-                        </div>
-
-                        <!-- City & State Row -->
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <!-- 1. SIGN IN FORM -->
+                        <form id="loginForm" class="ac-form-pane active" onsubmit="event.preventDefault(); handleLoginSubmit();">
                             <div class="ac-field-group">
-                                <label class="ac-field-label" for="regCity">City <span class="req">*</span></label>
-                                <input type="text" id="regCity" class="ac-text-input no-icon" placeholder="e.g. Surat" value="Surat" required>
+                                <label class="ac-field-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
+                                <div class="ac-input-wrapper">
+                                    <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <input type="text" id="loginPhone" class="ac-text-input" placeholder="e.g. 7046363528 or client@example.com" required autocomplete="username">
+                                </div>
                             </div>
+
                             <div class="ac-field-group">
-                                <label class="ac-field-label">State <span class="req">*</span></label>
-                                <div class="ac-custom-select" id="stateSelectBox">
-                                    <div class="ac-select-trigger" onclick="toggleDropdown('stateSelectBox')">
-                                        <span id="displayStateText" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gujarat</span>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                    </div>
-                                    <div class="ac-select-menu" id="stateDropdownMenu">
-                                        <div class="ac-select-search">
-                                            <input type="text" id="stateSearchInput" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                <label class="ac-field-label" for="loginPass">
+                                    <span>Password <span class="req">*</span></span>
+                                    <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="color:var(--dt-gold); font-weight:700; text-decoration:underline; font-size:0.75rem;">Forgot Password?</a>
+                                </label>
+                                <div class="ac-input-wrapper">
+                                    <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    <input type="password" id="loginPass" class="ac-text-input" placeholder="Enter your secret password" required autocomplete="current-password">
+                                    <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('loginPass', this)" title="Show/Hide Password">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="dt-btn-gold" id="loginSubmitBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                                <span>Sign In to VIP Lounge</span>
+                            </button>
+
+                            <div style="display:flex; align-items:center; gap:10px; margin: 4px 0;">
+                                <div style="flex:1; height:1px; background:#E2DFD7;"></div>
+                                <span style="font-size:0.74rem; color:#94A3B8; font-weight:700; text-transform:uppercase;">Or Instant Connect</span>
+                                <div style="flex:1; height:1px; background:#E2DFD7;"></div>
+                            </div>
+
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20sign%20in%20to%20my%20account" target="_blank" class="dt-btn-emerald">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>Sign In via WhatsApp Concierge</span>
+                            </a>
+                        </form>
+
+                        <!-- 2. CREATE ACCOUNT FORM -->
+                        <form id="registerForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleRegisterSubmit();">
+                            
+                            <!-- Full Name -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="regName">Full Name <span class="req">*</span></label>
+                                <div class="ac-input-wrapper">
+                                    <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <input type="text" id="regName" class="ac-text-input" placeholder="e.g. Radhika Sharma" required autocomplete="name">
+                                </div>
+                            </div>
+
+                            <!-- Country Selection Dropdown -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label">Country <span class="req">*</span></label>
+                                <div class="ac-custom-select" id="countrySelectBox">
+                                    <div class="ac-select-trigger" onclick="toggleDropdown('countrySelectBox')">
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <img src="https://flagcdn.com/w40/in.png" alt="India" class="ac-flag-img" id="displayCountryFlag">
+                                            <span id="displayCountryText">India (+91)</span>
                                         </div>
-                                        <div class="ac-select-options" id="stateOptionsList">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                    <div class="ac-select-menu" id="countryDropdownMenu">
+                                        <div class="ac-select-search">
+                                            <input type="text" id="countrySearchInput" placeholder="🔍 Search world countries..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                        </div>
+                                        <div class="ac-select-options" id="countryOptionsList">
                                             <!-- Dynamically Populated -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Account Role Selector -->
-                        <div class="ac-field-group">
-                            <label class="ac-field-label">Select Account Type <span class="req">*</span></label>
-                            <input type="hidden" id="regRole" name="role" value="Retailer">
-                            <div class="ac-role-grid">
-                                <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
-                                    <div class="ac-role-icon">
-                                        <svg viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="2"/><line x1="3" y1="6" x2="21" y2="6" stroke="#1D4ED8" stroke-width="2"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#1D4ED8" stroke-width="2"/></svg>
+                            <!-- Mobile Number Input -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="regPhone">
+                                    <span>WhatsApp Number <span class="req">*</span></span>
+                                    <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
+                                </label>
+                                <div class="ac-phone-input-group">
+                                    <div class="ac-phone-prefix">
+                                        <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
+                                        <span id="waDialCode">+91</span>
                                     </div>
-                                    <span class="ac-role-name">Retailer</span>
+                                    <input type="tel" id="regPhone" class="ac-phone-input" placeholder="10-digit WhatsApp number" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
                                 </div>
-                                <div class="ac-role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
-                                    <div class="ac-role-icon">
-                                        <svg viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#B45309" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="#B45309" stroke-width="2"/></svg>
-                                    </div>
-                                    <span class="ac-role-name">Wholesale</span>
-                                </div>
-                                <div class="ac-role-card" data-role="Reseller" onclick="selectRole('Reseller')">
-                                    <div class="ac-role-icon">
-                                        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" fill="#DCFCE7" stroke="#15803D" stroke-width="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#15803D" stroke-width="2"/><line x1="12" y1="12" x2="12" y2="15" stroke="#15803D" stroke-width="2"/></svg>
-                                    </div>
-                                    <span class="ac-role-name">Reseller</span>
+                                <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
+                                    ⚠️ Please enter a valid 10-digit WhatsApp number.
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Trade Application Notice -->
-                        <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
-                            Trade accounts are verified on WhatsApp before wholesale pricing is activated. You can shop at retail rates immediately while approval is pending.
-                        </div>
-
-                        <!-- Password -->
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="regPass">Choose Password <span class="req">*</span></label>
-                            <div class="ac-input-wrapper">
-                                <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input type="password" id="regPass" class="ac-text-input" placeholder="Minimum 6 characters" required autocomplete="new-password">
-                                <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('regPass', this)" title="Show/Hide Password">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
+                            <!-- City & State Row -->
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                <div class="ac-field-group">
+                                    <label class="ac-field-label" for="regCity">City <span class="req">*</span></label>
+                                    <input type="text" id="regCity" class="ac-text-input no-icon" placeholder="e.g. Surat" value="Surat" required>
+                                </div>
+                                <div class="ac-field-group">
+                                    <label class="ac-field-label">State <span class="req">*</span></label>
+                                    <div class="ac-custom-select" id="stateSelectBox">
+                                        <div class="ac-select-trigger" onclick="toggleDropdown('stateSelectBox')">
+                                            <span id="displayStateText" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gujarat</span>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </div>
+                                        <div class="ac-select-menu" id="stateDropdownMenu">
+                                            <div class="ac-select-search">
+                                                <input type="text" id="stateSearchInput" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                            </div>
+                                            <div class="ac-select-options" id="stateOptionsList">
+                                                <!-- Dynamically Populated -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            <span>Create VIP Account</span>
-                        </button>
-                    </form>
-
-                    <!-- 3. FORGOT PASSWORD PANE -->
-                    <form id="forgotForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleForgotSubmit();">
-                        <p style="font-size:0.84rem; color:var(--dt-text-sub); margin:0 0 10px 0; line-height:1.45;">
-                            Enter your registered WhatsApp Number or Email and our Concierge will instantly send you an authenticated password recovery link.
-                        </p>
-                        <div class="ac-field-group">
-                            <label class="ac-field-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
-                            <div class="ac-input-wrapper">
-                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 7046363528" required>
+                            <!-- Account Role Selector -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label">Select Account Type <span class="req">*</span></label>
+                                <input type="hidden" id="regRole" name="role" value="Retailer">
+                                <div class="ac-role-grid">
+                                    <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
+                                        <div class="ac-role-icon">
+                                            <svg viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="2"/><line x1="3" y1="6" x2="21" y2="6" stroke="#1D4ED8" stroke-width="2"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#1D4ED8" stroke-width="2"/></svg>
+                                        </div>
+                                        <span class="ac-role-name">Retailer</span>
+                                    </div>
+                                    <div class="ac-role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
+                                        <div class="ac-role-icon">
+                                            <svg viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#B45309" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="#B45309" stroke-width="2"/></svg>
+                                        </div>
+                                        <span class="ac-role-name">Wholesale</span>
+                                    </div>
+                                    <div class="ac-role-card" data-role="Reseller" onclick="selectRole('Reseller')">
+                                        <div class="ac-role-icon">
+                                            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" fill="#DCFCE7" stroke="#15803D" stroke-width="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#15803D" stroke-width="2"/><line x1="12" y1="12" x2="12" y2="15" stroke="#15803D" stroke-width="2"/></svg>
+                                        </div>
+                                        <span class="ac-role-name">Reseller</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <button type="submit" class="dt-btn-gold">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                            <span>Send Recovery via WhatsApp</span>
-                        </button>
-                        <div style="text-align:center;">
-                            <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Sign In</a>
-                        </div>
-                    </form>
 
-                </div>
-            </div>
+                            <!-- Trade Application Notice -->
+                            <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
+                                Trade accounts are verified on WhatsApp before wholesale pricing is activated. You can shop at retail rates immediately while approval is pending.
+                            </div>
 
-        </div>
+                            <!-- Password -->
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="regPass">Choose Password <span class="req">*</span></label>
+                                <div class="ac-input-wrapper">
+                                    <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    <input type="password" id="regPass" class="ac-text-input" placeholder="Minimum 6 characters" required autocomplete="new-password">
+                                    <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('regPass', this)" title="Show/Hide Password">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+                                </div>
+                            </div>
 
-        <!-- ════════════ VIEW 2: LOGGED-IN VIP DASHBOARD ════════════ -->
-        <div id="dashboardWrap" class="ac-dashboard-wrap">
-            
-            <!-- Hero Profile Banner -->
-            <div class="ac-profile-card">
-                <div class="ac-profile-left">
-                    <div class="ac-avatar-ring" id="dashUserInitials">DT</div>
-                    <div>
-                        <h2 class="ac-profile-name" id="dashUserName">Valued Client</h2>
-                        <div class="ac-profile-phone" id="dashUserPhone">+91 70463 63528</div>
-                        <div class="ac-tier-badge" id="dashUserRoleBadge">👑 VIP Member</div>
+                            <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                <span>Create VIP Account</span>
+                            </button>
+                        </form>
+
+                        <!-- 3. FORGOT PASSWORD PANE -->
+                        <form id="forgotForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleForgotSubmit();">
+                            <p style="font-size:0.84rem; color:var(--dt-text-sub); margin:0 0 10px 0; line-height:1.45;">
+                                Enter your registered WhatsApp Number or Email and our Concierge will instantly send you an authenticated password recovery link.
+                            </p>
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
+                                <div class="ac-input-wrapper">
+                                    <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 7046363528" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="dt-btn-gold">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                <span>Send Recovery via WhatsApp</span>
+                            </button>
+                            <div style="text-align:center;">
+                                <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Sign In</a>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
 
-                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
-                        <span>📦 Open Wholesale Depot</span>
-                        <span>→</span>
-                    </a>
-                    <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
-                        Sign Out
-                    </button>
-                </div>
             </div>
 
-            <!-- 2-Column Dashboard Grid -->
-            <div class="ac-dash-grid">
+            <!-- ════════════ VIEW 2: LOGGED-IN VIP DASHBOARD ════════════ -->
+            <div id="dashboardWrap" class="ac-dashboard-wrap">
                 
-                <!-- Left: Dynamic Live Orders -->
-                <div class="ac-card-panel">
-                    <div class="ac-card-header">
-                        <h3 class="ac-card-title">
-                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                            <span>Recent Orders &amp; Dispatches</span>
-                        </h3>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20inquire%20about%20my%20orders" target="_blank" style="color:#15803D; font-size:0.78rem; font-weight:800; text-decoration:none; display:flex; align-items:center; gap:4px;">
-                            <span>WhatsApp Support</span>
-                        </a>
+                <!-- Hero Profile Banner -->
+                <div class="ac-profile-card">
+                    <div class="ac-profile-left">
+                        <div class="ac-avatar-ring" id="dashUserInitials">DT</div>
+                        <div>
+                            <h2 class="ac-profile-name" id="dashUserName">Valued Client</h2>
+                            <div class="ac-profile-phone" id="dashUserPhone">+91 70463 63528</div>
+                            <div class="ac-tier-badge" id="dashUserRoleBadge">👑 VIP Member</div>
+                        </div>
                     </div>
 
-                    <div id="dashOrdersList">
-                        <!-- Populated dynamically by window.loadCustomerLiveOrders() -->
-                        <div style="padding: 24px; text-align: center; color: var(--dt-gold); font-weight: 700;">
-                            <span>Loading your live orders...</span>
-                        </div>
+                    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                        <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
+                            <span>📦 Open Wholesale Depot</span>
+                            <span>→</span>
+                        </a>
+                        <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
+                            Sign Out
+                        </button>
                     </div>
                 </div>
 
-                <!-- Right: Quick Stat Tiles & Concierge -->
-                <div style="display:flex; flex-direction:column; gap:20px;">
+                <!-- 2-Column Dashboard Grid -->
+                <div class="ac-dash-grid">
                     
-                    <div class="ac-stat-grid">
-                        <a href="/cart.php" class="ac-stat-card" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
-                            <div class="ac-stat-num" id="dashCartCount">0</div>
-                            <div class="ac-stat-lbl">Bag Items</div>
-                        </a>
-                        <a href="/wishlist.php" class="ac-stat-card" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
-                            <div class="ac-stat-num" id="dashWishCount">0</div>
-                            <div class="ac-stat-lbl">Saved Items</div>
-                        </a>
+                    <!-- Left: Dynamic Live Orders -->
+                    <div class="ac-card-panel">
+                        <div class="ac-card-header">
+                            <h3 class="ac-card-title">
+                                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                <span>Recent Orders &amp; Dispatches</span>
+                            </h3>
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20inquire%20about%20my%20orders" target="_blank" style="color:#15803D; font-size:0.78rem; font-weight:800; text-decoration:none; display:flex; align-items:center; gap:4px;">
+                                <span>WhatsApp Support</span>
+                            </a>
+                        </div>
+
+                        <div id="dashOrdersList">
+                            <!-- Populated dynamically by window.loadCustomerLiveOrders() -->
+                            <div style="padding: 24px; text-align: center; color: var(--dt-gold); font-weight: 700;">
+                                <span>Loading your live orders...</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Personal Concierge Card -->
-                    <div class="ac-card-panel" style="background: linear-gradient(135deg, #FAF8F4 0%, #FAF5EA 100%); border: 1.5px solid var(--dt-gold);">
-                        <h4 style="font-family:var(--font-serif); color:var(--dt-gold); margin:0 0 6px 0; font-size:1.05rem;">Royal Fashion Concierge</h4>
-                        <p style="font-size:0.8rem; color:#475569; margin:0 0 14px 0; line-height:1.45;">
-                            Need custom saree blouse stitching, bridal lot matching, or direct wholesale GST invoicing? Our master fashion stylists are at your service.
-                        </p>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20VIP%20styling%20support" target="_blank" class="dt-btn-emerald" style="text-decoration:none;">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>WhatsApp Fashion Stylist</span>
-                        </a>
-                    </div>
+                    <!-- Right: Quick Stat Tiles & Concierge -->
+                    <div style="display:flex; flex-direction:column; gap:20px;">
+                        
+                        <div class="ac-stat-grid">
+                            <a href="/cart.php" class="ac-stat-card" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
+                                <div class="ac-stat-num" id="dashCartCount">0</div>
+                                <div class="ac-stat-lbl">Bag Items</div>
+                            </a>
+                            <a href="/wishlist.php" class="ac-stat-card" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
+                                <div class="ac-stat-num" id="dashWishCount">0</div>
+                                <div class="ac-stat-lbl">Saved Items</div>
+                            </a>
+                        </div>
 
-                    <a href="/shop.php" class="dt-btn-gold" style="text-decoration:none; text-align:center;">
-                        Browse Luxury Catalog →
-                    </a>
+                        <!-- Personal Concierge Card -->
+                        <div class="ac-card-panel" style="background: linear-gradient(135deg, #FAF8F4 0%, #FAF5EA 100%); border: 1.5px solid var(--dt-gold);">
+                            <h4 style="font-family:var(--font-serif); color:var(--dt-gold); margin:0 0 6px 0; font-size:1.05rem;">Royal Fashion Concierge</h4>
+                            <p style="font-size:0.8rem; color:#475569; margin:0 0 14px 0; line-height:1.45;">
+                                Need custom saree blouse stitching, bridal lot matching, or direct wholesale GST invoicing? Our master fashion stylists are at your service.
+                            </p>
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20VIP%20styling%20support" target="_blank" class="dt-btn-emerald" style="text-decoration:none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>WhatsApp Fashion Stylist</span>
+                            </a>
+                        </div>
+
+                        <a href="/shop.php" class="dt-btn-gold" style="text-decoration:none; text-align:center;">
+                            Browse Luxury Catalog →
+                        </a>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+        </main>
+    </div>
 
-    </main>
-
-    <!-- ════════════ MASTER UNIVERSAL FOOTER ════════════ -->
-    <?php include_once __DIR__ . '/includes/footer.php'; ?>
+    <!-- ════════════ OFFICIAL MASTER SHOP FOOTER ════════════ -->
+    <?php include_once __DIR__ . '/includes/shopbottomfotoer.php'; ?>
 
     <!-- ════════════ JAVASCRIPT CONTROLLER ════════════ -->
     <script>
@@ -1375,11 +1372,17 @@ $page_title = "My Account & VIP Lounge ‹ DT Brand's";
             var c = ALL_WORLD_COUNTRIES.find(function(item) { return item.code === code; }) || ALL_WORLD_COUNTRIES[0];
             selectedCountry = c;
             
-            document.getElementById('displayCountryFlag').src = c.flagImg;
-            document.getElementById('displayCountryText').textContent = c.name + ' (' + c.dial + ')';
-            document.getElementById('waFlagImg').src = c.flagImg;
-            document.getElementById('waDialCode').textContent = c.dial;
-            document.getElementById('digitCountHint').textContent = c.digits + '-digit number';
+            var dFlag = document.getElementById('displayCountryFlag');
+            var dText = document.getElementById('displayCountryText');
+            var wFlag = document.getElementById('waFlagImg');
+            var wDial = document.getElementById('waDialCode');
+            var dHint = document.getElementById('digitCountHint');
+
+            if (dFlag) dFlag.src = c.flagImg;
+            if (dText) dText.textContent = c.name + ' (' + c.dial + ')';
+            if (wFlag) wFlag.src = c.flagImg;
+            if (wDial) wDial.textContent = c.dial;
+            if (dHint) dHint.textContent = c.digits + '-digit number';
             
             var phoneInput = document.getElementById('regPhone');
             if (phoneInput) {
@@ -1389,15 +1392,19 @@ $page_title = "My Account & VIP Lounge ‹ DT Brand's";
 
             renderStatesDropdown(c);
             selectedState = (c.states && c.states[0]) ? c.states[0] : 'Surat';
-            document.getElementById('displayStateText').textContent = selectedState;
+            var sText = document.getElementById('displayStateText');
+            if (sText) sText.textContent = selectedState;
 
-            document.getElementById('countrySelectBox').classList.remove('active');
+            var cBox = document.getElementById('countrySelectBox');
+            if (cBox) cBox.classList.remove('active');
         };
 
         window.selectState = function(st) {
             selectedState = st;
-            document.getElementById('displayStateText').textContent = st;
-            document.getElementById('stateSelectBox').classList.remove('active');
+            var sText = document.getElementById('displayStateText');
+            if (sText) sText.textContent = st;
+            var sBox = document.getElementById('stateSelectBox');
+            if (sBox) sBox.classList.remove('active');
         };
 
         window.filterCountryOptions = function(query) {
