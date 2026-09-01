@@ -5,8 +5,8 @@ use PDO;
 use Exception;
 
 /**
- * PaymentManager — Unified Enterprise Payment Processing Engine
- * Supports: Instant UPI Deep Linking & Dynamic QR, Razorpay, Cashfree, COD & WhatsApp Pay
+ * PaymentManager — Unified Enterprise Payment Processing & Audit Engine
+ * Supports: Instant UPI Deep Linking & Dynamic QR Studio, Razorpay PG, Cashfree PG, COD & WhatsApp Pay
  * DT Brand's & Jai Hanuman Tex
  */
 class PaymentManager
@@ -161,7 +161,7 @@ class PaymentManager
 
         $upiUri = "upi://pay?" . http_build_query($params);
 
-        // App-specific deep links
+        // Dedicated app deep links
         $gpayUri = "gpay://upi/pay?" . http_build_query($params);
         $phonepeUri = "phonepe://pay?" . http_build_query($params);
         $paytmUri = "paytmmp://pay?" . http_build_query($params);
@@ -384,6 +384,63 @@ class PaymentManager
         } catch (\Throwable $e) {
             error_log("PaymentManager::recordTransaction error: " . $e->getMessage());
             return 0;
+        }
+    }
+
+    /**
+     * Mark Order as Paid & Decrement Stock in Database (Audit Safeguard)
+     */
+    public static function markOrderPaidAndAdjustStock(string $orderNumber, string $gateway, string $paymentRef = '', array $extraData = []): bool
+    {
+        $db = Database::getConnection();
+        if ($db === null || Database::isMockMode()) {
+            return true;
+        }
+
+        try {
+            // 1. Update Order Table
+            $stmtOrder = $db->prepare("
+                UPDATE `orders` 
+                SET `payment_status` = 'paid', 
+                    `payment_gateway` = :gateway, 
+                    `gateway_payment_id` = :pid,
+                    `updated_at` = NOW()
+                WHERE `order_number` = :ord
+            ");
+            $stmtOrder->execute([
+                ':gateway' => $gateway,
+                ':pid'     => $paymentRef,
+                ':ord'     => $orderNumber
+            ]);
+
+            // 2. Fetch order items to decrement inventory stock safely
+            $stmtItems = $db->prepare("
+                SELECT `product_id`, `quantity` 
+                FROM `order_items` 
+                WHERE `order_id` = (SELECT `id` FROM `orders` WHERE `order_number` = :ord LIMIT 1)
+            ");
+            $stmtItems->execute([':ord' => $orderNumber]);
+            $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($items)) {
+                $stmtDec = $db->prepare("
+                    UPDATE `products` 
+                    SET `stock` = GREATEST(0, `stock` - :qty)
+                    WHERE `id` = :pid
+                ");
+                foreach ($items as $item) {
+                    $pid = (int)($item['product_id'] ?? 0);
+                    $qty = (int)($item['quantity'] ?? 1);
+                    if ($pid > 0 && $qty > 0) {
+                        $stmtDec->execute([':qty' => $qty, ':pid' => $pid]);
+                    }
+                }
+            }
+
+            return true;
+        } catch (\Throwable $e) {
+            error_log("PaymentManager::markOrderPaidAndAdjustStock error: " . $e->getMessage());
+            return false;
         }
     }
 

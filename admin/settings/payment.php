@@ -43,13 +43,12 @@ $waCfg = $waGate['config'] ?? [];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Gateways & Checkout Studio - DT Brand's Admin</title>
+    <title>Payment Gateways &amp; Checkout Studio - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <style>
-        /* Luxury Payment Studio Tabs & Components */
         .dt-pay-tab-nav {
             display: flex;
             gap: 8px;
@@ -163,17 +162,6 @@ $waCfg = $waGate['config'] ?? [];
         input:checked + .dt-toggle-slider:before {
             transform: translateX(20px);
         }
-        .dt-preview-qr-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border: 1.5px dashed #D4AF37;
-            border-radius: 12px;
-            background: #FAF9F5;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -187,15 +175,18 @@ $waCfg = $waGate['config'] ?? [];
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Payment Gateways & Checkout Studio</span>
+                        <span>Payment Gateways &amp; Checkout Studio</span>
                         <span class="adm-badge gold">Production Live</span>
                     </h1>
-                    <p class="adm-page-subtitle">Configure Instant Direct UPI, Dynamic QR Studio, Razorpay, Cashfree, COD & WhatsApp Pay.</p>
+                    <p class="adm-page-subtitle">Configure Instant Direct UPI, Dynamic QR Studio, Razorpay, Cashfree, COD &amp; WhatsApp Pay.</p>
                 </div>
                 <div class="adm-page-actions">
+                    <button type="button" class="adm-btn-secondary" onclick="simulateTestWebhook('direct_upi')">
+                        ⚡ Simulate Test Webhook
+                    </button>
                     <a href="/admin/payments/" class="adm-btn-secondary">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                        <span>View Ledger & Settlements</span>
+                        <span>View Ledger &amp; Settlements</span>
                     </a>
                     <a href="/checkout.php" target="_blank" class="adm-btn-primary">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -208,7 +199,7 @@ $waCfg = $waGate['config'] ?? [];
             <div class="dt-pay-tab-nav" id="paymentTabsNav">
                 <button type="button" class="dt-pay-tab-btn <?= $activeTab === 'upi' ? 'active' : '' ?>" onclick="switchPayTab('upi')">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                    <span>Instant UPI & QR Studio</span>
+                    <span>Instant UPI &amp; QR Studio</span>
                 </button>
                 <button type="button" class="dt-pay-tab-btn <?= $activeTab === 'razorpay' ? 'active' : '' ?>" onclick="switchPayTab('razorpay')">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
@@ -224,7 +215,7 @@ $waCfg = $waGate['config'] ?? [];
                 </button>
                 <button type="button" class="dt-pay-tab-btn <?= $activeTab === 'whatsapp' ? 'active' : '' ?>" onclick="switchPayTab('whatsapp')">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                    <span>WhatsApp Order & Pay</span>
+                    <span>WhatsApp Order &amp; Pay</span>
                 </button>
             </div>
 
@@ -236,7 +227,7 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>⚡ Instant Direct UPI & Dynamic QR Studio</span></h3>
+                                <h3 class="adm-card-title"><span>⚡ Instant Direct UPI &amp; Dynamic QR Studio</span></h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">Auto-opens Google Pay, PhonePe, Paytm, BHIM, CRED on mobile. Generates dynamic real-time QR on desktop with 0% processing fee.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -383,7 +374,7 @@ $waCfg = $waGate['config'] ?? [];
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
                                 <h3 class="adm-card-title"><span>🚀 Cashfree Payment Gateway</span></h3>
-                                <p style="font-size:12px; color:#64748B; margin-top:3px;">Accept payments via Cashfree Drop PG, Instant UPI Intent, Cards & Netbanking.</p>
+                                <p style="font-size:12px; color:#64748B; margin-top:3px;">Accept payments via Cashfree Drop PG, Instant UPI Intent, Cards &amp; Netbanking.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
                                 <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#1F2937;">
@@ -493,7 +484,7 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>💬 Direct WhatsApp Order & Pay</span></h3>
+                                <h3 class="adm-card-title"><span>💬 Direct WhatsApp Order &amp; Pay</span></h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">1-Click Concierge ordering routing customer directly to DT Brand's official WhatsApp.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -567,12 +558,29 @@ function copyText(text, btn) {
     });
 }
 
+function simulateTestWebhook(gateway) {
+    if (!confirm(`Trigger simulated test webhook for gateway: ${gateway}?`)) return;
+    fetch('/api/payment/test_webhook.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gateway: gateway, amount: 2499.00 })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert(`✓ Success: ${data.message}\nOrder: ${data.order_number}\nTx ID: ${data.transaction_id}`);
+        } else {
+            alert('Simulation error: ' + (data.error || 'Failed'));
+        }
+    })
+    .catch(err => alert('Communication error: ' + err.message));
+}
+
 function saveGatewayForm(e, gatewayKey) {
     e.preventDefault();
     const form = document.getElementById('form-' + gatewayKey);
     const formData = new FormData(form);
     
-    // Construct config payload
     const payload = {
         gateway_key: gatewayKey,
         is_active: form.querySelector('input[name="is_active"]')?.checked ? 1 : 0,
@@ -588,7 +596,6 @@ function saveGatewayForm(e, gatewayKey) {
         }
     });
 
-    // Checkbox boolean overrides for unchecked boxes
     if (gatewayKey === 'direct_upi') {
         payload.config.auto_open_app = form.querySelector('input[name="config[auto_open_app]"]')?.checked ? 1 : 0;
         payload.config.dynamic_qr = form.querySelector('input[name="config[dynamic_qr]"]')?.checked ? 1 : 0;
