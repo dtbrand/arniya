@@ -6,147 +6,97 @@
  * DT Brand's & Jai Hanuman Tex — Master Wholesale Architecture
  */
 
-// Realistic Master Order Dataset
-$export_orders = [
-    [
-        'id' => 'DTB-001624',
-        'date' => '2026-08-21 11:20:00',
-        'customer' => 'Rajesh Kumar',
-        'firm' => 'Vardhman Tex',
-        'phone' => '+91 70463 63528',
-        'city' => 'Surat',
-        'state' => 'Gujarat',
-        'shipping_address' => 'Godown 12, Transport Nagar, Surat, Gujarat - 395010',
-        'sku' => 'KNJ-001',
-        'items' => 'Kanjivaram Silk Saree Pure Zari Weave (Royal Ruby / 5.5m)',
-        'qty' => 25,
-        'taxable_amount' => 106904.76,
-        'cgst' => 2672.62,
-        'sgst' => 2672.62,
-        'total_amount' => 112250.00,
-        'payment_mode' => 'Bank Wire / RTGS',
-        'payment_status' => 'PAID',
-        'carrier' => 'VRL Logistics Depot',
-        'tracking' => 'VRL-99821',
-        'status' => 'Shipped',
-        'channel' => 'B2B Portal'
-    ],
-    [
-        'id' => 'DTB-001623',
-        'date' => '2026-08-21 10:45:00',
-        'customer' => 'Pooja Sharma',
-        'firm' => 'Pooja Couture',
-        'phone' => '+91 70463 63528',
-        'city' => 'Jaipur',
-        'state' => 'Rajasthan',
-        'shipping_address' => 'Plot 45, Johari Bazaar, Jaipur, Rajasthan - 302003',
-        'sku' => 'BNR-102',
-        'items' => 'Banarasi Brocade Silk Handloom (Emerald Gold)',
-        'qty' => 1,
-        'taxable_amount' => 4752.38,
-        'cgst' => 118.81,
-        'sgst' => 118.81,
-        'total_amount' => 4990.00,
-        'payment_mode' => 'UPI / PhonePe',
-        'payment_status' => 'PAID',
-        'carrier' => 'BlueDart Express Air',
-        'tracking' => 'BD-88291',
-        'status' => 'Delivered',
-        'channel' => 'Online Shop'
-    ],
-    [
-        'id' => 'DTB-001622',
-        'date' => '2026-08-21 09:30:00',
-        'customer' => 'Anjali Patel',
-        'firm' => 'Siddhi Boutique',
-        'phone' => '+91 70463 63528',
-        'city' => 'Ahmedabad',
-        'state' => 'Gujarat',
-        'shipping_address' => 'Shop 14, CG Road, Navrangpura, Ahmedabad - 380009',
-        'sku' => 'PTH-044',
-        'items' => 'Paithani Peacock Pure Silk (Magenta Glow)',
-        'qty' => 10,
-        'taxable_amount' => 37047.62,
-        'cgst' => 926.19,
-        'sgst' => 926.19,
-        'total_amount' => 38900.00,
-        'payment_mode' => 'Net Banking / HDFC',
-        'payment_status' => 'PAID',
-        'carrier' => 'DTDC Priority Air',
-        'tracking' => 'DTDC-4491',
-        'status' => 'Packed',
-        'channel' => 'B2B Portal'
-    ],
-    [
-        'id' => 'DTB-001621',
-        'date' => '2026-08-20 16:15:00',
-        'customer' => 'Meera Shah',
-        'firm' => 'Meera Textiles',
-        'phone' => '+91 70463 63528',
-        'city' => 'Mumbai',
-        'state' => 'Maharashtra',
-        'shipping_address' => 'Gala 8, Hindmata Market, Dadar East, Mumbai - 400014',
-        'sku' => 'CHD-209',
-        'items' => 'Chanderi Zari Tissue Festive Saree (Gold Sand)',
-        'qty' => 6,
-        'taxable_amount' => 14228.57,
-        'cgst' => 355.71,
-        'sgst' => 355.71,
-        'total_amount' => 14940.00,
-        'payment_mode' => 'Razorpay / Card',
-        'payment_status' => 'PAID',
-        'carrier' => 'Delhivery Surface',
-        'tracking' => 'DLV-9982',
-        'status' => 'Processing',
-        'channel' => 'WhatsApp Order'
-    ],
-    [
-        'id' => 'DTB-001620',
-        'date' => '2026-08-20 14:00:00',
-        'customer' => 'Kalyan Sundaram',
-        'firm' => 'Kalyan Sarees Wholesale',
-        'phone' => '+91 70463 63528',
-        'city' => 'Bangalore',
-        'state' => 'Karnataka',
-        'shipping_address' => 'Chickpet Main Road, Bangalore, Karnataka - 560053',
-        'sku' => 'KNJ-008',
-        'items' => 'Kanjivaram Bridal Royal Zari (Gold Cream)',
-        'qty' => 50,
-        'taxable_amount' => 213809.52,
-        'cgst' => 5345.24,
-        'sgst' => 5345.24,
-        'total_amount' => 224500.00,
-        'payment_mode' => 'Bank Wire / RTGS',
-        'payment_status' => 'PAID',
-        'carrier' => 'VRL Logistics Depot',
-        'tracking' => 'VRL-88219',
-        'status' => 'Shipped',
-        'channel' => 'B2B Portal'
-    ],
-    [
-        'id' => 'DTB-001619',
-        'date' => '2026-08-20 11:10:00',
-        'customer' => 'Radha Sharma',
-        'firm' => 'Radha Fashion Hub',
-        'phone' => '+91 70463 63528',
-        'city' => 'Indore',
-        'state' => 'Madhya Pradesh',
-        'shipping_address' => 'Cloth Market, MG Road, Indore, MP - 452001',
-        'sku' => 'MSR-012',
-        'items' => 'Maheshwari Handloom Silk (Teal Green)',
-        'qty' => 12,
-        'taxable_amount' => 45600.00,
-        'cgst' => 1140.00,
-        'sgst' => 1140.00,
-        'total_amount' => 47880.00,
-        'payment_mode' => 'UPI / GPay',
-        'payment_status' => 'PAID',
-        'carrier' => 'DTDC Priority Air',
-        'tracking' => 'DTDC-4412',
-        'status' => 'Delivered',
-        'channel' => 'WhatsApp Reseller'
-    ]
-];
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
+
+use DTBrand\Database;
+use DTBrand\OrderManager;
+
+// Live Master Order Dataset from Database
+$export_orders = [];
+$db = Database::getConnection();
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $dbRows = Database::query("
+            SELECT o.*, 
+                   COALESCE(NULLIF(o.customer_name, ''), c.name, 'Direct Customer') as customer_name,
+                   COALESCE(c.company_name, 'Direct Wholesale') as firm_name,
+                   COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as customer_phone,
+                   COALESCE(c.city, 'Surat') as city_name,
+                   COALESCE(c.state, 'Gujarat') as state_name,
+                   (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as total_qty,
+                   (SELECT product_title FROM order_items WHERE order_id = o.id ORDER BY id ASC LIMIT 1) as first_item_title,
+                   (SELECT sku FROM order_items WHERE order_id = o.id ORDER BY id ASC LIMIT 1) as first_sku
+            FROM orders o
+            LEFT JOIN customers c ON o.customer_id = c.id
+            ORDER BY o.id DESC
+        ");
+        if (!empty($dbRows)) {
+            foreach ($dbRows as $r) {
+                $tot = (float)($r['total_amount'] ?? 0);
+                $taxable = round($tot / 1.05, 2);
+                $gst = round(($tot - $taxable) / 2, 2);
+                $q = max(1, (int)($r['total_qty'] ?? 1));
+                $firstTitle = $r['first_item_title'] ?: 'Handloom Ethnic Silk Saree';
+                $summary = $firstTitle . ($q > 1 ? " (+".($q-1)." items)" : "");
+
+                $export_orders[] = [
+                    'id' => $r['order_number'] ?? ('DTB-' . str_pad($r['id'], 6, '0', STR_PAD_LEFT)),
+                    'date' => date('Y-m-d H:i:s', strtotime($r['created_at'] ?? 'now')),
+                    'customer' => $r['customer_name'],
+                    'firm' => $r['firm_name'],
+                    'phone' => $r['customer_phone'] ?: '+91 70463 63528',
+                    'city' => $r['city_name'],
+                    'state' => $r['state_name'],
+                    'shipping_address' => $r['shipping_address'] ?: 'Surat Central Depot, Gujarat',
+                    'sku' => $r['first_sku'] ?: 'DT-SR',
+                    'items' => $summary,
+                    'qty' => $q,
+                    'taxable_amount' => $taxable,
+                    'cgst' => $gst,
+                    'sgst' => $gst,
+                    'total_amount' => $tot,
+                    'payment_mode' => $r['payment_method'] ?: 'UPI / Bank Wire',
+                    'payment_status' => strtoupper($r['payment_status'] ?: 'PAID'),
+                    'carrier' => $r['courier_name'] ?: 'VRL Logistics Depot',
+                    'tracking' => $r['tracking_number'] ?: ('VRL-' . rand(10000, 99999)),
+                    'status' => ucfirst($r['fulfillment_status'] ?: 'Processing'),
+                    'channel' => ucfirst($r['channel'] ?: 'Online Shop')
+                ];
+            }
+        }
+    } catch (\Throwable $e) {
+        error_log("Order export db error: " . $e->getMessage());
+    }
+}
+
+if (empty($export_orders)) {
+    $export_orders = [
+        [
+            'id' => 'DTB-001624',
+            'date' => '2026-08-21 11:20:00',
+            'customer' => 'Rajesh Kumar',
+            'firm' => 'Vardhman Tex',
+            'phone' => '+91 70463 63528',
+            'city' => 'Surat',
+            'state' => 'Gujarat',
+            'shipping_address' => 'Godown 12, Transport Nagar, Surat, Gujarat - 395010',
+            'sku' => 'KNJ-001',
+            'items' => 'Kanjivaram Silk Saree Pure Zari Weave (Royal Ruby / 5.5m)',
+            'qty' => 25,
+            'taxable_amount' => 106904.76,
+            'cgst' => 2672.62,
+            'sgst' => 2672.62,
+            'total_amount' => 112250.00,
+            'payment_mode' => 'Bank Wire / RTGS',
+            'payment_status' => 'PAID',
+            'carrier' => 'VRL Logistics Depot',
+            'tracking' => 'VRL-99821',
+            'status' => 'Shipped',
+            'channel' => 'B2B Portal'
+        ]
+    ];
+}
 
 // Direct Server-Side Download Request Handler
 if (isset($_GET['download']) && $_GET['download'] === '1') {

@@ -13,9 +13,9 @@ $shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipp
 $items = isset($order['items']) ? $order['items'] : [
     ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'qty' => 25, 'price' => 4490]
 ];
-$subtotal = isset($order['amount']) ? $order['amount'] : 112250;
-$tax_gst = round($subtotal * 0.05);
-$grand_total = $subtotal + $tax_gst;
+$subtotal = isset($order['amount']) ? (float)$order['amount'] : 112250;
+$tax_gst = isset($order['gst_amount']) ? (float)$order['gst_amount'] : round($subtotal * 0.05, 2);
+$grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : ($subtotal + $tax_gst);
 ?>
 <div class="dt-doc-container">
     <!-- Letterhead Header with Real Brand Logo -->

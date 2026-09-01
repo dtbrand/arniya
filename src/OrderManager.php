@@ -659,10 +659,54 @@ class OrderManager
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
             try {
-                $stmt = $db->prepare("SELECT * FROM orders WHERE customer_phone = ? ORDER BY id DESC");
-                $stmt->execute([$phone]);
-                return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                $digits = preg_replace('/\D+/', '', $phone);
+                if (strlen($digits) > 10) {
+                    $digits = substr($digits, -10);
+                }
+                if ($digits === '') {
+                    return [];
+                }
+
+                $stmt = $db->prepare("
+                    SELECT o.*,
+                           COALESCE(NULLIF(o.customer_name, ''), c.name, 'Valued Customer') as display_customer_name,
+                           COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as display_customer_phone,
+                           (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as items_count
+                    FROM orders o
+                    LEFT JOIN customers c ON o.customer_id = c.id
+                    WHERE REPLACE(REPLACE(REPLACE(REPLACE(o.customer_phone, ' ', ''), '-', ''), '+91', ''), '+', '') LIKE ?
+                       OR o.customer_phone LIKE ?
+                    ORDER BY o.id DESC
+                ");
+                $stmt->execute(['%' . $digits, '%' . $digits]);
+                $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                // Fetch line items for each order
+                foreach ($orders as &$ord) {
+                    $iStmt = $db->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER BY id ASC");
+                    $iStmt->execute([(int)$ord['id']]);
+                    $items = $iStmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+                    // Link images if available
+                    foreach ($items as &$it) {
+                        $pid = (int)($it['product_id'] ?? 0);
+                        if ($pid > 0) {
+                            try {
+                                $pStmt = $db->prepare("SELECT primary_image FROM products WHERE id = ? LIMIT 1");
+                                $pStmt->execute([$pid]);
+                                $it['img'] = $pStmt->fetchColumn() ?: '/assets/images/product1.png';
+                            } catch (\Throwable $pe) {
+                                $it['img'] = '/assets/images/product1.png';
+                            }
+                        } else {
+                            $it['img'] = '/assets/images/product1.png';
+                        }
+                    }
+                    $ord['items'] = $items;
+                }
+                return $orders;
             } catch (\Exception $e) {
+                error_log("OrderManager::getByPhone error: " . $e->getMessage());
                 return [];
             }
         }
@@ -673,7 +717,6 @@ class OrderManager
      * Generate official WhatsApp dispatch message
      */
     public static function generateWhatsAppNotice(string $orderNumber, float $grandTotal, string $customerName): string
-
     {
         $formattedTotal = '₹' . number_format($grandTotal, 2);
         return "Namaste {$customerName} ji! 🙏\n" .
@@ -692,7 +735,12 @@ class OrderManager
         if ($db !== null && !Database::isMockMode()) {
             try {
                 $rows = Database::query("
-                    SELECT o.*, c.name as customer_name, c.phone as customer_phone, c.type as customer_type
+                    SELECT o.*, 
+                           COALESCE(NULLIF(o.customer_name, ''), c.name, 'Direct Customer') as display_name,
+                           COALESCE(NULLIF(o.customer_phone, ''), c.phone, '+91 70463 63528') as display_phone,
+                           COALESCE(c.type, o.channel, 'Retail') as display_type,
+                           (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as real_items_count,
+                           (SELECT product_title FROM order_items WHERE order_id = o.id ORDER BY id ASC LIMIT 1) as first_item_name
                     FROM orders o
                     LEFT JOIN customers c ON o.customer_id = c.id
                     ORDER BY o.id DESC
@@ -700,15 +748,18 @@ class OrderManager
                 if (!empty($rows)) {
                     $result = [];
                     foreach ($rows as $r) {
+                        $itemCount = (int)($r['real_items_count'] ?? 1);
+                        $summary = $r['first_item_name'] ? ($r['first_item_name'] . ($itemCount > 1 ? " (+".($itemCount-1)." more)" : "")) : 'Ethnic Silk Sarees';
+
                         $result[] = [
                             'id' => $r['order_number'] ?? ('DTB-' . str_pad($r['id'], 6, '0', STR_PAD_LEFT)),
                             'db_id' => (int)$r['id'],
-                            'customer' => $r['customer_name'] ?? 'Direct Customer',
-                            'customer_type' => ucfirst($r['customer_type'] ?? 'Retail'),
-                            'phone' => $r['customer_phone'] ?? '+91 70463 63528',
+                            'customer' => $r['display_name'],
+                            'customer_type' => ucfirst($r['display_type']),
+                            'phone' => $r['display_phone'],
                             'date' => date('d M Y, h:i A', strtotime($r['created_at'] ?? 'now')),
-                            'items_count' => '1 lot',
-                            'items_summary' => 'Ethnic Silk Sarees',
+                            'items_count' => $itemCount . ($itemCount > 1 ? ' items' : ' item'),
+                            'items_summary' => $summary,
                             'amount' => (float)($r['total_amount'] ?? 0),
                             'payment' => $r['payment_method'] ?? 'Bank Wire / RTGS',
                             'payment_status' => $r['payment_status'] ?? 'paid',
@@ -721,7 +772,9 @@ class OrderManager
                     }
                     return $result;
                 }
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                error_log("OrderManager::getAll error: " . $e->getMessage());
+            }
         }
 
         return [

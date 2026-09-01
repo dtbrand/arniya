@@ -867,15 +867,25 @@
             color: var(--dark-text);
         }
         .order-status-badge {
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
+        .status-pending { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+        .status-confirmed { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
         .status-processing { background: #FFF3E0; color: #E65100; border: 1px solid #FFE082; }
+        .status-packed { background: #FAF5E8; color: #8A681F; border: 1px solid #D4AF37; }
+        .status-shipped { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; }
+        .status-out-for-delivery, .status-out_for_delivery { background: #EEF2FF; color: #3730A3; border: 1px solid #C7D2FE; }
         .status-delivered { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+        .status-cancelled { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+        .status-refunded { background: #F5F3FF; color: #5B21B6; border: 1px solid #DDD6FE; }
         
         .order-item-detail {
             display: flex;
@@ -1292,52 +1302,15 @@
                             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                             <span>Recent Orders</span>
                         </h3>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT Brand's%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20inquire%20about%20my%20orders" target="_blank" class="track-wa-btn">
                             WhatsApp Support
                         </a>
                     </div>
 
-                    <div class="order-list">
-                        <!-- Order 1 -->
-                        <div class="order-box">
-                            <div class="order-top">
-                                <span class="order-id">Order #KLN-847291</span>
-                                <span class="order-status-badge status-processing">Processing & Stitching</span>
-                            </div>
-                            <div class="order-item-detail">
-                                <img src="/assets/images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src="/assets/images/product1.png";">
-                                <div>
-                                    <div style="font-weight:800; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
-                                    <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
-                                </div>
-                            </div>
-                            <div class="order-actions-bar">
-                                <div>Total: <span class="order-total-txt">₹24,999</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn">
-                                    Track on WhatsApp →
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Order 2 -->
-                        <div class="order-box">
-                            <div class="order-top">
-                                <span class="order-id">Order #KLN-312984</span>
-                                <span class="order-status-badge status-delivered">Delivered</span>
-                            </div>
-                            <div class="order-item-detail">
-                                <img src="/assets/images/product1.png" alt="Saree" class="order-thumb">
-                                <div>
-                                    <div style="font-weight:800; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
-                                    <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>
-                                </div>
-                            </div>
-                            <div class="order-actions-bar">
-                                <div>Total: <span class="order-total-txt">₹12,499</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn">
-                                    Re-Order on WhatsApp →
-                                </a>
-                            </div>
+                    <div class="order-list" id="dashOrdersList">
+                        <!-- Dynamic orders will be loaded here via loadCustomerLiveOrders() -->
+                        <div style="padding: 20px; text-align: center; color: #8A681F; font-size: 0.85rem; font-weight: 700;">
+                            <span>Fetching your live order records...</span>
                         </div>
                     </div>
                 </div>
@@ -1733,6 +1706,11 @@
                 var wEl = document.getElementById('dashWishCount');
                 if (cEl) cEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
                 if (wEl) wEl.textContent = wish.length;
+
+                // Load real-time orders dynamically from database
+                if (typeof window.loadCustomerLiveOrders === 'function') {
+                    window.loadCustomerLiveOrders(user.phone || user.rawPhone || '');
+                }
             } else {
                 authCard.style.display = 'block';
                 dashWrap.classList.remove('active');
@@ -1740,6 +1718,87 @@
                 switchAuthTab(initialTab);
             }
         }
+
+        window.loadCustomerLiveOrders = function(phone) {
+            var listEl = document.getElementById('dashOrdersList');
+            if (!listEl) return;
+
+            listEl.innerHTML = '<div style="padding: 24px; text-align: center; color: #8A681F; font-weight: 700;"><div style="display:inline-block; width:20px; height:20px; border:2px solid #8A681F; border-top-color:transparent; border-radius:50%; animation:dtSpin 0.8s linear infinite; margin-bottom:8px;"></div><div>Loading your live orders...</div></div><style>@keyframes dtSpin{to{transform:rotate(360deg);}}</style>';
+
+            var url = '/api/orders.php?action=my_orders' + (phone ? ('&phone=' + encodeURIComponent(phone)) : '');
+
+            fetch(url, { credentials: 'same-origin' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (!data || !data.success || !Array.isArray(data.orders) || data.orders.length === 0) {
+                        listEl.innerHTML = '<div style="padding: 28px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #64748B;">Explore our royal handloom silk sarees, bridal lehengas, and luxury fabrics.</p><a href="/shop.php" class="auth-btn-submit" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 0.82rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection →</a></div>';
+                        return;
+                    }
+
+                    var html = '';
+                    data.orders.forEach(function(ord) {
+                        var st = (ord.fulfillment_status || ord.status || 'processing').toLowerCase();
+                        var stClass = 'status-' + st.replace(/_/g, '-');
+                        var stLabel = st.replace(/_/g, ' ').toUpperCase();
+                        var ordNum = ord.order_number || ('DTB-' + ord.id);
+                        var created = ord.created_at ? new Date(ord.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent';
+                        var amount = parseFloat(ord.total_amount || ord.amount || 0).toLocaleString('en-IN');
+                        var waMsg = encodeURIComponent("Namaste DT Brand's! 🙏 Please share tracking & fulfillment update for Order #" + ordNum);
+                        var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + waMsg;
+
+                        var items = Array.isArray(ord.items) ? ord.items : [];
+                        var itemsHtml = '';
+
+                        if (items.length > 0) {
+                            items.forEach(function(it) {
+                                var title = it.product_title || it.name || 'Handloom Ethnic Silk Saree';
+                                var thumb = it.img || it.primary_image || '/assets/images/product1.png';
+                                var varText = [];
+                                if (it.variant_color) varText.push('Color: ' + it.variant_color);
+                                if (it.variant_size) varText.push('Size: ' + it.variant_size);
+                                if (it.selling_type === 'full_set') varText.push('Catalogue Set (Full)');
+                                var qty = it.quantity || it.qty || 1;
+                                var price = parseFloat(it.unit_price || it.price || 0).toLocaleString('en-IN');
+
+                                itemsHtml += '<div class="order-item-detail" style="margin-bottom: 8px; border-bottom: 1px dashed rgba(0,0,0,0.06); padding-bottom: 8px;"><img src="' + thumb + '" alt="' + title + '" class="order-thumb" onerror="this.src=\'/assets/images/product1.png\';"><div style="flex: 1;"><div style="font-weight: 800; color: var(--dark-text); font-size: 0.86rem;">' + title + '</div><div style="font-size: 0.74rem; color: #64748B; margin-top: 2px;">' + (varText.length ? varText.join(' • ') + ' • ' : '') + 'Qty: ' + qty + ' • ₹' + price + '</div></div></div>';
+                            });
+                        } else {
+                            itemsHtml = '<div class="order-item-detail"><img src="/assets/images/product1.png" alt="Saree" class="order-thumb"><div><div style="font-weight: 800; color: var(--dark-text);">Luxury Silk Handloom Lot</div><div style="font-size: 0.75rem; color: var(--light-text); margin-top: 2px;">Authentic Zari Weaving • Qty: 1</div></div></div>';
+                        }
+
+                        html += '<div class="order-box" style="background: #FFFFFF; border: 1.5px solid #D4AF37; border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">' +
+                            '<div class="order-top" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #FAF5E8; padding-bottom: 8px;">' +
+                                '<div>' +
+                                    '<span class="order-id" style="font-size: 0.95rem; font-weight: 800; color: #181512;">Order #' + ordNum + '</span>' +
+                                    '<div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">Placed on ' + created + '</div>' +
+                                '</div>' +
+                                '<span class="order-status-badge ' + stClass + '" style="font-weight: 800; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem;">' +
+                                    stLabel +
+                                '</span>' +
+                            '</div>' +
+                            '<div class="order-items-container">' + itemsHtml + '</div>' +
+                            (ord.tracking_number ? ('<div style="background: #FAF8F4; border: 1px solid #E2DFD7; border-radius: 6px; padding: 6px 10px; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; margin: 8px 0;"><span style="color: #64748B;">Courier: <strong style="color: #181512;">' + (ord.courier_name || 'VRL Logistics / Delhivery') + '</strong></span><span style="font-family: monospace; font-weight: 700; color: #8A681F;">AWB: ' + ord.tracking_number + '</span></div>') : '') +
+                            '<div class="order-actions-bar" style="margin-top: 10px; padding-top: 10px; border-top: 1.5px solid #F1ECE1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">' +
+                                '<div style="font-size: 0.88rem; font-weight: 700; color: #181512;">' +
+                                    'Total: <span class="order-total-txt" style="color: #8A681F; font-size: 1.05rem; font-weight: 800;">₹' + amount + '</span>' +
+                                '</div>' +
+                                '<div style="display: flex; gap: 8px;">' +
+                                    '<a href="' + waUrl + '" target="_blank" class="dt-btn dt-btn-emerald" style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; font-size: 0.75rem; font-weight: 800; border-radius: 6px; text-decoration: none; background: linear-gradient(135deg, #15803D 0%, #16A34A 100%); color: #FFFFFF;">' +
+                                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>' +
+                                        '<span>Track on WhatsApp</span>' +
+                                    '</a>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                    });
+
+                    listEl.innerHTML = html;
+                })
+                .catch(function(err) {
+                    console.error("Orders load failed:", err);
+                    listEl.innerHTML = '<div style="padding: 20px; text-align: center; color: #DC2626; font-size: 0.85rem;">Could not fetch recent orders. Please check your network connection.</div>';
+                });
+        };
 
         window.switchAuthTab = function(tab) {
             var loginForm = document.getElementById('loginForm');

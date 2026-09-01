@@ -5,22 +5,68 @@
  * invoice.php — Printable B2B GST Invoice Page
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
 
-$order = [
-    'id' => $order_id,
-    'date' => '21 Aug 2026',
-    'customer' => 'Rajesh Kumar (Vardhman Tex)',
-    'amount' => 112250,
-    'payment_status' => 'paid',
-    'address' => [
-        'billing' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5",
-        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
-    ],
-    'items' => [
-        ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'qty' => 25, 'price' => 4490]
-    ]
-];
+use DTBrand\Database;
+use DTBrand\OrderManager;
+
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+$rawOrder = null;
+
+if (!empty($order_id)) {
+    $rawOrder = OrderManager::getOrderDetails($order_id);
+}
+
+if ($rawOrder) {
+    $parsedItems = [];
+    foreach ($rawOrder['items'] as $it) {
+        $parsedItems[] = [
+            'name'  => $it['product_title'] ?? 'Handloom Silk Saree',
+            'sku'   => $it['sku'] ?? 'DT-SR',
+            'qty'   => (int)($it['quantity'] ?? 1),
+            'price' => (float)($it['unit_price'] ?? 0),
+            'image' => $it['primary_image'] ?? '/assets/images/product1.png',
+            'variant' => trim(($it['variant_color'] ?? '') . ' ' . ($it['variant_size'] ?? ''))
+        ];
+    }
+
+    $order = [
+        'id' => $rawOrder['order_number'] ?? ('DTB-' . str_pad($rawOrder['id'], 6, '0', STR_PAD_LEFT)),
+        'date' => !empty($rawOrder['created_at']) ? date('d M Y', strtotime($rawOrder['created_at'])) : date('d M Y'),
+        'customer' => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'amount' => (float)($rawOrder['subtotal'] ?? $rawOrder['total_amount'] ?? 0),
+        'total_amount' => (float)($rawOrder['total_amount'] ?? 0),
+        'gst_amount' => (float)($rawOrder['gst_amount'] ?? round(((float)($rawOrder['total_amount'] ?? 0)) * 0.05)),
+        'payment_status' => $rawOrder['payment_status'] ?? 'paid',
+        'payment_method' => $rawOrder['payment_method'] ?? 'UPI / Bank Wire',
+        'address' => [
+            'billing' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395002",
+            'shipping' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        ],
+        'items' => !empty($parsedItems) ? $parsedItems : [
+            ['name' => 'Handloom Pure Silk Saree', 'sku' => 'DT-SR-001', 'qty' => 1, 'price' => (float)($rawOrder['total_amount'] ?? 0), 'image' => '/assets/images/product1.png']
+        ]
+    ];
+} else {
+    $order = [
+        'id' => $order_id,
+        'date' => date('d M Y'),
+        'customer' => 'Rajesh Kumar (Vardhman Tex)',
+        'amount' => 112250,
+        'total_amount' => 117862.5,
+        'gst_amount' => 5612.5,
+        'payment_status' => 'paid',
+        'payment_method' => 'Bank Wire / RTGS',
+        'address' => [
+            'billing' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5",
+            'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        ],
+        'items' => [
+            ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'qty' => 25, 'price' => 4490, 'image' => '/assets/images/product1.png']
+        ]
+    ];
+}
 
 $page_title = "Invoice " . $order['id'];
 ?>

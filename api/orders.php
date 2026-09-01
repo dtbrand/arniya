@@ -95,8 +95,30 @@ try {
             exit;
         }
 
-        $orderNumber = trim($_GET['order_number'] ?? '');
+        // Customer Order History (My Orders)
+        if ($action === 'my_orders') {
+            if (session_status() === PHP_SESSION_NONE) {
+                @session_start();
+            }
+            $reqPhone = trim((string)($_GET['phone'] ?? ''));
+            $sessionPhone = (string)($_SESSION['user']['phone'] ?? ($_SESSION['customer_phone'] ?? ''));
+            $targetPhone = $reqPhone ?: $sessionPhone;
 
+            if (!empty($targetPhone)) {
+                $orders = OrderManager::getByPhone($targetPhone);
+                echo json_encode([
+                    'success' => true,
+                    'count'   => count($orders),
+                    'orders'  => $orders
+                ]);
+                exit;
+            }
+
+            echo json_encode(['success' => true, 'count' => 0, 'orders' => []]);
+            exit;
+        }
+
+        $orderNumber = trim($_GET['order_number'] ?? '');
         $phone = trim($_GET['phone'] ?? '');
 
         // Self-service order tracking. A buyer must present BOTH the order number
@@ -149,7 +171,6 @@ try {
 
         echo json_encode(['success' => true, 'orders' => OrderManager::getAll()]);
         exit;
-
     }
 
     // Order Actions (Create, Update Status, Delete)
