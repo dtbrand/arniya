@@ -1053,17 +1053,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                                 <span>Sign In to Account</span>
                             </button>
-
-                            <div style="display:flex; align-items:center; gap:10px; margin: 4px 0;">
-                                <div style="flex:1; height:1px; background:#E2DFD7;"></div>
-                                <span style="font-size:0.74rem; color:#94A3B8; font-weight:700; text-transform:uppercase;">Or Instant Connect</span>
-                                <div style="flex:1; height:1px; background:#E2DFD7;"></div>
-                            </div>
-
-                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20sign%20in%20to%20my%20account" target="_blank" class="dt-btn-emerald">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                <span>Sign In via WhatsApp Concierge</span>
-                            </a>
                         </form>
 
                         <!-- 2. CREATE ACCOUNT FORM -->
