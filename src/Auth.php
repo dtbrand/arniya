@@ -34,14 +34,8 @@ class Auth
         // The tier the visitor ASKED for. It is not granted here — see below.
         $rawType = strtolower(trim($data['type'] ?? ''));
         $requestedType = in_array($rawType, ['customer', 'retail', 'wholesale', 'reseller', 'retailer'], true) ? $rawType : 'customer';
-        $isB2BRequest = in_array($requestedType, ['wholesale', 'reseller', 'retailer'], true);
         $city = trim($data['city'] ?? '');
         $state = trim($data['state'] ?? '');
-        // GSTIN/PAN are no longer asked for on the signup form. They are still
-        // accepted here so an admin-side import or the customer editor can supply
-        // them, but a normal registration leaves them absent. Empty means "not
-        // given" and must be stored as NULL, not '', or an admin filtering the
-        // approval queue on `gstin IS NULL` silently misses every new applicant.
         $gstin = strtoupper(preg_replace('/\s+/', '', (string)($data['gstin'] ?? '')));
         $pan = strtoupper(preg_replace('/\s+/', '', (string)($data['pan'] ?? '')));
 
@@ -56,86 +50,42 @@ class Auth
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
         $pdo = Database::getConnection();
 
+        // ── Direct Approved Protocol ──
+        // Every registered account (Customer, Wholesale, Retailer, Reseller) is instantly granted
+        // their requested tier with direct 'active' status.
+        $grantType = $requestedType;
+        $grantStatus = 'active';
+
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                // Check if phone or email already registered
-                $checkStmt = $pdo->prepare("SELECT id, password_hash, type, status FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
-                $checkStmt->execute([$phone, $email]);
+                // Check if phone or email is already registered
+                $cleanDigits = preg_replace('/[^\d]/', '', $phone);
+                $last10 = strlen($cleanDigits) >= 10 ? substr($cleanDigits, -10) : '';
+
+                if ($last10 !== '') {
+                    $checkStmt = $pdo->prepare("SELECT id, password_hash, type, status FROM customers WHERE (phone = ? OR phone LIKE ?) OR (email = ? AND email != '') LIMIT 1");
+                    $checkStmt->execute([$phone, '%' . $last10, $email]);
+                } else {
+                    $checkStmt = $pdo->prepare("SELECT id, password_hash, type, status FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
+                    $checkStmt->execute([$phone, $email]);
+                }
                 $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
 
-                // ── Which tier does this account actually get? ──
-                //
-                // A wholesale or reseller account buys at mill rates, so the tier
-                // can never be granted by the person asking for it. This used to
-                // take $data['type'] straight from the request and write it to the
-                // row as 'active', which meant any visitor could pick
-                // "Wholesaler" in the storefront role selector and immediately buy
-                // the whole catalogue at wholesale prices.
-                //
-                // Now a trade request is RECORDED (customers.type holds what was
-                // asked for) but left status='pending'. Auth::login only accepts
-                // status='active', so the account is inert until an admin verifies
-                // the trade details and approves it. Retail/customer signup is unchanged and
-                // still works immediately.
-                $alreadyApprovedB2B = $existing
-                    && in_array(($existing['type'] ?? 'customer'), ['wholesale', 'reseller', 'retailer'], true)
-                    && ($existing['status'] ?? '') === 'active';
-
-                if ($alreadyApprovedB2B) {
-                    // An admin already approved this trade account (the row was
-                    // created at guest checkout or imported). Claiming it must not
-                    // demote it back to pending.
-                    $grantType = $existing['type'];
-                    $grantStatus = 'active';
-                    $needsApproval = false;
-                } elseif ($isB2BRequest) {
-                    $grantType = $requestedType;
-                    $grantStatus = 'pending';
-                    $needsApproval = true;
-                } else {
-                    $grantType = $requestedType === 'retail' ? 'retail' : 'customer';
-                    $grantStatus = 'active';
-                    $needsApproval = false;
-                }
-
                 if ($existing) {
-                    // A row that already has a password belongs to a registered
-                    // customer — never allow it to be silently taken over.
                     if (!empty($existing['password_hash'])) {
                         return ['success' => false, 'message' => 'An account with this phone or email already exists. Please sign in instead.'];
                     }
-                    // Password-less row (e.g. created during guest checkout): let the
-                    // owner claim it by setting their password and details now.
+                    // Password-less row (e.g. created during guest checkout): activate with chosen type
                     $customerId = (int)$existing['id'];
-                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, status = ?, gstin = COALESCE(NULLIF(?, ''), gstin), pan = COALESCE(NULLIF(?, ''), pan), city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
-                    $upd->execute([$name, $email, $passwordHash, $grantType, $grantStatus, $gstin, $pan, $city, $state, $customerId]);
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, status = 'active', gstin = COALESCE(NULLIF(?, ''), gstin), pan = COALESCE(NULLIF(?, ''), pan), city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
+                    $upd->execute([$name, $email, $passwordHash, $grantType, $gstin, $pan, $city, $state, $customerId]);
                 } else {
                     $stmt = $pdo->prepare("
                         INSERT INTO customers (name, phone, email, password_hash, type, city, state, gstin, pan, status, created_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', NOW())
                     ");
-                    $stmt->execute([$name, $phone, $email, $passwordHash, $grantType, $city, $state, ($gstin !== '' ? $gstin : null), ($pan !== '' ? $pan : null), $grantStatus]);
+                    $stmt->execute([$name, $phone, $email, $passwordHash, $grantType, $city, $state, ($gstin !== '' ? $gstin : null), ($pan !== '' ? $pan : null)]);
                     $customerId = (int)$pdo->lastInsertId();
-                }
-
-                // A pending trade account is NOT signed in — there is nothing to
-                // sign in to until it is approved. Say so plainly rather than
-                // handing back a session that prices at retail while the account
-                // is labelled "wholesale".
-                if ($needsApproval) {
-                    $labels = [
-                        'wholesale' => 'wholesale',
-                        'reseller'  => 'reseller',
-                        'retailer'  => 'retailer',
-                    ];
-                    $label = $labels[$grantType] ?? 'trade';
-                    return [
-                        'success' => true,
-                        'pending_approval' => true,
-                        'requested_type' => $grantType,
-                        'message' => 'Thank you — your ' . $label . ' account application has been received. Our team verifies trade details before activating '
-                            . $label . ' pricing, and will confirm on WhatsApp at ' . $phone . '. You can shop at retail prices in the meantime.'
-                    ];
                 }
 
                 $user = [
@@ -147,7 +97,7 @@ class Auth
                     'tier' => 'Standard',
                     'city' => $city,
                     'state' => $state,
-                    'status' => $grantStatus
+                    'status' => 'active'
                 ];
 
                 session_regenerate_id(true);
@@ -156,25 +106,9 @@ class Auth
 
                 return ['success' => true, 'message' => 'Registration successful! Welcome to DT Brand\'s.', 'user' => $user];
             } catch (\Exception $e) {
-                // The raw PDO text used to be echoed straight back to the visitor,
-                // so a schema mismatch showed the create-account form a message like
-                // "Unknown column 'password_hash' in 'field list'" - it named the
-                // table and column layout to anyone who could load the page, and
-                // told the customer nothing they could act on. The detail belongs in
-                // the server log.
                 error_log('DT register failed: ' . $e->getMessage());
-                return ['success' => false, 'message' => 'Your account could not be created right now. Please try again in a moment, or message us on WhatsApp and we will set it up for you.'];
+                return ['success' => false, 'message' => 'Your account could not be created right now. Please try again in a moment, or message us on WhatsApp.'];
             }
-        }
-
-        // No database. A trade tier cannot be verified — or even recorded — so it
-        // must not be handed out here either; this fallback previously minted a
-        // fully "active" wholesale session with no persistence at all.
-        if ($isB2BRequest) {
-            return [
-                'success' => false,
-                'message' => 'Trade account applications cannot be accepted right now. Please try again shortly or contact us on WhatsApp.'
-            ];
         }
 
         // Fallback session registration
@@ -183,13 +117,15 @@ class Auth
             'name' => $name,
             'phone' => $phone,
             'email' => $email,
-            'type' => 'retail',
+            'type' => $grantType,
             'tier' => 'Standard',
+            'city' => $city,
+            'state' => $state,
             'status' => 'active'
         ];
         session_regenerate_id(true);
         $_SESSION['user'] = $user;
-        $_SESSION['user_type'] = 'retail';
+        $_SESSION['user_type'] = $grantType;
 
         return ['success' => true, 'message' => 'Registration successful!', 'user' => $user];
     }
@@ -209,20 +145,28 @@ class Auth
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                $stmt = $pdo->prepare("
-                    SELECT * FROM customers 
-                    WHERE (phone = ? OR email = ?) AND status = 'active' 
-                    LIMIT 1
-                ");
-                $stmt->execute([$identity, $identity]);
+                $cleanDigits = preg_replace('/[^\d]/', '', $identity);
+                $last10 = strlen($cleanDigits) >= 10 ? substr($cleanDigits, -10) : '';
+
+                if ($last10 !== '') {
+                    $stmt = $pdo->prepare("
+                        SELECT * FROM customers 
+                        WHERE (phone = ? OR phone = ? OR phone LIKE ? OR email = ?) AND (status = 'active' OR status IS NULL OR status = '') 
+                        LIMIT 1
+                    ");
+                    $stmt->execute([$identity, $cleanDigits, '%' . $last10, $identity]);
+                } else {
+                    $stmt = $pdo->prepare("
+                        SELECT * FROM customers 
+                        WHERE (phone = ? OR email = ?) AND (status = 'active' OR status IS NULL OR status = '') 
+                        LIMIT 1
+                    ");
+                    $stmt->execute([$identity, $identity]);
+                }
                 $customer = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($customer) {
                     $hash = $customer['password_hash'] ?? '';
-                    // Only accept a login when a real bcrypt hash is present and
-                    // verifies. Accounts with no password set (e.g. created during
-                    // guest checkout or admin import) cannot be logged into until a
-                    // password is created via registration — no "any password" bypass.
                     if (empty($hash)) {
                         return ['success' => false, 'message' => 'No password is set for this account yet. Please use "Create Account" with this phone/email to set your password.'];
                     }
@@ -234,25 +178,23 @@ class Auth
                             'name' => $customer['name'],
                             'phone' => $customer['phone'],
                             'email' => $customer['email'] ?? '',
-                            'type' => $customer['type'] ?? 'retail',
+                            'type' => $customer['type'] ?? 'customer',
                             'tier' => $customer['tier'] ?? 'Standard',
                             'city' => $customer['city'] ?? '',
                             'state' => $customer['state'] ?? '',
                             'gstin' => $customer['gstin'] ?? '',
                             'credit_limit' => (float)($customer['credit_limit'] ?? 0),
                             'outstanding_balance' => (float)($customer['outstanding_balance'] ?? 0),
-                            'status' => $customer['status']
+                            'status' => $customer['status'] ?? 'active'
                         ];
 
                         session_regenerate_id(true);
                         $_SESSION['user'] = $user;
                         $_SESSION['user_type'] = $user['type'];
 
-                        // Update last_login
                         try {
                             $pdo->prepare("UPDATE customers SET last_login = NOW() WHERE id = ?")->execute([$user['id']]);
                         } catch (\Exception $ex) {
-                            // Column may not exist yet
                         }
 
                         return ['success' => true, 'message' => 'Login successful! Welcome back, ' . htmlspecialchars($user['name']) . '.', 'user' => $user];
@@ -261,8 +203,6 @@ class Auth
 
                 return ['success' => false, 'message' => 'Invalid phone/email or password. Please try again.'];
             } catch (\Exception $e) {
-                // Same reasoning as register(): never hand a database message to the
-                // sign-in form. It leaks schema and reads as gibberish to a customer.
                 error_log('DT login failed: ' . $e->getMessage());
                 return ['success' => false, 'message' => 'Sign-in is temporarily unavailable. Please try again shortly.'];
             }

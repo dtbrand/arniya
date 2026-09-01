@@ -2183,21 +2183,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 if (submitSpan) {
                     submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
                 }
-                if (data && data.success && data.pending_approval) {
-                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once approved.');
-                    var pType = (data.requested_type || typeCode).toLowerCase();
-                    if (pType === 'wholesale') {
-                        window.location.href = '/wholesale.php';
-                    } else if (pType === 'retailer') {
-                        window.location.href = '/retailer.php';
-                    } else if (pType === 'reseller') {
-                        window.location.href = '/reseller.php';
-                    } else {
-                        checkUserAuth();
-                    }
-                    return;
-                }
-                if (data.success && data.user) {
+                if (data && data.success && data.user) {
                     var u = data.user;
                     var srvType = (u.type || typeCode).toLowerCase();
                     var srvRole = srvType === 'wholesale' ? 'Wholesaler' : (srvType === 'reseller' ? 'Reseller' : (srvType === 'retailer' ? 'Retailer' : 'Customer'));
@@ -2215,7 +2201,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     };
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
-                    // Smart Redirection based on created user type
+                    // Smart Instant Direct-Approved Redirection
                     if (srvType === 'wholesale') {
                         window.location.href = '/wholesale.php';
                     } else if (srvType === 'retailer') {
@@ -2227,7 +2213,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         checkUserAuth();
                     }
                 } else {
-                    alert(data.message || 'Registration failed.');
+                    alert((data && data.message) ? data.message : 'Registration failed. Please check your details.');
                 }
             })
             .catch(function() {
