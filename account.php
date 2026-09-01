@@ -328,20 +328,21 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         /* ── Right Auth Studio Card ── */
         .ac-auth-card {
             background: #FFFFFF;
-            border-radius: var(--radius-xl);
+            border-radius: clamp(14px, 2.5vw, 20px);
             border: 1.5px solid var(--dt-gold);
-            box-shadow: 0 12px 40px rgba(138,104,31,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+            box-shadow: 0 8px 30px rgba(138,104,31,0.10), 0 0 0 1px rgba(255,255,255,0.6) inset;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            width: 100%;
         }
         .ac-auth-card-head {
-            padding: 24px 28px 16px;
+            padding: clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px) clamp(10px, 1.8vw, 14px);
             border-bottom: 1.5px solid #F1ECE1;
             background: #FAF8F4;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: clamp(10px, 2vw, 14px);
         }
         .ac-brand-lockup {
             display: flex;
@@ -349,20 +350,20 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             justify-content: space-between;
         }
         .ac-brand-logo-img {
-            height: 38px;
+            height: clamp(30px, 4vw, 36px);
             width: auto;
-            max-width: 170px;
+            max-width: 150px;
             object-fit: contain;
         }
         .ac-security-badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
             color: #15803D;
             background: #DCFCE7;
-            padding: 3px 8px;
+            padding: 2.5px 8px;
             border-radius: 12px;
             border: 1px solid #86EFAC;
         }
@@ -372,21 +373,21 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             display: grid;
             grid-template-columns: 1fr 1fr;
             background: #EFE8D6;
-            border-radius: 30px;
-            padding: 4px;
+            border-radius: 24px;
+            padding: 3px;
             border: 1px solid var(--dt-gold-border);
         }
         .ac-pill-btn {
-            padding: 10px 16px;
+            padding: clamp(7px, 1.4vw, 9px) clamp(10px, 2vw, 16px);
             border: none;
-            border-radius: 26px;
+            border-radius: 20px;
             background: transparent;
             font-family: var(--font-sans);
-            font-size: 0.84rem;
+            font-size: clamp(0.74rem, 1.6vw, 0.82rem);
             font-weight: 800;
             color: #635A4D;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-align: center;
@@ -394,43 +395,43 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         .ac-pill-btn.active {
             background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
             color: #111827;
-            box-shadow: 0 4px 14px rgba(184,134,11,0.35);
+            box-shadow: 0 3px 10px rgba(184,134,11,0.30);
             transform: scale(1.01);
         }
 
-        /* ── Form Body & Floating Inputs ── */
+        /* ── Form Body & Auto-Sized Fluid Inputs ── */
         .ac-auth-card-body {
-            padding: 24px 28px 28px;
+            padding: clamp(16px, 3vw, 24px);
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(12px, 2vw, 16px);
         }
         .ac-form-pane {
             display: none;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(12px, 2vw, 16px);
             animation: acFadeIn 0.2s ease-out;
         }
         .ac-form-pane.active {
             display: flex;
         }
         @keyframes acFadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .ac-field-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
             position: relative;
         }
         .ac-field-label {
-            font-size: 0.76rem;
+            font-size: clamp(0.70rem, 1.5vw, 0.75rem);
             font-weight: 800;
             color: #1F2937;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
             text-transform: uppercase;
             display: flex;
             justify-content: space-between;
@@ -449,9 +450,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
         .ac-input-icon {
             position: absolute;
-            left: 14px;
-            width: 18px;
-            height: 18px;
+            left: 12px;
+            width: 16px;
+            height: 16px;
             stroke: var(--dt-gold);
             stroke-width: 2.2;
             fill: none;
@@ -460,13 +461,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
         .ac-text-input {
             width: 100%;
-            height: 48px;
-            border-radius: 10px;
-            border: 1.5px solid #D1D5DB;
+            height: clamp(40px, 4.5vw, 44px);
+            border-radius: 8px;
+            border: 1.5px solid #D5D9E0;
             background: #FFFFFF;
-            padding: 0 14px 0 42px;
+            padding: 0 12px 0 36px;
             font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-size: clamp(0.84rem, 1.8vw, 0.90rem);
             font-weight: 600;
             color: var(--dt-text-main);
             outline: none;
@@ -474,7 +475,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             box-sizing: border-box;
         }
         .ac-text-input.no-icon {
-            padding-left: 14px;
+            padding-left: 12px;
         }
         .ac-text-input:focus {
             outline: none !important;
@@ -487,7 +488,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
         .ac-pwd-toggle {
             position: absolute;
-            right: 12px;
+            right: 10px;
             background: none;
             border: none;
             cursor: pointer;
@@ -497,8 +498,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             padding: 4px;
         }
         .ac-pwd-toggle svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             stroke: currentColor;
             stroke-width: 2;
             fill: none;
@@ -511,13 +512,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
         .ac-select-trigger {
             width: 100%;
-            height: 48px;
-            border: 1.5px solid #D1D5DB;
-            border-radius: 10px;
-            padding: 0 14px;
+            height: clamp(40px, 4.5vw, 44px);
+            border: 1.5px solid #D5D9E0;
+            border-radius: 8px;
+            padding: 0 12px;
             background: #FFFFFF;
             color: var(--dt-text-main);
-            font-size: 0.9rem;
+            font-size: clamp(0.84rem, 1.8vw, 0.88rem);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -528,7 +529,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
         .ac-select-trigger:hover, .ac-custom-select.active .ac-select-trigger {
             border-color: var(--dt-gold);
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.12);
         }
         .ac-select-menu {
             position: absolute;
@@ -536,9 +537,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             left: 0; right: 0;
             background: #FFFFFF;
             border: 1.5px solid var(--dt-gold);
-            border-radius: 12px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.18);
-            max-height: 260px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+            max-height: 240px;
             z-index: 1000;
             display: none;
             flex-direction: column;
@@ -548,17 +549,17 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             display: flex;
         }
         .ac-select-search {
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: #FAF8F4;
             border-bottom: 1px solid #E2DFD7;
         }
         .ac-select-search input {
             width: 100%;
-            height: 34px;
+            height: 32px;
             border: 1px solid #CBD5E1;
             border-radius: 6px;
-            padding: 0 10px;
-            font-size: 0.82rem;
+            padding: 0 8px;
+            font-size: 0.80rem;
             font-weight: 600;
             outline: none;
             box-sizing: border-box;
@@ -566,11 +567,11 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         .ac-select-options {
             overflow-y: auto;
             flex: 1;
-            max-height: 200px;
+            max-height: 180px;
         }
         .ac-select-option {
-            padding: 9px 14px;
-            font-size: 0.86rem;
+            padding: 8px 12px;
+            font-size: 0.84rem;
             font-weight: 600;
             color: #1F2937;
             cursor: pointer;
@@ -584,8 +585,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             color: var(--dt-gold);
         }
         .ac-flag-img {
-            width: 22px;
-            height: 15px;
+            width: 20px;
+            height: 14px;
             border-radius: 2px;
             object-fit: cover;
             border: 1px solid rgba(0,0,0,0.1);
@@ -594,37 +595,38 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         /* ── WhatsApp Phone Input Group ── */
         .ac-phone-input-group {
             display: flex;
-            border: 1.5px solid #D1D5DB;
-            border-radius: 10px;
+            border: 1.5px solid #D5D9E0;
+            border-radius: 8px;
             overflow: hidden;
             background: #FFFFFF;
             transition: all 0.2s ease;
         }
         .ac-phone-input-group:focus-within {
             border-color: var(--dt-gold);
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
         }
         .ac-phone-prefix {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 0 12px;
+            gap: 5px;
+            padding: 0 10px;
             background: #FAF5E8;
             border-right: 1.5px solid #E2DFD7;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: var(--dt-gold);
             user-select: none;
             flex-shrink: 0;
+            height: clamp(40px, 4.5vw, 44px);
         }
         .ac-phone-input {
             flex: 1;
-            height: 48px;
+            height: clamp(40px, 4.5vw, 44px);
             border: none;
             outline: none;
-            padding: 0 14px;
+            padding: 0 12px;
             font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-size: clamp(0.84rem, 1.8vw, 0.90rem);
             font-weight: 600;
             color: var(--dt-text-main);
             width: 100%;
@@ -635,17 +637,17 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         .ac-role-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
         .ac-role-card {
             border: 1.5px solid #E2DFD7;
             background: #FAF8F4;
-            border-radius: 10px;
-            padding: 10px 6px;
+            border-radius: 8px;
+            padding: 8px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
@@ -657,21 +659,21 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         .ac-role-card.active {
             border-color: var(--dt-gold);
             background: #FAF5E8;
-            box-shadow: 0 2px 8px rgba(138,104,31,0.25);
+            box-shadow: 0 2px 6px rgba(138,104,31,0.20);
         }
         .ac-role-icon {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .ac-role-icon svg {
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
         }
         .ac-role-name {
-            font-size: 0.74rem;
+            font-size: 0.70rem;
             font-weight: 800;
             color: #1F2937;
         }
@@ -682,13 +684,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         /* ── 100% Styled Master Primary Button ── */
         .dt-btn-gold {
             width: 100%;
-            height: 48px;
-            border-radius: 10px;
+            height: clamp(42px, 4.8vw, 46px);
+            border-radius: 8px;
             border: 1px solid #8A681F;
             background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
             color: #111827;
             font-family: var(--font-sans);
-            font-size: 0.9rem;
+            font-size: clamp(0.84rem, 1.8vw, 0.88rem);
             font-weight: 800;
             letter-spacing: -0.011em;
             cursor: pointer;
@@ -696,14 +698,14 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.30);
             transition: all 0.2s ease;
             text-decoration: none;
         }
         .dt-btn-gold:hover {
             background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
             transform: translateY(-1px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(184,134,11,0.40);
         }
         .dt-btn-emerald {
             width: 100%;
