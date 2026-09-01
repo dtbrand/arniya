@@ -1,22 +1,64 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */ 
+$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; 
+if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * pending.php - DT Brand's Admin Pending Payments & Invoices
+ * pending.php - DT Brand's Admin Pending Payments & UTR Verification
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = "Pending Payments & Invoices";
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/PaymentManager.php';
+
+use DTBrand\Database;
+
+$page_title = "Pending Payments & UTR Verification";
 $active_nav = "payments";
+$active_subnav = "pending";
+
+$pdo = Database::getConnection();
+$pendingTransactions = [];
+
+// Handle 1-Click Approval
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'approve_utr') {
+    $txId = (int)($_POST['tx_id'] ?? 0);
+    $orderNum = trim((string)($_POST['order_number'] ?? ''));
+    if ($pdo && $txId > 0 && !empty($orderNum)) {
+        try {
+            $stmt1 = $pdo->prepare("UPDATE `payment_transactions` SET `status` = 'captured', `notes` = 'Manually approved by admin', `updated_at` = NOW() WHERE `id` = :id");
+            $stmt1->execute([':id' => $txId]);
+
+            $stmt2 = $pdo->prepare("UPDATE `orders` SET `payment_status` = 'paid', `updated_at` = NOW() WHERE `order_number` = :ord");
+            $stmt2->execute([':ord' => $orderNum]);
+
+            $successMsg = "Order #{$orderNum} has been verified and marked as Paid!";
+        } catch (\Throwable $e) {
+            $errorMsg = "Error approving payment: " . $e->getMessage();
+        }
+    }
+}
+
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $stmt = $pdo->query("
+            SELECT * FROM `payment_transactions` 
+            WHERE `status` IN ('pending', 'authorized') 
+            ORDER BY `id` DESC 
+            LIMIT 50
+        ");
+        $pendingTransactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (\Throwable $e) {}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pending Payments & Invoices - DT Brand's Admin</title>
+    <title>Pending Payments & UTR Verification - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -28,54 +70,96 @@ $active_nav = "payments";
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Pending Payments & Invoices</span>
-                        <span class="adm-badge gold">2 Invoices</span>
+                        <span>Pending Payments &amp; UTR Verification</span>
+                        <span class="adm-badge gold"><?= count($pendingTransactions) ?> Pending</span>
                     </h1>
-                    <p class="adm-page-subtitle">Awaiting NEFT / RTGS bank wire verification from wholesale partners.</p>
+                    <p class="adm-page-subtitle">Verify customer-submitted 12-digit UPI UTR references, NEFT Bank Wire, and pending online gateways.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/payments/" class="adm-btn-secondary">← Back to Payments Suite</a>
-                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin/payments/" class="adm-btn-secondary">← Back to Payments Ledger</a>
+                    <a href="/admin/settings/payment.php" class="adm-btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>Gateway Settings</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- Page Specific Content -->
+            <?php if (!empty($successMsg)): ?>
+                <div style="background:#E8F5E9; border:1px solid #15803D; color:#15803D; padding:12px 16px; border-radius:8px; margin-bottom:16px; font-weight:700;">
+                    ✓ <?= htmlspecialchars($successMsg) ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="adm-table-card">
+                <div class="adm-table-toolbar">
+                    <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800; margin:0;">Pending UTR &amp; Gateway Audit Queue</h3></div>
+                </div>
+                <div class="adm-table-responsive">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th>Tx ID</th>
+                                <th>Order Number</th>
+                                <th>Customer</th>
+                                <th>Gateway</th>
+                                <th>Amount</th>
+                                <th>UTR / Reference</th>
+                                <th>Date &amp; Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($pendingTransactions)): ?>
+                                <?php foreach ($pendingTransactions as $tx): ?>
+                                    <tr>
+                                        <td>#<?= $tx['id'] ?></td>
+                                        <td><strong><?= htmlspecialchars($tx['order_number']) ?></strong></td>
+                                        <td>
+                                            <?= htmlspecialchars($tx['customer_name'] ?? 'Guest') ?><br>
+                                            <span style="font-size:0.75rem; color:#64748B;"><?= htmlspecialchars($tx['customer_phone'] ?? '') ?></span>
+                                        </td>
+                                        <td>
+                                            <span class="adm-badge <?= $tx['gateway'] === 'direct_upi' ? 'gold' : 'blue' ?>">
+                                                <?= strtoupper(htmlspecialchars($tx['gateway'])) ?>
+                                            </span>
+                                        </td>
+                                        <td><strong>₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
+                                        <td>
+                                            <?php if (!empty($tx['utr_reference'])): ?>
+                                                <code style="background:#FAF5E8; padding:3px 6px; border-radius:4px; color:#8A681F; font-weight:700;"><?= htmlspecialchars($tx['utr_reference']) ?></code>
+                                            <?php else: ?>
+                                                <span style="color:#94A3B8; font-style:italic;">Awaiting Submission</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td style="font-size:0.78rem; color:#64748B;"><?= date('d M Y, h:i A', strtotime($tx['created_at'])) ?></td>
+                                        <td>
+                                            <form method="POST" style="display:inline;" onsubmit="return confirm('Confirm receipt of payment for Order #<?= htmlspecialchars($tx['order_number']) ?>?');">
+                                                <input type="hidden" name="action" value="approve_utr">
+                                                <input type="hidden" name="tx_id" value="<?= $tx['id'] ?>">
+                                                <input type="hidden" name="order_number" value="<?= htmlspecialchars($tx['order_number']) ?>">
+                                                <button type="submit" class="adm-btn-primary adm-btn-sm" style="padding:4px 10px; font-size:0.75rem;">
+                                                    ✓ Approve &amp; Mark Paid
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="8" style="text-align:center; padding:30px; color:#64748B;">
+                                        ✨ All payments are up to date! Zero pending verifications in queue.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             
-        <div class="adm-table-card">
-            <div class="adm-table-toolbar">
-                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Pending Bank Wire Verification</h3></div>
-            </div>
-            <div class="adm-table-responsive">
-                <table class="adm-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Wholesaler</th>
-                            <th>Amount</th>
-                            <th>UTR #</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#ORD-9843</td>
-                            <td>Shree Ambika Silks</td>
-                            <td><strong>₹42,000</strong></td>
-                            <td><code>HDFC99482019</code></td>
-                            <td><button class="adm-btn-primary adm-btn-sm" onclick="showToastSafe('Razorpay settles payments via the signed webhook (api/webhooks/razorpay.php) — manual verification is not a payment write. Open the order to update fulfilment.')">✓ Verify & Settle</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<script>
-function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
-</script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
