@@ -155,90 +155,94 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
             }
         }
 
-        /* ── Left Editorial Showcase ── */
+        /* ── Left Designer E-Commerce Showcase ── */
         .ac-hero-showcase {
-            background: linear-gradient(145deg, #181512 0%, #2A241E 60%, #15120E 100%);
+            background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F5EDE0 100%);
             border-radius: var(--radius-xl);
-            border: 1.5px solid var(--dt-gold);
-            padding: clamp(28px, 5vw, 44px);
-            color: #FFFFFF;
+            border: 1.5px solid var(--dt-gold-border);
+            padding: clamp(24px, 4vw, 36px);
+            color: var(--dt-text-main);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+            box-shadow: 0 10px 30px rgba(138,104,31,0.08);
         }
         .ac-hero-showcase::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8A681F, #D4AF37, #FFFFFF, #D4AF37, #8A681F);
+            height: 3.5px;
+            background: linear-gradient(90deg, #8A681F, #D4AF37, #E6CA65, #D4AF37, #8A681F);
         }
         .ac-showcase-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--dt-gold-bright);
-            color: #E6CA65;
+            background: #FAF5E8;
+            border: 1px solid var(--dt-gold);
+            color: var(--dt-gold);
             font-size: 0.72rem;
             font-weight: 800;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             width: fit-content;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .ac-showcase-title {
             font-family: var(--font-serif);
-            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-size: clamp(1.35rem, 3vw, 1.85rem);
             font-weight: 800;
-            color: #FAF5E8;
-            letter-spacing: 0.04em;
-            line-height: 1.25;
-            margin: 0 0 12px 0;
+            color: #181512;
+            letter-spacing: 0.02em;
+            line-height: 1.2;
+            margin: 0 0 6px 0;
         }
         .ac-showcase-subtitle {
-            font-size: 0.9rem;
-            color: #D6CCA8;
-            line-height: 1.5;
-            margin: 0 0 28px 0;
+            font-size: 0.85rem;
+            color: #64748B;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 0 0 22px 0;
         }
         .ac-benefits-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 12px;
+            margin-bottom: 22px;
         }
         .ac-benefit-card {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 14px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(212,175,55,0.22);
+            background: #FFFFFF;
+            border: 1.2px solid rgba(138,104,31,0.2);
             border-radius: 12px;
-            padding: 12px 14px;
+            padding: 12px 16px;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
         .ac-benefit-card:hover {
-            background: rgba(255,255,255,0.07);
-            border-color: var(--dt-gold-bright);
+            background: #FAF8F4;
+            border-color: var(--dt-gold);
             transform: translateX(3px);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.1);
         }
         .ac-benefit-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--dt-gold-pale);
-            border: 1px solid var(--dt-gold);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+            border: 1.2px solid var(--dt-gold);
             color: var(--dt-gold);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.15);
         }
         .ac-benefit-icon svg {
             width: 18px;
@@ -250,22 +254,24 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
         .ac-benefit-title {
             font-size: 0.88rem;
             font-weight: 800;
-            color: #FAF5E8;
+            color: #181512;
             margin-bottom: 2px;
         }
         .ac-benefit-desc {
             font-size: 0.76rem;
-            color: #CBD5E1;
-            line-height: 1.4;
+            color: #64748B;
+            font-weight: 500;
+            line-height: 1.35;
         }
         .ac-showcase-footer {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 16px;
+            border-top: 1px dashed var(--dt-gold-border);
+            padding-top: 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.74rem;
-            color: #94A3B8;
+            font-size: 0.75rem;
+            color: #64748B;
+            font-weight: 600;
         }
         .ac-trust-dot {
             width: 6px;
@@ -935,12 +941,15 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
             <!-- ════════════ VIEW 1: AUTHENTICATION FOR GUESTS ════════════ -->
             <div id="authCardWrap" class="ac-auth-split-grid">
                 
-                <!-- Left Editorial Privilege Showcase -->
+                <!-- Left Designer E-Commerce Showcase -->
                 <div class="ac-hero-showcase">
                     <div>
-                        <div class="ac-showcase-badge">👑 Royal Privilege Club</div>
-                        <h1 class="ac-showcase-title">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
-                        <p class="ac-showcase-subtitle">Surat Central Handloom Depot &amp; B2B Wholesale Textile Hub. Access pure silk collections, verified trade margins, and concierge fulfillment.</p>
+                        <div class="ac-showcase-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <span>VIP Member Privileges</span>
+                        </div>
+                        <h1 class="ac-showcase-title">Welcome to DT Brand's</h1>
+                        <p class="ac-showcase-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
 
                         <div class="ac-benefits-list">
                             <div class="ac-benefit-card">
@@ -948,18 +957,8 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                                     <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                                 </div>
                                 <div>
-                                    <div class="ac-benefit-title">100% Handloom Silk Mark Certified</div>
-                                    <div class="ac-benefit-desc">Authentic Banarasi, Kanjeevaram, and Paithani silks woven by master artisans with pure tested zari.</div>
-                                </div>
-                            </div>
-
-                            <div class="ac-benefit-card">
-                                <div class="ac-benefit-icon">
-                                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                                </div>
-                                <div>
-                                    <div class="ac-benefit-title">Real-Time Dispatch &amp; Courier Tracking</div>
-                                    <div class="ac-benefit-desc">Instant live AWB tracking via VRL Logistics, BlueDart, and Delhivery with automated WhatsApp alerts.</div>
+                                    <div class="ac-benefit-title">100% Silk Mark Certified</div>
+                                    <div class="ac-benefit-desc">Authentic pure handloom weaves with tested zari.</div>
                                 </div>
                             </div>
 
@@ -968,8 +967,18 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                                     <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                                 </div>
                                 <div>
-                                    <div class="ac-benefit-title">Wholesale &amp; Reseller Trade Tiers</div>
-                                    <div class="ac-benefit-desc">Unlock direct mill-rate bulk pricing, GST tax invoices, catalog downloads, and godown dispatches.</div>
+                                    <div class="ac-benefit-title">Wholesale &amp; Reseller Margins</div>
+                                    <div class="ac-benefit-desc">Exclusive direct mill-rate bulk pricing &amp; GST invoices.</div>
+                                </div>
+                            </div>
+
+                            <div class="ac-benefit-card">
+                                <div class="ac-benefit-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-benefit-title">Express Dispatch &amp; Live Tracking</div>
+                                    <div class="ac-benefit-desc">Instant live courier AWB updates via WhatsApp.</div>
                                 </div>
                             </div>
 
@@ -978,16 +987,16 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                                     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                 </div>
                                 <div>
-                                    <div class="ac-benefit-title">Personal Fashion Stylist on WhatsApp</div>
-                                    <div class="ac-benefit-desc">1-on-1 concierge assistance for custom blouse tailoring, bridal trousseau, and bulk lot video calls.</div>
+                                    <div class="ac-benefit-title">Personal Fashion Concierge</div>
+                                    <div class="ac-benefit-desc">1-on-1 styling, custom tailoring &amp; video lot view.</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="ac-showcase-footer">
-                        <div><span class="ac-trust-dot"></span> 25,000+ Verified Customers • 1,400+ Active Boutiques</div>
-                        <div style="font-weight: 700; color: #E6CA65;">Surat Depot Dock 1</div>
+                        <div><span class="ac-trust-dot"></span> 25,000+ Happy Clients • 1,400+ Boutiques</div>
+                        <div style="font-weight: 800; color: #8A681F;">Surat Loom Depot</div>
                     </div>
                 </div>
 
