@@ -1547,7 +1547,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                     <div class="ac-select-trigger" onclick="toggleDropdown('countrySelectBox')">
                                         <div style="display:flex; align-items:center; gap:8px;">
                                             <img src="https://flagcdn.com/w40/in.png" alt="India" class="ac-flag-img" id="displayCountryFlag">
-                                            <span id="displayCountryText">India (+91)</span>
+                                            <span id="displayCountryText">India (IN)</span>
                                         </div>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                     </div>
@@ -1555,7 +1555,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                         <div class="ac-select-search">
                                             <div class="ac-search-input-wrap">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                <input type="text" id="countrySearchInput" placeholder="Search country or code (+91, +1, UK...)" oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                                <input type="text" id="countrySearchInput" placeholder="Search country or code (IN, US, UK, India...)" oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
                                             </div>
                                         </div>
                                         <div class="ac-select-options" id="countryOptionsList">
@@ -1902,7 +1902,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         '<span class="ac-opt-name">' + c.name + '</span>' +
                     '</div>' +
                     '<div class="ac-opt-right">' +
-                        '<span class="ac-dial-pill">' + c.dial + '</span>' +
+                        '<span class="ac-dial-pill">' + c.code.toUpperCase() + '</span>' +
                         (isSelected ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '') +
                     '</div>' +
                 '</div>';
@@ -1944,7 +1944,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             var dHint = document.getElementById('digitCountHint');
 
             if (dFlag) dFlag.src = c.flagImg;
-            if (dText) dText.textContent = c.name + ' (' + c.dial + ')';
+            if (dText) dText.textContent = c.name + ' (' + c.code.toUpperCase() + ')';
             if (wFlag) wFlag.src = c.flagImg;
             if (wDial) wDial.textContent = c.dial;
             if (dHint) dHint.textContent = c.digits + '-digit number';
