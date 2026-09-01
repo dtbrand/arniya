@@ -1344,7 +1344,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                             <span class="ac-tile-title">Customer Account</span>
                                             <span class="ac-tile-badge gold-badge">Instant</span>
                                         </div>
-                                        <span class="ac-tile-desc">Personal retail shopping &amp; order tracking</span>
+                                        <span class="ac-tile-desc">Personal Shopping</span>
                                     </div>
                                     <div class="ac-tile-arrow-btn gold-arrow-btn">
                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1367,7 +1367,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                             <span class="ac-tile-title">For Business</span>
                                             <span class="ac-tile-badge blue-badge">B2B Trade</span>
                                         </div>
-                                        <span class="ac-tile-desc">Wholesale, B2B retailers &amp; resellers hub</span>
+                                        <span class="ac-tile-desc">Wholesale &amp; Resellers</span>
                                     </div>
                                     <div class="ac-tile-arrow-btn dark-arrow-btn">
                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1827,7 +1827,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             if (flow === 'customer') {
                 if (roleGroup) roleGroup.style.display = 'none';
                 if (tagEl) tagEl.textContent = '👤 Customer Account';
-                if (subEl) subEl.textContent = 'Personal retail shopping & instant order tracking';
+                if (subEl) subEl.textContent = 'Personal Shopping & instant order tracking';
                 if (submitSpan) submitSpan.textContent = 'Create Customer Account';
                 var regRole = document.getElementById('regRole');
                 if (regRole) regRole.value = 'Customer';
@@ -1835,7 +1835,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             } else {
                 if (roleGroup) roleGroup.style.display = 'block';
                 if (tagEl) tagEl.textContent = '🏢 Business Trade Account';
-                if (subEl) subEl.textContent = 'Wholesale, B2B retailer & reseller volume portal';
+                if (subEl) subEl.textContent = 'Wholesale, B2B retailer & reseller portal';
                 if (submitSpan) submitSpan.textContent = 'Create Business Account';
                 selectRole('Retailer');
             }
