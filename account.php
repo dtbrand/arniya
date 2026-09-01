@@ -512,6 +512,40 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             fill: none;
         }
 
+        /* ── Login Footer & Forgot Password Link ── */
+        .ac-login-footer-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 6px;
+            padding: 2px 0;
+        }
+        .ac-forgot-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #8A681F;
+            text-decoration: none;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: all 0.2s cubic-bezier(0.34, 1.25, 0.64, 1);
+        }
+        .ac-forgot-link:hover {
+            color: #5A4210;
+            background: #FAF5E8;
+            transform: translateX(2px);
+        }
+        .ac-forgot-link svg {
+            stroke: #8A681F;
+            transition: transform 0.2s ease;
+        }
+        .ac-forgot-link:hover svg {
+            stroke: #5A4210;
+            transform: rotate(-15deg);
+        }
+
         /* ── Country Flag Dropdown ── */
         .ac-custom-select {
             position: relative;
@@ -1314,7 +1348,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             <div class="ac-field-group">
                                 <label class="ac-field-label" for="loginPass">
                                     <span class="ac-field-label-text">Password <span class="req">*</span></span>
-                                    <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="color:var(--dt-gold); font-weight:700; text-decoration:underline; font-size:0.75rem;">Forgot Password?</a>
                                 </label>
                                 <div class="ac-input-wrapper">
                                     <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -1329,6 +1362,17 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                                 <span>Sign In to Account</span>
                             </button>
+
+                            <div class="ac-login-footer-row">
+                                <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" class="ac-forgot-link">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                                        <path d="m21 2-9.6 9.6"></path>
+                                        <path d="m15.5 7.5 3 3L22 7l-3-3"></path>
+                                    </svg>
+                                    <span>Forgot Password?</span>
+                                </a>
+                            </div>
                         </form>
 
                         <!-- 2A. CHOOSE ACCOUNT PROFILE PANE (FIRST STEP) -->
