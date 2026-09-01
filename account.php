@@ -62,6 +62,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             100% { box-shadow: 0 0 18px rgba(212, 175, 55, 0.65); }
         }
 
+        html {
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             font-family: var(--font-sans);
             background: var(--dt-bg-canvas);
@@ -72,12 +79,18 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             margin: 0;
-            padding: 0;
+            padding: 0 !important;
+            padding-bottom: 50px !important;
+            overflow-x: hidden;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
 
         .page-wrapper {
-            flex: 1;
+            flex: 1 0 auto;
             width: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ── Main Canvas Wrapper ── */
@@ -85,8 +98,28 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             width: 100%;
             max-width: 1240px;
             margin: 0 auto;
-            padding: clamp(20px, 4vw, 40px) clamp(16px, 3vw, 32px);
+            padding: clamp(16px, 4vw, 36px) clamp(16px, 3vw, 32px);
+            padding-bottom: 50px;
             box-sizing: border-box;
+            flex: 1;
+        }
+
+        /* ── Completely Hide Floating Mobile Footer on Account Page ── */
+        .shop-smart-bottom-footer,
+        #shopSmartBottomFooter,
+        .mf-overlay,
+        #mfOverlay,
+        .bottom-sheet,
+        .sheet-overlay,
+        #sortOverlay,
+        #moreOverlay {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            position: absolute !important;
+            top: -9999px !important;
         }
 
         /* ── Breadcrumb Bar ── */
@@ -941,9 +974,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     <span class="ac-breadcrumb-sep">/</span>
                     <span class="ac-breadcrumb-current" id="acBreadcrumbTitle">My Account</span>
                 </div>
-                <a href="/shop.php" class="ac-back-btn">
+                <a href="/" class="ac-back-btn">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    <span>Back to Shop</span>
+                    <span>Back to Home</span>
                 </a>
             </div>
 
