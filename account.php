@@ -736,21 +736,21 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         .ac-choice-card {
             background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F4 100%);
             border: 1.5px solid var(--dt-gold-border);
-            border-radius: 14px;
-            padding: 16px 18px;
+            border-radius: 12px;
+            padding: 13px 14px;
             cursor: pointer;
             transition: all 0.22s cubic-bezier(0.34, 1.25, 0.64, 1);
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             box-shadow: 0 2px 8px rgba(138,104,31,0.06);
             text-align: left;
         }
         .ac-choice-card:hover {
             border-color: var(--dt-gold);
             transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(138,104,31,0.16);
+            box-shadow: 0 6px 20px rgba(138,104,31,0.15);
             background: #FFFFFF;
         }
         .ac-choice-card.business {
@@ -759,20 +759,20 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
         .ac-choice-card.business:hover {
             border-color: #1E293B;
-            box-shadow: 0 6px 22px rgba(15,23,42,0.14);
+            box-shadow: 0 6px 20px rgba(15,23,42,0.12);
         }
         .ac-choice-top {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
+            align-items: center;
+            gap: 11px;
         }
         .ac-choice-icon-wrap {
             flex-shrink: 0;
         }
         .ac-choice-icon-gold {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
             background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
             border: 1.2px solid var(--dt-gold);
             color: var(--dt-gold);
@@ -782,9 +782,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             box-shadow: 0 2px 6px rgba(138,104,31,0.12);
         }
         .ac-choice-icon-dark {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
             background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
             border: 1.2px solid #334155;
             color: #FAF5E8;
@@ -798,13 +798,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
         .ac-choice-title-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .ac-choice-title {
@@ -830,34 +830,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             color: #1D4ED8;
             background: #EFF6FF;
             border-color: #BFDBFE;
-        }
-        .ac-choice-desc {
-            font-size: clamp(0.76rem, 1.6vw, 0.80rem);
-            color: #4B5563;
-            font-weight: 500;
-            margin: 0;
-            line-height: 1.45;
-        }
-        .ac-choice-pills {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-        .ac-choice-pill {
-            font-size: 0.70rem;
-            font-weight: 700;
-            color: #334155;
-            background: #F8FAFC;
-            padding: 3px 8px;
-            border-radius: 7px;
-            border: 1px solid #E2E8F0;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .ac-choice-pill svg {
-            flex-shrink: 0;
         }
 
         /* Dark Obsidian Master Button for Business Card */
@@ -1295,9 +1267,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                         <!-- 2A. CHOOSE ACCOUNT PROFILE PANE (FIRST STEP) -->
                         <div id="regProfileChoicePane" class="ac-form-pane">
-                            <div style="text-align:center; margin-bottom: 2px;">
-                                <h3 style="font-size: 1.02rem; font-weight: 800; color: #111827; margin: 0 0 3px 0;">Select Account Type</h3>
-                                <p style="font-size: 0.76rem; color: #64748B; margin: 0; font-weight: 500;">Choose how you want to shop or partner with DT Brand's</p>
+                            <div style="text-align:center; margin-bottom: 4px;">
+                                <h3 style="font-size: 1.02rem; font-weight: 800; color: #111827; margin: 0;">Select Account Type</h3>
                             </div>
 
                             <!-- Option 1: Customer (Retail Shopper) -->
@@ -1313,24 +1284,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                             <h4 class="ac-choice-title">Customer Account</h4>
                                             <span class="ac-choice-badge">Instant Activation</span>
                                         </div>
-                                        <p class="ac-choice-desc">Personal shopping, bridal sarees &amp; luxury ethnic wear at retail rates with instant checkout.</p>
                                     </div>
                                 </div>
-                                <div class="ac-choice-pills">
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Instant Access</span>
-                                    </span>
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Live Tracking</span>
-                                    </span>
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Saved Wishlist</span>
-                                    </span>
-                                </div>
-                                <button type="button" class="dt-btn-gold" style="margin-top: 2px;">
+                                <button type="button" class="dt-btn-gold">
                                     <span>Continue as Customer</span>
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </button>
@@ -1349,24 +1305,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                             <h4 class="ac-choice-title">For Business</h4>
                                             <span class="ac-choice-badge biz">B2B Trade Portal</span>
                                         </div>
-                                        <p class="ac-choice-desc">Wholesalers, B2B retailers &amp; resellers accessing mill rates, master bales &amp; MOQ lots.</p>
                                     </div>
                                 </div>
-                                <div class="ac-choice-pills">
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Mill Wholesale</span>
-                                    </span>
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Bale / Set Lots</span>
-                                    </span>
-                                    <span class="ac-choice-pill">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>Dedicated Hub</span>
-                                    </span>
-                                </div>
-                                <button type="button" class="dt-btn-dark" style="margin-top: 2px;">
+                                <button type="button" class="dt-btn-dark">
                                     <span>Continue for Business</span>
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </button>
