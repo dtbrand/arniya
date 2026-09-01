@@ -547,6 +547,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         }
 
         /* ── Country Flag Dropdown ── */
+        /* ── Master Luxury Country & State Dropdown ── */
         .ac-custom-select {
             position: relative;
             width: 100%;
@@ -565,72 +566,151 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.34, 1.25, 0.64, 1);
             box-sizing: border-box;
+            user-select: none;
         }
         .ac-select-trigger:hover, .ac-custom-select.active .ac-select-trigger {
             border-color: var(--dt-gold);
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.12);
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.14);
+        }
+        .ac-custom-select.active .ac-select-trigger svg {
+            transform: rotate(180deg);
+        }
+        .ac-select-trigger svg {
+            transition: transform 0.2s ease;
         }
         .ac-select-menu {
             position: absolute;
             top: calc(100% + 4px);
-            left: 0; right: 0;
+            left: 0;
+            right: 0;
             background: #FFFFFF;
             border: 1.5px solid var(--dt-gold);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.16);
-            max-height: 240px;
-            z-index: 1000;
+            box-shadow: 0 12px 32px rgba(138,104,31,0.18), 0 4px 12px rgba(0,0,0,0.10);
+            max-height: 280px;
+            z-index: 1050;
             display: none;
             flex-direction: column;
             overflow: hidden;
+            animation: acDropFade 0.2s cubic-bezier(0.34, 1.25, 0.64, 1);
+        }
+        @keyframes acDropFade {
+            from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .ac-custom-select.active .ac-select-menu {
             display: flex;
         }
         .ac-select-search {
-            padding: 6px 10px;
+            padding: 8px 10px;
             background: #FAF8F4;
-            border-bottom: 1px solid #E2DFD7;
+            border-bottom: 1px solid var(--dt-gold-border);
+        }
+        .ac-search-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .ac-search-input-wrap svg {
+            position: absolute;
+            left: 9px;
+            pointer-events: none;
         }
         .ac-select-search input {
             width: 100%;
-            height: 32px;
-            border: 1px solid #CBD5E1;
+            height: 34px;
+            border: 1.2px solid #CBD5E1;
             border-radius: 6px;
-            padding: 0 8px;
-            font-size: 0.80rem;
+            padding: 0 8px 0 30px;
+            font-size: 0.82rem;
             font-weight: 600;
+            font-family: var(--font-sans);
+            color: #111827;
             outline: none;
             box-sizing: border-box;
+            background: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .ac-select-search input:focus {
+            border-color: var(--dt-gold);
+            box-shadow: 0 0 0 2.5px rgba(138,104,31,0.15);
         }
         .ac-select-options {
             overflow-y: auto;
             flex: 1;
-            max-height: 180px;
+            max-height: 220px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--dt-gold-border) #FAF8F4;
+        }
+        .ac-select-options::-webkit-scrollbar {
+            width: 5px;
+        }
+        .ac-select-options::-webkit-scrollbar-thumb {
+            background: var(--dt-gold);
+            border-radius: 4px;
         }
         .ac-select-option {
-            padding: 8px 12px;
-            font-size: 0.84rem;
+            padding: 9px 12px;
+            font-size: 0.83rem;
             font-weight: 600;
             color: #1F2937;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: background 0.15s ease;
+            justify-content: space-between;
+            gap: 10px;
+            transition: background 0.15s ease, color 0.15s ease;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .ac-select-option:last-child {
+            border-bottom: none;
         }
         .ac-select-option:hover {
-            background: var(--dt-gold-pale);
+            background: #FAF5E8;
+            color: #705114;
+        }
+        .ac-select-option.selected {
+            background: #FAF5E8;
+            color: #8A681F;
+            font-weight: 800;
+        }
+        .ac-opt-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .ac-opt-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ac-opt-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .ac-dial-pill {
+            font-size: 0.72rem;
+            font-weight: 800;
             color: var(--dt-gold);
+            background: #FFFFFF;
+            border: 1px solid var(--dt-gold-border);
+            padding: 1.5px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.01em;
         }
         .ac-flag-img {
-            width: 20px;
-            height: 14px;
+            width: 22px;
+            height: 15px;
             border-radius: 2px;
             object-fit: cover;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.12);
+            flex-shrink: 0;
         }
 
         /* ── WhatsApp Phone Input Group ── */
@@ -1473,7 +1553,10 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                     </div>
                                     <div class="ac-select-menu" id="countryDropdownMenu">
                                         <div class="ac-select-search">
-                                            <input type="text" id="countrySearchInput" placeholder="🔍 Search world countries..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                            <div class="ac-search-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                <input type="text" id="countrySearchInput" placeholder="Search country or code (+91, +1, UK...)" oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                            </div>
                                         </div>
                                         <div class="ac-select-options" id="countryOptionsList">
                                             <!-- Dynamically Populated -->
@@ -1519,7 +1602,10 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                         </div>
                                         <div class="ac-select-menu" id="stateDropdownMenu">
                                             <div class="ac-select-search">
-                                                <input type="text" id="stateSearchInput" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                                <div class="ac-search-input-wrap">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                    <input type="text" id="stateSearchInput" placeholder="Search state / province..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                                </div>
                                             </div>
                                             <div class="ac-select-options" id="stateOptionsList">
                                                 <!-- Dynamically Populated -->
@@ -1715,18 +1801,52 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
                     'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
                     'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi (NCT)', 
-                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry'
+                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Dadra and Nagar Haveli and Daman and Diu'
                 ]
             },
             { code: 'ae', name: 'United Arab Emirates', flagImg: 'https://flagcdn.com/w40/ae.png', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'] },
-            { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania'] },
-            { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'Manchester', 'West Midlands'] },
-            { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan'] },
-            { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia'] },
-            { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'West Region'] },
-            { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak'] },
-            { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Jeddah'] },
-            { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor'] }
+            { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania', 'North Carolina', 'Michigan', 'Virginia', 'Massachusetts', 'Arizona'] },
+            { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands', 'Greater Manchester', 'West Yorkshire'] },
+            { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan', 'Nova Scotia'] },
+            { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia', 'Tasmania', 'Australian Capital Territory'] },
+            { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Jeddah', 'Asir', 'Tabuk', 'Al Qassim'] },
+            { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor', 'Umm Salal', 'Al Daayen'] },
+            { code: 'kw', name: 'Kuwait', flagImg: 'https://flagcdn.com/w40/kw.png', dial: '+965', digits: 8, states: ['Al Asimah', 'Hawalli', 'Farwaniya', 'Ahmadi', 'Jahra', 'Mubarak Al-Kabeer'] },
+            { code: 'om', name: 'Oman', flagImg: 'https://flagcdn.com/w40/om.png', dial: '+968', digits: 8, states: ['Muscat', 'Dhofar', 'Musandam', 'Al Batinah', 'Ad Dakhiliyah', 'Ash Sharqiyah'] },
+            { code: 'bh', name: 'Bahrain', flagImg: 'https://flagcdn.com/w40/bh.png', dial: '+973', digits: 8, states: ['Capital Governorate', 'Muharraq', 'Northern Governorate', 'Southern Governorate'] },
+            { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'North-East Region', 'West Region'] },
+            { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak', 'Melaka', 'Pahang', 'Kedah'] },
+            { code: 'nz', name: 'New Zealand', flagImg: 'https://flagcdn.com/w40/nz.png', dial: '+64', digits: 9, states: ['Auckland', 'Wellington', 'Canterbury', 'Waikato', 'Bay of Plenty', 'Otago', 'Manawatu-Wanganui'] },
+            { code: 'za', name: 'South Africa', flagImg: 'https://flagcdn.com/w40/za.png', dial: '+27', digits: 9, states: ['Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Eastern Cape', 'Free State', 'Mpumalanga', 'Limpopo'] },
+            { code: 'np', name: 'Nepal', flagImg: 'https://flagcdn.com/w40/np.png', dial: '+977', digits: 10, states: ['Bagmati', 'Gandaki', 'Koshi', 'Lumbini', 'Madhesh', 'Karnali', 'Sudurpashchim'] },
+            { code: 'lk', name: 'Sri Lanka', flagImg: 'https://flagcdn.com/w40/lk.png', dial: '+94', digits: 9, states: ['Western Province', 'Central Province', 'Southern Province', 'Northern Province', 'Eastern Province', 'North Western Province'] },
+            { code: 'bd', name: 'Bangladesh', flagImg: 'https://flagcdn.com/w40/bd.png', dial: '+880', digits: 10, states: ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'] },
+            { code: 'mu', name: 'Mauritius', flagImg: 'https://flagcdn.com/w40/mu.png', dial: '+230', digits: 8, states: ['Port Louis', 'Plaines Wilhems', 'Pamplemousses', 'Flacq', 'Grand Port', 'Riviere du Rempart', 'Black River'] },
+            { code: 'fj', name: 'Fiji', flagImg: 'https://flagcdn.com/w40/fj.png', dial: '+679', digits: 7, states: ['Central Division', 'Western Division', 'Northern Division', 'Eastern Division'] },
+            { code: 'de', name: 'Germany', flagImg: 'https://flagcdn.com/w40/de.png', dial: '+49', digits: 10, states: ['Bavaria', 'North Rhine-Westphalia', 'Baden-Württemberg', 'Lower Saxony', 'Hesse', 'Berlin', 'Saxony'] },
+            { code: 'fr', name: 'France', flagImg: 'https://flagcdn.com/w40/fr.png', dial: '+33', digits: 9, states: ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Nouvelle-Aquitaine', 'Occitanie', 'Provence-Alpes-Côte d\'Azur'] },
+            { code: 'it', name: 'Italy', flagImg: 'https://flagcdn.com/w40/it.png', dial: '+39', digits: 10, states: ['Lombardy', 'Lazio', 'Campania', 'Veneto', 'Sicily', 'Piedmont', 'Emilia-Romagna', 'Tuscany'] },
+            { code: 'es', name: 'Spain', flagImg: 'https://flagcdn.com/w40/es.png', dial: '+34', digits: 9, states: ['Madrid', 'Catalonia', 'Andalusia', 'Valencia', 'Galicia', 'Basque Country', 'Castile and León'] },
+            { code: 'nl', name: 'Netherlands', flagImg: 'https://flagcdn.com/w40/nl.png', dial: '+31', digits: 9, states: ['North Holland', 'South Holland', 'North Brabant', 'Gelderland', 'Utrecht', 'Overijssel'] },
+            { code: 'ch', name: 'Switzerland', flagImg: 'https://flagcdn.com/w40/ch.png', dial: '+41', digits: 9, states: ['Zurich', 'Bern', 'Vaud', 'Geneva', 'Aargau', 'St. Gallen', 'Lucerne'] },
+            { code: 'be', name: 'Belgium', flagImg: 'https://flagcdn.com/w40/be.png', dial: '+32', digits: 9, states: ['Antwerp', 'East Flanders', 'Flemish Brabant', 'West Flanders', 'Brussels Capital'] },
+            { code: 'se', name: 'Sweden', flagImg: 'https://flagcdn.com/w40/se.png', dial: '+46', digits: 9, states: ['Stockholm', 'Västra Götaland', 'Skåne', 'Östergötland', 'Uppsala'] },
+            { code: 'no', name: 'Norway', flagImg: 'https://flagcdn.com/w40/no.png', dial: '+47', digits: 8, states: ['Oslo', 'Viken', 'Vestland', 'Rogaland', 'Trøndelag', 'Innlandet'] },
+            { code: 'dk', name: 'Denmark', flagImg: 'https://flagcdn.com/w40/dk.png', dial: '+45', digits: 8, states: ['Capital Region', 'Central Denmark', 'Region of Southern Denmark', 'Zealand', 'North Denmark'] },
+            { code: 'ie', name: 'Ireland', flagImg: 'https://flagcdn.com/w40/ie.png', dial: '+353', digits: 9, states: ['Dublin', 'Cork', 'Galway', 'Limerick', 'Waterford', 'Kildare'] },
+            { code: 'ke', name: 'Kenya', flagImg: 'https://flagcdn.com/w40/ke.png', dial: '+254', digits: 9, states: ['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Eldoret', 'Kiambu'] },
+            { code: 'tz', name: 'Tanzania', flagImg: 'https://flagcdn.com/w40/tz.png', dial: '+255', digits: 9, states: ['Dar es Salaam', 'Mwanza', 'Arusha', 'Dodoma', 'Zanzibar', 'Kilimanjaro'] },
+            { code: 'ug', name: 'Uganda', flagImg: 'https://flagcdn.com/w40/ug.png', dial: '+256', digits: 9, states: ['Kampala', 'Wakiso', 'Mukono', 'Jinja', 'Gulu', 'Mbarara'] },
+            { code: 'ng', name: 'Nigeria', flagImg: 'https://flagcdn.com/w40/ng.png', dial: '+234', digits: 10, states: ['Lagos', 'Kano', 'Rivers', 'Kaduna', 'Oyo', 'Abuja (FCT)', 'Ogun'] },
+            { code: 'gh', name: 'Ghana', flagImg: 'https://flagcdn.com/w40/gh.png', dial: '+233', digits: 9, states: ['Greater Accra', 'Ashanti', 'Western', 'Eastern', 'Central'] },
+            { code: 'th', name: 'Thailand', flagImg: 'https://flagcdn.com/w40/th.png', dial: '+66', digits: 9, states: ['Bangkok', 'Chiang Mai', 'Phuket', 'Chonburi', 'Nonthaburi', 'Samut Prakan'] },
+            { code: 'id', name: 'Indonesia', flagImg: 'https://flagcdn.com/w40/id.png', dial: '+62', digits: 10, states: ['Jakarta', 'West Java', 'East Java', 'Central Java', 'Bali', 'North Sumatra'] },
+            { code: 'ph', name: 'Philippines', flagImg: 'https://flagcdn.com/w40/ph.png', dial: '+63', digits: 10, states: ['Metro Manila', 'Calabarzon', 'Central Luzon', 'Central Visayas', 'Western Visayas', 'Davao'] },
+            { code: 'hk', name: 'Hong Kong', flagImg: 'https://flagcdn.com/w40/hk.png', dial: '+852', digits: 8, states: ['Hong Kong Island', 'Kowloon', 'New Territories'] },
+            { code: 'jp', name: 'Japan', flagImg: 'https://flagcdn.com/w40/jp.png', dial: '+81', digits: 10, states: ['Tokyo', 'Osaka', 'Kanagawa', 'Aichi', 'Saitama', 'Chiba', 'Hyogo', 'Hokkaido'] },
+            { code: 'kr', name: 'South Korea', flagImg: 'https://flagcdn.com/w40/kr.png', dial: '+82', digits: 10, states: ['Seoul', 'Gyeonggi', 'Busan', 'Incheon', 'Daegu', 'Daejeon'] },
+            { code: 'br', name: 'Brazil', flagImg: 'https://flagcdn.com/w40/br.png', dial: '+55', digits: 11, states: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia', 'Paraná', 'Rio Grande do Sul'] },
+            { code: 'mx', name: 'Mexico', flagImg: 'https://flagcdn.com/w40/mx.png', dial: '+52', digits: 10, states: ['Mexico City', 'Jalisco', 'Nuevo León', 'Puebla', 'Guanajuato', 'Veracruz'] }
         ];
 
         var selectedCountry = ALL_WORLD_COUNTRIES[0];
@@ -1738,7 +1858,25 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             if (!box) return;
             var isActive = box.classList.contains('active');
             document.querySelectorAll('.ac-custom-select').forEach(function(el){ el.classList.remove('active'); });
-            if (!isActive) box.classList.add('active');
+            
+            if (!isActive) {
+                box.classList.add('active');
+                if (boxId === 'countrySelectBox') {
+                    var cSearch = document.getElementById('countrySearchInput');
+                    if (cSearch) {
+                        cSearch.value = '';
+                        renderCountryDropdown(ALL_WORLD_COUNTRIES);
+                        setTimeout(function() { cSearch.focus(); }, 40);
+                    }
+                } else if (boxId === 'stateSelectBox') {
+                    var sSearch = document.getElementById('stateSearchInput');
+                    if (sSearch) {
+                        sSearch.value = '';
+                        renderStatesDropdown(selectedCountry);
+                        setTimeout(function() { sSearch.focus(); }, 40);
+                    }
+                }
+            }
         };
 
         document.addEventListener('click', function(e) {
@@ -1747,28 +1885,49 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             }
         });
 
-        function renderCountryDropdown() {
+        function renderCountryDropdown(list) {
             var listEl = document.getElementById('countryOptionsList');
             if (!listEl) return;
+            var countries = list || ALL_WORLD_COUNTRIES;
+            if (countries.length === 0) {
+                listEl.innerHTML = '<div style="padding:14px; text-align:center; font-size:0.8rem; color:#64748B;">No matching countries found</div>';
+                return;
+            }
             var html = '';
-            ALL_WORLD_COUNTRIES.forEach(function(c) {
-                html += '<div class="ac-select-option" onclick="selectCountry(\'' + c.code + '\')">' +
-                    '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-flag-img">' +
-                    '<span>' + c.name + ' (' + c.dial + ')</span>' +
+            countries.forEach(function(c) {
+                var isSelected = (selectedCountry && selectedCountry.code === c.code);
+                html += '<div class="ac-select-option ' + (isSelected ? 'selected' : '') + '" onclick="selectCountry(\'' + c.code + '\')">' +
+                    '<div class="ac-opt-left">' +
+                        '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-flag-img">' +
+                        '<span class="ac-opt-name">' + c.name + '</span>' +
+                    '</div>' +
+                    '<div class="ac-opt-right">' +
+                        '<span class="ac-dial-pill">' + c.dial + '</span>' +
+                        (isSelected ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '') +
+                    '</div>' +
                 '</div>';
             });
             listEl.innerHTML = html;
-            renderStatesDropdown(selectedCountry);
         }
 
-        function renderStatesDropdown(country) {
+        function renderStatesDropdown(country, filterText) {
             var listEl = document.getElementById('stateOptionsList');
             if (!listEl) return;
+            var states = (country && country.states) ? country.states : ['Central Province', 'Region 1'];
+            if (filterText) {
+                var q = filterText.toLowerCase().trim();
+                states = states.filter(function(st) { return st.toLowerCase().includes(q); });
+            }
+            if (states.length === 0) {
+                listEl.innerHTML = '<div style="padding:14px; text-align:center; font-size:0.8rem; color:#64748B;">No matching states found</div>';
+                return;
+            }
             var html = '';
-            var states = country.states || ['Central Province', 'Region 1'];
             states.forEach(function(st) {
-                html += '<div class="ac-select-option" onclick="selectState(\'' + st.replace(/'/g, "\\'") + '\')">' +
-                    '<span>' + st + '</span>' +
+                var isSelected = (selectedState === st);
+                html += '<div class="ac-select-option ' + (isSelected ? 'selected' : '') + '" onclick="selectState(\'' + st.replace(/'/g, "\\'") + '\')">' +
+                    '<span class="ac-opt-name">' + st + '</span>' +
+                    (isSelected ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '') +
                 '</div>';
             });
             listEl.innerHTML = html;
@@ -1792,14 +1951,18 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             
             var phoneInput = document.getElementById('regPhone');
             if (phoneInput) {
-                phoneInput.placeholder = c.digits + '-digit WhatsApp number';
+                phoneInput.placeholder = (c.code === 'in') ? 'e.g. 70463*****' : ('e.g. ' + c.digits + '-digit number');
                 phoneInput.maxLength = c.digits + 2;
             }
 
             renderStatesDropdown(c);
-            selectedState = (c.states && c.states[0]) ? c.states[0] : 'Surat';
+            selectedState = (c.states && c.states[0]) ? c.states[0] : (c.code === 'in' ? 'Gujarat' : 'Region 1');
             var sText = document.getElementById('displayStateText');
             if (sText) sText.textContent = selectedState;
+            var regCity = document.getElementById('regCity');
+            if (regCity && c.code === 'in' && (!regCity.value || regCity.value === 'Surat')) {
+                regCity.value = 'Surat';
+            }
 
             var cBox = document.getElementById('countrySelectBox');
             if (cBox) cBox.classList.remove('active');
@@ -1815,34 +1978,20 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
         window.filterCountryOptions = function(query) {
             var q = (query || '').toLowerCase().trim();
-            var listEl = document.getElementById('countryOptionsList');
-            if (!listEl) return;
+            if (!q) {
+                renderCountryDropdown(ALL_WORLD_COUNTRIES);
+                return;
+            }
             var filtered = ALL_WORLD_COUNTRIES.filter(function(c) {
-                return c.name.toLowerCase().includes(q) || c.dial.includes(q);
+                return c.name.toLowerCase().includes(q) || 
+                       c.dial.includes(q) || 
+                       c.code.toLowerCase().includes(q);
             });
-            var html = '';
-            filtered.forEach(function(c) {
-                html += '<div class="ac-select-option" onclick="selectCountry(\'' + c.code + '\')">' +
-                    '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-flag-img">' +
-                    '<span>' + c.name + ' (' + c.dial + ')</span>' +
-                '</div>';
-            });
-            listEl.innerHTML = html;
+            renderCountryDropdown(filtered);
         };
 
         window.filterStateOptions = function(query) {
-            var q = (query || '').toLowerCase().trim();
-            var listEl = document.getElementById('stateOptionsList');
-            if (!listEl) return;
-            var states = selectedCountry.states || [];
-            var filtered = states.filter(function(st) { return st.toLowerCase().includes(q); });
-            var html = '';
-            filtered.forEach(function(st) {
-                html += '<div class="ac-select-option" onclick="selectState(\'' + st.replace(/'/g, "\\'") + '\')">' +
-                    '<span>' + st + '</span>' +
-                '</div>';
-            });
-            listEl.innerHTML = html;
+            renderStatesDropdown(selectedCountry, query);
         };
 
         window.selectRole = function(role) {
@@ -2312,6 +2461,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            renderCountryDropdown(ALL_WORLD_COUNTRIES);
+            renderStatesDropdown(selectedCountry);
             checkUserAuth();
 
             fetch('/api/auth.php?action=session', { credentials: 'same-origin' })
