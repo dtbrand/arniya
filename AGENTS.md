@@ -24,15 +24,17 @@
 │ 3. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
 │    Every button must use DT Brand's gold gradient, emerald, or pale gold.   │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 4. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
-│    All icons must be crisp inline SVG vectors (stroke-width: 2 - 2.8).      │
+│ 4. ⚡ 100% REAL VECTOR SVG ICONS & RUPEE MANDATE: ZERO emojis in buttons    │
+│    and navigation. All icons must be crisp inline SVG vectors (2 - 2.8).    │
+│    ALWAYS use Indian Rupee (₹) SVG for all prices (ZERO dollar signs).      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 5. 📱 FLUID MOBILE & TABLET AUTO-SIZING: Wholesale Desktop + Tablet + Phone │
 │    responsive architecture with auto-fit grids, touch targets, and zero     │
 │    broken/clipped layouts across any device.                                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 6. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
-│    Every button, modal, drawer, and input must have working JS and backend. │
+│ 6. 🛡️ FULL PAYMENT SECURITY & REAL AUDIT: Multi-gateway suite with Instant   │
+│    UPI Deep Linking + Dynamic Laser QR, Razorpay HMAC, Cashfree, COD,       │
+│    WhatsApp Pay, automated inventory stock decrement & transaction audit.   │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 7. 🚫 ON-DEMAND LIVE PREVIEW ONLY: NEVER launch browser preview or subagent  │
 │    automatically. ONLY open browser when the user EXPLICITLY requests it.  │
@@ -43,115 +45,61 @@
 
 ---
 
-## 📱 1. Mobile & Tablet Fluid Auto-Sizing Standard (Wholesale Desktop Architecture)
+## ⚡ 1. 100% Real Vector SVG Icon Standard & Animated Real SVG System (MANDATORY)
 
-Every page, module, form, table, and modal created or modified across DT Brand's workspace MUST strictly implement responsive auto-sizing:
+Every icon across all pages, buttons, headers, navigation bars, modals, tables, and metric cards **MUST ALWAYS** be a clean, crisp, inline vector SVG (`stroke-width: 2 - 2.8`). **ZERO EMOJIS in UI buttons or navigation.**
 
-1. **📊 4-Card KPI Ribbon Auto-Sizing**:
-   - Desktop: `display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;`
-   - Tablet (`max-width: 1024px`): `grid-template-columns: repeat(2, 1fr); gap: 10px;`
-   - Mobile (`max-width: 600px`): `grid-template-columns: 1fr; gap: 8px;`
+### 💰 A. Real Indian Rupee (`₹`) Vector SVG (NEVER USE `$`)
+```html
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>
+</svg>
+```
 
-2. **🔍 Toolbars & Search Bars Auto-Sizing**:
-   - Desktop: Flex row with `justify-content: space-between; align-items: center; flex-wrap: wrap;`
-   - Tablet & Mobile (`max-width: 768px`):
-     - Filter dropdowns, bulk actions, and search boxes expand to 100% width (`width: 100%;`).
-     - Search input stretches fluidly (`flex: 1; width: 100%; min-width: 180px;`).
-     - Tap targets have a minimum height of `34px - 38px` for easy touch operation.
+### ⚡ B. Instant UPI Lightning Bolt Vector SVG
+```html
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+</svg>
+```
 
-3. **📋 Table Container Containment (`overflow-x: auto`)**:
-   - Tables must be wrapped inside a responsive card (`.wp-table-card` / `.adm-table-card`) with `overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%;`.
-   - Minimum table width set to `min-width: 780px` to preserve high-density columns while enabling smooth horizontal swiping on mobile.
+### 💳 C. Cards & Online Payment Gateway Vector SVG
+```html
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+    <line x1="1" y1="10" x2="23" y2="10"></line>
+</svg>
+```
 
-4. **🪟 Modals & Drawers Mobile Auto-Sizing**:
-   - `width: 95%; max-width: 520px; max-height: 90vh; overflow-y: auto; margin: auto; border-radius: 10px;`
-   - All modal inputs use full-width stacked layouts (`width: 100%; box-sizing: border-box; height: 36px;`).
+### 🚚 D. Cash on Delivery (COD) Doorstep Vector SVG
+```html
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="1" y="3" width="15" height="13"></rect>
+    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+</svg>
+```
 
----
+### 💬 E. Official WhatsApp Business Concierge Vector SVG
+```html
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+</svg>
+```
 
-## 🧠 2. Bilingual Hindi / Hinglish Understanding & Professional English Mandate
-
-1. **Seamless Hindi & Hinglish Comprehension**:
-   - The user communicates in Hindi, Hinglish, and colloquial typing (e.g. *"kham fast kere"*, *"projuct me dalna hai"*, *"adhura na rahe"*, *"button filed box sizes styles degine"*).
-   - **Rule**: The agent must effortlessly understand the deep business and technical intent behind every Hindi/Hinglish instruction without asking for clarification.
-2. **Automatic Typo Correction**:
-   - If user input contains spelling typos (e.g. `scren short` ➔ Screenshot, `improment` ➔ Improvement, `apolad` ➔ Upload, `dasttop` ➔ Desktop, `projuct` ➔ Product, `buttn` ➔ Button), the agent must silently normalize and execute the intended goal accurately.
-3. **100% Professional English in Production Code & UI**:
-   - **NEVER** use romanized Hindi or slang inside code, UI labels, buttons, placeholders, variable names, or git commit messages.
-
----
-
-## 🔤 3. Crystal-Clear Typography & Text Visibility Standard (TailAdmin Benchmark)
-
-Every page, table, card, modal, input, and label across the Admin Panel MUST strictly adhere to the **Clean & Sharp Inter Typography Standard**:
-
-1. **Font Family Stack**:
-   ```css
-   font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-   ```
-2. **Sharp Anti-Aliasing & Rendering Engine**:
-   ```css
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-   text-rendering: optimizeLegibility;
-   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-   letter-spacing: -0.011em;
-   ```
-3. **High-Contrast Text Hierarchy**:
-   - **Headings & Titles (`h1`, `h2`, `h3`, Card Headers)**: `#111827` (Deep Obsidian, `font-weight: 700 - 800;`)
-   - **Primary Body, Table Cells & Form Inputs**: `#1F2937` or `#334155` (`font-weight: 500 - 600;`)
-   - **Subtitles & Secondary Metadata**: `#64748B` or `#6B7280` (`font-weight: 500; font-size: 0.72rem - 0.78rem;`)
-   - **Gold Accent Numbers & Financials**: `#8A681F` / `#B8860B` (`font-weight: 800;`)
-4. **Zero Blurry or Washed-Out Text**: Never use light gray text on light backgrounds. Ensure WCAG AAA contrast ratio on all table headers, data cells, input placeholders, and status badges.
+### 🛡️ F. Verified Shield & Security Vector SVG
+```html
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+```
 
 ---
 
-## 🎨 4. Button & UI Component Styling Standards (MANDATORY)
+## ✨ 2. Master CSS Micro-Animations & Running Focus Lines
 
-Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
-
-### 👑 A. Primary Radiant Gold Master Button (`.dt-btn-gold` / `.adm-btn-gold`)
-- **Gradient**: `linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%)`
-- **Border**: `1px solid #8A681F`
-- **Text Color**: High-Contrast Obsidian `#111827` (`font-weight: 800; letter-spacing: -0.011em;`)
-- **Shadow**: `box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);`
-- **Hover**: `background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);`
-- **Icon**: Crisp vector SVG with `stroke="#111827"` or `stroke="#8A681F"`
-- **Usage**: `+ Add Product`, `+ Add Customer`, `Save Customer Profile`, `Save Changes`, `Update`, `Search`, `AI Generate`
-
-### ⬛ B. Dark Obsidian Master Hero Button (`.dt-btn-dark` / `.adm-btn-dark`)
-- **Gradient**: `linear-gradient(135deg, #181512 0%, #2A241E 100%)`
-- **Border**: `1.2px solid #8A681F`
-- **Text Color**: `#FAF5E8` (`font-weight: 700;`)
-- **Shadow**: `box-shadow: 0 2px 8px rgba(0,0,0,0.25);`
-- **Hover**: `border-color: #D4AF37; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.35);`
-- **Usage**: Primary Dark Actions, Quick Hero Triggers, Catalog Actions
-
-### 💬 C. WhatsApp B2B Emerald Button (`.dt-btn-emerald` / `.adm-btn-emerald`)
-- **Background**: `linear-gradient(135deg, #15803D 0%, #16A34A 100%)`
-- **Text Color**: `#FFFFFF` (`font-weight: 700;`)
-- **Icon**: Official vector WhatsApp SVG icon with white fill/stroke
-- **Usage**: 1-Click WhatsApp Lot Enquiry, Instant Customer Connect
-
-### ⚪ D. Pale Gold Secondary Action Pill (`.dt-btn-pale` / `.adm-btn-pale`)
-- **Background**: `#FAF5E8`
-- **Border**: `1px solid #D4AF37`
-- **Text Color**: Deep Bronze `#705114` (`font-weight: 700;`)
-- **Hover**: `background: #F5ECCE; color: #5A4210; border-color: #8A681F; transform: translateY(-1px);`
-- **Usage**: `Edit`, `Apply`, `Filter`, `Upload Image`, `Quick Edit`, `+ Add Tag`
-
-### 👁️ E. Soft Blue Info Pill (`.dt-btn-info` / `.adm-btn-info`)
-- **Background**: `#EFF6FF`
-- **Border**: `1px solid #BFDBFE`
-- **Text Color**: `#1D4ED8` (`font-weight: 700;`)
-- **Usage**: `View on Shop`, `Customer Reply`, `Catalog SKUs`
-
----
-
-## ✨ 5. Form Field Focus Standard: Animated Gold & Platinum Running Line
-
-Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-input`, `.dt-cust-select`, `.dt-country-search-input`) across the entire Admin Panel **MUST ALWAYS** implement the **Gold & Platinum Mix Animated Running Border Line** on `:focus`:
-
+### 🌟 A. Gold & Platinum 360° Running Focus Line
 ```css
 @property --dt-border-angle {
     syntax: "<angle>";
@@ -160,21 +108,15 @@ Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-
 }
 
 @keyframes dtBorderRotate {
-    to {
-        --dt-border-angle: 360deg;
-    }
+    to { --dt-border-angle: 360deg; }
 }
 
 @keyframes dtGoldPlatinumGlow {
-    0% {
-        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
-    }
-    100% {
-        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
-    }
+    0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35); }
+    100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6); }
 }
 
-input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-search-input:focus {
+input:focus, select:focus, textarea:focus, .co-input:focus, .adm-form-input:focus {
     outline: none !important;
     border: 2px solid transparent !important;
     background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
@@ -184,89 +126,149 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-se
 }
 ```
 
----
-
-## 💎 6. Master Luxury Gold & Silver/Platinum Glass Hero Box Architecture
-
-All dark summary boxes, customer identity hero bars, and metric banners across the Admin Panel **MUST NEVER** be flat solid black. They **MUST ALWAYS** use the **Luxury Gold & Silver/Platinum Ambient Lining Glassmorphic Style**:
-
+### 🔴 B. Dynamic QR Laser Scanner Ray Animation
 ```css
-@keyframes dtAdminAmbientGlow {
-    0% {
-        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
-    }
-    50% {
-        background-position: 100% 50%, 0% 50%, 0% 100%, 0% 0%;
-    }
-    100% {
-        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
-    }
+@keyframes dtQrScanLaser {
+    0% { top: 6px; opacity: 0.8; }
+    50% { top: calc(100% - 10px); opacity: 1; }
+    100% { top: 6px; opacity: 0.8; }
 }
 
-.dt-hero-luxury-card, .adm-hero-dark-box, .dt-cust-hero-banner {
-    position: relative;
-    background:
-        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
-        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%);
-    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
-    animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 2px solid #D4AF37;
-    border-radius: 12px;
-    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
+.co-upi-qr-laser {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 2.5px;
+    background: linear-gradient(90deg, transparent 0%, #DC2626 50%, transparent 100%);
+    box-shadow: 0 0 10px #DC2626, 0 0 20px #DC2626;
+    animation: dtQrScanLaser 2.2s ease-in-out infinite;
+    pointer-events: none;
+}
+```
+
+### 🟢 C. Pulsing Green Beacon / Active Radar Pulse
+```css
+@keyframes dtPulseGlow {
+    0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.5); }
+    70% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(21, 128, 61, 0); }
+    100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); }
 }
 ```
 
 ---
 
-## 🛡️ 7. Permanent Engineering, Security & Testing Governance (The 73-Point Standard)
+## 💳 3. Master Multi-Gateway Payment & Security Architecture
 
-Every future AI agent and developer modifying this codebase MUST strictly adhere to the following rules:
-
-1. **Absolute Codebase Preservation**:
-   - NEVER redesign existing layouts or swap color themes.
-   - NEVER modify pricing, discount, reseller, wholesale, or retail math without explicit user mandate.
-   - NEVER rename or delete working files.
-2. **Zero-Secrets Mandate**:
-   - NEVER commit plain passwords, API keys, private keys, or FTP passwords.
-   - Use environment variables (`.env`) or GitHub Secrets exclusively.
-3. **Automated Quality Testing**:
-   - Run PHP unit tests (`vendor/bin/phpunit`) and static analysis (`vendor/bin/phpstan`) before opening PRs.
-   - Run Playwright E2E and UI regression tests (`npm run test:e2e`).
-4. **Database Safety**:
-   - All migrations must be idempotent and non-destructive.
-   - Backups must be verified before executing schema updates.
-### 🗄️ Hostinger Live Production MySQL Database Credentials
-
-- **Database Name**: `u602484543_demodt121`
-- **Database User**: `u602484543_demodt121`
-- **Database Password**: `Gautam@9006`
-- **Database Host**: `localhost` (Port `3306`)
-- **Website URL**: `https://jaihanumantex.in/`
-
-### 📱 Official DT Brand WhatsApp Master Contact
-- **Official WhatsApp Number**: `917046363528` (Formatting: `+91 70463 63528`)
-- **Direct WhatsApp API Link**: `https://api.whatsapp.com/send?phone=917046363528&text=...` / `https://wa.me/917046363528`
-- **Rule**: ALWAYS use `917046363528` across all product pages, reels, quickviews, checkout, wholesale/reseller/retailer concierge, and customer support. NEVER use dummy/placeholder phone numbers.
+1. **⚡ Instant Direct UPI Deep Linking & Dynamic QR Studio**:
+   - NPCI Schema: `upi://pay?pa=917046363528@okaxis&pn=DT+Brands+Jai+Hanuman+Tex&mc=5691&tr={ORDER_NO}&tn=Order+{ORDER_NO}&am={AMOUNT}&cu=INR`
+   - Mobile: 1-Tap native deep links for `gpay://`, `phonepe://`, `paytmmp://`, `cred://`, `bhim://`.
+   - Desktop: Dynamic QR generation with laser ray animation, 5:00 countdown timer, and 12-digit UTR input form.
+2. **💳 Razorpay Payment Gateway**:
+   - Server-to-server order creation, client-side modal checkout, and HMAC-SHA256 signature verification (`hash_equals`).
+3. **🚀 Cashfree Payment Gateway**:
+   - Cashfree Drop PG session generation, return URL handling, and base64 HMAC signature verification.
+4. **🚚 Cash on Delivery (COD)**:
+   - Configurable minimum/maximum order limits and automated handling fee calculation.
+5. **💬 Direct WhatsApp Order & Pay**:
+   - Formatted itemized luxury receipt with embedded UPI payment link routed to official master WhatsApp (`917046363528`).
+6. **📦 Automated Inventory Management**:
+   - `PaymentManager::markOrderPaidAndAdjustStock()` automatically decrements product stock quantities in MySQL upon verified payment capture.
+7. **📋 Full Audit Ledger**:
+   - Every transaction is recorded in `payment_transactions` with client IP address, user-agent, order payload, and timestamp.
 
 ---
 
-## 📋 8. Master Quality Control Checklist (Run on Every Task)
+## 🎨 4. Button & UI Component Styling Standards (MANDATORY)
 
-Before marking ANY task complete, verify:
+Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
 
-- [ ] **Fluid Mobile & Tablet Auto-Sizing**: Responsive on desktop, tablet, and mobile with zero clipping.
-- [ ] **Design System Compliance**: Signature colors (`#8A681F`, `#D4AF37`, `#181512`), real vector SVGs.
-- [ ] **Zero Dollar Icons**: 100% Indian Rupee (`₹`) SVG used for all prices, valuations, and currency icons.
-- [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and docs.
-- [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
-- [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.
-- [ ] **Dynamic Data Prefilling**: Edit forms load real data from query parameters.
-- [ ] **Zero IDE & PHP Errors**: PHP linted cleanly (`php -l`), 0 undefined variables, 0 IDE problems.
-- [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links or stubs.
-- [ ] **Sanitation**: All temporary scratch files cleaned up; workspace is clean.
+### 👑 A. Primary Radiant Gold Master Button (`.dt-btn-gold` / `.adm-btn-gold` / `.co-submit-btn`)
+- **Gradient**: `linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%)`
+- **Border**: `1px solid #8A681F`
+- **Text Color**: High-Contrast Obsidian `#111827` (`font-weight: 800; letter-spacing: -0.011em;`)
+- **Shadow**: `box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);`
+- **Hover**: `background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);`
+- **Usage**: `+ Add Product`, `+ Add Customer`, `Proceed to Pay`, `Save Changes`, `Update`, `Search`, `AI Generate`
+
+### ⬛ B. Dark Obsidian Master Hero Button (`.dt-btn-dark` / `.adm-btn-dark`)
+- **Gradient**: `linear-gradient(135deg, #181512 0%, #2A241E 100%)`
+- **Border**: `1.2px solid #8A681F`
+- **Text Color**: `#FAF5E8` (`font-weight: 700;`)
+- **Hover**: `border-color: #D4AF37; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.35);`
+
+### 💬 C. WhatsApp B2B Emerald Button (`.dt-btn-emerald` / `.adm-btn-emerald`)
+- **Background**: `linear-gradient(135deg, #15803D 0%, #16A34A 100%)`
+- **Text Color**: `#FFFFFF` (`font-weight: 700;`)
+- **Icon**: Official vector WhatsApp SVG icon with white stroke
+- **Usage**: 1-Click WhatsApp Lot Enquiry, Instant Customer Connect
+
+### ⚪ D. Pale Gold Secondary Action Pill (`.dt-btn-pale` / `.adm-btn-pale`)
+- **Background**: `#FAF5E8`
+- **Border**: `1px solid #D4AF37`
+- **Text Color**: Deep Bronze `#705114` (`font-weight: 700;`)
+- **Hover**: `background: #F5ECCE; color: #5A4210; border-color: #8A681F; transform: translateY(-1px);`
+- **Usage**: `Edit`, `Apply`, `Filter`, `Upload Image`, `Quick Edit`, `+ Add Tag`
+
+---
+
+## 🔤 5. Typography & Contrast Standard (TailAdmin Benchmark)
+
+1. **Font Family Stack**:
+   ```css
+   font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+   ```
+2. **Rendering Engine**:
+   ```css
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   text-rendering: optimizeLegibility;
+   letter-spacing: -0.011em;
+   ```
+3. **High-Contrast Text Hierarchy**:
+   - **Headings (`h1`, `h2`, `h3`)**: `#111827` (Deep Obsidian, `font-weight: 700 - 800;`)
+   - **Body, Table Cells & Inputs**: `#1F2937` or `#334155` (`font-weight: 500 - 600;`)
+   - **Subtitles & Metadata**: `#64748B` (`font-weight: 500; font-size: 0.72rem - 0.78rem;`)
+   - **Gold Accent Numbers**: `#8A681F` / `#B8860B` (`font-weight: 800;`)
+
+---
+
+## 📱 6. Mobile & Tablet Fluid Auto-Sizing Standard
+
+- **KPI Ribbon Auto-Sizing**: Desktop 4-column auto-fit (`minmax(220px, 1fr)`), Tablet 2-column, Mobile 1-column.
+- **Toolbars & Search**: Flex row on desktop, wrapping to 100% width on tablet/mobile with 38px tap targets.
+- **Tables**: Contained in `.adm-table-responsive` with `overflow-x: auto; min-width: 780px;`.
+- **Modals**: Centered fluid layout (`width: 95%; max-width: 520px; max-height: 90vh;`).
+
+---
+
+## 🔄 7. Triple-Sync Deployment Workflow (Local + Git + FTP)
+
+- **ALWAYS** perform a complete 3-step synchronization for every change:
+  1. **Local**: Edit and validate all files cleanly in workspace (`c:\Users\sai\Desktop\WhatsApp CRM`) using `php -l`.
+  2. **GitHub**: Auto-commit with descriptive messages and push to `origin main`.
+  3. **Live FTP Server**: Upload all modified files via Python `ftplib` to Hostinger live server `/public_html`.
+
+### 🌐 Production Credentials
+
+- **FTP Host**: `147.93.99.134:21` (User: `u602484543.jaihanumantex.in`, Pass: `Gautam@9006`, Remote Dir: `/public_html`)
+- **MySQL Database**: `u602484543_demodt121` on `localhost:3306` (User: `u602484543_demodt121`, Pass: `Gautam@9006`)
+- **Website Base URL**: `https://jaihanumantex.in/`
+- **Official WhatsApp**: `917046363528` (`+91 70463 63528`)
+- **Official UPI VPA**: `917046363528@okaxis` / `dtbrands@icici` (MCC: `5691`)
+- **GitHub Repository**: `https://github.com/dtbrand/arniya.git` (Branch: `main`)
+
+---
+
+## 📋 8. Master Quality Control Checklist
+
+Before completing any task, verify:
+
+- [ ] **100% Real Vector SVG Icons**: Zero emojis in buttons, Indian Rupee (`₹`) SVG used for all prices.
+- [ ] **Real Animated SVGs & Micro-Interactions**: Laser scanner line on QR, animated running focus line.
+- [ ] **Fluid Auto-Sizing**: Responsive on desktop, tablet, and mobile with zero clipping.
+- [ ] **100% Styled Buttons**: Primary gold gradient, dark hero, emerald WhatsApp, or pale gold pills.
+- [ ] **Full Security & Stock Audit**: Webhook HMAC validation, safe inventory decrement, transaction logging.
+- [ ] **Zero IDE & PHP Errors**: PHP linted cleanly (`php -l`), 0 syntax errors.
 - [ ] **Git Synced**: Committed and pushed to GitHub `origin main`.
-- [ ] **Live Deployed**: Uploaded to Hostinger FTP server `/public_html/` and verified.
+- [ ] **Live Deployed**: Uploaded to Hostinger FTP server `/public_html/` and verified with `HTTP 200`.
+
