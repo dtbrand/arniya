@@ -123,7 +123,7 @@ $storageFormatted = $totalBytes >= 1048576
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Media Gallery &amp; Asset Library</span></h3>
-                    <input type="file" id="mediaFileInput" style="display:none;" onchange="window.showToast('✨ Media uploaded successfully!');" accept="image/*" multiple>
+                    <input type="file" id="mediaFileInput" style="display:none;" onchange="if(this.files.length){ showToastSafe('Use the dedicated uploader so files are stored and validated.'); setTimeout(function(){window.location.href='/admin/products/media/upload.php';}, 700); }" accept="image/*" multiple>
                     <button class="adm-btn-primary" onclick="document.getElementById('mediaFileInput').click();">+ Upload New Media</button>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:14px;">
@@ -146,6 +146,9 @@ $storageFormatted = $totalBytes >= 1048576
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+</script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

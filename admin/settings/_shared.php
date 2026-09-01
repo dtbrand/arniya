@@ -9,6 +9,8 @@
  */
 require_once __DIR__ . '/../../src/Database.php';
 
+use DTBrand\Database;
+
 $dtSettings = [];
 $dtSettingsLive = false;
 $dtSettingsIsSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'super_admin';

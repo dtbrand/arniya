@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_shared.php';
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -11,7 +12,6 @@
  * real configuration (INR / Asia/Kolkata is baked into the codebase), so the
  * editable fields are the ones the code actually honours.
  */
-require_once __DIR__ . '/_shared.php';
 
 $page_title = "General Store Settings";
 $active_nav = "settings";
@@ -26,13 +26,16 @@ $dtKeys = ['store_title', 'store_tagline', 'support_phone', 'support_email', 'or
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
+require_once __DIR__ . "/_shared.php"; echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+    <?php
+require_once __DIR__ . "/_shared.php"; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
+        <?php
+require_once __DIR__ . "/_shared.php"; include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -51,7 +54,8 @@ $dtKeys = ['store_title', 'store_tagline', 'support_phone', 'support_email', 'or
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>General</span></h3>
-                    <?php echo dt_set_save_button(); ?>
+                    <?php
+require_once __DIR__ . "/_shared.php"; echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group">
@@ -85,10 +89,13 @@ $dtKeys = ['store_title', 'store_tagline', 'support_phone', 'support_email', 'or
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+        <?php
+require_once __DIR__ . "/_shared.php"; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<?php echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<?php
+require_once __DIR__ . "/_shared.php"; echo dt_set_save_script($dtKeys); ?>
+<script src="/admin/assets/js/admin.js?v=<?php
+require_once __DIR__ . "/_shared.php"; echo time(); ?>"></script>
 </body>
 </html>

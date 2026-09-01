@@ -54,9 +54,9 @@ $active_nav = "cms";
             <div class="adm-card" style="max-width:850px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>📍 Flagship Showroom &amp; Customer Support</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Synchronized with Footer</span>
+                    <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:11.5px;">⚠ Saves to settings table — footer template must read the key to show it</span>
                 </div>
-                <form onsubmit="event.preventDefault(); window.showToast('✨ Contact information and showroom details saved!');" style="padding:18px 20px;">
+                <form onsubmit="event.preventDefault(); showToastSafe('Contact fields are display templates — the footer template reads hardcoded HTML today. Save goes to the settings table for future wiring.');" style="padding:18px 20px;">
                     <div class="dt-contact-grid">
                         <div style="grid-column: 1 / -1;">
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Surat Flagship Showroom Address *</label>
@@ -107,6 +107,9 @@ $active_nav = "cms";
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+</script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

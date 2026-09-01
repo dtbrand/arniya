@@ -62,7 +62,7 @@ $active_nav = "payments";
                             <td>Shree Ambika Silks</td>
                             <td><strong>₹42,000</strong></td>
                             <td><code>HDFC99482019</code></td>
-                            <td><button class="adm-btn-primary adm-btn-sm" onclick="window.showToast('Payment Verified!')">✓ Verify & Settle</button></td>
+                            <td><button class="adm-btn-primary adm-btn-sm" onclick="showToastSafe('Razorpay settles payments via the signed webhook (api/webhooks/razorpay.php) — manual verification is not a payment write. Open the order to update fulfilment.')">✓ Verify & Settle</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,6 +73,9 @@ $active_nav = "payments";
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+</script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

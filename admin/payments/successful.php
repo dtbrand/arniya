@@ -44,7 +44,7 @@ $active_nav = "payments";
         <div class="adm-table-card">
             <div class="adm-table-toolbar">
                 <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Settled Transactions</h3></div>
-                <button class="adm-btn-secondary" onclick="window.showToast('Exporting Settlement Ledger...')">📥 Export Ledger</button>
+                <button class="adm-btn-secondary" onclick="window.location.href='/admin/orders/export.php?download=1&format=csv';">📥 Export Ledger</button>
             </div>
             <div class="adm-table-responsive">
                 <table class="adm-table">

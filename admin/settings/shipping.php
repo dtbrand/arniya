@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_shared.php';
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -27,13 +28,16 @@ $dtKeys = ['warehouse_address', 'warehouse_city', 'warehouse_state', 'warehouse_
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+    <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -52,7 +56,8 @@ $dtKeys = ['warehouse_address', 'warehouse_city', 'warehouse_state', 'warehouse_
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Dispatch Origin</span></h3>
-                    <?php echo dt_set_save_button(); ?>
+                    <?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group full" style="grid-column:1/-1;">
@@ -100,10 +105,13 @@ $dtKeys = ['warehouse_address', 'warehouse_city', 'warehouse_state', 'warehouse_
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<?php echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_script($dtKeys); ?>
+<script src="/admin/assets/js/admin.js?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>"></script>
 </body>
 </html>

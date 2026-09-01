@@ -145,6 +145,39 @@ try {
         exit;
     }
 
+    if ($action === 'update') {
+        // Toggle / edit from admin/pricing/discounts.php. Status is the only
+        // field the UI changes today, but the guard block above already
+        // requires an admin session for anything reaching here.
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'A coupon ID is required.']);
+            exit;
+        }
+        $status = strtolower(trim((string)($_POST['status'] ?? '')));
+        if (!in_array($status, ['active', 'expired'], true)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Status must be active or expired.']);
+            exit;
+        }
+        $stmt = $pdo->prepare("UPDATE `coupons` SET `status` = ? WHERE `id` = ?");
+        $stmt->execute([$status, $id]);
+        if ($stmt->rowCount() === 0) {
+            // Same row-state or missing id; distinguish honestly.
+            $row = $pdo->prepare("SELECT status FROM `coupons` WHERE `id` = ?");
+            $row->execute([$id]);
+            $existing = $row->fetch(\PDO::FETCH_ASSOC);
+            if (!$existing) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'id' => $id, 'message' => 'That coupon does not exist.']);
+                exit;
+            }
+        }
+        echo json_encode(['success' => true, 'id' => $id, 'message' => "Coupon set to {$status}."]);
+        exit;
+    }
+
     if ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {

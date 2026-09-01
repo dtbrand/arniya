@@ -108,7 +108,7 @@ $allProducts = ProductCatalog::getAll(true);
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Tier Pricing Configuration Matrix</span></h3>
-                    <button class="adm-btn-primary" onclick="window.showToast('✨ Price Matrix updated &amp; synchronized!')">Update Price Matrix</button>
+                    <a class="adm-btn-primary" href="/admin/products/" style="text-decoration:none;">Edit Product Prices</a>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -135,8 +135,8 @@ $allProducts = ProductCatalog::getAll(true);
                                     $sumMrp += (float)($cp['mrp'] ?? 0);
                                     $sumPrice += (float)($cp['price'] ?? 0);
                                 }
-                                $avgMrp = $pCount > 0 ? round($sumMrp / $pCount) : 4990;
-                                $avgPrice = $pCount > 0 ? round($sumPrice / $pCount) : 3490;
+                                $avgMrp = $pCount > 0 ? round($sumMrp / $pCount) : 0;
+                                $avgPrice = $pCount > 0 ? round($sumPrice / $pCount) : 0;
                                 $resellerPrice = round($avgPrice * 0.88);
                                 $wholesalePrice = round($avgPrice * 0.72);
                                 $bulkPrice = round($avgPrice * 0.65);
@@ -147,11 +147,11 @@ $allProducts = ProductCatalog::getAll(true);
                                         <strong><?= htmlspecialchars($cat['name'] ?? 'Category') ?></strong><br>
                                         <small style="color:#7A7266;"><?= $cat['products_count'] ?? $pCount ?> Active SKUs</small>
                                     </td>
-                                    <td>₹<?= number_format($avgMrp) ?> / pc</td>
-                                    <td><strong style="color:#7E22CE;">₹<?= number_format($resellerPrice) ?> / pc</strong></td>
-                                    <td><strong style="color:#8A681F;">₹<?= number_format($wholesalePrice) ?> / pc</strong></td>
-                                    <td><strong style="color:#15803D;">₹<?= number_format($bulkPrice) ?> / pc</strong></td>
-                                    <td><span class="adm-badge success"><?= $margin ?>% Margin</span></td>
+                                    <td><?= $pCount > 0 ? ('₹' . number_format($avgMrp) . ' / pc') : '<span style="color:#94A3B8;">no products</span>' ?></td>
+                                    <td><strong style="color:#7E22CE;"><?= $pCount > 0 ? ('₹' . number_format($resellerPrice) . ' / pc') : '—' ?></strong></td>
+                                    <td><strong style="color:#8A681F;"><?= $pCount > 0 ? ('₹' . number_format($wholesalePrice) . ' / pc') : '—' ?></strong></td>
+                                    <td><strong style="color:#15803D;"><?= $pCount > 0 ? ('₹' . number_format($bulkPrice) . ' / pc') : '—' ?></strong></td>
+                                    <td><?= $pCount > 0 ? ('<span class="adm-badge success">' . $margin . '% Margin</span>') : '<span style="color:#94A3B8;">—</span>' ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

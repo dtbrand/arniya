@@ -104,8 +104,8 @@ $active_nav = "marketing";
                             </div>
                             <div style="font-size:11.5px; color:#64748B;">Target: <code>/shop?category=kanjivaram-silk</code></div>
                             <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:4px;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('✓ Banner updated!')">Edit</button>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="this.closest('.dt-banner-card').remove(); window.showToast('Banner deactivated.');">Disable</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Banners are managed in the Catalogue suite — opening it.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 600);">Edit</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="showToastSafe('Deactivate banners from the Catalogue suite so the change is stored, not just visual.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 900);">Disable</button>
                             </div>
                         </div>
                     </div>
@@ -122,8 +122,8 @@ $active_nav = "marketing";
                             </div>
                             <div style="font-size:11.5px; color:#64748B;">Target: <code>/shop?category=banarasi-silk</code></div>
                             <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:4px;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('✓ Banner updated!')">Edit</button>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="this.closest('.dt-banner-card').remove(); window.showToast('Banner deactivated.');">Disable</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Banners are managed in the Catalogue suite — opening it.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 600);">Edit</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="showToastSafe('Deactivate banners from the Catalogue suite so the change is stored, not just visual.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 900);">Disable</button>
                             </div>
                         </div>
                     </div>
@@ -140,8 +140,8 @@ $active_nav = "marketing";
                             </div>
                             <div style="font-size:11.5px; color:#64748B;">Target: <code>/wholesale</code></div>
                             <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:4px;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('✓ Banner updated!')">Edit</button>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="this.closest('.dt-banner-card').remove(); window.showToast('Banner deactivated.');">Disable</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Banners are managed in the Catalogue suite — opening it.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 600);">Edit</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="showToastSafe('Deactivate banners from the Catalogue suite so the change is stored, not just visual.'); setTimeout(function(){window.location.href='/admin/catalogue/banners/';}, 900);">Disable</button>
                             </div>
                         </div>
                     </div>
@@ -204,6 +204,9 @@ function handleNewBanner(e) {
         window.showToast(`✨ Hero Banner "${title}" added and saved!`);
     }
 }
+</script>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

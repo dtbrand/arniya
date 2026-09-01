@@ -133,7 +133,7 @@ $active_nav = "marketing";
                                 <td><strong style="color:#8A681F;">₹4,20,000</strong></td>
                                 <td><span class="adm-badge success">Live Active</span></td>
                                 <td style="text-align:right;">
-                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('📊 Campaign analytics exported!')">Analytics</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Campaign analytics are computed live in /api/orders.php?action=analytics (Super Admin or admin session).')">Analytics</button>
                                 </td>
                             </tr>
                             <tr>
@@ -149,7 +149,7 @@ $active_nav = "marketing";
                                 <td><strong style="color:#8A681F;">₹2,90,000</strong></td>
                                 <td><span class="adm-badge success">Live Active</span></td>
                                 <td style="text-align:right;">
-                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('📊 Campaign analytics exported!')">Analytics</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Campaign analytics are computed live in /api/orders.php?action=analytics (Super Admin or admin session).')">Analytics</button>
                                 </td>
                             </tr>
                             <tr>
@@ -166,7 +166,7 @@ $active_nav = "marketing";
                                 <td><strong style="color:#8A681F;">₹1,30,000</strong></td>
                                 <td><span class="adm-badge success">Live Active</span></td>
                                 <td style="text-align:right;">
-                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('📊 Campaign analytics exported!')">Analytics</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="showToastSafe('Campaign analytics are computed live in /api/orders.php?action=analytics (Super Admin or admin session).')">Analytics</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -247,6 +247,9 @@ function handleLaunchCampaign(e) {
             }
         });
 }
+</script>
+<script>
+function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

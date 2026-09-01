@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_shared.php';
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -42,13 +43,16 @@ if (is_file($envFile)) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+    <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -73,14 +77,17 @@ if (is_file($envFile)) {
                     Key ID / Key Secret / Webhook Secret are read from the server's <code>.env</code> file
                     (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, RAZORPAY_WEBHOOK_SECRET) and are deliberately not
                     editable here — storing secrets in the database would expose them in backups and exports.
-                    <?php if (!$razorpayConfigured): ?><br><strong style="color:#B45309;">⚠ No live key detected — checkout falls back to offline payment instructions.</strong><?php endif; ?>
+                    <?php
+require_once __DIR__ . '/_shared.php'; if (!$razorpayConfigured): ?><br><strong style="color:#B45309;">⚠ No live key detected — checkout falls back to offline payment instructions.</strong><?php
+require_once __DIR__ . '/_shared.php'; endif; ?>
                 </p>
             </div>
 
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Customer Payment Options</span></h3>
-                    <?php echo dt_set_save_button(); ?>
+                    <?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group">
@@ -114,10 +121,13 @@ if (is_file($envFile)) {
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<?php echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_script($dtKeys); ?>
+<script src="/admin/assets/js/admin.js?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>"></script>
 </body>
 </html>

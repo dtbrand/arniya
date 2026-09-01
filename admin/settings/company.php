@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_shared.php';
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -25,13 +26,16 @@ $dtKeys = ['company_legal_name', 'company_gstin', 'company_pan', 'company_addres
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
-    <?php include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+    <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
-        <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -50,7 +54,8 @@ $dtKeys = ['company_legal_name', 'company_gstin', 'company_pan', 'company_addres
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Legal Company Information</span></h3>
-                    <?php echo dt_set_save_button(); ?>
+                    <?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group">
@@ -78,16 +83,21 @@ $dtKeys = ['company_legal_name', 'company_gstin', 'company_pan', 'company_addres
                         <input type="text" class="adm-form-input" id="dtSet-company_pincode" maxlength="6" value="<?= htmlspecialchars(dt_set('company_pincode', '')) ?>">
                     </div>
                 </div>
-                <?php if (dt_set('company_gstin', '') === ''): ?>
+                <?php
+require_once __DIR__ . '/_shared.php'; if (dt_set('company_gstin', '') === ''): ?>
                 <p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">⚠ No GSTIN on file — B2B order invoices will print without a tax number until it is saved here.</p>
-                <?php endif; ?>
+                <?php
+require_once __DIR__ . '/_shared.php'; endif; ?>
             </div>
 
         </main>
-        <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+        <?php
+require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<?php echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<?php
+require_once __DIR__ . '/_shared.php'; echo dt_set_save_script($dtKeys); ?>
+<script src="/admin/assets/js/admin.js?v=<?php
+require_once __DIR__ . '/_shared.php'; echo time(); ?>"></script>
 </body>
 </html>
