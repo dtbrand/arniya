@@ -300,8 +300,10 @@ $active_subnav = "new";
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Account Type / Pricing Group</label>
                                     <select id="custNewType" name="type" class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="retail" selected>Retail Shopper (MRP Pricing)</option>
+                                        <option value="customer" selected>Direct Customer (Retail Shopper)</option>
+                                        <option value="retail">Retail Buyer</option>
                                         <option value="wholesale">Wholesale Buyer (Trade Pricing)</option>
+                                        <option value="retailer">B2B Retailer</option>
                                         <option value="reseller">Reseller (Commission Pricing)</option>
                                     </select>
                                 </div>

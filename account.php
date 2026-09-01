@@ -732,6 +732,190 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             box-shadow: 0 4px 14px rgba(21,128,61,0.42);
         }
 
+        /* ── Choice Cards for Create Account Step 1 ── */
+        .ac-choice-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F4 100%);
+            border: 1.5px solid var(--dt-gold-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.34, 1.25, 0.64, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.06);
+            text-align: left;
+        }
+        .ac-choice-card:hover {
+            border-color: var(--dt-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138,104,31,0.15);
+            background: #FFFFFF;
+        }
+        .ac-choice-card.business {
+            border-color: #CBD5E1;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        }
+        .ac-choice-card.business:hover {
+            border-color: #1E293B;
+            box-shadow: 0 6px 20px rgba(15,23,42,0.12);
+        }
+        .ac-choice-badge {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #15803D;
+            background: #DCFCE7;
+            border: 1px solid #86EFAC;
+            padding: 2px 7px;
+            border-radius: 10px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .ac-choice-badge.biz {
+            color: #1D4ED8;
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+        }
+        .ac-choice-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .ac-choice-icon-gold {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+            border: 1.2px solid var(--dt-gold);
+            color: var(--dt-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.12);
+        }
+        .ac-choice-icon-dark {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border: 1.2px solid #334155;
+            color: #FAF5E8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(15,23,42,0.20);
+        }
+        .ac-choice-title {
+            font-size: 0.94rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 0 0 2px 0;
+        }
+        .ac-choice-desc {
+            font-size: 0.74rem;
+            color: #64748B;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.35;
+        }
+        .ac-choice-pills {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .ac-choice-pill {
+            font-size: 0.66rem;
+            font-weight: 700;
+            color: #475569;
+            background: #F1F5F9;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1px solid #E2E8F0;
+        }
+
+        /* Dark Obsidian Master Button for Business Card */
+        .dt-btn-dark {
+            width: 100%;
+            height: clamp(42px, 4.8vw, 46px);
+            border-radius: 8px;
+            border: 1.2px solid #334155;
+            background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+            color: #FAF5E8;
+            font-family: var(--font-sans);
+            font-size: clamp(0.84rem, 1.8vw, 0.88rem);
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .dt-btn-dark:hover {
+            border-color: #D4AF37;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        }
+
+        /* ── Profile Indicator in Active Form ── */
+        .ac-flow-indicator {
+            background: #FAF8F4;
+            border: 1px solid var(--dt-gold-border);
+            border-radius: 9px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .ac-flow-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            text-align: left;
+        }
+        .ac-flow-tag {
+            font-size: 0.80rem;
+            font-weight: 800;
+            color: #111827;
+        }
+        .ac-flow-sub {
+            font-size: 0.68rem;
+            color: #64748B;
+            font-weight: 600;
+        }
+        .ac-flow-change-btn {
+            background: #FFFFFF;
+            border: 1px solid var(--dt-gold);
+            color: var(--dt-gold);
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+        .ac-flow-change-btn:hover {
+            background: var(--dt-gold-pale);
+            color: #5A4210;
+        }
+
         /* ═══════════════════════════════════════════════════════════════════
            VIEW 2: LOGGED-IN CUSTOMER DASHBOARD
         ═══════════════════════════════════════════════════════════════════ */
@@ -1090,9 +1274,75 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             </button>
                         </form>
 
-                        <!-- 2. CREATE ACCOUNT FORM -->
+                        <!-- 2A. CHOOSE ACCOUNT PROFILE PANE (FIRST STEP) -->
+                        <div id="regProfileChoicePane" class="ac-form-pane">
+                            <div style="text-align:center; margin-bottom: 2px;">
+                                <h3 style="font-size: 1.02rem; font-weight: 800; color: #111827; margin: 0 0 3px 0;">Select Account Type</h3>
+                                <p style="font-size: 0.76rem; color: #64748B; margin: 0; font-weight: 500;">Choose how you want to shop or partner with DT Brand's</p>
+                            </div>
+
+                            <!-- Option 1: Customer (Retail Shopper) -->
+                            <div class="ac-choice-card" onclick="selectRegFlow('customer')">
+                                <div class="ac-choice-badge">Instant Activation</div>
+                                <div class="ac-choice-header">
+                                    <div class="ac-choice-icon-gold">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="ac-choice-title">Customer Account</h4>
+                                        <p class="ac-choice-desc">Personal shopping, bridal sarees &amp; luxury ethnic wear at retail rates with instant checkout.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-choice-pills">
+                                    <span class="ac-choice-pill">✓ Instant Access</span>
+                                    <span class="ac-choice-pill">✓ Live Tracking</span>
+                                    <span class="ac-choice-pill">✓ Saved Wishlist</span>
+                                </div>
+                                <button type="button" class="dt-btn-gold" style="margin-top: 6px;">
+                                    <span>Continue as Customer</span>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            </div>
+
+                            <!-- Option 2: For Business (Wholesale, Retailer, Reseller) -->
+                            <div class="ac-choice-card business" onclick="selectRegFlow('business')">
+                                <div class="ac-choice-badge biz">B2B Trade Portal</div>
+                                <div class="ac-choice-header">
+                                    <div class="ac-choice-icon-dark">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M12 3l9 4H3l9-4z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="ac-choice-title">For Business</h4>
+                                        <p class="ac-choice-desc">Wholesalers, B2B retailers &amp; resellers accessing mill rates, master bales &amp; MOQ lots.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-choice-pills">
+                                    <span class="ac-choice-pill">✓ Mill Wholesale</span>
+                                    <span class="ac-choice-pill">✓ Bale / Set Lots</span>
+                                    <span class="ac-choice-pill">✓ Dedicated Hub</span>
+                                </div>
+                                <button type="button" class="dt-btn-dark" style="margin-top: 6px;">
+                                    <span>Continue for Business</span>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 2B. CREATE ACCOUNT REGISTRATION FORM -->
                         <form id="registerForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleRegisterSubmit();">
                             
+                            <!-- Flow Indicator Header -->
+                            <div class="ac-flow-indicator" id="regFlowIndicator">
+                                <div class="ac-flow-info">
+                                    <span class="ac-flow-tag" id="regFlowTag">👤 Customer Account</span>
+                                    <span class="ac-flow-sub" id="regFlowSub">Retail pricing &amp; instant order tracking</span>
+                                </div>
+                                <button type="button" class="ac-flow-change-btn" onclick="resetRegFlow()">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                    <span>Switch Type</span>
+                                </button>
+                            </div>
+
                             <!-- Full Name -->
                             <div class="ac-field-group">
                                 <label class="ac-field-label" for="regName">Full Name <span class="req">*</span></label>
@@ -1167,10 +1417,10 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 </div>
                             </div>
 
-                            <!-- Account Role Selector -->
-                            <div class="ac-field-group">
+                            <!-- Account Role Selector (Hidden for Customer Flow, Visible for Business Flow) -->
+                            <div class="ac-field-group" id="regRoleGroup" style="display:none;">
                                 <label class="ac-field-label">Select Account Type <span class="req">*</span></label>
-                                <input type="hidden" id="regRole" name="role" value="Retailer">
+                                <input type="hidden" id="regRole" name="role" value="Customer">
                                 <div class="ac-role-grid">
                                     <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
                                         <div class="ac-role-icon">
@@ -1212,7 +1462,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                             <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                                <span>Create Account</span>
+                                <span id="regSubmitBtnSpan">Create Customer Account</span>
                             </button>
                         </form>
 
@@ -1503,6 +1753,110 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             }
         };
 
+        window.currentRegFlow = null;
+
+        window.selectRegFlow = function(flow) {
+            window.currentRegFlow = flow;
+            var choicePane = document.getElementById('regProfileChoicePane');
+            var regForm = document.getElementById('registerForm');
+            var roleGroup = document.getElementById('regRoleGroup');
+            var tagEl = document.getElementById('regFlowTag');
+            var subEl = document.getElementById('regFlowSub');
+            var submitSpan = document.getElementById('regSubmitBtnSpan');
+
+            if (choicePane) {
+                choicePane.classList.remove('active');
+                choicePane.style.display = 'none';
+            }
+            if (regForm) {
+                regForm.classList.add('active');
+                regForm.style.display = 'flex';
+            }
+
+            if (flow === 'customer') {
+                if (roleGroup) roleGroup.style.display = 'none';
+                if (tagEl) tagEl.textContent = '👤 Customer Account';
+                if (subEl) subEl.textContent = 'Personal retail shopping & instant order tracking';
+                if (submitSpan) submitSpan.textContent = 'Create Customer Account';
+                var regRole = document.getElementById('regRole');
+                if (regRole) regRole.value = 'Customer';
+                window.selectedRole = 'Customer';
+            } else {
+                if (roleGroup) roleGroup.style.display = 'block';
+                if (tagEl) tagEl.textContent = '🏢 Business Trade Account';
+                if (subEl) subEl.textContent = 'Wholesale, B2B retailer & reseller volume portal';
+                if (submitSpan) submitSpan.textContent = 'Create Business Account';
+                selectRole('Retailer');
+            }
+        };
+
+        window.resetRegFlow = function() {
+            window.currentRegFlow = null;
+            var choicePane = document.getElementById('regProfileChoicePane');
+            var regForm = document.getElementById('registerForm');
+            if (regForm) {
+                regForm.classList.remove('active');
+                regForm.style.display = 'none';
+            }
+            if (choicePane) {
+                choicePane.classList.add('active');
+                choicePane.style.display = 'flex';
+            }
+        };
+
+        window.switchAuthTab = function(tab) {
+            var btnLogin = document.getElementById('tabBtnLogin');
+            var btnReg = document.getElementById('tabBtnRegister');
+            var loginForm = document.getElementById('loginForm');
+            var regForm = document.getElementById('registerForm');
+            var choicePane = document.getElementById('regProfileChoicePane');
+            var forgotForm = document.getElementById('forgotForm');
+
+            if (btnLogin) btnLogin.classList.toggle('active', tab === 'login');
+            if (btnReg) btnReg.classList.toggle('active', tab === 'register');
+
+            if (loginForm) {
+                loginForm.classList.toggle('active', tab === 'login');
+                loginForm.style.display = (tab === 'login') ? 'flex' : 'none';
+            }
+            if (forgotForm) {
+                forgotForm.classList.toggle('active', tab === 'forgot');
+                forgotForm.style.display = (tab === 'forgot') ? 'flex' : 'none';
+            }
+
+            if (tab === 'register') {
+                if (window.currentRegFlow) {
+                    if (choicePane) {
+                        choicePane.classList.remove('active');
+                        choicePane.style.display = 'none';
+                    }
+                    if (regForm) {
+                        regForm.classList.add('active');
+                        regForm.style.display = 'flex';
+                    }
+                } else {
+                    if (regForm) {
+                        regForm.classList.remove('active');
+                        regForm.style.display = 'none';
+                    }
+                    if (choicePane) {
+                        choicePane.classList.add('active');
+                        choicePane.style.display = 'flex';
+                    }
+                }
+                renderCountryDropdown();
+            } else {
+                if (choicePane) {
+                    choicePane.classList.remove('active');
+                    choicePane.style.display = 'none';
+                }
+                if (regForm) {
+                    regForm.classList.remove('active');
+                    regForm.style.display = 'none';
+                }
+            }
+        };
+
         window.validateWhatsAppDigits = function() {
             var phoneEl = document.getElementById('regPhone');
             var errorEl = document.getElementById('phoneErrorMsg');
@@ -1514,25 +1868,6 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 if (errorEl) errorEl.style.display = 'block';
             } else {
                 if (errorEl) errorEl.style.display = 'none';
-            }
-        };
-
-        window.switchAuthTab = function(tab) {
-            var btnLogin = document.getElementById('tabBtnLogin');
-            var btnReg = document.getElementById('tabBtnRegister');
-            var loginForm = document.getElementById('loginForm');
-            var regForm = document.getElementById('registerForm');
-            var forgotForm = document.getElementById('forgotForm');
-
-            if (btnLogin) btnLogin.classList.toggle('active', tab === 'login');
-            if (btnReg) btnReg.classList.toggle('active', tab === 'register');
-
-            if (loginForm) loginForm.classList.toggle('active', tab === 'login');
-            if (regForm) regForm.classList.toggle('active', tab === 'register');
-            if (forgotForm) forgotForm.classList.toggle('active', tab === 'forgot');
-
-            if (tab === 'register') {
-                renderCountryDropdown();
             }
         };
 
@@ -1717,21 +2052,32 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 
                 if (data.success && data.user) {
                     var u = data.user;
-                    var lType = (u.type || 'retail').toLowerCase();
-                    var roleName = lType === 'wholesale' ? 'Wholesaler' : (lType === 'reseller' ? 'Reseller' : 'Retailer');
+                    var lType = (u.type || 'customer').toLowerCase();
+                    var roleName = lType === 'wholesale' ? 'Wholesaler' : (lType === 'reseller' ? 'Reseller' : (lType === 'retailer' ? 'Retailer' : 'Customer'));
                     var userData = {
                         id: u.id,
                         name: u.name,
                         phone: u.phone,
                         email: u.email || 'member@dtbrands.in',
                         role: roleName,
+                        type: lType,
                         tier: u.tier || 'Standard',
                         country: 'India',
                         state: u.state || 'Gujarat',
                         city: u.city || 'Surat'
                     };
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                    checkUserAuth();
+
+                    // Smart Redirection based on role
+                    if (lType === 'wholesale') {
+                        window.location.href = '/wholesale.php';
+                    } else if (lType === 'retailer') {
+                        window.location.href = '/retailer.php';
+                    } else if (lType === 'reseller') {
+                        window.location.href = '/reseller.php';
+                    } else {
+                        checkUserAuth();
+                    }
                 } else {
                     alert(data.message || 'Login failed. Please verify your credentials.');
                 }
@@ -1757,7 +2103,10 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 return;
             }
 
-            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : 'retailer');
+            var typeCode = (window.currentRegFlow === 'customer' || selectedRole === 'Customer')
+                ? 'customer'
+                : (selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : 'retailer'));
+
             var fullPhone = selectedCountry.dial + ' ' + phone;
 
             var params = new URLSearchParams();
@@ -1771,7 +2120,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             params.append('state', selectedState);
 
             var regBtn = document.getElementById('regSubmitBtn');
-            if (regBtn) regBtn.innerHTML = '<span>Creating Account...</span>';
+            var submitSpan = document.getElementById('regSubmitBtnSpan');
+            if (submitSpan) submitSpan.textContent = 'Creating Account...';
 
             fetch('/api/auth.php', {
                 method: 'POST',
@@ -1779,34 +2129,60 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
-                if (regBtn) regBtn.innerHTML = '<span>Create Account</span>';
+                if (submitSpan) {
+                    submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
+                }
                 if (data && data.success && data.pending_approval) {
                     alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once approved.');
+                    var pType = (data.requested_type || typeCode).toLowerCase();
+                    if (pType === 'wholesale') {
+                        window.location.href = '/wholesale.php';
+                    } else if (pType === 'retailer') {
+                        window.location.href = '/retailer.php';
+                    } else if (pType === 'reseller') {
+                        window.location.href = '/reseller.php';
+                    } else {
+                        checkUserAuth();
+                    }
                     return;
                 }
                 if (data.success && data.user) {
                     var u = data.user;
-                    var srvType = (u.type || 'retail').toLowerCase();
-                    var srvRole = srvType === 'wholesale' ? 'Wholesaler' : (srvType === 'reseller' ? 'Reseller' : 'Retailer');
+                    var srvType = (u.type || typeCode).toLowerCase();
+                    var srvRole = srvType === 'wholesale' ? 'Wholesaler' : (srvType === 'reseller' ? 'Reseller' : (srvType === 'retailer' ? 'Retailer' : 'Customer'));
                     var userData = {
                         id: u.id,
                         name: u.name,
                         phone: u.phone,
                         rawPhone: phone,
                         role: srvRole,
+                        type: srvType,
                         tier: u.tier || 'Standard',
                         country: selectedCountry.name,
                         state: selectedState,
                         city: city || 'Surat'
                     };
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                    checkUserAuth();
+
+                    // Smart Redirection based on created user type
+                    if (srvType === 'wholesale') {
+                        window.location.href = '/wholesale.php';
+                    } else if (srvType === 'retailer') {
+                        window.location.href = '/retailer.php';
+                    } else if (srvType === 'reseller') {
+                        window.location.href = '/reseller.php';
+                    } else {
+                        // Customer ➔ Show member dashboard on account.php
+                        checkUserAuth();
+                    }
                 } else {
                     alert(data.message || 'Registration failed.');
                 }
             })
             .catch(function() {
-                if (regBtn) regBtn.innerHTML = '<span>Create Account</span>';
+                if (submitSpan) {
+                    submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
+                }
                 alert('Unable to reach server. Please try again.');
             });
         };

@@ -32,11 +32,9 @@ class Auth
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
         // The tier the visitor ASKED for. It is not granted here — see below.
-        // 'retailer' is a trade tier (own price column, MOQ rules, portal), so a
-        // retailer application follows the same admin-approval path as
-        // wholesale/reseller instead of being silently downgraded to retail.
-        $requestedType = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller', 'retailer']) ? $data['type'] : 'retail';
-        $isB2BRequest = ($requestedType !== 'retail');
+        $rawType = strtolower(trim($data['type'] ?? ''));
+        $requestedType = in_array($rawType, ['customer', 'retail', 'wholesale', 'reseller', 'retailer'], true) ? $rawType : 'customer';
+        $isB2BRequest = in_array($requestedType, ['wholesale', 'reseller', 'retailer'], true);
         $city = trim($data['city'] ?? '');
         $state = trim($data['state'] ?? '');
         // GSTIN/PAN are no longer asked for on the signup form. They are still
@@ -77,10 +75,10 @@ class Auth
                 // Now a trade request is RECORDED (customers.type holds what was
                 // asked for) but left status='pending'. Auth::login only accepts
                 // status='active', so the account is inert until an admin verifies
-                // the trade details and approves it. Retail signup is unchanged and
+                // the trade details and approves it. Retail/customer signup is unchanged and
                 // still works immediately.
                 $alreadyApprovedB2B = $existing
-                    && in_array(($existing['type'] ?? 'retail'), ['wholesale', 'reseller', 'retailer'], true)
+                    && in_array(($existing['type'] ?? 'customer'), ['wholesale', 'reseller', 'retailer'], true)
                     && ($existing['status'] ?? '') === 'active';
 
                 if ($alreadyApprovedB2B) {
@@ -95,7 +93,7 @@ class Auth
                     $grantStatus = 'pending';
                     $needsApproval = true;
                 } else {
-                    $grantType = 'retail';
+                    $grantType = $requestedType === 'retail' ? 'retail' : 'customer';
                     $grantStatus = 'active';
                     $needsApproval = false;
                 }

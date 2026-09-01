@@ -130,8 +130,8 @@ class CustomerManager
         $name = trim($data['name'] ?? '');
         $phone = trim($data['phone'] ?? '');
         $email = trim($data['email'] ?? '');
-        $type = trim($data['type'] ?? 'retail');
-        $type = in_array($type, ['retail', 'wholesale', 'reseller'], true) ? $type : 'retail';
+        $type = trim($data['type'] ?? 'customer');
+        $type = in_array($type, ['customer', 'retail', 'wholesale', 'reseller', 'retailer'], true) ? $type : 'customer';
         $tier = trim($data['tier'] ?? ($type === 'wholesale' ? 'Diamond Elite' : ($type === 'reseller' ? 'Gold VIP' : 'Silver Consumer')));
         $city = trim($data['city'] ?? '');
         $state = trim($data['state'] ?? '');
@@ -241,8 +241,8 @@ class CustomerManager
             if (isset($data['status']) && !in_array($data['status'], ['active', 'pending', 'suspended'], true)) {
                 return ['success' => false, 'message' => 'Status must be active, pending or suspended.'];
             }
-            if (isset($data['type']) && !in_array($data['type'], ['retail', 'wholesale', 'reseller'], true)) {
-                return ['success' => false, 'message' => 'Account type must be retail, wholesale or reseller.'];
+            if (isset($data['type']) && !in_array($data['type'], ['customer', 'retail', 'wholesale', 'reseller', 'retailer'], true)) {
+                return ['success' => false, 'message' => 'Account type must be customer, retail, wholesale, retailer, or reseller.'];
             }
 
             $fields = [];
@@ -286,6 +286,11 @@ class CustomerManager
         }
 
         try {
+            // Delete associated addresses first to keep the foreign keys clean
+            // even if CASCADE is not configured on the schema.
+            $delAddr = $pdo->prepare("DELETE FROM addresses WHERE customer_id = ?");
+            $delAddr->execute([$id]);
+
             $stmt = $pdo->prepare("DELETE FROM customers WHERE id = ?");
             $stmt->execute([$id]);
             // execute() is true for a statement that matched nothing, so a
@@ -347,7 +352,7 @@ class CustomerManager
         if ($id <= 0) return false;
 
         $type = strtolower(trim($type));
-        if (!in_array($type, ['retail', 'wholesale', 'reseller', 'retailer'], true)) {
+        if (!in_array($type, ['customer', 'retail', 'wholesale', 'reseller', 'retailer'], true)) {
             return false;
         }
 

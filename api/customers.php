@@ -112,9 +112,9 @@ try {
                 exit;
             }
             $newType = strtolower(trim($data['type']));
-            if (!in_array($newType, ['wholesale', 'reseller', 'retail', 'retailer'], true)) {
+            if (!in_array($newType, ['customer', 'wholesale', 'reseller', 'retail', 'retailer'], true)) {
                 http_response_code(400);
-                echo json_encode(['success' => false, 'message' => 'Type must be wholesale, reseller, retail, or retailer.'], JSON_PRETTY_PRINT);
+                echo json_encode(['success' => false, 'message' => 'Type must be customer, wholesale, reseller, retail, or retailer.'], JSON_PRETTY_PRINT);
                 exit;
             }
             $ok = CustomerManager::updateType($targetId, $newType);
