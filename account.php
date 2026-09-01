@@ -1,6 +1,6 @@
 <?php
 /**
- * account.php — Dedicated Ultra-Luxury Customer Account & VIP Hub
+ * account.php — Dedicated Ultra-Luxury Customer Account Hub
  * DT Brand's & Jai Hanuman Tex — Master Architecture Standard
  * 100% Fluid Responsive with Editorial Split-Hero Layout, Next-Gen Auth Studio,
  * Dynamic Real-Time Live Order History, and Official Shop Header/Footer Integration.
@@ -10,7 +10,7 @@ require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/Auth.php';
 require_once __DIR__ . '/src/ProductCatalog.php';
 
-$page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
+$page_title = "My Account — DT Brand's | Ethnic Luxury";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -689,7 +689,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
         }
 
         /* ═══════════════════════════════════════════════════════════════════
-           VIEW 2: LOGGED-IN VIP DASHBOARD
+           VIEW 2: LOGGED-IN CUSTOMER DASHBOARD
         ═══════════════════════════════════════════════════════════════════ */
         .ac-dashboard-wrap {
             display: none;
@@ -944,10 +944,6 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                 <!-- Left Designer E-Commerce Showcase -->
                 <div class="ac-hero-showcase">
                     <div>
-                        <div class="ac-showcase-badge">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                            <span>VIP Member Privileges</span>
-                        </div>
                         <h1 class="ac-showcase-title">Welcome to DT Brand's</h1>
                         <p class="ac-showcase-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
 
@@ -1046,7 +1042,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
 
                             <button type="submit" class="dt-btn-gold" id="loginSubmitBtn">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                                <span>Sign In to VIP Lounge</span>
+                                <span>Sign In to Account</span>
                             </button>
 
                             <div style="display:flex; align-items:center; gap:10px; margin: 4px 0;">
@@ -1183,7 +1179,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
 
                             <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                                <span>Create VIP Account</span>
+                                <span>Create Account</span>
                             </button>
                         </form>
 
@@ -1213,7 +1209,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
 
             </div>
 
-            <!-- ════════════ VIEW 2: LOGGED-IN VIP DASHBOARD ════════════ -->
+            <!-- ════════════ VIEW 2: LOGGED-IN CUSTOMER DASHBOARD ════════════ -->
             <div id="dashboardWrap" class="ac-dashboard-wrap">
                 
                 <!-- Hero Profile Banner -->
@@ -1223,7 +1219,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                         <div>
                             <h2 class="ac-profile-name" id="dashUserName">Valued Client</h2>
                             <div class="ac-profile-phone" id="dashUserPhone">+91 70463 63528</div>
-                            <div class="ac-tier-badge" id="dashUserRoleBadge">👑 VIP Member</div>
+                            <div class="ac-tier-badge" id="dashUserRoleBadge">Verified Member</div>
                         </div>
                     </div>
 
@@ -1281,7 +1277,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                             <p style="font-size:0.8rem; color:#475569; margin:0 0 14px 0; line-height:1.45;">
                                 Need custom saree blouse stitching, bridal lot matching, or direct wholesale GST invoicing? Our master fashion stylists are at your service.
                             </p>
-                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20VIP%20styling%20support" target="_blank" class="dt-btn-emerald" style="text-decoration:none;">
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20custom%20styling%20support" target="_blank" class="dt-btn-emerald" style="text-decoration:none;">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                 <span>WhatsApp Fashion Stylist</span>
                             </a>
@@ -1532,7 +1528,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
 
                 if (nameEl) nameEl.textContent = user.name || 'Valued Member';
                 if (phoneEl) phoneEl.textContent = user.phone || '+91 70463 63528';
-                if (roleEl) roleEl.textContent = '👑 ' + (user.role || 'VIP Member');
+                if (roleEl) roleEl.textContent = (user.role || 'Verified') + ' Member';
 
                 if (initEl) {
                     var parts = (user.name || 'Member').split(' ');
@@ -1684,7 +1680,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
-                if (btn) btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg><span>Sign In to VIP Lounge</span>';
+                if (btn) btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg><span>Sign In to Account</span>';
                 
                 if (data.success && data.user) {
                     var u = data.user;
@@ -1708,7 +1704,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                 }
             })
             .catch(function() {
-                if (btn) btn.innerHTML = '<span>Sign In to VIP Lounge</span>';
+                if (btn) btn.innerHTML = '<span>Sign In to Account</span>';
                 alert('Unable to reach server. Please check your connection.');
             });
         };
@@ -1742,7 +1738,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
             params.append('state', selectedState);
 
             var regBtn = document.getElementById('regSubmitBtn');
-            if (regBtn) regBtn.innerHTML = '<span>Creating VIP Profile...</span>';
+            if (regBtn) regBtn.innerHTML = '<span>Creating Account...</span>';
 
             fetch('/api/auth.php', {
                 method: 'POST',
@@ -1750,7 +1746,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
-                if (regBtn) regBtn.innerHTML = '<span>Create VIP Account</span>';
+                if (regBtn) regBtn.innerHTML = '<span>Create Account</span>';
                 if (data && data.success && data.pending_approval) {
                     alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once approved.');
                     return;
@@ -1777,7 +1773,7 @@ $page_title = "My Account & VIP Lounge — DT Brand's | Ethnic Luxury";
                 }
             })
             .catch(function() {
-                if (regBtn) regBtn.innerHTML = '<span>Create VIP Account</span>';
+                if (regBtn) regBtn.innerHTML = '<span>Create Account</span>';
                 alert('Unable to reach server. Please try again.');
             });
         };
