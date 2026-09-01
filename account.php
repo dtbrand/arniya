@@ -1367,7 +1367,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                             <span class="ac-tile-title">For Business</span>
                                             <span class="ac-tile-badge blue-badge">B2B Trade</span>
                                         </div>
-                                        <span class="ac-tile-desc">Wholesale &amp; Resellers</span>
+                                        <span class="ac-tile-desc">Wholesale, Retailers &amp; Resellers</span>
                                     </div>
                                     <div class="ac-tile-arrow-btn dark-arrow-btn">
                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
