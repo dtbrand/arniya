@@ -428,17 +428,24 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             position: relative;
         }
         .ac-field-label {
-            font-size: clamp(0.70rem, 1.5vw, 0.75rem);
-            font-weight: 800;
+            font-size: clamp(0.78rem, 1.6vw, 0.82rem);
+            font-weight: 700;
             color: #1F2937;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            text-transform: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2px;
+        }
+        .ac-field-label-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
         }
         .ac-field-label .req {
             color: #DC2626;
+            font-weight: 800;
             margin-left: 2px;
         }
 
@@ -1295,16 +1302,18 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         <!-- 1. SIGN IN FORM -->
                         <form id="loginForm" class="ac-form-pane active" onsubmit="event.preventDefault(); handleLoginSubmit();">
                             <div class="ac-field-group">
-                                <label class="ac-field-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
+                                <label class="ac-field-label" for="loginPhone">
+                                    <span class="ac-field-label-text">WhatsApp Number or Email <span class="req">*</span></span>
+                                </label>
                                 <div class="ac-input-wrapper">
                                     <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    <input type="text" id="loginPhone" class="ac-text-input" placeholder="e.g. 7046363528 or client@example.com" required autocomplete="username">
+                                    <input type="text" id="loginPhone" class="ac-text-input" placeholder="e.g. 70463***** or client@example.com" required autocomplete="username">
                                 </div>
                             </div>
 
                             <div class="ac-field-group">
                                 <label class="ac-field-label" for="loginPass">
-                                    <span>Password <span class="req">*</span></span>
+                                    <span class="ac-field-label-text">Password <span class="req">*</span></span>
                                     <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="color:var(--dt-gold); font-weight:700; text-decoration:underline; font-size:0.75rem;">Forgot Password?</a>
                                 </label>
                                 <div class="ac-input-wrapper">
@@ -1396,7 +1405,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                             <!-- Full Name -->
                             <div class="ac-field-group">
-                                <label class="ac-field-label" for="regName">Full Name <span class="req">*</span></label>
+                                <label class="ac-field-label" for="regName">
+                                    <span class="ac-field-label-text">Full Name <span class="req">*</span></span>
+                                </label>
                                 <div class="ac-input-wrapper">
                                     <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <input type="text" id="regName" class="ac-text-input" placeholder="e.g. Radhika Sharma" required autocomplete="name">
@@ -1405,7 +1416,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                             <!-- Country Selection Dropdown -->
                             <div class="ac-field-group">
-                                <label class="ac-field-label">Country <span class="req">*</span></label>
+                                <label class="ac-field-label">
+                                    <span class="ac-field-label-text">Country <span class="req">*</span></span>
+                                </label>
                                 <div class="ac-custom-select" id="countrySelectBox">
                                     <div class="ac-select-trigger" onclick="toggleDropdown('countrySelectBox')">
                                         <div style="display:flex; align-items:center; gap:8px;">
@@ -1428,7 +1441,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             <!-- Mobile Number Input -->
                             <div class="ac-field-group">
                                 <label class="ac-field-label" for="regPhone">
-                                    <span>WhatsApp Number <span class="req">*</span></span>
+                                    <span class="ac-field-label-text">WhatsApp Number <span class="req">*</span></span>
                                     <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
                                 </label>
                                 <div class="ac-phone-input-group">
@@ -1436,7 +1449,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                         <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
                                         <span id="waDialCode">+91</span>
                                     </div>
-                                    <input type="tel" id="regPhone" class="ac-phone-input" placeholder="10-digit WhatsApp number" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
+                                    <input type="tel" id="regPhone" class="ac-phone-input" placeholder="e.g. 70463*****" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
                                 </div>
                                 <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
                                     ⚠️ Please enter a valid 10-digit WhatsApp number.
@@ -1446,11 +1459,15 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             <!-- City & State Row -->
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                                 <div class="ac-field-group">
-                                    <label class="ac-field-label" for="regCity">City <span class="req">*</span></label>
+                                    <label class="ac-field-label" for="regCity">
+                                        <span class="ac-field-label-text">City <span class="req">*</span></span>
+                                    </label>
                                     <input type="text" id="regCity" class="ac-text-input no-icon" placeholder="e.g. Surat" value="Surat" required>
                                 </div>
                                 <div class="ac-field-group">
-                                    <label class="ac-field-label">State <span class="req">*</span></label>
+                                    <label class="ac-field-label">
+                                        <span class="ac-field-label-text">State <span class="req">*</span></span>
+                                    </label>
                                     <div class="ac-custom-select" id="stateSelectBox">
                                         <div class="ac-select-trigger" onclick="toggleDropdown('stateSelectBox')">
                                             <span id="displayStateText" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gujarat</span>
@@ -1470,7 +1487,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                             <!-- Account Role Selector (Hidden for Customer Flow, Visible for Business Flow) -->
                             <div class="ac-field-group" id="regRoleGroup" style="display:none;">
-                                <label class="ac-field-label">Select Account Type <span class="req">*</span></label>
+                                <label class="ac-field-label">
+                                    <span class="ac-field-label-text">Select Account Type <span class="req">*</span></span>
+                                </label>
                                 <input type="hidden" id="regRole" name="role" value="Customer">
                                 <div class="ac-role-grid">
                                     <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
@@ -1496,12 +1515,14 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                             <!-- Trade Application Notice -->
                             <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
-                                Trade accounts are verified on WhatsApp before wholesale pricing is activated. You can shop at retail rates immediately while approval is pending.
+                                Trade accounts get direct instant activation with mill pricing.
                             </div>
 
                             <!-- Password -->
                             <div class="ac-field-group">
-                                <label class="ac-field-label" for="regPass">Choose Password <span class="req">*</span></label>
+                                <label class="ac-field-label" for="regPass">
+                                    <span class="ac-field-label-text">Choose Password <span class="req">*</span></span>
+                                </label>
                                 <div class="ac-input-wrapper">
                                     <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                                     <input type="password" id="regPass" class="ac-text-input" placeholder="Minimum 6 characters" required autocomplete="new-password">
@@ -1523,10 +1544,12 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 Enter your registered WhatsApp Number or Email and our Concierge will instantly send you an authenticated password recovery link.
                             </p>
                             <div class="ac-field-group">
-                                <label class="ac-field-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
+                                <label class="ac-field-label" for="forgotInput">
+                                    <span class="ac-field-label-text">WhatsApp Number / Email <span class="req">*</span></span>
+                                </label>
                                 <div class="ac-input-wrapper">
                                     <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 7046363528" required>
+                                    <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 70463***** or client@example.com" required>
                                 </div>
                             </div>
                             <button type="submit" class="dt-btn-gold">
