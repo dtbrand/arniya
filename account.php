@@ -147,27 +147,36 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             grid-template-columns: 1fr;
             gap: 28px;
             align-items: stretch;
+            max-width: 520px;
+            margin: 0 auto;
         }
         @media (min-width: 960px) {
             .ac-auth-split-grid {
                 grid-template-columns: 1.05fr 1fr;
                 gap: 36px;
+                max-width: 100%;
+                margin: 0;
             }
         }
 
-        /* ── Left Designer E-Commerce Showcase ── */
+        /* ── Left Designer E-Commerce Showcase (Hidden on Mobile) ── */
         .ac-hero-showcase {
+            display: none;
             background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F5EDE0 100%);
             border-radius: var(--radius-xl);
             border: 1.5px solid var(--dt-gold-border);
             padding: clamp(24px, 4vw, 36px);
             color: var(--dt-text-main);
-            display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(138,104,31,0.08);
+        }
+        @media (min-width: 960px) {
+            .ac-hero-showcase {
+                display: flex;
+            }
         }
         .ac-hero-showcase::before {
             content: '';
