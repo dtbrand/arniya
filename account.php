@@ -1,833 +1,821 @@
 <?php
 /**
- * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Enhanced Ultra-Clear Typography, High Contrast Form Headings, Labels & Visual Hierarchy
- * 100% Fluid Responsive for Desktop & Mobile
+ * account.php — Dedicated Ultra-Luxury Customer Account & VIP Hub
+ * DT Brand's & Jai Hanuman Tex — Master Architecture Standard
+ * 100% Fluid Responsive with Editorial Split-Hero Layout, Next-Gen Auth Studio,
+ * Dynamic Real-Time Live Order History, and Universal Header/Footer Integration.
  */
+
+require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
+require_once __DIR__ . '/src/ProductCatalog.php';
+
+$page_title = "My Account & VIP Lounge ‹ DT Brand's";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Account — DT Brand's | Ethnic Luxury</title>
+    <title><?php echo $page_title; ?></title>
     
-    <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Core Brand Styles -->
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?php echo time(); ?>">
 
     <style>
         :root {
-            --dark-gold: #8A681F;
-            --deep-gold: #5F4512;
-            --gold-light: #C5A859;
-            --gold-pale: #FAF5E8;
-            --gold-border: rgba(138, 104, 31, 0.35);
-            --dark-text: #181512;
-            --mid-text: #423C34;
-            --light-text: #6E675D;
-            --off-white: #F9F7F2;
-            --pure-white: #FFFFFF;
-            --soft-platinum: #DCD7CD;
-            --font-serif: 'Cinzel', serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --dt-gold: #8A681F;
+            --dt-gold-bright: #D4AF37;
+            --dt-gold-light: #E6CA65;
+            --dt-gold-pale: #FAF5E8;
+            --dt-gold-border: rgba(138, 104, 31, 0.25);
+            --dt-dark: #181512;
+            --dt-dark-soft: #2A241E;
+            --dt-text-main: #111827;
+            --dt-text-sub: #4B5563;
+            --dt-text-muted: #64748B;
+            --dt-bg-canvas: #F8FAF9;
+            --dt-white: #FFFFFF;
+            --font-serif: 'Cinzel', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --shadow-subtle: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-gold: 0 10px 30px rgba(138,104,31,0.18);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        @property --dt-border-angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+        @keyframes dtBorderRotate {
+            to { --dt-border-angle: 360deg; }
+        }
+        @keyframes dtGoldPlatinumGlow {
+            0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.35); }
+            100% { box-shadow: 0 0 18px rgba(212, 175, 55, 0.65); }
         }
 
         body {
             font-family: var(--font-sans);
-            background: var(--off-white);
-            color: var(--dark-text);
+            background: var(--dt-bg-canvas);
+            color: var(--dt-text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
         }
 
-        /* ── Top Header Navigation Bar ── */
-        .account-nav-header {
-            background: #FFFFFF;
-            border-bottom: 2px solid var(--dark-gold);
-            padding: clamp(10px, 2.5vw, 16px) clamp(16px, 4vw, 40px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-        .account-nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .brand-seal {
-            width: clamp(34px, 6vw, 42px);
-            height: clamp(34px, 6vw, 42px);
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            font-weight: 700;
-            box-shadow: 0 3px 10px rgba(138,104,31,0.35);
-        }
-        .brand-seal svg {
-            width: clamp(18px, 3.5vw, 22px);
-            height: clamp(18px, 3.5vw, 22px);
-            stroke: currentColor;
-            stroke-width: 2.2;
-            fill: none;
-        }
-        .brand-text h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(1.05rem, 3.5vw, 1.4rem);
-            font-weight: 800;
-            color: var(--dark-gold);
-            letter-spacing: 0.08em;
-            line-height: 1;
-        }
-        .brand-text span {
-            font-size: clamp(0.58rem, 1.8vw, 0.7rem);
-            color: var(--mid-text);
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            display: block;
-            margin-top: 2px;
-        }
-        .return-shop-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px clamp(12px, 2.2vw, 18px);
-            border-radius: 20px;
-            border: 1.5px solid var(--dark-gold);
-            background: #FAF8F4;
-            color: var(--dark-gold);
-            font-size: clamp(0.74rem, 2vw, 0.84rem);
-            font-weight: 800;
-            text-decoration: none;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            transition: all var(--transition);
-        }
-        .return-shop-btn:hover {
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(138,104,31,0.25);
-        }
-
-        /* ── Main Page Container ── */
-        .page-container {
+        /* ── Main Canvas Wrapper ── */
+        .ac-main-canvas {
             flex: 1;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1240px;
             margin: 0 auto;
-            padding: clamp(16px, 3.5vw, 36px) clamp(12px, 3vw, 24px);
+            padding: clamp(20px, 4vw, 40px) clamp(16px, 3vw, 32px);
+            box-sizing: border-box;
         }
 
-        /* ════════════════════════════════════════════════════
-           HIGH-VISIBILITY AUTH CARD VIEW
-        ════════════════════════════════════════════════════ */
-        .auth-card-wrap {
-            max-width: 530px;
-            margin: clamp(10px, 4vw, 30px) auto;
-            background: #FFFFFF;
-            border-radius: 18px;
-            border: 2px solid var(--dark-gold);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-            overflow: visible;
-        }
-        
-        /* ── Luxury Form Card Header with Brand Logo & Royal Seal ── */
-        .auth-card-header {
-            background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
-            padding: 24px 24px 20px;
-            border-bottom: 2px solid var(--gold-border);
-            text-align: center;
-            border-radius: 16px 16px 0 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .auth-card-header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, var(--dark-gold) 50%, transparent 100%);
-        }
-        
-        /* Royal Logo Seal */
-        .auth-brand-seal-wrap {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 12px;
-            text-decoration: none;
-        }
-        .auth-logo-badge {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+        /* ── Breadcrumb Bar ── */
+        .ac-breadcrumb-bar {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            box-shadow: 0 4px 16px rgba(138,104,31,0.4);
-            border: 2px solid #FFFFFF;
-            position: relative;
-            margin-bottom: 8px;
-            animation: goldGlowPulse 3s ease-in-out infinite;
-        }
-        @keyframes goldGlowPulse {
-            0%, 100% { box-shadow: 0 4px 16px rgba(138,104,31,0.35); transform: scale(1); }
-            50% { box-shadow: 0 6px 24px rgba(197,168,89,0.55); transform: scale(1.03); }
-        }
-        .auth-logo-badge svg {
-            width: 26px;
-            height: 26px;
-            stroke: currentColor;
-            stroke-width: 2.2;
-            fill: none;
-        }
-        .auth-brand-title {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--dark-gold);
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-        .auth-brand-sub {
-            font-size: 0.62rem;
-            color: var(--mid-text);
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            margin-top: 3px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .auth-brand-sub::before, .auth-brand-sub::after {
-            content: '❖';
-            font-size: 0.5rem;
-            color: var(--dark-gold);
-            opacity: 0.7;
-        }
-
-        .auth-card-header h2 {
-            font-family: var(--font-serif);
-            font-size: clamp(1.2rem, 3.8vw, 1.45rem);
-            font-weight: 800;
-            color: var(--dark-text);
-            letter-spacing: 0.05em;
-            margin: 6px 0 3px;
-            line-height: 1.2;
-        }
-        .auth-card-header p {
-            font-size: 0.8rem;
-            color: var(--mid-text);
-            font-weight: 600;
-        }
-
-        /* Navigation Tabs */
-        .auth-tabs {
-            display: flex;
-            background: #EFE7D5;
-            border-bottom: 1.5px solid var(--gold-border);
-        }
-        .auth-tab {
-            flex: 1;
-            padding: 13px 8px;
-            background: transparent;
-            border: none;
-            border-bottom: 3.5px solid transparent;
-            font-family: var(--font-sans);
+            justify-content: space-between;
+            margin-bottom: 24px;
             font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--mid-text);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
         }
-        .auth-tab.active {
-            background: #FFFFFF;
-            color: var(--dark-gold);
-            border-bottom-color: var(--dark-gold);
-        }
-
-        /* Form Body */
-        .auth-body {
-            padding: clamp(18px, 4vw, 28px);
-        }
-        .auth-form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            margin-bottom: 18px;
-            position: relative;
-        }
-        
-        /* Ultra Clear Labels */
-        .auth-label {
-            font-size: 0.76rem;
-            font-weight: 800;
-            color: var(--dark-text);
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .auth-label .req {
-            color: #C62828;
-            font-weight: 900;
-            font-size: 0.9rem;
-            margin-left: 2px;
-        }
-        
-        /* Inputs */
-        .auth-input {
-            width: 100%;
-            height: 46px;
-            border: 1.8px solid var(--soft-platinum);
-            border-radius: 9px;
-            padding: 0 14px;
-            font-family: var(--font-sans);
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: var(--dark-text);
-            background: #FFFFFF;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-        .auth-input::placeholder {
-            color: var(--light-text);
-            font-weight: 500;
-        }
-        .auth-input:focus {
-            border-color: var(--dark-gold);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
-        }
-
-        /* Side-by-Side Grid for City & State */
-        .auth-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 480px) {
-            .auth-grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ── Custom Luxury Dropdown Select Component ── */
-        .custom-select-box {
-            position: relative;
-            width: 100%;
-        }
-        .custom-select-trigger {
-            width: 100%;
-            height: 46px;
-            border: 1.8px solid var(--soft-platinum);
-            border-radius: 9px;
-            padding: 0 14px;
-            background: #FFFFFF;
-            color: var(--dark-text);
-            font-size: 0.9rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-        .custom-select-trigger:hover,
-        .custom-select-box.active .custom-select-trigger {
-            border-color: var(--dark-gold);
-            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
-        }
-        .custom-select-val {
+        .ac-breadcrumb-list {
             display: flex;
             align-items: center;
             gap: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: var(--dt-text-muted);
+            font-weight: 600;
         }
-        .custom-select-arrow {
-            width: 18px;
-            height: 18px;
-            stroke: var(--dark-gold);
-            stroke-width: 2.5;
-            fill: none;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
+        .ac-breadcrumb-list a {
+            color: var(--dt-text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
         }
-        .custom-select-box.active .custom-select-arrow {
-            transform: rotate(180deg);
+        .ac-breadcrumb-list a:hover {
+            color: var(--dt-gold);
+        }
+        .ac-breadcrumb-sep {
+            color: #CBD5E1;
+        }
+        .ac-breadcrumb-current {
+            color: var(--dt-gold);
+            font-weight: 700;
+        }
+        .ac-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.2px solid var(--dt-gold-border);
+            background: var(--dt-white);
+            color: var(--dt-gold);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .ac-back-btn:hover {
+            background: var(--dt-gold-pale);
+            border-color: var(--dt-gold);
+            transform: translateY(-1px);
         }
 
-        /* Custom Dropdown Search & Menu */
-        .custom-select-menu {
+        /* ═══════════════════════════════════════════════════════════════════
+           VIEW 1: NEXT-GEN LUXURY SPLIT AUTH EXPERIENCE (GUEST USERS)
+        ═══════════════════════════════════════════════════════════════════ */
+        .ac-auth-split-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            align-items: stretch;
+        }
+        @media (min-width: 960px) {
+            .ac-auth-split-grid {
+                grid-template-columns: 1.05fr 1fr;
+                gap: 36px;
+            }
+        }
+
+        /* ── Left Editorial Showcase ── */
+        .ac-hero-showcase {
+            background: linear-gradient(145deg, #181512 0%, #2A241E 60%, #15120E 100%);
+            border-radius: var(--radius-xl);
+            border: 1.5px solid var(--dt-gold);
+            padding: clamp(28px, 5vw, 44px);
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+        }
+        .ac-hero-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8A681F, #D4AF37, #FFFFFF, #D4AF37, #8A681F);
+        }
+        .ac-hero-showcase::after {
+            content: '👑';
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            font-size: clamp(6rem, 15vw, 10rem);
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .ac-showcase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--dt-gold-bright);
+            color: #E6CA65;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            width: fit-content;
+            margin-bottom: 16px;
+        }
+        .ac-showcase-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-weight: 800;
+            color: #FAF5E8;
+            letter-spacing: 0.04em;
+            line-height: 1.25;
+            margin: 0 0 12px 0;
+        }
+        .ac-showcase-subtitle {
+            font-size: 0.9rem;
+            color: #D6CCA8;
+            line-height: 1.5;
+            margin: 0 0 28px 0;
+        }
+        .ac-benefits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .ac-benefit-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(212,175,55,0.22);
+            border-radius: 12px;
+            padding: 12px 14px;
+            transition: all 0.2s ease;
+        }
+        .ac-benefit-card:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: var(--dt-gold-bright);
+            transform: translateX(3px);
+        }
+        .ac-benefit-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--dt-gold-pale);
+            border: 1px solid var(--dt-gold);
+            color: var(--dt-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ac-benefit-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--dt-gold);
+            stroke-width: 2.2;
+            fill: none;
+        }
+        .ac-benefit-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #FAF5E8;
+            margin-bottom: 2px;
+        }
+        .ac-benefit-desc {
+            font-size: 0.76rem;
+            color: #CBD5E1;
+            line-height: 1.4;
+        }
+        .ac-showcase-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            color: #94A3B8;
+        }
+        .ac-trust-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16A34A;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #16A34A;
+        }
+
+        /* ── Right Auth Studio Card ── */
+        .ac-auth-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-xl);
+            border: 1.5px solid var(--dt-gold);
+            box-shadow: 0 12px 40px rgba(138,104,31,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .ac-auth-card-head {
+            padding: 24px 28px 16px;
+            border-bottom: 1.5px solid #F1ECE1;
+            background: #FAF8F4;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .ac-brand-lockup {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ac-brand-logo-img {
+            height: 38px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+        }
+        .ac-security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #15803D;
+            background: #DCFCE7;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #86EFAC;
+        }
+
+        /* ── Segmented Gold Pill Switcher (Sign In | Create Account) ── */
+        .ac-pill-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #EFE8D6;
+            border-radius: 30px;
+            padding: 4px;
+            border: 1px solid var(--dt-gold-border);
+        }
+        .ac-pill-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 26px;
+            background: transparent;
+            font-family: var(--font-sans);
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: #635A4D;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+        }
+        .ac-pill-btn.active {
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+            color: #111827;
+            box-shadow: 0 4px 14px rgba(184,134,11,0.35);
+            transform: scale(1.01);
+        }
+
+        /* ── Form Body & Floating Inputs ── */
+        .ac-auth-card-body {
+            padding: 24px 28px 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .ac-form-pane {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: acFadeIn 0.2s ease-out;
+        }
+        .ac-form-pane.active {
+            display: flex;
+        }
+        @keyframes acFadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ac-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+        .ac-field-label {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: #1F2937;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ac-field-label .req {
+            color: #DC2626;
+            margin-left: 2px;
+        }
+
+        .ac-input-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .ac-input-icon {
+            position: absolute;
+            left: 14px;
+            width: 18px;
+            height: 18px;
+            stroke: var(--dt-gold);
+            stroke-width: 2.2;
+            fill: none;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .ac-text-input {
+            width: 100%;
+            height: 48px;
+            border-radius: 10px;
+            border: 1.5px solid #D1D5DB;
+            background: #FFFFFF;
+            padding: 0 14px 0 42px;
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--dt-text-main);
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .ac-text-input.no-icon {
+            padding-left: 14px;
+        }
+        .ac-text-input:focus {
+            outline: none !important;
+            border: 2px solid transparent !important;
+            background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                        conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+            animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+            color: #111827 !important;
+        }
+
+        .ac-pwd-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dt-text-muted);
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+        .ac-pwd-toggle svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* ── Country Flag Dropdown ── */
+        .ac-custom-select {
+            position: relative;
+            width: 100%;
+        }
+        .ac-select-trigger {
+            width: 100%;
+            height: 48px;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 10px;
+            padding: 0 14px;
+            background: #FFFFFF;
+            color: var(--dt-text-main);
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .ac-select-trigger:hover, .ac-custom-select.active .ac-select-trigger {
+            border-color: var(--dt-gold);
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+        }
+        .ac-select-menu {
             position: absolute;
             top: calc(100% + 4px);
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             background: #FFFFFF;
-            border: 2px solid var(--dark-gold);
+            border: 1.5px solid var(--dt-gold);
             border-radius: 12px;
-            box-shadow: 0 12px 36px rgba(0,0,0,0.2);
-            max-height: 280px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+            max-height: 260px;
             z-index: 1000;
             display: none;
             flex-direction: column;
             overflow: hidden;
-            animation: customDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .custom-select-box.active .custom-select-menu {
+        .ac-custom-select.active .ac-select-menu {
             display: flex;
         }
-        @keyframes customDropFade {
-            from { opacity: 0; transform: translateY(-6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .dropdown-search-box {
+        .ac-select-search {
             padding: 8px 12px;
-            background: #FAF6EE;
-            border-bottom: 1.5px solid var(--soft-platinum);
-            flex-shrink: 0;
+            background: #FAF8F4;
+            border-bottom: 1px solid #E2DFD7;
         }
-        .dropdown-search-input {
+        .ac-select-search input {
             width: 100%;
-            height: 36px;
-            border: 1.5px solid var(--soft-platinum);
+            height: 34px;
+            border: 1px solid #CBD5E1;
             border-radius: 6px;
-            padding: 0 12px;
-            font-family: var(--font-sans);
-            font-size: 0.84rem;
+            padding: 0 10px;
+            font-size: 0.82rem;
             font-weight: 600;
-            color: var(--dark-text);
             outline: none;
-            background: #FFFFFF;
+            box-sizing: border-box;
         }
-        .dropdown-search-input:focus {
-            border-color: var(--dark-gold);
-            box-shadow: 0 0 0 2px rgba(138,104,31,0.2);
-        }
-        .dropdown-options-scroll {
+        .ac-select-options {
             overflow-y: auto;
             flex: 1;
-            padding: 4px 0;
-            scrollbar-width: thin;
+            max-height: 200px;
         }
-
-        .custom-select-option {
-            padding: 10px 14px;
+        .ac-select-option {
+            padding: 9px 14px;
             font-size: 0.86rem;
-            color: var(--dark-text);
             font-weight: 600;
+            color: #1F2937;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: all 0.15s ease;
+            gap: 8px;
+            transition: background 0.15s ease;
         }
-        .custom-select-option:hover {
-            background: #FAF3E0;
-            color: var(--dark-gold);
-            font-weight: 700;
-            padding-left: 18px;
+        .ac-select-option:hover {
+            background: var(--dt-gold-pale);
+            color: var(--dt-gold);
         }
-        .custom-select-option.selected {
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            font-weight: 700;
-        }
-        .select-flag-img {
-            width: 24px;
-            height: 16px;
+        .ac-flag-img {
+            width: 22px;
+            height: 15px;
+            border-radius: 2px;
             object-fit: cover;
-            border-radius: 3px;
-            border: 1px solid rgba(0,0,0,0.12);
-            flex-shrink: 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
-        /* ── Role Selection Pill Buttons with Real SVG Icons & Micro-Animations ── */
-        .role-pill-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 4px;
-        }
-        .role-pill-btn {
-            position: relative;
-            padding: 12px 8px;
-            border-radius: 11px;
-            border: 2px solid var(--soft-platinum);
-            background: #FFFFFF;
-            color: var(--dark-text);
-            font-family: var(--font-sans);
-            font-size: 0.84rem;
-            font-weight: 800;
-            cursor: pointer;
+        /* ── WhatsApp Phone Input Group ── */
+        .ac-phone-input-group {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            user-select: none;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-        }
-        .role-pill-btn:hover {
-            border-color: var(--dark-gold);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(138,104,31,0.18);
-        }
-        .role-pill-btn.selected {
-            border-color: var(--dark-gold);
-            background: linear-gradient(135deg, #FAF4E5 0%, #F5E8C8 100%);
-            color: var(--deep-gold);
-            box-shadow: 0 4px 18px rgba(138,104,31,0.28);
-            transform: translateY(-2px);
-        }
-        
-        /* Active Checkmark Pill Indicator */
-        .role-pill-btn.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            font-size: 0.55rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        @keyframes badgePop {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* SVG Role Icons */
-        .role-svg-icon {
-            width: 26px;
-            height: 26px;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .role-svg-icon svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Specific Animated States */
-        .role-pill-btn:hover .role-svg-retailer {
-            animation: bagSwing 0.6s ease-in-out;
-        }
-        .role-pill-btn:hover .role-svg-wholesaler {
-            animation: boxBounce 0.6s ease-in-out;
-        }
-        .role-pill-btn:hover .role-svg-reseller {
-            animation: caseTilt 0.6s ease-in-out;
-        }
-
-        .role-pill-btn.selected .role-svg-icon {
-            transform: scale(1.15);
-        }
-
-        @keyframes bagSwing {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-12deg) scale(1.1); }
-            75% { transform: rotate(12deg) scale(1.1); }
-        }
-        @keyframes boxBounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.12); }
-        }
-        @keyframes caseTilt {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            30% { transform: rotate(-10deg) scale(1.1); }
-            70% { transform: rotate(10deg) scale(1.1); }
-        }
-
-        /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
-        .wa-phone-group {
-            display: flex;
-            border: 1.8px solid var(--soft-platinum);
-            border-radius: 9px;
             background: #FFFFFF;
-            overflow: hidden;
             transition: all 0.2s ease;
         }
-        .wa-phone-group:focus-within {
-            border-color: var(--dark-gold);
-            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
+        .ac-phone-input-group:focus-within {
+            border-color: var(--dt-gold);
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
         }
-        .wa-phone-group.is-invalid {
-            border-color: #C62828 !important;
-            box-shadow: 0 0 0 3.5px rgba(198,40,40,0.2) !important;
-        }
-        .wa-flag-prefix {
+        .ac-phone-prefix {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 0 12px;
-            background: #EFE8D6;
-            border-right: 1.8px solid var(--soft-platinum);
+            background: #FAF5E8;
+            border-right: 1.5px solid #E2DFD7;
             font-size: 0.86rem;
             font-weight: 800;
-            color: var(--dark-gold);
-            flex-shrink: 0;
+            color: var(--dt-gold);
             user-select: none;
+            flex-shrink: 0;
         }
-        .wa-flag-img-preview {
-            width: 24px;
-            height: 16px;
-            object-fit: cover;
-            border-radius: 3px;
-            border: 1px solid rgba(0,0,0,0.12);
-        }
-        .wa-input-field {
+        .ac-phone-input {
             flex: 1;
-            height: 46px;
+            height: 48px;
             border: none;
             outline: none;
-            background: transparent;
             padding: 0 14px;
             font-family: var(--font-sans);
             font-size: 0.92rem;
             font-weight: 600;
-            color: var(--dark-text);
+            color: var(--dt-text-main);
             width: 100%;
-        }
-        .validation-error-msg {
-            font-size: 0.72rem;
-            color: #C62828;
-            font-weight: 700;
-            display: none;
-            margin-top: 4px;
+            background: transparent;
         }
 
-        /* Prominent Action Button */
-        .auth-btn-submit {
-            width: 100%;
-            padding: 15px;
-            border-radius: 9px;
-            border: none;
-            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
-            color: #FFFFFF;
-            font-family: var(--font-sans);
-            font-size: 0.92rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        /* ── Role Selection Pill Cards ── */
+        .ac-role-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .ac-role-card {
+            border: 1.5px solid #E2DFD7;
+            background: #FAF8F4;
+            border-radius: 10px;
+            padding: 10px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 5px 18px rgba(138,104,31,0.3);
+            text-align: center;
+        }
+        .ac-role-card:hover {
+            border-color: var(--dt-gold);
+            background: var(--dt-gold-pale);
+        }
+        .ac-role-card.active {
+            border-color: var(--dt-gold);
+            background: #FAF5E8;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.25);
+        }
+        .ac-role-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ac-role-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+        .ac-role-name {
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: #1F2937;
+        }
+        .ac-role-card.active .ac-role-name {
+            color: var(--dt-gold);
+        }
+
+        /* ── 100% Styled Master Primary Button ── */
+        .dt-btn-gold {
+            width: 100%;
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid #8A681F;
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+            color: #111827;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: -0.011em;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 12px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+            transition: all 0.2s ease;
+            text-decoration: none;
         }
-        .auth-btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(138,104,31,0.42);
+        .dt-btn-gold:hover {
+            background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
         }
-        .auth-link {
-            color: var(--dark-gold);
-            font-size: 0.78rem;
+        .dt-btn-emerald {
+            width: 100%;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid #15803D;
+            background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+            color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-size: 0.86rem;
             font-weight: 800;
-            text-decoration: underline;
-            background: none;
-            border: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(21,128,61,0.3);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .dt-btn-emerald:hover {
+            background: linear-gradient(135deg, #166534 0%, #15803D 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(21,128,61,0.42);
         }
 
-        /* ════════════════════════════════════════════════════
-           LOGGED IN MEMBER DASHBOARD VIEW
-        ════════════════════════════════════════════════════ */
-        .dashboard-wrap {
+        /* ═══════════════════════════════════════════════════════════════════
+           VIEW 2: LOGGED-IN VIP DASHBOARD
+        ═══════════════════════════════════════════════════════════════════ */
+        .ac-dashboard-wrap {
             display: none;
             flex-direction: column;
             gap: 24px;
         }
-        .dashboard-wrap.active {
+        .ac-dashboard-wrap.active {
             display: flex;
         }
 
-        /* VIP Profile Hero Banner */
-        .profile-hero {
-            background: linear-gradient(135deg, #201D17 0%, #362F24 100%);
-            border: 2px solid var(--dark-gold);
-            border-radius: 16px;
-            padding: clamp(16px, 4vw, 28px);
+        .ac-profile-card {
+            background: linear-gradient(145deg, #181512 0%, #2A241E 60%, #15120E 100%);
+            border-radius: var(--radius-xl);
+            border: 1.5px solid var(--dt-gold);
+            padding: clamp(20px, 4vw, 32px);
             color: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.18);
             position: relative;
             overflow: hidden;
         }
-        .profile-hero::after {
-            content: '👑';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: clamp(3rem, 10vw, 6rem);
-            opacity: 0.08;
-            pointer-events: none;
-        }
-        .profile-main-group {
+        .ac-profile-left {
             display: flex;
             align-items: center;
-            gap: clamp(12px, 3vw, 20px);
+            gap: 16px;
         }
-        .profile-avatar-circle {
-            width: clamp(54px, 10vw, 70px);
-            height: clamp(54px, 10vw, 70px);
+        .ac-avatar-ring {
+            width: clamp(56px, 10vw, 72px);
+            height: clamp(56px, 10vw, 72px);
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--dark-gold) 0%, #C5A859 100%);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+            color: #111827;
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-serif);
-            font-size: clamp(1.4rem, 4vw, 1.8rem);
-            font-weight: 800;
-            box-shadow: 0 4px 16px rgba(138,104,31,0.4);
             border: 2px solid #FFFFFF;
+            box-shadow: 0 4px 16px rgba(184,134,11,0.4);
             flex-shrink: 0;
         }
-        .profile-details h2 {
+        .ac-profile-name {
             font-family: var(--font-serif);
-            font-size: clamp(1.15rem, 3.5vw, 1.55rem);
+            font-size: clamp(1.2rem, 3.5vw, 1.5rem);
             font-weight: 800;
             color: #FAF5E8;
-            margin-bottom: 3px;
+            margin: 0 0 4px 0;
         }
-        .profile-phone {
-            font-size: clamp(0.76rem, 2vw, 0.88rem);
+        .ac-profile-phone {
+            font-size: 0.85rem;
             color: #D6CCA8;
             font-weight: 600;
         }
-        .profile-location {
-            font-size: clamp(0.72rem, 1.8vw, 0.8rem);
-            color: #E2C988;
-            font-weight: 600;
-            margin-top: 2px;
-        }
-        .vip-badge {
+        .ac-tier-badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 12px;
-            background: rgba(138,104,31,0.35);
-            border: 1px solid var(--dark-gold);
-            color: #E2C988;
-            font-size: 0.68rem;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--dt-gold-bright);
+            color: #E6CA65;
+            font-size: 0.7rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 6px;
-        }
-
-        .logout-btn {
-            padding: 9px 20px;
-            border-radius: 20px;
-            border: 1.5px solid rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.1);
-            color: #FFFFFF;
-            font-size: 0.78rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all var(--transition);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            flex-shrink: 0;
+            margin-top: 6px;
         }
-        .logout-btn:hover {
-            background: #C62828;
-            border-color: #C62828;
-            transform: scale(1.04);
+        .ac-logout-btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1.2px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.08);
+            color: #FFFFFF;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .ac-logout-btn:hover {
+            background: #DC2626;
+            border-color: #DC2626;
         }
 
-        /* ── Dashboard Content Grid ── */
-        .dash-grid {
+        /* Dashboard Grid */
+        .ac-dash-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 24px;
         }
-        @media (min-width: 850px) {
-            .dash-grid {
+        @media (min-width: 900px) {
+            .ac-dash-grid {
                 grid-template-columns: 2fr 1fr;
             }
         }
 
-        /* Section Cards */
-        .dash-card {
+        .ac-card-panel {
             background: #FFFFFF;
-            border: 1.5px solid var(--gold-border);
-            border-radius: 14px;
-            padding: clamp(16px, 3vw, 24px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            border: 1.5px solid var(--dt-gold-border);
+            border-radius: var(--radius-lg);
+            padding: clamp(18px, 3.5vw, 24px);
+            box-shadow: var(--shadow-subtle);
         }
-        .dash-card-header {
+        .ac-card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-            border-bottom: 1.5px dashed var(--gold-border);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            border-bottom: 1.5px dashed var(--dt-gold-border);
         }
-        .dash-card-title {
+        .ac-card-title {
             font-family: var(--font-serif);
-            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-size: 1.1rem;
             font-weight: 800;
-            color: var(--dark-gold);
-            letter-spacing: 0.05em;
+            color: var(--dt-gold);
             display: flex;
             align-items: center;
             gap: 8px;
+            margin: 0;
         }
-        .dash-card-title svg {
+        .ac-card-title svg {
             width: 18px;
             height: 18px;
             stroke: currentColor;
@@ -835,47 +823,41 @@
             fill: none;
         }
 
-        /* Order Cards */
-        .order-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        /* Order Box Styling */
         .order-box {
-            background: var(--off-white);
-            border: 1.5px solid var(--soft-platinum);
-            border-radius: 10px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            background: #FAF8F4;
+            border: 1.2px solid #E2DFD7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
             transition: all 0.2s ease;
         }
         .order-box:hover {
-            border-color: var(--dark-gold);
-            box-shadow: 0 4px 12px rgba(138,104,31,0.1);
+            border-color: var(--dt-gold);
+            background: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(138,104,31,0.08);
         }
         .order-top {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #EAE6DC;
+            margin-bottom: 12px;
         }
         .order-id {
             font-family: var(--font-serif);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 800;
-            color: var(--dark-text);
+            color: #111827;
         }
         .order-status-badge {
-            padding: 4px 10px;
+            padding: 3px 10px;
             border-radius: 14px;
             font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
         }
         .status-pending { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
         .status-confirmed { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
@@ -886,461 +868,422 @@
         .status-delivered { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
         .status-cancelled { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
         .status-refunded { background: #F5F3FF; color: #5B21B6; border: 1px solid #DDD6FE; }
-        
-        .order-item-detail {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.82rem;
-            color: var(--mid-text);
-        }
+
         .order-thumb {
-            width: 44px;
-            height: 58px;
+            width: 48px;
+            height: 62px;
             aspect-ratio: 3 / 4;
             border-radius: 6px;
             object-fit: cover;
-            object-position: top center;
-            border: 1px solid var(--soft-platinum);
-        }
-        .order-actions-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 8px;
-            border-top: 1px solid var(--soft-platinum);
-            font-size: 0.8rem;
-        }
-        .order-total-txt {
-            font-weight: 800;
-            color: var(--dark-gold);
-        }
-        .track-wa-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            color: #25D366;
-            font-weight: 800;
-            text-decoration: none;
-            font-size: 0.78rem;
-        }
-        .track-wa-btn:hover {
-            text-decoration: underline;
+            border: 1px solid #E2DFD7;
         }
 
-        /* Quick Stat Tiles */
-        .stat-tiles {
+        /* Stat tiles */
+        .ac-stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 20px;
         }
-        .stat-tile {
+        .ac-stat-card {
             background: #FFFFFF;
-            border: 1.5px solid var(--gold-border);
-            border-radius: 10px;
-            padding: 16px 12px;
+            border: 1.5px solid var(--dt-gold-border);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
             text-decoration: none;
-            color: inherit;
+            color: var(--dt-text-main);
             transition: all 0.2s ease;
         }
-        .stat-tile:hover {
-            border-color: var(--dark-gold);
+        .ac-stat-card:hover {
+            border-color: var(--dt-gold);
             transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(138,104,31,0.15);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.12);
         }
-        .stat-tile-num {
-            font-size: 1.45rem;
-            font-weight: 900;
-            color: var(--dark-gold);
+        .ac-stat-num {
             font-family: var(--font-serif);
-        }
-        .stat-tile-lbl {
-            font-size: 0.7rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            color: var(--mid-text);
+            color: var(--dt-gold);
+            margin-bottom: 2px;
+        }
+        .ac-stat-lbl {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--dt-text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-top: 3px;
-        }
-
-        /* Concierge Box */
-        .concierge-card {
-            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
-            border: 1.5px solid var(--gold-border);
-            border-radius: 12px;
-            padding: 18px;
-            text-align: center;
-        }
-        .concierge-card h4 {
-            font-family: var(--font-serif);
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--dark-gold);
-            margin-bottom: 6px;
-        }
-        .concierge-card p {
-            font-size: 0.78rem;
-            color: var(--mid-text);
-            margin-bottom: 14px;
-            line-height: 1.4;
-            font-weight: 500;
-        }
-        .concierge-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 11px;
-            border-radius: 8px;
-            background: #25D366;
-            color: #FFFFFF;
-            font-weight: 800;
-            font-size: 0.84rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            box-shadow: 0 4px 12px rgba(37,211,102,0.3);
-        }
-        .concierge-btn:hover {
-            background: #128C7E;
         }
     </style>
 </head>
 <body>
 
-    <!-- ═══ Navigation Header ═══ -->
-    <header class="account-nav-header">
-        <a href="/" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/assets/images/logo.png" onerror="this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
-        </a>
+    <!-- ════════════ MASTER UNIVERSAL HEADER ════════════ -->
+    <?php include_once __DIR__ . '/includes/header.php'; ?>
 
-        <a href="/shop.php" class="return-shop-btn">
-            <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            <span>Back to Shop</span>
-        </a>
-    </header>
-
-    <!-- ═══ Page Content ═══ -->
-    <main class="page-container">
-
-        <!-- ════════ VIEW 1: AUTHENTICATION (FOR GUEST USERS) ════════ -->
-        <div class="auth-card-wrap" id="authCardWrap">
-            <div class="auth-card-header">
-                <!-- Royal Brand Real Logo -->
-                <div class="auth-brand-seal-wrap" style="display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
-                    <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
-                </div>
-
-                <h2 id="authHeading">Sign In</h2>
-                <p id="authSubheading">Access your account to track orders & explore collections</p>
+    <!-- ════════════ MAIN CONTENT CANVAS ════════════ -->
+    <main class="ac-main-canvas">
+        
+        <!-- Breadcrumb & Return Bar -->
+        <div class="ac-breadcrumb-bar">
+            <div class="ac-breadcrumb-list">
+                <a href="/">Home</a>
+                <span class="ac-breadcrumb-sep">/</span>
+                <span class="ac-breadcrumb-current" id="acBreadcrumbTitle">My Account</span>
             </div>
-
-            <!-- Tabs (Only Login & Register) -->
-            <div class="auth-tabs">
-                <button class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Register</button>
-            </div>
-
-            <!-- Forms -->
-            <div class="auth-body">
-                
-                <!-- 1. LOGIN FORM -->
-                <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit();">
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
-                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
-                    </div>
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="loginPass">
-                            <span>Password <span class="req">*</span></span>
-                            <button type="button" class="auth-link" onclick="switchAuthTab('forgot')">Forgot Password?</button>
-                        </label>
-                        <input type="password" id="loginPass" class="auth-input" placeholder="Enter your password" required>
-                    </div>
-                    <button type="submit" class="auth-btn-submit">
-                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                        <span>Sign In to My Account</span>
-                    </button>
-                </form>
-
-                <!-- 2. REGISTER FORM -->
-                <form id="registerForm" style="display:none;" onsubmit="event.preventDefault(); handleRegisterSubmit();">
-                    
-                    <!-- Full Name -->
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="regName">Full Name <span class="req">*</span></label>
-                        <input type="text" id="regName" class="auth-input" placeholder="e.g. Rajan Mehta" required>
-                    </div>
-
-                    <!-- Country Option (All World Countries with Search & Real Flags) -->
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="countrySearchInput">Country <span class="req">*</span></label>
-                        <div class="custom-select-box" id="countrySelectBox">
-                            <div class="custom-select-trigger" onclick="toggleDropdown('countrySelectBox')">
-                                <div class="custom-select-val" id="selectedCountryDisplay">
-                                    <img src="https://flagcdn.com/w40/in.png" alt="India" class="select-flag-img" id="displayCountryFlag">
-                                    <span id="displayCountryText">India (+91)</span>
-                                </div>
-                                <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </div>
-                            <div class="custom-select-menu" id="countryDropdownMenu">
-                                <div class="dropdown-search-box">
-                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="🔍 Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
-                                </div>
-                                <div class="dropdown-options-scroll" id="countryOptionsList">
-                                    <!-- Populated dynamically by JS with All World Countries -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Number -->
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="regPhone">
-                            <span>Mobile Number <span class="req">*</span></span>
-                            <span id="digitCountHint" style="font-size:0.68rem; color:var(--light-text); text-transform:none; font-weight:600;">10-digit number</span>
-                        </label>
-                        <div class="wa-phone-group" id="waPhoneGroup">
-                            <div class="wa-flag-prefix">
-                                <img id="waFlagImg" class="wa-flag-img-preview" src="https://flagcdn.com/w40/in.png" alt="India Flag">
-                                <span id="waDialCode">IN +91</span>
-                            </div>
-                            <input
-                                type="tel"
-                                id="regPhone"
-                                class="wa-input-field"
-                                placeholder="10-digit number"
-                                maxlength="12"
-                                required
-                                autocomplete="tel"
-                                oninput="validateWhatsAppDigits()"
-                            />
-                        </div>
-                        <div class="validation-error-msg" id="phoneErrorMsg">
-                            ⚠️ Please enter a valid 10-digit WhatsApp number.
-                        </div>
-                    </div>
-
-                    <!-- City & State Side-by-Side (Like Screenshot) -->
-                    <div class="auth-grid-2">
-                        <!-- City -->
-                        <div class="auth-form-group">
-                            <label class="auth-label" for="regCity">City <span class="req">*</span></label>
-                            <input type="text" id="regCity" class="auth-input" placeholder="e.g. Surat" required value="Surat">
-                        </div>
-
-                        <!-- State (Custom Scrolling Dropdown) -->
-                        <div class="auth-form-group">
-                            <label class="auth-label" for="stateSearchInput">State <span class="req">*</span></label>
-                            <div class="custom-select-box" id="stateSelectBox">
-                                <div class="custom-select-trigger" onclick="toggleDropdown('stateSelectBox')">
-                                    <div class="custom-select-val">
-                                        <span id="displayStateText">Select State</span>
-                                    </div>
-                                    <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </div>
-                                <div class="custom-select-menu" id="stateDropdownMenu">
-                                    <div class="dropdown-search-box">
-                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
-                                    </div>
-                                    <div class="dropdown-options-scroll" id="stateOptionsList">
-                                        <!-- Populated dynamically by JS with States of Selected Country -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Role Option (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
-                    <div class="auth-form-group">
-                        <span class="auth-label" id="regRoleLabel">Your Role <span class="req">*</span></span>
-                        <input type="hidden" id="regRole" name="role" value="Retailer">
-                        <div class="role-pill-group" role="radiogroup" aria-labelledby="regRoleLabel">
-                            <!-- Retailer -->
-                            <div class="role-pill-btn selected" data-role="Retailer" onclick="selectRole('Retailer')">
-                                <div class="role-svg-icon role-svg-retailer">
-                                    <svg viewBox="0 0 24 24" fill="none">
-                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" stroke-linejoin="round"/>
-                                        <line x1="3" y1="6" x2="21" y2="6" stroke="#1976D2" stroke-width="2"/>
-                                        <path d="M16 10a4 4 0 0 1-8 0" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </div>
-                                <span>Retailer</span>
-                            </div>
-
-                            <!-- Wholesaler -->
-                            <div class="role-pill-btn" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
-                                <div class="role-svg-icon role-svg-wholesaler">
-                                    <svg viewBox="0 0 24 24" fill="none">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FFF3E0" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#E65100" stroke-width="2"/>
-                                        <line x1="12" y1="22.08" x2="12" y2="12" stroke="#E65100" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                                <span>Wholesaler</span>
-                            </div>
-
-                            <!-- Reseller -->
-                            <div class="role-pill-btn" data-role="Reseller" onclick="selectRole('Reseller')">
-                                <div class="role-svg-icon role-svg-reseller">
-                                    <svg viewBox="0 0 24 24" fill="none">
-                                        <rect x="2" y="7" width="20" height="14" rx="2" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-                                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#2E7D32" stroke-width="2"/>
-                                        <line x1="12" y1="12" x2="12" y2="15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
-                                        <line x1="2" y1="12" x2="22" y2="12" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                    </svg>
-                                </div>
-                                <span>Reseller</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--
-                        Trade signup notice, shown only for Wholesaler/Reseller. GSTIN and
-                        PAN are no longer asked for at signup - a trade account is still
-                        held at pending, and the trade details are collected by the team
-                        on WhatsApp during approval and stored from the admin customer
-                        editor. The note stays so a trade applicant is told up front that
-                        mill-rate pricing is not switched on instantly.
-                    -->
-                    <div class="auth-form-group" id="regTradeNoteGroup" style="display:none;">
-                        <p style="font-size:0.74rem; color:var(--mid-text); margin:0; line-height:1.45; font-weight:500;">
-                            Trade accounts are reviewed before wholesale pricing is activated. We'll confirm your trade details on WhatsApp — you can shop at retail prices meanwhile.
-                        </p>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="regPass">Password <span class="req">*</span></label>
-                        <input type="password" id="regPass" class="auth-input" placeholder="Minimum 6 characters" required>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="auth-btn-submit" id="regSubmitBtn">
-                        <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                        <span>Create My Account</span>
-                    </button>
-
-                    <div style="text-align:center; font-size:0.78rem; margin-top:12px; color:var(--mid-text); font-weight:600;">
-                        Already registered? <button type="button" class="auth-link" onclick="switchAuthTab('login')">Sign In</button>
-                    </div>
-                </form>
-
-                <!-- 3. FORGOT PASSWORD FORM -->
-                <form id="forgotForm" style="display:none;" onsubmit="event.preventDefault(); handleForgotSubmit();">
-                    <p style="font-size:0.8rem; color:var(--mid-text); margin-bottom:14px; line-height:1.4; font-weight:500;">
-                        Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset link on WhatsApp.
-                    </p>
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
-                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
-                    </div>
-                    <button type="submit" class="auth-btn-submit">
-                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                        <span>Send Reset Link via WhatsApp</span>
-                    </button>
-
-                    <div style="text-align:center; font-size:0.78rem; margin-top:14px; color:var(--mid-text); font-weight:600;">
-                        Remembered your password? <button type="button" class="auth-link" onclick="switchAuthTab('login')">← Back to Login</button>
-                    </div>
-                </form>
-
-            </div>
+            <a href="/shop.php" class="ac-back-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Shop</span>
+            </a>
         </div>
 
-        <!-- ════════ VIEW 2: LOGGED IN MEMBER DASHBOARD ════════ -->
-        <div class="dashboard-wrap" id="dashboardWrap">
+        <!-- ════════════ VIEW 1: AUTHENTICATION FOR GUESTS ════════════ -->
+        <div id="authCardWrap" class="ac-auth-split-grid">
+            
+            <!-- Left Editorial Privilege Showcase -->
+            <div class="ac-hero-showcase">
+                <div>
+                    <div class="ac-showcase-badge">👑 Royal Privilege Club</div>
+                    <h1 class="ac-showcase-title">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
+                    <p class="ac-showcase-subtitle">Surat Central Handloom Depot &amp; B2B Wholesale Textile Hub. Access pure silk collections, verified trade margins, and concierge fulfillment.</p>
+
+                    <div class="ac-benefits-list">
+                        <div class="ac-benefit-card">
+                            <div class="ac-benefit-icon">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div>
+                                <div class="ac-benefit-title">100% Handloom Silk Mark Certified</div>
+                                <div class="ac-benefit-desc">Authentic Banarasi, Kanjeevaram, and Paithani silks woven by master artisans with pure tested zari.</div>
+                            </div>
+                        </div>
+
+                        <div class="ac-benefit-card">
+                            <div class="ac-benefit-icon">
+                                <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            </div>
+                            <div>
+                                <div class="ac-benefit-title">Real-Time Dispatch &amp; Courier Tracking</div>
+                                <div class="ac-benefit-desc">Instant live AWB tracking via VRL Logistics, BlueDart, and Delhivery with automated WhatsApp alerts.</div>
+                            </div>
+                        </div>
+
+                        <div class="ac-benefit-card">
+                            <div class="ac-benefit-icon">
+                                <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            </div>
+                            <div>
+                                <div class="ac-benefit-title">Wholesale &amp; Reseller Trade Tiers</div>
+                                <div class="ac-benefit-desc">Unlock direct mill-rate bulk pricing, GST tax invoices, catalog downloads, and godown dispatches.</div>
+                            </div>
+                        </div>
+
+                        <div class="ac-benefit-card">
+                            <div class="ac-benefit-icon">
+                                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            </div>
+                            <div>
+                                <div class="ac-benefit-title">Personal Fashion Stylist on WhatsApp</div>
+                                <div class="ac-benefit-desc">1-on-1 concierge assistance for custom blouse tailoring, bridal trousseau, and bulk lot video calls.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ac-showcase-footer">
+                    <div><span class="ac-trust-dot"></span> 25,000+ Verified Customers • 1,400+ Active Boutiques</div>
+                    <div style="font-weight: 700; color: #E6CA65;">Surat Depot Dock 1</div>
+                </div>
+            </div>
+
+            <!-- Right Auth Studio Form Card -->
+            <div class="ac-auth-card">
+                <div class="ac-auth-card-head">
+                    <div class="ac-brand-lockup">
+                        <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
+                        <span class="ac-security-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>256-Bit SSL</span>
+                        </span>
+                    </div>
+
+                    <!-- Smooth Segmented Pill Switcher -->
+                    <div class="ac-pill-switcher">
+                        <button type="button" class="ac-pill-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+                        <button type="button" class="ac-pill-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
+                    </div>
+                </div>
+
+                <div class="ac-auth-card-body">
+                    
+                    <!-- 1. SIGN IN FORM -->
+                    <form id="loginForm" class="ac-form-pane active" onsubmit="event.preventDefault(); handleLoginSubmit();">
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
+                            <div class="ac-input-wrapper">
+                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <input type="text" id="loginPhone" class="ac-text-input" placeholder="e.g. 7046363528 or client@example.com" required autocomplete="username">
+                            </div>
+                        </div>
+
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="loginPass">
+                                <span>Password <span class="req">*</span></span>
+                                <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="color:var(--dt-gold); font-weight:700; text-decoration:underline; font-size:0.75rem;">Forgot Password?</a>
+                            </label>
+                            <div class="ac-input-wrapper">
+                                <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input type="password" id="loginPass" class="ac-text-input" placeholder="Enter your secret password" required autocomplete="current-password">
+                                <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('loginPass', this)" title="Show/Hide Password">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="dt-btn-gold" id="loginSubmitBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                            <span>Sign In to VIP Lounge</span>
+                        </button>
+
+                        <div style="display:flex; align-items:center; gap:10px; margin: 4px 0;">
+                            <div style="flex:1; height:1px; background:#E2DFD7;"></div>
+                            <span style="font-size:0.74rem; color:#94A3B8; font-weight:700; text-transform:uppercase;">Or Instant Connect</span>
+                            <div style="flex:1; height:1px; background:#E2DFD7;"></div>
+                        </div>
+
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20sign%20in%20to%20my%20account" target="_blank" class="dt-btn-emerald">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>Sign In via WhatsApp Concierge</span>
+                        </a>
+                    </form>
+
+                    <!-- 2. CREATE ACCOUNT FORM -->
+                    <form id="registerForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleRegisterSubmit();">
+                        
+                        <!-- Full Name -->
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="regName">Full Name <span class="req">*</span></label>
+                            <div class="ac-input-wrapper">
+                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <input type="text" id="regName" class="ac-text-input" placeholder="e.g. Radhika Sharma" required autocomplete="name">
+                            </div>
+                        </div>
+
+                        <!-- Country Selection Dropdown -->
+                        <div class="ac-field-group">
+                            <label class="ac-field-label">Country <span class="req">*</span></label>
+                            <div class="ac-custom-select" id="countrySelectBox">
+                                <div class="ac-select-trigger" onclick="toggleDropdown('countrySelectBox')">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <img src="https://flagcdn.com/w40/in.png" alt="India" class="ac-flag-img" id="displayCountryFlag">
+                                        <span id="displayCountryText">India (+91)</span>
+                                    </div>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </div>
+                                <div class="ac-select-menu" id="countryDropdownMenu">
+                                    <div class="ac-select-search">
+                                        <input type="text" id="countrySearchInput" placeholder="🔍 Search world countries..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                    </div>
+                                    <div class="ac-select-options" id="countryOptionsList">
+                                        <!-- Dynamically Populated -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Number Input -->
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="regPhone">
+                                <span>WhatsApp Number <span class="req">*</span></span>
+                                <span id="digitCountHint" style="font-size:0.7rem; color:var(--dt-text-muted); font-weight:600;">10-digit number</span>
+                            </label>
+                            <div class="ac-phone-input-group">
+                                <div class="ac-phone-prefix">
+                                    <img id="waFlagImg" class="ac-flag-img" src="https://flagcdn.com/w40/in.png" alt="Flag">
+                                    <span id="waDialCode">+91</span>
+                                </div>
+                                <input type="tel" id="regPhone" class="ac-phone-input" placeholder="10-digit WhatsApp number" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
+                            </div>
+                            <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
+                                ⚠️ Please enter a valid 10-digit WhatsApp number.
+                            </div>
+                        </div>
+
+                        <!-- City & State Row -->
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div class="ac-field-group">
+                                <label class="ac-field-label" for="regCity">City <span class="req">*</span></label>
+                                <input type="text" id="regCity" class="ac-text-input no-icon" placeholder="e.g. Surat" value="Surat" required>
+                            </div>
+                            <div class="ac-field-group">
+                                <label class="ac-field-label">State <span class="req">*</span></label>
+                                <div class="ac-custom-select" id="stateSelectBox">
+                                    <div class="ac-select-trigger" onclick="toggleDropdown('stateSelectBox')">
+                                        <span id="displayStateText" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gujarat</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                    <div class="ac-select-menu" id="stateDropdownMenu">
+                                        <div class="ac-select-search">
+                                            <input type="text" id="stateSearchInput" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                        </div>
+                                        <div class="ac-select-options" id="stateOptionsList">
+                                            <!-- Dynamically Populated -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Role Selector -->
+                        <div class="ac-field-group">
+                            <label class="ac-field-label">Select Account Type <span class="req">*</span></label>
+                            <input type="hidden" id="regRole" name="role" value="Retailer">
+                            <div class="ac-role-grid">
+                                <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
+                                    <div class="ac-role-icon">
+                                        <svg viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="2"/><line x1="3" y1="6" x2="21" y2="6" stroke="#1D4ED8" stroke-width="2"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#1D4ED8" stroke-width="2"/></svg>
+                                    </div>
+                                    <span class="ac-role-name">Retailer</span>
+                                </div>
+                                <div class="ac-role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
+                                    <div class="ac-role-icon">
+                                        <svg viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#B45309" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="#B45309" stroke-width="2"/></svg>
+                                    </div>
+                                    <span class="ac-role-name">Wholesale</span>
+                                </div>
+                                <div class="ac-role-card" data-role="Reseller" onclick="selectRole('Reseller')">
+                                    <div class="ac-role-icon">
+                                        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" fill="#DCFCE7" stroke="#15803D" stroke-width="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#15803D" stroke-width="2"/><line x1="12" y1="12" x2="12" y2="15" stroke="#15803D" stroke-width="2"/></svg>
+                                    </div>
+                                    <span class="ac-role-name">Reseller</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trade Application Notice -->
+                        <div id="regTradeNoteGroup" style="display:none; background:#FAF8F4; border:1px solid var(--dt-gold-border); border-radius:8px; padding:10px 12px; font-size:0.75rem; color:#475569; line-height:1.45;">
+                            Trade accounts are verified on WhatsApp before wholesale pricing is activated. You can shop at retail rates immediately while approval is pending.
+                        </div>
+
+                        <!-- Password -->
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="regPass">Choose Password <span class="req">*</span></label>
+                            <div class="ac-input-wrapper">
+                                <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input type="password" id="regPass" class="ac-text-input" placeholder="Minimum 6 characters" required autocomplete="new-password">
+                                <button type="button" class="ac-pwd-toggle" onclick="togglePwdVisibility('regPass', this)" title="Show/Hide Password">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                            <span>Create VIP Account</span>
+                        </button>
+                    </form>
+
+                    <!-- 3. FORGOT PASSWORD PANE -->
+                    <form id="forgotForm" class="ac-form-pane" onsubmit="event.preventDefault(); handleForgotSubmit();">
+                        <p style="font-size:0.84rem; color:var(--dt-text-sub); margin:0 0 10px 0; line-height:1.45;">
+                            Enter your registered WhatsApp Number or Email and our Concierge will instantly send you an authenticated password recovery link.
+                        </p>
+                        <div class="ac-field-group">
+                            <label class="ac-field-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
+                            <div class="ac-input-wrapper">
+                                <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 7046363528" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="dt-btn-gold">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            <span>Send Recovery via WhatsApp</span>
+                        </button>
+                        <div style="text-align:center;">
+                            <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Sign In</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ════════════ VIEW 2: LOGGED-IN VIP DASHBOARD ════════════ -->
+        <div id="dashboardWrap" class="ac-dashboard-wrap">
             
             <!-- Hero Profile Banner -->
-            <div class="profile-hero">
-                <div class="profile-main-group">
-                    <div class="profile-avatar-circle" id="dashUserInitials">GV</div>
-                    <div class="profile-details">
-                        <h2 id="dashUserName">Gautam Vaishnav</h2>
-                        <div class="profile-phone" id="dashUserPhone">+91 7046363528</div>
-                        <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
-                        <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
+            <div class="ac-profile-card">
+                <div class="ac-profile-left">
+                    <div class="ac-avatar-ring" id="dashUserInitials">DT</div>
+                    <div>
+                        <h2 class="ac-profile-name" id="dashUserName">Valued Client</h2>
+                        <div class="ac-profile-phone" id="dashUserPhone">+91 70463 63528</div>
+                        <div class="ac-tier-badge" id="dashUserRoleBadge">👑 VIP Member</div>
                     </div>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
-                        <span>🛍️ Open Retailer Dashboard</span>
+                    <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
+                        <span>📦 Open Wholesale Depot</span>
                         <span>→</span>
                     </a>
-                    <button class="logout-btn" onclick="handleLogoutClick()">
-                        Logout
+                    <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
+                        Sign Out
                     </button>
                 </div>
             </div>
 
-            <!-- Dedicated B2B VIP Hub Banner for Retailers & Wholesalers -->
-            <div class="ws-vip-access-banner" id="wsVipAccessBanner" style="display:flex; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:2px solid var(--dark-gold, #8A681F); border-radius:14px; padding:16px 20px; margin-bottom:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 16px rgba(138, 104, 31, 0.12);">
-                <div>
-                    <div id="wsVipBannerTitle" style="font-family:var(--font-serif, 'Cinzel', serif); font-size:1.1rem; font-weight:800; color:var(--dark-gold, #8A681F);">
-                        🛍️ Retailer B2B VIP Hub Ready
-                    </div>
-                    <div id="wsVipBannerSubtitle" style="font-size:0.82rem; color:var(--mid-text, #423C34); margin-top:3px;">
-                        Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
-                    </div>
-                </div>
-                <a href="/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
-                    Open Retailer Portal →
-                </a>
-            </div>
-
-            <!-- Dashboard Grid -->
-            <div class="dash-grid">
+            <!-- 2-Column Dashboard Grid -->
+            <div class="ac-dash-grid">
                 
-                <!-- Left: Orders History & Details -->
-                <div class="dash-card">
-                    <div class="dash-card-header">
-                        <h3 class="dash-card-title">
-                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Recent Orders</span>
+                <!-- Left: Dynamic Live Orders -->
+                <div class="ac-card-panel">
+                    <div class="ac-card-header">
+                        <h3 class="ac-card-title">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <span>Recent Orders &amp; Dispatches</span>
                         </h3>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20inquire%20about%20my%20orders" target="_blank" class="track-wa-btn">
-                            WhatsApp Support
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20to%20inquire%20about%20my%20orders" target="_blank" style="color:#15803D; font-size:0.78rem; font-weight:800; text-decoration:none; display:flex; align-items:center; gap:4px;">
+                            <span>WhatsApp Support</span>
                         </a>
                     </div>
 
-                    <div class="order-list" id="dashOrdersList">
-                        <!-- Dynamic orders will be loaded here via loadCustomerLiveOrders() -->
-                        <div style="padding: 20px; text-align: center; color: #8A681F; font-size: 0.85rem; font-weight: 700;">
-                            <span>Fetching your live order records...</span>
+                    <div id="dashOrdersList">
+                        <!-- Populated dynamically by window.loadCustomerLiveOrders() -->
+                        <div style="padding: 24px; text-align: center; color: var(--dt-gold); font-weight: 700;">
+                            <span>Loading your live orders...</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right: Quick Stat Tiles & Concierge -->
-                <div style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; flex-direction:column; gap:20px;">
                     
-                    <div class="stat-tiles">
-                        <a href="/cart.php" class="stat-tile" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
-                            <div class="stat-tile-num" id="dashCartCount">0</div>
-                            <div class="stat-tile-lbl">Bag Items</div>
+                    <div class="ac-stat-grid">
+                        <a href="/cart.php" class="ac-stat-card" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
+                            <div class="ac-stat-num" id="dashCartCount">0</div>
+                            <div class="ac-stat-lbl">Bag Items</div>
                         </a>
-                        <a href="/wishlist.php" class="stat-tile" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
-                            <div class="stat-tile-num" id="dashWishCount">0</div>
-                            <div class="stat-tile-lbl">Saved Items</div>
-                        </a>
-                    </div>
-
-                    <!-- Concierge Card -->
-                    <div class="concierge-card">
-                        <h4>Royal Concierge Desk</h4>
-                        <p>Need custom blouse stitching, bulk wholesale pricing, or reseller catalog? Our fashion stylists are available.</p>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
-                            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-                            <span>WhatsApp Stylist</span>
+                        <a href="/wishlist.php" class="ac-stat-card" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
+                            <div class="ac-stat-num" id="dashWishCount">0</div>
+                            <div class="ac-stat-lbl">Saved Items</div>
                         </a>
                     </div>
 
-                    <a href="/shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
-                        Browse Luxury Catalog
+                    <!-- Personal Concierge Card -->
+                    <div class="ac-card-panel" style="background: linear-gradient(135deg, #FAF8F4 0%, #FAF5EA 100%); border: 1.5px solid var(--dt-gold);">
+                        <h4 style="font-family:var(--font-serif); color:var(--dt-gold); margin:0 0 6px 0; font-size:1.05rem;">Royal Fashion Concierge</h4>
+                        <p style="font-size:0.8rem; color:#475569; margin:0 0 14px 0; line-height:1.45;">
+                            Need custom saree blouse stitching, bridal lot matching, or direct wholesale GST invoicing? Our master fashion stylists are at your service.
+                        </p>
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20would%20like%20VIP%20styling%20support" target="_blank" class="dt-btn-emerald" style="text-decoration:none;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>WhatsApp Fashion Stylist</span>
+                        </a>
+                    </div>
+
+                    <a href="/shop.php" class="dt-btn-gold" style="text-decoration:none; text-align:center;">
+                        Browse Luxury Catalog →
                     </a>
 
                 </div>
@@ -1351,12 +1294,14 @@
 
     </main>
 
-    <!-- ════════ JAVASCRIPT CONTROLLER ════════ -->
+    <!-- ════════════ MASTER UNIVERSAL FOOTER ════════════ -->
+    <?php include_once __DIR__ . '/includes/footer.php'; ?>
+
+    <!-- ════════════ JAVASCRIPT CONTROLLER ════════════ -->
     <script>
     (function() {
         'use strict';
 
-        /* ── Complete All World Countries & All Indian States Database ── */
         var ALL_WORLD_COUNTRIES = [
             {
                 code: 'in', name: 'India', flagImg: 'https://flagcdn.com/w40/in.png', dial: '+91', digits: 10,
@@ -1367,332 +1312,211 @@
                     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
                     'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
                     'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi (NCT)', 
-                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Dadra and Nagar Haveli and Daman and Diu', 'Andaman and Nicobar Islands', 'Lakshadweep'
+                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry'
                 ]
             },
             { code: 'ae', name: 'United Arab Emirates', flagImg: 'https://flagcdn.com/w40/ae.png', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'] },
-            { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania', 'North Carolina', 'Michigan', 'Virginia', 'Arizona', 'Massachusetts', 'Indiana', 'Tennessee', 'Missouri', 'Maryland', 'Wisconsin', 'Colorado', 'Minnesota', 'South Carolina', 'Alabama', 'Louisiana', 'Kentucky', 'Oregon', 'Oklahoma', 'Connecticut', 'Utah', 'Iowa', 'Nevada', 'Arkansas', 'Mississippi', 'Kansas', 'New Mexico', 'Nebraska', 'Idaho', 'West Virginia', 'Hawaii', 'New Hampshire', 'Maine', 'Rhode Island', 'Montana', 'Delaware', 'South Dakota', 'North Dakota', 'Alaska', 'Vermont', 'Wyoming'] },
-            { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands', 'Manchester', 'West Yorkshire', 'Hampshire', 'Essex'] },
-            { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan', 'Nova Scotia', 'New Brunswick', 'Newfoundland and Labrador', 'Prince Edward Island'] },
-            { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory'] },
-            { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'West Region', 'North-East Region'] },
-            { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak', 'Kedah', 'Pahang', 'Negeri Sembilan', 'Melaka', 'Kelantan', 'Terengganu'] },
-            { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Asir', 'Tabuk', 'Al-Qassim', 'Hail', 'Jazan', 'Najran', 'Al-Bahah', 'Al-Jawf'] },
-            { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor', 'Umm Salal'] },
-            { code: 'kw', name: 'Kuwait', flagImg: 'https://flagcdn.com/w40/kw.png', dial: '+965', digits: 8, states: ['Al Asimah (Capital)', 'Hawalli', 'Al Farwaniyah', 'Al Ahmadi', 'Jahra', 'Mubarak Al-Kabeer'] },
-            { code: 'bh', name: 'Bahrain', flagImg: 'https://flagcdn.com/w40/bh.png', dial: '+973', digits: 8, states: ['Capital Governorate', 'Muharraq', 'Northern Governorate', 'Southern Governorate'] },
-            { code: 'om', name: 'Oman', flagImg: 'https://flagcdn.com/w40/om.png', dial: '+968', digits: 8, states: ['Muscat', 'Dhofar', 'Musandam', 'Al Batinah', 'Al Dakhiliyah', 'Al Sharqiyah'] },
-            { code: 'nz', name: 'New Zealand', flagImg: 'https://flagcdn.com/w40/nz.png', dial: '+64', digits: 9, states: ['Auckland', 'Canterbury', 'Wellington', 'Waikato', 'Bay of Plenty', 'Otago', 'Manawatu-Wanganui'] },
-            { code: 'de', name: 'Germany', flagImg: 'https://flagcdn.com/w40/de.png', dial: '+49', digits: 10, states: ['Bavaria', 'Berlin', 'North Rhine-Westphalia', 'Baden-Württemberg', 'Hesse', 'Lower Saxony', 'Saxony', 'Hamburg'] },
-            { code: 'fr', name: 'France', flagImg: 'https://flagcdn.com/w40/fr.png', dial: '+33', digits: 9, states: ['Île-de-France (Paris)', 'Auvergne-Rhône-Alpes', 'Provence-Alpes-Côte d\'Azur', 'Occitanie', 'Nouvelle-Aquitaine', 'Grand Est'] },
-            { code: 'it', name: 'Italy', flagImg: 'https://flagcdn.com/w40/it.png', dial: '+39', digits: 10, states: ['Lombardy (Milan)', 'Lazio (Rome)', 'Campania (Naples)', 'Veneto', 'Piedmont', 'Tuscany', 'Sicily'] },
-            { code: 'es', name: 'Spain', flagImg: 'https://flagcdn.com/w40/es.png', dial: '+34', digits: 9, states: ['Madrid', 'Catalonia (Barcelona)', 'Andalusia', 'Valencia', 'Galicia', 'Basque Country'] },
-            { code: 'nl', name: 'Netherlands', flagImg: 'https://flagcdn.com/w40/nl.png', dial: '+31', digits: 9, states: ['North Holland (Amsterdam)', 'South Holland (Rotterdam)', 'Utrecht', 'North Brabant', 'Gelderland'] },
-            { code: 'ch', name: 'Switzerland', flagImg: 'https://flagcdn.com/w40/ch.png', dial: '+41', digits: 9, states: ['Zurich', 'Geneva', 'Bern', 'Vaud', 'Basel-City', 'Lucerne', 'St. Gallen'] },
-            { code: 'se', name: 'Sweden', flagImg: 'https://flagcdn.com/w40/se.png', dial: '+46', digits: 9, states: ['Stockholm', 'Västra Götaland (Gothenburg)', 'Skåne (Malmö)', 'Uppsala', 'Östergötland'] },
-            { code: 'no', name: 'Norway', flagImg: 'https://flagcdn.com/w40/no.png', dial: '+47', digits: 8, states: ['Oslo', 'Viken', 'Vestland (Bergen)', 'Trøndelag', 'Rogaland'] },
-            { code: 'dk', name: 'Denmark', flagImg: 'https://flagcdn.com/w40/dk.png', dial: '+45', digits: 8, states: ['Capital Region (Copenhagen)', 'Central Denmark (Aarhus)', 'Southern Denmark', 'North Denmark'] },
-            { code: 'fi', name: 'Finland', flagImg: 'https://flagcdn.com/w40/fi.png', dial: '+358', digits: 9, states: ['Uusimaa (Helsinki)', 'Pirkanmaa (Tampere)', 'Southwest Finland (Turku)', 'North Ostrobothnia'] },
-            { code: 'be', name: 'Belgium', flagImg: 'https://flagcdn.com/w40/be.png', dial: '+32', digits: 9, states: ['Brussels', 'Antwerp', 'East Flanders (Ghent)', 'Flemish Brabant', 'Walloon Brabant'] },
-            { code: 'at', name: 'Austria', flagImg: 'https://flagcdn.com/w40/at.png', dial: '+43', digits: 10, states: ['Vienna', 'Lower Austria', 'Upper Austria', 'Styria', 'Tyrol', 'Salzburg'] },
-            { code: 'ie', name: 'Ireland', flagImg: 'https://flagcdn.com/w40/ie.png', dial: '+353', digits: 9, states: ['Dublin', 'Cork', 'Galway', 'Limerick', 'Waterford'] },
-            { code: 'pt', name: 'Portugal', flagImg: 'https://flagcdn.com/w40/pt.png', dial: '+351', digits: 9, states: ['Lisbon', 'Porto', 'Braga', 'Setúbal', 'Faro (Algarve)'] },
-            { code: 'pl', name: 'Poland', flagImg: 'https://flagcdn.com/w40/pl.png', dial: '+48', digits: 9, states: ['Masovian (Warsaw)', 'Lesser Poland (Kraków)', 'Lower Silesian (Wrocław)', 'Silesian'] },
-            { code: 'gr', name: 'Greece', flagImg: 'https://flagcdn.com/w40/gr.png', dial: '+30', digits: 10, states: ['Attica (Athens)', 'Central Macedonia (Thessaloniki)', 'Crete', 'Thessaly'] },
-            { code: 'tr', name: 'Turkey', flagImg: 'https://flagcdn.com/w40/tr.png', dial: '+90', digits: 10, states: ['Istanbul', 'Ankara', 'Izmir', 'Bursa', 'Antalya', 'Adana'] },
-            { code: 'ru', name: 'Russia', flagImg: 'https://flagcdn.com/w40/ru.png', dial: '+7', digits: 10, states: ['Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Kazan'] },
-            { code: 'za', name: 'South Africa', flagImg: 'https://flagcdn.com/w40/za.png', dial: '+27', digits: 9, states: ['Gauteng (Johannesburg)', 'Western Cape (Cape Town)', 'KwaZulu-Natal (Durban)', 'Eastern Cape'] },
-            { code: 'eg', name: 'Egypt', flagImg: 'https://flagcdn.com/w40/eg.png', dial: '+20', digits: 10, states: ['Cairo', 'Alexandria', 'Giza', 'Qalyubia', 'Port Said', 'Suez'] },
-            { code: 'mu', name: 'Mauritius', flagImg: 'https://flagcdn.com/w40/mu.png', dial: '+230', digits: 8, states: ['Port Louis', 'Plaines Wilhems', 'Pamplemousses', 'Flacq', 'Grand Port'] },
-            { code: 'ke', name: 'Kenya', flagImg: 'https://flagcdn.com/w40/ke.png', dial: '+254', digits: 9, states: ['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Kiambu', 'Eldoret'] },
-            { code: 'ng', name: 'Nigeria', flagImg: 'https://flagcdn.com/w40/ng.png', dial: '+234', digits: 10, states: ['Lagos', 'Kano', 'Abuja (FCT)', 'Rivers (Port Harcourt)', 'Oyo (Ibadan)'] },
-            { code: 'lk', name: 'Sri Lanka', flagImg: 'https://flagcdn.com/w40/lk.png', dial: '+94', digits: 9, states: ['Western (Colombo)', 'Central (Kandy)', 'Southern (Galle)', 'Northern (Jaffna)', 'Eastern'] },
-            { code: 'bd', name: 'Bangladesh', flagImg: 'https://flagcdn.com/w40/bd.png', dial: '+880', digits: 10, states: ['Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi', 'Khulna', 'Barishal', 'Rangpur'] },
-            { code: 'np', name: 'Nepal', flagImg: 'https://flagcdn.com/w40/np.png', dial: '+977', digits: 10, states: ['Bagmati (Kathmandu)', 'Gandaki (Pokhara)', 'Lumbini', 'Koshi', 'Madhesh'] },
-            { code: 'th', name: 'Thailand', flagImg: 'https://flagcdn.com/w40/th.png', dial: '+66', digits: 9, states: ['Bangkok', 'Chiang Mai', 'Phuket', 'Chonburi (Pattaya)', 'Nonthaburi'] },
-            { code: 'id', name: 'Indonesia', flagImg: 'https://flagcdn.com/w40/id.png', dial: '+62', digits: 10, states: ['Jakarta', 'West Java (Bandung)', 'East Java (Surabaya)', 'Bali', 'Central Java'] },
-            { code: 'ph', name: 'Philippines', flagImg: 'https://flagcdn.com/w40/ph.png', dial: '+63', digits: 10, states: ['Metro Manila', 'Cebu', 'Davao', 'Calabarzon', 'Central Luzon'] },
-            { code: 'vn', name: 'Vietnam', flagImg: 'https://flagcdn.com/w40/vn.png', dial: '+84', digits: 9, states: ['Ho Chi Minh City', 'Hanoi', 'Da Nang', 'Hai Phong', 'Can Tho'] },
-            { code: 'jp', name: 'Japan', flagImg: 'https://flagcdn.com/w40/jp.png', dial: '+81', digits: 10, states: ['Tokyo', 'Osaka', 'Kanagawa (Yokohama)', 'Aichi (Nagoya)', 'Kyoto', 'Hokkaido (Sapporo)', 'Fukuoka'] },
-            { code: 'kr', name: 'South Korea', flagImg: 'https://flagcdn.com/w40/kr.png', dial: '+82', digits: 10, states: ['Seoul', 'Gyeonggi', 'Busan', 'Incheon', 'Daegu', 'Daejeon'] },
-            { code: 'cn', name: 'China', flagImg: 'https://flagcdn.com/w40/cn.png', dial: '+86', digits: 11, states: ['Guangdong (Guangzhou/Shenzhen)', 'Beijing', 'Shanghai', 'Zhejiang (Hangzhou)', 'Jiangsu'] },
-            { code: 'hk', name: 'Hong Kong', flagImg: 'https://flagcdn.com/w40/hk.png', dial: '+852', digits: 8, states: ['Hong Kong Island', 'Kowloon', 'New Territories'] },
-            { code: 'tw', name: 'Taiwan', flagImg: 'https://flagcdn.com/w40/tw.png', dial: '+886', digits: 9, states: ['Taipei', 'New Taipei', 'Taichung', 'Kaohsiung', 'Tainan'] },
-            { code: 'br', name: 'Brazil', flagImg: 'https://flagcdn.com/w40/br.png', dial: '+55', digits: 11, states: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia', 'Paraná', 'Rio Grande do Sul'] },
-            { code: 'mx', name: 'Mexico', flagImg: 'https://flagcdn.com/w40/mx.png', dial: '+52', digits: 10, states: ['Mexico City', 'Jalisco (Guadalajara)', 'Nuevo León (Monterrey)', 'Puebla', 'Yucatán'] },
-            { code: 'ar', name: 'Argentina', flagImg: 'https://flagcdn.com/w40/ar.png', dial: '+54', digits: 10, states: ['Buenos Aires', 'Córdoba', 'Santa Fe (Rosario)', 'Mendoza', 'Tucumán'] },
-            { code: 'cl', name: 'Chile', flagImg: 'https://flagcdn.com/w40/cl.png', dial: '+56', digits: 9, states: ['Santiago Metropolitan', 'Valparaíso', 'Biobío (Concepción)', 'Antofagasta'] },
-            { code: 'co', name: 'Colombia', flagImg: 'https://flagcdn.com/w40/co.png', dial: '+57', digits: 10, states: ['Bogotá D.C.', 'Antioquia (Medellín)', 'Valle del Cauca (Cali)', 'Atlántico (Barranquilla)'] },
-            { code: 'pe', name: 'Peru', flagImg: 'https://flagcdn.com/w40/pe.png', dial: '+51', digits: 9, states: ['Lima', 'Arequipa', 'Cusco', 'La Libertad (Trujillo)', 'Piura'] },
-            { code: 'fj', name: 'Fiji', flagImg: 'https://flagcdn.com/w40/fj.png', dial: '+679', digits: 7, states: ['Central (Suva)', 'Western (Nadi/Lautoka)', 'Northern (Labasa)', 'Eastern'] }
+            { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania'] },
+            { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'Manchester', 'West Midlands'] },
+            { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan'] },
+            { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia'] },
+            { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'West Region'] },
+            { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak'] },
+            { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Jeddah'] },
+            { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor'] }
         ];
 
-        var selectedRole = 'Retailer';
-        var selectedCountry = ALL_WORLD_COUNTRIES[0]; // Auto-selected: India (+91)
+        var selectedCountry = ALL_WORLD_COUNTRIES[0];
         var selectedState = 'Gujarat';
+        var selectedRole = 'Retailer';
 
-        /* Toggle Dropdown Menu */
         window.toggleDropdown = function(boxId) {
             var box = document.getElementById(boxId);
-            var isCurrentlyActive = box.classList.contains('active');
-            
-            /* Close all dropdowns first */
-            document.querySelectorAll('.custom-select-box').forEach(function(b){
-                b.classList.remove('active');
-            });
-
-            if (!isCurrentlyActive) {
-                box.classList.add('active');
-                if (boxId === 'countrySelectBox') {
-                    var sInput = document.getElementById('countrySearchInput');
-                    if (sInput) {
-                        sInput.value = '';
-                        filterCountryOptions('');
-                        setTimeout(function(){ sInput.focus(); }, 100);
-                    }
-                } else if (boxId === 'stateSelectBox') {
-                    var sInput = document.getElementById('stateSearchInput');
-                    if (sInput) {
-                        sInput.value = '';
-                        filterStateOptions('');
-                        setTimeout(function(){ sInput.focus(); }, 100);
-                    }
-                }
-            }
+            if (!box) return;
+            var isActive = box.classList.contains('active');
+            document.querySelectorAll('.ac-custom-select').forEach(function(el){ el.classList.remove('active'); });
+            if (!isActive) box.classList.add('active');
         };
 
-        /* Close Dropdown on outside click */
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.custom-select-box')) {
-                document.querySelectorAll('.custom-select-box').forEach(function(b){
-                    b.classList.remove('active');
-                });
+            if (!e.target.closest('.ac-custom-select')) {
+                document.querySelectorAll('.ac-custom-select').forEach(function(el){ el.classList.remove('active'); });
             }
         });
 
-        /* Filter Country Options */
-        window.filterCountryOptions = function(query) {
-            var q = (query || '').toLowerCase().trim();
-            var list = document.getElementById('countryOptionsList');
-            if (!list) return;
-
-            var filtered = ALL_WORLD_COUNTRIES.filter(function(c) {
-                return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q);
-            });
-
-            var html = '';
-            if (filtered.length === 0) {
-                html = '<div style="padding:12px; font-size:0.78rem; color:var(--light-text); text-align:center; font-weight:600;">No matching country found</div>';
-            } else {
-                filtered.forEach(function(c) {
-                    var isSel = c.code === selectedCountry.code;
-                    html += `
-                        <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
-                            <img src="${c.flagImg}" alt="${c.name}" class="select-flag-img">
-                            <span>${c.name} (${c.dial})</span>
-                        </div>
-                    `;
-                });
-            }
-            list.innerHTML = html;
-        };
-
-        /* Filter State Options */
-        window.filterStateOptions = function(query) {
-            var q = (query || '').toLowerCase().trim();
-            var list = document.getElementById('stateOptionsList');
-            if (!list) return;
-
-            var states = selectedCountry.states || ['Default Region'];
-            var filtered = states.filter(function(st) {
-                return st.toLowerCase().includes(q);
-            });
-
-            var html = '<div class="custom-select-option" onclick="selectState(\'Select State\')">Select State</div>';
-            if (filtered.length === 0) {
-                html += '<div style="padding:12px; font-size:0.78rem; color:var(--light-text); text-align:center; font-weight:600;">No matching state found</div>';
-            } else {
-                filtered.forEach(function(st) {
-                    var isSel = st === selectedState;
-                    html += `
-                        <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
-                            <span>${st}</span>
-                        </div>
-                    `;
-                });
-            }
-            list.innerHTML = html;
-        };
-
-        /* Populate Country Dropdown */
         function renderCountryDropdown() {
-            filterCountryOptions('');
-
-            /* Update Trigger Display */
-            var flagImg = document.getElementById('displayCountryFlag');
-            var txt = document.getElementById('displayCountryText');
-            if (flagImg) flagImg.src = selectedCountry.flagImg;
-            if (txt) txt.textContent = `${selectedCountry.name} (${selectedCountry.dial})`;
-
-            /* Update WhatsApp Prefix */
-            var waFlag = document.getElementById('waFlagImg');
-            var waDial = document.getElementById('waDialCode');
-            var hint = document.getElementById('digitCountHint');
-
-            if (waFlag) waFlag.src = selectedCountry.flagImg;
-            if (waDial) waDial.textContent = `${selectedCountry.code.toUpperCase()} ${selectedCountry.dial}`;
-            if (hint) hint.textContent = `${selectedCountry.digits}-digit number`;
-
-            renderStateDropdown();
-            validateWhatsAppDigits();
+            var listEl = document.getElementById('countryOptionsList');
+            if (!listEl) return;
+            var html = '';
+            ALL_WORLD_COUNTRIES.forEach(function(c) {
+                html += '<div class="ac-select-option" onclick="selectCountry(\'' + c.code + '\')">' +
+                    '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-flag-img">' +
+                    '<span>' + c.name + ' (' + c.dial + ')</span>' +
+                '</div>';
+            });
+            listEl.innerHTML = html;
+            renderStatesDropdown(selectedCountry);
         }
 
-        /* Populate State Dropdown */
-        function renderStateDropdown() {
-            filterStateOptions('');
-            var txt = document.getElementById('displayStateText');
-            if (txt) txt.textContent = selectedState;
+        function renderStatesDropdown(country) {
+            var listEl = document.getElementById('stateOptionsList');
+            if (!listEl) return;
+            var html = '';
+            var states = country.states || ['Central Province', 'Region 1'];
+            states.forEach(function(st) {
+                html += '<div class="ac-select-option" onclick="selectState(\'' + st.replace(/'/g, "\\'") + '\')">' +
+                    '<span>' + st + '</span>' +
+                '</div>';
+            });
+            listEl.innerHTML = html;
         }
 
         window.selectCountry = function(code) {
-            var found = ALL_WORLD_COUNTRIES.find(function(c) { return c.code === code; });
-            if (found) {
-                selectedCountry = found;
-                selectedState = (found.states && found.states.length > 0) ? found.states[0] : 'Default Region';
-                renderCountryDropdown();
+            var c = ALL_WORLD_COUNTRIES.find(function(item) { return item.code === code; }) || ALL_WORLD_COUNTRIES[0];
+            selectedCountry = c;
+            
+            document.getElementById('displayCountryFlag').src = c.flagImg;
+            document.getElementById('displayCountryText').textContent = c.name + ' (' + c.dial + ')';
+            document.getElementById('waFlagImg').src = c.flagImg;
+            document.getElementById('waDialCode').textContent = c.dial;
+            document.getElementById('digitCountHint').textContent = c.digits + '-digit number';
+            
+            var phoneInput = document.getElementById('regPhone');
+            if (phoneInput) {
+                phoneInput.placeholder = c.digits + '-digit WhatsApp number';
+                phoneInput.maxLength = c.digits + 2;
             }
-            var box = document.getElementById('countrySelectBox');
-            if (box) box.classList.remove('active');
+
+            renderStatesDropdown(c);
+            selectedState = (c.states && c.states[0]) ? c.states[0] : 'Surat';
+            document.getElementById('displayStateText').textContent = selectedState;
+
+            document.getElementById('countrySelectBox').classList.remove('active');
         };
 
-        window.selectState = function(stateName) {
-            selectedState = stateName;
-            var txt = document.getElementById('displayStateText');
-            if (txt) txt.textContent = stateName;
+        window.selectState = function(st) {
+            selectedState = st;
+            document.getElementById('displayStateText').textContent = st;
+            document.getElementById('stateSelectBox').classList.remove('active');
+        };
 
-            var box = document.getElementById('stateSelectBox');
-            if (box) box.classList.remove('active');
+        window.filterCountryOptions = function(query) {
+            var q = (query || '').toLowerCase().trim();
+            var listEl = document.getElementById('countryOptionsList');
+            if (!listEl) return;
+            var filtered = ALL_WORLD_COUNTRIES.filter(function(c) {
+                return c.name.toLowerCase().includes(q) || c.dial.includes(q);
+            });
+            var html = '';
+            filtered.forEach(function(c) {
+                html += '<div class="ac-select-option" onclick="selectCountry(\'' + c.code + '\')">' +
+                    '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-flag-img">' +
+                    '<span>' + c.name + ' (' + c.dial + ')</span>' +
+                '</div>';
+            });
+            listEl.innerHTML = html;
+        };
+
+        window.filterStateOptions = function(query) {
+            var q = (query || '').toLowerCase().trim();
+            var listEl = document.getElementById('stateOptionsList');
+            if (!listEl) return;
+            var states = selectedCountry.states || [];
+            var filtered = states.filter(function(st) { return st.toLowerCase().includes(q); });
+            var html = '';
+            filtered.forEach(function(st) {
+                html += '<div class="ac-select-option" onclick="selectState(\'' + st.replace(/'/g, "\\'") + '\')">' +
+                    '<span>' + st + '</span>' +
+                '</div>';
+            });
+            listEl.innerHTML = html;
         };
 
         window.selectRole = function(role) {
             selectedRole = role;
-            var regRoleInput = document.getElementById('regRole');
-            if (regRoleInput) regRoleInput.value = role;
-            document.querySelectorAll('.role-pill-btn').forEach(function(c) {
-                c.classList.toggle('selected', c.dataset.role === role);
+            document.querySelectorAll('.ac-role-card').forEach(function(el) {
+                el.classList.toggle('active', el.getAttribute('data-role') === role);
             });
-            // Only trade roles go through approval, so only they see the review note.
+            var roleInput = document.getElementById('regRole');
+            if (roleInput) roleInput.value = role;
+
             var note = document.getElementById('regTradeNoteGroup');
             if (note) {
                 note.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
             }
         };
 
-        /* Validate WhatsApp Digits in real-time */
-        window.validateWhatsAppDigits = function() {
-            var input = document.getElementById('regPhone');
-            var group = document.getElementById('waPhoneGroup');
-            var errorMsg = document.getElementById('phoneErrorMsg');
-            if (!input || !group || !errorMsg) return true;
-
-            var clean = input.value.replace(/[^0-9]/g, '');
-            input.value = clean;
-
-            var expected = selectedCountry.digits || 10;
-
-            if (clean.length > 0 && clean.length !== expected) {
-                group.classList.add('is-invalid');
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = `⚠️ ${selectedCountry.name} WhatsApp number must be exactly ${expected} digits (currently ${clean.length}).`;
-                return false;
+        window.togglePwdVisibility = function(inputId, btn) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
             } else {
-                group.classList.remove('is-invalid');
-                errorMsg.style.display = 'none';
-                return clean.length === expected;
+                input.type = 'password';
+                btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
             }
         };
 
-        /* Check URL Parameter for Initial Tab (e.g. ?tab=register or ?tab=login) */
-        var urlParams = new URLSearchParams(window.location.search);
-        var initialTab = urlParams.get('tab') || 'login';
+        window.validateWhatsAppDigits = function() {
+            var phoneEl = document.getElementById('regPhone');
+            var errorEl = document.getElementById('phoneErrorMsg');
+            if (!phoneEl) return;
+            var val = phoneEl.value.replace(/\D/g, '');
+            phoneEl.value = val;
+            var expected = selectedCountry.digits || 10;
+            if (val.length > 0 && val.length !== expected) {
+                if (errorEl) errorEl.style.display = 'block';
+            } else {
+                if (errorEl) errorEl.style.display = 'none';
+            }
+        };
 
-        function checkUserAuth() {
-            var userRaw = localStorage.getItem('dtbrands_user');
-            var authCard = document.getElementById('authCardWrap');
+        window.switchAuthTab = function(tab) {
+            var btnLogin = document.getElementById('tabBtnLogin');
+            var btnReg = document.getElementById('tabBtnRegister');
+            var loginForm = document.getElementById('loginForm');
+            var regForm = document.getElementById('registerForm');
+            var forgotForm = document.getElementById('forgotForm');
+
+            if (btnLogin) btnLogin.classList.toggle('active', tab === 'login');
+            if (btnReg) btnReg.classList.toggle('active', tab === 'register');
+
+            if (loginForm) loginForm.classList.toggle('active', tab === 'login');
+            if (regForm) regForm.classList.toggle('active', tab === 'register');
+            if (forgotForm) forgotForm.classList.toggle('active', tab === 'forgot');
+
+            if (tab === 'register') {
+                renderCountryDropdown();
+            }
+        };
+
+        window.checkUserAuth = function() {
+            var user = null;
+            try {
+                user = JSON.parse(localStorage.getItem('dtbrands_user'));
+            } catch(e) {}
+
+            var authWrap = document.getElementById('authCardWrap');
             var dashWrap = document.getElementById('dashboardWrap');
+            var breadcrumbTitle = document.getElementById('acBreadcrumbTitle');
 
-            if (userRaw) {
-                var user = JSON.parse(userRaw);
-                authCard.style.display = 'none';
-                dashWrap.classList.add('active');
+            if (user && (user.id || user.phone)) {
+                if (authWrap) authWrap.style.display = 'none';
+                if (dashWrap) {
+                    dashWrap.style.display = 'flex';
+                    dashWrap.classList.add('active');
+                }
+                if (breadcrumbTitle) breadcrumbTitle.textContent = 'Member Dashboard';
 
                 var nameEl = document.getElementById('dashUserName');
                 var phoneEl = document.getElementById('dashUserPhone');
-                var initEl = document.getElementById('dashUserInitials');
-                var locEl = document.getElementById('dashUserLocation');
                 var roleEl = document.getElementById('dashUserRoleBadge');
+                var initEl = document.getElementById('dashUserInitials');
 
-                if (nameEl) nameEl.textContent = user.name || 'Member';
-                if (phoneEl) phoneEl.textContent = user.phone || '';
-                if (locEl && user.city && user.state) {
-                    locEl.textContent = `📍 ${user.city}, ${user.state}, ${user.country || 'India'}`;
-                }
-                if (roleEl) {
-                    var r = user.role || 'Retailer';
-                    var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '🛍️');
-                    roleEl.textContent = `${icon} ${r} Member`;
-                }
-
-                var role = (user.role || 'Retailer').toLowerCase();
-                var wsBanner = document.getElementById('wsVipAccessBanner');
-                var heroBtn = document.getElementById('dashHeroPortalBtn');
-                var titleEl = document.getElementById('wsVipBannerTitle');
-                var subEl = document.getElementById('wsVipBannerSubtitle');
-                var linkEl = document.getElementById('wsVipBannerLink');
-
-                if (role === 'wholesaler') {
-                    if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
-                    if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
-                    if (linkEl) {
-                        linkEl.href = '/wholesale.php';
-                        linkEl.textContent = 'Open Wholesaler Portal →';
-                    }
-                    if (heroBtn) {
-                        heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '/wholesale.php';
-                        heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
-                    }
-                } else if (role === 'retailer') {
-                    if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
-                    if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
-                    if (linkEl) {
-                        linkEl.href = '/retailer.php';
-                        linkEl.textContent = 'Open Retailer Portal →';
-                    }
-                    if (heroBtn) {
-                        heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '/retailer.php';
-                        heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
-                    }
-                } else if (role === 'reseller') {
-                    if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
-                    if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
-                    if (linkEl) {
-                        linkEl.href = '/reseller.php';
-                        linkEl.textContent = 'Open Reseller Portal →';
-                    }
-                    if (heroBtn) {
-                        heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '/reseller.php';
-                        heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
-                    }
-                } else {
-                    if (wsBanner) wsBanner.style.display = 'none';
-                    if (heroBtn) heroBtn.style.display = 'none';
-                }
+                if (nameEl) nameEl.textContent = user.name || 'Valued Member';
+                if (phoneEl) phoneEl.textContent = user.phone || '+91 70463 63528';
+                if (roleEl) roleEl.textContent = '👑 ' + (user.role || 'VIP Member');
 
                 if (initEl) {
                     var parts = (user.name || 'Member').split(' ');
@@ -1700,6 +1524,7 @@
                     initEl.textContent = initials.toUpperCase();
                 }
 
+                // Update Bag / Saved Counts
                 var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
                 var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
                 var cEl = document.getElementById('dashCartCount');
@@ -1707,17 +1532,39 @@
                 if (cEl) cEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
                 if (wEl) wEl.textContent = wish.length;
 
-                // Load real-time orders dynamically from database
-                if (typeof window.loadCustomerLiveOrders === 'function') {
-                    window.loadCustomerLiveOrders(user.phone || user.rawPhone || '');
+                // Portal button
+                var heroBtn = document.getElementById('dashHeroPortalBtn');
+                var roleLower = (user.role || '').toLowerCase();
+                if (heroBtn) {
+                    if (roleLower.includes('wholesale')) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = '/wholesale.php';
+                        heroBtn.innerHTML = '<span>📦 Open Wholesale Depot</span><span>→</span>';
+                    } else if (roleLower.includes('reseller')) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = '/reseller.php';
+                        heroBtn.innerHTML = '<span>💼 Open Reseller Hub</span><span>→</span>';
+                    } else if (roleLower.includes('retailer')) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = '/retailer.php';
+                        heroBtn.innerHTML = '<span>🛍️ Open Retailer Hub</span><span>→</span>';
+                    } else {
+                        heroBtn.style.display = 'none';
+                    }
                 }
+
+                // Load real-time orders dynamically from database
+                window.loadCustomerLiveOrders(user.phone || user.rawPhone || '');
             } else {
-                authCard.style.display = 'block';
-                dashWrap.classList.remove('active');
+                if (authWrap) authWrap.style.display = 'grid';
+                if (dashWrap) {
+                    dashWrap.style.display = 'none';
+                    dashWrap.classList.remove('active');
+                }
+                if (breadcrumbTitle) breadcrumbTitle.textContent = 'Sign In / Register';
                 renderCountryDropdown();
-                switchAuthTab(initialTab);
             }
-        }
+        };
 
         window.loadCustomerLiveOrders = function(phone) {
             var listEl = document.getElementById('dashOrdersList');
@@ -1731,7 +1578,7 @@
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (!data || !data.success || !Array.isArray(data.orders) || data.orders.length === 0) {
-                        listEl.innerHTML = '<div style="padding: 28px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 14px 0; font-size: 0.8rem; color: #64748B;">Explore our royal handloom silk sarees, bridal lehengas, and luxury fabrics.</p><a href="/shop.php" class="auth-btn-submit" style="display: inline-flex; width: auto; padding: 10px 22px; font-size: 0.82rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection →</a></div>';
+                        listEl.innerHTML = '<div style="padding: 32px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">Explore our pure handloom silk sarees, bridal lehengas, and designer fabrics.</p><a href="/shop.php" class="dt-btn-gold" style="display: inline-flex; width: auto; padding: 10px 24px; font-size: 0.84rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection →</a></div>';
                         return;
                     }
 
@@ -1743,7 +1590,7 @@
                         var ordNum = ord.order_number || ('DTB-' + ord.id);
                         var created = ord.created_at ? new Date(ord.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent';
                         var amount = parseFloat(ord.total_amount || ord.amount || 0).toLocaleString('en-IN');
-                        var waMsg = encodeURIComponent("Namaste DT Brand's! 🙏 Please share tracking & fulfillment update for Order #" + ordNum);
+                        var waMsg = encodeURIComponent("Namaste DT Brand's! 🙏 Please share tracking update for Order #" + ordNum);
                         var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + waMsg;
 
                         var items = Array.isArray(ord.items) ? ord.items : [];
@@ -1760,30 +1607,28 @@
                                 var qty = it.quantity || it.qty || 1;
                                 var price = parseFloat(it.unit_price || it.price || 0).toLocaleString('en-IN');
 
-                                itemsHtml += '<div class="order-item-detail" style="margin-bottom: 8px; border-bottom: 1px dashed rgba(0,0,0,0.06); padding-bottom: 8px;"><img src="' + thumb + '" alt="' + title + '" class="order-thumb" onerror="this.src=\'/assets/images/product1.png\';"><div style="flex: 1;"><div style="font-weight: 800; color: var(--dark-text); font-size: 0.86rem;">' + title + '</div><div style="font-size: 0.74rem; color: #64748B; margin-top: 2px;">' + (varText.length ? varText.join(' • ') + ' • ' : '') + 'Qty: ' + qty + ' • ₹' + price + '</div></div></div>';
+                                itemsHtml += '<div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; border-bottom:1px dashed rgba(0,0,0,0.06); padding-bottom:8px;"><img src="' + thumb + '" alt="' + title + '" class="order-thumb" onerror="this.src=\'/assets/images/product1.png\';"><div style="flex:1;"><div style="font-weight:800; color:#111827; font-size:0.88rem;">' + title + '</div><div style="font-size:0.75rem; color:#64748B; margin-top:2px;">' + (varText.length ? varText.join(' • ') + ' • ' : '') + 'Qty: ' + qty + ' • ₹' + price + '</div></div></div>';
                             });
                         } else {
-                            itemsHtml = '<div class="order-item-detail"><img src="/assets/images/product1.png" alt="Saree" class="order-thumb"><div><div style="font-weight: 800; color: var(--dark-text);">Luxury Silk Handloom Lot</div><div style="font-size: 0.75rem; color: var(--light-text); margin-top: 2px;">Authentic Zari Weaving • Qty: 1</div></div></div>';
+                            itemsHtml = '<div style="display:flex; align-items:center; gap:12px;"><img src="/assets/images/product1.png" alt="Saree" class="order-thumb"><div><div style="font-weight:800; color:#111827;">Luxury Silk Handloom Lot</div><div style="font-size:0.75rem; color:#64748B; margin-top:2px;">Authentic Zari Craft • Qty: 1</div></div></div>';
                         }
 
-                        html += '<div class="order-box" style="background: #FFFFFF; border: 1.5px solid #D4AF37; border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">' +
-                            '<div class="order-top" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #FAF5E8; padding-bottom: 8px;">' +
+                        html += '<div class="order-box">' +
+                            '<div class="order-top">' +
                                 '<div>' +
-                                    '<span class="order-id" style="font-size: 0.95rem; font-weight: 800; color: #181512;">Order #' + ordNum + '</span>' +
-                                    '<div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">Placed on ' + created + '</div>' +
+                                    '<span class="order-id">Order #' + ordNum + '</span>' +
+                                    '<div style="font-size:0.74rem; color:#64748B; margin-top:2px;">Placed on ' + created + '</div>' +
                                 '</div>' +
-                                '<span class="order-status-badge ' + stClass + '" style="font-weight: 800; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem;">' +
-                                    stLabel +
-                                '</span>' +
+                                '<span class="order-status-badge ' + stClass + '">' + stLabel + '</span>' +
                             '</div>' +
-                            '<div class="order-items-container">' + itemsHtml + '</div>' +
-                            (ord.tracking_number ? ('<div style="background: #FAF8F4; border: 1px solid #E2DFD7; border-radius: 6px; padding: 6px 10px; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; margin: 8px 0;"><span style="color: #64748B;">Courier: <strong style="color: #181512;">' + (ord.courier_name || 'VRL Logistics / Delhivery') + '</strong></span><span style="font-family: monospace; font-weight: 700; color: #8A681F;">AWB: ' + ord.tracking_number + '</span></div>') : '') +
-                            '<div class="order-actions-bar" style="margin-top: 10px; padding-top: 10px; border-top: 1.5px solid #F1ECE1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">' +
-                                '<div style="font-size: 0.88rem; font-weight: 700; color: #181512;">' +
-                                    'Total: <span class="order-total-txt" style="color: #8A681F; font-size: 1.05rem; font-weight: 800;">₹' + amount + '</span>' +
+                            '<div>' + itemsHtml + '</div>' +
+                            (ord.tracking_number ? ('<div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:6px 10px; font-size:0.75rem; display:flex; justify-content:space-between; align-items:center; margin:8px 0;"><span style="color:#64748B;">Courier: <strong style="color:#181512;">' + (ord.courier_name || 'VRL Logistics / Delhivery') + '</strong></span><span style="font-family:monospace; font-weight:700; color:#8A681F;">AWB: ' + ord.tracking_number + '</span></div>') : '') +
+                            '<div style="margin-top:10px; padding-top:10px; border-top:1.5px solid #F1ECE1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">' +
+                                '<div style="font-size:0.88rem; font-weight:700; color:#111827;">' +
+                                    'Total: <span style="color:#8A681F; font-size:1.05rem; font-weight:800;">₹' + amount + '</span>' +
                                 '</div>' +
-                                '<div style="display: flex; gap: 8px;">' +
-                                    '<a href="' + waUrl + '" target="_blank" class="dt-btn dt-btn-emerald" style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; font-size: 0.75rem; font-weight: 800; border-radius: 6px; text-decoration: none; background: linear-gradient(135deg, #15803D 0%, #16A34A 100%); color: #FFFFFF;">' +
+                                '<div style="display:flex; gap:8px;">' +
+                                    '<a href="' + waUrl + '" target="_blank" class="dt-btn-emerald" style="display:inline-flex; width:auto; padding:6px 14px; font-size:0.75rem; height:auto; text-decoration:none;">' +
                                         '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>' +
                                         '<span>Track on WhatsApp</span>' +
                                     '</a>' +
@@ -1795,55 +1640,22 @@
                     listEl.innerHTML = html;
                 })
                 .catch(function(err) {
-                    console.error("Orders load failed:", err);
-                    listEl.innerHTML = '<div style="padding: 20px; text-align: center; color: #DC2626; font-size: 0.85rem;">Could not fetch recent orders. Please check your network connection.</div>';
+                    console.error("Orders load error:", err);
+                    listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#DC2626; font-size:0.85rem;">Could not load live order history. Please check your network connection.</div>';
                 });
-        };
-
-        window.switchAuthTab = function(tab) {
-            var loginForm = document.getElementById('loginForm');
-            var regForm = document.getElementById('registerForm');
-            var forgotForm = document.getElementById('forgotForm');
-
-            var btnLogin = document.getElementById('tabBtnLogin');
-            var btnReg = document.getElementById('tabBtnRegister');
-
-            var heading = document.getElementById('authHeading');
-            var sub = document.getElementById('authSubheading');
-
-            if (btnLogin) btnLogin.classList.toggle('active', tab === 'login');
-            if (btnReg) btnReg.classList.toggle('active', tab === 'register');
-
-            if (loginForm) loginForm.style.display = (tab === 'login') ? 'block' : 'none';
-            if (regForm) regForm.style.display = (tab === 'register') ? 'block' : 'none';
-            if (forgotForm) forgotForm.style.display = (tab === 'forgot') ? 'block' : 'none';
-
-            if (tab === 'login') {
-                heading.textContent = 'Sign In';
-                sub.textContent = 'Access your account to track orders & explore collections';
-            } else if (tab === 'register') {
-                heading.textContent = 'Create Account';
-                sub.textContent = 'Join DT Brand\'s & enjoy personalized shopping';
-                renderCountryDropdown();
-            } else if (tab === 'forgot') {
-                heading.textContent = 'Reset Password';
-                sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
-            }
         };
 
         window.handleLoginSubmit = function() {
             var input = document.getElementById('loginPhone').value.trim();
             var passEl = document.getElementById('loginPass');
             var pass = passEl ? passEl.value.trim() : '';
-            if (!input) {
-                alert('Please enter your phone or email.');
+            if (!input || !pass) {
+                alert('Please enter your phone/email and password.');
                 return;
             }
-            if (!pass) {
-                alert('Please enter your password.');
-                if (passEl) { passEl.focus(); }
-                return;
-            }
+
+            var btn = document.getElementById('loginSubmitBtn');
+            if (btn) btn.innerHTML = '<span>Verifying credentials...</span>';
 
             var params = new URLSearchParams();
             params.append('action', 'login');
@@ -1856,6 +1668,8 @@
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
+                if (btn) btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg><span>Sign In to VIP Lounge</span>';
+                
                 if (data.success && data.user) {
                     var u = data.user;
                     var lType = (u.type || 'retail').toLowerCase();
@@ -1864,10 +1678,9 @@
                         id: u.id,
                         name: u.name,
                         phone: u.phone,
-                        email: u.email || 'member@dtbrands.com',
+                        email: u.email || 'member@dtbrands.in',
                         role: roleName,
                         tier: u.tier || 'Standard',
-                        credit_limit: u.credit_limit || 0,
                         country: 'India',
                         state: u.state || 'Gujarat',
                         city: u.city || 'Surat'
@@ -1875,13 +1688,12 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
                     checkUserAuth();
                 } else {
-                    alert(data.message || 'Login failed.');
+                    alert(data.message || 'Login failed. Please verify your credentials.');
                 }
             })
-            .catch(function(_err) {
-                // Never fabricate a session here. A network/server failure means
-                // the password was never verified, so there is nothing to trust.
-                alert('We could not reach the server to sign you in. Please check your connection and try again.');
+            .catch(function() {
+                if (btn) btn.innerHTML = '<span>Sign In to VIP Lounge</span>';
+                alert('Unable to reach server. Please check your connection.');
             });
         };
 
@@ -1892,28 +1704,15 @@
             var passEl = document.getElementById('regPass');
             var pass = passEl ? passEl.value.trim() : '';
 
-            if (!name) {
-                alert('Please enter your Full Name.');
-                return;
-            }
-
-            if (pass.length < 6) {
-                alert('Please choose a password of at least 6 characters.');
-                if (passEl) { passEl.focus(); }
-                return;
-            }
-
+            if (!name) { alert('Please enter your full name.'); return; }
+            if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
             var expected = selectedCountry.digits || 10;
             if (!phone || phone.length !== expected) {
-                alert('Please enter a valid ' + expected + '-digit WhatsApp number for ' + selectedCountry.name + '.');
-                document.getElementById('regPhone').focus();
+                alert('Please enter a valid ' + expected + '-digit WhatsApp number.');
                 return;
             }
 
-            /* 'Retailer' is a genuine trade tier in this store (own pricing column,
-               MOQ rules, /retailer.php portal) — distinct from plain 'retail'
-               shoppers. The other two pills map directly. */
-            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : (selectedRole === 'Retailer' ? 'retailer' : 'retail'));
+            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : 'retailer');
             var fullPhone = selectedCountry.dial + ' ' + phone;
 
             var params = new URLSearchParams();
@@ -1926,9 +1725,8 @@
             params.append('city', city || 'Surat');
             params.append('state', selectedState);
 
-            /* GSTIN/PAN are not collected at signup. A trade request is still
-               recorded as pending; the team captures the trade details on WhatsApp
-               during approval and an admin stores them from the customer editor. */
+            var regBtn = document.getElementById('regSubmitBtn');
+            if (regBtn) regBtn.innerHTML = '<span>Creating VIP Profile...</span>';
 
             fetch('/api/auth.php', {
                 method: 'POST',
@@ -1936,19 +1734,13 @@
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
-                /* A wholesale/reseller application is recorded but not signed in:
-                   trade pricing is only granted after an admin verifies the trade
-                   details. Report the application honestly instead of falling
-                   through to the generic "could not create account" branch. */
+                if (regBtn) regBtn.innerHTML = '<span>Create VIP Account</span>';
                 if (data && data.success && data.pending_approval) {
-                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once it is approved.');
+                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once approved.');
                     return;
                 }
                 if (data.success && data.user) {
                     var u = data.user;
-                    // Trust the account type the SERVER stored, not the one picked
-                    // in the form — otherwise the UI can show B2B pricing for a
-                    // tier the backend never actually granted.
                     var srvType = (u.type || 'retail').toLowerCase();
                     var srvRole = srvType === 'wholesale' ? 'Wholesaler' : (srvType === 'reseller' ? 'Reseller' : 'Retailer');
                     var userData = {
@@ -1959,8 +1751,6 @@
                         role: srvRole,
                         tier: u.tier || 'Standard',
                         country: selectedCountry.name,
-                        countryCode: selectedCountry.code,
-                        dial: selectedCountry.dial,
                         state: selectedState,
                         city: city || 'Surat'
                     };
@@ -1970,62 +1760,48 @@
                     alert(data.message || 'Registration failed.');
                 }
             })
-            .catch(function(_err) {
-                // Never fabricate a session here. On a network/server failure the
-                // account was never created, and trusting the locally-chosen role
-                // would hand out Wholesaler/Reseller B2B pricing for free.
-                alert('We could not reach the server to create your account. Please check your connection and try again.');
+            .catch(function() {
+                if (regBtn) regBtn.innerHTML = '<span>Create VIP Account</span>';
+                alert('Unable to reach server. Please try again.');
             });
         };
 
         window.handleForgotSubmit = function() {
             var input = document.getElementById('forgotInput').value.trim();
             if (!input) return;
-
-            var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
+            var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + encodeURIComponent("Hi DT Brand's, I need a password reset link for account: " + input);
             window.open(waUrl, '_blank');
             alert('📩 Password reset request sent to WhatsApp Concierge!');
         };
 
         window.handleLogoutClick = function() {
-            // Clear the PHP session too, otherwise the server still considers the
-            // visitor signed in and the APIs keep returning their data.
             fetch('/api/auth.php?action=logout', {
                 method: 'POST',
                 credentials: 'same-origin'
             })
-            .catch(function() { /* still sign out locally below */ })
+            .catch(function(){})
             .then(function() {
                 localStorage.removeItem('dtbrands_user');
-                window.location.href = '/shop.php';
+                checkUserAuth();
             });
         };
 
-        /* Run on Page Load */
         document.addEventListener('DOMContentLoaded', function() {
-            // Paint immediately from the cached user so the page does not flicker…
             checkUserAuth();
 
-            // …then confirm with the server. localStorage is only a cache: if the
-            // PHP session has expired (or was never real), drop it and show the
-            // login card instead of a dashboard the visitor is not entitled to.
             fetch('/api/auth.php?action=session', { credentials: 'same-origin' })
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
-                    if (!data) return;
-                    if (data.authenticated && data.user) {
+                    if (data && data.authenticated && data.user) {
                         var u = data.user;
                         var t = (u.type || 'retail').toLowerCase();
                         var stored = {};
-                        try { stored = JSON.parse(localStorage.getItem('dtbrands_user')) || {}; } catch (e) {}
+                        try { stored = JSON.parse(localStorage.getItem('dtbrands_user')) || {}; } catch(e){}
                         stored.id = u.id;
                         stored.name = u.name || stored.name;
                         stored.phone = u.phone || stored.phone;
-                        stored.email = u.email || stored.email;
                         stored.role = t === 'wholesale' ? 'Wholesaler' : (t === 'reseller' ? 'Reseller' : 'Retailer');
                         stored.tier = u.tier || stored.tier || 'Standard';
-                        if (u.city) stored.city = u.city;
-                        if (u.state) stored.state = u.state;
                         localStorage.setItem('dtbrands_user', JSON.stringify(stored));
                         checkUserAuth();
                     } else if (localStorage.getItem('dtbrands_user')) {
@@ -2033,11 +1809,9 @@
                         checkUserAuth();
                     }
                 })
-                .catch(function() {
-                    // Offline: leave the cached view alone rather than logging the
-                    // customer out over a dropped connection.
-                });
+                .catch(function(){});
         });
+
     })();
     </script>
 

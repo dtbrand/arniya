@@ -1222,11 +1222,20 @@ function pdp_relative_date(string $ts): string
 
                 <!-- Trust Badges Row (All in 1 Single Line on Mobile) -->
                 <div class="pdp-wa-trust-row">
-                    <span class="pdp-wa-trust-item">🔒 256-Bit Encrypted</span>
+                    <span class="pdp-wa-trust-item">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        256-Bit Encrypted
+                    </span>
                     <span class="pdp-wa-trust-dot">•</span>
-                    <span class="pdp-wa-trust-item">⚡ 3–5 Day Delivery</span>
+                    <span class="pdp-wa-trust-item">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        3–5 Day Delivery
+                    </span>
                     <span class="pdp-wa-trust-dot">•</span>
-                    <span class="pdp-wa-trust-item">💎 100% Authentic</span>
+                    <span class="pdp-wa-trust-item">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        100% Authentic
+                    </span>
                 </div>
             </form>
         </div>
