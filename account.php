@@ -355,6 +355,20 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             max-width: 150px;
             object-fit: contain;
         }
+        .ac-portal-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #15803D;
+            background: #DCFCE7;
+            padding: 3px 9px;
+            border-radius: 12px;
+            border: 1px solid #86EFAC;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
         .ac-security-badge {
             display: inline-flex;
             align-items: center;
@@ -1151,6 +1165,336 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             color: #5A4210;
         }
 
+        /* ── Luxury Security & Trust Footer Bar inside Auth Card ── */
+        .ac-auth-card-footer {
+            background: linear-gradient(180deg, #FAF8F4 0%, #F5ECCE 100%);
+            border-top: 1.5px solid #F1ECE1;
+            padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ac-sec-headline-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(138, 104, 31, 0.25);
+            flex-wrap: wrap;
+        }
+
+        .ac-sec-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ac-sec-shield-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: #DCFCE7;
+            border: 1px solid #86EFAC;
+            color: #15803D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(21,128,61,0.15);
+        }
+
+        .ac-sec-title-text {
+            font-size: clamp(0.78rem, 1.8vw, 0.84rem);
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
+        }
+
+        .ac-sec-subtitle-text {
+            font-size: 0.67rem;
+            color: #64748B;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .ac-sec-live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #15803D;
+            background: #DCFCE7;
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid #86EFAC;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .ac-pulse-dot {
+            width: 6.5px;
+            height: 6.5px;
+            border-radius: 50%;
+            background: #16A34A;
+            box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+            animation: acSecPulse 1.8s infinite;
+        }
+
+        @keyframes acSecPulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+            70% { transform: scale(1.2); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+        }
+
+        /* 4-Item Security Micro Grid */
+        .ac-sec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        @media (max-width: 480px) {
+            .ac-sec-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ac-sec-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #FFFFFF;
+            border: 1px solid rgba(138, 104, 31, 0.2);
+            border-radius: 8px;
+            padding: 7px 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+        }
+        .ac-sec-item:hover {
+            border-color: var(--dt-gold);
+            background: #FAF5E8;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(138,104,31,0.12);
+        }
+
+        .ac-sec-item-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ac-sec-item-icon.gold {
+            background: #FAF5E8;
+            border: 1px solid #D4AF37;
+            color: #8A681F;
+        }
+        .ac-sec-item-icon.green {
+            background: #DCFCE7;
+            border: 1px solid #86EFAC;
+            color: #15803D;
+        }
+        .ac-sec-item-icon.blue {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            color: #1D4ED8;
+        }
+        .ac-sec-item-icon.amber {
+            background: #FEF3C7;
+            border: 1px solid #FCD34D;
+            color: #B45309;
+        }
+
+        .ac-sec-item-text {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .ac-sec-item-title {
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.2;
+        }
+        .ac-sec-item-desc {
+            font-size: 0.64rem;
+            color: #64748B;
+            font-weight: 600;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Policy & Trust Links Row */
+        .ac-policy-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            padding-top: 8px;
+            border-top: 1px dashed rgba(138, 104, 31, 0.20);
+        }
+        .ac-policy-link {
+            font-size: 0.70rem;
+            font-weight: 700;
+            color: #705114;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3.5px 9px;
+            border-radius: 12px;
+            background: #FFFFFF;
+            border: 1px solid rgba(138,104,31,0.25);
+            transition: all 0.18s ease;
+            cursor: pointer;
+        }
+        .ac-policy-link:hover {
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+            border-color: #8A681F;
+            color: #111827;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.15);
+        }
+        .ac-policy-link svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        /* ── Interactive Quick View Policy Modal ── */
+        .ac-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            animation: acModalFade 0.2s ease-out;
+        }
+        .ac-modal-overlay.active {
+            display: flex;
+        }
+        @keyframes acModalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .ac-policy-modal-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--dt-gold);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 540px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.6) inset;
+            animation: acModalScale 0.25s cubic-bezier(0.34, 1.35, 0.64, 1);
+            overflow: hidden;
+        }
+        @keyframes acModalScale {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .ac-policy-modal-head {
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #FAF8F4 0%, #F5ECCE 100%);
+            border-bottom: 1.5px solid rgba(138,104,31,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .ac-policy-modal-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ac-policy-modal-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #FFFFFF;
+            border: 1.2px solid var(--dt-gold);
+            color: var(--dt-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.15);
+        }
+        .ac-policy-modal-title {
+            font-family: var(--font-sans);
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 0;
+            letter-spacing: -0.015em;
+        }
+        .ac-policy-close-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 1px solid rgba(138,104,31,0.3);
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            flex-shrink: 0;
+        }
+        .ac-policy-close-btn:hover {
+            background: #DC2626;
+            border-color: #DC2626;
+            color: #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        .ac-policy-modal-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            color: #334155;
+            font-size: 0.83rem;
+            line-height: 1.55;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ac-policy-modal-foot {
+            padding: 12px 18px;
+            background: #FAF8F4;
+            border-top: 1px solid #F1ECE1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         /* ═══════════════════════════════════════════════════════════════════
            VIEW 2: LOGGED-IN CUSTOMER DASHBOARD
         ═══════════════════════════════════════════════════════════════════ */
@@ -1464,9 +1808,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     <div class="ac-auth-card-head">
                         <div class="ac-brand-lockup">
                             <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
-                            <span class="ac-security-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                <span>256-Bit SSL</span>
+                            <span class="ac-portal-status-badge">
+                                <span class="ac-pulse-dot"></span>
+                                <span>Official Member Studio</span>
                             </span>
                         </div>
 
@@ -1770,6 +2114,97 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Sign In</a>
                             </div>
                         </form>
+
+                    </div>
+
+                    <!-- Master Security & Trust Footer inside Auth Card -->
+                    <div class="ac-auth-card-footer">
+                        
+                        <!-- Top Security Headline Strip -->
+                        <div class="ac-sec-headline-strip">
+                            <div class="ac-sec-title-wrap">
+                                <div class="ac-sec-shield-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="ac-sec-title-text">256-Bit Bank-Grade SSL Encryption</div>
+                                    <div class="ac-sec-subtitle-text">End-to-End Encrypted Data &amp; Privacy Shield</div>
+                                </div>
+                            </div>
+                            <span class="ac-sec-live-badge">
+                                <span class="ac-pulse-dot"></span>
+                                <span>100% Secure</span>
+                            </span>
+                        </div>
+
+                        <!-- 4-Pillar Secure Data Trust Grid -->
+                        <div class="ac-sec-grid">
+                            
+                            <!-- 1. 256-Bit Military SSL -->
+                            <div class="ac-sec-item" onclick="openPolicyModal('ssl')" role="button" tabindex="0" title="Click to view SSL details">
+                                <div class="ac-sec-item-icon gold">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                                <div class="ac-sec-item-text">
+                                    <span class="ac-sec-item-title">256-Bit SSL Cipher</span>
+                                    <span class="ac-sec-item-desc">TLS 1.3 Military Standard</span>
+                                </div>
+                            </div>
+
+                            <!-- 2. 100% Privacy & Zero Spam -->
+                            <div class="ac-sec-item" onclick="openPolicyModal('privacy')" role="button" tabindex="0" title="Click to view Privacy details">
+                                <div class="ac-sec-item-icon green">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="ac-sec-item-text">
+                                    <span class="ac-sec-item-title">100% Data Privacy</span>
+                                    <span class="ac-sec-item-desc">Zero Spam • DPDP Verified</span>
+                                </div>
+                            </div>
+
+                            <!-- 3. Safe NPCI & UPI Payment Shield -->
+                            <div class="ac-sec-item" onclick="openPolicyModal('payments')" role="button" tabindex="0" title="Click to view Payment Security details">
+                                <div class="ac-sec-item-icon blue">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                                </div>
+                                <div class="ac-sec-item-text">
+                                    <span class="ac-sec-item-title">PCI-DSS Gateway</span>
+                                    <span class="ac-sec-item-desc">NPCI 3D Secure Verification</span>
+                                </div>
+                            </div>
+
+                            <!-- 4. Surat Loom Merchant Guarantee -->
+                            <div class="ac-sec-item" onclick="openPolicyModal('authenticity')" role="button" tabindex="0" title="Click to view Silk Mark details">
+                                <div class="ac-sec-item-icon amber">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="ac-sec-item-text">
+                                    <span class="ac-sec-item-title">Silk Mark Certified</span>
+                                    <span class="ac-sec-item-desc">Direct Surat Loom Depot</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Legal Policy & Helpdesk Quick Links Row -->
+                        <div class="ac-policy-row">
+                            <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="ac-policy-link">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Privacy Policy</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openPolicyModal('terms')" class="ac-policy-link">
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                <span>Terms of Service</span>
+                            </a>
+                            <a href="javascript:void(0)" onclick="openPolicyModal('shipping')" class="ac-policy-link">
+                                <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                <span>Dispatch &amp; Returns</span>
+                            </a>
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%20Security%20Desk%2C%20I%20have%20a%20data%20privacy%20or%20account%20query." target="_blank" rel="noopener noreferrer" class="ac-policy-link" style="color:#15803D; border-color:rgba(21,128,61,0.3);">
+                                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>Security Desk</span>
+                            </a>
+                        </div>
 
                     </div>
                 </div>
@@ -2535,6 +2970,91 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             });
         };
 
+        // ── Interactive Quick Policy Modal System ──
+        var POLICY_DATA = {
+            ssl: {
+                title: '256-Bit Bank-Grade SSL Encryption',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>',
+                link: '/privacy.php',
+                content: '<p><strong>Military-Grade Transport Security:</strong> All communications between your device and DT Brand\'s servers are protected via 256-Bit SHA-256 TLS 1.3 encryption.</p>' +
+                         '<div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem;">' +
+                         '🔒 <strong>Encrypted Data Channels:</strong> Passwords, payment requests, and GST invoices are hashed using cryptographic salt.' +
+                         '<br>🛡️ <strong>Zero Cleartext Storage:</strong> Sensitive credentials are never exposed or transmitted in plain text.' +
+                         '</div>'
+            },
+            privacy: {
+                title: '100% Data Privacy & DPDP Standard',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
+                link: '/privacy.php',
+                content: '<p><strong>Zero Unsolicited Data Sharing:</strong> DT Brand\'s and Jai Hanuman Tex strictly safeguard your personal identity, boutique details, and contact numbers.</p>' +
+                         '<ul style="margin:8px 0 8px 20px; padding:0; display:flex; flex-direction:column; gap:6px;">' +
+                         '<li><strong>Zero Spam Guarantee:</strong> We never sell, lease, or rent customer lists to third-party telemarketers.</li>' +
+                         '<li><strong>DPDP Act 2023 Compliant:</strong> Transparent data handling with full rights to update or erase stored profile records.</li>' +
+                         '<li><strong>Exclusive WhatsApp Updates:</strong> Only direct order status, dispatch AWB, and requested wholesale lot catalogs are communicated.</li>' +
+                         '</ul>'
+            },
+            payments: {
+                title: 'Safe NPCI & PCI-DSS Payment Shield',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>',
+                link: '/privacy.php',
+                content: '<p><strong>Multi-Gateway Bank Security:</strong> Instant direct UPI payments via NPCI verified schemas (Google Pay, PhonePe, Paytm, CRED, BHIM) and Razorpay/Cashfree PCI-DSS Level 1 3D Secure encryption.</p>' +
+                         '<div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem; color:#1E40AF;">' +
+                         '⚡ <strong>Dynamic Laser QR & UPI Links:</strong> NPCI direct merchant routing with automated transaction audit logging.' +
+                         '</div>'
+            },
+            authenticity: {
+                title: 'Silk Mark & Surat Loom Guarantee',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+                link: '/about-us.php',
+                content: '<p><strong>Direct Mill Authentic Textiles:</strong> 100% genuine silk, tested zari brocade, and master loom craftsmanship directly from our Surat manufacturing depot.</p>' +
+                         '<p>Every wholesale batch and designer piece comes with authentic quality assurance, verified fabric metrics, and transparent mill pricing.</p>'
+            },
+            terms: {
+                title: 'Terms of Service & Trade Standards',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>',
+                link: '/terms.php',
+                content: '<p><strong>Fair Trade & Transparent Fulfillment:</strong> DT Brand\'s governs all orders, trade invoicing, and catalog distribution under professional Indian commercial standards.</p>' +
+                         '<p>Wholesale lot bookings require valid GST or business contact, guaranteeing accurate dispatch schedules and verified invoices.</p>'
+            },
+            shipping: {
+                title: 'Dispatch, Courier & Returns Policy',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>',
+                link: '/shipping.php',
+                content: '<p><strong>Fast Express Courier Delivery:</strong> All orders are dispatched within 24-48 hours via premium express couriers with live WhatsApp AWB tracking.</p>' +
+                         '<p>Comprehensive transit insurance and hassle-free return support for damaged or defective items.</p>'
+            }
+        };
+
+        window.openPolicyModal = function(type) {
+            var item = POLICY_DATA[type] || POLICY_DATA['privacy'];
+            var modal = document.getElementById('policyQuickModal');
+            var titleEl = document.getElementById('policyModalTitle');
+            var iconWrap = document.getElementById('policyModalIconWrap');
+            var bodyEl = document.getElementById('policyModalBody');
+            var linkEl = document.getElementById('policyFullPageLink');
+
+            if (titleEl) titleEl.textContent = item.title;
+            if (iconWrap) iconWrap.innerHTML = item.icon;
+            if (bodyEl) bodyEl.innerHTML = item.content;
+            if (linkEl) linkEl.href = item.link || '/privacy.php';
+
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closePolicyModal = function(e) {
+            if (e && e.target && e.target.closest && e.target.closest('.ac-policy-modal-card') && !e.target.closest('.ac-policy-close-btn')) {
+                return;
+            }
+            var modal = document.getElementById('policyQuickModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             renderCountryDropdown(ALL_WORLD_COUNTRIES);
             renderStatesDropdown(selectedCountry);
@@ -2565,6 +3085,35 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
     })();
     </script>
+
+    <!-- ════════════ INTERACTIVE QUICK POLICY MODAL ════════════ -->
+    <div id="policyQuickModal" class="ac-modal-overlay" onclick="closePolicyModal(event)">
+        <div class="ac-policy-modal-card" onclick="event.stopPropagation()">
+            <div class="ac-policy-modal-head">
+                <div class="ac-policy-modal-title-wrap">
+                    <div class="ac-policy-modal-icon" id="policyModalIconWrap">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3 class="ac-policy-modal-title" id="policyModalTitle">Privacy Policy &amp; Data Safeguards</h3>
+                </div>
+                <button type="button" class="ac-policy-close-btn" onclick="closePolicyModal()" aria-label="Close modal">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="ac-policy-modal-body" id="policyModalBody">
+                <!-- Dynamically Populated by window.openPolicyModal -->
+            </div>
+            <div class="ac-policy-modal-foot">
+                <a href="/privacy.php" target="_blank" class="dt-btn-pale" id="policyFullPageLink" style="font-size:0.75rem; text-decoration:none; padding:7px 14px;">
+                    <span>View Full Legal Document</span>
+                    <span>→</span>
+                </a>
+                <button type="button" class="dt-btn-gold" onclick="closePolicyModal()" style="font-size:0.78rem; padding:7px 18px;">
+                    <span>I Understand</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
     <?php include_once __DIR__ . '/Shared/quickview.php'; ?>
