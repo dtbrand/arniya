@@ -1113,13 +1113,13 @@ $catalogHasProducts = $catalogProducts !== [];
                                     <span>Edit</span>
                                 </button>
                             </div>
-                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp">Shree Krishna Silks Pvt Ltd</div>
+                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp"><?= htmlspecialchars($user['business_name'] ?? $user['name'] ?? 'Registered Commercial Account') ?></div>
                             <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
-                                Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road<br>
-                                Surat, Gujarat - 395002 (GSTIN: 24AABCU9603R1ZM)
+                                <?= htmlspecialchars($user['address'] ?? 'Commercial Market Address') ?><br>
+                                <?= htmlspecialchars($user['city'] ?? 'Surat') ?>, <?= htmlspecialchars($user['state'] ?? 'Gujarat') ?> - <?= htmlspecialchars($user['pincode'] ?? '395002') ?><?= !empty($user['gst_number']) ? ' (GSTIN: <strong>' . htmlspecialchars($user['gst_number']) . '</strong>)' : '' ?>
                             </div>
                             <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
-                                Attn: Rajesh Kumar (+91 70463 63528)
+                                Attn: <?= htmlspecialchars($user['name'] ?? 'Authorized Buyer') ?> (+91 <?= htmlspecialchars($user['phone'] ?? '917046363528') ?>)
                             </div>
                         </div>
 
@@ -1136,7 +1136,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
                             <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
-                                Dispatched to GST registered address: Shop No. 402, Millennium Textile Market 2, Surat - 395002
+                                Dispatched to: <?= htmlspecialchars($user['address'] ?? 'Registered Commercial Address, ' . ($user['city'] ?? 'Surat')) ?>
                             </div>
                             <div style="font-size:0.74rem; font-weight:700; color:var(--ws-text-sub); margin-top:8px;" id="addrPreviewDispatchTransporter">
                                 Preferred Hub: BlueDart Express / Surat Goods Transporter
@@ -1541,10 +1541,12 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-form-group">
                                     <label class="ws-label" for="ticketOrderId">Related Order ID <span class="req">*</span></label>
                                     <select id="ticketOrderId" class="ws-select" required>
-                                        <option value="KLN-WS-8021">KLN-WS-8021 (Nilambari Silk 12 Pcs)</option>
-                                        <option value="KLN-WS-7914">KLN-WS-7914 (Banarasi Zari 8 Pcs)</option>
-                                        <option value="KLN-WS-6540">KLN-WS-6540 (Bridal Velvet 4 Pcs)</option>
                                         <option value="General Inquiry">General / Custom Catalog Inquiry</option>
+                                        <?php if (!empty($b2bOrders)): ?>
+                                            <?php foreach ($b2bOrders as $ord): ?>
+                                                <option value="<?= htmlspecialchars($ord['id']) ?>"><?= htmlspecialchars($ord['id']) ?> (<?= htmlspecialchars($ord['productName']) ?> <?= htmlspecialchars($ord['qty']) ?> Pcs)</option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
 
@@ -1993,7 +1995,7 @@ $catalogHasProducts = $catalogProducts !== [];
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
                     <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    <span id="modalOrderTitle">Order Details #KLN-WS-8021</span>
+                    <span id="modalOrderTitle">Consignment Order Details</span>
                 </h3>
                 <button class="ws-modal-close-btn" onclick="closeOrderDetailsModal()" aria-label="Close Modal">&times;</button>
             </div>
@@ -2369,65 +2371,27 @@ $catalogHasProducts = $catalogProducts !== [];
                     </h4>
                 </div>
                 <div style="border:1.5px solid var(--ws-border); border-radius:10px; overflow:hidden; background:#FFFFFF; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
-                    <!-- Row 1: RTGS Top-Up -->
-                    <div class="ws-txn-row">
-                        <div class="ws-txn-icon-wrap green">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                    <?php if (empty($b2bOrders)): ?>
+                        <div style="text-align:center; padding:24px 12px; font-size:0.82rem; color:var(--ws-text-muted);">
+                            No wallet ledger deductions recorded yet. Available credit limit: ₹<?= number_format($availableBalance) ?>.
                         </div>
-                        <div class="ws-txn-info">
-                            <strong>Wallet Top-Up (RTGS)</strong>
-                            <span>14 Aug 2026, 11:20 AM • UTR #RTGS992104</span>
-                        </div>
-                        <div class="ws-txn-amt">
-                            <strong style="color:#15803D;">+₹50,000</strong>
-                            <span class="ws-txn-badge green">Credited</span>
-                        </div>
-                    </div>
-
-                    <!-- Row 2: Order Deduction -->
-                    <div class="ws-txn-row">
-                        <div class="ws-txn-icon-wrap red">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                        </div>
-                        <div class="ws-txn-info">
-                            <strong>Order Deduction #KLN-WS-8021</strong>
-                            <span>14 Aug 2026, 10:30 AM • 12 Pcs Silk Lot</span>
-                        </div>
-                        <div class="ws-txn-amt">
-                            <strong style="color:#DC2626;">-₹38,308</strong>
-                            <span class="ws-txn-badge red">Debited</span>
-                        </div>
-                    </div>
-
-                    <!-- Row 3: Cashback Coins -->
-                    <div class="ws-txn-row">
-                        <div class="ws-txn-icon-wrap amber">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 2.5 5 1.5 5 4a2.5 2.5 0 0 1-5 0"></path></svg>
-                        </div>
-                        <div class="ws-txn-info">
-                            <strong>Silk Cashback Coins Reward</strong>
-                            <span>12 Aug 2026, 04:15 PM • Volume Order Bonus</span>
-                        </div>
-                        <div class="ws-txn-amt">
-                            <strong style="color:#D97706;">+500 Coins</strong>
-                            <span class="ws-txn-badge amber">Earned</span>
-                        </div>
-                    </div>
-
-                    <!-- Row 4: Settlement -->
-                    <div class="ws-txn-row">
-                        <div class="ws-txn-icon-wrap blue">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        </div>
-                        <div class="ws-txn-info">
-                            <strong>Consignment Advance Settlement</strong>
-                            <span>10 Aug 2026, 02:00 PM • Credit Line Release</span>
-                        </div>
-                        <div class="ws-txn-amt">
-                            <strong style="color:#1D4ED8;">+₹1,00,000</strong>
-                            <span class="ws-txn-badge blue">Restored</span>
-                        </div>
-                    </div>
+                    <?php else: ?>
+                        <?php foreach (array_slice($b2bOrders, 0, 4) as $ord): ?>
+                            <div class="ws-txn-row">
+                                <div class="ws-txn-icon-wrap red">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                </div>
+                                <div class="ws-txn-info">
+                                    <strong>Order Deduction #<?= htmlspecialchars($ord['id']) ?></strong>
+                                    <span><?= htmlspecialchars($ord['date']) ?> • <?= htmlspecialchars($ord['qty']) ?> Pcs <?= htmlspecialchars($ord['productName']) ?></span>
+                                </div>
+                                <div class="ws-txn-amt">
+                                    <strong style="color:#DC2626;">-₹<?= number_format($ord['total']) ?></strong>
+                                    <span class="ws-txn-badge red"><?= htmlspecialchars($ord['payment'] ?? 'Debited') ?></span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="ws-modal-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
@@ -2742,7 +2706,7 @@ $catalogHasProducts = $catalogProducts !== [];
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/assets/js/wholesale.js?v=1787019062"></script>
+    <script src="/assets/js/wholesale.js?v=<?= time() ?>"></script>
     <script src="/assets/js/profile-save.js?v=<?= time() ?>"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->

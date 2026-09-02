@@ -390,11 +390,12 @@
         };
 
         function renderAddressBookData(user) {
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 70463 63528';
-            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
+            user = user || {};
+            var comp = user.companyName || user.company_name || user.business_name || user.name || 'Registered Retailer Account';
+            var gstNum = user.gst_number || user.gstin || 'Unregistered / Exempt';
+            var name = user.name || 'Authorized Buyer';
+            var phone = user.phone || '917046363528';
+            var billAddr = user.address || 'Commercial Retail Storefront Address';
             var billCity = user.city || 'Surat';
             var billState = user.state || 'Gujarat';
             var billPin = user.pincode || '395002';
@@ -496,12 +497,18 @@
             if (dispatchWrap) dispatchWrap.style.display = 'none';
         };
 
-        function renderAddressBookData(user) {
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
-            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
+        window.loadSavedRetailerData = function() {
+            var user = window.b2bUser || (function() {
+                try {
+                    var raw = localStorage.getItem('dtbrands_user');
+                    return raw ? JSON.parse(raw) : {};
+                } catch(e) { return {}; }
+            })();
+            var comp = user.companyName || user.company_name || user.business_name || user.name || 'Registered Retailer Account';
+            var gstNum = user.gst_number || user.gstin || 'Unregistered / Exempt';
+            var name = user.name || 'Authorized Buyer';
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '917046363528');
+            var billAddr = user.address || 'Commercial Retail Storefront Address';
             var billCity = user.city || 'Surat';
             var billState = user.state || 'Gujarat';
             var billPin = user.pincode || '395002';
@@ -568,7 +575,7 @@
                 if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
             }
-        }
+        };
 
         window.handleSaveAddress = function(e) {
             if (e) e.preventDefault();
@@ -1359,11 +1366,15 @@
         window.printWholesaleReport = function() {
             var modal = document.getElementById('wsPrintableAuditReportModal');
             if (modal) {
-                var userRaw = localStorage.getItem('dtbrands_user');
-                var user = userRaw ? JSON.parse(userRaw) : {};
-                var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-                var gst = user.gst_number || '24AABCU9603R1ZM';
-                var rep = user.name || 'Rajesh Kumar';
+                var user = window.b2bUser || (function() {
+                    try {
+                        var raw = localStorage.getItem('dtbrands_user');
+                        return raw ? JSON.parse(raw) : {};
+                    } catch(e) { return {}; }
+                })();
+                var comp = user.companyName || user.company_name || user.business_name || user.name || 'Registered Retailer Account';
+                var gst = user.gst_number || user.gstin || 'Unregistered / Exempt';
+                var rep = user.name || 'Authorized Buyer';
 
                 var repInfoEl = document.getElementById('auditReportBuyerInfo');
                 if (repInfoEl) {
@@ -1378,33 +1389,41 @@
                 var tbody = document.getElementById('auditReportTbody');
                 if (tbody) {
                     tbody.innerHTML = '';
-                    var totalSub = 0, totalTax = 0, totalGrand = 0, totalQty = 0;
-                    activeOrdersList.forEach(function(o, idx) {
-                        totalSub += Number(o.subtotal || 0);
-                        totalTax += Number(o.tax || 0);
-                        totalGrand += Number(o.total || 0);
-                        totalQty += Number(o.qty || 0);
+                    if (!activeOrdersList || activeOrdersList.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:24px; color:#888;">No procurement records found for this retailer account.</td></tr>';
+                        if (document.getElementById('auditTotalSub')) document.getElementById('auditTotalSub').textContent = '₹0';
+                        if (document.getElementById('auditTotalTax')) document.getElementById('auditTotalTax').textContent = '₹0';
+                        if (document.getElementById('auditTotalGrand')) document.getElementById('auditTotalGrand').textContent = '₹0';
+                        if (document.getElementById('auditTotalQty')) document.getElementById('auditTotalQty').textContent = '0 Pcs';
+                    } else {
+                        var totalSub = 0, totalTax = 0, totalGrand = 0, totalQty = 0;
+                        activeOrdersList.forEach(function(o, idx) {
+                            totalSub += Number(o.subtotal || 0);
+                            totalTax += Number(o.tax || 0);
+                            totalGrand += Number(o.total || 0);
+                            totalQty += Number(o.qty || 0);
 
-                        var tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${idx + 1}</td>
-                            <td><strong>${o.id}</strong></td>
-                            <td>${o.date}</td>
-                            <td>${o.hsn}</td>
-                            <td>${o.productName}</td>
-                            <td>${o.qty} Pcs</td>
-                            <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
-                            <td>₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                            <td><strong>₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                            <td>${o.payment}</td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
+                            var tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${idx + 1}</td>
+                                <td><strong>${o.id}</strong></td>
+                                <td>${o.date}</td>
+                                <td>${o.hsn}</td>
+                                <td>${o.productName}</td>
+                                <td>${o.qty} Pcs</td>
+                                <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
+                                <td>₹${Number(o.tax).toLocaleString('en-IN')}</td>
+                                <td><strong>₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                                <td>${o.payment}</td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
 
-                    document.getElementById('auditTotalSub').textContent = '₹' + totalSub.toLocaleString('en-IN');
-                    document.getElementById('auditTotalTax').textContent = '₹' + totalTax.toLocaleString('en-IN');
-                    document.getElementById('auditTotalGrand').textContent = '₹' + totalGrand.toLocaleString('en-IN');
-                    document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
+                        if (document.getElementById('auditTotalSub')) document.getElementById('auditTotalSub').textContent = '₹' + totalSub.toLocaleString('en-IN');
+                        if (document.getElementById('auditTotalTax')) document.getElementById('auditTotalTax').textContent = '₹' + totalTax.toLocaleString('en-IN');
+                        if (document.getElementById('auditTotalGrand')) document.getElementById('auditTotalGrand').textContent = '₹' + totalGrand.toLocaleString('en-IN');
+                        if (document.getElementById('auditTotalQty')) document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
+                    }
                 }
 
                 window.showModal('wsPrintableAuditReportModal');
@@ -1423,6 +1442,10 @@
 
         /* ── Export Reports to CSV ── */
         window.exportReportsToCsv = function() {
+            if (!activeOrdersList || activeOrdersList.length === 0) {
+                window.showWsToast('⚠️ No consignment records available to export.');
+                return;
+            }
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
             var rows = activeOrdersList.map(function(o) {
                 return [
@@ -1444,7 +1467,7 @@
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `DT Brand\'s_Wholesale_Report_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `DT_Brands_Retailer_Report_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -1711,7 +1734,7 @@
             var buyerPin = user.pincode || '';
             var buyerPhone = user.phone || '917046363528';
             var buyerAltPhone = user.alt_phone || buyerPhone;
-            var buyerGst = user.gstin || user.gst_number || (user.gst_type === 'gst' ? '24AABCU9603R1ZM' : 'N/A (Unregistered)');
+            var buyerGst = user.gstin || user.gst_number || 'N/A (Unregistered)';
             var stateCode = user.state_code || (buyerState ? buyerState : '24-Gujarat');
 
             if (document.getElementById('invNum')) document.getElementById('invNum').textContent = cleanId;
@@ -1740,15 +1763,15 @@
             var items = o.items || [];
             if (!items.length) {
                 // If single product order object
-                var unitPrice = Number(o.unitPrice || o.price || 75);
-                var qty = Number(o.qty || 186);
+                var unitPrice = Number(o.unitPrice || o.price || 0);
+                var qty = Number(o.qty || 1);
                 var subtotal = Number(o.subtotal || (unitPrice * qty));
-                var tax = Number(o.tax || (subtotal * 0.05));
+                var tax = Number(o.tax || Math.round(subtotal * 0.05));
                 var total = Number(o.total || (subtotal + tax));
 
                 items = [
                     {
-                        name: o.productName || 'Ikkat cotton',
+                        name: o.productName || 'Retail Catalog Lot',
                         hsn: o.hsn || '5407',
                         qty: qty,
                         price: unitPrice,
@@ -2584,7 +2607,7 @@
         }
 
         /* ── Live Shipment Tracking Controller ── */
-        var activeTrackOrderId = 'KLN-WS-8021';
+        var activeTrackOrderId = (Array.isArray(activeOrdersList) && activeOrdersList.length > 0) ? activeOrdersList[0].id : null;
         var currentTrackFilter = 'all';
 
         function renderTrackingTab(orders, selectedId) {
