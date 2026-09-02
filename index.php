@@ -1183,7 +1183,6 @@ $total_products = count($products);
 <?php include_once __DIR__ . '/Shared/includes/cart.php'; ?>
 <?php include_once __DIR__ . '/Shared/includes/wishlist.php'; ?>
 <?php include_once __DIR__ . '/Shared/includes/checkout.php'; ?>
-<?php include_once __DIR__ . '/Shared/includes/account.php'; ?>
 
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 

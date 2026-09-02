@@ -812,7 +812,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
         <!-- Scrollable Navigation Area -->
         <div class="home-menu-scroll">
             <!-- Dynamic VIP User Card -->
-            <div class="home-menu-user-card" id="homeMenuUserCard" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof openAuthModal==='function'){openAuthModal('profile');}else if(typeof openAccountModal==='function'){openAccountModal('login');}else{window.location.href='/account.php';}">
+            <div class="home-menu-user-card" id="homeMenuUserCard" onclick="toggleHomeMobileMenu(false); window.location.href='/account.php';">
                 <div class="home-menu-user-avatar-wrap">
                     <svg class="home-menu-user-default-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
@@ -983,7 +983,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof openAuthModal==='function'){openAuthModal('profile');}else if(typeof openAccountModal==='function'){openAccountModal('login');}else{window.location.href='/account.php';}" class="home-menu-link">
+                    <a href="/account.php" onclick="toggleHomeMobileMenu(false);" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span>My Account &amp; Orders</span>
                     </a>
@@ -1142,21 +1142,15 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
             } else if (typeof window.openWishlist === 'function') {
                 window.openWishlist();
             } else {
-                window.location.href = '/Frontend/Shop/wishlist.php';
+                window.location.href = '/wishlist.php';
             }
             return;
         }
 
-        // 4. MY ACCOUNT ACTION (Role-Based Direct Dashboard or Login Modal)
+        // 4. MY ACCOUNT ACTION (Direct to Master Account Hub)
         if (actionKey === 'account') {
             if (e) e.preventDefault();
-            if (typeof window.handleUserWiseAccountNavigation === 'function') {
-                window.handleUserWiseAccountNavigation();
-            } else if (typeof window.openAccountModal === 'function') {
-                window.openAccountModal('login');
-            } else {
-                window.location.href = '/Shared/Auth/myaccount.php?tab=login';
-            }
+            window.location.href = '/account.php';
             return;
         }
 

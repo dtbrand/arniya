@@ -544,8 +544,10 @@
             </button>
 
             <!-- Member Account Button -->
-            <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/account.php?tab=login';}" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
-                <div class="pdp-account-avatar" id="pdpUserAvatar">👤</div>
+            <a href="/account.php" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
+                <div class="pdp-account-avatar" id="pdpUserAvatar">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
                 <span id="pdpUserLabel">Account</span>
             </a>
         </div>

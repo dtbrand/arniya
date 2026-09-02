@@ -510,8 +510,5 @@ $total_products = count($products);
 <!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
 <?php include_once __DIR__ . '/Shared/checkout.php'; ?>
 
-<!-- ════════════ ACCOUNT & AUTH MODAL SYSTEM ════════════ -->
-<?php include_once __DIR__ . '/Shared/account.php'; ?>
-
 </body>
 </html>

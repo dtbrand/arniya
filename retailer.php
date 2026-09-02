@@ -2753,6 +2753,5 @@ $catalogHasProducts = $catalogProducts !== [];
     })();
     </script>
 <?php include_once __DIR__ . '/Shared/reels.php'; ?>
-<?php include_once __DIR__ . '/Shared/account.php'; ?>
 </body>
 </html>

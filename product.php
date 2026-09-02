@@ -40,6 +40,10 @@ if (!$product && ctype_digit($pidParam)) {
 // and a request that reached an empty catalogue rendered one of eight sarees
 // hardcoded in this file that no order could ever be fulfilled from.
 if (!$product) {
+    if ($pidParam === '' && $slugParam === '' && $skuParam === '') {
+        header('Location: /shop.php');
+        exit;
+    }
     http_response_code(404);
     $pdpAlternatives = array_slice(array_values($catalogProducts), 0, 4);
     require __DIR__ . '/includes/product-not-found.php';
@@ -1319,6 +1323,5 @@ function pdp_relative_date(string $ts): string
 <?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 
 <?php include_once __DIR__ . '/Shared/reels.php'; ?>
-<?php include_once __DIR__ . '/Shared/account.php'; ?>
 </body>
 </html>
