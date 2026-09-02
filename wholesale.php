@@ -2574,13 +2574,18 @@ $catalogHasProducts = $catalogProducts !== [];
                 <p>This portal is exclusively authorized for verified <strong>Wholesaler B2B Members</strong>. Please sign in with your registered wholesaler account to access bulk tier pricing, order tracking, and GST invoicing.</p>
                 
                 <div style="display:flex; flex-direction:column; gap:10px;">
-                    <button class="ws-btn ws-btn-primary" onclick="loginAsDemoWholesaler()">
-                        👑 Continue as Verified Wholesaler
-                    </button>
-                    <a href="/account.php?tab=login" class="ws-btn ws-btn-secondary">
-                        Sign In with Other Account
+                    <a href="/account.php?tab=login&role=wholesale" class="ws-btn ws-btn-primary" style="text-decoration:none; justify-content:center;">
+                        <span>Sign In to Wholesaler Portal</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </a>
-                    <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
+                    <a href="https://api.whatsapp.com/send?phone=917046363528&text=Namaste+DT+Brands%2C+I+want+to+activate+my+Wholesale+B2B+Partner+Account" target="_blank" class="ws-btn ws-btn-emerald" style="text-decoration:none; justify-content:center;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>1-Click WhatsApp B2B Verification</span>
+                    </a>
+                    <a href="/account.php?tab=register&role=wholesale" class="ws-btn ws-btn-secondary" style="text-decoration:none; justify-content:center;">
+                        Register as New Wholesaler
+                    </a>
+                    <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px; text-align:center;">
                         ← Return to Retail Store
                     </a>
                 </div>

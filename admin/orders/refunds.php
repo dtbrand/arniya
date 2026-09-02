@@ -3,11 +3,52 @@
 
 /**
  * refunds.php — Refund Management & Credit Notes Ledger
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — Live Database Wiring
  */
+require_once __DIR__ . '/../../src/Database.php';
+
 $page_title = "Refund Management & Credit Notes";
 $active_nav = "orders";
 $active_subnav = "refunds";
+
+$refundOrders = [];
+$totalSettled = 0;
+$pendingApproval = 0;
+$inGateway = 0;
+$creditNotesCount = 0;
+$creditNotesBalance = 0;
+
+try {
+    $pdo = \DTBrand\Database::getConnection();
+    if ($pdo !== null && !\DTBrand\Database::isMockMode()) {
+        $stmt = $pdo->query("
+            SELECT o.*, c.name as buyer_name, c.phone as buyer_phone, c.type as buyer_type, c.city as buyer_city 
+            FROM orders o 
+            LEFT JOIN customers c ON o.customer_id = c.id 
+            WHERE o.payment_status IN ('refunded', 'partially_refunded') OR o.fulfillment_status = 'cancelled'
+            ORDER BY o.id DESC
+        ");
+        $refundOrders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        foreach ($refundOrders as $ro) {
+            $amt = (float)($ro['total_amount'] ?? 0);
+            $paySt = strtolower($ro['payment_status'] ?? '');
+            if ($paySt === 'refunded') {
+                $totalSettled += $amt;
+            } else {
+                $pendingApproval += $amt;
+            }
+            if (stripos($ro['payment_method'] ?? '', 'wire') !== false || stripos($ro['payment_method'] ?? '', 'ledger') !== false) {
+                $creditNotesCount++;
+                $creditNotesBalance += $amt;
+            } else {
+                $inGateway += $amt;
+            }
+        }
+    }
+} catch (\Exception $e) {
+    $refundOrders = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +79,7 @@ $active_subnav = "refunds";
                             <span>Refunds &amp; Credit Notes Ledger</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#8A681F; box-shadow:0 0 0 2px rgba(138,104,31,0.2);"></span>
-                                <strong>₹24,420</strong> Settled
+                                <strong>₹<?php echo number_format($totalSettled); ?></strong> Settled
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Track gateway payouts, UPI chargeback reversals, and B2B wholesale credit ledger balances.</p>
@@ -48,7 +89,7 @@ $active_subnav = "refunds";
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>Back to Orders</span>
                         </a>
-                        <button type="button" onclick="window.DT_REFUNDS.openRefundDrawer('DTB-001624', 112250)" class="dt-btn dt-btn-gold">
+                        <button type="button" onclick="window.DT_REFUNDS.openRefundDrawer('', 0)" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.4"><path d="M12 5v14M5 12h14"></path></svg>
                             <span>Issue Refund / Credit Note</span>
                         </button>
@@ -65,11 +106,11 @@ $active_subnav = "refunds";
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹24,420</span>
+                            <span class="dt-kpi-main-number">₹<?php echo number_format($totalSettled); ?></span>
                             <span class="dt-kpi-trend-pill up">100% Audited</span>
                         </div>
                         <div class="dt-kpi-footer">
-                            <span>6 Total Claims • 0 Disputes</span>
+                            <span><?php echo count($refundOrders); ?> Total Records</span>
                             <span class="dt-kpi-arrow">→</span>
                         </div>
                     </div>
@@ -82,11 +123,11 @@ $active_subnav = "refunds";
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹4,490</span>
-                            <span class="dt-kpi-trend-pill amber">1 Action Req.</span>
+                            <span class="dt-kpi-main-number">₹<?php echo number_format($pendingApproval); ?></span>
+                            <span class="dt-kpi-trend-pill amber">Live Audit</span>
                         </div>
                         <div class="dt-kpi-footer">
-                            <span>Kalyan Sarees • Defect Review</span>
+                            <span>Claims &amp; Return Reviews</span>
                             <span class="dt-kpi-arrow">→</span>
                         </div>
                     </div>
@@ -99,11 +140,11 @@ $active_subnav = "refunds";
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹8,840</span>
-                            <span class="dt-kpi-trend-pill blue">2 Processing</span>
+                            <span class="dt-kpi-main-number">₹<?php echo number_format($inGateway); ?></span>
+                            <span class="dt-kpi-trend-pill blue">Gateway Processing</span>
                         </div>
                         <div class="dt-kpi-footer">
-                            <span>PhonePe UPI &amp; Razorpay</span>
+                            <span>UPI &amp; Razorpay Auto-Sync</span>
                             <span class="dt-kpi-arrow">→</span>
                         </div>
                     </div>
@@ -116,11 +157,11 @@ $active_subnav = "refunds";
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">3 Notes</span>
+                            <span class="dt-kpi-main-number"><?php echo $creditNotesCount; ?> Notes</span>
                             <span class="dt-kpi-trend-pill emerald">Active Ledger</span>
                         </div>
                         <div class="dt-kpi-footer">
-                            <span>₹33,140 Wholesale Ledger Bal.</span>
+                            <span>₹<?php echo number_format($creditNotesBalance); ?> Wholesale Ledger Bal.</span>
                             <span class="dt-kpi-arrow">→</span>
                         </div>
                     </div>
@@ -128,10 +169,10 @@ $active_subnav = "refunds";
 
                 <!-- Interactive Subnav Filter Pills -->
                 <div class="dt-refund-subnav">
-                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('all', this)" class="dt-refund-subnav-pill active">All Refunds <small>6</small></button>
-                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('pending', this)" class="dt-refund-subnav-pill">Pending Approval <small>1</small></button>
-                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('processing', this)" class="dt-refund-subnav-pill">Gateway Processing <small>2</small></button>
-                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('settled', this)" class="dt-refund-subnav-pill">Settled &amp; Cleared <small>3</small></button>
+                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('all', this)" class="dt-refund-subnav-pill active">All Refunds <small><?php echo count($refundOrders); ?></small></button>
+                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('pending', this)" class="dt-refund-subnav-pill">Pending Approval <small><?php echo $pendingApproval > 0 ? 1 : 0; ?></small></button>
+                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('processing', this)" class="dt-refund-subnav-pill">Gateway Processing <small><?php echo $inGateway > 0 ? 1 : 0; ?></small></button>
+                    <button type="button" onclick="window.DT_REFUNDS.filterByStatus('settled', this)" class="dt-refund-subnav-pill">Settled &amp; Cleared <small><?php echo $totalSettled > 0 ? count($refundOrders) : 0; ?></small></button>
                 </div>
 
                 <!-- Toolbar & Debounced Live Search -->
@@ -144,10 +185,10 @@ $active_subnav = "refunds";
                         <!-- Quick Payout Method Filter -->
                         <select id="payoutFilterSelect" onchange="window.DT_REFUNDS.filterByMethod(this.value)" class="dt-order-search-input" style="height:36px; font-weight:700; border-radius:6px; min-width:180px;">
                             <option value="all">All Payout Methods</option>
-                            <option value="ICICI Direct Bank Transfer">ICICI Direct Bank Wire</option>
-                            <option value="UPI Reversal">UPI Reversal (PhonePe/GPay)</option>
-                            <option value="B2B Wholesale Credit Ledger">B2B Credit Note Ledger</option>
-                            <option value="Razorpay Instant Reversal">Razorpay Instant Reversal</option>
+                            <option value="Bank Transfer">Direct Bank Wire</option>
+                            <option value="UPI">UPI Reversal (PhonePe/GPay)</option>
+                            <option value="B2B Credit">B2B Credit Note Ledger</option>
+                            <option value="Razorpay">Razorpay Instant Reversal</option>
                         </select>
 
                         <!-- Hide / Show Columns Options Dropdown (Like Orders Section) -->
@@ -204,201 +245,68 @@ $active_subnav = "refunds";
                                 </tr>
                             </thead>
                             <tbody id="refundTableBody">
-                                <tr data-status="settled" data-method="ICICI Direct Bank Transfer">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4012</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001612" class="dt-order-id-link">DTB-001612</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Meenakshi Silk House</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Depot • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">ICICI Direct Bank Transfer</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹14,940</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">20 Aug 2026</div>
-                                        <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: ICICR52026082001</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4012')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4012', 'DTB-001612', '14940', 'Meenakshi Silk House')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4012', '14940', 'Meenakshi Silk House')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr data-status="processing" data-method="UPI Reversal">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4011</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001609" class="dt-order-id-link">DTB-001609</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Shweta Joshi</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Ahmedabad Order • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">UPI Reversal (PhonePe)</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,990</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">19 Aug 2026</div>
-                                        <div style="font-size:10px; color:#64748B; margin-top:1px;">REF: UPI-291084-IN</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4011')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4011', 'DTB-001609', '4990', 'Shweta Joshi')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4011', '4990', 'Shweta Joshi')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr data-status="pending" data-method="B2B Wholesale Credit Ledger">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4010</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001605" class="dt-order-id-link">DTB-001605</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Kalyan Sarees Wholesale</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Loom Defect Claim • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,490</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge pending"><span class="dt-status-dot"></span><span>Pending Approval</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">18 Aug 2026</div>
-                                        <div style="font-size:10px; color:#B45309; font-weight:700; margin-top:1px;">Action Req.</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.approveClaim('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-gold" style="height:28px; padding:0 10px; font-size:11px;" title="Approve & Credit Balance">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                <span>Approve</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4010')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4010', 'DTB-001605', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr data-status="settled" data-method="HDFC Bank Wire Transfer">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4009</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001598" class="dt-order-id-link">DTB-001598</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Vardhman Tex Godown</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Central Depot • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">HDFC Direct Bank Wire</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹22,500</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">17 Aug 2026</div>
-                                        <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: HDFCR52026081702</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4009')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4009', 'DTB-001598', '22500', 'Vardhman Tex Godown')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4009', '22500', 'Vardhman Tex Godown')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr data-status="processing" data-method="Razorpay Instant Reversal">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4008</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001590" class="dt-order-id-link">DTB-001590</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Pooja Sharma</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Mumbai Online Shop • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">Razorpay Instant Reversal</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹3,850</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">16 Aug 2026</div>
-                                        <div style="font-size:10px; color:#64748B; margin-top:1px;">REF: RZP-REF-771920</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4008')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4008', 'DTB-001590', '3850', 'Pooja Sharma')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4008', '3850', 'Pooja Sharma')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr data-status="settled" data-method="B2B Wholesale Credit Ledger">
-                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4007</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001582" class="dt-order-id-link">DTB-001582</a></td>
-                                    <td class="col-ref-customer">
-                                        <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Ananya Silks Bangalore</div>
-                                        <div style="font-size:11px; color:#64748B; margin-top:2px;">B2B Wholesale • Ph: +91 70463 63528</div>
-                                    </td>
-                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
-                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹18,200</td>
-                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td class="col-ref-settlement" style="white-space:nowrap;">
-                                        <div style="font-size:11.5px; color:#181512; font-weight:700;">15 Aug 2026</div>
-                                        <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: CR-NOTE-SURAT-099</div>
-                                    </td>
-                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
-                                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4007')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                <span>View</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4007', 'DTB-001582', '18200', 'Ananya Silks Bangalore')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                                <span>Voucher</span>
-                                            </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4007', '18200', 'Ananya Silks Bangalore')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
-                                                <span>WhatsApp</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (empty($refundOrders)): ?>
+                                    <tr>
+                                        <td colspan="8" style="text-align:center; padding: 48px 16px; background:#FAF8F4; border-radius:12px;">
+                                            <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom:10px;">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                            </svg>
+                                            <h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No Active Refund Claims or Disputes</h4>
+                                            <p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">All retail customer orders, reseller disbursements, and wholesale shipments are 100% verified and cleared with zero active chargebacks.</p>
+                                            <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold" style="display:inline-flex; width:auto; padding:8px 20px; font-size:0.82rem; text-decoration:none; margin:0 auto;">
+                                                <span>View Live Orders Center →</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($refundOrders as $ro): 
+                                        $refId = 'REF-' . (4000 + (int)$ro['id']);
+                                        $ordNum = htmlspecialchars($ro['order_number'] ?: ('DTB-' . $ro['id']));
+                                        $custName = htmlspecialchars($ro['customer_name'] ?: ($ro['buyer_name'] ?: 'Direct Customer'));
+                                        $custPhone = htmlspecialchars($ro['customer_phone'] ?: ($ro['buyer_phone'] ?: ''));
+                                        $custCity = htmlspecialchars($ro['buyer_city'] ?: 'Surat');
+                                        $method = htmlspecialchars($ro['payment_method'] ?: 'UPI / Bank Transfer');
+                                        $amount = (float)($ro['total_amount'] ?? 0);
+                                        $payStatus = strtolower($ro['payment_status'] ?? '');
+                                        $isSettled = ($payStatus === 'refunded');
+                                        $statusClass = $isSettled ? 'delivered' : 'pending';
+                                        $statusLabel = $isSettled ? 'Settled' : 'Pending Approval';
+                                        $dateStr = $ro['created_at'] ? date('d M Y', strtotime($ro['created_at'])) : 'Recent';
+                                        $utrStr = htmlspecialchars($ro['tracking_number'] ?: ('REF-' . substr(md5($ro['id']), 0, 8)));
+                                    ?>
+                                    <tr data-status="<?php echo $isSettled ? 'settled' : 'pending'; ?>" data-method="<?php echo $method; ?>">
+                                        <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;"><?php echo $refId; ?></td>
+                                        <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=<?php echo $ordNum; ?>" class="dt-order-id-link"><?php echo $ordNum; ?></a></td>
+                                        <td class="col-ref-customer">
+                                            <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;"><?php echo $custName; ?></div>
+                                            <div style="font-size:11px; color:#64748B; margin-top:2px;"><?php echo $custCity; ?><?php echo $custPhone ? ' • Ph: ' . $custPhone : ''; ?></div>
+                                        </td>
+                                        <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;"><?php echo $method; ?></td>
+                                        <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹<?php echo number_format($amount); ?></td>
+                                        <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge <?php echo $statusClass; ?>"><span class="dt-status-dot"></span><span><?php echo $statusLabel; ?></span></span></td>
+                                        <td class="col-ref-settlement" style="white-space:nowrap;">
+                                            <div style="font-size:11.5px; color:#181512; font-weight:700;"><?php echo $dateStr; ?></div>
+                                            <div style="font-size:10px; color:#64748B; margin-top:1px;">REF: <?php echo $utrStr; ?></div>
+                                        </td>
+                                        <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
+                                            <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
+                                                <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('<?php echo $refId; ?>')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                    <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                    <span>View</span>
+                                                </button>
+                                                <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('<?php echo $refId; ?>', '<?php echo $ordNum; ?>', '<?php echo $amount; ?>', '<?php echo addslashes($custName); ?>')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                    <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                                    <span>Voucher</span>
+                                                </button>
+                                                <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('<?php echo $refId; ?>', '<?php echo $amount; ?>', '<?php echo addslashes($custName); ?>')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                    <span>WhatsApp</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

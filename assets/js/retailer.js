@@ -109,27 +109,9 @@
         }
         window.initRetailerApp = initRetailerApp;
 
-        window.loginAsDemoRetailer = function() {
-            var demoRetailer = {
-                name: 'Rajesh Kumar',
-                companyName: 'Shree Krishna Silks Pvt Ltd',
-                phone: '+91 70463 63528',
-                rawPhone: '7046363528',
-                email: 'rajesh@shreekrishnasilks.com',
-                role: 'Retailer',
-                gst_type: 'gst',
-                gst_number: '24AABCU9603R1ZM',
-                address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
-                city: 'Surat',
-                state: 'Gujarat',
-                pincode: '395002'
-            };
-            localStorage.setItem('dtbrands_user', JSON.stringify(demoRetailer));
-            try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        window.closeRoleGateModal = function() {
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
-            initRetailerApp();
-            window.showWsToast('👑 Logged in as Verified Retailer (Rajesh Kumar)!');
         };
 
         /* ── Universal Modal Show & Hide Engine ── */

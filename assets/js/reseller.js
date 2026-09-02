@@ -148,28 +148,11 @@ window.animateTargetGauge = animateTargetGauge;
 
 
 
-        function loginAsDemoReseller() {
-            var demoReseller = {
-                name: 'Pooja Sharma',
-                companyName: 'Pooja Boutique & Ethnic Hub',
-                phone: '+91 70463 63528',
-                rawPhone: '7046363528',
-                email: 'pooja.reseller@gmail.com',
-                role: 'Reseller',
-                gst_type: 'none',
-                gst_number: '',
-                address: 'Flat 302, Palm Heights, Link Road',
-                city: 'Jaipur',
-                state: 'Rajasthan',
-                pincode: '302001'
-            };
-            localStorage.setItem('dtbrands_user', JSON.stringify(demoReseller));
-            try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        function closeRoleGateModal() {
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
-            initResellerApp();
-            showWsToast('👑 Logged in as Verified Reseller (Pooja Sharma)!');
-        };
+        }
+        window.closeRoleGateModal = closeRoleGateModal;
 
         /* ── Universal Modal Show & Hide Engine ── */
         function showModal(modalId) {
@@ -3117,13 +3100,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
         };
 
-        function openWalletTopupModal() {
-            showModal('wsWalletTopupModal');
-        };
 
-        function closeWalletTopupModal() {
-            hideModal('wsWalletTopupModal');
-        };
 
         function setTopupAmount(amount, btn) {
             var input = document.getElementById('wsTopupAmountInput');
@@ -3168,47 +3145,9 @@ window.animateTargetGauge = animateTargetGauge;
             showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
-        /* ── Reseller Cart Badge Synchronization ── */
-        function updateWholesaleCartBadge() {
-            try {
-                var raw = localStorage.getItem('dtbrands_cart');
-                var cart = raw ? JSON.parse(raw) : [];
-                var totalCount = 0;
-                if (Array.isArray(cart)) {
-                    totalCount = cart.reduce(function(acc, item) { return acc + (Number(item.qty) || 1); }, 0);
-                }
-                var dockBadge = document.getElementById('wsDockCartBadge');
-                var hdrBadge = document.getElementById('headerCartBadge');
-                [dockBadge, hdrBadge].forEach(function(badge) {
-                    if (badge) {
-                        if (totalCount > 0) {
-                            badge.textContent = totalCount;
-                            badge.style.display = 'flex';
-                        } else {
-                            badge.style.display = 'none';
-                        }
-                    }
-                });
-            } catch(e) {}
-        };
 
-        /* ── Reseller Wishlist Badge Synchronization ── */
-        function updateWholesaleWishlistBadge() {
-            try {
-                var raw = localStorage.getItem('dtbrands_wishlist');
-                var wishlist = raw ? JSON.parse(raw) : [];
-                var count = Array.isArray(wishlist) ? wishlist.length : 0;
-                var badge = document.getElementById('headerWishlistBadge');
-                if (badge) {
-                    if (count > 0) {
-                        badge.textContent = count;
-                        badge.style.display = 'flex';
-                    } else {
-                        badge.style.display = 'none';
-                    }
-                }
-            } catch(e) {}
-        };
+
+
 
         document.addEventListener('DOMContentLoaded', function() {
             initResellerApp();
@@ -5873,7 +5812,7 @@ Rajesh Kumar (Reseller Partner)`;
 (function() {
     var exposedList = [
         'switchWsTab', 'setOverviewFilter', 'switchSalesChartStyle', 'filterByPriceTier',
-        'handleWholesalerLogout', 'initResellerApp', 'checkResellerSecurity', 'loginAsDemoReseller',
+        'handleWholesalerLogout', 'initResellerApp', 'checkResellerSecurity', 'closeRoleGateModal',
         'openWsCatalogCategoryModal', 'closeWsCatalogCategoryModal', 'openSmartShareModal', 'closeSmartShareModal',
         'openWalletTopupModal', 'closeWalletTopupModal', 'openEditAddressDrawer', 'closeEditAddressDrawer',
         'selectGstMode', 'toggleSameAsBillingAddress', 'saveGstSettings', 'saveAddressBookSettings',

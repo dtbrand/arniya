@@ -777,44 +777,7 @@ class OrderManager
             }
         }
 
-        return [
-            [
-                'id' => 'DT-ORD-90281',
-                'db_id' => 1,
-                'customer' => 'Radhika Sarees Emporium',
-                'customer_type' => 'Wholesale',
-                'phone' => '+91 70463 63528',
-                'date' => '21 Aug 2026, 11:20 AM',
-                'items_count' => '24 pcs',
-                'items_summary' => 'Nilambari & Banarasi Silk (x24)',
-                'amount' => 44688,
-                'payment' => 'Bank Wire / RTGS',
-                'payment_status' => 'paid',
-                'shipping' => 'Delhivery Express',
-                'tracking' => 'DEL-94028491',
-                'status' => 'dispatched',
-                'source' => 'Wholesale',
-                'updated' => '10 mins ago'
-            ],
-            [
-                'id' => 'DT-ORD-89412',
-                'db_id' => 2,
-                'customer' => 'Pooja Sharma',
-                'customer_type' => 'Reseller',
-                'phone' => '+91 70463 63528',
-                'date' => '22 Aug 2026, 02:45 PM',
-                'items_count' => '1 pc',
-                'items_summary' => 'Royal Banarasi Meenakari Silk Saree',
-                'amount' => 8399,
-                'payment' => 'Razorpay / UPI',
-                'payment_status' => 'paid',
-                'shipping' => 'Blue Dart Aviation',
-                'tracking' => 'BD-84920194',
-                'status' => 'delivered',
-                'source' => 'Reseller',
-                'updated' => '1 hour ago'
-            ]
-        ];
+        return [];
     }
 
     /**

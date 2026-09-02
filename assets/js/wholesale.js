@@ -109,27 +109,9 @@
         }
         window.initWholesalerApp = initWholesalerApp;
 
-        window.loginAsDemoWholesaler = function() {
-            var demoWholesaler = {
-                name: 'Ramesh Patel',
-                companyName: 'Surat Loomcraft Mega Traders',
-                phone: '+91 70463 63528',
-                rawPhone: '7046363528',
-                email: 'ramesh@suratloomcraft.com',
-                role: 'Wholesaler',
-                gst_type: 'gst',
-                gst_number: '24AABCU9603R1ZM',
-                address: 'Plot No. 108, Phase 2, GIDC Textile Market',
-                city: 'Surat',
-                state: 'Gujarat',
-                pincode: '395002'
-            };
-            localStorage.setItem('dtbrands_user', JSON.stringify(demoWholesaler));
-            try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        window.closeRoleGateModal = function() {
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
-            initWholesalerApp();
-            window.showWsToast('👑 Logged in as Verified Wholesaler (Ramesh Patel)!');
         };
 
         /* ── Universal Modal Show & Hide Engine ── */
