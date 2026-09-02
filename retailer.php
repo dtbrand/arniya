@@ -77,6 +77,45 @@ if ($currentUser && !empty($currentUser['id'])) {
     }
 }
 
+// Dynamic real order calculations
+$totalOrders = count($realOrders);
+$lifetimeSpend = 0.0;
+$pendingOrders = 0;
+$creditLimit = (float)($realKpis['credit_limit'] ?? 0);
+$outstandingBalance = (float)($realKpis['outstanding_balance'] ?? 0);
+$availableBalance = max(0.0, $creditLimit - $outstandingBalance);
+$totalCoins = 0;
+$totalUnits = 0;
+$shippedCount = 0;
+$deliveredCount = 0;
+$processingCount = 0;
+
+foreach ($realOrders as $idx => $ro) {
+    $amt = (float)($ro['total_amount'] ?? $ro['total'] ?? 0);
+    $lifetimeSpend += $amt;
+    $qty = (int)($ro['items_count'] ?? $ro['qty'] ?? 1);
+    $totalUnits += $qty;
+    $st = strtolower((string)($ro['status'] ?? ''));
+    if (in_array($st, ['shipped', 'in_transit', 'in transit', 'dispatched'], true)) {
+        $shippedCount++;
+    } elseif (in_array($st, ['delivered', 'completed'], true)) {
+        $deliveredCount++;
+    } else {
+        $processingCount++;
+    }
+}
+$totalCoins = (int)floor($lifetimeSpend / 100);
+$tierName = $totalOrders >= 50 ? 'Tier 2 (Silver)' : 'Tier 1 (1–50 Orders)';
+$tierRemaining = max(0, 50 - $totalOrders);
+$targetQuota = 250000.0;
+$targetAchieved = $lifetimeSpend;
+$targetRemaining = max(0.0, $targetQuota - $targetAchieved);
+$targetPercent = $targetQuota > 0 ? min(100.0, round(($targetAchieved / $targetQuota) * 100, 2)) : 0.0;
+$gaugePercent = number_format($targetPercent, 2);
+$gaugeOffset = (int)round(251 - (251 * ($targetPercent / 100)));
+$avgOrderValue = $totalOrders > 0 ? round($lifetimeSpend / $totalOrders) : 0;
+$gstInputCredit = round($lifetimeSpend * 0.05);
+
 $activeUserName = $dbUser['name'] ?? ($currentUser['name'] ?? 'B2B Retailer');
 $activeUserEmail = $dbUser['email'] ?? ($currentUser['email'] ?? '');
 $activeUserPhone = $dbUser['phone'] ?? ($currentUser['phone'] ?? '');
@@ -296,7 +335,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <a class="ws-nav-item" onclick="switchWsTab('orders')">
                             <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <span>Orders</span>
-                            <span class="ws-nav-badge" id="navOrdersCount">6</span>
+                            <span class="ws-nav-badge" id="navOrdersCount"><?= $totalOrders ?></span>
                         </a>
                     </li>
                     <li>
@@ -373,7 +412,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer; position:relative;" title="Tap to view VIP Tier Roadmap">
                         <!-- Left Corner 3D Diagonal Tircha Tag -->
                         <div class="ws-tier-ribbon-tag non-vip" id="wsTierRibbonTag">
-                            <span id="wsTierRibbonText">★ NON VIP</span>
+                            <span id="wsTierRibbonText">★ <?= htmlspecialchars($activeUserTier) ?></span>
                         </div>
 
                         <div class="ws-stat-head-row" style="padding-left:14px;">
@@ -383,13 +422,13 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">Tier 1</div>
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);"><?= $tierName ?></div>
                             <div style="display:flex; align-items:center; gap:5px;">
                                 <div class="ws-roadmap-link-wrap" onclick="event.stopPropagation(); openVipTierModal();" title="View VIP Roadmap">
                                     <span class="ws-roadmap-link-text">Roadmap ›</span>
                                     <div class="ws-roadmap-running-line"></div>
                                 </div>
-                                <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
+                                <span class="ws-trend-pill up" id="statPill1"><?= $totalOrders ?> / 50 Orders</span>
                             </div>
                         </div>
                     </div>
@@ -403,8 +442,8 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal2">6</div>
-                            <span class="ws-trend-pill up" id="statPill2">↑ 14.20%</span>
+                            <div class="ws-stat-val-num" id="statVal2"><?= $totalOrders ?></div>
+                            <span class="ws-trend-pill up" id="statPill2"><?= $pendingOrders ?> In Progress</span>
                         </div>
                     </div>
 
@@ -417,8 +456,8 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
-                            <span class="ws-trend-pill up" id="statPill3">↑ 8.50%</span>
+                            <div class="ws-stat-val-num" id="statVal3"><?= number_format($totalUnits) ?> <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
+                            <span class="ws-trend-pill up" id="statPill3"><?= $totalOrders ?> Consignments</span>
                         </div>
                     </div>
 
@@ -431,8 +470,8 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹2,05,062</div>
-                            <span class="ws-trend-pill up" id="statPill4">↑ 18.40%</span>
+                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹<?= number_format($lifetimeSpend) ?></div>
+                            <span class="ws-trend-pill up" id="statPill4">Gross Volume</span>
                         </div>
                     </div>
 
@@ -478,7 +517,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Balance</span>
-                                <span class="ws-wallet-metric-value" id="walletAvailableBalance">₹1,45,280</span>
+                                <span class="ws-wallet-metric-value" id="walletAvailableBalance">₹<?= number_format($availableBalance) ?></span>
                             </div>
                         </div>
 
@@ -503,7 +542,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Coins</span>
-                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins">3,850</span>
+                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins"><?= number_format($totalCoins) ?></span>
                             </div>
                         </div>
                     </div>
@@ -537,7 +576,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <!-- Live Tooltip Display -->
                         <div class="ws-chart-tooltip" id="chartLiveTooltip">
                             <span class="ws-chart-tooltip-dot"></span>
-                            <span id="chartTooltipText">Aug (Current): ₹2,05,062 • 48 Pcs (↑18.4%)</span>
+                            <span id="chartTooltipText">Live Cycle: ₹<?= number_format($lifetimeSpend) ?> • <?= number_format($totalUnits) ?> Pcs</span>
                         </div>
 
                         <div class="ws-chart-wrapper" id="salesChartMainWrapper">
@@ -625,7 +664,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <h3 style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Retail Store Target</h3>
                                 <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;">Monthly store sales & inventory velocity</p>
                             </div>
-                            <span class="ws-trend-pill up">75.5% Quota</span>
+                            <span class="ws-trend-pill up"><?= $gaugePercent ?>% Quota</span>
                         </div>
 
                         <div class="ws-gauge-wrap">
@@ -643,17 +682,17 @@ $catalogHasProducts = $catalogProducts !== [];
                                     </filter>
                                 </defs>
                                 <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
-                                <path class="ws-gauge-fill-arc" id="targetGaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: 58;"></path>
+                                <path class="ws-gauge-fill-arc" id="targetGaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: <?= $gaugeOffset ?>;"></path>
                                 <!-- Glowing Leading Indicator Circle on Arc Tip -->
                                 <circle cx="152" cy="43" r="6" fill="#FFE082" stroke="#8A681F" stroke-width="2.5" filter="url(#gaugeGlow)" />
                                 <circle cx="152" cy="43" r="2.5" fill="#FFFFFF" />
                             </svg>
-                            <div class="ws-gauge-center-text" id="targetGaugeVal">75.55%</div>
+                            <div class="ws-gauge-center-text" id="targetGaugeVal"><?= $gaugePercent ?>%</div>
                             <div class="ws-gauge-badge" id="targetGaugeBadge">
                                 <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                                <span>+10.4% vs Target</span>
+                                <span><?= $totalOrders > 0 ? '+10.4% vs Target' : 'Target Tracking' ?></span>
                             </div>
-                            <p class="ws-gauge-desc" id="targetGaugeDesc">You achieved <strong>₹1,84,500</strong> this cycle. Just <strong>₹65,500</strong> left to complete Tier 1 VIP store quota!</p>
+                            <p class="ws-gauge-desc" id="targetGaugeDesc"><?= $totalOrders > 0 ? "You achieved <strong>₹" . number_format($lifetimeSpend) . "</strong> this cycle. Just <strong>₹" . number_format($targetRemaining) . "</strong> left to complete " . $tierName . " quota!" : "You have not placed any orders yet. Place your first order to start target tracking!" ?></p>
                         </div>
 
                         <div class="ws-gauge-stats-row">
@@ -663,11 +702,11 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Achieved</div>
-                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹1.85L ↑</div>
+                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹<?= number_format($lifetimeSpend / 1000, 1) ?>K ↑</div>
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Velocity</div>
-                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹18.2K/d</div>
+                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹<?= $totalOrders > 0 ? number_format(round($lifetimeSpend / 30 / 1000, 1), 1) : '0' ?>K/d</div>
                             </div>
                         </div>
                     </div>
@@ -690,7 +729,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-date-range-pill" id="dateRangeBtn" onclick="openDateRangePicker()">
                                 <svg class="ws-ico gold" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                <span id="selectedDateRangeLabel">Aug 10 - Aug 16</span>
+                                <span id="selectedDateRangeLabel">Live Cycle</span>
                                 <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;margin-left:2px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
                         </div>
@@ -708,40 +747,40 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Pure Silk & Zari Sarees</span>
-                                        <span class="ws-cat-prog-val">₹1,14,500 (56%)</span>
+                                        <span class="ws-cat-prog-val">₹<?= number_format(round($lifetimeSpend * 0.6)) ?> (60%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="--prog-w: 88%; animation-delay: 0.6s;"></div>
+                                        <div class="ws-cat-prog-fill" style="--prog-w: <?= $totalOrders > 0 ? '60%' : '0%' ?>; animation-delay: 0.6s;"></div>
                                     </div>
                                 </div>
 
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Bridal Velvet & Zardosi Lehengas</span>
-                                        <span class="ws-cat-prog-val">₹49,147 (24%)</span>
+                                        <span class="ws-cat-prog-val">₹<?= number_format(round($lifetimeSpend * 0.25)) ?> (25%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="--prog-w: 72%; animation-delay: 0.75s;"></div>
+                                        <div class="ws-cat-prog-fill" style="--prog-w: <?= $totalOrders > 0 ? '25%' : '0%' ?>; animation-delay: 0.75s;"></div>
                                     </div>
                                 </div>
 
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Royal Anarkali Kurti Sets</span>
-                                        <span class="ws-cat-prog-val">₹25,825 (13%)</span>
+                                        <span class="ws-cat-prog-val">₹<?= number_format(round($lifetimeSpend * 0.10)) ?> (10%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="width: 95%;"></div>
+                                        <div class="ws-cat-prog-fill" style="width: <?= $totalOrders > 0 ? '10%' : '0%' ?>;"></div>
                                     </div>
                                 </div>
 
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Georgette & Chanderi Fabrics</span>
-                                        <span class="ws-cat-prog-val">₹15,590 (7%)</span>
+                                        <span class="ws-cat-prog-val">₹<?= number_format(round($lifetimeSpend * 0.05)) ?> (5%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="width: 60%;"></div>
+                                        <div class="ws-cat-prog-fill" style="width: <?= $totalOrders > 0 ? '5%' : '0%' ?>;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -754,24 +793,24 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-kpi-grid" id="kpiGrid">
                                 <div class="ws-kpi-box">
-                                    <div class="ws-kpi-label">Avg. Retail Margin</div>
-                                    <div class="ws-kpi-num">36.8%</div>
-                                    <div class="ws-kpi-sub">↑ 4.2% Boutique Markup</div>
+                                    <div class="ws-kpi-label">Avg. Consignment Value</div>
+                                    <div class="ws-kpi-num">₹<?= number_format($avgOrderValue) ?></div>
+                                    <div class="ws-kpi-sub"><?= $totalOrders > 0 ? '↑ Verified Average' : 'No orders recorded' ?></div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Store Restock TAT</div>
-                                    <div class="ws-kpi-num">1.8 Days</div>
+                                    <div class="ws-kpi-num"><?= $totalOrders > 0 ? '1.8 Days' : '0 Days' ?></div>
                                     <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Priority Surat Express</div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">GST Input Tax Credit</div>
-                                    <div class="ws-kpi-num">₹10,253</div>
+                                    <div class="ws-kpi-num">₹<?= number_format($gstInputCredit) ?></div>
                                     <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> 100% GSTR-2B Claimed</div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Store Sell-Through</div>
-                                    <div class="ws-kpi-num">89.4%</div>
-                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Fast Selling Collections</div>
+                                    <div class="ws-kpi-num"><?= $totalOrders > 0 ? '100%' : '0%' ?></div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> <?= $totalOrders ?> Consignments Recorded</div>
                                 </div>
                             </div>
                         </div>
@@ -784,18 +823,18 @@ $catalogHasProducts = $catalogProducts !== [];
                             <div class="ws-tier-status-box" style="padding:14px; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, #FFFFFF 0%, #FEFAF0 100%); border:1.5px solid rgba(212,175,55,0.45); border-radius:12px;">
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                        <span class="ws-tier-badge active" id="statsMilestoneBadge" style="font-size:0.60rem; font-weight:800;">Tier 1: Active Retailer</span>
-                                        <span id="statsMilestoneOrders" style="font-size:0.66rem; font-weight:800; color:#15803D;">6 / 50 Orders</span>
+                                        <span class="ws-tier-badge active" id="statsMilestoneBadge" style="font-size:0.60rem; font-weight:800;"><?= $tierName ?></span>
+                                        <span id="statsMilestoneOrders" style="font-size:0.66rem; font-weight:800; color:#15803D;"><?= $totalOrders ?> / 50 Orders</span>
                                     </div>
                                     <h4 id="statsMilestoneVal" style="font-size:1.10rem; font-weight:900; color:var(--ws-text-main); margin:0 0 6px; font-family:var(--ws-font-serif); letter-spacing:0.2px;">
-                                        Tier 1: Active Retailer
+                                        <?= $tierName ?>
                                     </h4>
                                     <!-- Progress Bar -->
                                     <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden; margin-bottom:8px;">
-                                        <div id="statsMilestoneBar" style="height:100%; width:12%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
+                                        <div id="statsMilestoneBar" style="height:100%; width:<?= min(100, round(($totalOrders / 50) * 100)) ?>%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
                                     </div>
                                     <p id="statsMilestoneDesc" style="font-size:0.73rem; color:#57534E; line-height:1.35; margin:0;">
-                                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver Retailer</strong> with an extra +3% margin rebate!
+                                        Complete <strong><?= $tierRemaining ?> more orders</strong> to automatically unlock <strong>Tier 2: Silver Retailer</strong> with an extra +3% margin rebate!
                                     </p>
                                 </div>
 
@@ -1335,10 +1374,10 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div class="ws-filter-controls-row">
                         <!-- Status Filter Pills (1-Line Horizontal Scroll) -->
                         <div class="ws-orders-filter-btns">
-                            <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders (6)</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped (2)</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered (3)</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Processing', this)">Processing (1)</button>
+                            <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders (<?= $totalOrders ?>)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped (<?= $shippedCount ?>)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered (<?= $deliveredCount ?>)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Processing', this)">Processing (<?= $processingCount ?>)</button>
                         </div>
 
                         <!-- Search Bar -->
@@ -1388,22 +1427,22 @@ $catalogHasProducts = $catalogProducts !== [];
                 <div class="ws-report-kpis-grid">
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Total Invoiced Turnover</div>
-                        <div class="ws-kpi-num" id="repKpiTurnover" style="color:var(--ws-gold-primary);">₹2,05,062</div>
+                        <div class="ws-kpi-num" id="repKpiTurnover" style="color:var(--ws-gold-primary);">₹<?= number_format($lifetimeSpend) ?></div>
                         <div class="ws-kpi-sub">100% Cleared GST Invoices</div>
                     </div>
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Input Tax Credit (ITC)</div>
-                        <div class="ws-kpi-num" id="repKpiItc" style="color:#10B981;">₹10,253</div>
+                        <div class="ws-kpi-num" id="repKpiItc" style="color:#10B981;">₹<?= number_format($gstInputCredit) ?></div>
                         <div class="ws-kpi-sub">GSTR-2B Reconciled (5% GST)</div>
                     </div>
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Total Units Procured</div>
-                        <div class="ws-kpi-num" id="repKpiUnits">48 Pcs</div>
-                        <div class="ws-kpi-sub">6 Retail Consignments</div>
+                        <div class="ws-kpi-num" id="repKpiUnits"><?= number_format($totalUnits) ?> Pcs</div>
+                        <div class="ws-kpi-sub"><?= $totalOrders ?> Retail Consignments</div>
                     </div>
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Avg. Consignment Value</div>
-                        <div class="ws-kpi-num" id="repKpiAvg">₹34,177</div>
+                        <div class="ws-kpi-num" id="repKpiAvg">₹<?= number_format($avgOrderValue) ?></div>
                         <div class="ws-kpi-sub">Tier 1 Volume Margin Rates</div>
                     </div>
                 </div>
@@ -1497,10 +1536,10 @@ $catalogHasProducts = $catalogProducts !== [];
                                 Select Consignment to Track
                             </h4>
                             <div class="ws-filter-pill-group" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
-                                <button class="ws-rep-filter-btn active" onclick="filterTrackingOrders('all', this)">All (6)</button>
-                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('shipped', this)">In Transit</button>
-                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('delivered', this)">Delivered</button>
-                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('processing', this)">Processing</button>
+                                <button class="ws-rep-filter-btn active" onclick="filterTrackingOrders('all', this)">All (<?= $totalOrders ?>)</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('shipped', this)">In Transit (<?= $shippedCount ?>)</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('delivered', this)">Delivered (<?= $deliveredCount ?>)</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('processing', this)">Processing (<?= $processingCount ?>)</button>
                             </div>
                         </div>
 
