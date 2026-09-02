@@ -434,7 +434,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (dispatchWrap) dispatchWrap.style.display = 'block';
                 if (dispatchWrap) {
                     dispatchWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    var firstInp = dispatchWrap.querySelector('input, textarea');
+                    firstInp = dispatchWrap.querySelector('input, textarea');
                     if (firstInp) firstInp.focus();
                 }
             } else {
@@ -1641,7 +1641,7 @@ window.animateTargetGauge = animateTargetGauge;
         };
 
         /* ── Official GST Tax Invoice Modal & Print PDF ── */
-        function openBillInvoiceModal(o) {
+        window.openBillInvoiceModal = function(o) {
             if (typeof closeOrderDetailsModal === 'function') {
                 closeOrderDetailsModal();
             }
@@ -2426,27 +2426,49 @@ window.animateTargetGauge = animateTargetGauge;
             }
         };
 
-        /* ── Monthly Sales Chart Data & Interactive Tooltips ── */
-        var MONTH_SALES_DATA = [
-            { m: 'Jan', val: '₹1,24,000', qty: '32 Pcs', growth: '+5.2%' },
-            { m: 'Feb', val: '₹3,42,000', qty: '84 Pcs', growth: '+28.4%' },
-            { m: 'Mar', val: '₹1,48,000', qty: '38 Pcs', growth: '+4.1%' },
-            { m: 'Apr', val: '₹2,88,000', qty: '72 Pcs', growth: '+19.6%' },
-            { m: 'May', val: '₹1,36,000', qty: '35 Pcs', growth: '-2.0%' },
-            { m: 'Jun', val: '₹1,65,000', qty: '42 Pcs', growth: '+8.3%' },
-            { m: 'Jul', val: '₹2,72,000', qty: '68 Pcs', growth: '+15.2%' },
-            { m: 'Aug', val: '₹2,05,062', qty: '48 Pcs', growth: '↑ 18.4%' },
-            { m: 'Sep', val: '₹1,90,000', qty: '46 Pcs', growth: '+7.5%' },
-            { m: 'Oct', val: '₹3,85,000', qty: '96 Pcs', growth: '+32.0%' },
-            { m: 'Nov', val: '₹2,48,000', qty: '62 Pcs', growth: '+12.8%' },
-            { m: 'Dec', val: '₹1,15,000', qty: '28 Pcs', growth: '-5.0%' }
-        ];
+        /* ── Monthly Sales Chart Data & Interactive Tooltips (Dynamic from Live Orders) ── */
+        function getMonthlySalesData(orders) {
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var monthTotals = {}, monthQtys = {};
+            months.forEach(function(m) { monthTotals[m] = 0; monthQtys[m] = 0; });
+            if (Array.isArray(orders)) {
+                orders.forEach(function(o) {
+                    var d = o.created_at || o.date;
+                    if (d) {
+                        var dateObj = new Date(d);
+                        if (!isNaN(dateObj.getTime())) {
+                            var mName = months[dateObj.getMonth()];
+                            var amt = Number(o.total || o.total_amount || 0);
+                            var qty = 0;
+                            if (Array.isArray(o.items)) {
+                                o.items.forEach(function(it){ qty += Number(it.qty || it.quantity || 1); });
+                            } else {
+                                qty = Number(o.items_count || o.total_items || 1);
+                            }
+                            monthTotals[mName] += amt;
+                            monthQtys[mName] += qty;
+                        }
+                    }
+                });
+            }
+            return months.map(function(m) {
+                var val = monthTotals[m];
+                var qty = monthQtys[m];
+                return {
+                    m: m,
+                    val: '₹' + Math.round(val).toLocaleString('en-IN'),
+                    qty: qty + ' Pcs',
+                    growth: val > 0 ? '+100%' : '0%'
+                };
+            });
+        }
 
-        function showChartNodeTooltip(idx) {
-            var item = MONTH_SALES_DATA[idx];
+        window.showChartNodeTooltip = function(idx) {
+            var data = getMonthlySalesData(activeOrdersList);
+            var item = data[idx];
             if (!item) return;
             var el = document.getElementById('chartTooltipText');
-            if (el) el.textContent = `${item.m}: ${item.val} • ${item.qty} (${item.growth})`;
+            if (el) el.textContent = `${item.m}: ${item.val} • ${item.qty}`;
             document.querySelectorAll('.ws-chart-node').forEach(function(node, i) {
                 node.classList.toggle('active', i === idx);
             });
@@ -2455,7 +2477,7 @@ window.animateTargetGauge = animateTargetGauge;
             });
         };
 
-        function switchSalesChartStyle(type, btn) {
+        window.switchSalesChartStyle = function(type, btn) {
             document.querySelectorAll('.ws-chart-type-btn').forEach(function(b) { b.classList.remove('active'); });
             if (btn) btn.classList.add('active');
 
@@ -2592,7 +2614,7 @@ window.animateTargetGauge = animateTargetGauge;
                     <div class="ws-timeline-step completed">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                         <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
-                        <div class="ws-timeline-date">DT Brand\'s Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
+                        <div class="ws-timeline-date">DT Brand's Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
                     </div>
                     <div class="ws-timeline-step ${isProcessing ? 'active' : 'completed'}">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
@@ -4698,14 +4720,15 @@ window.animateTargetGauge = animateTargetGauge;
             if (!c) return;
 
             var phone = c.whatsapp || c.mobile;
+            var senderName = (window.b2bUser && window.b2bUser.name) || 'Reseller Partner';
             var text = `Namaste ${c.name} ji 🙏,
 
-We have exciting new luxury silk saree collections and festive arrivals at DT Brand\'s / Arniya.
+We have exciting new luxury silk saree collections and festive arrivals at DT Brand's / Arniya.
 
 Would you like me to share the latest catalog?
 
 Warm regards,
-Rajesh Kumar (Reseller Partner)`;
+${senderName} (Reseller Partner)`;
             var url = 'https://api.whatsapp.com/send?phone=91' + phone + '&text=' + encodeURIComponent(text);
             window.open(url, '_blank');
         };

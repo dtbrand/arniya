@@ -256,7 +256,7 @@ $catalogHasProducts = $catalogProducts !== [];
             <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Wholesaler Profile">
                 <img src="/assets/images/profile.png" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
                 <div class="ws-user-name-text">
-                    <span id="headerUserName">Rajesh Kumar</span>
+                    <span id="headerUserName"><?= htmlspecialchars($activeUserName) ?></span>
                     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
             </div>
@@ -280,7 +280,7 @@ $catalogHasProducts = $catalogProducts !== [];
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
                     <img src="/assets/images/profile.png" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
                     <div style="flex: 1; min-width: 0;">
-                        <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
+                        <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName"><?= htmlspecialchars($activeUserName) ?></div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
                             <span>★ Verified Wholesaler</span>
                         </div>
@@ -969,20 +969,20 @@ $catalogHasProducts = $catalogProducts !== [];
                             
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfName">Full Name / Authorized Rep <span class="req">*</span></label>
-                                <input type="text" id="wsProfName" class="ws-input" placeholder="e.g. Rajesh Kumar" required>
+                                <input type="text" id="wsProfName" class="ws-input" placeholder="Enter Full Name" required>
                             </div>
 
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfPhone">WhatsApp Mobile Number <span class="req">*</span></label>
                                 <div class="ws-phone-wrap">
                                     <div class="ws-phone-prefix">🇮🇳 +91</div>
-                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="7046363528" maxlength="10" required>
+                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="10-digit mobile number" maxlength="10" required>
                                 </div>
                             </div>
 
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfEmail">Registered Business Email <span class="req">*</span></label>
-                                <input type="email" id="wsProfEmail" class="ws-input" placeholder="e.g. rajesh@shreekrishnasilks.com" required>
+                                <input type="email" id="wsProfEmail" class="ws-input" placeholder="business@example.com" required>
                             </div>
 
                             <div class="ws-form-group">
@@ -1053,15 +1053,15 @@ $catalogHasProducts = $catalogProducts !== [];
                             
                             <div class="ws-form-group full" id="wsCompanyNameFieldWrap">
                                 <label class="ws-label" for="wsCompanyName">Registered Legal Trade Name / Firm Name <span class="req">*</span></label>
-                                <input type="text" id="wsCompanyName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd" required>
+                                <input type="text" id="wsCompanyName" class="ws-input" placeholder="Enter Registered Business / Enterprise Name" required>
                             </div>
 
                             <div class="ws-form-group full" id="gstNumberFieldWrap">
                                 <label class="ws-label" for="wsGstNumber">
                                     <span>15-Character GSTIN Number <span class="req">*</span></span>
-                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700;">Format: 24AABCU9603R1ZM</span>
+                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700;">Format: 15-Digit GSTIN</span>
                                 </label>
-                                <input type="text" id="wsGstNumber" class="ws-input" placeholder="e.g. 24AABCU9603R1ZM" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
+                                <input type="text" id="wsGstNumber" class="ws-input" placeholder="24AAAAA0000A1Z5" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
                             </div>
 
                             <div class="ws-form-group full" id="nonGstNoticeWrap" style="display:none;">
@@ -1164,7 +1164,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-form-grid">
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsMainCompName">Business / Firm / Company Name <span class="req">*</span></label>
-                                        <input type="text" id="wsMainCompName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd">
+                                        <input type="text" id="wsMainCompName" class="ws-input" placeholder="Enter Registered Business Name">
                                     </div>
 
                                     <div class="ws-form-group">
@@ -1928,12 +1928,12 @@ $catalogHasProducts = $catalogProducts !== [];
                     
                     <div class="ws-form-group">
                         <label class="ws-label" for="wsMainEditCompName">Business / Company Name <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditCompName" class="ws-input" required placeholder="e.g. Shree Krishna Silks Pvt Ltd">
+                        <input type="text" id="wsMainEditCompName" class="ws-input" required placeholder="Enter Registered Business Name">
                     </div>
 
                     <div class="ws-form-group">
                         <label class="ws-label" for="wsMainEditGstNumber">GSTIN (Tax ID) <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditGstNumber" class="ws-input" maxlength="15" style="text-transform:uppercase;" placeholder="24AABCU9603R1ZM">
+                        <input type="text" id="wsMainEditGstNumber" class="ws-input" maxlength="15" style="text-transform:uppercase;" placeholder="24AAAAA0000A1Z5">
                     </div>
 
                     <div class="ws-form-group full">
@@ -2085,8 +2085,8 @@ $catalogHasProducts = $catalogProducts !== [];
                                 States : <span id="invBuyerState"><?= htmlspecialchars($currentUser['state'] ?? 'Gujarat') ?></span><br>
                                 PIN code: <span id="invBuyerPin"><?= htmlspecialchars($currentUser['pincode'] ?? '395002') ?></span><br>
                                 M/n :- <span id="invBuyerAltPhone"><?= htmlspecialchars($currentUser['phone'] ?? '917046363528') ?></span><br>
-                                Contact No: <strong id="invBuyerPhone"><?= htmlspecialchars($currentUser['phone'] ?? '917046363528') ?></strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst"><?= htmlspecialchars($currentUser['gstin'] ?? '24AABCU9603R1ZM') ?></strong><br>
-                                State: <strong id="invBuyerStateCode"><?= htmlspecialchars($currentUser['state'] ?? '24-Gujarat') ?></strong>
+                                Contact No: <strong id="invBuyerPhone"><?= htmlspecialchars($activeUserPhone ?: '917046363528') ?></strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst"><?= !empty($activeUserGstin) ? htmlspecialchars($activeUserGstin) : 'Unregistered / Exempt' ?></strong><br>
+                                State: <strong id="invBuyerStateCode"><?= htmlspecialchars($activeUserState ?: '24-Gujarat') ?></strong>
                             </div>
                         </div>
 
@@ -2094,9 +2094,9 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-ti-cell-invmeta">
                             <div class="ws-ti-cell-header">Invoice Details:</div>
                             <div style="line-height:1.5;">
-                                No: <strong id="invNum">1001</strong><br>
+                                No: <strong id="invNum">-</strong><br>
                                 Date: <strong id="invDate"><?= date('d-m-Y') ?></strong><br>
-                                Place of Supply: <strong id="invPlaceOfSupply"><?= htmlspecialchars($currentUser['state'] ?? '24-Gujarat') ?></strong>
+                                Place of Supply: <strong id="invPlaceOfSupply"><?= htmlspecialchars($activeUserState ?: '24-Gujarat') ?></strong>
                             </div>
                         </div>
                     </div>
@@ -2132,10 +2132,10 @@ $catalogHasProducts = $catalogProducts !== [];
                             <tr class="ws-ti-total-row">
                                 <td colspan="2" style="font-weight:800; text-align:left; padding-left:12px;">Total</td>
                                 <td></td>
-                                <td style="text-align:right; font-weight:800;" id="invTableTotalQty">373</td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalQty">-</td>
                                 <td></td>
-                                <td style="text-align:right; font-weight:800;" id="invTableTotalGst">₹ 1,492.25</td>
-                                <td style="text-align:right; font-weight:800;" id="invTableTotalAmount">₹ 31,337.25</td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalGst">-</td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalAmount">-</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -2177,16 +2177,16 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-ti-net-calc-col">
                             <div class="ws-ti-calc-row">
                                 <span>Sub Total</span>
-                                <span>: <strong id="invSubTotalRight">₹ 31,337.25</strong></span>
+                                <span>: <strong id="invSubTotalRight">-</strong></span>
                             </div>
                             <div class="ws-ti-calc-row" style="background:#FAFAFA; font-weight:800;">
                                 <span>Total</span>
-                                <span>: <strong id="invTotalRight">₹ 31,337.25</strong></span>
+                                <span>: <strong id="invTotalRight">-</strong></span>
                             </div>
                             <div class="ws-ti-words-box">
                                 <div style="font-weight:700; color:#374151; font-size:10px;">Invoice Amount In Words :</div>
                                 <div id="invAmountInWords" style="font-weight:600; color:#111827; margin-top:2px; font-size:10px;">
-                                    Thirty One Thousand Three Hundred and Thirty Seven Rupees and Twenty Five Paisa only
+                                    -
                                 </div>
                             </div>
                             <div class="ws-ti-calc-row">
@@ -2195,7 +2195,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-ti-calc-row" style="border-bottom:none; font-weight:800;">
                                 <span>Balance</span>
-                                <span>: <strong id="invBalance">₹ 31,337.25</strong></span>
+                                <span>: <strong id="invBalance">-</strong></span>
                             </div>
                         </div>
                     </div>
@@ -2286,19 +2286,19 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div class="ws-inv-totals-box">
                         <div class="ws-inv-tot-row">
                             <span>Total Procured Units:</span>
-                            <strong id="auditTotalQty">48 Pcs</strong>
+                            <strong id="auditTotalQty"><?= $totalUnits > 0 ? ($totalUnits . ' Pcs') : '0 Pcs' ?></strong>
                         </div>
                         <div class="ws-inv-tot-row">
                             <span>Total Taxable Base:</span>
-                            <strong id="auditTotalSub">₹1,95,297</strong>
+                            <strong id="auditTotalSub">₹<?= number_format(round($lifetimeSpend * 0.95)) ?></strong>
                         </div>
                         <div class="ws-inv-tot-row">
                             <span>Total GST ITC (5%):</span>
-                            <strong id="auditTotalTax" style="color:#10B981;">₹10,253</strong>
+                            <strong id="auditTotalTax" style="color:#10B981;">₹<?= number_format($gstInputCredit) ?></strong>
                         </div>
                         <div class="ws-inv-tot-row grand">
                             <span>Total Settled Procurement:</span>
-                            <span id="auditTotalGrand">₹2,05,062</span>
+                            <span id="auditTotalGrand">₹<?= number_format($lifetimeSpend) ?></span>
                         </div>
                     </div>
 
@@ -2702,6 +2702,42 @@ $catalogHasProducts = $catalogProducts !== [];
         }
         echo json_encode($wsPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     ?></script>
+
+    <script>
+    window.b2bOrders = <?= json_encode($realOrders, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.b2bUser = <?= json_encode([
+        'id' => $currentUser['id'] ?? null,
+        'name' => $activeUserName,
+        'email' => $activeUserEmail,
+        'phone' => $activeUserPhone,
+        'rawPhone' => preg_replace('/[^0-9]/', '', $activeUserPhone),
+        'companyName' => $dbUser['business_name'] ?? $currentUser['companyName'] ?? $currentUser['business_name'] ?? $activeUserName,
+        'company_name' => $dbUser['business_name'] ?? $currentUser['business_name'] ?? $activeUserName,
+        'business_name' => $dbUser['business_name'] ?? $currentUser['business_name'] ?? $activeUserName,
+        'gst_number' => $activeUserGstin,
+        'gstin' => $activeUserGstin,
+        'pan' => $activeUserPan,
+        'city' => $activeUserCity ?: 'Surat',
+        'state' => $activeUserState ?: 'Gujarat',
+        'pincode' => $dbUser['pincode'] ?? $currentUser['pincode'] ?? '395002',
+        'tier' => $tierName,
+        'credit_limit' => $creditLimit,
+        'outstanding_balance' => $outstandingBalance
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.b2bKpis = <?= json_encode([
+        'total_orders' => $totalOrders,
+        'lifetime_spend' => $lifetimeSpend,
+        'pending_orders' => $pendingOrders,
+        'credit_limit' => $creditLimit,
+        'outstanding_balance' => $outstandingBalance,
+        'available_balance' => $availableBalance,
+        'total_coins' => $totalCoins,
+        'total_units' => $totalUnits,
+        'tier' => $tierName,
+        'gauge_percent' => $gaugePercent,
+        'gauge_offset' => $gaugeOffset
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    </script>
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
