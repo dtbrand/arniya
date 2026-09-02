@@ -754,52 +754,118 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             background: transparent;
         }
 
-        /* ── Role Selection Pill Cards ── */
+        /* ── Role Selection Master Luxury Cards ── */
         .ac-role-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 8px;
         }
         .ac-role-card {
-            border: 1.5px solid #E2DFD7;
-            background: #FAF8F4;
-            border-radius: 8px;
-            padding: 8px 4px;
+            position: relative;
+            border: 1.5px solid #D5D9E0;
+            background: #FFFFFF;
+            border-radius: 10px;
+            padding: 10px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            gap: 5px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.22s cubic-bezier(0.34, 1.25, 0.64, 1);
             text-align: center;
+            user-select: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            min-height: 72px;
         }
         .ac-role-card:hover {
             border-color: var(--dt-gold);
-            background: var(--dt-gold-pale);
+            background: #FAF8F4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.12);
         }
         .ac-role-card.active {
-            border-color: var(--dt-gold);
-            background: #FAF5E8;
-            box-shadow: 0 2px 6px rgba(138,104,31,0.20);
+            border: 2px solid #8A681F !important;
+            background: linear-gradient(135deg, #FAF5E8 0%, #FFFDF8 100%) !important;
+            box-shadow: 0 6px 16px rgba(138,104,31,0.22), inset 0 0 0 1px #D4AF37 !important;
+            transform: translateY(-2px);
+        }
+        .ac-role-check {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 5px rgba(21,128,61,0.35);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .ac-role-card.active .ac-role-check {
+            display: flex;
+            animation: dtPopIn 0.25s cubic-bezier(0.34, 1.5, 0.64, 1);
+        }
+        @keyframes dtPopIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
         }
         .ac-role-icon {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .ac-role-card:hover .ac-role-icon, .ac-role-card.active .ac-role-icon {
+            transform: scale(1.10);
+        }
+        .ac-role-icon.blue-icon {
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid rgba(29,78,216,0.18);
+        }
+        .ac-role-icon.amber-icon {
+            background: #FEF3C7;
+            color: #B45309;
+            border: 1px solid rgba(180,83,9,0.20);
+        }
+        .ac-role-icon.emerald-icon {
+            background: #DCFCE7;
+            color: #15803D;
+            border: 1px solid rgba(21,128,61,0.20);
         }
         .ac-role-icon svg {
             width: 18px;
             height: 18px;
+            stroke-width: 2.2;
         }
         .ac-role-name {
-            font-size: 0.70rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: #1F2937;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            transition: color 0.2s ease;
         }
         .ac-role-card.active .ac-role-name {
-            color: var(--dt-gold);
+            color: #705114;
+            font-weight: 900;
+        }
+        .ac-role-sub {
+            font-size: 0.66rem;
+            font-weight: 600;
+            color: #64748B;
+            line-height: 1;
+        }
+        .ac-role-card.active .ac-role-sub {
+            color: #8A681F;
+            font-weight: 700;
         }
 
         /* ── 100% Styled Master Primary Button ── */
@@ -1602,26 +1668,45 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 <label class="ac-field-label">
                                     <span class="ac-field-label-text">Select Account Type <span class="req">*</span></span>
                                 </label>
-                                <input type="hidden" id="regRole" name="role" value="Customer">
+                                <input type="hidden" id="regRole" name="role" value="Retailer">
                                 <div class="ac-role-grid">
+                                    
+                                    <!-- 1. Retailer Card -->
                                     <div class="ac-role-card active" data-role="Retailer" onclick="selectRole('Retailer')">
-                                        <div class="ac-role-icon">
-                                            <svg viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#EFF6FF" stroke="#1D4ED8" stroke-width="2"/><line x1="3" y1="6" x2="21" y2="6" stroke="#1D4ED8" stroke-width="2"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#1D4ED8" stroke-width="2"/></svg>
+                                        <div class="ac-role-check">
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="ac-role-icon blue-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                         </div>
                                         <span class="ac-role-name">Retailer</span>
+                                        <span class="ac-role-sub">Boutique &amp; Shop</span>
                                     </div>
+
+                                    <!-- 2. Wholesaler Card -->
                                     <div class="ac-role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
-                                        <div class="ac-role-icon">
-                                            <svg viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#B45309" stroke-width="2"/><line x1="12" y1="22.08" x2="12" y2="12" stroke="#B45309" stroke-width="2"/></svg>
+                                        <div class="ac-role-check">
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="ac-role-icon amber-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                                         </div>
                                         <span class="ac-role-name">Wholesale</span>
+                                        <span class="ac-role-sub">Mill Rate Lots</span>
                                     </div>
+
+                                    <!-- 3. Reseller Card -->
                                     <div class="ac-role-card" data-role="Reseller" onclick="selectRole('Reseller')">
-                                        <div class="ac-role-icon">
-                                            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="2" fill="#DCFCE7" stroke="#15803D" stroke-width="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#15803D" stroke-width="2"/><line x1="12" y1="12" x2="12" y2="15" stroke="#15803D" stroke-width="2"/></svg>
+                                        <div class="ac-role-check">
+                                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="ac-role-icon emerald-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="15"/></svg>
                                         </div>
                                         <span class="ac-role-name">Reseller</span>
+                                        <span class="ac-role-sub">Online / Catalog</span>
                                     </div>
+
                                 </div>
                             </div>
 
