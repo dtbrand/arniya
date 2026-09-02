@@ -218,37 +218,120 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             height: 3.5px;
             background: linear-gradient(90deg, #8A681F, #D4AF37, #E6CA65, #D4AF37, #8A681F);
         }
-        .ac-showcase-badge {
+        .ac-showcase-corner-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 2;
+        }
+        .ac-corner-seal-3d {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+            border: 1.2px solid var(--dt-gold);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
+            transform: perspective(400px) rotateY(-3deg) rotateX(2deg);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .ac-corner-seal-3d:hover {
+            transform: perspective(400px) rotateY(0deg) rotateX(0deg) scale(1.03);
+            box-shadow: 0 6px 16px rgba(138,104,31,0.28);
+        }
+        .ac-seal-crest {
+            color: #8A681F;
+        }
+        .ac-seal-text {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: #705114;
+            text-transform: uppercase;
+        }
+
+        .ac-showcase-kicker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3.5px 11px;
+            border-radius: 14px;
             background: #FAF5E8;
-            border: 1px solid var(--dt-gold);
-            color: var(--dt-gold);
-            font-size: 0.72rem;
+            border: 1px solid rgba(138,104,31,0.35);
+            color: #8A681F;
+            font-size: 0.68rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
+            margin-bottom: 8px;
             width: fit-content;
-            margin-bottom: 14px;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.08);
         }
-        .ac-showcase-title {
+
+        .ac-showcase-title-3d {
             font-family: var(--font-serif);
-            font-size: clamp(1.35rem, 3vw, 1.85rem);
-            font-weight: 800;
-            color: #181512;
+            font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+            font-weight: 900;
             letter-spacing: 0.02em;
-            line-height: 1.2;
-            margin: 0 0 6px 0;
+            line-height: 1.15;
+            margin: 0 0 8px 0;
+            position: relative;
+            display: inline-block;
+            
+            /* 3D Metallic Gold & Deep Obsidian Multi-Stop Gradient */
+            background: linear-gradient(135deg, #181512 0%, #3D2D0C 20%, #8A681F 40%, #D4AF37 55%, #FFF8DC 65%, #C59312 80%, #181512 100%);
+            background-size: 240% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: acTitle3dShimmer 6s ease-in-out infinite alternate;
+            
+            /* Layered 3D Multi-Elevation Text Shadows */
+            filter: drop-shadow(0 1px 0 rgba(255,255,255,0.9))
+                    drop-shadow(0 2px 1px rgba(138,104,31,0.4))
+                    drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+            transform: perspective(600px) translateZ(6px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .ac-showcase-title-3d:hover {
+            transform: perspective(600px) translateZ(14px) rotateX(1deg);
+        }
+        @keyframes acTitle3dShimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .ac-showcase-flourish-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 0 10px 0;
+        }
+        .ac-flourish-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #8A681F 0%, #D4AF37 70%, #FFF5D0 100%);
+            border-radius: 2px;
+        }
+        .ac-flourish-line.right {
+            background: linear-gradient(90deg, #FFF5D0 0%, #D4AF37 30%, #8A681F 100%);
+        }
+        .ac-flourish-crest {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 4px rgba(138,104,31,0.35));
+        }
+
         .ac-showcase-subtitle {
             font-size: 0.85rem;
             color: #64748B;
             font-weight: 600;
             line-height: 1.4;
-            margin: 0 0 22px 0;
+            margin: 0 0 20px 0;
         }
         .ac-benefits-list {
             display: flex;
@@ -337,37 +420,124 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             width: 100%;
         }
         .ac-auth-card-head {
-            padding: clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px) clamp(10px, 1.8vw, 14px);
+            padding: clamp(16px, 2.8vw, 22px) clamp(16px, 3vw, 24px) clamp(12px, 2vw, 16px);
             border-bottom: 1.5px solid #F1ECE1;
-            background: #FAF8F4;
+            background: linear-gradient(180deg, #FAF8F4 0%, #F5EFE4 100%);
             display: flex;
             flex-direction: column;
             gap: clamp(10px, 2vw, 14px);
         }
         .ac-brand-lockup {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            text-align: center;
+            gap: 8px;
+            width: 100%;
+            padding: 2px 0 2px;
+        }
+        .ac-brand-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
         }
         .ac-brand-logo-img {
-            height: clamp(30px, 4vw, 36px);
+            height: clamp(48px, 6.5vw, 62px);
             width: auto;
-            max-width: 150px;
+            max-width: 210px;
             object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(138,104,31,0.18));
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+            display: block;
+        }
+        .ac-brand-logo-img:hover {
+            transform: scale(1.04);
+            filter: drop-shadow(0 6px 18px rgba(212,175,55,0.40));
+        }
+
+        /* Animated Luxury Design Under Logo */
+        .ac-logo-ornament-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .ac-logo-laser-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, #D4AF37 80%, #FFF5D0 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+        .ac-logo-laser-line.right {
+            background: linear-gradient(90deg, #FFF5D0 0%, #D4AF37 20%, rgba(184,134,11,0.3) 70%, transparent 100%);
+        }
+        .ac-logo-laser-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #FFFFFF, transparent);
+            animation: acLaserBeam 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .ac-logo-center-crest {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+            border: 1.2px solid #D4AF37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(212,175,55,0.4);
+            animation: acCrestPulse 2.8s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes acLaserBeam {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        @keyframes acCrestPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 6px rgba(212,175,55,0.35); }
+            50% { transform: scale(1.14); box-shadow: 0 0 14px rgba(212,175,55,0.8), 0 0 22px rgba(230,202,101,0.5); }
+        }
+        .ac-logo-sub-badge-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .ac-portal-status-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 800;
             color: #15803D;
             background: #DCFCE7;
-            padding: 3px 9px;
+            padding: 3.5px 11px;
             border-radius: 12px;
             border: 1px solid #86EFAC;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 6px rgba(21,128,61,0.12);
+        }
+        .ac-pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16A34A;
+            display: inline-block;
+            box-shadow: 0 0 8px #16A34A;
+            animation: dtPulseGlow 1.8s infinite;
         }
         .ac-security-badge {
             display: inline-flex;
@@ -1750,9 +1920,38 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 
                 <!-- Left Designer E-Commerce Showcase -->
                 <div class="ac-hero-showcase">
+                    <!-- Top-Right 3D Luxury Seal Badge -->
+                    <div class="ac-showcase-corner-badge">
+                        <div class="ac-corner-seal-3d">
+                            <svg class="ac-seal-crest" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            </svg>
+                            <span class="ac-seal-text">ROYAL SILK HERITAGE</span>
+                        </div>
+                    </div>
+
                     <div>
-                        <h1 class="ac-showcase-title">Welcome to DT Brand's</h1>
-                        <p class="ac-showcase-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
+                        <!-- 3D Header Section -->
+                        <div class="ac-showcase-top-block">
+                            <span class="ac-showcase-kicker-badge">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <span>Direct Surat Mill Depot</span>
+                            </span>
+                            <h1 class="ac-showcase-title-3d">Welcome to DT Brand's</h1>
+                            
+                            <!-- 3D Decorative Flourish Underline -->
+                            <div class="ac-showcase-flourish-wrap">
+                                <span class="ac-flourish-line"></span>
+                                <span class="ac-flourish-crest">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.8">
+                                        <path d="M12 2L2 12l10 10 10-10L12 2z"></path>
+                                    </svg>
+                                </span>
+                                <span class="ac-flourish-line right"></span>
+                            </div>
+
+                            <p class="ac-showcase-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
+                        </div>
 
                         <div class="ac-benefits-list">
                             <div class="ac-benefit-card">
@@ -1807,11 +2006,29 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 <div class="ac-auth-card">
                     <div class="ac-auth-card-head">
                         <div class="ac-brand-lockup">
-                            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
-                            <span class="ac-portal-status-badge">
-                                <span class="ac-pulse-dot"></span>
-                                <span>Official Member Studio</span>
-                            </span>
+                            <!-- Prominent Centered Logo -->
+                            <div class="ac-brand-logo-container">
+                                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ac-brand-logo-img">
+                            </div>
+
+                            <!-- Animated Luxury Laser & Crest Accent Under Logo -->
+                            <div class="ac-logo-ornament-wrap">
+                                <div class="ac-logo-laser-line"></div>
+                                <div class="ac-logo-center-crest" title="DT Brand's Certified">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.4">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="ac-logo-laser-line right"></div>
+                            </div>
+
+                            <!-- Centered Member Studio Pill -->
+                            <div class="ac-logo-sub-badge-wrap">
+                                <span class="ac-portal-status-badge">
+                                    <span class="ac-pulse-dot"></span>
+                                    <span>Official Member Studio</span>
+                                </span>
+                            </div>
                         </div>
 
                         <!-- Smooth Segmented Pill Switcher -->
