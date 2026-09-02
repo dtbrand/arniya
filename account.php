@@ -192,13 +192,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             }
         }
 
-        /* ── Left Designer E-Commerce Showcase (Hidden on Mobile) ── */
+        /* ── Left Designer E-Commerce Showcase (Fluid on All Devices) ── */
         .ac-hero-showcase {
-            display: none;
+            display: flex;
             background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F5EDE0 100%);
             border-radius: var(--radius-xl);
             border: 1.5px solid var(--dt-gold-border);
-            padding: clamp(24px, 4vw, 36px);
+            padding: clamp(20px, 3.5vw, 32px);
             color: var(--dt-text-main);
             flex-direction: column;
             justify-content: space-between;
@@ -206,132 +206,161 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(138,104,31,0.08);
         }
-        @media (min-width: 960px) {
-            .ac-hero-showcase {
-                display: flex;
-            }
-        }
         .ac-hero-showcase::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 3.5px;
-            background: linear-gradient(90deg, #8A681F, #D4AF37, #E6CA65, #D4AF37, #8A681F);
+            height: 4px;
+            background: linear-gradient(90deg, #8A681F, #D4AF37, #FFFFFF, #E6CA65, #D4AF37, #8A681F);
         }
-        .ac-showcase-corner-badge {
+
+        /* ═══════════════════════════════════════════════════════════════════
+           3D LUXURY WELCOME TO DT BRAND'S — LEFT UPPER CORNER 3D DESIGN
+        ═══════════════════════════════════════════════════════════════════ */
+        .ac-3d-welcome-card {
+            position: relative;
+            background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F4EAD7 100%);
+            border: 2px solid #D4AF37;
+            border-radius: 18px;
+            padding: clamp(18px, 3.2vw, 24px);
+            margin-bottom: 20px;
+            box-shadow: 
+                0 2px 0 rgba(255, 255, 255, 0.95) inset,
+                0 -2px 0 #B8860B inset,
+                0 8px 24px rgba(138, 104, 31, 0.16),
+                0 16px 36px rgba(0, 0, 0, 0.07);
+            transform: perspective(700px) rotateX(2deg) rotateY(-1deg);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .ac-3d-welcome-card:hover {
+            transform: perspective(700px) rotateX(0deg) rotateY(0deg) translateY(-3px);
+            box-shadow: 
+                0 2px 0 rgba(255, 255, 255, 0.95) inset,
+                0 -2px 0 #D4AF37 inset,
+                0 14px 32px rgba(138, 104, 31, 0.26),
+                0 22px 48px rgba(0, 0, 0, 0.12);
+        }
+        .ac-3d-welcome-card::after {
+            content: '';
             position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 2;
+            top: -50%;
+            left: -120%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+            transform: rotate(25deg);
+            animation: acGleamSweep 4.5s ease-in-out infinite;
+            pointer-events: none;
         }
-        .ac-corner-seal-3d {
+        @keyframes acGleamSweep {
+            0%, 50% { left: -120%; }
+            100% { left: 220%; }
+        }
+
+        /* Upper Left Corner 3D Heritage Ribbon */
+        .ac-3d-corner-kicker {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
-            border: 1.2px solid var(--dt-gold);
-            box-shadow: 0 4px 12px rgba(138,104,31,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
-            transform: perspective(400px) rotateY(-3deg) rotateX(2deg);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .ac-corner-seal-3d:hover {
-            transform: perspective(400px) rotateY(0deg) rotateX(0deg) scale(1.03);
-            box-shadow: 0 6px 16px rgba(138,104,31,0.28);
-        }
-        .ac-seal-crest {
-            color: #8A681F;
-        }
-        .ac-seal-text {
+            background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+            border: 1.2px solid #D4AF37;
+            color: #FAF5E8;
             font-size: 0.68rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
-            color: #705114;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(212,175,55,0.5);
+            transform: translateZ(12px);
+        }
+        .ac-3d-corner-kicker svg {
+            color: #D4AF37;
         }
 
-        .ac-showcase-kicker-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 3.5px 11px;
-            border-radius: 14px;
-            background: #FAF5E8;
-            border: 1px solid rgba(138,104,31,0.35);
-            color: #8A681F;
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            width: fit-content;
-            box-shadow: 0 2px 6px rgba(138,104,31,0.08);
-        }
-
-        .ac-showcase-title-3d {
+        /* 3D "WELCOME TO" Text Line */
+        .ac-3d-welcome-line {
             font-family: var(--font-serif);
-            font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
             font-weight: 900;
-            letter-spacing: 0.02em;
-            line-height: 1.15;
-            margin: 0 0 8px 0;
-            position: relative;
-            display: inline-block;
-            
-            /* 3D Metallic Gold & Deep Obsidian Multi-Stop Gradient */
-            background: linear-gradient(135deg, #181512 0%, #3D2D0C 20%, #8A681F 40%, #D4AF37 55%, #FFF8DC 65%, #C59312 80%, #181512 100%);
-            background-size: 240% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: acTitle3dShimmer 6s ease-in-out infinite alternate;
-            
-            /* Layered 3D Multi-Elevation Text Shadows */
-            filter: drop-shadow(0 1px 0 rgba(255,255,255,0.9))
-                    drop-shadow(0 2px 1px rgba(138,104,31,0.4))
-                    drop-shadow(0 6px 12px rgba(0,0,0,0.12));
-            transform: perspective(600px) translateZ(6px);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .ac-showcase-title-3d:hover {
-            transform: perspective(600px) translateZ(14px) rotateX(1deg);
-        }
-        @keyframes acTitle3dShimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            letter-spacing: 0.18em;
+            color: #8A681F;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin: 0 0 4px 0;
+            display: block;
+            text-shadow: 
+                1px 1px 0px #FFFFFF,
+                2px 2px 0px rgba(212, 175, 55, 0.45);
         }
 
-        .ac-showcase-flourish-wrap {
+        /* 3D "DT BRAND'S" Bold Extruded Lettering */
+        .ac-3d-brand-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.85rem, 3.8vw, 2.5rem);
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            line-height: 1.08;
+            margin: 0 0 10px 0;
+            color: #181512;
+            text-transform: uppercase;
+            display: block;
+            
+            /* Ultra-Crisp 3D Bevel & Extrusion */
+            text-shadow: 
+                1px 1px 0px #FFFFFF,
+                2px 2px 0px #E6CA65,
+                3px 3px 0px #D4AF37,
+                4px 4px 0px #B8860B,
+                5px 5px 0px #8A681F,
+                6px 6px 1px rgba(0, 0, 0, 0.22),
+                0 8px 18px rgba(138, 104, 31, 0.35);
+            transform: translateZ(16px);
+        }
+
+        /* 3D Gold Accent Bar with Center Sparkling Crest */
+        .ac-3d-gold-divider {
             display: flex;
             align-items: center;
-            gap: 8px;
-            width: 100%;
+            gap: 10px;
+            margin: 10px 0 12px 0;
             max-width: 320px;
-            margin: 0 0 10px 0;
         }
-        .ac-flourish-line {
+        .ac-3d-divider-beam {
             flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, #8A681F 0%, #D4AF37 70%, #FFF5D0 100%);
-            border-radius: 2px;
+            height: 3px;
+            background: linear-gradient(90deg, #8A681F 0%, #D4AF37 50%, #FAF5E8 100%);
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15), 0 0 6px rgba(212,175,55,0.4);
         }
-        .ac-flourish-line.right {
-            background: linear-gradient(90deg, #FFF5D0 0%, #D4AF37 30%, #8A681F 100%);
+        .ac-3d-divider-beam.right {
+            background: linear-gradient(90deg, #FAF5E8 0%, #D4AF37 50%, #8A681F 100%);
         }
-        .ac-flourish-crest {
+        .ac-3d-crest-node {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FAF5E8 0%, #D4AF37 100%);
+            border: 1.5px solid #8A681F;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 2px 4px rgba(138,104,31,0.35));
+            box-shadow: 0 2px 6px rgba(138,104,31,0.4), inset 0 1px 0 #FFFFFF;
+            animation: acGemPulse 3s infinite;
+        }
+        @keyframes acGemPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 2px 6px rgba(138,104,31,0.4); }
+            50% { transform: scale(1.15); box-shadow: 0 0 14px rgba(212,175,55,0.8); }
         }
 
-        .ac-showcase-subtitle {
-            font-size: 0.85rem;
-            color: #64748B;
-            font-weight: 600;
-            line-height: 1.4;
-            margin: 0 0 20px 0;
+        .ac-3d-subtitle {
+            font-size: 0.88rem;
+            color: #475569;
+            font-weight: 700;
+            line-height: 1.45;
+            margin: 0;
         }
         .ac-benefits-list {
             display: flex;
@@ -1920,37 +1949,30 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 
                 <!-- Left Designer E-Commerce Showcase -->
                 <div class="ac-hero-showcase">
-                    <!-- Top-Right 3D Luxury Seal Badge -->
-                    <div class="ac-showcase-corner-badge">
-                        <div class="ac-corner-seal-3d">
-                            <svg class="ac-seal-crest" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                            </svg>
-                            <span class="ac-seal-text">ROYAL SILK HERITAGE</span>
-                        </div>
-                    </div>
-
                     <div>
-                        <!-- 3D Header Section -->
-                        <div class="ac-showcase-top-block">
-                            <span class="ac-showcase-kicker-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                                <span>Direct Surat Mill Depot</span>
-                            </span>
-                            <h1 class="ac-showcase-title-3d">Welcome to DT Brand's</h1>
-                            
-                            <!-- 3D Decorative Flourish Underline -->
-                            <div class="ac-showcase-flourish-wrap">
-                                <span class="ac-flourish-line"></span>
-                                <span class="ac-flourish-crest">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.8">
+                        <!-- 3D Luxury Plaque Box in Left Upper Corner -->
+                        <div class="ac-3d-welcome-card">
+                            <!-- Upper Left Corner 3D Heritage Ribbon -->
+                            <div class="ac-3d-corner-kicker">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <span>Royal Ethnic Heritage • Surat Mill</span>
+                            </div>
+
+                            <span class="ac-3d-welcome-line">Welcome To</span>
+                            <h1 class="ac-3d-brand-title">DT Brand's</h1>
+
+                            <!-- 3D Gold Accent Divider -->
+                            <div class="ac-3d-gold-divider">
+                                <span class="ac-3d-divider-beam"></span>
+                                <span class="ac-3d-crest-node" title="Certified Pure Handloom">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#8A681F" stroke="#FAF5E8" stroke-width="1.8">
                                         <path d="M12 2L2 12l10 10 10-10L12 2z"></path>
                                     </svg>
                                 </span>
-                                <span class="ac-flourish-line right"></span>
+                                <span class="ac-3d-divider-beam right"></span>
                             </div>
 
-                            <p class="ac-showcase-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
+                            <p class="ac-3d-subtitle">Surat's Premier Silk Handloom &amp; Wholesale Depot</p>
                         </div>
 
                         <div class="ac-benefits-list">
