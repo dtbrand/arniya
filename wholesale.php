@@ -15,21 +15,79 @@ require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/OrderManager.php';
 require_once __DIR__ . '/src/CustomerManager.php';
 require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\OrderManager;
 use DTBrand\CustomerManager;
+use DTBrand\Database;
+use DTBrand\Auth;
+
+Auth::initSession();
+$currentUser = Auth::getCurrentUser();
+$dbUser = null;
+$realOrders = [];
+$realKpis = [
+    'total_orders' => 0,
+    'lifetime_spend' => 0.0,
+    'pending_orders' => 0,
+    'tier' => 'Wholesale Gold Partner',
+    'credit_limit' => 0.0,
+    'outstanding_balance' => 0.0
+];
+
+if ($currentUser && !empty($currentUser['id'])) {
+    $dbUser = CustomerManager::getById((int)$currentUser['id']);
+    $pdo = Database::getConnection();
+    if ($pdo !== null && !Database::isMockMode()) {
+        try {
+            $orderStmt = $pdo->prepare("SELECT id, order_number, channel, total_amount, payment_status, status, items, shipping_address, created_at, tracking_number, courier FROM orders WHERE customer_id = ? OR phone = ? ORDER BY id DESC LIMIT 50");
+            $orderStmt->execute([(int)$currentUser['id'], $currentUser['phone'] ?? '']);
+            $rawOrders = $orderStmt->fetchAll(\PDO::FETCH_ASSOC);
+            $spend = 0.0;
+            $pending = 0;
+            foreach ($rawOrders as $ro) {
+                $amt = (float)($ro['total_amount'] ?? 0);
+                $spend += $amt;
+                $st = strtolower((string)($ro['status'] ?? ''));
+                if (in_array($st, ['pending', 'processing', 'in_transit', 'dispatched'], true)) {
+                    $pending++;
+                }
+                $realOrders[] = [
+                    'id' => (int)$ro['id'],
+                    'order_number' => (string)($ro['order_number'] ?? ('DT-WS-' . $ro['id'])),
+                    'channel' => (string)($ro['channel'] ?? 'wholesale'),
+                    'total_amount' => $amt,
+                    'payment_status' => (string)($ro['payment_status'] ?? 'pending'),
+                    'status' => (string)($ro['status'] ?? 'pending'),
+                    'items_count' => is_array(json_decode($ro['items'] ?? '[]', true)) ? count(json_decode($ro['items'] ?? '[]', true)) : 1,
+                    'shipping_address' => (string)($ro['shipping_address'] ?? ''),
+                    'tracking_number' => (string)($ro['tracking_number'] ?? ''),
+                    'courier' => (string)($ro['courier'] ?? 'VRL Freight / TCI Express'),
+                    'date' => (string)($ro['created_at'] ?? '')
+                ];
+            }
+            $realKpis['total_orders'] = count($realOrders);
+            $realKpis['lifetime_spend'] = round($spend, 2);
+            $realKpis['pending_orders'] = $pending;
+            $realKpis['tier'] = !empty($dbUser['tier']) ? $dbUser['tier'] : 'Wholesale Gold Partner';
+            $realKpis['credit_limit'] = (float)($dbUser['credit_limit'] ?? 0);
+            $realKpis['outstanding_balance'] = (float)($dbUser['outstanding_balance'] ?? 0);
+        } catch (\Throwable $e) {}
+    }
+}
+
+$activeUserName = $dbUser['name'] ?? ($currentUser['name'] ?? 'Wholesale Partner');
+$activeUserEmail = $dbUser['email'] ?? ($currentUser['email'] ?? '');
+$activeUserPhone = $dbUser['phone'] ?? ($currentUser['phone'] ?? '');
+$activeUserGstin = $dbUser['gstin'] ?? ($currentUser['gstin'] ?? '');
+$activeUserPan = $dbUser['pan'] ?? ($currentUser['pan'] ?? '');
+$activeUserCity = $dbUser['city'] ?? ($currentUser['city'] ?? '');
+$activeUserState = $dbUser['state'] ?? ($currentUser['state'] ?? '');
+$activeUserTier = $realKpis['tier'];
 
 /*
  * B2B catalogue, read straight from the products table.
- *
- * What stood here before: this same map (with 'Royal Silk' / 'Pure Silk' /
- * 'New Catalogue' placeholders and a fabricated HSN code and tier ladder of
- * wholesale x 0.95 / x 0.90), followed by a 380-line hardcoded catalogue that
- * loaded whenever the query returned nothing. An empty - or unreachable -
- * database therefore presented a full, orderable catalogue of products that do
- * not exist (ids 101-112). Missing values are now passed through empty and the
- * cards below leave those lines out.
  */
 $catalogProducts = [];
 foreach (ProductCatalog::getAll() as $dp) {
@@ -40,8 +98,7 @@ foreach (ProductCatalog::getAll() as $dp) {
     $colors  = array_values(array_filter(array_map('strval', (array)($dp['colors'] ?? [])), static fn($c) => trim($c) !== ''));
     $sizes   = array_values(array_filter(array_map('strval', (array)($dp['size'] ?? [])), static fn($s) => trim($s) !== ''));
 
-    // Real lot sizes from the moq_* columns. No invented per-tier discount: the
-    // table stores one wholesale rate per product, so that is the rate quoted.
+    // Real lot sizes from the moq_* columns.
     $lotParts = [];
     foreach (['single' => 'Single', 'half_set' => 'Half set', 'full_set' => 'Full set', 'master_bale' => 'Master bale'] as $lotKey => $lotLabel) {
         $lotQty = (int)($dp['moq_lots'][$lotKey] ?? 0);
@@ -94,17 +151,20 @@ $catalogHasProducts = $catalogProducts !== [];
     <title>Wholesaler B2B Dashboard — DT Brand's Couture</title>
     
     <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/wholesale.css?v=1787019062">
+    <link rel="stylesheet" href="/assets/css/wholesale.css?v=1787019062&v=<?= time() ?>">
 
-    <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
+    <!-- ════════════ GLOBAL PRODUCTS & REAL USER BOOTSTRAP ════════════ -->
     <script>
         window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
+        window.b2bUser = <?php echo json_encode($dbUser ?: $currentUser ?: null); ?>;
+        window.b2bOrders = <?php echo json_encode($realOrders); ?>;
+        window.b2bKpis = <?php echo json_encode($realKpis); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
     </script>
@@ -1970,15 +2030,15 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-ti-cell-billto">
                             <div class="ws-ti-cell-header">Bill To:</div>
                             <div id="invBillToBody" style="line-height:1.42;">
-                                <strong id="invBuyerName">Siddannagouda Patil</strong><br>
-                                <span id="invBuyerCompany">Patil Cloth Bazar</span><br>
-                                <span id="invBuyerAddress">Sumbad Road Yedrami kalaburgi Dist</span><br>
-                                City: <span id="invBuyerCity">kalaburgi</span><br>
-                                States : <span id="invBuyerState">Karnataka</span><br>
-                                PIN code: <span id="invBuyerPin">585325</span><br>
-                                M/n :- <span id="invBuyerAltPhone">7046363528</span><br>
-                                Contact No: <strong id="invBuyerPhone">7046363528</strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst">29CFZPV1455E1ZO</strong><br>
-                                State: <strong id="invBuyerStateCode">29-Karnataka</strong>
+                                <strong id="invBuyerName"><?= htmlspecialchars($currentUser['name'] ?? 'Buyer Partner') ?></strong><br>
+                                <span id="invBuyerCompany"><?= htmlspecialchars($currentUser['company_name'] ?? 'Buyer Enterprise') ?></span><br>
+                                <span id="invBuyerAddress"><?= htmlspecialchars($currentUser['address'] ?? 'Primary Business Address') ?></span><br>
+                                City: <span id="invBuyerCity"><?= htmlspecialchars($currentUser['city'] ?? 'Surat') ?></span><br>
+                                States : <span id="invBuyerState"><?= htmlspecialchars($currentUser['state'] ?? 'Gujarat') ?></span><br>
+                                PIN code: <span id="invBuyerPin"><?= htmlspecialchars($currentUser['pincode'] ?? '395002') ?></span><br>
+                                M/n :- <span id="invBuyerAltPhone"><?= htmlspecialchars($currentUser['phone'] ?? '917046363528') ?></span><br>
+                                Contact No: <strong id="invBuyerPhone"><?= htmlspecialchars($currentUser['phone'] ?? '917046363528') ?></strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst"><?= htmlspecialchars($currentUser['gstin'] ?? '24AABCU9603R1ZM') ?></strong><br>
+                                State: <strong id="invBuyerStateCode"><?= htmlspecialchars($currentUser['state'] ?? '24-Gujarat') ?></strong>
                             </div>
                         </div>
 
@@ -1986,9 +2046,9 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-ti-cell-invmeta">
                             <div class="ws-ti-cell-header">Invoice Details:</div>
                             <div style="line-height:1.5;">
-                                No: <strong id="invNum">1023</strong><br>
-                                Date: <strong id="invDate">20-04-2026</strong><br>
-                                Place of Supply: <strong id="invPlaceOfSupply">29-Karnataka</strong>
+                                No: <strong id="invNum">1001</strong><br>
+                                Date: <strong id="invDate"><?= date('d-m-Y') ?></strong><br>
+                                Place of Supply: <strong id="invPlaceOfSupply"><?= htmlspecialchars($currentUser['state'] ?? '24-Gujarat') ?></strong>
                             </div>
                         </div>
                     </div>
@@ -1997,10 +2057,10 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div class="ws-ti-shipto-box">
                         <div class="ws-ti-cell-header">Ship To:</div>
                         <div id="invShipToBody" style="line-height:1.4;">
-                            <strong id="invShipCompany">Patil Cloth Bazar</strong><br>
-                            <span id="invShipAddress">Vrl near Delivery Point : Jevargi</span><br>
-                            <span id="invShipCityPin">kalaburgi Dist 585310</span><br>
-                            Number : <span id="invShipPhone">7046363528</span>
+                            <strong id="invShipCompany"><?= htmlspecialchars($currentUser['company_name'] ?? 'Buyer Enterprise') ?></strong><br>
+                            <span id="invShipAddress"><?= htmlspecialchars($currentUser['address'] ?? 'Standard Surface Transport Hub') ?></span><br>
+                            <span id="invShipCityPin"><?= htmlspecialchars(($currentUser['city'] ?? 'Surat') . ' - ' . ($currentUser['pincode'] ?? '395002')) ?></span><br>
+                            Number : <span id="invShipPhone"><?= htmlspecialchars($currentUser['phone'] ?? '917046363528') ?></span>
                         </div>
                     </div>
 

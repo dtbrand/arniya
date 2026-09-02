@@ -2,151 +2,8 @@
     (function() {
         'use strict';
 
-        /* ── Wholesale Initial Sample Orders Data ── */
-        var SAMPLE_ORDERS = [
-            {
-                id: 'KLN-WS-8021',
-                date: '14 Aug 2026',
-                status: 'Shipped',
-                productName: 'Nilambari Silk Saree (Pack of 12)',
-                sku: 'KLN-SR-001',
-                hsn: '5007',
-                image: '/assets/images/product1.png',
-                qty: 12,
-                unitPrice: 3199,
-                subtotal: 38388,
-                tax: 1920,
-                discount: 2000,
-                total: 38308,
-                payment: 'Bank NEFT / RTGS (Paid)',
-                courier: 'BlueDart Express',
-                awb: '884729104',
-                color: 'Navy Blue (Lot Assorted)',
-                size: 'Free Size'
-            },
-            {
-                id: 'KLN-WS-7914',
-                date: '10 Aug 2026',
-                status: 'Delivered',
-                productName: 'Banarasi Zari Saree (Pack of 8)',
-                sku: 'KLN-SR-002',
-                hsn: '5007',
-                image: '/assets/images/product2.png',
-                qty: 8,
-                unitPrice: 5499,
-                subtotal: 43992,
-                tax: 2200,
-                discount: 3000,
-                total: 43192,
-                payment: 'UPI on WhatsApp (Paid)',
-                courier: 'Delhivery Surface',
-                awb: 'DLV9928174',
-                color: 'Maroon & Deep Wine',
-                size: 'Free Size'
-            },
-            {
-                id: 'KLN-WS-6540',
-                date: '02 Aug 2026',
-                status: 'Delivered',
-                productName: 'Kanjivaram Temple Silk (Pack of 6)',
-                sku: 'KLN-SR-003',
-                hsn: '5007',
-                image: '/assets/images/product3.png',
-                qty: 6,
-                unitPrice: 8499,
-                subtotal: 50994,
-                tax: 2550,
-                discount: 4000,
-                total: 49544,
-                payment: 'Bank NEFT / RTGS (Paid)',
-                courier: 'DTDC Priority Cargo',
-                awb: 'DTDC773819',
-                color: 'Golden Ochre',
-                size: 'Free Size'
-            },
-            {
-                id: 'KLN-WS-5912',
-                date: '26 Jul 2026',
-                status: 'Delivered',
-                productName: 'Royal Anarkali Kurti Sets (Pack of 10)',
-                sku: 'KLN-KT-005',
-                hsn: '6204',
-                image: '/assets/images/product5.png',
-                qty: 10,
-                unitPrice: 1799,
-                subtotal: 17990,
-                tax: 900,
-                discount: 1000,
-                total: 17890,
-                payment: 'Cash on Delivery (COD)',
-                courier: 'BlueDart Express',
-                awb: 'BLU6619283',
-                color: 'Teal & Emerald Assorted',
-                size: 'S, M, L, XL'
-            },
-            {
-                id: 'KLN-WS-4810',
-                date: '18 Jul 2026',
-                status: 'Processing',
-                productName: 'Bridal Zardosi Velvet Lehenga (Pack of 2)',
-                sku: 'KLN-LH-006',
-                hsn: '6204',
-                image: '/assets/images/product6.png',
-                qty: 2,
-                unitPrice: 16499,
-                subtotal: 32998,
-                tax: 1650,
-                discount: 2000,
-                total: 32648,
-                payment: 'Advance 50% Deposit (Paid)',
-                courier: 'Hand Craft Weaving Unit',
-                awb: 'WEAVE-SRT-09',
-                color: 'Crimson Red',
-                size: 'Custom Tailored'
-            },
-            {
-                id: 'KLN-WS-3120',
-                date: '08 Jul 2026',
-                status: 'Returned',
-                productName: 'Georgette Bloom Saree (Pack of 10)',
-                sku: 'KLN-SR-004',
-                hsn: '5407',
-                image: '/assets/images/product4.png',
-                qty: 10,
-                unitPrice: 2199,
-                subtotal: 21990,
-                tax: 1100,
-                discount: 1500,
-                total: 21590,
-                payment: 'Refunded (₹21,590 credited)',
-                courier: 'Return Pickup Completed',
-                awb: 'RET99381',
-                color: 'Peach Bloom',
-                size: 'Free Size'
-            }
-        ];
-
-        /* ── Sample Support Tickets ── */
-        var SAMPLE_TICKETS = [
-            {
-                id: 'TCK-892',
-                orderId: 'KLN-WS-8021',
-                category: 'Logistics & Dispatch Inquiry',
-                status: 'In Progress',
-                message: 'Kindly ensure dispatch before Thursday for Surat wedding exhibition lot.',
-                date: '14 Aug 2026'
-            },
-            {
-                id: 'TCK-814',
-                orderId: 'KLN-WS-7914',
-                category: 'GST Input Tax Credit Query',
-                status: 'Resolved',
-                message: 'Received GSTR-1 invoice reflection in portal. Thank you for prompt assistance.',
-                date: '11 Aug 2026'
-            }
-        ];
-
-        var activeOrdersList = [];
+        /* ── Real Database Orders & Tickets Roster (Empty by Default, Hydrated from Live Database) ── */
+        var activeOrdersList = Array.isArray(window.b2bOrders) ? window.b2bOrders.slice() : [];
         var activeTicketsList = [];
         var activeGstMode = 'gst';
         var currentOrderStatusFilter = 'all';
@@ -375,42 +232,134 @@
             backdrop.classList.toggle('active', shouldOpen);
         };
 
-        /* ── Load Wholesaler Profile & State ── */
+        /* ── Load Wholesaler Profile & State (Real Database Hydration) ── */
         window.loadSavedWholesalerData = function() {
+            var b2b = window.b2bUser || {};
             var userRaw = localStorage.getItem('dtbrands_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
+            var localUser = userRaw ? JSON.parse(userRaw) : {};
+            var user = Object.assign({}, localUser, b2b);
 
-            var name = user.name || 'Rajesh Kumar';
-            var company = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
-            var email = user.email || 'rajesh@shreekrishnasilks.com';
-            var gstType = user.gst_type || 'gst';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var address = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var city = user.city || 'Surat';
-            var state = user.state || 'Gujarat';
-            var pincode = user.pincode || '395002';
+            var name = user.name || 'Wholesale Partner';
+            var company = user.companyName || user.company_name || '';
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '');
+            var email = user.email || '';
+            var gstType = user.gst_type || (user.gstin ? 'gst' : 'non_gst');
+            var gstNum = user.gstin || user.gst_number || '';
 
             var hdrName = document.getElementById('headerUserName');
-            if (hdrName) hdrName.textContent = name;
+            if (hdrName && name !== 'Wholesale Partner') hdrName.textContent = name;
+            var sideName = document.getElementById('sideUserName');
+            if (sideName && name !== 'Wholesale Partner') sideName.textContent = name;
 
             // Populate My Details form
             var profName = document.getElementById('wsProfName');
             var profPhone = document.getElementById('wsProfPhone');
             var profEmail = document.getElementById('wsProfEmail');
-            if (profName) profName.value = name;
-            if (profPhone) profPhone.value = phone;
-            if (profEmail) profEmail.value = email;
+            if (profName && !profName.value) profName.value = name !== 'Wholesale Partner' ? name : '';
+            if (profPhone && !profPhone.value) profPhone.value = phone;
+            if (profEmail && !profEmail.value) profEmail.value = email;
 
             // Populate GST form
-            selectGstMode(gstType);
+            if (typeof selectGstMode === 'function') selectGstMode(gstType);
             var compEl = document.getElementById('wsCompanyName');
             var gstEl = document.getElementById('wsGstNumber');
-            if (compEl) compEl.value = company;
-            if (gstEl) gstEl.value = gstNum;
+            if (compEl && !compEl.value) compEl.value = company;
+            if (gstEl && !gstEl.value) gstEl.value = gstNum;
 
             // Populate Address Book & Shipping data
-            renderAddressBookData(user);
+            if (typeof renderAddressBookData === 'function') {
+                renderAddressBookData(user);
+            }
+        };
+
+        /* ── Real Database Live Profile & GST Updates ── */
+        window.handleSaveWholesalerDetails = function(e) {
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
+            var name = (document.getElementById('wsProfName') ? document.getElementById('wsProfName').value : '').trim();
+            var phone = (document.getElementById('wsProfPhone') ? document.getElementById('wsProfPhone').value : '').trim();
+            var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
+
+            if (!name) {
+                window.showWsToast('⚠️ Please enter your Full Name.');
+                return false;
+            }
+
+            var btn = e && e.target ? e.target.querySelector('button[type="submit"]') : null;
+            if (btn) { btn.disabled = true; btn.textContent = 'Saving to Database...'; }
+
+            fetch('/api/wholesale.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'update_profile',
+                    name: name,
+                    phone: phone,
+                    email: email
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
+                if (res.success) {
+                    var userRaw = localStorage.getItem('dtbrands_user');
+                    var user = userRaw ? JSON.parse(userRaw) : {};
+                    user.name = name;
+                    user.email = email;
+                    user.phone = phone;
+                    localStorage.setItem('dtbrands_user', JSON.stringify(user));
+                    if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
+                    if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
+                    window.showWsToast('✅ Wholesale Profile updated in live database!');
+                } else {
+                    window.showWsToast('⚠️ ' + (res.error || 'Failed to update profile'));
+                }
+            })
+            .catch(function() {
+                if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
+                window.showWsToast('✅ Profile saved locally.');
+            });
+
+            return false;
+        };
+
+        window.handleSaveGstProfile = function(e) {
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
+            var compName = (document.getElementById('wsCompanyName') ? document.getElementById('wsCompanyName').value : '').trim();
+            var gstin = (document.getElementById('wsGstNumber') ? document.getElementById('wsGstNumber').value : '').trim().toUpperCase();
+
+            var btn = e && e.target ? e.target.querySelector('button[type="submit"]') : null;
+            if (btn) { btn.disabled = true; btn.textContent = 'Verifying GSTIN...'; }
+
+            fetch('/api/wholesale.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'update_profile',
+                    company_name: compName,
+                    gstin: gstin
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
+                if (res.success) {
+                    var userRaw = localStorage.getItem('dtbrands_user');
+                    var user = userRaw ? JSON.parse(userRaw) : {};
+                    user.companyName = compName;
+                    user.gst_number = gstin;
+                    user.gstin = gstin;
+                    localStorage.setItem('dtbrands_user', JSON.stringify(user));
+                    window.showWsToast('✅ GST Tax Profile updated in live database!');
+                } else {
+                    window.showWsToast('⚠️ ' + (res.error || 'Invalid GST details'));
+                }
+            })
+            .catch(function() {
+                if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
+                window.showWsToast('✅ GST profile saved.');
+            });
+
+            return false;
         };
 
         window.toggleSameAsBillingAddress = function(isSame) {
@@ -2033,24 +1982,26 @@
             var modal = document.getElementById('wsBillInvoiceModal');
             if (!modal) return;
 
+            var b2b = window.b2bUser || {};
             var userRaw = localStorage.getItem('dtbrands_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
+            var localUser = userRaw ? JSON.parse(userRaw) : {};
+            var user = Object.assign({}, localUser, b2b);
 
             // 1. Invoice Meta
-            var cleanId = o.id ? o.id.replace(/[^0-9]/g, '') : '1023';
-            if (!cleanId) cleanId = '1023';
-            var invDate = o.date || '20-04-2026';
+            var cleanId = String(o.order_number || o.id || '1001').replace(/[^0-9]/g, '');
+            if (!cleanId) cleanId = '1001';
+            var invDate = o.date || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             
-            var buyerName = user.name || 'Siddannagouda Patil';
-            var buyerComp = user.companyName || user.company_name || 'Patil Cloth Bazar';
-            var buyerAddr = user.address || 'Sumbad Road Yedrami kalaburgi Dist';
-            var buyerCity = user.city || 'kalaburgi';
-            var buyerState = user.state || 'Karnataka';
-            var buyerPin = user.pincode || '585325';
-            var buyerPhone = user.phone || '7046363528';
-            var buyerAltPhone = user.alt_phone || '7046363528';
-            var buyerGst = user.gst_number || (user.gst_type === 'gst' ? '29CFZPV1455E1ZO' : '29CFZPV1455E1ZO');
-            var stateCode = user.state_code || '29-Karnataka';
+            var buyerName = user.name || (o.customer_name || 'Valued Wholesale Partner');
+            var buyerComp = user.companyName || user.company_name || user.name || 'Registered Wholesale Enterprise';
+            var buyerAddr = user.address || (o.shipping_address || 'Registered Business Address');
+            var buyerCity = user.city || 'Surat';
+            var buyerState = user.state || 'Gujarat';
+            var buyerPin = user.pincode || '';
+            var buyerPhone = user.phone || '917046363528';
+            var buyerAltPhone = user.alt_phone || buyerPhone;
+            var buyerGst = user.gstin || user.gst_number || (user.gst_type === 'gst' ? '24AABCU9603R1ZM' : 'N/A (Unregistered)');
+            var stateCode = user.state_code || (buyerState ? buyerState : '24-Gujarat');
 
             if (document.getElementById('invNum')) document.getElementById('invNum').textContent = cleanId;
             if (document.getElementById('invDate')) document.getElementById('invDate').textContent = invDate;
@@ -2070,9 +2021,9 @@
 
             // 3. Ship To
             if (document.getElementById('invShipCompany')) document.getElementById('invShipCompany').textContent = buyerComp;
-            if (document.getElementById('invShipAddress')) document.getElementById('invShipAddress').textContent = o.delivery_point || 'Vrl near Delivery Point : Jevargi';
-            if (document.getElementById('invShipCityPin')) document.getElementById('invShipCityPin').textContent = `${buyerCity} Dist ${buyerPin}`;
-            if (document.getElementById('invShipPhone')) document.getElementById('invShipPhone').textContent = `${buyerPhone}, ${buyerAltPhone}`;
+            if (document.getElementById('invShipAddress')) document.getElementById('invShipAddress').textContent = o.shipping_address || o.delivery_point || buyerAddr;
+            if (document.getElementById('invShipCityPin')) document.getElementById('invShipCityPin').textContent = buyerCity + (buyerPin ? ' - ' + buyerPin : '');
+            if (document.getElementById('invShipPhone')) document.getElementById('invShipPhone').textContent = buyerPhone;
 
             // 4. Calculate Items & Taxes
             var items = o.items || [];
@@ -2211,60 +2162,67 @@
         var activeCatalogSubCategory = 'all_sub';
         var activeCatalogSubCategoryLabel = '';
 
+        var svgStar = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+        var svgFire = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>';
+        var svgDiamond = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>';
+        var svgCrown = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"></path></svg>';
+        var svgTag = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>';
+        var svgLayers = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>';
+
         var wsCategoryTaxonomy = {
             'Kurtis': {
                 title: 'Kurtis & Sets',
                 icon: '<svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>',
                 subcategories: [
-                    { name: 'All Kurtis & Sets', filter: 'all_sub', icon: '✨' },
-                    { name: 'Sharara & Anarkali Sets', filter: 'sharara', icon: '🔥' },
-                    { name: 'Straight Cut Kurtis', filter: 'straight', icon: '👗' },
-                    { name: 'Lakhnavi Chikan Work', filter: 'chikan', icon: '💎' },
-                    { name: 'Printed Cotton Kurtis', filter: 'cotton', icon: '🌸' },
-                    { name: 'Rayon Everyday Sets', filter: 'rayon', icon: '⚡' }
+                    { name: 'All Kurtis & Sets', filter: 'all_sub', icon: svgStar },
+                    { name: 'Sharara & Anarkali Sets', filter: 'sharara', icon: svgFire },
+                    { name: 'Straight Cut Kurtis', filter: 'straight', icon: svgTag },
+                    { name: 'Lakhnavi Chikan Work', filter: 'chikan', icon: svgDiamond },
+                    { name: 'Printed Cotton Kurtis', filter: 'cotton', icon: svgLayers },
+                    { name: 'Rayon Everyday Sets', filter: 'rayon', icon: svgStar }
                 ]
             },
             'Sarees': {
                 title: 'Sarees',
                 icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
                 subcategories: [
-                    { name: 'All Sarees', filter: 'all_sub', icon: '🥻' },
-                    { name: 'Kanjivaram Silk', filter: 'kanjivaram', icon: '👑' },
-                    { name: 'Dola & Paithani Silk', filter: 'dola', icon: '✨' },
-                    { name: 'Georgette & Chiffon', filter: 'georgette', icon: '🔥' },
-                    { name: 'Chanderi Festive', filter: 'chanderi', icon: '💎' },
-                    { name: 'Bandhani Art Silk', filter: 'bandhani', icon: '⚡' }
+                    { name: 'All Sarees', filter: 'all_sub', icon: svgLayers },
+                    { name: 'Kanjivaram Silk', filter: 'kanjivaram', icon: svgCrown },
+                    { name: 'Dola & Paithani Silk', filter: 'dola', icon: svgStar },
+                    { name: 'Georgette & Chiffon', filter: 'georgette', icon: svgFire },
+                    { name: 'Chanderi Festive', filter: 'chanderi', icon: svgDiamond },
+                    { name: 'Bandhani Art Silk', filter: 'bandhani', icon: svgTag }
                 ]
             },
             'Lehengas': {
                 title: 'Lehengas',
                 icon: '<svg viewBox="0 0 24 24"><polygon points="12 2 2 22 22 22 12 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>',
                 subcategories: [
-                    { name: 'All Lehengas', filter: 'all_sub', icon: '👑' },
-                    { name: 'Bridal Velvet', filter: 'velvet', icon: '💎' },
-                    { name: 'Zardosi Heavy Work', filter: 'zardosi', icon: '✨' },
-                    { name: 'Semi-Bridal Art Silk', filter: 'silk', icon: '🔥' },
-                    { name: 'Festive Georgette', filter: 'georgette', icon: '🌸' }
+                    { name: 'All Lehengas', filter: 'all_sub', icon: svgCrown },
+                    { name: 'Bridal Velvet', filter: 'velvet', icon: svgDiamond },
+                    { name: 'Zardosi Heavy Work', filter: 'zardosi', icon: svgStar },
+                    { name: 'Semi-Bridal Art Silk', filter: 'silk', icon: svgFire },
+                    { name: 'Festive Georgette', filter: 'georgette', icon: svgLayers }
                 ]
             },
             'Gowns': {
                 title: 'Gowns & Indo-Western',
                 icon: '<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4z"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>',
                 subcategories: [
-                    { name: 'All Gowns', filter: 'all_sub', icon: '💃' },
-                    { name: 'Flared Designer Gowns', filter: 'flared', icon: '✨' },
-                    { name: 'Indo-Western Fusion', filter: 'indo', icon: '🔥' },
-                    { name: 'Embroidered Festive', filter: 'embroidered', icon: '💎' }
+                    { name: 'All Gowns', filter: 'all_sub', icon: svgCrown },
+                    { name: 'Flared Designer Gowns', filter: 'flared', icon: svgStar },
+                    { name: 'Indo-Western Fusion', filter: 'indo', icon: svgFire },
+                    { name: 'Embroidered Festive', filter: 'embroidered', icon: svgDiamond }
                 ]
             },
             'Dress Materials': {
                 title: 'Dress Materials',
                 icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
                 subcategories: [
-                    { name: 'All Dress Materials', filter: 'all_sub', icon: '🧵' },
-                    { name: 'Pure Cotton Suit Lots', filter: 'cotton', icon: '🚀' },
-                    { name: 'Chanderi Jacquard Suits', filter: 'chanderi', icon: '✨' },
-                    { name: 'Silk Touch Unstitched', filter: 'silk', icon: '💎' }
+                    { name: 'All Dress Materials', filter: 'all_sub', icon: svgLayers },
+                    { name: 'Pure Cotton Suit Lots', filter: 'cotton', icon: svgStar },
+                    { name: 'Chanderi Jacquard Suits', filter: 'chanderi', icon: svgDiamond },
+                    { name: 'Silk Touch Unstitched', filter: 'silk', icon: svgCrown }
                 ]
             }
         };
@@ -2902,8 +2860,8 @@
             })();
             window.allProducts = Array.isArray(products) ? products : [];
 
-            activeOrdersList = SAMPLE_ORDERS.slice();
-            activeTicketsList = SAMPLE_TICKETS.slice();
+            activeOrdersList = Array.isArray(window.b2bOrders) ? window.b2bOrders.slice() : [];
+            activeTicketsList = [];
 
             loadSavedWholesalerData();
             renderOrdersView(activeOrdersList);
