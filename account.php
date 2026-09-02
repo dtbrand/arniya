@@ -192,13 +192,13 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             }
         }
 
-        /* ── Left Designer E-Commerce Showcase (Fluid on All Devices) ── */
+        /* ── Left Designer E-Commerce Showcase (Hidden on Mobile, Desktop Only) ── */
         .ac-hero-showcase {
-            display: flex;
+            display: none !important;
             background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F5EDE0 100%);
             border-radius: var(--radius-xl);
             border: 1.5px solid var(--dt-gold-border);
-            padding: clamp(20px, 3.5vw, 32px);
+            padding: clamp(24px, 4vw, 36px);
             color: var(--dt-text-main);
             flex-direction: column;
             justify-content: space-between;
@@ -206,12 +206,17 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(138,104,31,0.08);
         }
+        @media (min-width: 960px) {
+            .ac-hero-showcase {
+                display: flex !important;
+            }
+        }
         .ac-hero-showcase::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8A681F, #D4AF37, #FFFFFF, #E6CA65, #D4AF37, #8A681F);
+            height: 3.5px;
+            background: linear-gradient(90deg, #8A681F, #D4AF37, #E6CA65, #D4AF37, #8A681F);
         }
 
         /* ═══════════════════════════════════════════════════════════════════
