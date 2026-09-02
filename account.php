@@ -1920,6 +1920,128 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             color: var(--dt-text-muted);
             text-transform: uppercase;
         }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           DEFINITIVE 3D MASTER STYLES FOR "WELCOME TO DT BRAND'S"
+        ═══════════════════════════════════════════════════════════════════ */
+        .ac-hero-showcase .ac-3d-welcome-card {
+            position: relative !important;
+            background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 50%, #F4EAD7 100%) !important;
+            border: 2px solid #D4AF37 !important;
+            border-radius: 18px !important;
+            padding: clamp(18px, 3.2vw, 24px) !important;
+            margin-bottom: 20px !important;
+            box-shadow: 
+                0 2px 0 rgba(255, 255, 255, 0.95) inset,
+                0 -2px 0 #B8860B inset,
+                0 8px 24px rgba(138, 104, 31, 0.20),
+                0 16px 36px rgba(0, 0, 0, 0.08) !important;
+            transform: perspective(700px) rotateX(2deg) rotateY(-1deg) !important;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            overflow: hidden !important;
+            display: block !important;
+        }
+        .ac-hero-showcase .ac-3d-welcome-card:hover {
+            transform: perspective(700px) rotateX(0deg) rotateY(0deg) translateY(-3px) !important;
+            box-shadow: 
+                0 2px 0 rgba(255, 255, 255, 0.95) inset,
+                0 -2px 0 #D4AF37 inset,
+                0 14px 32px rgba(138, 104, 31, 0.30),
+                0 22px 48px rgba(0, 0, 0, 0.14) !important;
+        }
+
+        .ac-hero-showcase .ac-3d-corner-kicker {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 4px 12px !important;
+            border-radius: 20px !important;
+            background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+            border: 1.2px solid #D4AF37 !important;
+            color: #FAF5E8 !important;
+            font-size: 0.68rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.1em !important;
+            text-transform: uppercase !important;
+            margin-bottom: 10px !important;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(212,175,55,0.5) !important;
+        }
+
+        .ac-hero-showcase .ac-3d-welcome-line {
+            font-family: 'Cinzel', Georgia, serif !important;
+            font-size: clamp(1.1rem, 2.2vw, 1.35rem) !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.18em !important;
+            color: #8A681F !important;
+            text-transform: uppercase !important;
+            line-height: 1.15 !important;
+            margin: 0 0 4px 0 !important;
+            display: block !important;
+            text-shadow: 
+                1px 1px 0px #FFFFFF,
+                2px 2px 0px rgba(212, 175, 55, 0.5),
+                3px 3px 6px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .ac-hero-showcase .ac-3d-brand-title {
+            font-family: 'Cinzel', Georgia, serif !important;
+            font-size: clamp(1.9rem, 3.8vw, 2.6rem) !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.04em !important;
+            line-height: 1.08 !important;
+            margin: 0 0 10px 0 !important;
+            color: #181512 !important;
+            text-transform: uppercase !important;
+            display: block !important;
+            text-shadow: 
+                1px 1px 0px #FFFFFF,
+                2px 2px 0px #E6CA65,
+                3px 3px 0px #D4AF37,
+                4px 4px 0px #B8860B,
+                5px 5px 0px #8A681F,
+                6px 6px 1px rgba(0, 0, 0, 0.25),
+                0 8px 20px rgba(138, 104, 31, 0.40) !important;
+        }
+
+        .ac-hero-showcase .ac-3d-gold-divider {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin: 10px 0 12px 0 !important;
+            max-width: 320px !important;
+        }
+
+        .ac-hero-showcase .ac-3d-divider-beam {
+            flex: 1 !important;
+            height: 3px !important;
+            background: linear-gradient(90deg, #8A681F 0%, #D4AF37 50%, #FAF5E8 100%) !important;
+            border-radius: 3px !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15), 0 0 6px rgba(212,175,55,0.4) !important;
+        }
+        .ac-hero-showcase .ac-3d-divider-beam.right {
+            background: linear-gradient(90deg, #FAF5E8 0%, #D4AF37 50%, #8A681F 100%) !important;
+        }
+
+        .ac-hero-showcase .ac-3d-crest-node {
+            width: 22px !important;
+            height: 22px !important;
+            border-radius: 50% !important;
+            background: linear-gradient(135deg, #FAF5E8 0%, #D4AF37 100%) !important;
+            border: 1.5px solid #8A681F !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.5), inset 0 1px 0 #FFFFFF !important;
+            animation: acGemPulse 3s infinite !important;
+        }
+
+        .ac-hero-showcase .ac-3d-subtitle {
+            font-size: 0.88rem !important;
+            color: #475569 !important;
+            font-weight: 700 !important;
+            line-height: 1.45 !important;
+            margin: 0 !important;
+        }
     </style>
 </head>
 <body>
