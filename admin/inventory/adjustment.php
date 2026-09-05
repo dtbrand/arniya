@@ -52,14 +52,17 @@ $products = ProductCatalog::getAll(true);
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Manually balance and reconcile SKU inventory levels following physical warehouse cycle counts.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Inventory Depot</a>
+                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Inventory Depot</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Adjustment Entry Form Card -->
             <div class="adm-card" style="max-width:800px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>⚖️ Physical Stock Audit Form</span></h3>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>Physical Stock Audit Form</span></h3>
                     <span class="adm-badge" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800; font-size:11.5px;">Direct DB Reconciliation</span>
                 </div>
                 <form id="stockAdjustmentForm" onsubmit="handleStockAdjustment(event)" style="padding:18px 20px;">
@@ -116,7 +119,7 @@ function handleStockAdjustment(e) {
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Stock reconciled (${qty > 0 ? '+' : ''}${qty} pcs) for "${title}" in MySQL database!`);
+                window.showToast(`Stock reconciled (${qty > 0 ? '+' : ''}${qty} pcs) for "${title}" in MySQL database!`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';
@@ -124,7 +127,7 @@ function handleStockAdjustment(e) {
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Stock adjusted (${qty > 0 ? '+' : ''}${qty} pcs)!`);
+                window.showToast(`Stock adjusted (${qty > 0 ? '+' : ''}${qty} pcs)!`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';

@@ -72,7 +72,10 @@ $typeLabels = [
                     <p class="adm-page-subtitle">Pending trade applications first, then active accounts by value — every chat button is a live wa.me link.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/whatsapp/" class="adm-btn-secondary">← Back to Whatsapp Suite</a>
+                    <a href="/admin/whatsapp/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to WhatsApp Suite</span>
+                    </a>
                 </div>
             </div>
 
@@ -118,9 +121,11 @@ $typeLabels = [
                                     </td>
                                     <td><?= htmlspecialchars(date('d M Y', strtotime((string)$l['created_at']))) ?></td>
                                     <td>
-                                        <a class="adm-action-btn wa" style="text-decoration:none;" target="_blank" rel="noopener"
+                                        <a class="adm-action-btn wa" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px;" target="_blank" rel="noopener"
                                            href="https://wa.me/<?= htmlspecialchars($phone) ?>?text=<?= rawurlencode($msg) ?>"
-                                           title="Open WhatsApp chat">💬</a>
+                                           title="Open WhatsApp chat">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

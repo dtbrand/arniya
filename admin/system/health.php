@@ -56,7 +56,10 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Real-time performance monitors for Apache server, PHP <?= $phpVer ?> OPcache, MySQL connection pool, and SSL certificate.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← System Suite</a>
+                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>System Suite</span>
+                    </a>
                     <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="reverifyHealth(this)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                         <span>Re-Verify Health</span>
@@ -76,12 +79,12 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
                         btn.disabled = false;
                         var dbOk = d && (d.database === 'connected' || d.connection === 'ok' || d.status === 'ok' || d.success);
                         out.textContent = dbOk
-                            ? '✓ Database connected. Diagnostics: ' + JSON.stringify(d).slice(0, 400)
-                            : '⚠ Diagnostics returned: ' + JSON.stringify(d).slice(0, 400);
+                            ? '[Success] Database connected. Diagnostics: ' + JSON.stringify(d).slice(0, 400)
+                            : '[Notice] Diagnostics returned: ' + JSON.stringify(d).slice(0, 400);
                     })
                     .catch(function () {
                         btn.disabled = false;
-                        out.textContent = '⚠ Could not reach /api/db_health.php — check the server logs.';
+                        out.textContent = '[Notice] Could not reach /api/db_health.php — check the server logs.';
                     });
             }
             </script>
@@ -113,8 +116,8 @@ $curMem = round(memory_get_usage(true) / (1024 * 1024), 2) . ' MB';
             <!-- Diagnostics Detailed Matrix -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>⚡ Subsystem Health Matrix</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 All Subsystems Green</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Subsystem Health Matrix</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D; margin-right:4px;"></span>All Subsystems Green</span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">

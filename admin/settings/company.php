@@ -85,7 +85,10 @@ require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
                 </div>
                 <?php
 require_once __DIR__ . '/_shared.php'; if (dt_set('company_gstin', '') === ''): ?>
-                <p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">⚠ No GSTIN on file — B2B order invoices will print without a tax number until it is saved here.</p>
+                <p style="font-size:11.5px; color:#B45309; padding:0 18px 12px; display:flex; align-items:center; gap:6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span>No GSTIN on file — B2B order invoices will print without a tax number until it is saved here.</span>
+                </p>
                 <?php
 require_once __DIR__ . '/_shared.php'; endif; ?>
             </div>

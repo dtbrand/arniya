@@ -55,8 +55,11 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">Audit log of processed refunds, returns, and reversals.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/payments/" class="adm-btn-secondary">← Back to Payments Suite</a>
-                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Payments Suite</span>
+                    </a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">Main Console</a>
                 </div>
             </div>
 
@@ -93,7 +96,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <?php else: ?>
                                 <tr>
                                     <td colspan="7" style="text-align:center; padding:35px; color:#64748B;">
-                                        ✨ Zero refund requests or chargebacks logged in ledger.
+                                        Zero refund requests or chargebacks logged in ledger.
                                     </td>
                                 </tr>
                             <?php endif; ?>

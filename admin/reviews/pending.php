@@ -54,15 +54,21 @@ if (empty($pendingReviews)) {
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Audit and approve customer testimonials and rating stars before displaying publicly on product pages.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/reviews/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Reviews Hub</a>
-                    <a href="/admin/reviews/approved.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">Published Reviews →</a>
+                    <a href="/admin/reviews/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Reviews Hub</span>
+                    </a>
+                    <a href="/admin/reviews/approved.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <span>Published Reviews</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
                 </div>
             </div>
 
             <!-- Pending Reviews Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>⏳ Awaiting Moderator Verification</span></h3>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Awaiting Moderator Verification</span></h3>
                     <span class="adm-badge" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D; font-weight:700; font-size:11.5px;">Pending Approval</span>
                 </div>
                 <div class="adm-table-responsive">
@@ -87,8 +93,10 @@ if (empty($pendingReviews)) {
                                         <span class="adm-badge gold" style="font-weight:700;">Product #<?= (int)($r['product_id'] ?? 1) ?></span>
                                     </td>
                                     <td>
-                                        <div style="color:#D4AF37; font-size:14px; letter-spacing:2px;">
-                                            <?= str_repeat('★', (int)($r['rating'] ?? 5)) ?>
+                                        <div style="display:inline-flex; align-items:center; gap:2px;">
+                                            <?php for ($si = 0; $si < (int)($r['rating'] ?? 5); $si++): ?>
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#B8860B" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <?php endfor; ?>
                                         </div>
                                     </td>
                                     <td>
@@ -101,11 +109,13 @@ if (empty($pendingReviews)) {
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:6px;">
-                                            <button type="button" class="dt-btn dt-btn-emerald dt-btn-sm" onclick="moderateReview(<?= $r['id'] ?>, 'approve')">
-                                                ✓ Approve &amp; Publish
+                                            <button type="button" class="dt-btn dt-btn-emerald dt-btn-sm" style="display:inline-flex; align-items:center; gap:4px;" onclick="moderateReview(<?= $r['id'] ?>, 'approve')">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span>Approve &amp; Publish</span>
                                             </button>
-                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626;" onclick="moderateReview(<?= $r['id'] ?>, 'reject')">
-                                                ✕ Reject
+                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626; display:inline-flex; align-items:center; gap:4px;" onclick="moderateReview(<?= $r['id'] ?>, 'reject')">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                <span>Reject</span>
                                             </button>
                                         </div>
                                     </td>
@@ -141,7 +151,7 @@ function moderateReview(id, action) {
             }
             const r = document.getElementById('reviewRow_' + id);
             if (r) r.remove();
-            toast(action === 'approve' ? '✨ Review approved & published to live storefront!' : 'Review rejected.');
+            toast(action === 'approve' ? 'Review approved and published to live storefront!' : 'Review rejected.');
         })
         .catch(() => {
             toast('Network error — the review was not updated. Please try again.');

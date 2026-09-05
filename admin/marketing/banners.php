@@ -77,7 +77,10 @@ $active_nav = "marketing";
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Manage top rotating promotional banners, mobile hero banners, and deep-link click URLs.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/marketing/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Marketing Hub</a>
+                    <a href="/admin/marketing/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Marketing Hub</span>
+                    </a>
                     <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="openNewBannerModal()">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>+ Add New Banner</span>
@@ -88,8 +91,8 @@ $active_nav = "marketing";
             <!-- Active Hero Sliders Grid -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>🖼️ Active Storefront Hero Sliders</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Auto-Rotating (5s)</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>Active Storefront Hero Sliders</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D; margin-right:4px;"></span>Auto-Rotating (5s)</span>
                 </div>
                 <div class="dt-banner-grid" style="padding:16px 18px;">
                     <!-- Banner Card 1 -->
@@ -156,7 +159,7 @@ $active_nav = "marketing";
 <div id="newBannerModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
     <div style="background:#FFFFFF; border-radius:12px; width:95%; max-width:460px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1.5px solid #D4AF37;">
         <h3 style="margin:0 0 14px 0; font-size:1.1rem; font-weight:800; color:#181512; display:flex; align-items:center; gap:8px;">
-            <span>🖼️ Add Homepage Hero Banner</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>Add Homepage Hero Banner</span>
         </h3>
         <form onsubmit="handleNewBanner(event)">
             <div style="display:flex; flex-direction:column; gap:12px;">
@@ -201,7 +204,7 @@ function handleNewBanner(e) {
     const title = document.getElementById('bannerTitle').value.trim();
     closeNewBannerModal();
     if (typeof window.showToast === 'function') {
-        window.showToast(`✨ Hero Banner "${title}" added and saved!`);
+        window.showToast(`Hero Banner "${title}" added and saved!`);
     }
 }
 </script>

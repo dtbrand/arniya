@@ -211,7 +211,7 @@ function quickAdjustStock(prodId, delta, sku) {
     fetch('/api/products.php', { method: 'POST', body: params })
         .then(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`📦 Stock for ${sku} updated to ${newQty} units in database!`);
+                window.showToast(`Stock for ${sku} updated to ${newQty} units in database!`);
             }
         })
         .catch(() => {});

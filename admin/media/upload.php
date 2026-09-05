@@ -34,8 +34,11 @@ $active_nav = "media";
                     <p class="adm-page-subtitle">Drag and drop high-resolution saree photos and catalog banners.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/media/" class="adm-btn-secondary">← Back to Media Suite</a>
-                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin/media/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Media Suite</span>
+                    </a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">Main Console</a>
                 </div>
             </div>
 
@@ -43,13 +46,18 @@ $active_nav = "media";
             
         <div class="adm-card">
             <div class="adm-card-head">
-                <h3 class="adm-card-title"><span>📤 Drag & Drop Asset Uploader</span></h3>
+                <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Drag &amp; Drop Asset Uploader</span></h3>
             </div>
             <div style="padding:40px; border:2px dashed #D5A021; border-radius:8px; text-align:center; background:#FAF8F4;">
-                <div style="font-size:2.5rem; margin-bottom:10px;">📁</div>
+                <div style="margin-bottom:12px; display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; background:#FAF5E8; border:1px solid #D4AF37;">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                </div>
                 <h4>Drag high-res WebP / PNG / JPG images here</h4>
                 <p style="color:#7A7266; font-size:0.8rem; margin:8px 0 16px;">Files are automatically optimized to WebP format for high-speed page loads.</p>
-                <button class="adm-btn-primary" onclick="window.showToast('Choose Files...')">Browse Files</button>
+                <button class="dt-btn dt-btn-gold" style="height:34px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px; margin:0 auto;" onclick="window.showToast('Choose Files...')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <span>Browse Files</span>
+                </button>
             </div>
         </div>
         

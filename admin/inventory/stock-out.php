@@ -53,14 +53,17 @@ $products = ProductCatalog::getAll(true);
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Record and audit inventory deductions for B2B wholesale bales, retail parcel dispatches, and exhibition lots.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Inventory Depot</a>
+                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Inventory Depot</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Outward Dispatch Form Card -->
             <div class="adm-card" style="max-width:800px; margin-bottom:18px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>📤 Post Stock Outward Dispatch</span></h3>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Post Stock Outward Dispatch</span></h3>
                     <span class="adm-badge" style="background:#FEF2F2; color:#DC2626; border:1px solid #FCA5A5; font-weight:700; font-size:11.5px;">Real-Time Stock Deduction</span>
                 </div>
                 <form id="stockOutwardForm" onsubmit="handleStockOutward(event)" style="padding:18px 20px;">

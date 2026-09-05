@@ -91,10 +91,13 @@ if (empty($tables)) {
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Direct telemetry into MySQL schema tables, row counts, index sizes, and engine optimization.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← System Suite</a>
+                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>System Suite</span>
+                    </a>
                     <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="optimizeTables(this)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span>⚡ Optimize Tables</span>
+                        <span>Optimize Tables</span>
                     </button>
                 </div>
             </div>
@@ -109,12 +112,12 @@ if (empty($tables)) {
                     .then(function (r) { return r.json(); })
                     .then(function (d) {
                         btn.disabled = false;
-                        if (d && d.success === false) { out.textContent = '⚠ ' + (d.message || 'Optimize failed'); return; }
-                        out.textContent = '✓ ' + (d.message || ('Optimized ' + (d.optimized || 0) + ' tables.')) + (d.details ? '\n' + d.details.join('\n') : '');
+                        if (d && d.success === false) { out.textContent = '[Notice] ' + (d.message || 'Optimize failed'); return; }
+                        out.textContent = '[Success] ' + (d.message || ('Optimized ' + (d.optimized || 0) + ' tables.')) + (d.details ? '\n' + d.details.join('\n') : '');
                     })
                     .catch(function () {
                         btn.disabled = false;
-                        out.textContent = '⚠ Could not reach /api/db_optimize.php.';
+                        out.textContent = '[Notice] Could not reach /api/db_optimize.php.';
                     });
             }
             </script>
@@ -146,8 +149,8 @@ if (empty($tables)) {
             <!-- Tables Table Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>🗄️ MySQL Database Tables Status</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 UTF8MB4 Clean</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>MySQL Database Tables Status</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D; margin-right:4px;"></span>UTF8MB4 Clean</span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">

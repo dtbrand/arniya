@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'optimize_db' && $pdo !== null && !Database::isMockMode()) {
         try {
             $pdo->exec("OPTIMIZE TABLE products, categories, product_brands, orders, customers, reviews, coupons");
-            $flashMessage = "✨ Live MySQL database tables optimized and defragmented successfully!";
+            $flashMessage = "Live MySQL database tables optimized and defragmented successfully!";
         } catch (\Exception $e) {
             $flashMessage = "Database optimization completed.";
         }
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         if (function_exists('opcache_reset')) {
             @opcache_reset();
         }
-        $flashMessage = "⚡ Server OPcache and temporary cache purged successfully!";
+        $flashMessage = "Server OPcache and temporary cache purged successfully!";
     }
 }
 
@@ -75,11 +75,17 @@ if ($pdo !== null && !Database::isMockMode()) {
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
                     <form method="POST" style="margin:0;">
                         <input type="hidden" name="action" value="clear_cache">
-                        <button type="submit" class="dt-btn dt-btn-pale" style="height:32px; font-size:12px; font-weight:700;">⚡ Purge OPcache</button>
+                        <button type="submit" class="dt-btn dt-btn-pale" style="height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>Purge OPcache</span>
+                        </button>
                     </form>
                     <form method="POST" style="margin:0;">
                         <input type="hidden" name="action" value="optimize_db">
-                        <button type="submit" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800;">🛠️ Optimize Database</button>
+                        <button type="submit" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                            <span>Optimize Database</span>
+                        </button>
                     </form>
                 </div>
             </div>

@@ -65,7 +65,10 @@ $amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'supe
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Full-schema + rows SQL dumps of the live database, written to the server's backups/ directory.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← System Suite</a>
+                    <a href="/admin/system/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>System Suite</span>
+                    </a>
                     <?php if ($amSuper): ?>
                     <button type="button" id="dtBkCreate" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="createSnapshot(this)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
@@ -81,7 +84,7 @@ $amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'supe
 
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>Available Snapshots</span></h3>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>Available Snapshots</span></h3>
                     <span class="adm-badge" style="background:#FAF8F4; color:#78716C; font-weight:700; font-size:11.5px;">backups/ on the web server</span>
                 </div>
                 <div class="adm-table-responsive">
@@ -105,9 +108,15 @@ $amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'supe
                                     <td><?= htmlspecialchars($b['created']) ?></td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:6px;">
-                                            <a class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none;" href="/api/system/backup.php?action=download&name=<?= urlencode($b['name']) ?>" download>Download</a>
+                                            <a class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px;" href="/api/system/backup.php?action=download&name=<?= urlencode($b['name']) ?>" download>
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                                <span>Download</span>
+                                            </a>
                                             <?php if ($amSuper): ?>
-                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#15803D;" onclick="verifySnapshot('<?= htmlspecialchars(addslashes($b['name'])) ?>', this)">Verify</button>
+                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#15803D; display:inline-flex; align-items:center; gap:5px;" onclick="verifySnapshot('<?= htmlspecialchars(addslashes($b['name'])) ?>', this)">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                                <span>Verify</span>
+                                            </button>
                                             <?php endif; ?>
                                         </div>
                                     </td>

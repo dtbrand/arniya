@@ -77,7 +77,10 @@ $hasToken = trim((string)getenv('WHATSAPP_ACCESS_TOKEN')) !== ''
                     <p class="adm-page-subtitle">Build an audience from the live customer directory and open WhatsApp deep links.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/whatsapp/" class="adm-btn-secondary">← Back to Whatsapp Suite</a>
+                    <a href="/admin/whatsapp/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to WhatsApp Suite</span>
+                    </a>
                 </div>
             </div>
 
@@ -100,16 +103,18 @@ $hasToken = trim((string)getenv('WHATSAPP_ACCESS_TOKEN')) !== ''
                         </select>
                     </div>
                     <div class="adm-form-group">
-                        <label class="adm-form-label">Message</label>
-                        <textarea id="dtWaMsg" class="adm-form-input" rows="3" placeholder="e.g. Namaste ji! New Kanjivaram lot just landed — reply to book your picks.">Namaste ji! New Kanjivaram &amp; Banarasi lots just landed at the Surat depot. Reply here to book your picks at trade pricing.</textarea>
+                        <label class="adm-form-label">Message text (interpolated with customer's name)</label>
+                        <textarea class="adm-form-input" id="dtWaMsg" rows="4" style="height:auto; padding:10px 12px;">Namaste! DT Brand's &amp; Jai Hanuman Tex is offering factory-direct rates on our latest pure Silk &amp; Banarasi Saree lots. View catalogue: https://jaihanumantex.in/shop</textarea>
                     </div>
-                    <button class="adm-btn-primary" onclick="buildBroadcast()">Build wa.me Links</button>
+                    <button class="dt-btn dt-btn-gold" style="height:34px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="buildBroadcast()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>Build wa.me Links</span>
+                    </button>
                     <div id="dtWaOut" class="dt-wa-out"></div>
                     <?php if (!$hasToken): ?>
-                    <p style="font-size:11.5px; color:#B45309; margin-top:10px;">
-                        ⚠ Automated sending requires WHATSAPP_ACCESS_TOKEN (Meta Cloud API) in the server's .env. Without it,
-                        this tool generates one-tap wa.me links you can click through manually — no message is ever
-                        claimed as "sent" when it was not.
+                    <p style="font-size:11.5px; color:#B45309; margin-top:10px; display:flex; align-items:flex-start; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>Automated sending requires WHATSAPP_ACCESS_TOKEN (Meta Cloud API) in the server's .env. Without it, this tool generates one-tap wa.me links you can click through manually — no message is ever claimed as "sent" when it was not.</span>
                     </p>
                     <?php endif; ?>
                 </div>
@@ -130,7 +135,7 @@ function buildBroadcast() {
     fetch('/api/whatsapp/audience.php?type=' + encodeURIComponent(type), { credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.success === false) { out.textContent = '⚠ ' + (d.message || 'Failed'); return; }
+            if (d && d.success === false) { out.textContent = '[Notice] ' + (d.message || 'Failed'); return; }
             var lines = [];
             (d.customers || []).forEach(function (c) {
                 var phone = String(c.phone || '').replace(/[^0-9]/g, '');
@@ -139,7 +144,7 @@ function buildBroadcast() {
             });
             out.textContent = lines.length ? lines.join("\n") : 'No matching customers.';
         })
-        .catch(function () { out.textContent = '⚠ Could not reach the server.'; });
+        .catch(function () { out.textContent = '[Notice] Could not reach the server.'; });
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

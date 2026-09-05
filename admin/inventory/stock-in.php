@@ -52,15 +52,18 @@ $products = ProductCatalog::getAll(true);
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Record fresh handloom saree consignments from Surat powerlooms directly into central warehouse stock.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Inventory Depot</a>
+                    <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Inventory Depot</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Inward Entry Form Card -->
             <div class="adm-card" style="max-width:800px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>📥 Consignment Entry Form</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Direct Factory Inward</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Consignment Entry Form</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D; margin-right:4px;"></span>Direct Factory Inward</span>
                 </div>
                 <form id="stockInwardForm" onsubmit="handleStockInward(event)" style="padding:18px 20px;">
                     <div class="dt-stock-grid">
@@ -124,7 +127,7 @@ function handleStockInward(e) {
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Successfully recorded +${qty} pcs for "${title}" in MySQL database!`);
+                window.showToast(`Successfully recorded +${qty} pcs for "${title}" in MySQL database!`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';
@@ -132,7 +135,7 @@ function handleStockInward(e) {
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Recorded +${qty} pcs inward consignment!`);
+                window.showToast(`Recorded +${qty} pcs inward consignment!`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';

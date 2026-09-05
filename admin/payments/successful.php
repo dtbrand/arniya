@@ -59,8 +59,11 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">All 100% captured and verified transactions across Instant UPI, Cards, NetBanking, and COD.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/payments/" class="adm-btn-secondary">← Back to Payments Suite</a>
-                    <a href="/admin/payments/pending.php" class="adm-btn-secondary">Pending Queue</a>
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Payments Suite</span>
+                    </a>
+                    <a href="/admin/payments/pending.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">Pending Queue</a>
                 </div>
             </div>
 
@@ -99,13 +102,18 @@ if ($pdo !== null && !Database::isMockMode()) {
                                             <code style="font-size:0.75rem; color:#475569;"><?= htmlspecialchars($tx['utr_reference'] ?: ($tx['gateway_payment_id'] ?: 'CAPTURED_AUTO')) ?></code>
                                         </td>
                                         <td style="font-size:0.75rem; color:#64748B;"><?= date('d M Y, h:i A', strtotime($tx['created_at'])) ?></td>
-                                        <td><span class="adm-badge success">✓ Settled</span></td>
+                                        <td>
+                                            <span class="adm-badge success" style="display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span>Settled</span>
+                                            </span>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="8" style="text-align:center; padding:35px; color:#64748B;">
-                                        ✨ No settled transactions in database yet.
+                                        No settled transactions in database yet.
                                     </td>
                                 </tr>
                             <?php endif; ?>

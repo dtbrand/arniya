@@ -143,7 +143,10 @@ $triggerRules = []; // No editable rules table exists in the schema yet — the 
                                     <td><small style="color:#7A7266;"><?= htmlspecialchars($tr['condition']) ?></small></td>
                                     <td><span class="adm-badge success"><?= htmlspecialchars($tr['status']) ?></span></td>
                                     <td>
-                                        <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="testNotificationTrigger('<?= addslashes($tr['event']) ?>', '<?= addslashes($tr['template']) ?>')">⚡ Test Trigger</button>
+                                        <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; display:inline-flex; align-items:center; gap:4px;" onclick="testNotificationTrigger('<?= addslashes($tr['event']) ?>', '<?= addslashes($tr['template']) ?>')">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                            <span>Test Trigger</span>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -158,7 +161,7 @@ $triggerRules = []; // No editable rules table exists in the schema yet — the 
 <script>
 function testNotificationTrigger(eventTitle, template) {
     if (typeof window.showToast === 'function') {
-        window.showToast(`🚀 Dispatched test notification for "${eventTitle}" (${template})`);
+        window.showToast(`Dispatched test notification for "${eventTitle}" (${template})`);
     }
     const params = new URLSearchParams();
     params.append('action', 'broadcast');

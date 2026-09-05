@@ -55,16 +55,22 @@ if (empty($approvedReviews)) {
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Published customer testimonials, 5-star ratings, and verified buyer badges displayed live on storefront product pages.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/reviews/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Reviews Hub</a>
-                    <a href="/admin/reviews/pending.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">Pending Queue →</a>
+                    <a href="/admin/reviews/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Reviews Hub</span>
+                    </a>
+                    <a href="/admin/reviews/pending.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <span>Pending Queue</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
                 </div>
             </div>
 
             <!-- Approved Reviews Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>🌟 Published Storefront Testimonials</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Displayed on PDP</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Published Storefront Testimonials</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D; margin-right:4px;"></span>Displayed on PDP</span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -89,8 +95,10 @@ if (empty($approvedReviews)) {
                                         <span class="adm-badge gold" style="font-weight:700;">Product #<?= (int)($r['product_id'] ?? 1) ?></span>
                                     </td>
                                     <td>
-                                        <div style="color:#D4AF37; font-size:14px; letter-spacing:2px;">
-                                            <?= str_repeat('★', (int)($r['rating'] ?? 5)) ?>
+                                        <div style="display:inline-flex; align-items:center; gap:2px;">
+                                            <?php for ($si = 0; $si < (int)($r['rating'] ?? 5); $si++): ?>
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#B8860B" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <?php endfor; ?>
                                         </div>
                                     </td>
                                     <td>
@@ -154,12 +162,12 @@ function dtReviewAction(id, action, okMessage) {
 }
 
 function unpublishReview(id) {
-    dtReviewAction(id, 'unpublish', '✓ Review unpublished from storefront.');
+    dtReviewAction(id, 'unpublish', 'Review unpublished from storefront.');
 }
 
 function deleteReview(id) {
     if (!confirm('Are you sure you want to permanently delete this review?')) return;
-    dtReviewAction(id, 'delete', '✓ Review deleted from database.');
+    dtReviewAction(id, 'delete', 'Review deleted from database.');
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

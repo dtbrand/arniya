@@ -80,8 +80,11 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">Verify customer-submitted 12-digit UPI UTR references, NEFT Bank Wire, and pending online gateways.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/payments/" class="adm-btn-secondary">← Back to Payments Ledger</a>
-                    <a href="/admin/settings/payment.php" class="adm-btn-primary">
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Payments Ledger</span>
+                    </a>
+                    <a href="/admin/settings/payment.php" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         <span>Gateway Settings</span>
                     </a>
@@ -89,8 +92,9 @@ if ($pdo !== null && !Database::isMockMode()) {
             </div>
 
             <?php if (!empty($successMsg)): ?>
-                <div style="background:#E8F5E9; border:1px solid #15803D; color:#15803D; padding:12px 16px; border-radius:8px; margin-bottom:16px; font-weight:700;">
-                    ✓ <?= htmlspecialchars($successMsg) ?>
+                <div style="background:#E8F5E9; border:1px solid #15803D; color:#15803D; padding:12px 16px; border-radius:8px; margin-bottom:16px; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span><?= htmlspecialchars($successMsg) ?></span>
                 </div>
             <?php endif; ?>
 
@@ -142,8 +146,9 @@ if ($pdo !== null && !Database::isMockMode()) {
                                                 <input type="hidden" name="tx_id" value="<?= $tx['id'] ?>">
                                                 <input type="hidden" name="order_number" value="<?= htmlspecialchars($tx['order_number']) ?>">
                                                 <input type="hidden" name="utr_ref" value="<?= htmlspecialchars($tx['utr_reference'] ?? '') ?>">
-                                                <button type="submit" class="adm-btn-primary" style="padding:4px 10px; font-size:0.75rem;">
-                                                    ✓ Approve &amp; Mark Paid
+                                                <button type="submit" class="dt-btn dt-btn-gold dt-btn-sm" style="padding:4px 10px; font-size:0.75rem; display:inline-flex; align-items:center; gap:5px;">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    <span>Approve &amp; Mark Paid</span>
                                                 </button>
                                             </form>
                                         </td>
@@ -152,7 +157,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <?php else: ?>
                                 <tr>
                                     <td colspan="8" style="text-align:center; padding:35px; color:#64748B;">
-                                        ✨ All payments verified! Zero pending items in queue.
+                                        All payments verified! Zero pending items in queue.
                                     </td>
                                 </tr>
                             <?php endif; ?>

@@ -130,7 +130,7 @@ if (empty($shipmentsList)) {
                     <h3 class="adm-card-title"><span>Courier Partner Serviceability &amp; Dispatches</span></h3>
                     <a href="/admin/orders/export.php?download=1&format=csv" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <span>📄 Download Courier Manifest</span>
+                        <span>Download Courier Manifest</span>
                     </a>
                 </div>
                 <div class="adm-table-responsive">
@@ -164,7 +164,10 @@ if (empty($shipmentsList)) {
                                     <td><span class="adm-badge gold"><?= strtoupper(htmlspecialchars($sh['channel'] ?? 'RETAIL')) ?></span></td>
                                     <td><span class="adm-badge <?= $badgeClass ?>"><?= ucfirst($fStatus) ?></span></td>
                                     <td>
-                                        <a class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none;" target="_blank" rel="noopener" href="https://track.delhivery.com/?wbn=<?= htmlspecialchars($tracking) ?>">📍 Track</a>
+                                        <a class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" target="_blank" rel="noopener" href="https://track.delhivery.com/?wbn=<?= htmlspecialchars($tracking) ?>">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            <span>Track</span>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

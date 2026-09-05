@@ -258,7 +258,10 @@ if ($pdo !== null && !Database::isMockMode()) {
             <div class="adm-table-card">
                 <div class="adm-table-toolbar">
                     <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800; margin:0;">Transaction Audit Trail (<?= count($transactions) ?> Records)</h3></div>
-                    <button class="adm-btn-secondary" onclick="exportTableToCSV('payments_ledger.csv')">📥 Export CSV</button>
+                    <button class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;" onclick="exportTableToCSV('payments_ledger.csv')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export CSV</span>
+                    </button>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table" id="paymentsLedgerTable">
@@ -293,10 +296,10 @@ if ($pdo !== null && !Database::isMockMode()) {
                                         <td><strong>₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
                                         <td>
                                             <?php 
-                                            $statusBadge = 'gray';
-                                            if ($tx['status'] === 'captured') $statusBadge = 'success';
-                                            elseif ($tx['status'] === 'pending') $statusBadge = 'amber';
-                                            elseif ($tx['status'] === 'failed') $statusBadge = 'danger';
+                                             $statusBadge = 'gray';
+                                             if ($tx['status'] === 'captured') $statusBadge = 'success';
+                                             elseif ($tx['status'] === 'pending') $statusBadge = 'amber';
+                                             elseif ($tx['status'] === 'failed') $statusBadge = 'danger';
                                             ?>
                                             <span class="adm-badge <?= $statusBadge ?>"><?= ucfirst(htmlspecialchars($tx['status'])) ?></span>
                                         </td>
@@ -311,8 +314,9 @@ if ($pdo !== null && !Database::isMockMode()) {
                                         </td>
                                         <td style="font-size:0.75rem; color:#64748B;"><?= date('d M Y, h:i A', strtotime($tx['created_at'])) ?></td>
                                         <td>
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="padding:3px 8px; font-size:0.72rem;" onclick="viewPayload(<?= htmlspecialchars(json_encode($tx), ENT_QUOTES, 'UTF-8') ?>)">
-                                                🔍 Payload
+                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:5px; padding:3px 8px; font-size:0.72rem;" onclick="viewPayload(<?= htmlspecialchars(json_encode($tx), ENT_QUOTES, 'UTF-8') ?>)">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                <span>Payload</span>
                                             </button>
                                         </td>
                                     </tr>
@@ -320,7 +324,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <?php else: ?>
                                 <tr>
                                     <td colspan="9" style="text-align:center; padding:35px; color:#64748B;">
-                                        ✨ No transactions found matching current filter criteria.
+                                        No transactions found matching current filter criteria.
                                     </td>
                                 </tr>
                             <?php endif; ?>
@@ -339,7 +343,9 @@ if ($pdo !== null && !Database::isMockMode()) {
     <div class="dt-payload-card">
         <div style="padding:14px 18px; border-bottom:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:center;">
             <h3 style="margin:0; font-size:0.95rem; font-family:var(--adm-font-serif); color:#8A681F;" id="payloadModalTitle">Transaction Audit Record</h3>
-            <button type="button" style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748B;" onclick="document.getElementById('payloadModalBg').classList.remove('active')">✕</button>
+            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="border:none; padding:4px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('payloadModalBg').classList.remove('active')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
         <div class="dt-payload-body" id="payloadModalContent"></div>
     </div>
