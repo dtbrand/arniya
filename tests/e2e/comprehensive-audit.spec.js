@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () => {
 
   test('1. Storefront: Search, Category Filtering, and Navigation', async ({ page }) => {
-    await page.goto('/index.php');
+    await page.goto('/index.php', { waitUntil: 'domcontentloaded' });
     expect(page.url()).toContain('jaihanumantex.in');
 
     // Verify main header logo
@@ -18,7 +18,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
     }
 
     // Navigate to shop
-    await page.goto('/shop.php');
+    await page.goto('/shop.php', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(/Shop|DT Brand|Saree/i);
 
     // Verify subnav category items exist
@@ -40,12 +40,12 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('2. Product Detail Page (PDP): Gallery, Pricing, and Actions', async ({ page }) => {
-    await page.goto('/shop.php');
+    await page.goto('/shop.php', { waitUntil: 'domcontentloaded' });
     const firstProduct = page.locator('.product-card a, .product-card').first();
     await expect(firstProduct).toBeVisible();
     
     // Navigate to product PDP
-    await page.goto('/product.php?id=13');
+    await page.goto('/product.php?id=13', { waitUntil: 'domcontentloaded' });
     const body = page.locator('body');
     await expect(body).toBeVisible();
 
@@ -68,12 +68,12 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
 
   test('3. Cart & Wishlist Workflow', async ({ page }) => {
     // Visit Wishlist
-    await page.goto('/wishlist.php');
+    await page.goto('/wishlist.php', { waitUntil: 'domcontentloaded' });
     expect(page.url()).toContain('wishlist');
     await expect(page.locator('body')).toBeVisible();
 
     // Visit Cart
-    await page.goto('/cart.php');
+    await page.goto('/cart.php', { waitUntil: 'domcontentloaded' });
     expect(page.url()).toContain('cart');
     await expect(page.locator('body')).toBeVisible();
 
@@ -85,7 +85,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('4. Checkout Page: Multi-Gateway Payment Suite & Form Validation', async ({ page }) => {
-    await page.goto('/checkout.php');
+    await page.goto('/checkout.php', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toBeVisible();
 
     // Check if address fields exist
@@ -111,7 +111,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('5. Customer Account Hub: Profile and Navigation', async ({ page }) => {
-    await page.goto('/account.php');
+    await page.goto('/account.php', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toBeVisible();
 
     // Verify account sections or login state
@@ -122,7 +122,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('6. Wholesaler B2B Portal: Analytics, Lots & Passbook Statement', async ({ page }) => {
-    await page.goto('/wholesale.php');
+    await page.goto('/wholesale.php', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toBeVisible();
 
     // Check passbook statement download button exists in DOM and handler is attached
@@ -138,7 +138,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('7. Retailer B2B Portal: Margins, MOQ & Statements', async ({ page }) => {
-    await page.goto('/retailer.php');
+    await page.goto('/retailer.php', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toBeVisible();
 
     const stmtBtn = page.locator('button:has-text("Download Statement"), button[onclick*="downloadWalletStatement"]');
@@ -148,7 +148,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('8. Reseller B2B Portal: CRM, Order Booking & Statement', async ({ page }) => {
-    await page.goto('/reseller.php');
+    await page.goto('/reseller.php', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toBeVisible();
 
     const stmtBtn = page.locator('button:has-text("Download Statement"), button[onclick*="downloadWalletStatement"]');
@@ -158,7 +158,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('9. Admin Portal: Login and Navigation Security', async ({ page }) => {
-    await page.goto('/adminlogin.php');
+    await page.goto('/adminlogin.php', { waitUntil: 'domcontentloaded' });
     const emailField = page.locator('input[type="email"], input[name="email"]').first();
     const passField = page.locator('input[type="password"], input[name="password"]').first();
     const submitBtn = page.locator('button[type="submit"]').first();
@@ -172,23 +172,23 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
     await page.waitForTimeout(500);
 
     // Verify Admin Orders Management loads
-    const ordersRes = await page.goto('/admin/orders/index.php');
+    const ordersRes = await page.goto('/admin/orders/index.php', { waitUntil: 'domcontentloaded' });
     expect(ordersRes?.status()).toBe(200);
 
     // Verify Admin Products Management loads
-    const prodsRes = await page.goto('/admin/products/index.php');
+    const prodsRes = await page.goto('/admin/products/index.php', { waitUntil: 'domcontentloaded' });
     expect(prodsRes?.status()).toBe(200);
 
     // Verify Admin Customers Management loads
-    const custsRes = await page.goto('/admin/customers/index.php');
+    const custsRes = await page.goto('/admin/customers/index.php', { waitUntil: 'domcontentloaded' });
     expect(custsRes?.status()).toBe(200);
 
     // Verify Admin Settings loads
-    const settingsRes = await page.goto('/admin/settings/general.php');
+    const settingsRes = await page.goto('/admin/settings/general.php', { waitUntil: 'domcontentloaded' });
     expect(settingsRes?.status()).toBe(200);
 
     // Verify Admin System Health loads
-    const healthRes = await page.goto('/admin/system/health.php');
+    const healthRes = await page.goto('/admin/system/health.php', { waitUntil: 'domcontentloaded' });
     expect(healthRes?.status()).toBe(200);
   });
 

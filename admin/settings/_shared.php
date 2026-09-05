@@ -82,4 +82,18 @@ function showToastSafe(m) { if (typeof window.showToast === 'function') window.s
 </script>
 HTML;
 }
-?>
+
+
+/** Banner shown when the settings table is unreachable. Pages call this
+ *  instead of reading $dtSettingsLive directly so phpstan sees the read
+ *  inside the helper (the variable is assigned at the top of this file). */
+function dt_db_unavailable_banner(string $label = 'Database unreachable'): string
+{
+    global $dtSettingsLive;
+    if ($dtSettingsLive === false) {
+        return '<p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">⚠ '
+            . htmlspecialchars($label)
+            . ' — values shown are defaults and cannot be saved right now.</p>';
+    }
+    return '';
+}?>
