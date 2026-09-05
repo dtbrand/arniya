@@ -207,19 +207,19 @@ $prod = [
                     </a>
                 </div>
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <button type="button" class="wp-button" onclick="window.shareProductWhatsApp(<?php echo $prod['id']; ?>)" title="Share on WhatsApp">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="color:#25D366;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                    <button type="button" class="wp-button adm-btn-emerald" onclick="window.shareProductWhatsApp(<?php echo $prod['id']; ?>)" title="Share on WhatsApp">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="color:#FFFFFF;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                         <span>WhatsApp Share</span>
                     </button>
-                    <a href="/admin/products/duplicate.php?id=<?php echo $prod['id']; ?>" class="wp-button">
+                    <a href="/admin/products/duplicate.php?id=<?php echo $prod['id']; ?>" class="wp-button adm-btn-pale">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         <span>Duplicate</span>
                     </a>
-                    <button type="button" class="wp-button" onclick="window.archiveProduct(<?php echo $prod['id']; ?>)">
+                    <button type="button" class="wp-button adm-btn-pale" onclick="window.archiveProduct(<?php echo $prod['id']; ?>)">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
                         <span>Archive</span>
                     </button>
-                    <a href="/admin/products/edit.php?id=<?php echo $prod['id']; ?>" class="wp-button primary">
+                    <a href="/admin/products/edit.php?id=<?php echo $prod['id']; ?>" class="wp-button primary adm-btn-gold">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <span>Edit Product</span>
                     </a>

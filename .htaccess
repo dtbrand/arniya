@@ -24,6 +24,9 @@ Options -Indexes -MultiViews
     # Block access to internal protected directories
     RewriteRule ^(config|database|src|app|storage|tests|scripts|vendor|bootstrap|docs|backups|\.git|\.agents|\.uix|\.vscode)/ - [F,L,NC]
 
+    # Block direct script execution in media upload directories
+    RewriteRule ^assets/images/uploads/.*\.(php[0-9]?|phtml|phar|cgi|pl|sh)$ - [F,L,NC]
+
     # ── 3. CANONICAL HOMEPAGE REDIRECTS ──
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(home|home\.php|index\.php)\ HTTP/ [NC]
     RewriteRule ^(home|home\.php|index\.php)$ / [R=301,L]
@@ -78,6 +81,7 @@ Options -Indexes -MultiViews
     RewriteRule ^cart/?$ cart.php [QSA,L]
     RewriteRule ^checkout/?$ checkout.php [QSA,L]
     RewriteRule ^wishlist/?$ wishlist.php [QSA,L]
+    RewriteRule ^contact/?$ contact.php [QSA,L]
     RewriteRule ^about-us/?$ about-us.php [QSA,L]
     RewriteRule ^privacy/?$ privacy.php [QSA,L]
     RewriteRule ^shipping/?$ shipping.php [QSA,L]
@@ -86,6 +90,9 @@ Options -Indexes -MultiViews
     RewriteRule ^health/?$ health.php [QSA,L]
 
     # ── 6. CLEAN API ROUTES ──
+    # Nested two-segment API endpoints (e.g. /api/webhooks/razorpay, /api/payment/verify, /api/system/backup)
+    RewriteRule ^api/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ api/$1/$2.php [QSA,L]
+    # Single-segment API endpoints (e.g. /api/cart, /api/orders, /api/checkout)
     RewriteRule ^api/([a-zA-Z0-9_-]+)/?$ api/$1.php [QSA,L]
 
     # ── 7. CLEAN ADMIN & AUTH ROUTES ──
@@ -99,6 +106,9 @@ Options -Indexes -MultiViews
     RewriteRule ^admin/products/([^/]+\.php)$ admin/products/$1 [QSA,L]
     RewriteRule ^admin/products/([^/]+)/?$ admin/products/$1/index.php [QSA,L]
     RewriteRule ^admin/products/([^/]+)/([^/]+\.php)$ admin/products/$1/$2 [QSA,L]
+
+    # Admin two-segment clean URLs (e.g. /admin/settings/payment -> admin/settings/payment.php)
+    RewriteRule ^admin/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ admin/$1/$2.php [QSA,L]
 
     RewriteRule ^admin/([^/]+)/?$ admin/$1/index.php [QSA,L]
     RewriteRule ^admin/([^/]+)/([^/]+\.php)$ admin/$1/$2 [QSA,L]

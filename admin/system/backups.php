@@ -105,7 +105,7 @@ $amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'supe
                                     <td><?= htmlspecialchars($b['created']) ?></td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:6px;">
-                                            <a class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none;" href="/backups/<?= htmlspecialchars($b['name']) ?>" download>Download</a>
+                                            <a class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none;" href="/api/system/backup.php?action=download&name=<?= urlencode($b['name']) ?>" download>Download</a>
                                             <?php if ($amSuper): ?>
                                             <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#15803D;" onclick="verifySnapshot('<?= htmlspecialchars(addslashes($b['name'])) ?>', this)">Verify</button>
                                             <?php endif; ?>

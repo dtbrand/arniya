@@ -86,6 +86,50 @@
     color: #135e96;
 }
 
+/* ── UNIVERSAL WORDPRESS/ADMIN BUTTON SYSTEM ── */
+.wp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.wp-button:hover {
+    background: #F5ECCE;
+    color: #5A4210;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+.wp-button.primary {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    border: 1px solid #8A681F !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35) !important;
+    font-weight: 800 !important;
+}
+
+.wp-button.primary:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
+    transform: translateY(-1px) !important;
+    color: #111827 !important;
+}
+
 /* ── UNIVERSAL DT BRAND ACTION BUTTONS SYSTEM ── */
 .dt-btn-action-sm {
     display: inline-flex;

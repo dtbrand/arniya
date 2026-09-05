@@ -1,0 +1,25 @@
+# ==============================================================================
+# DT BRAND'S & JAI HANUMAN TEX — UPLOADS DIRECTORY SECURITY .HTACCESS
+# Prevent arbitrary script execution in user-uploaded media folder
+# ==============================================================================
+
+<FilesMatch "(?i)\.(php.*|phtml|phar|cgi|pl|py|sh|asp|aspx|jsp|shtml|bin)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+Options -ExecCGI -Indexes
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>

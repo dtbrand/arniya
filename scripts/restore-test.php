@@ -22,10 +22,18 @@ $latest = end($files);
 echo "Testing backup file: " . basename($latest) . "\n";
 
 $content = file_get_contents($latest);
-if (strpos($content, 'FOREIGN_KEY_CHECKS') !== false && strlen($content) > 10) {
-    echo "SUCCESS: Backup integrity validated. Schema structure and constraints valid.\n";
+$hasHeader = strpos($content, '-- DT Brand\'s database snapshot') !== false;
+$hasFkStart = strpos($content, 'SET FOREIGN_KEY_CHECKS=0;') !== false;
+$hasFkEnd = strpos($content, 'SET FOREIGN_KEY_CHECKS=1;') !== false;
+$hasCreateTable = strpos($content, 'CREATE TABLE') !== false;
+$hasSize = strlen($content) > 50;
+
+if ($hasHeader && $hasFkStart && $hasFkEnd && $hasCreateTable && $hasSize) {
+    echo "SUCCESS: Backup integrity validated. Header, schema, foreign key constraints and completion marker verified.\n";
+    echo "Snapshot Size: " . number_format(strlen($content)) . " bytes\n";
+    echo "Integrity Check: PASSED (100%)\n";
     exit(0);
 } else {
-    echo "ERROR: Corrupt or invalid backup file detected!\n";
+    echo "ERROR: Corrupt or incomplete backup file detected! Missing essential schema markers.\n";
     exit(1);
 }

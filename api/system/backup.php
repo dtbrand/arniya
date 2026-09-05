@@ -69,6 +69,25 @@ function dt_backup_list(string $dir): array
     return $out;
 }
 
+if ($method === 'GET' && ($_GET['action'] ?? '') === 'download') {
+    $name = basename(trim((string)($_GET['name'] ?? '')));
+    $path = $backupDir . '/' . $name;
+    if ($name === '' || !is_file($path) || strpos((string)realpath($path), (string)realpath($backupDir)) !== 0) {
+        http_response_code(404);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['success' => false, 'message' => 'Snapshot not found: ' . $name]);
+        exit;
+    }
+
+    header('Content-Type: application/sql');
+    header('Content-Disposition: attachment; filename="' . $name . '"');
+    header('Content-Length: ' . filesize($path));
+    header('Cache-Control: private, no-cache, no-store, must-revalidate');
+    header('Pragma: no-cache');
+    readfile($path);
+    exit;
+}
+
 if ($method === 'POST' && ($_POST['action'] ?? '') === 'verify') {
     $name = basename(trim((string)($_POST['name'] ?? '')));
     $path = $backupDir . '/' . $name;

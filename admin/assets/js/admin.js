@@ -1432,7 +1432,6 @@
 
     function initBroadcaster() {
         const templateSelect = document.getElementById('admBroadcastTemplate');
-        const audienceSelect = document.getElementById('admBroadcastAudience');
         const msgTextarea = document.getElementById('admBroadcastMessage');
         const previewBox = document.getElementById('admBroadcastPreview');
 
@@ -1557,7 +1556,7 @@
             window.showToast('New product added to catalog: ' + name);
         }
 
-        closeAdmModal('admProductModal');
+        window.closeAdmModal('admProductModal');
         renderProductsTable();
     };
 
@@ -1600,9 +1599,8 @@
     // The surviving one fetches the product from /api/products.php.
 
     window.launchBroadcast = function() {
-        const template = document.getElementById('admBroadcastTemplate').value;
-        const count = document.getElementById('admBroadcastAudience').value === 'all' ? '1,420' : '285';
-        window.showToast(`🚀 WhatsApp Broadcast initiated to ${count} recipients!`);
+        const count = document.getElementById('admBroadcastAudience')?.value === 'all' ? '1,420' : '285';
+        window.showToast(`WhatsApp Broadcast initiated successfully to ${count} recipients.`);
     };
 
     // ════ INVOICE MODAL ════
@@ -1648,7 +1646,7 @@
     };
 
     // ════ UNIVERSAL MODULE TABLE FILTER & SEARCH ════
-    window.filterModuleTable = function(query, type) {
+    window.filterModuleTable = function(query, _type) {
         const table = document.querySelector('.adm-table') || document.getElementById('moduleDataTable');
         if (!table) return;
         const rows = table.querySelectorAll('tbody tr');

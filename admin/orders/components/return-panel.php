@@ -269,7 +269,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <td class="col-rma-actions" style="text-align:right; white-space:nowrap;">
                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:5px;">
                             <!-- View Return & Evidence Button -->
-                            <button type="button" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:11px; font-weight:700;" onclick="window.DT_RETURNS.viewRmaDetails('<?php echo $r['id']; ?>')" title="View Evidence Photos, Unboxing Video & Details">
+                            <button type="button" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:11px; font-weight:700;" onclick="window.DT_RETURNS.viewRmaDetails('<?php echo $r['id']; ?>')" title="View Evidence Photos, Unboxing Video & Details">
                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 <span>View</span>
                             </button>
@@ -288,7 +288,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                             <?php endif; ?>
 
                             <!-- WhatsApp Slip Trigger -->
-                            <button type="button" onclick="window.DT_RETURNS.shareWhatsApp('<?php echo $r['id']; ?>')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 8px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:3px;" title="WhatsApp Update">
+                            <button type="button" onclick="window.DT_RETURNS.shareWhatsApp('<?php echo $r['id']; ?>')" class="dt-btn dt-btn-emerald" style="height:28px; padding:0 8px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:3px;" title="WhatsApp Update">
                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
                                 <span>WhatsApp</span>
                             </button>
@@ -332,7 +332,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     <span>Reject Claim</span>
                 </button>
-                <button type="button" id="modalWhatsAppBtn" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:32px; padding:0 12px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
+                <button type="button" id="modalWhatsAppBtn" class="dt-btn dt-btn-emerald" style="height:32px; padding:0 12px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
                     <span>WhatsApp</span>
                 </button>
