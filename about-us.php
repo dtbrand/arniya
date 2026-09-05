@@ -41,8 +41,9 @@ $page_title = "About Us ‹ Royal Surat Silk Handloom Heritage";
                 <strong style="font-size:1.05rem; color:#181512; display:block;">Have a Custom Bulk Requirement?</strong>
                 <span style="font-size:0.85rem; color:#78716C;">Connect directly with our Surat factory desk on WhatsApp.</span>
             </div>
-            <a href="https://wa.me/917046363528?text=Namaste%20DT%20Brand%27s!%20I%20am%20interested%20in%20your%20pure%20silk%20wholesale%20collection." target="_blank" style="background:#15803D; color:#FFFFFF; padding:10px 20px; border-radius:8px; font-weight:800; text-decoration:none; font-size:13px; display:inline-flex; align-items:center; gap:6px;">
-                <span>💬 WhatsApp Factory Desk</span>
+            <a href="https://wa.me/917046363528?text=Namaste%20DT%20Brand%27s!%20I%20am%20interested%20in%20your%20pure%20silk%20wholesale%20collection." target="_blank" style="background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); color:#FFFFFF; padding:10px 20px; border-radius:8px; font-weight:800; text-decoration:none; font-size:13px; display:inline-flex; align-items:center; gap:8px; box-shadow:0 2px 8px rgba(21,128,61,0.25);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <span>WhatsApp Factory Desk</span>
             </a>
         </div>
     </div>

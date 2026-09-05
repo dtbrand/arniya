@@ -43,7 +43,7 @@ $catalogProducts = ProductCatalog::getAll();
         <!-- Rendered from the shopper's real saved wishlist (localStorage: dtbrands_wishlist) -->
     </div>
     <div id="wishlistEmptyState" style="display:none; text-align:center; padding:50px 20px;">
-        <div style="font-size:2.5rem; margin-bottom:12px;">💛</div>
+        <div style="display:flex; justify-content:center; margin-bottom:12px;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
         <h3 style="font-size:1.15rem; font-weight:800; margin:0 0 6px 0;">Your Wishlist is Empty</h3>
         <p style="font-size:0.88rem; color:#78716C; margin:0 0 20px 0;">Tap the heart on any product to save it here for later.</p>
         <a href="/shop" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:10px 24px; border-radius:8px; font-weight:800; text-decoration:none; border:1px solid #8A681F;">Discover the Collection</a>
@@ -85,14 +85,13 @@ $catalogProducts = ProductCatalog::getAll();
             var custBase = Number(p.customer_price) || Number(p.retail_price) || Number(p.price) || 0;
             var price = Number(p.effective_customer_price || p.price) || (custBase > 0 ? Math.max(0, custBase - saleDisc) : 0);
             var oldPrice = saleDisc > 0 ? custBase : (Number(p.old_price || p.mrp) || 0);
-            // "In Stock" was printed for every saved item regardless of the real
-            // stock level, which is not stored in the wishlist snapshot.
-            var stockNote = (p.in_stock === true) ? '🟢 In Stock' : (p.in_stock === false ? 'Out of stock' : '');
+            // "In Stock" status badge
+            var stockNote = (p.in_stock === true) ? 'In Stock' : (p.in_stock === false ? 'Out of stock' : '');
             return '' +
               '<div class="dt-wsh-card" data-wid="' + p.id + '">' +
                 '<div style="position:relative;">' +
                   '<img src="' + img + '" alt="' + name + '" style="width:100%; height:280px; object-fit:cover;">' +
-                  '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:#B91C1C; font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);">×</button>' +
+                  '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:#B91C1C; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
                 '</div>' +
                 '<div style="padding:14px;">' +
                   (cat ? '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' : '') +
@@ -103,7 +102,7 @@ $catalogProducts = ProductCatalog::getAll();
                       (oldPrice > price && price > 0 ? ' <span style="font-size:0.85rem; color:#94A3B8; text-decoration:line-through; margin-left:4px;">' + money(oldPrice) + '</span>' : '') +
                       (saleDisc > 0 ? ' <span style="font-size:0.75rem; background:#FEF3C7; color:#B45309; font-weight:800; padding:1px 5px; border-radius:3px; margin-left:4px;">SAVE ₹' + saleDisc + '</span>' : '') +
                     '</div>' +
-                    (stockNote ? '<span style="font-size:0.78rem; color:#15803D; font-weight:700;">' + stockNote + '</span>' : '') +
+                    (stockNote ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:0.78rem; color:#15803D; font-weight:700;"><span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span>' + stockNote + '</span>' : '') +
                   '</div>' +
                   '<div style="display:flex; gap:8px;">' +
                     '<button data-add-wish="' + p.id + '" style="flex:1; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; border:1px solid #8A681F; cursor:pointer;">Add to Bag</button>' +

@@ -468,7 +468,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 
                     '<div class="wd-recommend-section">' +
                         '<div class="wd-rec-head">' +
-                            '<span>✨ RECOMMENDED FOR YOU</span>' +
+                            '<span style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>RECOMMENDED FOR YOU</span>' +
                             '<span style="font-size:0.65rem; opacity:0.8;">SWIPE &rsaquo;</span>' +
                         '</div>' +
                         '<div class="wd-rec-track" id="wdRecTrack">' +
@@ -513,7 +513,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         var p = products.find(function(x) { return x.id == productId; });
         if (p && typeof window.toggleWishlistProduct === 'function') {
             window.toggleWishlistProduct(p);
-            if (typeof window.showToast === 'function') window.showToast('♡ Saved ' + p.name + ' to wishlist');
+            if (typeof window.showToast === 'function') window.showToast('Saved ' + p.name + ' to wishlist');
         }
     };
 

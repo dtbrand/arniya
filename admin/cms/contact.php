@@ -53,8 +53,8 @@ $active_nav = "cms";
             <!-- Page Editor Card -->
             <div class="adm-card" style="max-width:850px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>📍 Flagship Showroom &amp; Customer Support</span></h3>
-                    <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:11.5px;">⚠ Saves to settings table — footer template must read the key to show it</span>
+                    <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Flagship Showroom &amp; Customer Support</span></h3>
+                    <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Saves to settings table — footer template must read the key to show it</span>
                 </div>
                 <form onsubmit="event.preventDefault(); showToastSafe('Contact fields are display templates — the footer template reads hardcoded HTML today. Save goes to the settings table for future wiring.');" style="padding:18px 20px;">
                     <div class="dt-contact-grid">
