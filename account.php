@@ -2288,7 +2288,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                             <!-- Flow Indicator Header -->
                             <div class="ac-flow-indicator" id="regFlowIndicator">
                                 <div class="ac-flow-info">
-                                    <span class="ac-flow-tag" id="regFlowTag">👤 Customer Account</span>
+                                    <span class="ac-flow-tag" id="regFlowTag">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Customer Account
+                                    </span>
                                     <span class="ac-flow-sub" id="regFlowSub">Retail pricing &amp; instant order tracking</span>
                                 </div>
                                 <button type="button" class="ac-flow-change-btn" onclick="resetRegFlow()">
@@ -2427,8 +2429,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                     </div>
                                     <input type="tel" id="regPhone" class="ac-phone-input" placeholder="e.g. 70463*****" maxlength="12" required autocomplete="tel" oninput="validateWhatsAppDigits()">
                                 </div>
-                                <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:2px;">
-                                    ⚠️ Please enter a valid 10-digit WhatsApp number.
+                                <div id="phoneErrorMsg" style="display:none; color:#DC2626; font-size:0.72rem; font-weight:700; margin-top:4px;">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    <span>Please enter a valid 10-digit WhatsApp number.</span>
                                 </div>
                             </div>
 
@@ -2498,7 +2501,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                     <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                         <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
-                            <span>📦 Open Wholesale Depot</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <span>Open Wholesale Depot</span>
                             <span>→</span>
                         </a>
                         <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
@@ -2823,7 +2827,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
             if (flow === 'customer') {
                 if (roleGroup) roleGroup.style.display = 'none';
-                if (tagEl) tagEl.textContent = '👤 Customer Account';
+                if (tagEl) tagEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Customer Account';
                 if (subEl) subEl.textContent = 'Personal Shopping & instant order tracking';
                 if (submitSpan) submitSpan.textContent = 'Create Customer Account';
                 var regRole = document.getElementById('regRole');
@@ -2831,7 +2835,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 window.selectedRole = 'Customer';
             } else {
                 if (roleGroup) roleGroup.style.display = 'block';
-                if (tagEl) tagEl.textContent = '🏢 Business Trade Account';
+                if (tagEl) tagEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M12 3l9 4H3l9-4z"></path></svg>Business Trade Account';
                 if (subEl) subEl.textContent = 'Wholesale, B2B retailer & reseller portal';
                 if (submitSpan) submitSpan.textContent = 'Create Business Account';
                 selectRole('Retailer');
@@ -2967,15 +2971,15 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     if (roleLower.includes('wholesale')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/wholesale.php';
-                        heroBtn.innerHTML = '<span>📦 Open Wholesale Depot</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span>Open Wholesale Depot</span><span>→</span>';
                     } else if (roleLower.includes('reseller')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/reseller.php';
-                        heroBtn.innerHTML = '<span>💼 Open Reseller Hub</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Open Reseller Hub</span><span>→</span>';
                     } else if (roleLower.includes('retailer')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/retailer.php';
-                        heroBtn.innerHTML = '<span>🛍️ Open Retailer Hub</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span>Open Retailer Hub</span><span>→</span>';
                     } else {
                         heroBtn.style.display = 'none';
                     }
@@ -3018,7 +3022,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         var ordNum = ord.order_number || ('DTB-' + ord.id);
                         var created = ord.created_at ? new Date(ord.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recent';
                         var amount = parseFloat(ord.total_amount || ord.amount || 0).toLocaleString('en-IN');
-                        var waMsg = encodeURIComponent("Namaste DT Brand's! 🙏 Please share tracking update for Order #" + ordNum);
+                        var waMsg = encodeURIComponent("Namaste DT Brand's, please share tracking update for Order #" + ordNum);
                         var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + waMsg;
 
                         var items = Array.isArray(ord.items) ? ord.items : [];
@@ -3226,7 +3230,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             if (!input) return;
             var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + encodeURIComponent("Hi DT Brand's, I need a password reset link for account: " + input);
             window.open(waUrl, '_blank');
-            alert('📩 Password reset request sent to WhatsApp Concierge!');
+            alert('Password reset request sent to WhatsApp Concierge.');
         };
 
         window.handleLogoutClick = function() {
@@ -3248,9 +3252,9 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>',
                 link: '/privacy.php',
                 content: '<p><strong>Military-Grade Transport Security:</strong> All communications between your device and DT Brand\'s servers are protected via 256-Bit SHA-256 TLS 1.3 encryption.</p>' +
-                         '<div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem;">' +
-                         '🔒 <strong>Encrypted Data Channels:</strong> Passwords, payment requests, and GST invoices are hashed using cryptographic salt.' +
-                         '<br>🛡️ <strong>Zero Cleartext Storage:</strong> Sensitive credentials are never exposed or transmitted in plain text.' +
+                         '<div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem; display:flex; flex-direction:column; gap:6px;">' +
+                         '<div style="display:flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><strong>Encrypted Data Channels:</strong> Passwords, payment requests, and GST invoices are hashed using cryptographic salt.</div>' +
+                         '<div style="display:flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><strong>Zero Cleartext Storage:</strong> Sensitive credentials are never exposed or transmitted in plain text.</div>' +
                          '</div>'
             },
             privacy: {
@@ -3269,8 +3273,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>',
                 link: '/privacy.php',
                 content: '<p><strong>Multi-Gateway Bank Security:</strong> Instant direct UPI payments via NPCI verified schemas (Google Pay, PhonePe, Paytm, CRED, BHIM) and Razorpay/Cashfree PCI-DSS Level 1 3D Secure encryption.</p>' +
-                         '<div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem; color:#1E40AF;">' +
-                         '⚡ <strong>Dynamic Laser QR & UPI Links:</strong> NPCI direct merchant routing with automated transaction audit logging.' +
+                         '<div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:12px; margin:8px 0; font-size:0.8rem; color:#1E40AF; display:flex; align-items:center; gap:6px;">' +
+                         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg><strong>Dynamic Laser QR &amp; UPI Links:</strong> NPCI direct merchant routing with automated transaction audit logging.' +
                          '</div>'
             },
             authenticity: {

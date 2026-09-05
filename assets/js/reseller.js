@@ -30,15 +30,56 @@ window.updateWholesaleWishlistBadge = updateWholesaleWishlistBadge;
         
 function animateTargetGauge(pct) {
     try {
-        var p = Number(pct) || 75.55;
         var valEl = document.getElementById('targetGaugeVal');
         var fillEl = document.getElementById('targetGaugeFill');
-        if (valEl) valEl.textContent = p.toFixed(2) + '%';
-        if (fillEl) {
-            var totalLen = 251.2;
-            var offset = totalLen - (totalLen * (p / 100));
-            fillEl.style.strokeDashoffset = offset;
+        var tipGlow = document.getElementById('targetGaugeIndicatorGlow');
+        var tipDot = document.getElementById('targetGaugeIndicatorDot');
+        if (!valEl) return;
+
+        var target = (typeof pct === 'number' && !isNaN(pct)) ? pct : 0;
+        target = Math.max(0, Math.min(100, target));
+        var start = performance.now();
+        var duration = 1200;
+
+        function updateTip(curVal) {
+            var angleRad = Math.PI * (1 - (curVal / 100));
+            var cx = Math.round((100 + 80 * Math.cos(angleRad)) * 10) / 10;
+            var cy = Math.round((100 - 80 * Math.sin(angleRad)) * 10) / 10;
+            if (tipGlow) {
+                tipGlow.setAttribute('cx', cx);
+                tipGlow.setAttribute('cy', cy);
+                tipGlow.style.opacity = curVal > 0 ? '1' : '0';
+            }
+            if (tipDot) {
+                tipDot.setAttribute('cx', cx);
+                tipDot.setAttribute('cy', cy);
+                tipDot.style.opacity = curVal > 0 ? '1' : '0';
+            }
         }
+
+        if (target === 0) {
+            valEl.textContent = '0%';
+            if (fillEl) fillEl.style.strokeDashoffset = 251;
+            updateTip(0);
+            return;
+        }
+
+        function step(time) {
+            var progress = Math.min((time - start) / duration, 1);
+            var ease = 1 - Math.pow(1 - progress, 3);
+            var cur = ease * target;
+            var targetOffset = Math.round(251 - (251 * (cur / 100)));
+            if (fillEl) fillEl.style.strokeDashoffset = targetOffset;
+            valEl.textContent = (cur >= 10 ? cur.toFixed(1) : cur.toFixed(2)) + '%';
+            updateTip(cur);
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                valEl.textContent = (target >= 10 ? target.toFixed(1) : target.toFixed(2)) + '%';
+                updateTip(target);
+            }
+        }
+        requestAnimationFrame(step);
     } catch(e) {}
 }
 window.animateTargetGauge = animateTargetGauge;
@@ -271,7 +312,7 @@ window.animateTargetGauge = animateTargetGauge;
             var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
 
             if (!name) {
-                window.showWsToast('⚠️ Please enter your Full Name.');
+                window.showWsToast('️ Please enter your Full Name.');
                 return false;
             }
 
@@ -300,14 +341,14 @@ window.animateTargetGauge = animateTargetGauge;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
                     if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
                     if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
-                    window.showWsToast('✅ Reseller Profile updated in live database!');
+                    window.showWsToast(' Reseller Profile updated in live database!');
                 } else {
-                    window.showWsToast('⚠️ ' + (res.error || 'Failed to update profile'));
+                    window.showWsToast('️ ' + (res.error || 'Failed to update profile'));
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
-                window.showWsToast('✅ Profile saved locally.');
+                window.showWsToast(' Profile saved locally.');
             });
 
             return false;
@@ -341,14 +382,14 @@ window.animateTargetGauge = animateTargetGauge;
                     user.gst_number = gstin;
                     user.gstin = gstin;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                    window.showWsToast('✅ GST Tax Profile updated in live database!');
+                    window.showWsToast(' GST Tax Profile updated in live database!');
                 } else {
-                    window.showWsToast('⚠️ ' + (res.error || 'Invalid GST details'));
+                    window.showWsToast('️ ' + (res.error || 'Invalid GST details'));
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
-                window.showWsToast('✅ GST profile saved.');
+                window.showWsToast(' GST profile saved.');
             });
 
             return false;
@@ -499,7 +540,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             var ship = user.custom_shipping || {};
             if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Custom Godown';
                 if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
                 if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
@@ -520,7 +561,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (shipPin) shipPin.value = ship.pincode || '';
                 if (shipTransporter) shipTransporter.value = ship.transporter || '';
             } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing';
                 if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
                 if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
@@ -575,7 +616,7 @@ window.animateTargetGauge = animateTargetGauge;
             closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedResellerData();
-            showWsToast('✓ Address configuration saved successfully!');
+            showWsToast(' Address configuration saved successfully!');
         };
 
         /* ── GST Mode Toggle ── */
@@ -1047,7 +1088,7 @@ window.animateTargetGauge = animateTargetGauge;
                 btn.classList.add('active');
             }
             updateDashboardAnalytics();
-            showWsToast('📊 Switched to ' + mode.toUpperCase() + ' Analytics Mode');
+            showWsToast(' Switched to ' + mode.toUpperCase() + ' Analytics Mode');
         };
 
         /* ── Date Range Modal Controller ── */
@@ -1076,7 +1117,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            showWsToast('📅 Applied Date Filter: ' + label);
+            showWsToast(' Applied Date Filter: ' + label);
         };
 
         function applyCustomDateRange() {
@@ -1109,7 +1150,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            showWsToast('📅 Applied Custom Calendar Range: ' + label);
+            showWsToast(' Applied Custom Calendar Range: ' + label);
         };
 
         function handleGlobalQuickSearch(input) {
@@ -1375,7 +1416,7 @@ window.animateTargetGauge = animateTargetGauge;
         /* ── Export Reports to CSV ── */
         function exportReportsToCsv() {
             if (!activeOrdersList || activeOrdersList.length === 0) {
-                showWsToast('⚠️ No consignment records available to export.');
+                showWsToast('️ No consignment records available to export.');
                 return;
             }
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
@@ -1403,7 +1444,7 @@ window.animateTargetGauge = animateTargetGauge;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showWsToast('📁 CSV Spreadsheet downloaded successfully!');
+            showWsToast(' CSV Spreadsheet downloaded successfully!');
         };
 
         /* ── Render Support Tickets ── */
@@ -1464,7 +1505,7 @@ window.animateTargetGauge = animateTargetGauge;
             activeTicketsList.unshift(newTicket);
             renderTicketsView();
             document.getElementById('wsTicketForm').reset();
-            showWsToast('🎫 Support ticket created! Concierge assigned.');
+            showWsToast(' Support ticket created! Concierge assigned.');
         };
 
         /* ── Order Details Modal ── */
@@ -1582,10 +1623,10 @@ window.animateTargetGauge = animateTargetGauge;
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    showWsToast('🛒 ' + o.productName + ' added to reseller cart!');
+                    showWsToast(' ' + o.productName + ' added to reseller cart!');
                 }
             } catch(e) {
-                showWsToast('🛒 Added to cart!');
+                showWsToast(' Added to cart!');
             }
         };
 
@@ -2192,15 +2233,15 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    showWsToast('✓ Showing All Available Reseller Lots');
+                    showWsToast(' Showing All Available Reseller Lots');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    showWsToast(' ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    showWsToast('️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
                 } else if (activeCatalogCategory !== 'All') {
-                    showWsToast('🥻 ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    showWsToast(' ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
                 } else if (activePriceTier !== null) {
-                    showWsToast('🏷️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    showWsToast('️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
                 }
             }
 
@@ -2310,7 +2351,7 @@ window.animateTargetGauge = animateTargetGauge;
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    showWsToast('🛍️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    showWsToast('️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
                 }
             } catch(e) {
                 console.error(e);
@@ -2360,7 +2401,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (typeof showToast === 'function') {
                     showToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 } else if (typeof window.showWsToast === 'function') {
-                    showWsToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    showWsToast(added ? ' Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 }
                 return;
             }
@@ -2456,6 +2497,8 @@ window.animateTargetGauge = animateTargetGauge;
                 var qty = monthQtys[m];
                 return {
                     m: m,
+                    raw_val: val,
+                    raw_qty: qty,
                     val: '₹' + Math.round(val).toLocaleString('en-IN'),
                     qty: qty + ' Pcs',
                     growth: val > 0 ? '+100%' : '0%'
@@ -2477,27 +2520,74 @@ window.animateTargetGauge = animateTargetGauge;
             });
         };
 
+        var currentSalesChartStyle = 'zigzag';
+
+        window.renderRealSalesChart = function(styleType) {
+            if (styleType) currentSalesChartStyle = styleType;
+            var line = document.getElementById('svgLinePath');
+            var area = document.getElementById('svgAreaPath');
+            var nodes = document.querySelectorAll('.ws-chart-node');
+            if (!line || !area) return;
+
+            var data = getMonthlySalesData(activeOrdersList);
+            var xCoords = [40, 86, 132, 178, 224, 270, 316, 362, 408, 454, 500, 546];
+            var rawValues = data.map(function(d) {
+                return (typeof d.raw_val === 'number') ? d.raw_val : (parseFloat(String(d.val || '').replace(/[^0-9.]/g, '')) || 0);
+            });
+
+            var maxVal = Math.max.apply(null, rawValues);
+            var yBase = 158;
+            var yTop = 20;
+            var chartHeight = yBase - yTop; // 138px range
+
+            var points = [];
+            if (maxVal <= 0) {
+                for (var i = 0; i < 12; i++) {
+                    points.push({ x: xCoords[i], y: yBase });
+                    if (nodes[i]) {
+                        nodes[i].setAttribute('cx', xCoords[i]);
+                        nodes[i].setAttribute('cy', yBase);
+                    }
+                }
+                var flatLine = 'M ' + xCoords[0] + ',' + yBase + ' L ' + xCoords[11] + ',' + yBase;
+                var flatArea = flatLine + ' L ' + xCoords[11] + ',' + yBase + ' L ' + xCoords[0] + ',' + yBase + ' Z';
+                line.setAttribute('d', flatLine);
+                area.setAttribute('d', flatArea);
+                return;
+            }
+
+            var scaleMax = Math.max(100000, Math.ceil(maxVal / 50000) * 50000);
+            for (var j = 0; j < 12; j++) {
+                var val = rawValues[j];
+                var y = Math.round(yBase - ((val / scaleMax) * chartHeight));
+                points.push({ x: xCoords[j], y: y });
+                if (nodes[j]) {
+                    nodes[j].setAttribute('cx', xCoords[j]);
+                    nodes[j].setAttribute('cy', y);
+                }
+            }
+
+            if (currentSalesChartStyle === 'smooth') {
+                var dLine = 'M ' + points[0].x + ',' + points[0].y;
+                for (var k = 0; k < points.length - 1; k++) {
+                    var cpX = Math.round((points[k].x + points[k + 1].x) / 2);
+                    dLine += ' C ' + cpX + ',' + points[k].y + ' ' + cpX + ',' + points[k + 1].y + ' ' + points[k + 1].x + ',' + points[k + 1].y;
+                }
+                var dArea = dLine + ' L ' + points[points.length - 1].x + ',' + yBase + ' L ' + points[0].x + ',' + yBase + ' Z';
+                line.setAttribute('d', dLine);
+                area.setAttribute('d', dArea);
+            } else {
+                var dZig = 'M ' + points.map(function(p) { return p.x + ',' + p.y; }).join(' L ');
+                var dZigArea = dZig + ' L ' + points[points.length - 1].x + ',' + yBase + ' L ' + points[0].x + ',' + yBase + ' Z';
+                line.setAttribute('d', dZig);
+                area.setAttribute('d', dZigArea);
+            }
+        };
+
         window.switchSalesChartStyle = function(type, btn) {
             document.querySelectorAll('.ws-chart-type-btn').forEach(function(b) { b.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-
-            var line = document.getElementById('svgLinePath');
-            var area = document.getElementById('svgAreaPath');
-            if (!line || !area) return;
-
-            if (type === 'smooth') {
-                // Smooth curved spline wave (Luxury Cubic Curve)
-                var smoothLine = 'M 40,115 C 63,115 63,96 86,96 C 109,96 109,102 132,102 C 155,102 155,85 178,85 C 201,85 201,76 224,76 C 247,76 247,82 270,82 C 293,82 293,62 316,62 C 339,62 339,88 362,88 C 385,88 385,68 408,68 C 431,68 431,38 454,38 C 477,38 477,52 500,52 C 523,52 523,94 546,94';
-                var smoothArea = smoothLine + ' L 546,158 L 40,158 Z';
-                line.setAttribute('d', smoothLine);
-                area.setAttribute('d', smoothArea);
-            } else {
-                // Crisp Zigzag Lines (Luxury Style)
-                var zigzagLine = 'M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94';
-                var zigzagArea = zigzagLine + ' L 546,158 L 40,158 Z';
-                line.setAttribute('d', zigzagLine);
-                area.setAttribute('d', zigzagArea);
-            }
+            window.renderRealSalesChart(type);
         };
 
         /* ── Reseller Logout ── */
@@ -2528,7 +2618,12 @@ window.animateTargetGauge = animateTargetGauge;
             renderReportsView(activeOrdersList);
             renderTrackingTab(activeOrdersList);
             renderTicketsView();
-            animateTargetGauge(75.55);
+            window.renderRealSalesChart('zigzag');
+
+            var realGaugeVal = (window.b2bKpis && typeof window.b2bKpis.gauge_percent === 'number') 
+                ? window.b2bKpis.gauge_percent 
+                : 0;
+            animateTargetGauge(realGaugeVal);
             updateWholesaleCartBadge();
         }
 
@@ -2688,7 +2783,7 @@ window.animateTargetGauge = animateTargetGauge;
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            showWsToast('📍 Loaded tracking timeline for ' + orderId);
+            showWsToast(' Loaded tracking timeline for ' + orderId);
         };
 
         function filterTrackingOrders(status, btn) {
@@ -2703,7 +2798,7 @@ window.animateTargetGauge = animateTargetGauge;
                 function copyAwbNumber(awb) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(awb).then(function() {
-                    showWsToast('📋 AWB ' + awb + ' copied to clipboard!');
+                    showWsToast(' AWB ' + awb + ' copied to clipboard!');
                 }).catch(function() {
                     showWsToast('AWB: ' + awb);
                 });
@@ -2733,7 +2828,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 4,
                     title: "Tier 4: Gold",
                     shortTitle: "Gold (Tier 4)",
-                    badgeText: "⭐ Gold VIP",
+                    badgeText: " Gold VIP",
                     pillText: "300–500 Orders",
                     discount: "10% Margin Rebate",
                     minOrders: 301,
@@ -2745,7 +2840,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 3,
                     title: "Tier 3: Gold",
                     shortTitle: "Gold (Tier 3)",
-                    badgeText: "⭐ Gold VIP",
+                    badgeText: " Gold VIP",
                     pillText: "200–300 Orders",
                     discount: "7.5% Margin Rebate",
                     minOrders: 201,
@@ -2821,10 +2916,10 @@ window.animateTargetGauge = animateTargetGauge;
                 closeEditMainAddressModal();
                 loadSavedResellerData();
                 renderAddressBookData(user);
-                showWsToast('✓ Billing address updated successfully!');
+                showWsToast(' Billing address updated successfully!');
             } catch(err) {
                 closeEditMainAddressModal();
-                showWsToast('✓ Billing address saved!');
+                showWsToast(' Billing address saved!');
             }
         };
 
@@ -2862,15 +2957,15 @@ window.animateTargetGauge = animateTargetGauge;
             if (availEl) availEl.textContent = (newBal + 100000).toLocaleString('en-IN');
             if (modalBal) modalBal.textContent = '₹' + newBal.toLocaleString('en-IN');
 
-            showWsToast('💳 Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
+            showWsToast(' Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
         };
 
         function requestCreditLimitBoost() {
-            showWsToast('⚡ Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
+            showWsToast(' Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
         };
 
         function requestWalletWithdrawal() {
-            showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
+            showWsToast(' Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
 
@@ -2898,203 +2993,29 @@ window.animateTargetGauge = animateTargetGauge;
            RESELLER CRM, CUSTOMERS & OPERATIONS ENGINE
         ════════════════════════════════════════════════════════════ */
 
-        // 1. Initial Real-World Reseller Customers Dataset
-        var DEFAULT_RESELLER_CUSTOMERS = [
-            {
-                id: 1,
-                name: "Ananya Deshmukh",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "ananya.d@gmail.com",
-                address: "402, Lotus Grandeur, Linking Road, Bandra West",
-                city: "Mumbai",
-                state: "Maharashtra",
-                pincode: "400050",
-                tags: ["VIP", "REPEAT", "HIGH VALUE"],
-                totalOrders: 8,
-                totalPurchase: 114500,
-                totalProfit: 24800,
-                firstOrder: "2026-02-14",
-                lastOrder: "2026-08-12",
-                reorderCycleDays: 25,
-                notes: [
-                    { id: 101, text: "Prefers Pure Silk & Paithani sarees in Navy and Maroon colors.", date: "2026-08-12 14:30", creator: "Rajesh Kumar" },
-                    { id: 102, text: "Always pays via UPI immediately on order booking.", date: "2026-07-20 11:15", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 201, date: "2026-08-19", time: "11:30", note: "Send festive Paithani catalog collection on WhatsApp", status: "Pending" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Pooja Varma",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "pooja.varma@outlook.com",
-                address: "Flat 12B, Regency Heights, Civil Lines",
-                city: "Jaipur",
-                state: "Rajasthan",
-                pincode: "302006",
-                tags: ["VIP", "REPEAT"],
-                totalOrders: 6,
-                totalPurchase: 84900,
-                totalProfit: 18200,
-                firstOrder: "2026-03-10",
-                lastOrder: "2026-08-05",
-                reorderCycleDays: 30,
-                notes: [
-                    { id: 103, text: "Boutique owner in Jaipur. Buys bridal sets and heavy dupattas.", date: "2026-08-05 16:20", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 202, date: "2026-08-18", time: "16:00", note: "Follow-up for Rakhi & Teej bridal orders", status: "Pending" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Sneha Patel",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "sneha.patel@gmail.com",
-                address: "Plot 88, Sunrise Park, Bodakdev",
-                city: "Ahmedabad",
-                state: "Gujarat",
-                pincode: "380054",
-                tags: ["REPEAT", "REGULAR"],
-                totalOrders: 4,
-                totalPurchase: 48900,
-                totalProfit: 10400,
-                firstOrder: "2026-04-18",
-                lastOrder: "2026-07-28",
-                reorderCycleDays: 28,
-                notes: [
-                    { id: 104, text: "Loves soft georgette and organza sarees.", date: "2026-07-28 10:45", creator: "Rajesh Kumar" }
-                ],
-                followups: []
-            },
-            {
-                id: 4,
-                name: "Kavita Singhania",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "kavita.singhania@yahoo.com",
-                address: "Flat 5C, Queens Mansion, Park Street",
-                city: "Kolkata",
-                state: "West Bengal",
-                pincode: "700016",
-                tags: ["VIP", "HIGH VALUE"],
-                totalOrders: 5,
-                totalPurchase: 92400,
-                totalProfit: 21500,
-                firstOrder: "2026-01-22",
-                lastOrder: "2026-08-14",
-                reorderCycleDays: 20,
-                notes: [
-                    { id: 105, text: "High-ticket buyer for designer wedding lehengas.", date: "2026-08-14 18:00", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 203, date: "2026-08-20", time: "12:00", note: "Confirm dispatch tracking of Zardosi Lehenga", status: "Pending" }
-                ]
-            },
-            {
-                id: 5,
-                name: "Ritu Aggarwal",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "ritu.aggarwal@gmail.com",
-                address: "House 24, Block C, Greater Kailash 1",
-                city: "New Delhi",
-                state: "Delhi",
-                pincode: "110048",
-                tags: ["NEW"],
-                totalOrders: 1,
-                totalPurchase: 14500,
-                totalProfit: 3200,
-                firstOrder: "2026-08-15",
-                lastOrder: "2026-08-15",
-                reorderCycleDays: 30,
-                notes: [
-                    { id: 106, text: "New customer inquiry from Instagram advertisement.", date: "2026-08-15 09:30", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 204, date: "2026-08-18", time: "14:00", note: "Call for feedback after delivery", status: "Pending" }
-                ]
-            },
-            {
-                id: 6,
-                name: "Meera Nair",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "meera.nair@gmail.com",
-                address: "Kairali Villa, Panampilly Nagar",
-                city: "Kochi",
-                state: "Kerala",
-                pincode: "682036",
-                tags: ["REPEAT", "REGULAR"],
-                totalOrders: 3,
-                totalPurchase: 32400,
-                totalProfit: 7100,
-                firstOrder: "2026-05-04",
-                lastOrder: "2026-08-01",
-                reorderCycleDays: 35,
-                notes: [],
-                followups: []
-            },
-            {
-                id: 7,
-                name: "Priyanka Reddy",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "priyanka.reddy@gmail.com",
-                address: "Plot 104, Road No. 36, Jubilee Hills",
-                city: "Hyderabad",
-                state: "Telangana",
-                pincode: "500033",
-                tags: ["VIP", "REPEAT", "HIGH VALUE"],
-                totalOrders: 7,
-                totalPurchase: 108900,
-                totalProfit: 23600,
-                firstOrder: "2026-02-01",
-                lastOrder: "2026-08-10",
-                reorderCycleDays: 22,
-                notes: [
-                    { id: 107, text: "Frequent orders of Kanjivaram & Zari border sarees.", date: "2026-08-10 15:10", creator: "Rajesh Kumar" }
-                ],
-                followups: []
-            },
-            {
-                id: 8,
-                name: "Sunita Mehra",
-                mobile: "7046363528",
-                whatsapp: "7046363528",
-                email: "sunita.mehra@gmail.com",
-                address: "House 102, Sector 9D",
-                city: "Chandigarh",
-                state: "Punjab",
-                pincode: "160009",
-                tags: ["INACTIVE"],
-                totalOrders: 2,
-                totalPurchase: 18900,
-                totalProfit: 4100,
-                firstOrder: "2026-03-12",
-                lastOrder: "2026-05-10",
-                reorderCycleDays: 45,
-                notes: [
-                    { id: 108, text: "Has not ordered for 90+ days. Needs re-engagement offer.", date: "2026-07-01 11:00", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 205, date: "2026-08-21", time: "15:30", note: "Send 10% discount promo code for re-activation", status: "Pending" }
-                ]
-            }
-        ];
+        // 1. Initial Real-World Reseller Customers Dataset (Empty by default, populated by actual users)
+        var DEFAULT_RESELLER_CUSTOMERS = [];
 
         // 2. Load / Save Reseller Customers State
         function getResellerCustomers() {
             try {
                 var raw = localStorage.getItem('reseller_customers_db');
-                if (raw) return JSON.parse(raw);
+                if (raw) {
+                    var parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) {
+                        // Purge legacy mock data if detected
+                        var hasMock = parsed.some(function(c) {
+                            return c && (c.name === "Ananya Deshmukh" || (c.notes && c.notes.some(function(n) { return n && n.creator === "Rajesh Kumar"; })));
+                        });
+                        if (hasMock) {
+                            localStorage.removeItem('reseller_customers_db');
+                            return [];
+                        }
+                        return parsed;
+                    }
+                }
             } catch(e) {}
-            localStorage.setItem('reseller_customers_db', JSON.stringify(DEFAULT_RESELLER_CUSTOMERS));
-            return DEFAULT_RESELLER_CUSTOMERS;
+            return [];
         };
 
         function saveResellerCustomers(customers) {
@@ -3392,7 +3313,7 @@ window.animateTargetGauge = animateTargetGauge;
                         ⚡ New Order
                     </button>
                     <button class="crm-btn-action" onclick="openRepeatOrderModal(${c.id})">
-                        🔁 Repeat Order
+                        Repeat Order
                     </button>
                     <button class="crm-btn-action" onclick="openAddNoteModal(${c.id})">
                         📝 Add Note
@@ -3509,32 +3430,37 @@ window.animateTargetGauge = animateTargetGauge;
         function renderProfileLedgerTab(c) {
             var container = document.getElementById('profLedgerContent');
             if (!container) return;
+            var custOrders = activeOrdersList.filter(function(o) {
+                return (o.phone && c.mobile && String(o.phone).indexOf(String(c.mobile).slice(-10)) !== -1) ||
+                       (o.customer_name && o.customer_name.toLowerCase() === c.name.toLowerCase());
+            });
+            if (custOrders.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--ws-text-muted); padding:30px;">No purchase transactions recorded yet for ' + (c.name || 'this customer') + '.</div>';
+                return;
+            }
             container.innerHTML = `
                 <table class="ws-orders-table">
                     <thead>
                         <tr>
-                            <th>Transaction / Order</th>
+                            <th>Order</th>
                             <th>Total Purchase</th>
-                            <th>Reseller Cost</th>
-                            <th style="color:#047857;">Net Profit</th>
+                            <th>Items</th>
+                            <th style="color:#047857;">Status</th>
                             <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#ORD-77492 (Paithani Saree)</td>
-                            <td>₹18,200</td>
-                            <td>₹14,000</td>
-                            <td style="font-weight:900; color:#047857;">+₹4,200</td>
-                            <td>2026-08-12</td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-77450 (Silk Kurti Lot)</td>
-                            <td>₹12,400</td>
-                            <td>₹9,600</td>
-                            <td style="font-weight:900; color:#047857;">+₹2,800</td>
-                            <td>2026-07-20</td>
-                        </tr>
+                        ` + custOrders.map(function(o) {
+                            return `
+                                <tr>
+                                    <td>#${o.order_number || o.id}</td>
+                                    <td>₹${Number(o.total || o.total_amount || 0).toLocaleString('en-IN')}</td>
+                                    <td>${o.items_count || 1} Pcs</td>
+                                    <td style="font-weight:700; color:#047857;">${o.status || 'Confirmed'}</td>
+                                    <td>${o.date || o.created_at || 'Recently'}</td>
+                                </tr>
+                            `;
+                        }).join('') + `
                     </tbody>
                 </table>
             `;
@@ -3552,7 +3478,7 @@ window.animateTargetGauge = animateTargetGauge;
                 return `
                     <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
                         <div style="font-size:0.80rem; color:var(--ws-text-main); font-weight:600; line-height:1.4;">${n.text}</div>
-                        <div style="font-size:0.68rem; color:var(--ws-text-muted); margin-top:4px;">📅 ${n.date} &bull; By: <strong>${n.creator}</strong></div>
+                        <div style="font-size:0.68rem; color:var(--ws-text-muted); margin-top:4px;">${n.date || 'Recently'} &bull; By: <strong>${n.creator || 'Reseller'}</strong></div>
                     </div>
                 `;
             }).join('');
@@ -3571,9 +3497,9 @@ window.animateTargetGauge = animateTargetGauge;
                     <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <div style="font-size:0.82rem; font-weight:800; color:var(--ws-text-main);">${f.note}</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted); margin-top:2px;">📅 ${f.date} at ${f.time} &bull; Status: <span class="crm-tag crm-tag-followup">${f.status}</span></div>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted); margin-top:2px;">${f.date || ''} at ${f.time || ''} &bull; Status: <span class="crm-tag crm-tag-followup">${f.status || 'Pending'}</span></div>
                         </div>
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${c.id}, ${f.id})">✅ Mark Done</button>
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${c.id}, ${f.id})">Mark Done</button>
                     </div>
                 `;
             }).join('');
@@ -3582,36 +3508,25 @@ window.animateTargetGauge = animateTargetGauge;
         function renderProfileTimelineTab(c) {
             var container = document.getElementById('profTimelineList');
             if (!container) return;
-            container.innerHTML = `
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">✓</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">📦 Order #ORD-77492 Delivered Successfully</div>
-                        <div class="crm-timeline-time">August 14, 2026 &bull; BlueDart AWB: 884729104</div>
+            var custOrders = activeOrdersList.filter(function(o) {
+                return (o.phone && c.mobile && String(o.phone).indexOf(String(c.mobile).slice(-10)) !== -1) ||
+                       (o.customer_name && o.customer_name.toLowerCase() === c.name.toLowerCase());
+            });
+            if (custOrders.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--ws-text-muted); padding:30px;">No customer order timeline recorded yet.</div>';
+                return;
+            }
+            container.innerHTML = custOrders.map(function(o) {
+                return `
+                    <div class="crm-timeline-item">
+                        <div class="crm-timeline-dot">✓</div>
+                        <div class="crm-timeline-content">
+                            <div class="crm-timeline-title">Order #${o.order_number || o.id} (${o.status || 'Confirmed'})</div>
+                            <div class="crm-timeline-time">${o.date || o.created_at || 'Recently'} &bull; ${o.items_count || 1} Pcs</div>
+                        </div>
                     </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">💬</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">WhatsApp Catalog Sent</div>
-                        <div class="crm-timeline-time">August 12, 2026 &bull; Shared Diwali silk saree collection</div>
-                    </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">📝</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">Note Added by Rajesh Kumar</div>
-                        <div class="crm-timeline-time">July 28, 2026 &bull; Customer preferred soft georgette fabrics</div>
-                    </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">👤</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">Customer Created</div>
-                        <div class="crm-timeline-time">${c.firstOrder || 'February 14, 2026'} &bull; First booking</div>
-                    </div>
-                </div>
-            `;
+                `;
+            }).join('');
         };
 
         // 9. Add / Edit Customer Modal & Smart UI Helpers
@@ -3701,7 +3616,7 @@ window.animateTargetGauge = animateTargetGauge;
             var btn = document.getElementById('btnCustSyncWhatsapp');
             if (mobile && whatsapp) {
                 if (!mobile.value.trim()) {
-                    showWsToast('⚠️ Please enter Mobile Number first');
+                    showWsToast('️ Please enter Mobile Number first');
                     mobile.focus();
                     return;
                 }
@@ -3720,7 +3635,7 @@ window.animateTargetGauge = animateTargetGauge;
                         btn.style.borderColor = '';
                     }, 1800);
                 }
-                showWsToast('⚡ WhatsApp number synced with Mobile!');
+                showWsToast(' WhatsApp number synced with Mobile!');
             }
         };
 
@@ -3858,9 +3773,9 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (qoModal && qoModal.classList.contains('active')) {
                 selectQoCustomer(targetId);
-                showWsToast('🎉 Customer "' + name + '" saved & selected for Quick Order!');
+                showWsToast(' Customer "' + name + '" saved & selected for Quick Order!');
             } else {
-                showWsToast('✅ Customer saved successfully!');
+                showWsToast(' Customer saved successfully!');
             }
         };
 
@@ -4242,7 +4157,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             closeResellerQuickOrderDrawer();
-            showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
+            showWsToast(' Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
         };
 
         // 11. Repeat Order Modal Flow
@@ -4303,7 +4218,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             closeRepeatOrderModal();
-            showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
+            showWsToast('Repeat Order confirmed & dispatched to customer!');
         };
 
         // 12. Notes Engine
@@ -4333,7 +4248,7 @@ window.animateTargetGauge = animateTargetGauge;
                     id: Date.now(),
                     text: text,
                     date: new Date().toLocaleString(),
-                    creator: 'Rajesh Kumar'
+                    creator: (window.b2bProfile && window.b2bProfile.name) ? window.b2bProfile.name : 'Reseller Partner'
                 });
                 saveResellerCustomers(customers);
                 if (currentActiveProfileCustomer && currentActiveProfileCustomer.id === custId) {
@@ -4342,7 +4257,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             closeAddNoteModal();
-            showWsToast('📝 Note saved successfully!');
+            showWsToast('Note saved successfully!');
         };
 
         // 13. Schedule Follow-up Modal & Actions
@@ -4395,7 +4310,7 @@ window.animateTargetGauge = animateTargetGauge;
                 target.setDate(target.getDate() + 7);
             }
             dateEl.value = target.toISOString().split('T')[0];
-            showWsToast('📅 Set follow-up date: ' + target.toLocaleDateString('en-IN', { day:'numeric', month:'short' }));
+            showWsToast('Set follow-up date: ' + target.toLocaleDateString('en-IN', { day:'numeric', month:'short' }));
         };
 
         function insertFollowupTaskPrompt(promptText) {
@@ -4442,7 +4357,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             closeScheduleFollowupModal();
             renderFollowupsTable();
-            showWsToast('⏰ Follow-up task scheduled for ' + (c ? c.name : 'Customer') + '!');
+            showWsToast('Follow-up task scheduled for ' + (c ? c.name : 'Customer') + '!');
         };
 
         function markFollowupCompleted(custId, fId) {
@@ -4453,7 +4368,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (f) f.status = 'Completed';
                 saveResellerCustomers(customers);
                 renderFollowupsTable();
-                showWsToast('✅ Follow-up marked as completed!');
+                showWsToast('Follow-up marked as completed!');
             }
         };
 
@@ -4465,7 +4380,7 @@ window.animateTargetGauge = animateTargetGauge;
                 c.followups = c.followups.filter(function(x) { return x.id !== fId; });
                 saveResellerCustomers(customers);
                 renderFollowupsTable();
-                showWsToast('🗑️ Follow-up reminder removed.');
+                showWsToast('Follow-up reminder removed.');
             }
         };
 
@@ -4480,13 +4395,13 @@ window.animateTargetGauge = animateTargetGauge;
                 return;
             }
 
-            var text = 'Namaste ' + c.name + '! 🙏\n\nHope you are doing well.';
+            var text = 'Namaste ' + c.name + '!\n\nHope you are doing well.';
             if (customTaskNote) {
                 text += '\nRegarding our scheduled follow-up: ' + customTaskNote;
             } else {
                 text += '\nFollowing up to share our latest festive Paithani & pure silk saree arrivals for your boutique!';
             }
-            text += '\n\nFeel free to explore and let me know if you would like me to book your order today!\n— Rajesh Kumar (DT Brand\'s Reseller)';
+            text += '\n\nFeel free to explore and let me know if you would like me to book your order today!\n— ' + ((window.b2bProfile && window.b2bProfile.name) ? window.b2bProfile.name : 'Your Trusted Partner') + ' (DT Brand\'s Reseller)';
 
             var url = 'https://wa.me/91' + phone + '?text=' + encodeURIComponent(text);
             window.open(url, '_blank');
@@ -4552,7 +4467,7 @@ window.animateTargetGauge = animateTargetGauge;
             var customers = getResellerCustomers();
             var sorted = customers.slice().sort(function(a, b) { return b.totalPurchase - a.totalPurchase; });
             container.innerHTML = sorted.slice(0, 4).map(function(c, idx) {
-                var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : '⭐'));
+                var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
                 return `
                     <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:6px 10px; cursor:pointer;" onclick="openCustomerProfileModal(${c.id})">
                         <div style="display:flex; align-items:center; gap:8px;">
@@ -4747,13 +4662,27 @@ ${senderName} (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Customers_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            showWsToast('📥 Customers CSV exported!');
+            showWsToast(' Customers CSV exported!');
         };
 
         function exportProfitLedgerCSV() {
-            var csv = 'OrderID,Customer,Product,SellingPrice,BaseCost,NetProfit,MarginPct,Date\n';
-            csv += '#ORD-77492,Ananya Deshmukh,Paithani Silk Saree,18200,14000,4200,23.08%,2026-08-12\n';
-            csv += '#ORD-77450,Pooja Varma,Bridal Lehenga Set,24800,19000,5800,23.38%,2026-08-05\n';
+            if (!activeOrdersList || activeOrdersList.length === 0) {
+                showWsToast('No completed resale orders to export.');
+                return;
+            }
+            var csv = 'OrderID,Customer,Quantity,SellingPrice,BaseCost,NetProfit,MarginPct,Status,Date\n';
+            activeOrdersList.forEach(function(o) {
+                var id = (o.order_number || o.id);
+                var cust = (o.customer_name || 'Customer').replace(/,/g, ' ');
+                var qty = (o.items_count || 1);
+                var sell = Number(o.total_amount || o.total || 0);
+                var cost = Math.round(sell * 0.8);
+                var profit = sell - cost;
+                var margin = '20.0%';
+                var status = (o.status || 'Confirmed');
+                var date = (o.date || o.created_at || '').split(' ')[0];
+                csv += `"${id}","${cust}","${qty}","${sell}","${cost}","${profit}","${margin}","${status}","${date}"\n`;
+            });
 
             var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             var url = URL.createObjectURL(blob);
@@ -4761,7 +4690,7 @@ ${senderName} (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Profit_Ledger_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            showWsToast('📥 Profit Ledger CSV exported!');
+            showWsToast('Profit Ledger CSV exported successfully.');
         };
 
         // 18. Notifications Modal
@@ -4769,22 +4698,18 @@ ${senderName} (Reseller Partner)`;
             var modal = document.getElementById('resellerNotificationsModal');
             var list = document.getElementById('resellerNotificationsList');
             if (list) {
-                list.innerHTML = `
-                    <div style="display:flex; flex-direction:column; gap:8px;">
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:var(--ws-text-main);">📦 Order #ORD-77492 Dispatched</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">BlueDart courier in transit to Ananya Deshmukh (Mumbai)</div>
-                        </div>
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:#B45309;">⏰ Follow-up Due Today: Pooja Varma</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Scheduled call at 4:00 PM for festive orders</div>
-                        </div>
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:#047857;">💰 Profit Updated: +₹4,200</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Realized margin credited to Reseller Gold Wallet</div>
-                        </div>
-                    </div>
-                `;
+                if (activeOrdersList && activeOrdersList.length > 0) {
+                    list.innerHTML = activeOrdersList.slice(0, 5).map(function(o) {
+                        return `
+                            <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px; margin-bottom:8px;">
+                                <div style="font-weight:800; font-size:0.78rem; color:var(--ws-text-main);">Order #${o.order_number || o.id}: ${o.status || 'Processing'}</div>
+                                <div style="font-size:0.70rem; color:var(--ws-text-muted);">${o.date || o.created_at || ''} &bull; Total: ₹${Number(o.total_amount || o.total || 0).toLocaleString('en-IN')}</div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    list.innerHTML = '<div style="text-align:center; padding:20px; color:var(--ws-text-muted); font-size:0.80rem;">No new notifications. Place catalog orders to receive live dispatch tracking alerts.</div>';
+                }
             }
             if (modal) modal.classList.add('active');
         };
@@ -4800,25 +4725,37 @@ ${senderName} (Reseller Partner)`;
             if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
         });
 
-    
-                        /* ── Profit Ledger Renderer (Qty Only, Product Name Removed) ── */
+        /* ── Profit Ledger Renderer (Qty Only, Product Name Removed) ── */
         function renderProfitLedger() {
             var tbody = document.getElementById('crmProfitTbody');
             var mobList = document.getElementById('crmProfitMobileList');
             if (!tbody) return;
 
-            var profitData = [
-                { id: '#ORD-77492', cust: 'Ananya Deshmukh', qty: '1 Pc', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
-                { id: '#ORD-77450', cust: 'Pooja Varma', qty: '1 Pc', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
-                { id: '#ORD-77412', cust: 'Kavita Singhania', qty: '2 Pcs', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
-                { id: '#ORD-77388', cust: 'Priyanka Reddy', qty: '1 Pc', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
-                { id: '#ORD-77350', cust: 'Sneha Patel', qty: '3 Pcs', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
-                { id: '#ORD-77510', cust: 'Ritu Aggarwal', qty: '1 Pc', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
-            ];
+            var orders = Array.isArray(activeOrdersList) ? activeOrdersList : [];
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No resale orders recorded yet. Place orders from the live catalog to track real-time profit margins.</td></tr>';
+                if (mobList) {
+                    mobList.innerHTML = '<div style="text-align:center; padding:30px; color:var(--ws-text-muted);">No resale orders recorded yet.</div>';
+                }
+                return;
+            }
+
+            var profitData = orders.map(function(o) {
+                var id = '#' + (o.order_number || o.id);
+                var cust = o.customer_name || (o.shipping_address ? (o.shipping_address.split(',')[0]) : 'Resale Consignment');
+                var qty = (o.items_count || 1) + ' Pcs';
+                var sell = Number(o.total_amount || o.total || 0);
+                var cost = Math.round(sell * 0.8);
+                var profit = sell - cost;
+                var margin = '20.0%';
+                var status = o.status || 'Confirmed';
+                var date = (o.date || o.created_at || '').split(' ')[0] || 'Today';
+                return { id: id, cust: cust, qty: qty, sell: sell, cost: cost, profit: profit, margin: margin, status: status, date: date };
+            });
 
             // 1. Desktop Table
             tbody.innerHTML = profitData.map(function(item) {
-                var isDel = item.status === 'Delivered';
+                var isDel = item.status.toLowerCase() === 'delivered';
                 var statusCls = isDel ? 'background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;' : 'background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;';
                 return `
                     <tr>
@@ -4838,7 +4775,7 @@ ${senderName} (Reseller Partner)`;
             // 2. Mobile Responsive Cards
             if (mobList) {
                 mobList.innerHTML = profitData.map(function(item) {
-                    var isDel = item.status === 'Delivered';
+                    var isDel = item.status.toLowerCase() === 'delivered';
                     var statusCls = isDel ? 'background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;' : 'background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;';
                     return `
                         <div class="ws-mobile-order-card" style="border-left:4.5px solid var(--ws-gold-primary);">
@@ -5367,7 +5304,7 @@ ${senderName} (Reseller Partner)`;
             var url = 'https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(text);
             window.open(url, '_blank');
             if (typeof showWsToast === 'function') {
-                showWsToast('📲 Opening WhatsApp pitch for ' + c.name + '...');
+                showWsToast(' Opening WhatsApp pitch for ' + c.name + '...');
             }
         }
         window.pitchProductToCustomerWhatsApp = pitchProductToCustomerWhatsApp;
@@ -5437,7 +5374,7 @@ ${senderName} (Reseller Partner)`;
             cleanPhone = cleanPhone.replace(/[^0-9]/g, '');
             if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
             window.open('https://api.whatsapp.com/send?phone=' + cleanPhone + '&text=' + encodeURIComponent(msg), '_blank');
-            showWsToast('🚀 Opened WhatsApp broadcast for ' + selected.length + ' selected customers!');
+            showWsToast(' Opened WhatsApp broadcast for ' + selected.length + ' selected customers!');
         }
         window.bulkWhatsAppCustomers = bulkWhatsAppCustomers;
 
@@ -5457,7 +5394,7 @@ ${senderName} (Reseller Partner)`;
                 }
             });
             saveResellerCustomers(customers);
-            showWsToast('🏷️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
+            showWsToast('️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
         }
         window.bulkAddTagToCustomers = bulkAddTagToCustomers;
 
@@ -5494,7 +5431,7 @@ ${senderName} (Reseller Partner)`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showWsToast('📥 Exported ' + selected.length + ' selected customers to CSV!');
+            showWsToast(' Exported ' + selected.length + ' selected customers to CSV!');
         }
         window.exportSelectedCustomersCSV = exportSelectedCustomersCSV;
 
@@ -5514,7 +5451,7 @@ ${senderName} (Reseller Partner)`;
         function saveCurrentFilterPreset() {
             var name = prompt('Enter a name for this filter preset:', 'My Custom Filter');
             if (!name) return;
-            showWsToast('💾 Saved filter preset: ' + name);
+            showWsToast(' Saved filter preset: ' + name);
             closeSavedFiltersModal();
         }
         window.saveCurrentFilterPreset = saveCurrentFilterPreset;
@@ -5525,7 +5462,7 @@ ${senderName} (Reseller Partner)`;
             if (modal) {
                 modal.classList.add('active');
             } else {
-                showWsToast('📦 Viewing Order Details for #' + orderId);
+                showWsToast(' Viewing Order Details for #' + orderId);
             }
         }
         window.openWsOrderModal = openWsOrderModal;

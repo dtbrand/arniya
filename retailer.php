@@ -41,29 +41,54 @@ if ($currentUser && !empty($currentUser['id'])) {
     $pdo = Database::getConnection();
     if ($pdo !== null && !Database::isMockMode()) {
         try {
-            $orderStmt = $pdo->prepare("SELECT id, order_number, channel, total_amount, payment_status, status, items, shipping_address, created_at, tracking_number, courier FROM orders WHERE customer_id = ? OR phone = ? ORDER BY id DESC LIMIT 50");
-            $orderStmt->execute([(int)$currentUser['id'], $currentUser['phone'] ?? '']);
+            $userPhone = $currentUser['phone'] ?? ($dbUser['phone'] ?? '');
+            $digits = preg_replace('/\D+/', '', (string)$userPhone);
+            if (strlen($digits) > 10) {
+                $digits = substr($digits, -10);
+            }
+            $phoneParam = !empty($digits) ? ('%' . $digits) : '---NO-PHONE---';
+
+            $orderStmt = $pdo->prepare("
+                SELECT o.*,
+                       COALESCE(NULLIF(o.customer_name, ''), c.name, 'Valued Retailer') as display_customer_name,
+                       COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as display_customer_phone,
+                       (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as real_items_count
+                FROM orders o
+                LEFT JOIN customers c ON o.customer_id = c.id
+                WHERE o.customer_id = ?
+                   OR REPLACE(REPLACE(REPLACE(REPLACE(o.customer_phone, ' ', ''), '-', ''), '+91', ''), '+', '') LIKE ?
+                   OR o.customer_phone LIKE ?
+                ORDER BY o.id DESC LIMIT 100
+            ");
+            $orderStmt->execute([(int)$currentUser['id'], $phoneParam, $phoneParam]);
             $rawOrders = $orderStmt->fetchAll(\PDO::FETCH_ASSOC);
             $spend = 0.0;
             $pending = 0;
             foreach ($rawOrders as $ro) {
                 $amt = (float)($ro['total_amount'] ?? 0);
                 $spend += $amt;
-                $st = strtolower((string)($ro['status'] ?? ''));
-                if (in_array($st, ['pending', 'processing', 'in_transit', 'dispatched'], true)) {
+                $st = strtolower((string)($ro['fulfillment_status'] ?? ($ro['status'] ?? '')));
+                if (in_array($st, ['pending', 'processing', 'unfulfilled', 'in_transit', 'dispatched'], true)) {
                     $pending++;
                 }
+                $itemCount = (int)($ro['real_items_count'] ?? 0);
+                if ($itemCount <= 0 && !empty($ro['items'])) {
+                    $parsed = json_decode($ro['items'], true);
+                    if (is_array($parsed)) $itemCount = count($parsed);
+                }
+                if ($itemCount <= 0) $itemCount = 1;
+
                 $realOrders[] = [
                     'id' => (int)$ro['id'],
                     'order_number' => (string)($ro['order_number'] ?? ('DT-' . $ro['id'])),
                     'channel' => (string)($ro['channel'] ?? 'retailer'),
                     'total_amount' => $amt,
-                    'payment_status' => (string)($ro['payment_status'] ?? 'pending'),
-                    'status' => (string)($ro['status'] ?? 'pending'),
-                    'items_count' => is_array(json_decode($ro['items'] ?? '[]', true)) ? count(json_decode($ro['items'] ?? '[]', true)) : 1,
-                    'shipping_address' => (string)($ro['shipping_address'] ?? ''),
+                    'payment_status' => (string)($ro['payment_status'] ?? 'paid'),
+                    'status' => (string)($ro['fulfillment_status'] ?? ($ro['status'] ?? 'processing')),
+                    'items_count' => $itemCount,
+                    'shipping_address' => (string)($ro['shipping_address'] ?? ($ro['address'] ?? '')),
                     'tracking_number' => (string)($ro['tracking_number'] ?? ''),
-                    'courier' => (string)($ro['courier'] ?? 'Delhivery Logistics'),
+                    'courier' => (string)($ro['courier_name'] ?? ($ro['courier'] ?? 'Delhivery Logistics')),
                     'date' => (string)($ro['created_at'] ?? '')
                 ];
             }
@@ -73,7 +98,9 @@ if ($currentUser && !empty($currentUser['id'])) {
             $realKpis['tier'] = !empty($dbUser['tier']) ? $dbUser['tier'] : 'Verified Retailer (Tier 1)';
             $realKpis['credit_limit'] = (float)($dbUser['credit_limit'] ?? 0);
             $realKpis['outstanding_balance'] = (float)($dbUser['outstanding_balance'] ?? 0);
-        } catch (\Throwable $e) {}
+        } catch (\Throwable $e) {
+            error_log('Retailer orders loading error: ' . $e->getMessage());
+        }
     }
 }
 
@@ -115,6 +142,50 @@ $gaugePercent = number_format($targetPercent, 2);
 $gaugeOffset = (int)round(251 - (251 * ($targetPercent / 100)));
 $avgOrderValue = $totalOrders > 0 ? round($lifetimeSpend / $totalOrders) : 0;
 $gstInputCredit = round($lifetimeSpend * 0.05);
+
+// Dynamic tip coordinates on the semi-circular arc (radius 80, center at 100, 100)
+$gaugeRad = M_PI * (1.0 - ($targetPercent / 100.0));
+$gaugeTipCx = round(100 + 80 * cos($gaugeRad), 1);
+$gaugeTipCy = round(100 - 80 * sin($gaugeRad), 1);
+
+// Real 12-Month Sales & Units Aggregation
+$monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+$monthlySales = array_fill(0, 12, 0.0);
+$monthlyUnits = array_fill(0, 12, 0);
+
+if (!empty($realOrders)) {
+    foreach ($realOrders as $ro) {
+        $od = $ro['date'] ?? ($ro['created_at'] ?? '');
+        if (!empty($od)) {
+            $ts = strtotime($od);
+            if ($ts !== false && (int)date('Y', $ts) === (int)date('Y')) {
+                $mIdx = (int)date('n', $ts) - 1;
+                $monthlySales[$mIdx] += (float)($ro['total_amount'] ?? 0);
+                $monthlyUnits[$mIdx] += (int)($ro['items_count'] ?? 1);
+            }
+        }
+    }
+}
+
+$chartXCoords = [40, 86, 132, 178, 224, 270, 316, 362, 408, 454, 500, 546];
+$chartMaxVal = !empty($monthlySales) ? max($monthlySales) : 0.0;
+$chartPoints = [];
+if ($chartMaxVal <= 0) {
+    for ($ci = 0; $ci < 12; $ci++) {
+        $chartPoints[] = ['x' => $chartXCoords[$ci], 'y' => 158];
+    }
+    $initialChartLine = 'M 40,158 L 546,158';
+    $initialChartArea = 'M 40,158 L 546,158 L 546,158 L 40,158 Z';
+} else {
+    $scaleMax = max(100000.0, ceil($chartMaxVal / 50000.0) * 50000.0);
+    for ($ci = 0; $ci < 12; $ci++) {
+        $cyVal = round(158 - (($monthlySales[$ci] / $scaleMax) * 138));
+        $chartPoints[] = ['x' => $chartXCoords[$ci], 'y' => $cyVal];
+    }
+    $ptStrs = array_map(static fn($p) => "{$p['x']},{$p['y']}", $chartPoints);
+    $initialChartLine = 'M ' . implode(' L ', $ptStrs);
+    $initialChartArea = $initialChartLine . ' L 546,158 L 40,158 Z';
+}
 
 $activeUserName = $dbUser['name'] ?? ($currentUser['name'] ?? 'B2B Retailer');
 $activeUserEmail = $dbUser['email'] ?? ($currentUser['email'] ?? '');
@@ -317,7 +388,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName"><?= htmlspecialchars($activeUserName) ?></div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
-                            <span>★ Verified Retailer</span>
+                            <span><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Verified Retailer</span>
                         </div>
                     </div>
                     <span style="font-size: 0.58rem; font-weight: 800; background: #DCFCE7; color: #15803D; padding: 2px 5px; border-radius: 6px; border: 1px solid #BBF7D0; flex-shrink: 0;">Tier 1</span>
@@ -412,7 +483,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer; position:relative;" title="Tap to view VIP Tier Roadmap">
                         <!-- Left Corner 3D Diagonal Tircha Tag -->
                         <div class="ws-tier-ribbon-tag non-vip" id="wsTierRibbonTag">
-                            <span id="wsTierRibbonText">★ <?= htmlspecialchars($activeUserTier) ?></span>
+                            <span id="wsTierRibbonText"><?= htmlspecialchars($activeUserTier) ?></span>
                         </div>
 
                         <div class="ws-stat-head-row" style="padding-left:14px;">
@@ -481,7 +552,7 @@ $catalogHasProducts = $catalogProducts !== [];
                 <div class="ws-wallet-strip" onclick="openFullWalletModal()" style="cursor:pointer;" title="Click to view Gold Wallet & Passbook">
                     <!-- Left Corner Micro 3D Diagonal Tircha Tag -->
                     <div class="ws-wallet-ribbon-tag">
-                        <span>★ WALLET</span>
+                        <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-1px; margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h0M2 10h20"></path></svg>WALLET</span>
                     </div>
 
                     <!-- Left: Total Balance & Total Coins Metrics (Frosted Gold Glass Styling) -->
@@ -615,27 +686,18 @@ $catalogHasProducts = $catalogProducts !== [];
                                     <line class="ws-chart-gridline" x1="0" y1="125" x2="600" y2="125" />
                                     <line class="ws-chart-gridline" x1="0" y1="158" x2="600" y2="158" />
 
-                                    <!-- Zigzag Area Gradient Fill -->
+                                    <!-- Dynamic Sales Area Fill -->
                                     <path class="ws-chart-zigzag-area" id="svgAreaPath" 
-                                          d="M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94 L 546,158 L 40,158 Z" />
+                                          d="<?= htmlspecialchars($initialChartArea) ?>" />
 
-                                    <!-- Zigzag Line Stroke -->
+                                    <!-- Dynamic Sales Line Stroke -->
                                     <path class="ws-chart-zigzag-line" id="svgLinePath" 
-                                          d="M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94" />
+                                          d="<?= htmlspecialchars($initialChartLine) ?>" />
 
-                                    <!-- 12 Month Interactive Nodes (Proportional Coordinates) -->
-                                    <circle class="ws-chart-node" cx="40" cy="115" onmouseover="showChartNodeTooltip(0)" onclick="showChartNodeTooltip(0)" />
-                                    <circle class="ws-chart-node" cx="86" cy="96" onmouseover="showChartNodeTooltip(1)" onclick="showChartNodeTooltip(1)" />
-                                    <circle class="ws-chart-node" cx="132" cy="102" onmouseover="showChartNodeTooltip(2)" onclick="showChartNodeTooltip(2)" />
-                                    <circle class="ws-chart-node" cx="178" cy="85" onmouseover="showChartNodeTooltip(3)" onclick="showChartNodeTooltip(3)" />
-                                    <circle class="ws-chart-node" cx="224" cy="76" onmouseover="showChartNodeTooltip(4)" onclick="showChartNodeTooltip(4)" />
-                                    <circle class="ws-chart-node" cx="270" cy="82" onmouseover="showChartNodeTooltip(5)" onclick="showChartNodeTooltip(5)" />
-                                    <circle class="ws-chart-node" cx="316" cy="62" onmouseover="showChartNodeTooltip(6)" onclick="showChartNodeTooltip(6)" />
-                                    <circle class="ws-chart-node active" cx="362" cy="88" onmouseover="showChartNodeTooltip(7)" onclick="showChartNodeTooltip(7)" />
-                                    <circle class="ws-chart-node" cx="408" cy="68" onmouseover="showChartNodeTooltip(8)" onclick="showChartNodeTooltip(8)" />
-                                    <circle class="ws-chart-node" cx="454" cy="38" onmouseover="showChartNodeTooltip(9)" onclick="showChartNodeTooltip(9)" />
-                                    <circle class="ws-chart-node" cx="500" cy="52" onmouseover="showChartNodeTooltip(10)" onclick="showChartNodeTooltip(10)" />
-                                    <circle class="ws-chart-node" cx="546" cy="94" onmouseover="showChartNodeTooltip(11)" onclick="showChartNodeTooltip(11)" />
+                                    <!-- 12 Month Interactive Nodes (Dynamically Placed) -->
+                                    <?php foreach ($chartPoints as $pi => $pt): ?>
+                                    <circle class="ws-chart-node<?= $pi === 7 ? ' active' : '' ?>" cx="<?= $pt['x'] ?>" cy="<?= $pt['y'] ?>" onmouseover="showChartNodeTooltip(<?= $pi ?>)" onclick="showChartNodeTooltip(<?= $pi ?>)" />
+                                    <?php endforeach; ?>
                                 </svg>
                             </div>
 
@@ -684,15 +746,15 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
                                 <path class="ws-gauge-fill-arc" id="targetGaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: <?= $gaugeOffset ?>;"></path>
                                 <!-- Glowing Leading Indicator Circle on Arc Tip -->
-                                <circle cx="152" cy="43" r="6" fill="#FFE082" stroke="#8A681F" stroke-width="2.5" filter="url(#gaugeGlow)" />
-                                <circle cx="152" cy="43" r="2.5" fill="#FFFFFF" />
+                                <circle id="targetGaugeIndicatorGlow" cx="<?= $gaugeTipCx ?>" cy="<?= $gaugeTipCy ?>" r="6" fill="#FFE082" stroke="#8A681F" stroke-width="2.5" filter="url(#gaugeGlow)" style="<?= $targetPercent > 0 ? '' : 'opacity:0;' ?>" />
+                                <circle id="targetGaugeIndicatorDot" cx="<?= $gaugeTipCx ?>" cy="<?= $gaugeTipCy ?>" r="2.5" fill="#FFFFFF" style="<?= $targetPercent > 0 ? '' : 'opacity:0;' ?>" />
                             </svg>
                             <div class="ws-gauge-center-text" id="targetGaugeVal"><?= $gaugePercent ?>%</div>
                             <div class="ws-gauge-badge" id="targetGaugeBadge">
                                 <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                                 <span><?= $totalOrders > 0 ? '+10.4% vs Target' : 'Target Tracking' ?></span>
                             </div>
-                            <p class="ws-gauge-desc" id="targetGaugeDesc"><?= $totalOrders > 0 ? "You achieved <strong>₹" . number_format($lifetimeSpend) . "</strong> this cycle. Just <strong>₹" . number_format($targetRemaining) . "</strong> left to complete " . $tierName . " quota!" : "You have not placed any orders yet. Place your first order to start target tracking!" ?></p>
+                            <p class="ws-gauge-desc" id="targetGaugeDesc"><?= $totalOrders > 0 ? "You achieved <strong>₹" . number_format($lifetimeSpend) . "</strong> this cycle. Just <strong>₹" . number_format($targetRemaining) . "</strong> left to complete " . htmlspecialchars($tierName) . " quota!" : "You have not placed any orders yet. Place your first order to start target tracking!" ?></p>
                         </div>
 
                         <div class="ws-gauge-stats-row">
@@ -702,11 +764,11 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Achieved</div>
-                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹<?= number_format($lifetimeSpend / 1000, 1) ?>K ↑</div>
+                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹<?= number_format($lifetimeSpend) ?> ↑</div>
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Velocity</div>
-                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹<?= $totalOrders > 0 ? number_format(round($lifetimeSpend / 30 / 1000, 1), 1) : '0' ?>K/d</div>
+                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹<?= $totalOrders > 0 ? number_format(round($lifetimeSpend / 30)) : '0' ?>/d</div>
                             </div>
                         </div>
                     </div>
@@ -1010,7 +1072,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfPhone">WhatsApp Mobile Number <span class="req">*</span></label>
                                 <div class="ws-phone-wrap">
-                                    <div class="ws-phone-prefix">🇮🇳 +91</div>
+                                    <div class="ws-phone-prefix"><img src="https://flagcdn.com/w40/in.png" alt="India" style="width:16px; height:11px; object-fit:cover; border-radius:2px; vertical-align:middle; margin-right:4px;">+91</div>
                                     <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="10-digit mobile number" maxlength="10" required>
                                 </div>
                             </div>
@@ -1022,14 +1084,14 @@ $catalogHasProducts = $catalogProducts !== [];
 
                             <div class="ws-form-group">
                                 <label class="ws-label">Account Role Designation</label>
-                                <input type="text" class="ws-input" value="👑 Retailer B2B VIP Tier" disabled>
+                                <input type="text" class="ws-input" value="Retailer B2B VIP Tier" disabled>
                             </div>
 
                         </div>
 
                         <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--ws-border);">
                             <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:10px;">
-                                🔒 Change Password (Leave blank to keep current)
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Change Password (Leave blank to keep current)
                             </h4>
                             <div class="ws-form-grid">
                                 <div class="ws-form-group">
@@ -1130,7 +1192,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </h3>
                         </div>
                         <span class="ws-status-badge delivered" style="font-size:0.70rem; padding:4px 9px; font-weight:800; border-radius:6px; flex-shrink:0;">
-                            ★ GST Verified Dispatch
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>GST Verified Dispatch
                         </span>
                     </div>
 
@@ -1141,7 +1203,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div style="background:linear-gradient(145deg, #FFFCF7 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(180,83,9,0.05);">
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px;">
-                                    ★ Registered GST Billing Address
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Registered GST Billing Address
                                 </span>
                                 <button type="button" id="btnEditMainAddr" onclick="openEditMainAddressModal()" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Billing Address">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -1162,7 +1224,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div style="background:linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%); border:1.5px solid #E2E8F0; border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(0,0,0,0.03);" id="addrPreviewDispatchCard">
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase; letter-spacing:0.3px;" id="addrPreviewDispatchBadge">
-                                    📦 Dispatch: Same as Billing
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing
                                 </span>
                                 <button type="button" id="btnEditDispatchAddr" onclick="toggleEditAddressSection('dispatch')" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Dispatch Hub">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -1262,13 +1324,13 @@ $catalogHasProducts = $catalogProducts !== [];
                                             <div style="font-size:0.72rem; color:var(--ws-text-muted);">Consignments will be dispatched directly to your primary registered address.</div>
                                         </div>
                                     </label>
-                                    <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill">✓ Default Active</span>
+                                    <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" style="vertical-align:-1px; margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>Default Active</span>
                                 </div>
 
                                 <!-- Notice when "Same as Billing" is selected (Form is hidden!) -->
                                 <div id="wsSameAddressNotice" style="display:block; background:#FAF8F4; border:1px dashed var(--ws-gold-border); border-radius:10px; padding:14px 16px; text-align:center;">
                                     <p style="margin:0; font-size:0.82rem; color:var(--ws-text-sub); font-weight:600;">
-                                        ✓ Dispatch destination is set to your <strong>Registered Business Address</strong>.
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" style="vertical-align:-2px; margin-right:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>Dispatch destination is set to your <strong>Registered Business Address</strong>.
                                     </p>
                                     <button type="button" onclick="document.getElementById('wsSameAsBillingCheckbox').checked = false; toggleSameAsBillingAddress(false);" style="margin-top:8px; background:transparent; border:none; color:var(--ws-gold-primary); font-size:0.78rem; font-weight:800; cursor:pointer; text-decoration:underline;">+ Specify a different Godown / Warehouse / Transport Hub</button>
                                 </div>
@@ -1521,7 +1583,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-card-title-group">
                             <h3 style="margin:0; font-size:1.05rem;">Live Consignment Tracking</h3>
                         </div>
-                        <span class="ws-status-badge shipped" id="trackHeaderBadge" style="white-space:nowrap; font-size:0.75rem;">⚡ BlueDart Express</span>
+                        <span class="ws-status-badge shipped" id="trackHeaderBadge" style="white-space:nowrap; font-size:0.75rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-1px; margin-right:3px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>BlueDart Express</span>
                     </div>
 
                     <!-- Active Tracking Hero Visual Card -->
@@ -2273,11 +2335,11 @@ $catalogHasProducts = $catalogProducts !== [];
         <div class="ws-modal-box" style="max-width: 820px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
-                    <span>📊 Retail B2B Sales & Procurement Audit Statement</span>
+                    <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Retail B2B Sales & Procurement Audit Statement</span>
                 </h3>
                 <div style="display:flex; gap:8px; align-items:center;">
                     <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="window.print()">
-                        🖨️ Print Statement
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print Statement
                     </button>
                     <button class="ws-modal-close-btn" onclick="closePrintableAuditReportModal()" aria-label="Close Modal">&times;</button>
                 </div>
@@ -2777,6 +2839,11 @@ $catalogHasProducts = $catalogProducts !== [];
         'tier' => $tierName,
         'gauge_percent' => $gaugePercent,
         'gauge_offset' => $gaugeOffset
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.b2bMonthlyData = <?= json_encode([
+        'labels' => $monthLabels,
+        'sales' => $monthlySales,
+        'units' => $monthlyUnits
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
     </script>
 

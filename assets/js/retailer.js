@@ -262,7 +262,7 @@
             var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
 
             if (!name) {
-                window.showWsToast('⚠️ Please enter your Full Name.');
+                window.showWsToast('️ Please enter your Full Name.');
                 return false;
             }
 
@@ -291,14 +291,14 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
                     if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
                     if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
-                    window.showWsToast('✅ Profile updated in live database!');
+                    window.showWsToast(' Profile updated in live database!');
                 } else {
-                    window.showWsToast('⚠️ ' + (res.error || 'Failed to update profile'));
+                    window.showWsToast('️ ' + (res.error || 'Failed to update profile'));
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
-                window.showWsToast('✅ Profile saved locally.');
+                window.showWsToast(' Profile saved locally.');
             });
 
             return false;
@@ -331,14 +331,14 @@
                     user.gst_number = gstin;
                     user.gstin = gstin;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                    window.showWsToast('✅ GST Tax Profile updated in live database!');
+                    window.showWsToast(' GST Tax Profile updated in live database!');
                 } else {
-                    window.showWsToast('⚠️ ' + (res.error || 'Invalid GST details'));
+                    window.showWsToast('️ ' + (res.error || 'Invalid GST details'));
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
-                window.showWsToast('✅ GST profile saved.');
+                window.showWsToast(' GST profile saved.');
             });
 
             return false;
@@ -419,7 +419,7 @@
 
             var ship = user.custom_shipping || {};
             if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Custom Godown';
                 if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
                 if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
@@ -440,7 +440,7 @@
                 if (shipPin) shipPin.value = ship.pincode || '';
                 if (shipTransporter) shipTransporter.value = ship.transporter || '';
             } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing';
                 if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
                 if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
@@ -549,7 +549,7 @@
 
             var ship = user.custom_shipping || {};
             if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Custom Godown';
                 if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
                 if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
@@ -570,7 +570,7 @@
                 if (shipPin) shipPin.value = ship.pincode || '';
                 if (shipTransporter) shipTransporter.value = ship.transporter || '';
             } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
+                if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing';
                 if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
                 if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
                 if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
@@ -625,7 +625,7 @@
             closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedRetailerData();
-            window.showWsToast('✓ Address configuration saved successfully!');
+            window.showWsToast(' Address configuration saved successfully!');
         };
 
         /* ── GST Mode Toggle ── */
@@ -1115,7 +1115,7 @@
                 btn.classList.add('active');
             }
             updateDashboardAnalytics();
-            window.showWsToast('📊 Switched to ' + mode.toUpperCase() + ' Analytics Mode');
+            window.showWsToast(' Switched to ' + mode.toUpperCase() + ' Analytics Mode');
         };
 
         /* ── Date Range Modal Controller ── */
@@ -1144,7 +1144,7 @@
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast('📅 Applied Date Filter: ' + label);
+            window.showWsToast(' Applied Date Filter: ' + label);
         };
 
         window.applyCustomDateRange = function() {
@@ -1177,7 +1177,7 @@
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast('📅 Applied Custom Calendar Range: ' + label);
+            window.showWsToast(' Applied Custom Calendar Range: ' + label);
         };
 
         window.handleGlobalQuickSearch = function(input) {
@@ -1443,7 +1443,7 @@
         /* ── Export Reports to CSV ── */
         window.exportReportsToCsv = function() {
             if (!activeOrdersList || activeOrdersList.length === 0) {
-                window.showWsToast('⚠️ No consignment records available to export.');
+                window.showWsToast('️ No consignment records available to export.');
                 return;
             }
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
@@ -1471,7 +1471,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            window.showWsToast('📁 CSV Spreadsheet downloaded successfully!');
+            window.showWsToast(' CSV Spreadsheet downloaded successfully!');
         };
 
         /* ── Render Support Tickets ── */
@@ -1532,7 +1532,7 @@
             activeTicketsList.unshift(newTicket);
             renderTicketsView();
             document.getElementById('wsTicketForm').reset();
-            window.showWsToast('🎫 Support ticket created! Concierge assigned.');
+            window.showWsToast(' Support ticket created! Concierge assigned.');
         };
 
         /* ── Order Details Modal ── */
@@ -1650,10 +1650,10 @@
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    window.showWsToast('🛒 ' + o.productName + ' added to retail cart!');
+                    window.showWsToast(' ' + o.productName + ' added to retail cart!');
                 }
             } catch(e) {
-                window.showWsToast('🛒 Added to cart!');
+                window.showWsToast(' Added to cart!');
             }
         };
 
@@ -2261,15 +2261,15 @@
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast('✓ Showing All Available Retail Lots');
+                    window.showWsToast(' Showing All Available Retail Lots');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    window.showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(' ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    window.showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    window.showWsToast('️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
                 } else if (activeCatalogCategory !== 'All') {
-                    window.showWsToast('🥻 ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(' ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
                 } else if (activePriceTier !== null) {
-                    window.showWsToast('🏷️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast('️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
                 }
             }
 
@@ -2379,7 +2379,7 @@
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('🛍️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    window.showWsToast('️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
                 }
             } catch(e) {
                 console.error(e);
@@ -2429,7 +2429,7 @@
                 if (typeof showToast === 'function') {
                     showToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 } else if (typeof window.showWsToast === 'function') {
-                    window.showWsToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    window.showWsToast(added ? ' Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 }
                 return;
             }
@@ -2525,6 +2525,8 @@
                 var qty = monthQtys[m];
                 return {
                     m: m,
+                    raw_val: val,
+                    raw_qty: qty,
                     val: '₹' + Math.round(val).toLocaleString('en-IN'),
                     qty: qty + ' Pcs',
                     growth: val > 0 ? '+100%' : '0%'
@@ -2546,51 +2548,125 @@
             });
         };
 
+        var currentSalesChartStyle = 'zigzag';
+
+        window.renderRealSalesChart = function(styleType) {
+            if (styleType) currentSalesChartStyle = styleType;
+            var line = document.getElementById('svgLinePath');
+            var area = document.getElementById('svgAreaPath');
+            var nodes = document.querySelectorAll('.ws-chart-node');
+            if (!line || !area) return;
+
+            var data = getMonthlySalesData(activeOrdersList);
+            var xCoords = [40, 86, 132, 178, 224, 270, 316, 362, 408, 454, 500, 546];
+            var rawValues = data.map(function(d) {
+                return (typeof d.raw_val === 'number') ? d.raw_val : (parseFloat(String(d.val || '').replace(/[^0-9.]/g, '')) || 0);
+            });
+
+            var maxVal = Math.max.apply(null, rawValues);
+            var yBase = 158;
+            var yTop = 20;
+            var chartHeight = yBase - yTop; // 138px range
+
+            var points = [];
+            if (maxVal <= 0) {
+                for (var i = 0; i < 12; i++) {
+                    points.push({ x: xCoords[i], y: yBase });
+                    if (nodes[i]) {
+                        nodes[i].setAttribute('cx', xCoords[i]);
+                        nodes[i].setAttribute('cy', yBase);
+                    }
+                }
+                var flatLine = 'M ' + xCoords[0] + ',' + yBase + ' L ' + xCoords[11] + ',' + yBase;
+                var flatArea = flatLine + ' L ' + xCoords[11] + ',' + yBase + ' L ' + xCoords[0] + ',' + yBase + ' Z';
+                line.setAttribute('d', flatLine);
+                area.setAttribute('d', flatArea);
+                return;
+            }
+
+            var scaleMax = Math.max(100000, Math.ceil(maxVal / 50000) * 50000);
+            for (var j = 0; j < 12; j++) {
+                var val = rawValues[j];
+                var y = Math.round(yBase - ((val / scaleMax) * chartHeight));
+                points.push({ x: xCoords[j], y: y });
+                if (nodes[j]) {
+                    nodes[j].setAttribute('cx', xCoords[j]);
+                    nodes[j].setAttribute('cy', y);
+                }
+            }
+
+            if (currentSalesChartStyle === 'smooth') {
+                var dLine = 'M ' + points[0].x + ',' + points[0].y;
+                for (var k = 0; k < points.length - 1; k++) {
+                    var cpX = Math.round((points[k].x + points[k + 1].x) / 2);
+                    dLine += ' C ' + cpX + ',' + points[k].y + ' ' + cpX + ',' + points[k + 1].y + ' ' + points[k + 1].x + ',' + points[k + 1].y;
+                }
+                var dArea = dLine + ' L ' + points[points.length - 1].x + ',' + yBase + ' L ' + points[0].x + ',' + yBase + ' Z';
+                line.setAttribute('d', dLine);
+                area.setAttribute('d', dArea);
+            } else {
+                var dZig = 'M ' + points.map(function(p) { return p.x + ',' + p.y; }).join(' L ');
+                var dZigArea = dZig + ' L ' + points[points.length - 1].x + ',' + yBase + ' L ' + points[0].x + ',' + yBase + ' Z';
+                line.setAttribute('d', dZig);
+                area.setAttribute('d', dZigArea);
+            }
+        };
+
         window.switchSalesChartStyle = function(type, btn) {
             document.querySelectorAll('.ws-chart-type-btn').forEach(function(b) { b.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-
-            var line = document.getElementById('svgLinePath');
-            var area = document.getElementById('svgAreaPath');
-            if (!line || !area) return;
-
-            if (type === 'smooth') {
-                // Smooth curved spline wave (Luxury Cubic Curve)
-                var smoothLine = 'M 40,115 C 63,115 63,96 86,96 C 109,96 109,102 132,102 C 155,102 155,85 178,85 C 201,85 201,76 224,76 C 247,76 247,82 270,82 C 293,82 293,62 316,62 C 339,62 339,88 362,88 C 385,88 385,68 408,68 C 431,68 431,38 454,38 C 477,38 477,52 500,52 C 523,52 523,94 546,94';
-                var smoothArea = smoothLine + ' L 546,158 L 40,158 Z';
-                line.setAttribute('d', smoothLine);
-                area.setAttribute('d', smoothArea);
-            } else {
-                // Crisp Zigzag Lines (Luxury Style)
-                var zigzagLine = 'M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94';
-                var zigzagArea = zigzagLine + ' L 546,158 L 40,158 Z';
-                line.setAttribute('d', zigzagLine);
-                area.setAttribute('d', zigzagArea);
-            }
+            window.renderRealSalesChart(type);
         };
 
         /* ── Animate Target Gauge Percentage Count-up ── */
         window.animateTargetGauge = function(targetPercent) {
             var valEl = document.getElementById('targetGaugeVal');
             var fillEl = document.getElementById('targetGaugeFill');
+            var tipGlow = document.getElementById('targetGaugeIndicatorGlow');
+            var tipDot = document.getElementById('targetGaugeIndicatorDot');
             if (!valEl) return;
 
-            var target = targetPercent || 75.55;
+            var target = (typeof targetPercent === 'number' && !isNaN(targetPercent)) ? targetPercent : 0;
+            target = Math.max(0, Math.min(100, target));
             var start = performance.now();
             var duration = 1200;
 
-            var targetOffset = Math.round(236 - (236 * (target / 100)));
-            if (fillEl) fillEl.style.strokeDashoffset = targetOffset;
+            function updateTip(curVal) {
+                var angleRad = Math.PI * (1 - (curVal / 100));
+                var cx = Math.round((100 + 80 * Math.cos(angleRad)) * 10) / 10;
+                var cy = Math.round((100 - 80 * Math.sin(angleRad)) * 10) / 10;
+                if (tipGlow) {
+                    tipGlow.setAttribute('cx', cx);
+                    tipGlow.setAttribute('cy', cy);
+                    tipGlow.style.opacity = curVal > 0 ? '1' : '0';
+                }
+                if (tipDot) {
+                    tipDot.setAttribute('cx', cx);
+                    tipDot.setAttribute('cy', cy);
+                    tipDot.style.opacity = curVal > 0 ? '1' : '0';
+                }
+            }
+
+            if (target === 0) {
+                valEl.textContent = '0%';
+                if (fillEl) fillEl.style.strokeDashoffset = 251;
+                updateTip(0);
+                return;
+            }
 
             function step(time) {
                 var progress = Math.min((time - start) / duration, 1);
                 var ease = 1 - Math.pow(1 - progress, 3);
-                var val = (ease * target).toFixed(2);
-                valEl.textContent = val + '%';
+                var cur = ease * target;
+                var targetOffset = Math.round(251 - (251 * (cur / 100)));
+                if (fillEl) fillEl.style.strokeDashoffset = targetOffset;
+                valEl.textContent = (cur >= 10 ? cur.toFixed(1) : cur.toFixed(2)) + '%';
+                updateTip(cur);
                 if (progress < 1) {
                     requestAnimationFrame(step);
                 } else {
-                    valEl.textContent = target.toFixed(2) + '%';
+                    valEl.textContent = (target >= 10 ? target.toFixed(1) : target.toFixed(2)) + '%';
+                    updateTip(target);
                 }
             }
             requestAnimationFrame(step);
@@ -2624,7 +2700,12 @@
             renderReportsView(activeOrdersList);
             renderTrackingTab(activeOrdersList);
             renderTicketsView();
-            window.animateTargetGauge(75.55);
+            window.renderRealSalesChart('zigzag');
+
+            var realGaugeVal = (window.b2bKpis && typeof window.b2bKpis.gauge_percent === 'number') 
+                ? window.b2bKpis.gauge_percent 
+                : 0;
+            window.animateTargetGauge(realGaugeVal);
             window.updateWholesaleCartBadge();
         }
 
@@ -2797,7 +2878,7 @@
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            window.showWsToast('📍 Loaded tracking timeline for ' + orderId);
+            window.showWsToast(' Loaded tracking timeline for ' + orderId);
         };
 
         window.filterTrackingOrders = function(status, btn) {
@@ -2812,7 +2893,7 @@
         window.copyAwbNumber = function(awb) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(awb).then(function() {
-                    window.showWsToast('📋 AWB ' + awb + ' copied to clipboard!');
+                    window.showWsToast(' AWB ' + awb + ' copied to clipboard!');
                 }).catch(function() {
                     window.showWsToast('AWB: ' + awb);
                 });
@@ -2841,7 +2922,7 @@
                     tierNum: 4,
                     title: "Tier 4: Gold",
                     shortTitle: "Gold (Tier 4)",
-                    badgeText: "⭐ Gold VIP",
+                    badgeText: " Gold VIP",
                     pillText: "300–500 Orders",
                     discount: "10% Margin Rebate",
                     minOrders: 301,
@@ -2853,7 +2934,7 @@
                     tierNum: 3,
                     title: "Tier 3: Gold",
                     shortTitle: "Gold (Tier 3)",
-                    badgeText: "⭐ Gold VIP",
+                    badgeText: " Gold VIP",
                     pillText: "200–300 Orders",
                     discount: "7.5% Margin Rebate",
                     minOrders: 201,
@@ -2952,10 +3033,10 @@
                 closeEditMainAddressModal();
                 loadSavedRetailerData();
                 renderAddressBookData(user);
-                window.showWsToast('✓ Billing address updated successfully!');
+                window.showWsToast(' Billing address updated successfully!');
             } catch(err) {
                 closeEditMainAddressModal();
-                window.showWsToast('✓ Billing address saved!');
+                window.showWsToast(' Billing address saved!');
             }
         };
 
@@ -2999,15 +3080,15 @@
             if (availEl) availEl.textContent = (newBal + 100000).toLocaleString('en-IN');
             if (modalBal) modalBal.textContent = '₹' + newBal.toLocaleString('en-IN');
 
-            window.showWsToast('💳 Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
+            window.showWsToast(' Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
         };
 
         window.requestCreditLimitBoost = function() {
-            window.showWsToast('⚡ Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
+            window.showWsToast(' Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
         };
 
         window.requestWalletWithdrawal = function() {
-            window.showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
+            window.showWsToast(' Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
         /* ── Retail Cart Badge Synchronization ── */
@@ -3111,7 +3192,7 @@ function directAddWholesaleToCart(prodOrId, btn) {
         if (typeof window.renderCart === 'function') window.renderCart();
         if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
         if (typeof window.openCartDrawer === 'function') window.openCartDrawer();
-        if (typeof showWsToast === 'function') showWsToast('🛒 Added ' + addQty + ' pcs of ' + prod.name + ' to Cart!');
+        if (typeof showWsToast === 'function') showWsToast(' Added ' + addQty + ' pcs of ' + prod.name + ' to Cart!');
     } catch(e) { console.error('directAddWholesaleToCart error:', e); }
 }
 window.directAddWholesaleToCart = directAddWholesaleToCart;
@@ -3152,7 +3233,7 @@ function toggleWholesaleWishlist(prodOrId, btn) {
         if (btn) btn.classList.toggle('active', isAdded);
         if (typeof window.renderWishlist === 'function') window.renderWishlist();
         if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
-        if (typeof showWsToast === 'function') showWsToast(isAdded ? '♡ Saved ' + prod.name + ' to Wishlist!' : 'Removed from Wishlist');
+        if (typeof showWsToast === 'function') showWsToast(isAdded ? ' Saved ' + prod.name + ' to Wishlist!' : 'Removed from Wishlist');
     } catch(e) { console.error('toggleWholesaleWishlist error:', e); }
 }
 window.toggleWholesaleWishlist = toggleWholesaleWishlist;
@@ -3245,7 +3326,7 @@ function handleGlobalSearch(query) {
     var html = '';
 
     if (orders.length > 0) {
-        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:var(--ws-gold-primary); background:#FAF5E8;">📦 Orders & Consignments (' + orders.length + ')</div>';
+        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:var(--ws-gold-primary); background:#FAF5E8;">Orders & Consignments (' + orders.length + ')</div>';
         orders.slice(0, 4).forEach(function(o) {
             var oId = o.id || o.orderId;
             html += `
