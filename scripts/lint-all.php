@@ -1,32 +1,71 @@
 <?php
 /**
- * scripts/lint-all.php — Full Workspace PHP Syntax Linter
+ * scripts/lint-all.php — Fast Full Workspace PHP Syntax Linter
+ * DT Brand's & Jai Hanuman Tex
  */
-$root = realpath(__DIR__ . '/..');
-$errors = [];
-$count = 0;
+declare(strict_types=1);
 
-$iterator = new RecursiveIteratorIterator(
-    new RecursiveDirectoryIterator($root, RecursiveDirectoryIterator::SKIP_DOTS)
-);
+$root = realpath(__DIR__ . '/..') ?: dirname(__DIR__);
+$excluded = [
+    '.git',
+    'node_modules',
+    'vendor',
+    'scratch',
+    '.gemini',
+    '.agents',
+    'playwright-report',
+    'test-results',
+    'dist',
+    '.system_generated',
+    '.phpunit.cache',
+    'storage'
+];
 
-foreach ($iterator as $file) {
-    if (!$file->isFile() || $file->getExtension() !== 'php') continue;
-    $path = $file->getRealPath();
-    if (strpos($path, 'vendor') !== false || strpos($path, 'node_modules') !== false || strpos($path, 'scratch') !== false) {
-        continue;
+/**
+ * Recursively find all PHP files without traversing excluded directories
+ */
+function findPhpFiles(string $dir, array $excluded): array {
+    $files = [];
+    $items = @scandir($dir);
+    if ($items === false) {
+        return $files;
     }
-    $count++;
-    static $resolvedPhp = null;
-    if ($resolvedPhp === null) {
-        if (defined('PHP_BINARY') && PHP_BINARY && @file_exists(PHP_BINARY)) {
-            $resolvedPhp = PHP_BINARY;
-        } elseif (DIRECTORY_SEPARATOR === '/') {
-            $resolvedPhp = 'php';
-        } else {
-            $resolvedPhp = file_exists('C:\\xampp\\php\\php.exe') ? 'C:\\xampp\\php\\php.exe' : 'php';
+
+    foreach ($items as $item) {
+        if ($item === '.' || $item === '..') {
+            continue;
+        }
+        if (in_array($item, $excluded, true)) {
+            continue;
+        }
+
+        $fullPath = $dir . DIRECTORY_SEPARATOR . $item;
+        if (is_dir($fullPath)) {
+            $files = array_merge($files, findPhpFiles($fullPath, $excluded));
+        } elseif (substr($item, -4) === '.php') {
+            $files[] = $fullPath;
         }
     }
+
+    return $files;
+}
+
+$resolvedPhp = null;
+if (defined('PHP_BINARY') && PHP_BINARY && @file_exists(PHP_BINARY)) {
+    $resolvedPhp = PHP_BINARY;
+} elseif (DIRECTORY_SEPARATOR === '/') {
+    $resolvedPhp = 'php';
+} else {
+    $resolvedPhp = file_exists('C:\\xampp\\php\\php.exe') ? 'C:\\xampp\\php\\php.exe' : 'php';
+}
+
+$phpFiles = findPhpFiles($root, $excluded);
+$count = count($phpFiles);
+$errors = [];
+
+foreach ($phpFiles as $path) {
+    $output = [];
+    $returnVar = 0;
     exec('"' . $resolvedPhp . '" -l ' . escapeshellarg($path), $output, $returnVar);
     if ($returnVar !== 0) {
         $errors[] = [
