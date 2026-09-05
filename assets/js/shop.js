@@ -16,7 +16,7 @@
         }
 
         var raw = String(msg || '').trim();
-        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        var cleanText = raw.replace(/^[\p{Extended_Pictographic}\uFE0E\uFE0F✓♡\s]+/u, '').trim();
         if (!cleanText) cleanText = raw;
 
         var lower = raw.toLowerCase();
@@ -186,7 +186,7 @@
         var subVal = String((subItem && (subItem.val || subItem.label || subItem.name)) || '').toLowerCase().trim();
         var keywords = (subItem && subItem.keywords) ? subItem.keywords : [];
         if (keywords.length === 0) {
-            keywords = subVal.split(/[\s,\-\+&]+/).filter(function(k){ return k.length > 2; });
+            keywords = subVal.split(/[\s,\-+&]+/).filter(function(k){ return k.length > 2; });
         }
 
         // 1. Try finding a product with photo that belongs to this category and matches subcategory
@@ -316,7 +316,7 @@
             list = subCategoryData[mainCat] || subCategoryData[mainCat.toLowerCase()] || subCategoryData['All'] || [];
         }
 
-        track.innerHTML = list.map(function(item, idx) {
+        track.innerHTML = list.map(function(item, _idx) {
             var itemVal = (item.val || '').toLowerCase();
             var isAct = false;
             if (item.type === 'all') {
@@ -338,7 +338,7 @@
                 circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '✦') + '</span>';
             }
 
-            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
+            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
                 '<div class="cat-ring">' +
                     '<div class="cat-circle ' + dtEsc(item.gradient || '') + '">' + circleContent + '</div>' +
                 '</div>' +
@@ -410,7 +410,7 @@
                     var tCat = (t.dataset.cat || '').toLowerCase();
                     var isMatch = (st.category.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === st.category.toLowerCase());
                     t.classList.toggle('active', isMatch);
-                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                    if (isMatch) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
                 });
 
                 // Sync sidebar category chips
@@ -500,7 +500,7 @@
                     if (cardSub && (cardSub === sVal || cardSub.indexOf(sVal) !== -1 || sVal.indexOf(cardSub) !== -1)) return true;
                     if (cardFab && (cardFab === sVal || cardFab.indexOf(sVal) !== -1 || sVal.indexOf(cardFab) !== -1)) return true;
                     
-                    var tokens = sVal.split(/[\s,\-\+&]+/).filter(function(k){ return k.length > 2 && ['and', 'pure', 'sets', 'wear'].indexOf(k) === -1; });
+                    var tokens = sVal.split(/[\s,\-+&]+/).filter(function(k){ return k.length > 2 && ['and', 'pure', 'sets', 'wear'].indexOf(k) === -1; });
                     return tokens.some(function(t) {
                         return cardAllText.indexOf(t) !== -1;
                     });
@@ -521,10 +521,10 @@
                 rawQ = rawQ.replace(/\b(sarees|lehengas|gowns|kurtis)\b/g, function(m){
                     return m.slice(0, -1);
                 });
-                var tokens = rawQ.split(/[\s,\-\+]+/).filter(function(t){ return t.length > 0; });
+                var searchTokens = rawQ.split(/[\s,\-+]+/).filter(function(t){ return t.length > 0; });
 
-                var cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
-                var cardAria = (card.getAttribute('aria-label') || '').toLowerCase();
+                cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
+                cardAria = (card.getAttribute('aria-label') || '').toLowerCase();
                 var cardCatText = (card.dataset.category || '').toLowerCase();
                 var cardSubText = (card.dataset.subcategory || '').toLowerCase();
                 var cardFabricText = (card.dataset.fabric || '').toLowerCase();
@@ -543,14 +543,14 @@
                 }
 
                 var matchCount = 0;
-                tokens.forEach(function(token) {
+                searchTokens.forEach(function(token) {
                     var tokenBase = (token.length > 3 && token.slice(-1) === 's') ? token.slice(0, -1) : token;
                     if (corpus.indexOf(token) !== -1 || corpus.indexOf(tokenBase) !== -1) {
                         matchCount++;
                     }
                 });
 
-                var minReq = tokens.length === 1 ? 1 : Math.max(1, Math.ceil(tokens.length * 0.5));
+                var minReq = searchTokens.length === 1 ? 1 : Math.max(1, Math.ceil(searchTokens.length * 0.5));
                 searchMatch = matchCount >= minReq;
             }
 
@@ -765,8 +765,8 @@
     /* Main Category Tabs click */
     document.querySelectorAll('.main-cat-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
-            document.querySelectorAll('.main-cat-tab').forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-            tab.classList.add('active'); tab.setAttribute('aria-selected','true');
+            document.querySelectorAll('.main-cat-tab').forEach(function(t){ t.classList.remove('active'); t.removeAttribute('aria-current'); });
+            tab.classList.add('active'); tab.setAttribute('aria-current', 'page');
             tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
             var cat = tab.dataset.cat;
@@ -803,20 +803,20 @@
                     var tCat = (t.dataset.cat || '').toLowerCase();
                     var isMatch = (val.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === val.toLowerCase());
                     t.classList.toggle('active', isMatch);
-                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                    if (isMatch) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
                 });
                 window.renderSubCategories(val);
             } else if (type === 'size') {
                 var idx = st.sizes.indexOf(val);
                 if (idx === -1) st.sizes.push(val); else st.sizes.splice(idx, 1);
             } else if (type === 'fabric') {
-                var idx = st.fabrics.indexOf(val);
+                idx = st.fabrics.indexOf(val);
                 if (idx === -1) st.fabrics.push(val); else st.fabrics.splice(idx, 1);
             } else if (type === 'discount') {
                 var dVal = parseInt(val);
                 st.minDiscount = (st.minDiscount === dVal) ? 0 : dVal;
             } else if (type === 'availability') {
-                var idx = st.availability.indexOf(val);
+                idx = st.availability.indexOf(val);
                 if (idx === -1) st.availability.push(val); else st.availability.splice(idx, 1);
             }
 
@@ -960,9 +960,9 @@
             if (qvBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var id = qvBtn.dataset.id;
+                var qvId = qvBtn.dataset.id;
                 if (typeof window.openQV === 'function') {
-                    window.openQV(id);
+                    window.openQV(qvId);
                 }
                 return;
             }
@@ -1086,7 +1086,7 @@
             var tCat = (t.dataset.cat || '').toLowerCase();
             var isMatch = (catName.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === catName.toLowerCase());
             t.classList.toggle('active', isMatch);
-            t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            if (isMatch) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
         });
         document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
             ci.classList.toggle('active', ci.dataset.sfVal.toLowerCase() === catName.toLowerCase());
@@ -1114,7 +1114,7 @@
         var tCat = (t.dataset.cat || '').toLowerCase();
         var isMatch = (initialCategory.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === initialCategory.toLowerCase());
         t.classList.toggle('active', isMatch);
-        t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        if (isMatch) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
     });
 
     window.renderSubCategories(initialCategory);

@@ -26,6 +26,12 @@ $rzpGate = PaymentManager::getGateway('razorpay');
 $cfg = $rzpGate['config'] ?? [];
 $webhookSecret = trim((string)($cfg['webhook_secret'] ?? (getenv('RAZORPAY_WEBHOOK_SECRET') ?: '')));
 
+if (empty($signature)) {
+    http_response_code(401);
+    echo json_encode(['status' => 'error', 'message' => 'Missing X-Razorpay-Signature header']);
+    exit;
+}
+
 if (!empty($webhookSecret)) {
     $expected = hash_hmac('sha256', $rawBody, $webhookSecret);
     if (!hash_equals($expected, $signature)) {
@@ -33,6 +39,10 @@ if (!empty($webhookSecret)) {
         echo json_encode(['status' => 'error', 'message' => 'Invalid webhook signature']);
         exit;
     }
+} else {
+    http_response_code(503);
+    echo json_encode(['status' => 'error', 'message' => 'Razorpay webhook secret not configured']);
+    exit;
 }
 
 $event = json_decode($rawBody, true) ?: [];

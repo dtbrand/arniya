@@ -39,8 +39,8 @@ test.describe('DT Brand\'s Core E-Commerce & Admin Flows', () => {
     expect(response?.status()).toBe(200);
   });
 
-  test('Retail Management Dashboard loads with 12-Card KPI ribbon', async ({ page }) => {
-    const response = await page.goto('/admin/retail/index.php');
+  test('Order Management Dashboard loads with 12-Card KPI ribbon', async ({ page }) => {
+    const response = await page.goto('/admin/orders/index.php');
     expect(response?.status()).toBe(200);
   });
 });

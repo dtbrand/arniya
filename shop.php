@@ -128,7 +128,7 @@ $total_products = count($products);
 
     <!-- ════ ROUND SUB-CATEGORY SLIDER (Positioned directly under Banner Slider) ════ -->
     <nav class="cat-slider-section" aria-label="Sub categories">
-        <div class="cat-slider-track" id="catSliderTrack" role="list">
+        <div class="cat-slider-track" id="catSliderTrack">
             <!-- Dynamically populated from JS -->
         </div>
     </nav>

@@ -168,7 +168,7 @@
                 circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
             }
 
-            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + (item.type || '') + '" data-val="' + (item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + item.label + '">' +
+            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" data-type="' + (item.type || '') + '" data-val="' + (item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + item.label + '">' +
                 '<div class="cat-ring">' +
                     '<div class="cat-circle ' + (item.gradient || '') + '">' + circleContent + '</div>' +
                 '</div>' +

@@ -83,9 +83,7 @@ require_once __DIR__ . "/_shared.php"; echo dt_set_save_button(); ?>
                         <input type="text" class="adm-form-input" value="INR (₹) · Asia/Kolkata (IST)" readonly>
                     </div>
                 </div>
-                <?php if (!$dtSettingsLive): ?>
-                <p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">⚠ Database unreachable — values shown are defaults and cannot be saved right now.</p>
-                <?php endif; ?>
+                <?php echo dt_db_unavailable_banner('Database unreachable'); ?>
             </div>
 
         </main>

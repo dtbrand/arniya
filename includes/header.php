@@ -13,19 +13,19 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
         <button type="button" class="dt-ticker-arrow prev" onclick="if(typeof slideDtTicker==='function') slideDtTicker(-1)" aria-label="Previous announcement">‹</button>
         <div class="dt-ticker-track" id="dtTickerTrack">
             <div class="dt-ticker-slide active">
-                <span class="dt-ticker-icon">✨</span>
+                <span class="dt-ticker-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                 <span class="dt-ticker-text"><strong>100% Original Product</strong> &bull; Certified Pure Handloom Silk</span>
             </div>
             <div class="dt-ticker-slide">
-                <span class="dt-ticker-icon">⚡</span>
+                <span class="dt-ticker-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>
                 <span class="dt-ticker-text"><strong>Fast Delivery in 3–5 Days</strong> &bull; All India Express Dispatch</span>
             </div>
             <div class="dt-ticker-slide">
-                <span class="dt-ticker-icon">💎</span>
+                <span class="dt-ticker-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
                 <span class="dt-ticker-text"><strong>7-Day Fast Exchange</strong> &bull; Zero-Hassle Doorstep Pickup</span>
             </div>
             <div class="dt-ticker-slide">
-                <span class="dt-ticker-icon">🎁</span>
+                <span class="dt-ticker-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></span>
                 <span class="dt-ticker-text"><strong>Luxury Gift Box</strong> &bull; Complimentary Royal Packaging</span>
             </div>
         </div>

@@ -1075,7 +1075,7 @@ input[type=range].mf-range::-moz-range-thumb {
                     var tCat = (t.dataset.cat || '').toLowerCase();
                     var isMatch = (val.toLowerCase() === 'all' && (tCat === 'all' || tCat === '')) || (tCat === val.toLowerCase());
                     t.classList.toggle('active', isMatch);
-                    t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                    if (isMatch) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
                 });
             } else if (type === 'size') {
                 var idx = st.sizes.indexOf(val);
