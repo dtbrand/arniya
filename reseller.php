@@ -2128,10 +2128,22 @@ $catalogHasProducts = $catalogProducts !== [];
                             <span style="font-size:0.80rem; font-weight:700;"><span id="crmSelectedCount">0</span> Customers Selected</span>
                         </div>
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkAddTagToCustomers()" style="color:#111; background:#FFF;">🏷️ Add Tag</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkWhatsAppCustomers()" style="color:#FFF; background:#25D366;">💬 WhatsApp</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportSelectedCustomersCSV()" style="color:#111; background:#FFF;">📥 Export</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="clearCustomerSelection()" style="color:#FFF; background:#4B5563;">✕ Cancel</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkAddTagToCustomers()" style="color:#111; background:#FFF; display:inline-flex; align-items:center; gap:5px;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                <span>Add Tag</span>
+                            </button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkWhatsAppCustomers()" style="color:#FFF; background:#15803D; display:inline-flex; align-items:center; gap:5px;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>WhatsApp</span>
+                            </button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportSelectedCustomersCSV()" style="color:#111; background:#FFF; display:inline-flex; align-items:center; gap:5px;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export</span>
+                            </button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="clearCustomerSelection()" style="color:#FFF; background:#4B5563; display:inline-flex; align-items:center; gap:5px;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                <span>Cancel</span>
+                            </button>
                         </div>
                     </div>
 
@@ -3050,7 +3062,7 @@ $catalogHasProducts = $catalogProducts !== [];
             </div>
             <div class="ws-modal-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
                 <!-- Button 1: Download Statement -->
-                <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px;" onclick="showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
+                <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px;" onclick="downloadWalletStatement()">
                     <svg class="ws-anim-dl-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download Statement</span>
                 </button>
@@ -3482,7 +3494,10 @@ $catalogHasProducts = $catalogProducts !== [];
                     <button class="crm-profile-tab" onclick="switchProfileTab('recommended', this)">Recommended</button>
                     <button class="crm-profile-tab" onclick="switchProfileTab('ledger', this)">Profit & Ledger</button>
                     <button class="crm-profile-tab" onclick="switchProfileTab('notes', this)">Notes (<span id="profNotesBadge">0</span>)</button>
-                    <button class="crm-profile-tab" onclick="switchProfileTab('followups', this)">⏰ Follow-ups (<span id="profFollowupsBadge">0</span>)</button>
+                    <button class="crm-profile-tab" onclick="switchProfileTab('followups', this)" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Follow-ups (<span id="profFollowupsBadge">0</span>)</span>
+                    </button>
                     <button class="crm-profile-tab" onclick="switchProfileTab('timeline', this)">Activity Timeline</button>
                 </div>
 
@@ -3581,7 +3596,10 @@ $catalogHasProducts = $catalogProducts !== [];
                             <div>
                                 <label class="ws-smart-label">
                                     <span>WhatsApp Number</span>
-                                    <button type="button" id="btnCustSyncWhatsapp" class="ws-quick-action-link" onclick="setCustWhatsappSame()" title="Auto-copy Mobile Number">⚡ Same as Mobile</button>
+                                    <button type="button" id="btnCustSyncWhatsapp" class="ws-quick-action-link" onclick="setCustWhatsappSame()" title="Auto-copy Mobile Number" style="display:inline-flex; align-items:center; gap:3px;">
+                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                        <span>Same as Mobile</span>
+                                    </button>
                                 </label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
@@ -3663,7 +3681,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         </div>
 
                         <div class="ws-smart-chips-wrap" id="custSmartTagChips">
-                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'VIP')">⭐ VIP</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'VIP')"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>VIP</span>
                             <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'REPEAT')">Repeat</span>
                             <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'BRIDAL')">Bridal</span>
                             <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'WHOLESALE')">Wholesale</span>
@@ -4158,8 +4176,9 @@ $catalogHasProducts = $catalogProducts !== [];
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;max-width:20px!important;max-height:20px!important;display:inline-block!important;flex-shrink:0!important;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
                     <div>
-                        <h3 class="ws-modal-luxury-title">
-                            <span>⭐ My Saved Filters</span>
+                        <h3 class="ws-modal-luxury-title" style="display:inline-flex; align-items:center; gap:6px;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>My Saved Filters</span>
                         </h3>
                         <div class="ws-modal-luxury-subtitle">Quickly filter customers with 1 click</div>
                     </div>
@@ -4182,7 +4201,7 @@ $catalogHasProducts = $catalogProducts !== [];
     </div>
 
     <!-- Floating Quick Order Action Button -->
-    <button class="crm-floating-quick-order-btn" onclick="openResellerQuickOrderDrawer()" title="Quick Order (⚡ Fast)" aria-label="Quick Order">
+    <button class="crm-floating-quick-order-btn" onclick="openResellerQuickOrderDrawer()" title="Quick Order (Express Checkout)" aria-label="Quick Order">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>

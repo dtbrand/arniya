@@ -5,8 +5,8 @@
   "description": "DT Brand's & Jai Hanuman Tex Commerce & WhatsApp CRM Platform",
   "private": true,
   "scripts": {
-    "lint:js": "eslint \"Frontend/**/*.js\" \"Shared/**/*.js\"",
-    "lint:css": "stylelint \"Frontend/**/*.css\" \"Shared/**/*.css\"",
+    "lint:js": "eslint \"assets/js/**/*.js\" \"Shared/**/*.js\" \"admin/**/*.js\" --no-error-on-unmatched-pattern",
+    "lint:css": "stylelint \"assets/css/**/*.css\" \"Shared/**/*.css\" \"admin/**/*.css\" --allow-empty-input",
     "format:check": "prettier --check \"**/*.{js,json,css,md,yml,yaml}\"",
     "format:fix": "prettier --write \"**/*.{js,json,css,md,yml,yaml}\"",
     "test:e2e": "playwright test",

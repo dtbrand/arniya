@@ -19,7 +19,7 @@
             }
 
             var raw = String(msg || '').trim();
-            var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+            var cleanText = raw.replace(/^[\p{Extended_Pictographic}\uFE0E\uFE0F✓♡\s]+/u, '').trim();
             if (!cleanText) cleanText = raw;
 
             var lower = raw.toLowerCase();
@@ -100,14 +100,7 @@
             }
         }
 
-        function initRetailerApp() {
-            var isAuth = checkRetailerSecurity();
-            if (!isAuth) return;
-            if (typeof window.loadSavedRetailerData === 'function') {
-                window.loadSavedRetailerData();
-            }
-        }
-        window.initRetailerApp = initRetailerApp;
+
 
         window.closeRoleGateModal = function() {
             var gateModal = document.getElementById('wsRoleGateModal');
@@ -479,8 +472,8 @@
                 if (dispatchWrap) dispatchWrap.style.display = 'block';
                 if (dispatchWrap) {
                     dispatchWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    var firstInp = dispatchWrap.querySelector('input, textarea');
-                    if (firstInp) firstInp.focus();
+                    var dispatchInp = dispatchWrap.querySelector('input, textarea');
+                    if (dispatchInp) dispatchInp.focus();
                 }
             } else {
                 if (mainWrap) mainWrap.style.display = 'block';
@@ -1269,8 +1262,8 @@
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})' title="Download GST Tax Invoice PDF">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Bill</span>
                             </button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details">
-                                👁️
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details" style="display:inline-flex; align-items:center; justify-content:center; padding:4px 8px;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </button>
                         </div>
                     </td>
@@ -1284,9 +1277,15 @@
                     <div class="ws-mob-rep-top">
                         <div>
                             <span class="ws-order-id-cell" style="font-size:0.90rem;">${o.id}</span>
-                            <span style="font-size:0.72rem; color:var(--ws-text-muted); margin-left:6px;">📅 ${o.date}</span>
+                            <span style="font-size:0.72rem; color:var(--ws-text-muted); margin-left:6px; display:inline-flex; align-items:center; gap:3px;">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span>${o.date}</span>
+                            </span>
                         </div>
-                        <span class="ws-status-badge delivered" style="font-size:0.65rem;">✓ 5% GST Verified</span>
+                        <span class="ws-status-badge delivered" style="font-size:0.65rem; display:inline-flex; align-items:center; gap:3px;">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>5% GST Verified</span>
+                        </span>
                     </div>
 
                     <div class="ws-mob-rep-body">
@@ -1443,7 +1442,7 @@
         /* ── Export Reports to CSV ── */
         window.exportReportsToCsv = function() {
             if (!activeOrdersList || activeOrdersList.length === 0) {
-                window.showWsToast('️ No consignment records available to export.');
+                window.showWsToast('No consignment records available to export.');
                 return;
             }
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
@@ -1471,7 +1470,47 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            window.showWsToast(' CSV Spreadsheet downloaded successfully!');
+            window.showWsToast('CSV Spreadsheet downloaded successfully.');
+        };
+
+        /* ── Export Wallet Statement to CSV ── */
+        window.downloadWalletStatement = function() {
+            var availBal = (window.b2bKpis && window.b2bKpis.credit_limit) ? window.b2bKpis.credit_limit : 200000;
+            var headers = ["Txn Reference", "Date", "Particulars", "Type", "Amount (INR)", "Status"];
+            var rows = [];
+
+            // Allocation row
+            rows.push([
+                `"TXN-CREDIT-ALLOCATION"`,
+                `"${new Date().toLocaleDateString('en-IN')}"`,
+                `"Verified Retail Credit Line Allocation"`,
+                `"Credit"`,
+                Number(availBal).toFixed(2),
+                `"Active / Available"`
+            ]);
+
+            if (activeOrdersList && activeOrdersList.length > 0) {
+                activeOrdersList.forEach(function(o) {
+                    rows.push([
+                        `"TXN-${o.id}"`,
+                        `"${o.date}"`,
+                        `"Consignment Debit - ${o.productName.replace(/"/g, '""')} (${o.qty} Pcs)"`,
+                        `"Debit"`,
+                        (-Number(o.total || 0)).toFixed(2),
+                        `"Debited / Fulfilled"`
+                    ]);
+                });
+            }
+
+            var csvContent = "data:text/csv;charset=utf-8," + [headers.join(",")].concat(rows.map(function(e){ return e.join(","); })).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `DT_Brands_Wallet_Passbook_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.showWsToast('Full Wallet Passbook Statement downloaded successfully (CSV).');
         };
 
         /* ── Render Support Tickets ── */
@@ -2724,14 +2763,14 @@
             if (!list || list.length === 0) {
                 if (headerBadge) {
                     headerBadge.className = 'ws-status-badge';
-                    headerBadge.innerHTML = '⚡ No Active Shipments';
+                    headerBadge.innerHTML = 'No Active Shipments';
                 }
                 heroContainer.innerHTML = `
                     <div style="text-align:center; padding:32px 20px;">
                         <div style="width:54px; height:54px; border-radius:50%; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; margin:0 auto 14px;">
                             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="1" y="3" width="15" height="13"></rect>
-                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
                                 <circle cx="5.5" cy="18.5" r="2.5"></circle>
                                 <circle cx="18.5" cy="18.5" r="2.5"></circle>
                             </svg>
@@ -2759,7 +2798,7 @@
 
             if (headerBadge) {
                 headerBadge.className = 'ws-status-badge ' + currentOrder.status.toLowerCase();
-                headerBadge.innerHTML = '⚡ ' + currentOrder.courier;
+                headerBadge.innerHTML = currentOrder.courier;
             }
 
             // 1. Render Active Hero Card
@@ -2771,6 +2810,15 @@
 
             heroContainer.innerHTML = `
                 <!-- Top Header: Consignment ID + Status Pill + ETA -->
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px dashed var(--ws-border);">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="ws-order-id-cell" style="font-size:1.05rem; font-weight:800;">${currentOrder.id}</span>
+                        <span class="ws-status-badge ${currentOrder.status.toLowerCase()}" style="font-size:0.75rem; padding:3px 8px;">${currentOrder.status}</span>
+                    </div>
+                    <div style="font-size:0.80rem; font-weight:800; color:${etaColor};">
+                        ${etaText}
+                    </div>
+                </div>-->
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px dashed var(--ws-border);">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span class="ws-order-id-cell" style="font-size:1.05rem; font-weight:800;">${currentOrder.id}</span>
@@ -2804,7 +2852,7 @@
                     <div class="ws-timeline-step completed">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                         <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
-                        <div class="ws-timeline-date">DT Brand\'s Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
+                        <div class="ws-timeline-date">DT Brand's Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
                     </div>
                     <div class="ws-timeline-step ${isProcessing ? 'active' : 'completed'}">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
@@ -2846,7 +2894,7 @@
             filteredList.forEach(function(o) {
                 var isSelected = o.id === activeTrackOrderId;
                 var card = document.createElement('div');
-                var trackStatusLabel = isSelected ? '● Currently Tracking' : '⚡ Track Consignment &rsaquo;';
+                var trackStatusLabel = isSelected ? 'Currently Tracking' : 'Track Consignment &rsaquo;';
                 card.className = 'ws-track-order-card' + (isSelected ? ' selected' : '');
                 card.onclick = function() {
                     selectTrackingOrder(o.id);
@@ -2910,7 +2958,7 @@
                     tierNum: 5,
                     title: "Tier 5: Platinum",
                     shortTitle: "Platinum (Tier 5)",
-                    badgeText: "👑 Platinum VIP",
+                    badgeText: "Platinum VIP",
                     pillText: "1000+ Orders",
                     discount: "15% Margin Rebate",
                     minOrders: 1000,
@@ -2922,7 +2970,7 @@
                     tierNum: 4,
                     title: "Tier 4: Gold",
                     shortTitle: "Gold (Tier 4)",
-                    badgeText: " Gold VIP",
+                    badgeText: "Gold VIP",
                     pillText: "300–500 Orders",
                     discount: "10% Margin Rebate",
                     minOrders: 301,
@@ -2934,7 +2982,7 @@
                     tierNum: 3,
                     title: "Tier 3: Gold",
                     shortTitle: "Gold (Tier 3)",
-                    badgeText: " Gold VIP",
+                    badgeText: "Gold VIP",
                     pillText: "200–300 Orders",
                     discount: "7.5% Margin Rebate",
                     minOrders: 201,
@@ -2946,7 +2994,7 @@
                     tierNum: 2,
                     title: "Tier 2: Silver",
                     shortTitle: "Silver (Tier 2)",
-                    badgeText: "🥈 Silver VIP",
+                    badgeText: "Silver VIP",
                     pillText: "50–200 Orders",
                     discount: "5% Margin Rebate",
                     minOrders: 51,

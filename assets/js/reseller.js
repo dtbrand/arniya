@@ -105,7 +105,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             var raw = String(msg || '').trim();
-            var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+            var cleanText = raw.replace(/^[\p{Extended_Pictographic}\uFE0E\uFE0F✓♡\s]+/u, '').trim();
             if (!cleanText) cleanText = raw;
 
             var lower = raw.toLowerCase();
@@ -1242,8 +1242,8 @@ window.animateTargetGauge = animateTargetGauge;
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})' title="Download GST Tax Invoice PDF">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Bill</span>
                             </button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details">
-                                👁️
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details" style="display:inline-flex; align-items:center; justify-content:center; padding:4px 8px;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </button>
                         </div>
                     </td>
@@ -1257,9 +1257,15 @@ window.animateTargetGauge = animateTargetGauge;
                     <div class="ws-mob-rep-top">
                         <div>
                             <span class="ws-order-id-cell" style="font-size:0.90rem;">${o.id}</span>
-                            <span style="font-size:0.72rem; color:var(--ws-text-muted); margin-left:6px;">📅 ${o.date}</span>
+                            <span style="font-size:0.72rem; color:var(--ws-text-muted); margin-left:6px; display:inline-flex; align-items:center; gap:3px;">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span>${o.date}</span>
+                            </span>
                         </div>
-                        <span class="ws-status-badge delivered" style="font-size:0.65rem;">✓ 5% GST Verified</span>
+                        <span class="ws-status-badge delivered" style="font-size:0.65rem; display:inline-flex; align-items:center; gap:3px;">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>5% GST Verified</span>
+                        </span>
                     </div>
 
                     <div class="ws-mob-rep-body">
@@ -1416,7 +1422,7 @@ window.animateTargetGauge = animateTargetGauge;
         /* ── Export Reports to CSV ── */
         function exportReportsToCsv() {
             if (!activeOrdersList || activeOrdersList.length === 0) {
-                showWsToast('️ No consignment records available to export.');
+                showWsToast('No consignment records available to export.');
                 return;
             }
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
@@ -1444,8 +1450,49 @@ window.animateTargetGauge = animateTargetGauge;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showWsToast(' CSV Spreadsheet downloaded successfully!');
+            showWsToast('CSV Spreadsheet downloaded successfully.');
         };
+
+        /* ── Export Wallet Statement to CSV ── */
+        function downloadWalletStatement() {
+            var availBal = (window.b2bKpis && window.b2bKpis.credit_limit) ? window.b2bKpis.credit_limit : 200000;
+            var headers = ["Txn Reference", "Date", "Particulars", "Type", "Amount (INR)", "Status"];
+            var rows = [];
+
+            // Allocation row
+            rows.push([
+                `"TXN-CREDIT-ALLOCATION"`,
+                `"${new Date().toLocaleDateString('en-IN')}"`,
+                `"Verified Reseller Credit Line Allocation"`,
+                `"Credit"`,
+                Number(availBal).toFixed(2),
+                `"Active / Available"`
+            ]);
+
+            if (activeOrdersList && activeOrdersList.length > 0) {
+                activeOrdersList.forEach(function(o) {
+                    rows.push([
+                        `"TXN-${o.id}"`,
+                        `"${o.date}"`,
+                        `"Consignment Debit - ${o.productName.replace(/"/g, '""')} (${o.qty} Pcs)"`,
+                        `"Debit"`,
+                        (-Number(o.total || 0)).toFixed(2),
+                        `"Debited / Fulfilled"`
+                    ]);
+                });
+            }
+
+            var csvContent = "data:text/csv;charset=utf-8," + [headers.join(",")].concat(rows.map(function(e){ return e.join(","); })).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `DT_Brands_Wallet_Passbook_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showWsToast('Full Wallet Passbook Statement downloaded successfully (CSV).');
+        };
+        window.downloadWalletStatement = downloadWalletStatement;
 
         /* ── Render Support Tickets ── */
         function renderTicketsView() {
@@ -2751,7 +2798,7 @@ window.animateTargetGauge = animateTargetGauge;
             filteredList.forEach(function(o) {
                 var isSelected = o.id === activeTrackOrderId;
                 var card = document.createElement('div');
-                var trackStatusLabel = isSelected ? '● Currently Tracking' : '⚡ Track Consignment &rsaquo;';
+                var trackStatusLabel = isSelected ? 'Currently Tracking' : 'Track Consignment &rsaquo;';
                 card.className = 'ws-track-order-card' + (isSelected ? ' selected' : '');
                 card.onclick = function() {
                     selectTrackingOrder(o.id);
@@ -2816,7 +2863,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 5,
                     title: "Tier 5: Platinum",
                     shortTitle: "Platinum (Tier 5)",
-                    badgeText: "👑 Platinum VIP",
+                    badgeText: "Platinum VIP",
                     pillText: "1000+ Orders",
                     discount: "15% Margin Rebate",
                     minOrders: 1000,
@@ -2828,7 +2875,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 4,
                     title: "Tier 4: Gold",
                     shortTitle: "Gold (Tier 4)",
-                    badgeText: " Gold VIP",
+                    badgeText: "Gold VIP",
                     pillText: "300–500 Orders",
                     discount: "10% Margin Rebate",
                     minOrders: 301,
@@ -2840,7 +2887,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 3,
                     title: "Tier 3: Gold",
                     shortTitle: "Gold (Tier 3)",
-                    badgeText: " Gold VIP",
+                    badgeText: "Gold VIP",
                     pillText: "200–300 Orders",
                     discount: "7.5% Margin Rebate",
                     minOrders: 201,
@@ -2852,7 +2899,7 @@ window.animateTargetGauge = animateTargetGauge;
                     tierNum: 2,
                     title: "Tier 2: Silver",
                     shortTitle: "Silver (Tier 2)",
-                    badgeText: "🥈 Silver VIP",
+                    badgeText: "Silver VIP",
                     pillText: "50–200 Orders",
                     discount: "5% Margin Rebate",
                     minOrders: 51,
@@ -3205,8 +3252,14 @@ window.animateTargetGauge = animateTargetGauge;
                         </div>
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="flex:1;" onclick="openCustomerProfileModal(${c.id})">👤 View Profile</button>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1;" onclick="openResellerQuickOrderDrawer(${c.id})">⚡ Quick Order</button>
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="flex:1; display:inline-flex; align-items:center; justify-content:center; gap:4px;" onclick="openCustomerProfileModal(${c.id})">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>View Profile</span>
+                        </button>
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1; display:inline-flex; align-items:center; justify-content:center; gap:4px;" onclick="openResellerQuickOrderDrawer(${c.id})">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>Quick Order</span>
+                        </button>
                     </div>
                 `;
                 mobList.appendChild(card);
@@ -3303,26 +3356,32 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (ribbon) {
                 ribbon.innerHTML = `
-                    <button class="crm-btn-action wa" onclick="sendCustomerWhatsAppMessage(${c.id})">
-                        💬 WhatsApp Customer
+                    <button class="crm-btn-action wa" onclick="sendCustomerWhatsAppMessage(${c.id})" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>WhatsApp Customer</span>
                     </button>
-                    <a href="tel:${c.mobile}" class="crm-btn-action">
-                        📞 Call
+                    <a href="tel:${c.mobile}" class="crm-btn-action" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>Call</span>
                     </a>
-                    <button class="crm-btn-action primary" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">
-                        ⚡ New Order
+                    <button class="crm-btn-action primary" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>New Order</span>
                     </button>
                     <button class="crm-btn-action" onclick="openRepeatOrderModal(${c.id})">
                         Repeat Order
                     </button>
-                    <button class="crm-btn-action" onclick="openAddNoteModal(${c.id})">
-                        📝 Add Note
+                    <button class="crm-btn-action" onclick="openAddNoteModal(${c.id})" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Add Note</span>
                     </button>
-                    <button class="crm-btn-action" onclick="openScheduleFollowupModal(${c.id})">
-                        ⏰ Add Follow-up
+                    <button class="crm-btn-action" onclick="openScheduleFollowupModal(${c.id})" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Add Follow-up</span>
                     </button>
-                    <button class="crm-btn-action" onclick="openAddCustomerModal(${c.id})">
-                        ✏️ Edit Customer
+                    <button class="crm-btn-action" onclick="openAddCustomerModal(${c.id})" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        <span>Edit Customer</span>
                     </button>
                 `;
             }
@@ -3377,7 +3436,10 @@ window.animateTargetGauge = animateTargetGauge;
                         </div>
                         <div style="display:flex; align-items:center; gap:8px;">
                             <span style="font-weight:900; font-size:0.95rem; color:var(--ws-gold-primary);">₹${Number(o.total).toLocaleString('en-IN')}</span>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="openRepeatOrderModal(${c.id}, '${o.orderId}')">🔁 Reorder</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="openRepeatOrderModal(${c.id}, '${o.orderId}')" style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                                <span>Reorder</span>
+                            </button>
                         </div>
                     </div>
                 `;
@@ -3421,7 +3483,10 @@ window.animateTargetGauge = animateTargetGauge;
                         <img src="${rImg}" alt="${p.name || ''}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
                         <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name || ''}</div>
                         <div style="font-size:0.78rem; font-weight:900; color:var(--ws-gold-primary); margin-top:2px;">${rCost > 0 ? '₹' + rCost.toLocaleString('en-IN') : 'Price on request'}</div>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; margin-top:6px; font-size:0.68rem; padding:4px;" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">⚡ Create Order</button>
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; margin-top:6px; font-size:0.68rem; padding:4px; display:inline-flex; align-items:center; justify-content:center; gap:4px;" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>Create Order</span>
+                        </button>
                     </div>
                 `;
             }).join('');
@@ -3549,7 +3614,7 @@ window.animateTargetGauge = animateTargetGauge;
                 var customers = getResellerCustomers();
                 var c = customers.find(function(x) { return x.id === editId; });
                 if (c) {
-                    if (title) title.innerHTML = '<span>✏️ Edit Customer Profile</span>';
+                    if (title) title.innerHTML = '<span>Edit Customer Profile</span>';
                     if (formId) formId.value = c.id;
                     if (formName) formName.value = c.name;
                     if (formMobile) formMobile.value = c.mobile;
@@ -3562,7 +3627,7 @@ window.animateTargetGauge = animateTargetGauge;
                     if (formTags) formTags.value = (c.tags || []).join(', ');
                 }
             } else {
-                if (title) title.innerHTML = '<span>👤 Add New Customer</span>';
+                if (title) title.innerHTML = '<span>Add New Customer</span>';
                 if (formId) formId.value = '';
                 if (formName) formName.value = '';
                 if (formMobile) formMobile.value = '';
@@ -4433,7 +4498,10 @@ window.animateTargetGauge = animateTargetGauge;
                                     <div style="font-weight:800; font-size:0.78rem;">${item.customer.name}</div>
                                     <div style="font-size:0.68rem; color:var(--ws-text-muted);">${item.task.note} &bull; <strong>${item.task.date}</strong></div>
                                 </div>
-                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:2px 8px; font-size:0.68rem;">💬 Chat</button>
+                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#15803D; color:#FFF; padding:2px 8px; font-size:0.68rem; display:inline-flex; align-items:center; gap:4px;">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <span>Chat</span>
+                                </button>
                             </div>
                         `;
                     }).join('');
@@ -4454,7 +4522,10 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div style="font-weight:800; font-size:0.78rem;">${c.name} &bull; Reorder Cycle ${c.reorderCycleDays || 30} Days</div>
                                 <div style="font-size:0.68rem; color:#B45309; font-weight:700;">Last order was 28 days ago</div>
                             </div>
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openRepeatOrderModal(${c.id})" style="padding:2px 8px; font-size:0.68rem;">🔁 Reorder</button>
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openRepeatOrderModal(${c.id})" style="padding:2px 8px; font-size:0.68rem; display:inline-flex; align-items:center; gap:4px;">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                                <span>Reorder</span>
+                            </button>
                         </div>
                     `;
                 }).join('');
@@ -4467,11 +4538,11 @@ window.animateTargetGauge = animateTargetGauge;
             var customers = getResellerCustomers();
             var sorted = customers.slice().sort(function(a, b) { return b.totalPurchase - a.totalPurchase; });
             container.innerHTML = sorted.slice(0, 4).map(function(c, idx) {
-                var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+                var rankBg = idx === 0 ? '#FEF3C7; color:#8A681F; border:1px solid #D4AF37;' : (idx === 1 ? '#F1F5F9; color:#475569; border:1px solid #CBD5E1;' : (idx === 2 ? '#FFEDD5; color:#9A3412; border:1px solid #FDBA74;' : '#F3F4F6; color:#6B7280;'));
                 return `
                     <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:6px 10px; cursor:pointer;" onclick="openCustomerProfileModal(${c.id})">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.90rem;">${medal}</span>
+                            <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; font-size:0.72rem; font-weight:800; background:${rankBg}">${idx + 1}</span>
                             <div>
                                 <div style="font-weight:800; font-size:0.78rem;">${c.name}</div>
                                 <div style="font-size:0.68rem; color:var(--ws-text-muted);">${c.totalOrders} Orders &bull; Profit: ₹${Number(c.totalProfit).toLocaleString('en-IN')}</div>
@@ -5066,7 +5137,7 @@ ${senderName} (Reseller Partner)`;
                             formattedDate = d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
                         } catch(e) {}
 
-                        var dueBadge = isDueToday ? '🚨 Due Today' : (isCompleted ? '✓ Completed' : '📅 ' + formattedDate);
+                        var dueBadge = isDueToday ? 'Due Today' : (isCompleted ? 'Completed' : formattedDate);
 
                         return `
                             <div class="ws-mobile-followup-card ${cardClass}">
@@ -5083,7 +5154,7 @@ ${senderName} (Reseller Partner)`;
                                     <div class="ws-followup-avatar-initial">${(item.customer.name || 'C').charAt(0)}</div>
                                     <div>
                                         <div style="font-weight:800; font-size:0.90rem; color:#1E293B;">${item.customer.name}</div>
-                                        <div style="font-size:0.72rem; color:#7D7162; font-weight:600;">📞 ${item.customer.mobile} &bull; 📍 ${item.customer.city || 'Surat'}</div>
+                                        <div style="font-size:0.72rem; color:#7D7162; font-weight:600;">Tel: ${item.customer.mobile} &bull; ${item.customer.city || 'Surat'}</div>
                                     </div>
                                 </div>
                                 <div class="ws-mobile-followup-note">
@@ -5100,8 +5171,9 @@ ${senderName} (Reseller Partner)`;
                                             <span>Mark Done</span>
                                         </button>
                                     ` : `
-                                        <button type="button" class="ws-btn-followup-done" style="background:#F1F5F9; border-color:#CBD5E1; color:#64748B !important; cursor:default;">
-                                            <span>✓ Done</span>
+                                        <button type="button" class="ws-btn-followup-done" style="background:#F1F5F9; border-color:#CBD5E1; color:#64748B !important; cursor:default; display:inline-flex; align-items:center; gap:4px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            <span>Done</span>
                                         </button>
                                     `}
                                 </div>

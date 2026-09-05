@@ -63,7 +63,10 @@ $phpFiles = findPhpFiles($root, $excluded);
 $count = count($phpFiles);
 $errors = [];
 
-foreach ($phpFiles as $path) {
+echo "Scanning {$count} PHP files across DT Brand's workspace...\n";
+$startTime = microtime(true);
+
+foreach ($phpFiles as $i => $path) {
     $output = [];
     $returnVar = 0;
     exec('"' . $resolvedPhp . '" -l ' . escapeshellarg($path), $output, $returnVar);
@@ -72,14 +75,26 @@ foreach ($phpFiles as $path) {
             'file' => str_replace($root . DIRECTORY_SEPARATOR, '', $path),
             'error' => implode("\n", $output)
         ];
+        echo "E";
+    } else {
+        if (($i + 1) % 25 === 0) {
+            echo ".";
+            if (($i + 1) % 100 === 0) {
+                echo " (" . ($i + 1) . "/{$count})\n";
+            }
+            flush();
+        }
     }
 }
+echo "\n";
+$elapsed = round(microtime(true) - $startTime, 2);
 
 echo "=================================================================\n";
 echo "DT Brand's PHP Syntax Lint Report\n";
 echo "=================================================================\n";
 echo "Scanned PHP files: " . $count . "\n";
 echo "Syntax Errors:     " . count($errors) . "\n";
+echo "Execution Time:    " . $elapsed . "s\n";
 echo "=================================================================\n";
 
 if (empty($errors)) {
