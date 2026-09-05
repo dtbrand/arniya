@@ -10,11 +10,18 @@
 /package.json @dtbrand
 /.htaccess @dtbrand
 
-# Core Business Logic & Pricing
+# Core Business Logic, Pricing & Portals
 /src/ @dtbrand
-/Shared/Auth/ @dtbrand
-/Shared/Includes/checkout.php @dtbrand
-/Shared/Includes/cart.php @dtbrand
+/Shared/ @dtbrand
+/wholesale.php @dtbrand
+/retailer.php @dtbrand
+/reseller.php @dtbrand
+/cart.php @dtbrand
+/checkout.php @dtbrand
+/product.php @dtbrand
+/shop.php @dtbrand
+/admin/ @dtbrand
+/api/ @dtbrand
 
 # Database & Migrations
 /database/ @dtbrand

@@ -17,10 +17,17 @@ foreach ($iterator as $file) {
         continue;
     }
     $count++;
-    $output = [];
-    $returnVar = 0;
-    $phpBin = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'C:\\xampp\\php\\php.exe';
-    exec('"' . $phpBin . '" -l ' . escapeshellarg($path), $output, $returnVar);
+    static $resolvedPhp = null;
+    if ($resolvedPhp === null) {
+        if (defined('PHP_BINARY') && PHP_BINARY && @file_exists(PHP_BINARY)) {
+            $resolvedPhp = PHP_BINARY;
+        } elseif (DIRECTORY_SEPARATOR === '/') {
+            $resolvedPhp = 'php';
+        } else {
+            $resolvedPhp = file_exists('C:\\xampp\\php\\php.exe') ? 'C:\\xampp\\php\\php.exe' : 'php';
+        }
+    }
+    exec('"' . $resolvedPhp . '" -l ' . escapeshellarg($path), $output, $returnVar);
     if ($returnVar !== 0) {
         $errors[] = [
             'file' => str_replace($root . DIRECTORY_SEPARATOR, '', $path),
