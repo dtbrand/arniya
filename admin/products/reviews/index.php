@@ -121,7 +121,7 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Product Reviews &amp; Ratings</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px;">★ <?php echo htmlspecialchars($avgText); ?> Average</span>
+                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px; display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span><?php echo htmlspecialchars($avgText); ?> Average</span></span>
                     <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;"><?php echo (int)$counts['approved']; ?> Approved</span>
                 </div>
 
@@ -237,14 +237,14 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
                                     <div>
                                         <strong style="font-size:13px; color:#181512; display:block;"><?= htmlspecialchars((string)($rev['customer_name'] ?? 'Customer')) ?></strong>
                                         <?php if (!empty($rev['verified_buyer'])): ?>
-                                        <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:1px 5px; font-weight:700;">✓ Verified Buyer</span>
+                                        <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:2px 6px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Verified Buyer</span></span>
                                         <?php endif; ?>
                                         <small style="display:block; color:#646970; font-size:11px; margin-top:2px;"><?= htmlspecialchars(substr((string)($rev['created_at'] ?? ''), 0, 16)) ?></small>
                                     </div>
                                 </div>
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="color:#D4AF37; font-size:15px; letter-spacing:1px; font-weight:700;"><?= str_repeat('★', $stars) . str_repeat('☆', 5 - $stars) ?></div>
+                                <div style="display:inline-flex; align-items:center; gap:2px; margin-bottom:2px;"><?php for ($si = 1; $si <= 5; $si++): ?><svg width="13" height="13" viewBox="0 0 24 24" fill="<?= ($si <= $stars) ? '#D4AF37' : '#E2E8F0' ?>" stroke="<?= ($si <= $stars) ? '#8A681F' : '#CBD5E1' ?>" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><?php endfor; ?></div>
                                 <span style="font-size:11.5px; font-weight:700; color:#181512;"><?= $stars ?>.0 Rating</span>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top;">
@@ -320,11 +320,11 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
                 <div>
                     <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Rating Stars</label>
                     <select id="revStars" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
-                        <option value="5">★★★★★ 5.0 (Excellent)</option>
-                        <option value="4">★★★★☆ 4.0 (Very Good)</option>
-                        <option value="3">★★★☆☆ 3.0 (Average)</option>
-                        <option value="2">★★☆☆☆ 2.0 (Poor)</option>
-                        <option value="1">★☆☆☆☆ 1.0 (Bad)</option>
+                        <option value="5">5.0 Stars (Excellent)</option>
+                        <option value="4">4.0 Stars (Very Good)</option>
+                        <option value="3">3.0 Stars (Average)</option>
+                        <option value="2">2.0 Stars (Poor)</option>
+                        <option value="1">1.0 Star (Bad)</option>
                     </select>
                 </div>
                 <div>
@@ -391,16 +391,16 @@ function moderateReview(id, action) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Action failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Action failed');
                 return;
             }
             const row = document.getElementById('review-row-' + id);
             if (row) row.remove();
-            if (typeof window.showToast === 'function') window.showToast('✓ Review ' + action + 'd successfully');
+            if (typeof window.showToast === 'function') window.showToast('Review ' + action + 'd successfully');
             setTimeout(() => window.location.reload(), 400);
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
         });
 }
 
@@ -409,7 +409,7 @@ function handleBulkReviewAction() {
     if (!action) return;
     const ids = Array.from(document.querySelectorAll('.review-row-check:checked')).map(c => c.value);
     if (ids.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one review');
+        if (typeof window.showToast === 'function') window.showToast('Select at least one review');
         return;
     }
     if (action === 'delete' && !confirm('Delete ' + ids.length + ' reviews permanently?')) return;
@@ -440,7 +440,7 @@ function submitNewReview() {
     const productId = parseInt(document.getElementById('revProductId').value, 10);
     const text = document.getElementById('revComment').value.trim();
     if (!name || !productId || !text) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Name, product id and review text are required');
+        if (typeof window.showToast === 'function') window.showToast('Name, product id and review text are required');
         return;
     }
     const params = new URLSearchParams();
@@ -472,7 +472,7 @@ function submitReply() {
     const id = document.getElementById('replyReviewId').value;
     const reply = document.getElementById('replyContent').value.trim();
     if (!reply) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Write a reply first');
+        if (typeof window.showToast === 'function') window.showToast('Write a reply first');
         return;
     }
     const params = new URLSearchParams();

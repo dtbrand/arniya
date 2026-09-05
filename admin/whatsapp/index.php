@@ -123,7 +123,7 @@ $active_nav = "whatsapp";
                             $cPhone = preg_replace('/[^0-9]/', '', $c['phone'] ?? '917046363528');
                             $cType = ucfirst($c['type'] ?? 'Wholesale');
                             $initial = strtoupper(substr($cName, 0, 1));
-                            $waText = urlencode("Namaste {$cName} ji! 🙏 DT Brand's & Jai Hanuman Tex Surat team is here with our latest wholesale pure silk catalog. How may we assist your bulk purchase today?");
+                            $waText = urlencode("Namaste {$cName} ji! DT Brand's & Jai Hanuman Tex Surat team is here with our latest wholesale pure silk catalog. How may we assist your bulk purchase today?");
                         ?>
                         <div class="adm-wa-lead-item" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; transition:all 0.15s ease;">
                             <div class="adm-wa-lead-left" style="display:flex; align-items:center; gap:10px;">
@@ -162,9 +162,9 @@ $active_nav = "whatsapp";
                     <div class="adm-form-group" style="margin-bottom:16px;">
                         <label class="adm-form-label" style="display:block; font-size:12px; font-weight:700; color:#334155; margin-bottom:4px;">Message Template</label>
                         <div class="adm-wa-preview-bubble" style="background:#DCF8C6; border:1px solid #C4E8A8; border-radius:8px; padding:12px; font-size:12.5px; color:#111827; line-height:1.5;">
-                            <strong>👑 DT BRAND'S &amp; JAI HANUMAN TEX — FESTIVE SILK ALERT</strong><br>
-                            Namaste! 🙏 Explore our latest 2026 Pure Handloom Silk Sarees &amp; Bridal Lehengas crafted for premium boutique collections.<br>
-                            👉 <strong>Explore Live Catalog:</strong> https://jaihanumantex.in/shop
+                            <strong>DT BRAND'S &amp; JAI HANUMAN TEX — FESTIVE SILK ALERT</strong><br>
+                            Namaste! Explore our latest 2026 Pure Handloom Silk Sarees &amp; Bridal Lehengas crafted for premium boutique collections.<br>
+                            <strong>Explore Live Catalog:</strong> https://jaihanumantex.in/shop
                         </div>
                     </div>
                     <button type="button" class="adm-btn-primary dt-btn-gold" style="width:100%; height:40px; justify-content:center; display:flex; align-items:center; gap:8px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="launchBroadcastAlert()">
@@ -183,7 +183,7 @@ function launchBroadcastAlert() {
     const audience = document.getElementById('waTargetAudience')?.value || 'all';
     
     if (typeof window.showToast === 'function') {
-        window.showToast('🚀 Broadcast queue initiated for ' + audience.toUpperCase() + ' audience!');
+        window.showToast('Broadcast queue initiated for ' + audience.toUpperCase() + ' audience!');
     }
 
     const params = new URLSearchParams();
@@ -196,12 +196,12 @@ function launchBroadcastAlert() {
         .then(data => {
             const count = data.recipients_count || 'all';
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ WhatsApp campaign successfully dispatched to ${count} contacts!`);
+                window.showToast(`WhatsApp campaign successfully dispatched to ${count} contacts!`);
             }
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast('✨ WhatsApp campaign queued successfully!');
+                window.showToast('WhatsApp campaign queued successfully!');
             }
         });
 }

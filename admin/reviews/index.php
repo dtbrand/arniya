@@ -99,7 +99,7 @@ foreach ($reviewsList as $r) {
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
                         <span>Customer Reviews &amp; Moderation Hub</span>
-                        <span class="adm-badge gold"><?= number_format($avgRating, 1) ?> ★ (<?= $totalReviewsCount ?> Reviews)</span>
+                        <span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:4px;"><span><?= number_format($avgRating, 1) ?></span><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5" style="display:inline-block;vertical-align:-1px;margin-left:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>(<?= $totalReviewsCount ?> Reviews)</span></span>
                     </h1>
                     <p class="adm-page-subtitle">Review authentic customer ratings, buyer testimonials, and photo reviews.</p>
                 </div>
@@ -193,15 +193,15 @@ foreach ($reviewsList as $r) {
                                         <small style="color:#7A7266;"><?= date('d M Y, h:i A', strtotime($rev['created_at'] ?? 'now')) ?></small>
                                     </td>
                                     <td><?= htmlspecialchars($rev['product_title'] ?? 'Silk Saree') ?></td>
-                                    <td><span style="color:#F59E0B; font-weight:800;"><?= str_repeat('★', (int)($rev['rating'] ?? 5)) ?></span> (<?= number_format((float)($rev['rating'] ?? 5), 1) ?>)</td>
+                                    <td><div style="display:inline-flex; align-items:center; gap:2px; margin-right:4px;"><?php for($si=1; $si<=(int)($rev['rating'] ?? 5); $si++): ?><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><?php endfor; ?></div><span style="font-weight:700; color:#181512;">(<?= number_format((float)($rev['rating'] ?? 5), 1) ?>)</span></td>
                                     <td>"<?= htmlspecialchars($rev['review_text'] ?? '') ?>"</td>
                                     <td><span class="adm-badge <?= $badgeClass ?>"><?= $badgeText ?></span></td>
                                     <td>
                                         <div style="display:flex; gap:6px;">
                                             <?php if ($rStatus === 'pending'): ?>
-                                                <button type="button" class="adm-btn-primary adm-btn-sm" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'approve')">✓ Approve</button>
+                                                <button type="button" class="adm-btn-gold adm-btn-sm" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'approve')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Approve</span></button>
                                             <?php endif; ?>
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2;" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'delete')">🗑️ Delete</button>
+                                            <button type="button" class="adm-btn-pale adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2; display:inline-flex; align-items:center; gap:4px;" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'delete')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>Delete</span></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -220,7 +220,7 @@ foreach ($reviewsList as $r) {
    status — a 401 or a 500 updated the badge and toasted "published live" just
    like a success. The response is now parsed and checked.
 
-   A "📌 Pin" button used to sit here too; its only action was showing the toast
+   A Pin button used to sit here too; its only action was showing the toast
    "Review pinned to storefront!". There is no pinned column on the reviews
    table and nothing was ever stored, so it has been removed rather than left
    claiming to do something. */
@@ -242,7 +242,7 @@ function dtModerateReview(id, action) {
             const row = document.getElementById('rev-row-' + id);
             if (action === 'delete') {
                 if (row) row.remove();
-                toast('🗑️ Review deleted from database');
+                toast('Review deleted from live database');
                 return;
             }
             const badge = row ? row.querySelector('.adm-badge') : null;
@@ -252,7 +252,7 @@ function dtModerateReview(id, action) {
             }
             const btn = row ? row.querySelector('.adm-btn-primary') : null;
             if (btn) btn.remove();
-            toast('✨ Review approved & published live!');
+            toast('Review approved & published live!');
         })
         .catch(() => {
             toast('Network error — the review was not updated. Please try again.');

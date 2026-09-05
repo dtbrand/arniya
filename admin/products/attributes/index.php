@@ -378,7 +378,7 @@ function closeAddAttributeModal() {
 function submitNewAttribute() {
     const name = document.getElementById('newAttrName')?.value.trim();
     if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter an attribute name');
+        if (typeof window.showToast === 'function') window.showToast('Please enter an attribute name');
         return;
     }
     const type = document.getElementById('newAttrType')?.value || 'Text Badge / Pill';
@@ -397,13 +397,13 @@ function submitNewAttribute() {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Could not save'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Could not save attribute');
                 return;
             }
             window.location.reload();
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
         });
 }
 
@@ -416,7 +416,7 @@ function deleteAttrRow(id) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Delete failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed');
                 return;
             }
             window.location.reload();
@@ -442,7 +442,7 @@ function saveEditedAttribute() {
     const slug = document.getElementById('editAttrSlug').value.trim();
     const type = document.getElementById('editAttrType').value;
     if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Attribute name is required');
+        if (typeof window.showToast === 'function') window.showToast('Attribute name is required');
         return;
     }
 
@@ -456,7 +456,7 @@ function saveEditedAttribute() {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Update failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Update failed');
                 return;
             }
             window.location.reload();
@@ -473,7 +473,7 @@ function handleAttrBulkAction() {
     if (!action) return;
     const ids = Array.from(document.querySelectorAll('.attr-row-check:checked')).map(c => c.value);
     if (ids.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one attribute');
+        if (typeof window.showToast === 'function') window.showToast('Select at least one attribute');
         return;
     }
     if (action === 'delete') {

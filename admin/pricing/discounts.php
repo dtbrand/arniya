@@ -167,7 +167,7 @@ function showToastSafe(m) { if (typeof window.showToast === 'function') window.s
 function submitCoupon() {
     var code = document.getElementById('cpCode').value.trim().toUpperCase();
     var value = parseFloat(document.getElementById('cpValue').value);
-    if (!code || !(value > 0)) { showToastSafe('⚠️ Code and a positive value are required'); return; }
+    if (!code || !(value > 0)) { showToastSafe('Code and a positive value are required'); return; }
     var params = new URLSearchParams();
     params.append('action', 'create');
     params.append('code', code);
@@ -178,10 +178,10 @@ function submitCoupon() {
     fetch('/api/coupons.php', { method: 'POST', body: params, credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.success === false) { showToastSafe('⚠️ ' + (d.message || 'Save failed')); return; }
+            if (d && d.success === false) { showToastSafe(d.message || 'Save failed'); return; }
             window.location.reload();
         })
-        .catch(function () { showToastSafe('⚠️ Could not reach the server'); });
+        .catch(function () { showToastSafe('Could not reach the server'); });
 }
 
 function toggleCoupon(id, current, btn) {
@@ -193,10 +193,10 @@ function toggleCoupon(id, current, btn) {
     fetch('/api/coupons.php', { method: 'POST', body: params, credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.success === false) { showToastSafe('⚠️ ' + (d.message || 'Update failed')); return; }
+            if (d && d.success === false) { showToastSafe(d.message || 'Update failed'); return; }
             window.location.reload();
         })
-        .catch(function () { showToastSafe('⚠️ Could not reach the server'); });
+        .catch(function () { showToastSafe('Could not reach the server'); });
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>

@@ -53,7 +53,7 @@ if (empty($lowStockItems) && !empty($allProducts)) {
                     <a href="/admin/inventory/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Inventory Depot</a>
                     <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800;" onclick="reorderAllCritical()">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                        <span>⚡ Re-Order All Critical</span>
+                        <span style="display:inline-flex;align-items:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg><span>Re-Order All Critical</span></span>
                     </button>
                 </div>
             </div>
@@ -95,7 +95,7 @@ if (empty($lowStockItems) && !empty($allProducts)) {
                                     <td><strong>₹<?= number_format((float)($item['price'] ?? 4490)) ?></strong></td>
                                     <td style="text-align:right;">
                                         <button type="button" class="dt-btn dt-btn-gold" style="height:28px; padding:0 12px; font-size:11.5px; font-weight:800;" onclick="reorderSingleSku(<?= $item['id'] ?>, '<?= addslashes($item['title'] ?? 'Product') ?>', 50)">
-                                            ⚡ Re-Order +50 pcs
+                                            Re-Order +50 pcs
                                         </button>
                                     </td>
                                 </tr>
@@ -126,12 +126,12 @@ function reorderSingleSku(id, title, qty) {
                 el.style.color = '#15803D';
             }
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Restocked +${qty} pcs for ${title}! Updated in MySQL database.`);
+                window.showToast(`Restocked +${qty} pcs for ${title}! Updated in live database.`);
             }
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Restock PO sent for ${title}!`);
+                window.showToast(`Restock PO sent for ${title}!`);
             }
         });
 }
@@ -143,7 +143,7 @@ function reorderAllCritical() {
         if (btn) btn.click();
     });
     if (typeof window.showToast === 'function') {
-        window.showToast('🚀 Bulk Purchase Orders generated and dispatched for all low stock items!');
+        window.showToast('Bulk Purchase Orders generated and dispatched for all low stock items!');
     }
 }
 </script>

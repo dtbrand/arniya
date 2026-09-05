@@ -347,7 +347,7 @@ $total_products = count($products);
                 <div class="card-body">
                     <div class="card-sku-rating-row">
                         <span class="card-sku-text"><?= $p['sku'] ?></span>
-                        <span class="card-rating-badge">★ <?= number_format($p['rating'], 1) ?> (<?= $p['reviews_count'] ?>)</span>
+                        <span class="card-rating-badge" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span><?= number_format($p['rating'], 1) ?> (<?= $p['reviews_count'] ?>)</span></span>
                     </div>
 
                     <h3 class="card-name">
@@ -428,7 +428,7 @@ $total_products = count($products);
                     <div class="deal-card-body">
                         <div class="deal-sku-row">
                             <span class="deal-sku-text"><?= $p['sku'] ?></span>
-                            <span class="deal-rating-badge">★ <?= $p['rating'] ?></span>
+                            <span class="deal-rating-badge" style="display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span><?= $p['rating'] ?></span></span>
                         </div>
                         <h4 class="deal-card-title">
                             <a href="/product.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
@@ -582,7 +582,7 @@ $total_products = count($products);
                     <h2 class="home-section-title">Recently Viewed Products</h2>
                 </div>
                 <div class="home-section-actions" style="display:flex; align-items:center; gap:12px;">
-                    <button type="button" class="home-section-sub-link" onclick="if(typeof window.clearRecentlyViewed==='function') window.clearRecentlyViewed();" style="background:none; border:none; color:var(--dark-gold, #8A681F); font-size:0.80rem; font-weight:700; cursor:pointer; text-decoration:underline;">Clear History ✕</button>
+                    <button type="button" class="home-section-sub-link" onclick="if(typeof window.clearRecentlyViewed==='function') window.clearRecentlyViewed();" style="background:none; border:none; color:var(--dark-gold, #8A681F); font-size:0.80rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px; text-decoration:underline;"><span>Clear History</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                     <div class="rv-scroll-nav-btns" style="display:flex; gap:6px;">
                         <button type="button" class="rv-nav-btn rv-prev-btn" onclick="window.slideRecentlyViewed(-1)" aria-label="Previous Recently Viewed">
                             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -648,7 +648,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-retailer">
@@ -673,7 +673,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Pooja Sharma</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Mumbai • Owner, Pooja Designer Home Boutique</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -681,7 +681,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-retailer">
@@ -706,7 +706,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Ananya Patel</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Ahmedabad • Owner, Ananya Ethnic Wear Shop</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -714,7 +714,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-retailer">
@@ -739,7 +739,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Ritu Kapoor</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Delhi • Founder, Ritu Bridal Studio & Boutique</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -747,7 +747,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-retailer">
@@ -772,7 +772,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Meenakshi Sundaram</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Chennai • Owner, Sri Meenakshi Retail Silks</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -780,7 +780,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-retailer">
@@ -805,7 +805,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Shreya Mukherjee</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Kolkata • Owner, Shreya Boutique & Studio</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
                 </div>
@@ -816,7 +816,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-reseller">
@@ -841,7 +841,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Sunita Mehta</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Pune • WhatsApp Reseller (₹48k/mo)</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -849,7 +849,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-reseller">
@@ -874,7 +874,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Kavita Gupta</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Jaipur • Instagram Boutique Owner</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -882,7 +882,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-reseller">
@@ -907,7 +907,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Deepa Nair</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Kochi • Verified Reseller</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -915,7 +915,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-reseller">
@@ -940,7 +940,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Preeti Verma</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Lucknow • Social Seller</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
                 </div>
@@ -951,7 +951,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-wholesale">
@@ -976,7 +976,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Venkatesh Rao</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Hyderabad • Retail Showroom Chain</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -984,7 +984,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-wholesale">
@@ -1009,7 +1009,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Mukesh Shah</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Surat & Kolkata • Textile Trader</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
 
@@ -1017,7 +1017,7 @@ $total_products = count($products);
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
-                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-stars" style="display:inline-flex; align-items:center; gap:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
                             <span class="rev-verified-badge rev-badge-wholesale">
@@ -1042,7 +1042,7 @@ $total_products = count($products);
                                 <h5 class="rev-name">Sangeeta Deshmukh</h5>
                                 <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Nagpur, Maharashtra • Boutique Owner</span>
                             </div>
-                            <div class="rev-quote-watermark">❝</div>
+                            <div class="rev-quote-watermark"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.25"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg></div>
                         </div>
                     </div>
                 </div>

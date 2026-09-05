@@ -62,7 +62,7 @@ function dtSettingsSave(btn) {
         if (el.required && v === '') missing.push(k);
         payload[k] = v;
     });
-    if (missing.length) { showToastSafe('⚠️ Required: ' + missing.join(', ')); return; }
+    if (missing.length) { showToastSafe('Required: ' + missing.join(', ')); return; }
     btn.disabled = true;
     fetch('/api/settings.php', {
         method: 'POST',
@@ -73,10 +73,10 @@ function dtSettingsSave(btn) {
     .then(function (r) { return r.json(); })
     .then(function (d) {
         btn.disabled = false;
-        if (d && d.success === false) { showToastSafe('⚠️ ' + (d.message || 'Save failed')); return; }
-        if (typeof window.showToast === 'function') window.showToast('✓ ' + (d.message || 'Settings saved.'));
+        if (d && d.success === false) { showToastSafe(d.message || 'Save failed'); return; }
+        if (typeof window.showToast === 'function') window.showToast(d.message || 'Settings saved.');
     })
-    .catch(function () { btn.disabled = false; showToastSafe('⚠️ Could not reach the server'); });
+    .catch(function () { btn.disabled = false; showToastSafe('Could not reach the server'); });
 }
 function showToastSafe(m) { if (typeof window.showToast === 'function') window.showToast(m); else alert(m); }
 </script>
@@ -91,7 +91,7 @@ function dt_db_unavailable_banner(string $label = 'Database unreachable'): strin
 {
     global $dtSettingsLive;
     if ($dtSettingsLive === false) {
-        return '<p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">⚠ '
+        return '<p style="font-size:11.5px; color:#B45309; padding:0 18px 12px;">'
             . htmlspecialchars($label)
             . ' — values shown are defaults and cannot be saved right now.</p>';
     }

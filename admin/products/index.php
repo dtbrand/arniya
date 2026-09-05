@@ -400,7 +400,7 @@ $active_subnav = "";
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
                     <div style="position:relative; display:inline-flex; align-items:center;">
                         <input type="text" id="wpSearchInput" class="wp-search-input" placeholder="Search products, SKUs..." style="height:28px; padding-left:10px; padding-right:22px; width:180px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpProducts(this.value); toggleSearchClearBtn(this.value)">
-                        <span id="wpSearchClearBtn" onclick="clearWpSearch()" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
+                        <span id="wpSearchClearBtn" onclick="clearWpSearch()" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; display:none; align-items:center; justify-content:center;" title="Clear search"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                     </div>
                     <button type="button" class="dt-btn-action-sm gold" onclick="searchWpProducts(document.getElementById('wpSearchInput').value)" style="height:28px; font-size:11px; padding:0 10px;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -428,7 +428,7 @@ $active_subnav = "";
                                 <th style="padding:8px 8px;">Categories</th>
                                 <th style="padding:8px 8px;">Brand</th>
                                 <th style="padding:8px 8px;">Rating</th>
-                                <th style="text-align: center; width:40px; padding:8px 6px;">★</th>
+                                <th style="text-align: center; width:40px; padding:8px 6px;" title="Featured"><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></th>
                                 <th style="padding:8px 10px;">Date</th>
                             </tr>
                         </thead>
@@ -513,9 +513,9 @@ $active_subnav = "";
                                     </td>
                                     <td style="padding:8px 8px;"><a href="/admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;"><?= htmlspecialchars($catName) ?></a></td>
                                     <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
-                                    <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;"><?= number_format($rating, 1) ?> ★</span> <span style="color:#646970; font-size:10.5px;">(<?= $revCount ?>)</span></td>
+                                    <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700; display:inline-flex; align-items:center; gap:2px;"><span><?= number_format($rating, 1) ?></span><svg width="10" height="10" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span style="color:#646970; font-size:10.5px;">(<?= $revCount ?>)</span></td>
                                     <td style="text-align: center; padding:8px 6px;">
-                                        <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, '<?= $rowId ?>', '<?= addslashes($p['title']) ?>')">★</button>
+                                        <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, '<?= $rowId ?>', '<?= addslashes($p['title']) ?>')" style="display:inline-flex; align-items:center; justify-content:center; padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="#8A681F" stroke-width="1.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
                                     </td>
                                     <td style="padding:8px 10px; font-size:11px;">
                                         <span class="prod-status-text" style="color:<?= ($statusText === 'Draft') ? '#64748B' : '#15803D' ?>; font-weight:700;"><?= $statusText ?></span><br>
@@ -595,7 +595,7 @@ $active_subnav = "";
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 <span id="bulkEditModalTitle">Bulk Quick Edit</span>
             </div>
-            <button type="button" class="dt-modal-close" onclick="closeBulkEditModal()">✕</button>
+            <button type="button" class="dt-modal-close" onclick="closeBulkEditModal()" aria-label="Close" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         <div class="dt-modal-body">
             <div style="font-size:12px; color:#50575e; background:#FAF5E8; padding:8px 10px; border-radius:4px; border:1px solid #D4AF37;">
@@ -904,7 +904,6 @@ function toggleFeaturedProduct(btn, rowId, productName) {
 
     if (isCurrentlyActive) {
         btn.classList.remove('active');
-        btn.textContent = '★';
         btn.style.color = '#c3c4c7';
         if (row) {
             row.setAttribute('data-featured', '0');
@@ -912,7 +911,6 @@ function toggleFeaturedProduct(btn, rowId, productName) {
         }
     } else {
         btn.classList.add('active');
-        btn.textContent = '★';
         btn.style.color = '#D4AF37';
         if (row) {
             row.setAttribute('data-featured', '1');
@@ -933,12 +931,12 @@ function toggleFeaturedProduct(btn, rowId, productName) {
     .then(res => res.json())
     .then(data => {
         if (typeof window.showToast === 'function') {
-            window.showToast(isFeatured ? `🌟 "${productName}" marked as Featured in database!` : `"${productName}" removed from Featured`);
+            window.showToast(isFeatured ? `"${productName}" marked as Featured in database!` : `"${productName}" removed from Featured`);
         }
     })
     .catch(err => {
         if (typeof window.showToast === 'function') {
-            window.showToast(isFeatured ? `🌟 "${productName}" marked as Featured!` : `"${productName}" removed from Featured`);
+            window.showToast(isFeatured ? `"${productName}" marked as Featured!` : `"${productName}" removed from Featured`);
         }
     });
 }
@@ -956,12 +954,12 @@ function handleWpBulkActionBottom() {
 
 function processBulkAction(action) {
     if (!action) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please select a bulk action');
+        if (typeof window.showToast === 'function') window.showToast('Please select a bulk action');
         return;
     }
     const selected = document.querySelectorAll('.wp-row-check:checked');
     if (selected.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one product row');
+        if (typeof window.showToast === 'function') window.showToast('Select at least one product row');
         return;
     }
 
@@ -1003,16 +1001,16 @@ function processBulkAction(action) {
             if (typeof window.showToast === 'function') {
                 if (data && data.success) {
                     window.showToast(makeFeatured
-                        ? `🌟 Marked ${ids.length} product(s) as Featured in database!`
+                        ? `Marked ${ids.length} product(s) as Featured in database!`
                         : `Removed ${ids.length} product(s) from Featured in database.`);
                 } else {
-                    window.showToast('⚠️ Could not save featured status. Please retry.');
+                    window.showToast('Could not save featured status. Please retry.');
                 }
             }
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast('⚠️ Could not save featured status. Please retry.');
+                window.showToast('Could not save featured status. Please retry.');
             }
         });
     }
@@ -1039,7 +1037,7 @@ function processBulkAction(action) {
                 }
             });
             if (typeof window.showToast === 'function') {
-                window.showToast(`🗑️ Permanently deleted ${ids.length} product(s) from database.`);
+                window.showToast(`Permanently deleted ${ids.length} product(s) from database.`);
             }
         })
         .catch(err => {
@@ -1100,7 +1098,7 @@ function saveBulkEdit() {
     .then(data => {
         closeBulkEditModal();
         if (typeof window.showToast === 'function') {
-            window.showToast(`✨ Bulk updated ${ids.length} products in live database!`);
+            window.showToast(`Bulk updated ${ids.length} products in live database!`);
         }
         setTimeout(() => window.location.reload(), 400);
     })
@@ -1113,7 +1111,7 @@ function saveBulkEdit() {
 function duplicateProductRow(rowId) {
     const prodId = rowId.replace('row-prod-', '');
     if (typeof window.showToast === 'function') {
-        window.showToast('📋 Duplicating product in database...');
+        window.showToast('Duplicating product in database...');
     }
 
     fetch('/api/products.php', {
@@ -1125,7 +1123,7 @@ function duplicateProductRow(rowId) {
     .then(data => {
         if (data.success) {
             if (typeof window.showToast === 'function') {
-                window.showToast('✨ Product duplicated successfully in live database!');
+                window.showToast('Product duplicated successfully in live database!');
             }
             setTimeout(() => {
                 window.location.reload();
@@ -1162,7 +1160,7 @@ function trashProductRow(rowId, productName) {
             setTimeout(() => {
                 row.remove();
                 if (typeof window.showToast === 'function') {
-                    window.showToast('🗑️ "' + productName + '" permanently deleted from database.');
+                    window.showToast('"' + productName + '" permanently deleted from database.');
                 }
             }, 250);
         }
@@ -1174,9 +1172,9 @@ function trashProductRow(rowId, productName) {
 
 function shareProductWhatsApp(productName, sku, wholesaleRate) {
     const message = encodeURIComponent(`*DT BRAND'S & JAI HANUMAN TEX — WHOLESALE INQUIRY*\n\n` +
-        `📦 *Product:* ${productName}\n` +
-        `🏷️ *SKU:* ${sku}\n` +
-        `💰 *Wholesale Rate:* ${wholesaleRate}/pc\n\n` +
+        `*Product:* ${productName}\n` +
+        `*SKU:* ${sku}\n` +
+        `*Wholesale Rate:* Rs. ${wholesaleRate}/pc\n\n` +
         `Please send catalog details and minimum lot MOQ availability.`);
     window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${message}`, '_blank');
 }

@@ -293,9 +293,9 @@ function submitUserModal() {
     var pass = document.getElementById('dtUserPass').value;
     var isEdit = id !== '';
 
-    if (!name) { showToastSafe('⚠️ Name is required'); return; }
-    if (!isEdit && !email) { showToastSafe('⚠️ Email is required'); return; }
-    if (!isEdit && pass.length < 8) { showToastSafe('⚠️ Password must be at least 8 characters'); return; }
+    if (!name) { showToastSafe('Name is required'); return; }
+    if (!isEdit && !email) { showToastSafe('Email is required'); return; }
+    if (!isEdit && pass.length < 8) { showToastSafe('Password must be at least 8 characters'); return; }
 
     var params = new URLSearchParams();
     params.append('action', isEdit ? 'update' : 'create');
@@ -309,10 +309,10 @@ function submitUserModal() {
     fetch('/api/users.php', { method: 'POST', body: params, credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.success === false) { showToastSafe('⚠️ ' + (d.message || 'Request failed')); return; }
+            if (d && d.success === false) { showToastSafe(d.message || 'Request failed'); return; }
             window.location.reload();
         })
-        .catch(function () { showToastSafe('⚠️ Could not reach the server'); });
+        .catch(function () { showToastSafe('Could not reach the server'); });
 }
 
 function deleteUser(id, name) {
@@ -323,11 +323,11 @@ function deleteUser(id, name) {
     fetch('/api/users.php', { method: 'POST', body: params, credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (d) {
-            if (d && d.success === false) { showToastSafe('⚠️ ' + (d.message || 'Delete failed')); return; }
+            if (d && d.success === false) { showToastSafe(d.message || 'Delete failed'); return; }
             var row = document.getElementById('user-row-' + id);
             if (row) row.remove();
         })
-        .catch(function () { showToastSafe('⚠️ Could not reach the server'); });
+        .catch(function () { showToastSafe('Could not reach the server'); });
 }
 
 function showToastSafe(msg) {

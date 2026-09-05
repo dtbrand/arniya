@@ -172,7 +172,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 <div class="dt-returns-toolbar">
     <div class="dt-returns-toolbar-left">
         <input type="text" id="rmaSearchInput" oninput="window.DT_RETURNS.handleSearch(this.value)" placeholder="Search RMA ID, Order ID, Customer, Courier AWB..." class="dt-order-search-input" style="height:36px; padding-left:12px; width:100%; border-radius:6px; box-sizing:border-box;">
-        <button type="button" onclick="document.getElementById('rmaSearchInput').value=''; window.DT_RETURNS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; font-size:12px;">✕</button>
+        <button type="button" onclick="document.getElementById('rmaSearchInput').value=''; window.DT_RETURNS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; display:flex; align-items:center; justify-content:center;" aria-label="Clear search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
     <div class="dt-returns-toolbar-right">
         <!-- Quick Filter by Type -->
@@ -302,7 +302,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 🪟 1. VIEW RMA DETAILS, EVIDENCE PHOTOS & VIDEO MODAL         -->
+<!-- 1. VIEW RMA DETAILS, EVIDENCE PHOTOS & VIDEO MODAL         -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div id="viewRmaModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_RETURNS.closeRmaModal()">
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:760px; max-height:88vh; height:auto; box-shadow:0 14px 44px rgba(0,0,0,0.35); overflow:hidden; display:flex; flex-direction:column; font-family:'Plus Jakarta Sans', sans-serif;">
@@ -326,7 +326,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 
         <!-- Modal Footer -->
         <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
-            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_RETURNS.closeRmaModal()" style="height:32px; padding:0 14px; font-size:11.5px;">✕ Close</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_RETURNS.closeRmaModal()" style="height:32px; padding:0 14px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close</span></button>
             <div style="display:flex; gap:8px;">
                 <button type="button" id="modalRejectBtn" class="dt-btn dt-btn-danger" style="height:32px; padding:0 12px; font-size:11.5px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -346,7 +346,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 🛑 2. REJECT RMA CLAIM POPUP DRAWER / MODAL                   -->
+<!-- 2. REJECT RMA CLAIM POPUP DRAWER / MODAL                   -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div id="rejectRmaModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:9999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_RETURNS.closeRejectModal()">
     <div style="background:#FFFFFF; border:1.5px solid #FECACA; border-radius:12px; width:95%; max-width:480px; box-shadow:0 14px 40px rgba(0,0,0,0.32); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
@@ -400,7 +400,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 🔍 3. FULL-SCREEN MEDIA & UNBOXING VIDEO LIGHTBOX VIEWER      -->
+<!-- 3. FULL-SCREEN MEDIA & UNBOXING VIDEO LIGHTBOX VIEWER      -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div id="dtMediaLightboxModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(15,12,9,0.88); z-index:99999999; backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_RETURNS.closeLightbox()">
     <div style="background:#181512; border:1.5px solid #D4AF37; border-radius:14px; width:95%; max-width:820px; max-height:92vh; box-shadow:0 20px 60px rgba(0,0,0,0.6); overflow:hidden; display:flex; flex-direction:column; font-family:'Plus Jakarta Sans', sans-serif; color:#FFFFFF;">
@@ -413,7 +413,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <p id="lightboxSubText" style="margin:2px 0 0 0; font-size:11px; color:#A8A29E;">Surat Central Depot Quality Audit</p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_RETURNS.closeLightbox()" style="background:#2A241E; border:1px solid #5A4210; color:#D4AF37; width:28px; height:28px; border-radius:6px; cursor:pointer; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">✕</button>
+            <button type="button" onclick="window.DT_RETURNS.closeLightbox()" style="background:#2A241E; border:1px solid #5A4210; color:#D4AF37; width:28px; height:28px; border-radius:6px; cursor:pointer; font-weight:800; display:flex; align-items:center; justify-content:center;" aria-label="Close Viewer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Lightbox Canvas Body -->
@@ -427,7 +427,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                 Verified Continuous Proof • 100% Intact Seal
             </div>
             <div style="display:flex; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_RETURNS.closeLightbox()" style="height:32px; padding:0 14px; font-size:11.5px;">✕ Close Viewer</button>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_RETURNS.closeLightbox()" style="height:32px; padding:0 14px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close Viewer</span></button>
             </div>
         </div>
     </div>
