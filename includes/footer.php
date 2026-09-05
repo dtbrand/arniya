@@ -358,10 +358,10 @@
                 </div>
 
                 <div class="dt-footer-pay-badges">
-                    <span class="dt-pay-pill">🔒 256-bit SSL</span>
-                    <span class="dt-pay-pill">⚡ UPI</span>
-                    <span class="dt-pay-pill">💳 Cards</span>
-                    <span class="dt-pay-pill">🏛️ NetBanking</span>
+                    <span class="dt-pay-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>256-bit SSL</span>
+                    <span class="dt-pay-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>UPI</span>
+                    <span class="dt-pay-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Cards</span>
+                    <span class="dt-pay-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><line x1="2" y1="20" x2="22" y2="20"></line><line x1="12" y1="2" x2="2" y2="7"></line><line x1="12" y1="2" x2="22" y2="7"></line><line x1="2" y1="7" x2="22" y2="7"></line><line x1="6" y1="10" x2="6" y2="17"></line><line x1="10" y1="10" x2="10" y2="17"></line><line x1="14" y1="10" x2="14" y2="17"></line><line x1="18" y1="10" x2="18" y2="17"></line></svg>NetBanking</span>
                 </div>
             </div>
         </div>

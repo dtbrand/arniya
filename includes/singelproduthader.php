@@ -460,19 +460,19 @@
         <button type="button" class="pdp-ticker-arrow prev" onclick="slidePdpTicker(-1)" aria-label="Previous announcement">‹</button>
         <div class="pdp-ticker-track" id="pdpTickerTrack">
             <div class="pdp-ticker-slide active">
-                <span class="pdp-ticker-icon">✨</span>
+                <span class="pdp-ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                 <span class="pdp-ticker-text"><strong>100% Original Product</strong> • Certified Handloom Silk</span>
             </div>
             <div class="pdp-ticker-slide">
-                <span class="pdp-ticker-icon">⚡</span>
+                <span class="pdp-ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>
                 <span class="pdp-ticker-text"><strong>Fast Express Delivery</strong> • Dispatched in 24–48 Hours</span>
             </div>
             <div class="pdp-ticker-slide">
-                <span class="pdp-ticker-icon">💎</span>
+                <span class="pdp-ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"></path><path d="M2 9h20"></path></svg></span>
                 <span class="pdp-ticker-text"><strong>7-Day Fast Exchange</strong> • Zero-Hassle Doorstep Pickup</span>
             </div>
             <div class="pdp-ticker-slide">
-                <span class="pdp-ticker-icon">🎁</span>
+                <span class="pdp-ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></span>
                 <span class="pdp-ticker-text"><strong>Luxury Gift Box</strong> • Complimentary Royal Packaging</span>
             </div>
         </div>

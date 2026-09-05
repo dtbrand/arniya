@@ -71,7 +71,7 @@ $total_products = count($products);
                 <!-- Slide 1: Festive Sarees Edit -->
                 <div class="hero-banner-slide hero-slide-1" onclick="if(typeof window.filterByBanner==='function') window.filterByBanner('Sarees');">
                     <div class="hero-slide-content">
-                        <span class="hero-slide-tag">✨ FESTIVE SILK UTSAV</span>
+                        <span class="hero-slide-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>FESTIVE SILK UTSAV</span>
                         <h2 class="hero-slide-title">Royal Banarasi & Kanjeevaram</h2>
                         <p class="hero-slide-desc">Flat 25% OFF &bull; Pure Zari Heritage Weaves</p>
                         <button class="hero-slide-btn">Explore Sarees &rarr;</button>
@@ -97,7 +97,7 @@ $total_products = count($products);
                 <!-- Slide 3: Bridal Lehengas & Gowns -->
                 <div class="hero-banner-slide hero-slide-3" onclick="if(typeof window.filterByBanner==='function') window.filterByBanner('Lehengas');">
                     <div class="hero-slide-content">
-                        <span class="hero-slide-tag">👑 ROYAL BRIDAL COUTURE</span>
+                        <span class="hero-slide-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>ROYAL BRIDAL COUTURE</span>
                         <h2 class="hero-slide-title">Velvet & Zardozi Lehengas</h2>
                         <p class="hero-slide-desc">Complimentary Custom Fit Available</p>
                         <button class="hero-slide-btn">View Bridal &rarr;</button>

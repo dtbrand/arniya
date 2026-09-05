@@ -709,7 +709,7 @@
             return downloadDirectProductMedia(item);
         }
 
-        showShareToast('⚡ Packaging ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos into ZIP...');
+        showShareToast('Packaging ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos into ZIP...');
 
         return new Promise(function(resolve) {
             ensureJSZip(function(JSZip) {

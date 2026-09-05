@@ -730,7 +730,7 @@ body.qv-modal-open #dtMobileBottomNav {
 
             <!-- Full Product Description -->
             <div class="pd-desc-box">
-                <h4 class="pd-section-title">✨ Full Product Description</h4>
+                <h4 class="pd-section-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Full Product Description</h4>
                 <p class="pd-full-desc" id="pdFullDesc">
                     Handcrafted luxury ethnic wear from DT Brand's Heritage Collection. Features premium fabric draping, authentic hand-finished weave, and timeless royal elegance.
                 </p>
@@ -762,7 +762,7 @@ body.qv-modal-open #dtMobileBottomNav {
                     </div>
                     <div class="pd-spec-item">
                         <span class="pd-spec-label">Delivery</span>
-                        <span class="pd-spec-val">⚡ Fast Express Delivery Across India</span>
+                        <span class="pd-spec-val"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Fast Express Delivery Across India</span>
                     </div>
                 </div>
             </div>
@@ -771,11 +771,11 @@ body.qv-modal-open #dtMobileBottomNav {
             <div class="pd-assurance-box">
                 <div class="pd-assure-item">
                     <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <span>✨ 100% Original Product</span>
+                    <span>100% Original Product</span>
                 </div>
                 <div class="pd-assure-item">
                     <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                    <span>⚡ Fast Express Delivery & 7-Day Fast Exchange</span>
+                    <span>Fast Express Delivery & 7-Day Fast Exchange</span>
                 </div>
             </div>
         </div>
@@ -989,7 +989,7 @@ body.qv-modal-open #dtMobileBottomNav {
                     '</div>' +
                     '<div class="m-perk-item">' +
                         '<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>' +
-                        '<span>⚡ Fast Express Delivery & Fast Exchange</span>' +
+                        '<span>Fast Express Delivery & Fast Exchange</span>' +
                     '</div>' +
                 '</div>' +
             '</div>';

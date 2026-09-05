@@ -106,7 +106,7 @@ $total_products = count($products);
                         </div>
                         <div class="coyu-video-overlay"></div>
                         <div class="coyu-slide-content">
-                            <span class="coyu-slide-badge">✨ NEW ARRIVALS 2026</span>
+                            <span class="coyu-slide-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>NEW ARRIVALS 2026</span>
                             <h1 class="coyu-slide-slogan">Curated. Fresh. Always on Trend.</h1>
                             <p class="coyu-slide-sub">Direct Surat Mill Weaves • Pure Silk, Handloom Korvai & Festive Craftsmanship</p>
                             <div class="coyu-slide-cta-row">
@@ -132,7 +132,7 @@ $total_products = count($products);
                         </div>
                         <div class="coyu-video-overlay"></div>
                         <div class="coyu-slide-content">
-                            <span class="coyu-slide-badge">⚡ FACTORY DIRECT B2B</span>
+                            <span class="coyu-slide-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>FACTORY DIRECT B2B</span>
                             <h2 class="coyu-slide-slogan">Surat Factory Rates. Zero Middlemen.</h2>
                             <p class="coyu-slide-sub">Wholesale Single Saree & Bulk Booking • Resell with 40%+ Profit Margins</p>
                             <div class="coyu-slide-cta-row">
@@ -240,7 +240,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-section-header home-cat-section-header">
                 <div>
-                    <span class="home-section-tag">✨ CURATED ETHNIC COLLECTIONS</span>
+                    <span class="home-section-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>CURATED ETHNIC COLLECTIONS</span>
                     <h2 class="home-section-title">Shop By Category</h2>
                 </div>
                 <div class="home-cat-header-actions">
@@ -289,7 +289,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-section-header home-trending-section-header">
                 <div>
-                    <span class="home-section-tag trending-tag">🔥 HOTTEST PICKS THIS WEEK</span>
+                    <span class="home-section-tag trending-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>HOTTEST PICKS THIS WEEK</span>
                     <h2 class="home-section-title">Trending Now</h2>
                 </div>
                 <div class="home-trending-header-actions">
@@ -393,7 +393,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-deal-header">
                 <div class="deal-header-left">
-                    <span class="home-section-tag deal-tag">⚡ LIMITED TIME FLASH SALE</span>
+                    <span class="home-section-tag deal-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>LIMITED TIME FLASH SALE</span>
                     <h2 class="home-section-title">Deal of the Day — Up to 30% OFF</h2>
                 </div>
                 <div class="deal-header-actions">
@@ -439,7 +439,7 @@ $total_products = count($products);
                         </div>
                         <div class="deal-stock-bar-wrap">
                             <div class="deal-stock-bar" style="width: <?= min(90, max(30, ($p['in_stock'] % 70) + 25)) ?>%;"></div>
-                            <span class="deal-stock-text">🔥 Only <?= max(3, $p['in_stock'] % 12) ?> sets left</span>
+                            <span class="deal-stock-text"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>Only <?= max(3, $p['in_stock'] % 12) ?> sets left</span>
                         </div>
                         <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); }">
                             <span>Claim Deal</span>
@@ -457,7 +457,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-section-header">
                 <div>
-                    <span class="home-section-tag">🌟 EDITORIAL CURATIONS</span>
+                    <span class="home-section-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>EDITORIAL CURATIONS</span>
                     <h2 class="home-section-title">Signature Collections</h2>
                 </div>
             </div>
@@ -497,7 +497,7 @@ $total_products = count($products);
             <div class="rec-section-header">
                 <div class="rec-header-titles">
                     <div class="rec-ai-badge-wrap">
-                        <span class="rec-ai-badge"><span class="rec-sparkle">✨</span> AI PERSONALIZED PICKS</span>
+                        <span class="rec-ai-badge"><span class="rec-sparkle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> AI PERSONALIZED PICKS</span>
                         <span class="rec-match-pill">● 98% Match Rate</span>
                     </div>
                     <h2 class="home-section-title rec-title" id="recommendedTitle">Recommended For You</h2>
@@ -518,9 +518,9 @@ $total_products = count($products);
 
             <!-- Category Filter Pills Bar -->
             <div class="rec-filter-pills-bar">
-                <button type="button" class="rec-filter-pill active" onclick="window.filterRecommendedCategory('All', this)">✨ All Picks (<?= count($products) ?>)</button>
+                <button type="button" class="rec-filter-pill active" onclick="window.filterRecommendedCategory('All', this)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>All Picks (<?= count($products) ?>)</button>
                 <?php foreach ($categoriesList as $catItem): ?>
-                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('<?= htmlspecialchars($catItem['name']) ?>', this)">👑 <?= htmlspecialchars($catItem['name']) ?></button>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('<?= htmlspecialchars($catItem['name']) ?>', this)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg><?= htmlspecialchars($catItem['name']) ?></button>
                 <?php endforeach; ?>
             </div>
 
@@ -547,7 +547,7 @@ $total_products = count($products);
                             
                             <!-- AI Match & Discount Badges -->
                             <div class="rec-badges-top">
-                                <span class="rec-badge-ai">✨ <?= $aiScore ?>% Match</span>
+                                <span class="rec-badge-ai"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><?= $aiScore ?>% Match</span>
                                 <span class="rec-badge-disc"><?= $disc ?>% OFF</span>
                             </div>
 
@@ -578,7 +578,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-section-header">
                 <div>
-                    <span class="home-section-tag">🕒 BROWSING HISTORY</span>
+                    <span class="home-section-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>BROWSING HISTORY</span>
                     <h2 class="home-section-title">Recently Viewed Products</h2>
                 </div>
                 <div class="home-section-actions" style="display:flex; align-items:center; gap:12px;">
@@ -622,13 +622,13 @@ $total_products = count($products);
                     <!-- Tab Filter Navigation -->
                     <div class="reviews-tab-nav">
                         <button type="button" class="rev-tab-pill active" onclick="switchReviewTab('customers', this)">
-                            <span>🏪 Retail Boutiques & Shops</span>
+                            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Retail Boutiques & Shops</span>
                         </button>
                         <button type="button" class="rev-tab-pill" onclick="switchReviewTab('resellers', this)">
-                            <span>⚡ Reseller Partners</span>
+                            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Reseller Partners</span>
                         </button>
                         <button type="button" class="rev-tab-pill" onclick="switchReviewTab('wholesale', this)">
-                            <span>🏭 Wholesale Boutiques</span>
+                            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4L2 8z"></path></svg>Wholesale Boutiques</span>
                         </button>
                     </div>
 
@@ -671,7 +671,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-gold">PS</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Pooja Sharma</h5>
-                                <span class="rev-location">📍 Mumbai • Owner, Pooja Designer Home Boutique</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Mumbai • Owner, Pooja Designer Home Boutique</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -704,7 +704,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-amber">AP</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Ananya Patel</h5>
-                                <span class="rev-location">📍 Ahmedabad • Owner, Ananya Ethnic Wear Shop</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Ahmedabad • Owner, Ananya Ethnic Wear Shop</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -737,7 +737,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-emerald">RK</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Ritu Kapoor</h5>
-                                <span class="rev-location">📍 Delhi • Founder, Ritu Bridal Studio & Boutique</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Delhi • Founder, Ritu Bridal Studio & Boutique</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -770,7 +770,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-indigo">MS</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Meenakshi Sundaram</h5>
-                                <span class="rev-location">📍 Chennai • Owner, Sri Meenakshi Retail Silks</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Chennai • Owner, Sri Meenakshi Retail Silks</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -803,7 +803,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-purple">SM</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Shreya Mukherjee</h5>
-                                <span class="rev-location">📍 Kolkata • Owner, Shreya Boutique & Studio</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Kolkata • Owner, Shreya Boutique & Studio</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -839,7 +839,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-emerald">SM</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Sunita Mehta</h5>
-                                <span class="rev-location">📍 Pune • WhatsApp Reseller (₹48k/mo)</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Pune • WhatsApp Reseller (₹48k/mo)</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -872,7 +872,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-rose">KG</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Kavita Gupta</h5>
-                                <span class="rev-location">📍 Jaipur • Instagram Boutique Owner</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Jaipur • Instagram Boutique Owner</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -905,7 +905,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-cyan">DN</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Deepa Nair</h5>
-                                <span class="rev-location">📍 Kochi • Verified Reseller</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Kochi • Verified Reseller</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -938,7 +938,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-gold">PV</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Preeti Verma</h5>
-                                <span class="rev-location">📍 Lucknow • Social Seller</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Lucknow • Social Seller</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -974,7 +974,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-indigo">VR</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Venkatesh Rao</h5>
-                                <span class="rev-location">📍 Hyderabad • Retail Showroom Chain</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Hyderabad • Retail Showroom Chain</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -1007,7 +1007,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-amber">MS</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Mukesh Shah</h5>
-                                <span class="rev-location">📍 Surat & Kolkata • Textile Trader</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Surat & Kolkata • Textile Trader</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
@@ -1040,7 +1040,7 @@ $total_products = count($products);
                             <div class="rev-avatar rev-av-purple">SD</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Sangeeta Deshmukh</h5>
-                                <span class="rev-location">📍 Nagpur, Maharashtra • Boutique Owner</span>
+                                <span class="rev-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Nagpur, Maharashtra • Boutique Owner</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>

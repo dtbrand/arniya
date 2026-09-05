@@ -923,7 +923,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                     <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openReelsModal==='function') window.openReelsModal(0);" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="4"></rect><line x1="2" y1="8" x2="22" y2="8"></line><polygon points="10 12 15 15 10 18" fill="currentColor"></polygon></svg>
                         <span>Video Reels Stream</span>
-                        <span class="home-menu-link-badge hot">🔥 HOT</span>
+                        <span class="home-menu-link-badge hot"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>HOT</span>
                     </a>
                 </li>
             </ul>
@@ -1055,7 +1055,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                     <polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>
                 </svg>
                 <!-- Animated Glowing 🔥 HOT Badge -->
-                <span class="smart-hero-hot-badge">🔥 HOT</span>
+                <span class="smart-hero-hot-badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>HOT</span>
             </div>
             <span class="smart-nav-hero-label">Reels</span>
         </a>

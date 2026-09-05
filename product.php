@@ -446,7 +446,7 @@ function pdp_relative_date(string $ts): string
                 <!-- B2B Wholesale Exclusive Lock Card for Guest / Customer / Reseller -->
                 <div class="pdp-fullset-lock-card" style="background:#FAF8F2; border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; margin:14px 0;">
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                        <span style="font-size:18px;">👑</span>
+                        <span style="display:inline-flex; align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg></span>
                         <strong style="font-size:13px; color:#5A4210; text-transform:uppercase; letter-spacing:0.5px;">B2B Trade Full Set Exclusive</strong>
                     </div>
                     <p style="font-size:12px; color:#64748B; margin:0 0 12px; line-height:1.5;">
@@ -714,7 +714,7 @@ function pdp_relative_date(string $ts): string
                                     <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                                 </div>
                                 <div class="pdp-trust-mini-text">
-                                    <h5>⚡ Fast Express Priority Dispatch</h5>
+                                    <h5><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Fast Express Priority Dispatch</h5>
                                     <p>Dispatched within 24–48 hours with live SMS/WhatsApp shipment tracking across 19,000+ Indian pincodes.</p>
                                 </div>
                             </div>
@@ -723,7 +723,7 @@ function pdp_relative_date(string $ts): string
                                     <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                                 </div>
                                 <div class="pdp-trust-mini-text">
-                                    <h5>💎 7-Day Fast Doorstep Exchange</h5>
+                                    <h5><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M6 3h12l4 6-10 12L2 9z"></path><path d="M2 9h20"></path></svg>7-Day Fast Doorstep Exchange</h5>
                                     <p>Zero-hassle size or fit exchanges arranged instantly with doorstep pickup via our dedicated WhatsApp concierge.</p>
                                 </div>
                             </div>
@@ -738,7 +738,7 @@ function pdp_relative_date(string $ts): string
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
         <div class="pdp-section-header-centered">
-            <span class="pdp-section-badge-pill">✨ BOUTIQUE CLIENT SOCIAL PROOF</span>
+            <span class="pdp-section-badge-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>BOUTIQUE CLIENT SOCIAL PROOF</span>
             <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
             <p class="pdp-section-subtitle">Real feedback &amp; styling impressions from our boutique clientele</p>
         </div>
@@ -843,7 +843,7 @@ function pdp_relative_date(string $ts): string
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             Verified Boutique Purchase
                         </span>
-                        <button type="button" class="pdp-rc-helpful-btn" onclick="this.classList.toggle('voted'); this.innerHTML = this.classList.contains('voted') ? '👍 Helpful (1)' : '👍 Helpful';">
+                        <button type="button" class="pdp-rc-helpful-btn" onclick="this.classList.toggle('voted'); this.innerHTML = this.classList.contains('voted') ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> Helpful (1)' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> Helpful';">
                             👍 Helpful
                         </button>
                     </div>
@@ -1140,7 +1140,7 @@ function pdp_relative_date(string $ts): string
                     <div class="pdp-wa-input-group">
                         <label class="pdp-wa-label" for="pdpWaPhone">WhatsApp Mobile Number <span class="required">*</span></label>
                         <div class="pdp-wa-phone-wrap">
-                            <div class="pdp-wa-phone-prefix">🇮🇳 +91</div>
+                            <div class="pdp-wa-phone-prefix">+91</div>
                             <input type="text" id="pdpWaPhone" required placeholder="70463 63528" class="pdp-wa-input pdp-wa-phone-input" autocomplete="tel" />
                         </div>
                     </div>

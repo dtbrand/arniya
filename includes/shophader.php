@@ -1917,7 +1917,7 @@ window.closeWishlistDrawer = function() {
 
         // 1. Trending searches
         if (data.trending && data.trending.length > 0) {
-            html += '<div class="dt-sugg-section-header">🔥 Trending in Ethnic Wear</div>';
+            html += '<div class="dt-sugg-section-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>Trending in Ethnic Wear</div>';
             html += '<div class="dt-sugg-trending-wrap">';
             data.trending.forEach(function (tag) {
                 html += '<a href="javascript:void(0)" class="dt-sugg-tag" data-tag="' + tag + '">' +
@@ -1929,7 +1929,7 @@ window.closeWishlistDrawer = function() {
 
         // 2. Matching Categories
         if (data.categories && data.categories.length > 0) {
-            html += '<div class="dt-sugg-section-header">📁 Matching Categories</div>';
+            html += '<div class="dt-sugg-section-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>Matching Categories</div>';
             data.categories.forEach(function (c) {
                 var cName = c.name;
                 var highlightedName = highlightKeywords(cName, q);
@@ -1945,7 +1945,7 @@ window.closeWishlistDrawer = function() {
 
         // 3. Matching Live Products
         if (data.products && data.products.length > 0) {
-            html += '<div class="dt-sugg-section-header">💎 ' + (q ? 'Matching Ensembles (' + (data.total || data.products.length) + ')' : 'Popular Handpicked Ensembles') + '</div>';
+            html += '<div class="dt-sugg-section-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:5px;"><path d="M6 3h12l4 6-10 12L2 9z"></path><path d="M2 9h20"></path></svg>' + (q ? 'Matching Ensembles (' + (data.total || data.products.length) + ')' : 'Popular Handpicked Ensembles') + '</div>';
 
             if (isMobile) {
                 data.products.forEach(function (p) {
