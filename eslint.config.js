@@ -2,6 +2,18 @@ import js from "@eslint/js";
 import globals from "globals";
 
 export default [
+  {
+    ignores: [
+      "node_modules/**",
+      "vendor/**",
+      "scratch/**",
+      ".uix/**",
+      "playwright-report/**",
+      "test-results/**",
+      "**/*.min.js",
+      "**/Asset/js/**",
+    ],
+  },
   js.configs.recommended,
   {
     languageOptions: {
@@ -24,13 +36,5 @@ export default [
       "no-undef": "warn",
       "no-empty": "warn",
     },
-    ignores: [
-      "node_modules/**",
-      "vendor/**",
-      "scratch/**",
-      ".uix/**",
-      "playwright-report/**",
-      "test-results/**",
-    ],
   },
 ];
