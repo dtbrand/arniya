@@ -632,7 +632,7 @@ $dashPayload = [
                 </li>
             </ul>
             <div style="font-size:0.75rem; color:#8A681F; font-weight:700; white-space:nowrap; display:flex; align-items:center; gap:6px;">
-                <span>★ Master Admin Console</span>
+                <span>Master Admin Console</span>
             </div>
         </nav>
 
@@ -644,7 +644,7 @@ $dashPayload = [
             ════════════════════════════════════════════════════════════ -->
             <section class="adm-tab-panel active" id="tab-overview">
                 <!-- ══════════════════════════════════════════════════════════════
-                     👑 NEXT-LEVEL MODERN MOBILE APP DASHBOARD UI SUITE
+                     MASTER MOBILE APP DASHBOARD UI SUITE
                 ══════════════════════════════════════════════════════════════ -->
                 <div class="adm-mobile-dashboard-suite">
                     <!-- A. Modern App Hero Greeting Card -->
@@ -938,7 +938,7 @@ $dashPayload = [
                 </section>
 
                 <!-- ══════════════════════════════════════════════════════════════
-                     👑 DESKTOP REFERENCE DASHBOARD UI SUITE (EXACT REFERENCE MATCH)
+                     MASTER DESKTOP DASHBOARD UI SUITE
                 ══════════════════════════════════════════════════════════════ -->
                 <div class="adm-desktop-ref-suite">
                     <!-- 1. 5-Card Top Hero Metric Row -->
@@ -1118,19 +1118,19 @@ $dashPayload = [
                                                 $itemInfo  = $orderItemSummary[(int)($ord['id'] ?? 0)] ?? null;
 
                                                 $payPillMap = [
-                                                    'paid'     => ['emerald', '✓ Paid'],
-                                                    'pending'  => ['purple',  '● Awaiting payment'],
-                                                    'credit'   => ['rose',    '● On credit'],
-                                                    'refunded' => ['danger',  '↩ Refunded'],
+                                                    'paid'     => ['emerald', 'Paid'],
+                                                    'pending'  => ['purple',  'Awaiting Payment'],
+                                                    'credit'   => ['rose',    'On Credit'],
+                                                    'refunded' => ['danger',  'Refunded'],
                                                 ];
                                                 [$payPillClass, $payPillText] = $payPillMap[$payStatus] ?? ['purple', ucfirst($payStatus)];
 
                                                 $fulPillMap = [
-                                                    'unfulfilled' => ['purple',  '● Unfulfilled'],
-                                                    'processing'  => ['purple',  '● Processing'],
-                                                    'dispatched'  => ['rose',    '● Dispatched'],
-                                                    'delivered'   => ['emerald', '✓ Delivered'],
-                                                    'cancelled'   => ['danger',  '✕ Cancelled'],
+                                                    'unfulfilled' => ['purple',  'Unfulfilled'],
+                                                    'processing'  => ['purple',  'Processing'],
+                                                    'dispatched'  => ['rose',    'Dispatched'],
+                                                    'delivered'   => ['emerald', 'Delivered'],
+                                                    'cancelled'   => ['danger',  'Cancelled'],
                                                 ];
                                                 [$fulPillClass, $fulPillText] = $fulPillMap[$fulStatus] ?? ['purple', ucfirst($fulStatus)];
 
@@ -1429,7 +1429,7 @@ $dashPayload = [
                 <div class="adm-card" style="margin-bottom:24px;">
                     <div class="adm-card-head">
                         <h3 class="adm-card-title">
-                            <span>📦 Order Status Fulfillment Pipeline</span>
+                            <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Order Status Fulfillment Pipeline</span>
                         </h3>
                         <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="switchAdmTab('orders')">All Orders ↗</button>
                     </div>
@@ -1737,11 +1737,11 @@ $dashPayload = [
                     <div class="adm-page-actions">
                         <a href="/admin/products/imports/" class="adm-btn-secondary">
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            <span>📥 Import Wizard</span>
+                            <span>Import Wizard</span>
                         </a>
                         <button class="adm-btn-secondary" onclick="window.exportCurrentTable('products_catalog')">
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            <span>📤 Export CSV</span>
+                            <span>Export CSV</span>
                         </button>
                         <a href="/admin/products/add.php" class="adm-btn-primary">
                             <svg viewBox="0 0 24 24" width="13" height="13" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -1862,7 +1862,7 @@ $dashPayload = [
                     <div class="adm-table-toolbar">
                         <div class="adm-search-box" style="max-width:320px;">
                             <input type="text" id="admProdSearch" class="adm-search-input" placeholder="Search product name, SKU, fabric..." style="padding-left:12px;" oninput="if(typeof filterProducts==='function') filterProducts();">
-                            <button type="button" id="admProdSearchClear" class="adm-search-clear" onclick="document.getElementById('admProdSearch').value=''; if(typeof filterProducts==='function') filterProducts();">✕</button>
+                            <button type="button" id="admProdSearchClear" class="adm-search-clear" onclick="document.getElementById('admProdSearch').value=''; if(typeof filterProducts==='function') filterProducts();" aria-label="Clear Search"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
 
                         <div class="adm-table-filters">
@@ -1956,7 +1956,7 @@ $dashPayload = [
                     <div class="adm-table-toolbar">
                         <div class="adm-search-box" style="max-width:320px;">
                             <input type="text" id="admOrderSearch" class="adm-search-input" placeholder="Search order ID, customer, phone..." style="padding-left:12px;">
-                            <button type="button" id="admOrderSearchClear" class="adm-search-clear">✕</button>
+                            <button type="button" id="admOrderSearchClear" class="adm-search-clear" aria-label="Clear Search"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
 
                         <div class="adm-table-filters">
@@ -2041,9 +2041,9 @@ $dashPayload = [
                             <div class="adm-form-group">
                                 <label class="adm-form-label">Select Campaign Template</label>
                                 <select id="admBroadcastTemplate" class="adm-form-select">
-                                    <option value="catalogue">✨ Luxury Ethnic Fresh Catalogue 2026</option>
-                                    <option value="festive">🔥 Festive Bonanza — 40% Off Wholesale</option>
-                                    <option value="wholesale_drop">💎 Bulk Lot Price Drop Alert</option>
+                                    <option value="catalogue">Luxury Ethnic Fresh Catalogue 2026</option>
+                                    <option value="festive">Festive Bonanza — 40% Off Wholesale</option>
+                                    <option value="wholesale_drop">Bulk Lot Price Drop Alert</option>
                                 </select>
                             </div>
 
@@ -2059,12 +2059,12 @@ $dashPayload = [
 
                             <div class="adm-form-group">
                                 <label class="adm-form-label">Message Content (Dynamic Variables Supported)</label>
-                                <textarea id="admBroadcastMessage" class="adm-form-textarea" rows="4">✨ *DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE* ✨
+                                <textarea id="admBroadcastMessage" class="adm-form-textarea" rows="4">*DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE*
 
 Dear {Name},
 Explore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.
 
-👉 *View & Order Online:* https://jaihanumantex.in/shop
+*View & Order Online:* https://jaihanumantex.in/shop
 
 _Special 15% VIP Discount Applied!_</textarea>
                             </div>
@@ -2073,10 +2073,10 @@ _Special 15% VIP Discount Applied!_</textarea>
                             <div class="adm-form-group">
                                 <label class="adm-form-label">Live WhatsApp Chat Preview</label>
                                 <div class="adm-wa-preview-bubble" id="admBroadcastPreview">
-                                    ✨ <strong>DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE</strong> ✨<br><br>
+                                    <strong>DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE</strong><br><br>
                                     Dear Rajesh Kumar,<br>
                                     Explore our latest 2026 Pure Silk Sarees &amp; Designer Lehengas crafted for premium festive collections.<br><br>
-                                    👉 <strong>View &amp; Order Online:</strong> https://jaihanumantex.in/shop<br><br>
+                                    <strong>View &amp; Order Online:</strong> https://jaihanumantex.in/shop<br><br>
                                     <em>Special 15% VIP Discount Applied!</em>
                                 </div>
                             </div>
@@ -2105,7 +2105,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-table-toolbar">
                         <div class="adm-search-box" style="max-width:320px;">
                             <input type="text" id="admPartnerSearch" class="adm-search-input" placeholder="Search partner name, GST, phone..." style="padding-left:12px;">
-                            <button type="button" id="admPartnerSearchClear" class="adm-search-clear">✕</button>
+                            <button type="button" id="admPartnerSearchClear" class="adm-search-clear" aria-label="Clear Search"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                     </div>
 
@@ -2146,7 +2146,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-table-toolbar">
                         <div class="adm-search-box" style="max-width:320px;">
                             <input type="text" id="admCustomerSearch" class="adm-search-input" placeholder="Search customer name or phone..." style="padding-left:12px;">
-                            <button type="button" id="admCustomerSearchClear" class="adm-search-clear">✕</button>
+                            <button type="button" id="admCustomerSearchClear" class="adm-search-clear" aria-label="Clear Search"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                     </div>
 
@@ -2220,7 +2220,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-kpi-card">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Taxable Turnover</span>
-                            <div class="adm-kpi-icon-box">📊</div>
+                            <div class="adm-kpi-icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
                         </div>
                         <div class="adm-kpi-val">₹38,96,270</div>
                         <div class="adm-kpi-bottom"><span class="adm-kpi-subtext">Current Fiscal Month</span></div>
@@ -2228,7 +2228,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-kpi-card">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total GST Output (5% / 12%)</span>
-                            <div class="adm-kpi-icon-box green">📜</div>
+                            <div class="adm-kpi-icon-box green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
                         </div>
                         <div class="adm-kpi-val">₹2,89,630</div>
                         <div class="adm-kpi-bottom"><span class="adm-kpi-subtext">CGST: ₹1.44L | SGST: ₹1.44L</span></div>
@@ -2236,7 +2236,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-kpi-card">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Integrated Tax (IGST)</span>
-                            <div class="adm-kpi-icon-box blue">🌐</div>
+                            <div class="adm-kpi-icon-box blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
                         </div>
                         <div class="adm-kpi-val">₹1,00,000</div>
                         <div class="adm-kpi-bottom"><span class="adm-kpi-subtext">Inter-state Consignments</span></div>
@@ -2307,7 +2307,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                 <div class="adm-charts-grid">
                     <!-- Business Profile Info -->
                     <div class="adm-card">
-                        <h3 class="adm-card-title">🏢 Brand & Legal Profile</h3>
+                        <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line><line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line><line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line><line x1="9" y1="18" x2="9" y2="18.01"></line><line x1="15" y1="18" x2="15" y2="18.01"></line></svg>Brand &amp; Legal Profile</span></h3>
                         <form onsubmit="event.preventDefault(); window.showToast('Store settings saved successfully!');" style="display:flex; flex-direction:column; gap:12px;">
                             <div class="adm-form-grid">
                                 <div class="adm-form-group">
@@ -2339,7 +2339,7 @@ _Special 15% VIP Discount Applied!_</textarea>
 
                     <!-- Logistics & WhatsApp Gateways -->
                     <div class="adm-card">
-                        <h3 class="adm-card-title">🚚 Courier & WhatsApp Gateways</h3>
+                        <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>Courier &amp; WhatsApp Gateways</span></h3>
                         <div style="display:flex; flex-direction:column; gap:14px; font-size:0.82rem;">
                             <div style="padding:10px; background:#FAF5E8; border:1px solid rgba(212,175,55,0.3); border-radius:8px;">
                                 <strong style="color:#8A681F;">WhatsApp Cloud API Status</strong>
@@ -2372,8 +2372,8 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Configure wholesale MOQ volume tiers, reseller commission margins, and festive discount coupons.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/pricing/discounts.php" class="adm-btn-secondary">🏷️ Manage Coupons</a>
-                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('pricing_matrix')">📤 Export Pricing CSV</button>
+                        <a href="/admin/pricing/discounts.php" class="adm-btn-secondary" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Manage Coupons</span></a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('pricing_matrix')" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><span>Export Pricing CSV</span></button>
                         <button class="adm-btn-primary" onclick="window.showToast('Add Price Tier Rule...')">+ Add Tier Rule</button>
                     </div>
                 </div>
@@ -2390,22 +2390,22 @@ _Special 15% VIP Discount Applied!_</textarea>
                 <!-- 4 Pricing Summary Cards -->
                 <div class="adm-kpi-grid" style="margin-bottom:20px;">
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Price Tiers</span><div class="adm-kpi-icon-box gold">🏷️</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Price Tiers</span><div class="adm-kpi-icon-box gold"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div></div>
                         <div class="adm-kpi-val">4 Tiers</div>
                         <div class="adm-kpi-bottom"><span class="adm-badge gold">B2C, Reseller, Wholesale, Bulk</span></div>
                     </div>
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">Average Wholesale Margin</span><div class="adm-kpi-icon-box green">📈</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Average Wholesale Margin</span><div class="adm-kpi-icon-box green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div></div>
                         <div class="adm-kpi-val">34.8%</div>
                         <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Healthy B2B Spread</span></div>
                     </div>
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Coupons</span><div class="adm-kpi-icon-box purple">🎁</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Coupons</span><div class="adm-kpi-icon-box purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line></svg></div></div>
                         <div class="adm-kpi-val">6 Codes</div>
                         <div class="adm-kpi-bottom"><span class="adm-badge success">FESTIVE2026 Live</span></div>
                     </div>
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">GST Tax Slabs</span><div class="adm-kpi-icon-box blue">🏛️</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">GST Tax Slabs</span><div class="adm-kpi-icon-box blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line><line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line><line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line><line x1="9" y1="18" x2="9" y2="18.01"></line><line x1="15" y1="18" x2="15" y2="18.01"></line></svg></div></div>
                         <div class="adm-kpi-val">5% &amp; 12%</div>
                         <div class="adm-kpi-bottom"><span class="adm-badge info">HSN 5007 &amp; 6204</span></div>
                     </div>
@@ -2483,18 +2483,18 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
                             <span>Customer Reviews &amp; Social Proof</span>
-                            <span class="adm-badge gold">4.9 ★ Rating</span>
+                            <span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>4.9 Rating</span></span>
                         </h1>
                         <p class="adm-page-subtitle">Moderate customer reviews, pin verified photo reviews to product pages, and respond to inquiries.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/reviews/pending.php" class="adm-btn-secondary">⏳ Pending Moderation (2)</a>
-                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('customer_reviews')">📤 Export Reviews</button>
+                        <a href="/admin/reviews/pending.php" class="adm-btn-secondary" style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Pending Moderation (2)</span></a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('customer_reviews')" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><span>Export Reviews</span></button>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/admin/reviews/" class="adm-prod-pill active"><span>⭐️ All Reviews (342)</span></a>
+                    <a href="/admin/reviews/" class="adm-prod-pill active"><span><svg viewBox="0 0 24 24" width="13" height="13" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>All Reviews (342)</span></a>
                     <a href="/admin/reviews/pending.php" class="adm-prod-pill"><span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Pending (2)</span></a>
                     <a href="/admin/reviews/approved.php" class="adm-prod-pill"><span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>Approved (338)</span></a>
                     <a href="/admin/reviews/rejected.php" class="adm-prod-pill"><span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Rejected (2)</span></a>
@@ -2529,7 +2529,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                     <tr>
                                         <td><strong><?= $rCust ?></strong><br><small style="color:#7A7266;"><?= !empty($rev['verified_buyer']) ? 'Verified Buyer' : 'Customer Review' ?></small></td>
                                         <td><strong><?= $rProd ?></strong><br><small style="color:#8A681F;">SKU: <?= $rSku ?></small></td>
-                                        <td><span style="color:#F59E0B; font-weight:800;">★ <?= $rRating ?></span></td>
+                                        <td><span style="color:#B8860B; font-weight:800; display:inline-flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><?= $rRating ?></span></td>
                                         <td>"<?= $rText ?>"</td>
                                         <td><?= $rDate ?></td>
                                         <td><span class="adm-badge <?= ($rStatus === 'approved' ? 'success' : ($rStatus === 'pending' ? 'warning' : 'danger')) ?>"><?= ucfirst($rStatus) ?></span></td>
@@ -2573,7 +2573,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     </div>
                     <div class="adm-page-actions">
                         <a href="/admin/inventory/stock-in.php" class="adm-btn-primary">+ Stock In (Procurement)</a>
-                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('inventory_stock')">📤 Export Stock</button>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('inventory_stock')" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><span>Export Stock</span></button>
                     </div>
                 </div>
 
@@ -2652,7 +2652,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Manage Delhivery, BlueDart &amp; TCI Freight logistics integrations and dispatch manifests.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/shipping/tracking.php" class="adm-btn-secondary">🔍 Live Tracking</a>
+                        <a href="/admin/shipping/tracking.php" class="adm-btn-secondary" style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Live Tracking</span></a>
                         <button class="adm-btn-primary" onclick="window.showToast('Generate Shipping Manifest...')">+ Create Manifest</button>
                     </div>
                 </div>
@@ -2726,7 +2726,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Track incoming UPI, NetBanking, RTGS transfers, COD remittances, and reseller commission payouts.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('payment_transactions')">📤 Export Ledger</button>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('payment_transactions')" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><span>Export Ledger</span></button>
                     </div>
                 </div>
 
@@ -2796,7 +2796,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Run flash sales, configure festive banner sliders, and distribute WhatsApp promo codes.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/marketing/banners.php" class="adm-btn-secondary">🖼️ Homepage Banners</a>
+                        <a href="/admin/marketing/banners.php" class="adm-btn-secondary" style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span>Homepage Banners</span></a>
                         <a href="/admin/marketing/coupons.php" class="adm-btn-primary">+ Create Coupon</a>
                     </div>
                 </div>
@@ -2856,7 +2856,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Manage homepage hero announcements, brand story, contact address, and legal policies.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/cms/homepage.php" class="adm-btn-primary">✏️ Edit Homepage Content</a>
+                        <a href="/admin/cms/homepage.php" class="adm-btn-primary" style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg><span>Edit Homepage Content</span></a>
                     </div>
                 </div>
 
@@ -2913,7 +2913,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Centralized media asset vault with WebP compression and instant CDN delivery.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/admin/media/upload.php" class="adm-btn-primary">📤 Upload New Media</a>
+                        <a href="/admin/media/upload.php" class="adm-btn-primary" style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><span>Upload New Media</span></a>
                     </div>
                 </div>
 
@@ -3063,7 +3063,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Monitor server response time, MySQL database connections, and create instant backup snapshots.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <button class="adm-btn-primary" onclick="window.showToast('Database Backup Snapshot Created (backup_2026.sql)!')">💾 Backup Database Now</button>
+                        <button class="adm-btn-primary" onclick="window.showToast('Database Backup Snapshot Created (backup_2026.sql)!')" style="display:inline-flex; align-items:center; gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg><span>Backup Database Now</span></button>
                     </div>
                 </div>
 
@@ -3076,17 +3076,17 @@ _Special 15% VIP Discount Applied!_</textarea>
 
                 <div class="adm-kpi-grid">
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">PHP Engine</span><div class="adm-kpi-icon-box purple">🐘</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">PHP Engine</span><div class="adm-kpi-icon-box purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div></div>
                         <div class="adm-kpi-val">PHP 8.2+</div>
                         <div class="adm-kpi-bottom"><span class="adm-badge success">OPcache Enabled</span></div>
                     </div>
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">Database Storage</span><div class="adm-kpi-icon-box blue">🗄️</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Database Storage</span><div class="adm-kpi-icon-box blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div></div>
                         <div class="adm-kpi-val">24.5 MB</div>
                         <div class="adm-kpi-bottom"><span class="adm-badge gold">MySQL InnoDB</span></div>
                     </div>
                     <div class="adm-kpi-card">
-                        <div class="adm-kpi-top"><span class="adm-kpi-label">Server Uptime</span><div class="adm-kpi-icon-box green">⚡</div></div>
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Server Uptime</span><div class="adm-kpi-icon-box green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div></div>
                         <div class="adm-kpi-val">99.98%</div>
                         <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Hostinger Cloud</span></div>
                     </div>
@@ -3108,7 +3108,7 @@ _Special 15% VIP Discount Applied!_</textarea>
     <div class="adm-modal-box">
         <div class="adm-modal-head">
             <h3 class="adm-modal-title" id="admProductModalTitle">Add New Product</h3>
-            <button type="button" class="adm-modal-close-btn" onclick="closeAdmModal('admProductModal')">✕</button>
+            <button type="button" class="adm-modal-close-btn" onclick="closeAdmModal('admProductModal')" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         <form onsubmit="saveProductForm(event)">
             <div class="adm-modal-body">
@@ -3181,7 +3181,7 @@ _Special 15% VIP Discount Applied!_</textarea>
     <div class="adm-modal-box" style="max-width:620px;">
         <div class="adm-modal-head">
             <h3 class="adm-modal-title">Tax Invoice — DT Brand's</h3>
-            <button type="button" class="adm-modal-close-btn" onclick="closeAdmModal('admInvoiceModal')">✕</button>
+            <button type="button" class="adm-modal-close-btn" onclick="closeAdmModal('admInvoiceModal')" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         <div class="adm-modal-body" style="background:#FFFFFF; font-size:0.84rem;">
             <div style="display:flex; justify-content:space-between; border-bottom:1.5px solid #8A681F; padding-bottom:12px;">
@@ -3232,7 +3232,7 @@ _Special 15% VIP Discount Applied!_</textarea>
             </div>
         </div>
         <div class="adm-modal-foot">
-            <button type="button" class="adm-btn-secondary" onclick="window.print()">🖨️ Print Invoice</button>
+            <button type="button" class="adm-btn-secondary" onclick="window.print()" style="display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span>Print Invoice</span></button>
             <button type="button" class="adm-btn-primary" onclick="closeAdmModal('admInvoiceModal')">Close</button>
         </div>
     </div>
