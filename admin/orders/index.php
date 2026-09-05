@@ -77,6 +77,12 @@ $filter_status = "all";
     </div>
 </div>
 
+<?php
+$ordersPayload = \DTBrand\OrderManager::getAll();
+?>
+<script>
+window.SERVER_ORDERS = <?php echo json_encode($ordersPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+</script>
 <script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/orders/assets/js/order-list.js?v=<?php echo time(); ?>"></script>

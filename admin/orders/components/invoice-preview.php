@@ -5,15 +5,13 @@
  * invoice-preview.php — B2B GST Tax Invoice Preview Component
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($order['id']) ? $order['id'] : 'DTB-001624';
-$inv_date = isset($order['date']) ? $order['date'] : '21 Aug 2026';
-$customer = isset($order['customer']) ? $order['customer'] : 'Rajesh Kumar (Vardhman Tex)';
-$billing_addr = isset($order['address']['billing']) ? $order['address']['billing'] : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
-$shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : 'Godown 12, Transport Nagar, Surat, Gujarat - 395010';
-$items = isset($order['items']) ? $order['items'] : [
-    ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'qty' => 25, 'price' => 4490]
-];
-$subtotal = isset($order['amount']) ? (float)$order['amount'] : 112250;
+$order_id = !empty($order['id']) ? $order['id'] : '—';
+$inv_date = !empty($order['date']) ? $order['date'] : date('d M Y');
+$customer = !empty($order['customer']) ? $order['customer'] : 'Direct Customer';
+$billing_addr = !empty($order['address']['billing']) ? $order['address']['billing'] : 'Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002';
+$shipping_addr = !empty($order['address']['shipping']) ? $order['address']['shipping'] : 'Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002';
+$items = !empty($order['items']) ? $order['items'] : [];
+$subtotal = isset($order['amount']) ? (float)$order['amount'] : 0.0;
 $tax_gst = isset($order['gst_amount']) ? (float)$order['gst_amount'] : round($subtotal * 0.05, 2);
 $grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : ($subtotal + $tax_gst);
 ?>
@@ -33,7 +31,7 @@ $grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : (
         <div class="dt-doc-meta-box">
             <span class="dt-doc-meta-title" style="font-size:17px; font-weight:800; color:#8A681F; letter-spacing:0.5px;">TAX INVOICE</span>
             <div><span style="font-size:9.5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:800; padding:1px 6px; border-radius:4px;">ORIGINAL FOR RECIPIENT</span></div>
-            <span style="margin-top:2px;">Invoice No: <strong>INV-<?php echo substr($order_id, 4); ?>-2026</strong></span>
+            <span style="margin-top:2px;">Invoice No: <strong>INV-<?php echo substr($order_id, 4); ?>-<?= date('Y') ?></strong></span>
             <span>Order ID: <strong><?php echo $order_id; ?></strong></span>
             <span>Date: <strong><?php echo $inv_date; ?></strong></span>
         </div>
@@ -66,6 +64,11 @@ $grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : (
             </tr>
         </thead>
         <tbody>
+            <?php if (empty($items)): ?>
+            <tr>
+                <td colspan="6" style="padding:16px; text-align:center; color:#64748B;">No items recorded for this order invoice.</td>
+            </tr>
+            <?php else: ?>
             <?php foreach ($items as $idx => $it): ?>
             <tr style="border-bottom:1px solid #E2E8F0;">
                 <td style="padding:10px; color:#64748B; vertical-align:middle;"><?php echo ($idx + 1); ?></td>
@@ -75,21 +78,23 @@ $grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : (
                         <div>
                             <strong style="color:#181512; font-size:12.5px; line-height:1.3; display:block;"><?php echo htmlspecialchars($it['name']); ?></strong>
                             <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
-                                <span style="font-size:10px; color:#8A681F; font-weight:700; font-family:monospace;">SKU: <?php echo htmlspecialchars($it['sku']); ?></span>
+                                <span style="font-size:10px; color:#8A681F; font-weight:700; font-family:monospace;">SKU: <?php echo htmlspecialchars($it['sku'] ?? 'DT-SR'); ?></span>
+                                <?php if (!empty($it['variant'])): ?>
                                 <span style="display:inline-flex; align-items:center; gap:4px; font-size:10px; color:#475569; background:#FAF8F4; padding:1px 6px; border-radius:4px; border:1px solid #E2DFD7;">
-                                    <span style="width:8px; height:8px; border-radius:50%; background:#9B111E; display:inline-block;"></span>
-                                    <span>Royal Ruby</span>
+                                    <span><?php echo htmlspecialchars($it['variant']); ?></span>
                                 </span>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 </td>
                 <td style="padding:10px; text-align:center; font-family:monospace; color:#475569; vertical-align:middle;">5007</td>
-                <td style="padding:10px; text-align:center; font-weight:800; font-size:12px; vertical-align:middle;"><?php echo $it['qty']; ?> pcs</td>
-                <td style="padding:10px; text-align:right; font-weight:600; vertical-align:middle;">₹<?php echo number_format($it['price']); ?></td>
-                <td style="padding:10px; text-align:right; font-weight:800; color:#181512; vertical-align:middle;">₹<?php echo number_format($it['price'] * $it['qty']); ?></td>
+                <td style="padding:10px; text-align:center; font-weight:800; font-size:12px; vertical-align:middle;"><?php echo (int)($it['qty'] ?? 1); ?> pcs</td>
+                <td style="padding:10px; text-align:right; font-weight:600; vertical-align:middle;">₹<?php echo number_format((float)($it['price'] ?? 0)); ?></td>
+                <td style="padding:10px; text-align:right; font-weight:800; color:#181512; vertical-align:middle;">₹<?php echo number_format(((float)($it['price'] ?? 0)) * ((int)($it['qty'] ?? 1))); ?></td>
             </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 
@@ -97,9 +102,9 @@ $grand_total = isset($order['total_amount']) ? (float)$order['total_amount'] : (
     <div style="display:grid; grid-template-columns:1fr auto; gap:20px; align-items:start; margin-bottom:20px;">
         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px 14px; font-size:11px; line-height:1.5;">
             <div style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:3px;">Settlement &amp; Bank Clearance:</div>
-            <strong>Payment Mode:</strong> Bank Wire / RTGS Direct Settlement<br>
+            <strong>Payment Mode:</strong> <?php echo htmlspecialchars($order['payment_method'] ?? 'UPI / Bank Wire'); ?><br>
             <strong>Bank A/c:</strong> ICICI Bank Corporate • <strong>IFSC:</strong> ICIC0000982<br>
-            <strong>Settlement Status:</strong> <span style="color:#15803D; font-weight:800;">PAID &amp; CLEARED (UTR-9821039812)</span>
+            <strong>Settlement Status:</strong> <span style="color:<?php echo (($order['payment_status'] ?? '') === 'paid') ? '#15803D' : '#B45309'; ?>; font-weight:800;"><?php echo strtoupper(htmlspecialchars($order['payment_status'] ?? 'PENDING')); ?></span>
         </div>
 
         <div class="dt-doc-totals-wrap" style="min-width:280px;">

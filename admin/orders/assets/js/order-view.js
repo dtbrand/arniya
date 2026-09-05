@@ -390,14 +390,14 @@
 
             // Fill Billing inputs
             const billFirm = document.getElementById('editBillingFirm');
-            if (billFirm) billFirm.value = document.getElementById('billingFirmText')?.textContent.trim() || order.customer || 'Vardhman Tex Private Limited';
+            if (billFirm) billFirm.value = document.getElementById('billingFirmText')?.textContent.trim() || order.customer || '';
 
             const billGstin = document.getElementById('editBillingGstin');
-            if (billGstin) billGstin.value = order.gstin || '24AAECJ1928K1Z5';
+            if (billGstin) billGstin.value = order.gstin || '';
 
             const billAddr = (order.address && order.address.billing) ? order.address.billing : '';
             const billLine1 = document.getElementById('editBillingLine1');
-            if (billLine1) billLine1.value = billAddr.split(',')[0] || 'Shop 42, Ground Floor, Millennium Textile Market';
+            if (billLine1) billLine1.value = billAddr.split(',')[0] || '';
 
             const billCity = document.getElementById('editBillingCity');
             if (billCity) billCity.value = 'Surat';
@@ -521,25 +521,125 @@
             const modal = document.getElementById('customerLedgerModal');
             if (!modal) return;
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentOrderId = urlParams.get('id') || '';
+
+            // Retrieve all available orders
+            const allOrders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : (window.SERVER_ORDERS || []);
+            const currentOrder = allOrders.find(o => o.id === currentOrderId) || (window.currentOrder || {});
+
+            name = name || currentOrder.customer || 'Direct Wholesale Client';
+            phone = phone || currentOrder.phone || '—';
+            email = email || currentOrder.email || '—';
+
             const nameEl = document.getElementById('ledgerCustomerName');
-            if (nameEl && name) nameEl.textContent = name;
+            if (nameEl) nameEl.textContent = name;
 
             const avatarEl = document.getElementById('ledgerAvatarInitials');
-            if (avatarEl && name) {
+            if (avatarEl) {
                 const parts = name.trim().split(/\s+/);
                 avatarEl.textContent = (parts.length > 1 ? (parts[0][0] + parts[1][0]) : parts[0].slice(0, 2)).toUpperCase();
             }
 
             const phoneText = document.getElementById('ledgerPhoneText');
-            if (phoneText && phone) phoneText.textContent = phone;
+            if (phoneText) phoneText.textContent = phone;
 
             const emailText = document.getElementById('ledgerEmailText');
-            if (emailText && email) emailText.textContent = email;
+            if (emailText) emailText.textContent = email;
+
+            const fullPageLink = document.getElementById('ledgerFullPageLink');
+            if (fullPageLink && currentOrderId) {
+                fullPageLink.href = '/admin/orders/ledger.php?id=' + encodeURIComponent(currentOrderId);
+            }
 
             const waBtn = document.getElementById('ledgerWhatsAppBtn');
-            if (waBtn && phone) {
+            if (waBtn && phone && phone !== '—') {
                 const clean = phone.replace(/\D/g, '');
                 waBtn.href = 'https://wa.me/' + clean + '?text=' + encodeURIComponent('Namaste ' + (name || 'Client') + ', sharing your latest DT Brand\'s account ledger statement:');
+            }
+
+            // Filter customer orders
+            const customerOrders = allOrders.filter(o => {
+                if (name && o.customer && o.customer.toLowerCase().trim() === name.toLowerCase().trim()) return true;
+                if (phone && phone !== '—' && o.phone && o.phone.replace(/\D/g, '') === phone.replace(/\D/g, '')) return true;
+                if (currentOrderId && o.id === currentOrderId) return true;
+                return false;
+            });
+
+            // Calculate metrics
+            let totalBusiness = 0;
+            let totalSettled = 0;
+
+            customerOrders.forEach(o => {
+                const amt = Number(o.total || o.amount || o.total_amount || 0);
+                totalBusiness += amt;
+                const isPaid = (o.payment_status && String(o.payment_status).toUpperCase() === 'PAID') ||
+                               (o.status && ['delivered', 'shipped', 'confirmed', 'completed'].includes(String(o.status).toLowerCase()));
+                if (isPaid) {
+                    totalSettled += amt;
+                }
+            });
+
+            const outstanding = Math.max(0, totalBusiness - totalSettled);
+
+            const formatInr = num => Number(num || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            const lifeEl = document.getElementById('ledgerLifetimeBusiness');
+            if (lifeEl) lifeEl.textContent = formatInr(totalBusiness);
+
+            const countEl = document.getElementById('ledgerConsignmentsCount');
+            if (countEl) countEl.textContent = `${customerOrders.length} Recorded ${customerOrders.length === 1 ? 'Order' : 'Orders'}`;
+
+            const settledEl = document.getElementById('ledgerTotalSettled');
+            if (settledEl) settledEl.textContent = formatInr(totalSettled);
+
+            const settledPctEl = document.getElementById('ledgerSettledPercent');
+            if (settledPctEl) {
+                const pct = totalBusiness > 0 ? Math.round((totalSettled / totalBusiness) * 100) : 100;
+                settledPctEl.textContent = `${pct}% Paid / Settled`;
+            }
+
+            const balEl = document.getElementById('ledgerOutstandingBalance');
+            if (balEl) balEl.textContent = formatInr(outstanding);
+
+            const balStatusEl = document.getElementById('ledgerBalanceStatus');
+            if (balStatusEl) {
+                balStatusEl.textContent = outstanding === 0 ? 'All Invoices Settled' : `₹ ${formatInr(outstanding)} Pending`;
+            }
+
+            // Populate table
+            const tbody = document.getElementById('customerLedgerTableBody');
+            if (tbody) {
+                if (customerOrders.length === 0) {
+                    tbody.innerHTML = `
+                        <tr id="ledgerEmptyRow">
+                            <td colspan="7" style="padding:28px 16px; text-align:center; color:#64748B;">No ledger transactions recorded for this customer.</td>
+                        </tr>`;
+                } else {
+                    let runningBalance = 0;
+                    tbody.innerHTML = customerOrders.map(o => {
+                        const amt = Number(o.total || o.amount || o.total_amount || 0);
+                        const isPaid = (o.payment_status && String(o.payment_status).toUpperCase() === 'PAID') ||
+                                       (o.status && ['delivered', 'shipped', 'confirmed', 'completed'].includes(String(o.status).toLowerCase()));
+                        runningBalance += (isPaid ? 0 : amt);
+                        const orderDate = o.date || (o.created_at ? new Date(o.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—');
+                        const statusBadge = isPaid
+                            ? `<span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span>`
+                            : `<span class="dt-status-badge pending" style="font-size:9.5px; padding:2px 7px;">PENDING</span>`;
+
+                        return `
+                            <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">${orderDate}</td>
+                                <td style="padding:9px 12px;"><a href="/admin/orders/view.php?id=${encodeURIComponent(o.id)}" style="font-weight:800; color:#8A681F; text-decoration:none;">${o.id}</a></td>
+                                <td style="padding:9px 12px; color:#181512; font-weight:600;">Consignment ${o.id} • ${o.items_summary || (o.items_count ? (o.items_count + ' items') : 'Wholesale Lot')}</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">${formatInr(amt)}</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:${isPaid ? '#15803D' : '#94A3B8'};">${isPaid ? formatInr(amt) : '—'}</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:${runningBalance > 0 ? '#B45309' : '#15803D'};">${formatInr(runningBalance)}</td>
+                                <td style="padding:9px 12px; text-align:center;">${statusBadge}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
             }
 
             modal.style.display = 'flex';
@@ -552,15 +652,48 @@
 
         printLedger: function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id') || 'DTB-001624';
+            const orderId = urlParams.get('id') || '';
             window.open('/admin/orders/ledger.php?id=' + encodeURIComponent(orderId) + '&print=1', '_blank');
         },
 
         exportLedgerCSV: function() {
-            const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Rajesh Kumar (Vardhman Tex)');
+            const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Wholesale Client');
             const safeName = name.replace(/[^a-zA-Z0-9]/g, '_');
-            const phone = document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : '+91 70463 63528';
-            const email = document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : 'rajesh@vardhmantex.com';
+            const phone = document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : '—';
+            const email = document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : '—';
+            const lifeBusiness = document.getElementById('ledgerLifetimeBusiness') ? document.getElementById('ledgerLifetimeBusiness').textContent.trim() : '0.00';
+            const totalSettled = document.getElementById('ledgerTotalSettled') ? document.getElementById('ledgerTotalSettled').textContent.trim() : '0.00';
+            const outstanding = document.getElementById('ledgerOutstandingBalance') ? document.getElementById('ledgerOutstandingBalance').textContent.trim() : '0.00';
+
+            const tbody = document.getElementById('customerLedgerTableBody');
+            let tableRowsHtml = '';
+            if (tbody) {
+                const trs = tbody.querySelectorAll('tr:not(#ledgerEmptyRow)');
+                if (trs.length > 0) {
+                    trs.forEach(tr => {
+                        const tds = tr.querySelectorAll('td');
+                        if (tds.length >= 7) {
+                            tableRowsHtml += `
+  <tr height="22">
+    <td class="td-date">${tds[0].textContent.trim()}</td>
+    <td class="td-ref">${tds[1].textContent.trim()}</td>
+    <td class="td-desc">${tds[2].textContent.trim()}</td>
+    <td class="td-num">${tds[3].textContent.trim()}</td>
+    <td class="td-num">${tds[4].textContent.trim()}</td>
+    <td class="td-num">${tds[5].textContent.trim()}</td>
+    <td class="td-status">${tds[6].textContent.trim()}</td>
+  </tr>`;
+                        }
+                    });
+                }
+            }
+
+            if (!tableRowsHtml) {
+                tableRowsHtml = `
+  <tr height="22">
+    <td colspan="7" style="text-align:center; padding:12px; color:#64748B;">No ledger records found.</td>
+  </tr>`;
+            }
 
             const excelHtml = `
 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -611,21 +744,21 @@
   </tr>
   <tr height="22">
     <td class="label-cell">GSTIN:</td>
-    <td class="value-cell" colspan="2">24AAECJ1928K1Z5</td>
+    <td class="value-cell" colspan="2">—</td>
     <td class="label-cell">Credit Limit:</td>
-    <td class="value-cell" colspan="3">₹ 15,00,000 (Net 15 Days)</td>
+    <td class="value-cell" colspan="3">Standard Wholesale Terms</td>
   </tr>
   <tr height="22">
     <td class="label-cell">Phone / WhatsApp:</td>
     <td class="value-cell" colspan="2">${phone}</td>
     <td class="label-cell">Lifetime Business:</td>
-    <td class="value-cell" colspan="3"><b>₹ 8,42,500.00</b></td>
+    <td class="value-cell" colspan="3"><b>₹ ${lifeBusiness}</b></td>
   </tr>
   <tr height="22">
     <td class="label-cell">Email:</td>
     <td class="value-cell" colspan="2">${email}</td>
     <td class="label-cell">Current Balance:</td>
-    <td class="value-cell" colspan="3" style="color:#15803D;"><b>₹ 0.00 (All Invoices Settled)</b></td>
+    <td class="value-cell" colspan="3" style="color:#15803D;"><b>₹ ${outstanding}</b></td>
   </tr>
   <tr><td colspan="7"></td></tr>
 
@@ -638,86 +771,13 @@
     <th class="th-cell" width="120">Balance (₹)</th>
     <th class="th-cell" width="100">Status</th>
   </tr>
-  
-  <tr height="22">
-    <td class="td-date">21-Aug-2026</td>
-    <td class="td-ref">DTB-001624</td>
-    <td class="td-desc">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
-    <td class="td-num">1,12,250.00</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num">1,12,250.00</td>
-    <td class="td-status" style="color:#B45309;">Billed</td>
-  </tr>
-  <tr height="22" style="background-color:#F8FAFC;">
-    <td class="td-date">21-Aug-2026</td>
-    <td class="td-ref" style="color:#0F172A;">UTR-9821039812</td>
-    <td class="td-desc" style="color:#15803D;">Bank Wire / RTGS Full Settlement</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num" style="color:#15803D;">1,12,250.00</td>
-    <td class="td-num" style="color:#15803D;">0.00</td>
-    <td class="td-status" style="color:#15803D;">PAID</td>
-  </tr>
-  <tr height="22">
-    <td class="td-date">10-Aug-2026</td>
-    <td class="td-ref">DTB-001605</td>
-    <td class="td-desc">Banarasi Silk Lot Consignment (40pcs)</td>
-    <td class="td-num">2,45,000.00</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num">2,45,000.00</td>
-    <td class="td-status" style="color:#15803D;">Delivered</td>
-  </tr>
-  <tr height="22" style="background-color:#F8FAFC;">
-    <td class="td-date">11-Aug-2026</td>
-    <td class="td-ref" style="color:#0F172A;">UTR-882910398</td>
-    <td class="td-desc" style="color:#15803D;">RTGS ICICI Bank Full Settlement</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num" style="color:#15803D;">2,45,000.00</td>
-    <td class="td-num" style="color:#15803D;">0.00</td>
-    <td class="td-status" style="color:#15803D;">PAID</td>
-  </tr>
-  <tr height="22">
-    <td class="td-date">25-Jul-2026</td>
-    <td class="td-ref">DTB-001582</td>
-    <td class="td-desc">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
-    <td class="td-num">1,85,250.00</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num">1,85,250.00</td>
-    <td class="td-status" style="color:#15803D;">Delivered</td>
-  </tr>
-  <tr height="22" style="background-color:#F8FAFC;">
-    <td class="td-date">26-Jul-2026</td>
-    <td class="td-ref" style="color:#0F172A;">UTR-771829301</td>
-    <td class="td-desc" style="color:#15803D;">HDFC NetBanking Direct Settlement</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num" style="color:#15803D;">1,85,250.00</td>
-    <td class="td-num" style="color:#15803D;">0.00</td>
-    <td class="td-status" style="color:#15803D;">PAID</td>
-  </tr>
-  <tr height="22">
-    <td class="td-date">08-Jul-2026</td>
-    <td class="td-ref">DTB-001550</td>
-    <td class="td-desc">Paithani Heritage Zari Collection (20pcs)</td>
-    <td class="td-num">1,42,000.00</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num">1,42,000.00</td>
-    <td class="td-status" style="color:#15803D;">Delivered</td>
-  </tr>
-  <tr height="22" style="background-color:#F8FAFC;">
-    <td class="td-date">09-Jul-2026</td>
-    <td class="td-ref" style="color:#0F172A;">UTR-662918274</td>
-    <td class="td-desc" style="color:#15803D;">SBI Corporate Direct Wire Transfer</td>
-    <td class="td-num" style="color:#94A3B8;">—</td>
-    <td class="td-num" style="color:#15803D;">1,42,000.00</td>
-    <td class="td-num" style="color:#15803D;">0.00</td>
-    <td class="td-status" style="color:#15803D;">PAID</td>
-  </tr>
-
+  ${tableRowsHtml}
   <tr height="28" class="total-row">
     <td colspan="3" style="text-align:right; font-weight:bold; padding-right:10px; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">RECONCILED TOTALS:</td>
-    <td class="td-num" style="color:#181512; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 6,84,500.00</td>
-    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 6,84,500.00</td>
-    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 0.00</td>
-    <td class="td-status" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">ALL CLEAR</td>
+    <td class="td-num" style="color:#181512; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ ${lifeBusiness}</td>
+    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ ${totalSettled}</td>
+    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ ${outstanding}</td>
+    <td class="td-status" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">${Number(outstanding) === 0 ? 'ALL CLEAR' : 'PENDING'}</td>
   </tr>
 </table>
 </body>
@@ -747,17 +807,18 @@
             }
 
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                amount: 112250,
-                status: 'shipped',
-                date: '21 Aug 2026, 11:20 AM',
-                payment: 'Bank Wire / RTGS',
-                payment_status: 'PAID',
-                items: [{ name: 'Kanjivaram Silk Saree Pure Zari Weave', sku: 'KNJ-001', variant: 'Royal Ruby / 5.5m', qty: 25, price: 4490 }]
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                amount: currentOrder.total || currentOrder.amount || 0,
+                status: currentOrder.status || 'confirmed',
+                date: currentOrder.date || '—',
+                payment: currentOrder.payment_method || 'Online Payment',
+                payment_status: currentOrder.payment_status || 'PENDING',
+                items: currentOrder.items || []
             };
 
             const fullPageLink = document.getElementById('invoiceModalFullPageLink');
@@ -766,10 +827,10 @@
             const orderIdTitle = document.getElementById('invoiceModalOrderId');
             if (orderIdTitle) orderIdTitle.textContent = order.id;
 
-            const taxable = (Number(order.amount || 112250) / 1.05);
+            const taxable = (Number(order.amount || 0) / 1.05);
             const cgst = taxable * 0.025;
             const sgst = taxable * 0.025;
-            const grandTotal = Number(order.amount || 112250);
+            const grandTotal = Number(order.amount || 0);
 
             const body = document.getElementById('invoiceModalBody');
             if (body) {
@@ -785,7 +846,7 @@
                         <div style="text-align:right; flex-shrink:0;">
                             <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px; display:inline-block;">TAX INVOICE</span>
                             <div style="font-size:12px; font-weight:800; color:#181512; margin-top:3px;">INV-${order.id.replace('DTB-', '2026-')}</div>
-                            <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '21 Aug 2026'}</div>
+                            <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '—'}</div>
                         </div>
                     </div>
 
@@ -793,13 +854,13 @@
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">Billed Customer (Consignee)</div>
                             <div style="font-weight:800; font-size:12.5px; color:#181512;">${order.customer}</div>
-                            <div style="font-size:11px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="font-size:11px; color:#475569;">${order.firm ? order.firm : ''}</div>
                             <div style="font-size:11px; color:#475569;">Phone: ${order.phone}</div>
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">Payment &amp; Clearance Details</div>
                             <div style="font-weight:800; font-size:12px; color:#15803D;">● Settlement: ${order.payment_status || 'PAID & CLEARED'}</div>
-                            <div style="font-size:11px; color:#475569;">Mode: ${order.payment || 'Bank Wire / RTGS'}</div>
+                            <div style="font-size:11px; color:#475569;">Mode: ${order.payment || 'Online Payment'}</div>
                             <div style="font-size:11px; color:#475569;">Depot: Surat Central Dock 1</div>
                         </div>
                     </div>
@@ -868,16 +929,17 @@
             }
 
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                amount: 112250,
-                status: 'shipped',
-                date: '21 Aug 2026, 11:20 AM',
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821'
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                amount: currentOrder.total || currentOrder.amount || 0,
+                status: currentOrder.status || 'confirmed',
+                date: currentOrder.date || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-'
             };
 
             const fullPageLink = document.getElementById('packingModalFullPageLink');
@@ -900,7 +962,7 @@
                         <div style="text-align:right; flex-shrink:0;">
                             <div style="font-size:13px; font-weight:800; color:#8A681F;">ORDER #${order.id}</div>
                             <div style="font-size:10.5px; color:#64748B;">Manifest Box: <strong>1 of 1</strong></div>
-                            <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '21 Aug 2026'}</div>
+                            <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '—'}</div>
                         </div>
                     </div>
 
@@ -908,13 +970,13 @@
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">1. Billed Customer &amp; Firm</div>
                             <div style="font-weight:800; font-size:13px; color:#181512;">${order.customer}</div>
-                            <div style="font-size:11.5px; color:#475569; margin-top:2px;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="font-size:11.5px; color:#475569; margin-top:2px;">${order.firm ? order.firm : ''}</div>
                             <div style="margin-top:6px;"><span style="font-size:9.5px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:1px 5px; border-radius:3px; font-weight:700;">Verified B2B Account</span></div>
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">2. Shipping Destination (Godown)</div>
                             <div style="font-weight:800; font-size:12px; color:#181512;">Consignee: ${order.customer}</div>
-                            <div style="font-size:11px; color:#475569;">Godown 12, Transport Nagar, Surat, Gujarat - 395010</div>
+                            <div style="font-size:11px; color:#475569;">${(order.address && order.address.shipping) ? order.address.shipping : 'Standard Delivery Destination'}</div>
                             <div style="font-size:11px; font-weight:700; color:#8A681F; margin-top:3px;">Contact No: ${order.phone}</div>
                         </div>
                     </div>
@@ -934,18 +996,18 @@
                                 <td style="padding:8px; display:flex; align-items:center; gap:8px;">
                                     <img src="/assets/images/product1.png" onerror="this.onerror=null; this.src='/assets/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #E2DFD7;">
                                     <div>
-                                        <strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br>
-                                        <small style="color:#64748B;">SKU: KNJ-001 • <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#9B111E; display:inline-block;"></span> Royal Ruby / 5.5m</span></small>
+                                        <strong>${order.items_summary || 'Wholesale Consignment Lot'}</strong><br>
+                                        <small style="color:#64748B;">SKU: ${order.sku || 'SKU-DTB-001'}</small>
                                     </div>
                                 </td>
-                                <td style="padding:8px; text-align:center; font-weight:800; font-size:13px; color:#181512;">25 pcs</td>
+                                <td style="padding:8px; text-align:center; font-weight:800; font-size:13px; color:#181512;">${order.items_count || '1 lot'}</td>
                                 <td style="padding:8px; text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">✓ PASS (Silk Mark)</span></td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; font-size:11px; color:#64748B; display:flex; justify-content:space-between; align-items:center;">
-                        <div>Carrier: <strong>${order.shipping || 'VRL Logistics Depot'}</strong> (${order.tracking || 'VRL-99821'})</div>
+                        <div>Carrier: <strong>${order.shipping || 'Standard Surface Logistics'}</strong> (${order.tracking || '-'})</div>
                         <div style="font-weight:700; color:#15803D;">QC Verification: PASS • Sealed Manifest</div>
                     </div>
                 `;
@@ -960,23 +1022,24 @@
         },
 
         downloadInvoiceExcel: function(orderId) {
-            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || 'DTB-001624';
+            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                amount: 112250,
-                date: '21 Aug 2026',
-                payment: 'Bank Wire / RTGS',
-                payment_status: 'PAID'
+                id: orderId || currentOrder.id || 'INV-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                amount: currentOrder.total || currentOrder.amount || 0,
+                date: currentOrder.date || '—',
+                payment: currentOrder.payment_method || 'Online Payment',
+                payment_status: currentOrder.payment_status || 'PAID'
             };
 
-            const taxable = (Number(order.amount || 112250) / 1.05);
+            const taxable = (Number(order.amount || 0) / 1.05);
             const cgst = taxable * 0.025;
             const sgst = taxable * 0.025;
-            const total = Number(order.amount || 112250);
+            const total = Number(order.amount || 0);
 
             const excelContent = `
 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -986,14 +1049,14 @@
     <tr><th colspan="5" style="background:#8A681F; color:#FFFFFF; font-size:16px; height:36px; text-align:center;">DT BRAND'S &amp; JAI HANUMAN TEX — TAX INVOICE</th></tr>
     <tr><td colspan="5" style="text-align:center; font-size:11px; color:#64748B;">Surat Central Depot • Ring Road, Surat • GSTIN: 24AAECJ1928K1Z5</td></tr>
     <tr><td><strong>Invoice No:</strong></td><td colspan="2">INV-${order.id.replace('DTB-', '2026-')}</td><td><strong>Date:</strong></td><td>${order.date}</td></tr>
-    <tr><td><strong>Customer Name:</strong></td><td colspan="2">${order.customer} (${order.firm || 'Vardhman Tex'})</td><td><strong>Phone:</strong></td><td>${order.phone}</td></tr>
+    <tr><td><strong>Customer Name:</strong></td><td colspan="2">${order.customer}${order.firm ? ' (' + order.firm + ')' : ''}</td><td><strong>Phone:</strong></td><td>${order.phone}</td></tr>
     <tr style="background:#181512; color:#FAF5E8;"><th>#</th><th>Item Description &amp; SKU</th><th>Qty</th><th>Unit Rate (INR)</th><th>Taxable Amount (INR)</th></tr>
-    <tr><td style="text-align:center;">1</td><td>Kanjivaram Silk Saree Pure Zari Weave (KNJ-001)</td><td style="text-align:center;">25 pcs</td><td style="text-align:right;">4,490.00</td><td style="text-align:right;">${taxable.toFixed(2)}</td></tr>
+    <tr><td style="text-align:center;">1</td><td>${order.items_summary || 'Wholesale Textile Consignment'}</td><td style="text-align:center;">${order.items_count || '1 lot'}</td><td style="text-align:right;">${total.toFixed(2)}</td><td style="text-align:right;">${taxable.toFixed(2)}</td></tr>
     <tr><td colspan="4" style="text-align:right; font-weight:bold;">Taxable Subtotal:</td><td style="text-align:right; font-weight:bold;">₹ ${taxable.toFixed(2)}</td></tr>
     <tr><td colspan="4" style="text-align:right;">Output CGST @ 2.5%:</td><td style="text-align:right;">₹ ${cgst.toFixed(2)}</td></tr>
     <tr><td colspan="4" style="text-align:right;">Output SGST @ 2.5%:</td><td style="text-align:right;">₹ ${sgst.toFixed(2)}</td></tr>
     <tr style="background:#FAF5E8;"><td colspan="4" style="text-align:right; font-weight:bold; font-size:14px; color:#8A681F;">GRAND TOTAL (INR):</td><td style="text-align:right; font-weight:bold; font-size:14px; color:#8A681F;">₹ ${total.toFixed(2)}</td></tr>
-    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Payment Status: ${order.payment_status} via ${order.payment} • Silk Mark Certified</td></tr>
+    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Payment Status: ${order.payment_status} via ${order.payment} • Verified B2B Account</td></tr>
 </table>
 </body>
 </html>`;
@@ -1012,23 +1075,24 @@
         },
 
         downloadInvoicePDF: function(orderId) {
-            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || 'DTB-001624';
+            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                amount: 112250,
-                date: '21 Aug 2026',
-                payment: 'Bank Wire / RTGS',
-                payment_status: 'PAID'
+                id: orderId || currentOrder.id || 'INV-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                amount: currentOrder.total || currentOrder.amount || 0,
+                date: currentOrder.date || '—',
+                payment: currentOrder.payment_method || 'Online Payment',
+                payment_status: currentOrder.payment_status || 'PAID'
             };
 
-            const taxable = (Number(order.amount || 112250) / 1.05);
+            const taxable = (Number(order.amount || 0) / 1.05);
             const cgst = taxable * 0.025;
             const sgst = taxable * 0.025;
-            const total = Number(order.amount || 112250);
+            const total = Number(order.amount || 0);
 
             // Hidden iframe for direct download without opening new tabs/windows
             let iframe = document.getElementById('dt-direct-pdf-iframe');
@@ -1081,7 +1145,7 @@
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Billed Consignee</div>
                             <div style="font-weight:800; font-size:14px; margin-top:2px;">${order.customer}</div>
-                            <div style="font-size:12px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="font-size:12px; color:#475569;">${order.firm ? order.firm : ''}</div>
                             <div style="font-size:11.5px; color:#475569;">Contact: ${order.phone}</div>
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
@@ -1156,16 +1220,17 @@
         },
 
         downloadPackingSlipExcel: function(orderId) {
-            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || 'DTB-001624';
+            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821',
-                date: '21 Aug 2026'
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-',
+                date: currentOrder.date || '—'
             };
 
             const excelContent = `
@@ -1176,12 +1241,12 @@
     <tr><th colspan="5" style="background:#8A681F; color:#FFFFFF; font-size:16px; height:36px; text-align:center;">PACKING SLIP — DEPOT DISPATCH MANIFEST</th></tr>
     <tr><td colspan="5" style="text-align:center; font-size:11px; color:#64748B;">Surat Central Depot Internal Wholesale Logistics Manifest</td></tr>
     <tr><td><strong>Order ID:</strong></td><td>${order.id}</td><td><strong>Manifest Box:</strong></td><td colspan="2">1 of 1 (Date: ${order.date})</td></tr>
-    <tr><td><strong>1. Billed Customer &amp; Firm:</strong></td><td colspan="2">${order.customer} (${order.firm || 'Vardhman Tex'})</td><td><strong>Account Type:</strong></td><td>Verified B2B Account</td></tr>
-    <tr><td><strong>2. Shipping Destination (Godown):</strong></td><td colspan="2">Godown 12, Transport Nagar, Surat, Gujarat - 395010</td><td><strong>Contact Phone:</strong></td><td>${order.phone}</td></tr>
+    <tr><td><strong>1. Billed Customer &amp; Firm:</strong></td><td colspan="2">${order.customer}${order.firm ? ' (' + order.firm + ')' : ''}</td><td><strong>Account Type:</strong></td><td>Verified B2B Account</td></tr>
+    <tr><td><strong>2. Shipping Destination (Godown):</strong></td><td colspan="2">${(order.address && order.address.shipping) ? order.address.shipping : 'Standard Delivery Destination'}</td><td><strong>Contact Phone:</strong></td><td>${order.phone}</td></tr>
     <tr style="background:#181512; color:#FAF5E8;"><th>#</th><th>Item Details &amp; SKU</th><th>Color / Specs</th><th>Packed Qty</th><th>QC Verification</th></tr>
-    <tr><td style="text-align:center;">1</td><td>Kanjivaram Silk Saree Pure Zari Weave (KNJ-001)</td><td>Royal Ruby / 5.5m</td><td style="text-align:center; font-weight:bold;">25 pcs</td><td style="text-align:center; color:#15803D; font-weight:bold;">PASS (Silk Mark)</td></tr>
-    <tr><td colspan="3" style="text-align:right; font-weight:bold;">TOTAL CONSIGNMENT QUANTITY:</td><td colspan="2" style="font-weight:bold; font-size:13px; color:#8A681F;">25 pcs (1 Bale Packed)</td></tr>
-    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Carrier: ${order.shipping || 'VRL Logistics Depot'} (${order.tracking || 'VRL-99821'}) • QC Inspection Officer Verified</td></tr>
+    <tr><td style="text-align:center;">1</td><td>${order.items_summary || 'Wholesale Consignment Lot'}</td><td>Standard Packaging</td><td style="text-align:center; font-weight:bold;">${order.items_count || '1 lot'}</td><td style="text-align:center; color:#15803D; font-weight:bold;">PASS</td></tr>
+    <tr><td colspan="3" style="text-align:right; font-weight:bold;">TOTAL CONSIGNMENT QUANTITY:</td><td colspan="2" style="font-weight:bold; font-size:13px; color:#8A681F;">${order.items_count || '1 lot'}</td></tr>
+    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Carrier: ${order.shipping || 'Standard Surface Logistics'} (${order.tracking || '-'}) • QC Inspection Officer Verified</td></tr>
 </table>
 </body>
 </html>`;
@@ -1200,16 +1265,17 @@
         },
 
         downloadPackingSlipPDF: function(orderId) {
-            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || 'DTB-001624';
+            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821',
-                date: '21 Aug 2026'
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-',
+                date: currentOrder.date || '—'
             };
 
             // Hidden iframe for direct download without opening new tabs/windows
@@ -1263,7 +1329,7 @@
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">1. Billed Customer &amp; Firm</div>
                             <div style="font-weight:800; font-size:14px; margin-top:2px;">${order.customer}</div>
-                            <div style="font-size:12px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="font-size:12px; color:#475569;">${order.firm ? order.firm : ''}</div>
                             <div style="margin-top:6px;"><span style="font-size:9.5px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:1px 5px; border-radius:3px; font-weight:700;">Verified B2B Account</span></div>
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
@@ -1327,18 +1393,20 @@
             }
 
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId || 'DTB-001624',
-                customer: 'Rajesh Kumar (Vardhman Tex)',
-                phone: '+91 70463 63528',
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821',
-                items_count: 25,
-                items_summary: 'Kanjivaram Silk Saree Pure Zari Weave (x25)',
-                amount: 112250,
-                date: '21 Aug 2026',
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-',
+                items_count: currentOrder.items_count || (currentOrder.items ? currentOrder.items.length : 1),
+                items_summary: currentOrder.items_summary || (currentOrder.items && currentOrder.items[0] ? currentOrder.items[0].name : 'Wholesale Textile Consignment'),
+                amount: currentOrder.total || currentOrder.amount || 0,
+                date: currentOrder.date || '—',
                 address: {
-                    shipping: 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002'
+                    shipping: (currentOrder.address && currentOrder.address.shipping) ? currentOrder.address.shipping : 'Standard Delivery Destination'
                 }
             };
 
@@ -1489,20 +1557,22 @@
         },
 
         printShippingLabelDirect: function(orderId) {
-            orderId = orderId || document.getElementById('shippingLabelModalOrderId')?.textContent || 'DTB-001624';
+            orderId = orderId || document.getElementById('shippingLabelModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar (Vardhman Tex)',
-                phone: '+91 70463 63528',
-                shipping: 'Surat Central Depot Express',
-                tracking: 'VRL-99821',
-                items_count: 25,
-                items_summary: 'Kanjivaram Pure Silk Zari Weave Saree',
-                size: 'Free Size (6.3m with Blouse)',
-                sku: 'DTB-KANJI-' + String(orderId || '1624').slice(-4),
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-',
+                items_count: currentOrder.items_count || (currentOrder.items ? currentOrder.items.length : 1),
+                items_summary: currentOrder.items_summary || (currentOrder.items && currentOrder.items[0] ? currentOrder.items[0].name : 'Wholesale Textile Consignment'),
+                size: currentOrder.size || 'Standard Saree Bale',
+                sku: currentOrder.sku || ('DTB-TEX-' + String(orderId || currentOrder.id || '101').slice(-4)),
                 address: {
-                    shipping: 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002'
+                    shipping: (currentOrder.address && currentOrder.address.shipping) ? currentOrder.address.shipping : 'Standard Delivery Destination'
                 }
             };
 
@@ -1699,19 +1769,20 @@
         },
 
         switchDocTab: function(tabName) {
-            const orderId = document.getElementById('shippingLabelModalOrderId')?.textContent || 'DTB-001624';
+            const orderId = document.getElementById('shippingLabelModalOrderId')?.textContent || '';
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const currentOrder = window.currentOrder || {};
             const order = orders.find(o => o.id === orderId) || {
-                id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
-                phone: '+91 70463 63528',
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821',
-                items_count: '25 pcs',
-                items_summary: 'Kanjivaram Silk Saree Pure Zari Weave (x25)',
-                amount: 112250,
-                date: '21 Aug 2026'
+                id: orderId || currentOrder.id || 'ORD-001',
+                customer: currentOrder.customer || 'Direct Customer',
+                firm: currentOrder.firm || '',
+                phone: currentOrder.phone || '—',
+                shipping: currentOrder.shipping || 'Standard Surface Logistics',
+                tracking: currentOrder.tracking || '-',
+                items_count: currentOrder.items_count || (currentOrder.items ? currentOrder.items.length : 1),
+                items_summary: currentOrder.items_summary || (currentOrder.items && currentOrder.items[0] ? currentOrder.items[0].name : 'Wholesale Textile Consignment'),
+                amount: currentOrder.total || currentOrder.amount || 0,
+                date: currentOrder.date || '—'
             };
 
             const tabShipping = document.getElementById('tabBtnShippingLabel');
@@ -1734,7 +1805,7 @@
                     tabPacking.style.borderColor = '#FCD34D';
                     tabPacking.style.fontWeight = '800';
                 }
-                if (footerNote) footerNote.textContent = 'Internal Warehouse Dispatch Record • Silk Mark QC Passed';
+                if (footerNote) footerNote.textContent = 'Internal Warehouse Dispatch Record • Quality Verification Passed';
                 if (printBtnText) printBtnText.textContent = 'Print Packing Manifest';
                 if (printBtn) printBtn.onclick = () => window.DT_ORDER_VIEW.printPackingSlipDirect(order.id);
 
@@ -1756,13 +1827,13 @@
                                 <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                     <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Consignee Destination</div>
                                     <div style="font-weight:800; font-size:12.5px; color:#181512;">${order.customer}</div>
-                                    <div style="font-size:11px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                                    <div style="font-size:11px; color:#475569;">${order.firm ? order.firm : ''}</div>
                                     <div style="font-size:11px; color:#475569;">TEL: ${order.phone}</div>
                                 </div>
                                 <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                     <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Carrier &amp; Tracking</div>
-                                    <div style="font-weight:800; font-size:12px; color:#181512;">${order.shipping || 'VRL Logistics Depot'}</div>
-                                    <div style="font-size:11px; color:#475569;">AWB: ${order.tracking || 'VRL-99821'}</div>
+                                    <div style="font-weight:800; font-size:12px; color:#181512;">${order.shipping || 'Standard Surface Logistics'}</div>
+                                    <div style="font-size:11px; color:#475569;">AWB: ${order.tracking || '-'}</div>
                                     <div style="font-size:10.5px; color:#15803D; font-weight:700;">QC Verification: 100% PASS</div>
                                 </div>
                             </div>

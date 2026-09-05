@@ -18,16 +18,16 @@
                 </div>
                 <div>
                     <div style="display:flex; align-items:center; gap:6px;">
-                        <span id="drawerOrderId" style="font-size:15px; font-weight:800; color:#181512; letter-spacing:-0.01em;">DTB-001624</span>
-                        <span id="drawerCustomerType" class="dt-kpi-badge up" style="font-size:9.5px; padding:1px 6px;">Wholesale B2B</span>
+                        <span id="drawerOrderId" style="font-size:15px; font-weight:800; color:#181512; letter-spacing:-0.01em;">—</span>
+                        <span id="drawerCustomerType" class="dt-kpi-badge up" style="font-size:9.5px; padding:1px 6px;">—</span>
                     </div>
-                    <p id="drawerOrderDate" style="margin:2px 0 0 0; font-size:11px; color:#64748B;">21 Aug 2026 • 11:20 AM</p>
+                    <p id="drawerOrderDate" style="margin:2px 0 0 0; font-size:11px; color:#64748B;">—</p>
                 </div>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-                <span id="drawerStatusBadge" class="dt-status-badge shipped">
+                <span id="drawerStatusBadge" class="dt-status-badge">
                     <span class="dt-status-dot"></span>
-                    <span id="drawerStatusBadgeText">Shipped</span>
+                    <span id="drawerStatusBadgeText">—</span>
                 </span>
                 <button type="button" onclick="window.DT_ORDER_VIEW.closeDrawer()" style="width:30px; height:30px; border-radius:50%; border:1px solid #E2E8F0; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Drawer">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -78,9 +78,9 @@
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
-                        <div id="drawerCustomerName" style="font-size:13px; font-weight:800; color:#0F172A;">Rajesh Kumar (Vardhman Tex)</div>
-                        <div id="drawerCustomerPhone" style="font-size:11.5px; color:#475569; margin-top:2px; font-weight:600;">+91 70463 63528</div>
-                        <div id="drawerCustomerEmail" style="font-size:10.5px; color:#94A3B8; margin-top:1px;">rajesh@vardhmantex.com</div>
+                        <div id="drawerCustomerName" style="font-size:13px; font-weight:800; color:#0F172A;">—</div>
+                        <div id="drawerCustomerPhone" style="font-size:11.5px; color:#475569; margin-top:2px; font-weight:600;">—</div>
+                        <div id="drawerCustomerEmail" style="font-size:10.5px; color:#94A3B8; margin-top:1px;">—</div>
                     </div>
                     <button type="button" onclick="if(window.DT_ORDERS)window.DT_ORDERS.copyText(document.getElementById('drawerCustomerPhone').innerText, 'Phone Number')" class="dt-btn dt-btn-pale" style="height:24px; font-size:10px; padding:0 6px;">
                         <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>

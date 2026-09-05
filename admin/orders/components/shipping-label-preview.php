@@ -5,16 +5,16 @@
  * shipping-label-preview.php — Meesho / Courier Standard Shipping Label Component
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($order['id']) ? $order['id'] : 'DTB-001624';
-$carrier = isset($order['carrier']) ? $order['carrier'] : 'Surat Central Depot Express';
-$tracking_id = isset($order['tracking_id']) ? $order['tracking_id'] : 'VRL-99821';
-$customer = isset($order['customer']) ? $order['customer'] : 'Rajesh Kumar (Vardhman Tex)';
-$shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
-$phone = isset($order['phone']) ? $order['phone'] : '+91 70463 63528';
-$items_count = isset($order['items_count']) ? $order['items_count'] : 25;
-$items_summary = isset($order['items_summary']) ? $order['items_summary'] : 'Kanjivaram Pure Silk Zari Weave Saree';
-$size = isset($order['size']) ? $order['size'] : 'Free Size (6.3m with Blouse)';
-$sku = isset($order['sku']) ? $order['sku'] : 'DTB-KANJI-' . substr($order_id, -4);
+$order_id = !empty($order['id']) ? $order['id'] : '—';
+$carrier = !empty($order['carrier']) ? $order['carrier'] : 'Surat Central Depot Express';
+$tracking_id = !empty($order['tracking_id']) ? $order['tracking_id'] : '-';
+$customer = !empty($order['customer']) ? $order['customer'] : 'Direct Customer';
+$shipping_addr = !empty($order['address']['shipping']) ? $order['address']['shipping'] : 'Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002';
+$phone = !empty($order['phone']) ? $order['phone'] : '+91 70463 63528';
+$items_count = isset($order['items_count']) ? (int)$order['items_count'] : 1;
+$items_summary = !empty($order['items_summary']) ? $order['items_summary'] : 'Handloom Pure Silk Saree';
+$size = !empty($order['size']) ? $order['size'] : 'Free Size (6.3m with Blouse)';
+$sku = !empty($order['sku']) ? $order['sku'] : ('DT-SR-' . substr($order_id, -4));
 ?>
 <div class="dt-shipping-label-card" style="max-width:440px; margin:0 auto; background:#FFFFFF; border:2.5px solid #181512; border-radius:8px; padding:16px 20px; font-family:'Plus Jakarta Sans', sans-serif; box-sizing:border-box;">
     <!-- Header Block -->

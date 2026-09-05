@@ -45,11 +45,11 @@ if ($db !== null && !Database::isMockMode()) {
                     'date' => date('Y-m-d H:i:s', strtotime($r['created_at'] ?? 'now')),
                     'customer' => $r['customer_name'],
                     'firm' => $r['firm_name'],
-                    'phone' => $r['customer_phone'] ?: '+91 70463 63528',
+                    'phone' => $r['customer_phone'] ?: '',
                     'city' => $r['city_name'],
                     'state' => $r['state_name'],
-                    'shipping_address' => $r['shipping_address'] ?: 'Surat Central Depot, Gujarat',
-                    'sku' => $r['first_sku'] ?: 'DT-SR',
+                    'shipping_address' => $r['shipping_address'] ?: '',
+                    'sku' => $r['first_sku'] ?: '—',
                     'items' => $summary,
                     'qty' => $q,
                     'taxable_amount' => $taxable,
@@ -58,8 +58,8 @@ if ($db !== null && !Database::isMockMode()) {
                     'total_amount' => $tot,
                     'payment_mode' => $r['payment_method'] ?: 'UPI / Bank Wire',
                     'payment_status' => strtoupper($r['payment_status'] ?: 'PAID'),
-                    'carrier' => $r['courier_name'] ?: 'VRL Logistics Depot',
-                    'tracking' => $r['tracking_number'] ?: ('VRL-' . rand(10000, 99999)),
+                    'carrier' => $r['courier_name'] ?: '—',
+                    'tracking' => $r['tracking_number'] ?: '—',
                     'status' => ucfirst($r['fulfillment_status'] ?: 'Processing'),
                     'channel' => ucfirst($r['channel'] ?: 'Online Shop')
                 ];
@@ -68,34 +68,6 @@ if ($db !== null && !Database::isMockMode()) {
     } catch (\Throwable $e) {
         error_log("Order export db error: " . $e->getMessage());
     }
-}
-
-if (empty($export_orders)) {
-    $export_orders = [
-        [
-            'id' => 'DTB-001624',
-            'date' => '2026-08-21 11:20:00',
-            'customer' => 'Rajesh Kumar',
-            'firm' => 'Vardhman Tex',
-            'phone' => '+91 70463 63528',
-            'city' => 'Surat',
-            'state' => 'Gujarat',
-            'shipping_address' => 'Godown 12, Transport Nagar, Surat, Gujarat - 395010',
-            'sku' => 'KNJ-001',
-            'items' => 'Kanjivaram Silk Saree Pure Zari Weave (Royal Ruby / 5.5m)',
-            'qty' => 25,
-            'taxable_amount' => 106904.76,
-            'cgst' => 2672.62,
-            'sgst' => 2672.62,
-            'total_amount' => 112250.00,
-            'payment_mode' => 'Bank Wire / RTGS',
-            'payment_status' => 'PAID',
-            'carrier' => 'VRL Logistics Depot',
-            'tracking' => 'VRL-99821',
-            'status' => 'Shipped',
-            'channel' => 'B2B Portal'
-        ]
-    ];
 }
 
 // Direct Server-Side Download Request Handler
@@ -237,11 +209,17 @@ $active_subnav = "export";
                     <div class="dt-detail-card-body" style="display:flex; flex-direction:column; gap:16px; padding-top:16px;">
                         <div>
                             <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:6px;">Export Scope &amp; Record Selection</label>
+                            <?php
+                            $totalCount = count($export_orders);
+                            $shippedCount = count(array_filter($export_orders, fn($o) => in_array(strtolower($o['status']), ['shipped', 'delivered'])));
+                            $pendingCount = count(array_filter($export_orders, fn($o) => in_array(strtolower($o['status']), ['pending', 'processing'])));
+                            $returnsCount = count(array_filter($export_orders, fn($o) => in_array(strtolower($o['status']), ['returned', 'refunded', 'cancelled'])));
+                            ?>
                             <select id="exportScopeSelect" class="dt-order-search-input" style="height:36px; font-weight:600; font-size:12px;">
-                                <option value="all">All Orders in Database (1,624 Records)</option>
-                                <option value="shipped">Only Shipped &amp; Delivered Orders (1,542 Records)</option>
-                                <option value="pending">Pending Dispatch Consignments (42 Records)</option>
-                                <option value="returns">Returns &amp; Refunded Items (14 Records)</option>
+                                <option value="all">All Orders in Database (<?= number_format($totalCount) ?> Records)</option>
+                                <option value="shipped">Only Shipped &amp; Delivered Orders (<?= number_format($shippedCount) ?> Records)</option>
+                                <option value="pending">Pending Dispatch Consignments (<?= number_format($pendingCount) ?> Records)</option>
+                                <option value="returns">Returns &amp; Refunded Items (<?= number_format($returnsCount) ?> Records)</option>
                             </select>
                         </div>
 
@@ -311,6 +289,23 @@ $active_subnav = "export";
 <script>
 window.REAL_EXPORT_DATA = <?php echo json_encode($export_orders, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?>;
 
+function getFilteredExportData() {
+    const scope = document.getElementById('exportScopeSelect')?.value || 'all';
+    const dateFrom = document.getElementById('exportDateFrom')?.value;
+    const dateTo = document.getElementById('exportDateTo')?.value;
+    
+    return (window.REAL_EXPORT_DATA || []).filter(o => {
+        const st = (o.status || '').toLowerCase();
+        if (scope === 'shipped' && !['shipped', 'delivered'].includes(st)) return false;
+        if (scope === 'pending' && !['pending', 'processing'].includes(st)) return false;
+        if (scope === 'returns' && !['returned', 'refunded', 'cancelled'].includes(st)) return false;
+        
+        if (dateFrom && o.date && o.date.slice(0, 10) < dateFrom) return false;
+        if (dateTo && o.date && o.date.slice(0, 10) > dateTo) return false;
+        return true;
+    });
+}
+
 function selectExportFormat(fmt) {
     document.querySelectorAll('input[name="exportFormat"]').forEach(r => r.checked = (r.value === fmt));
     document.querySelectorAll('.dt-format-card').forEach(card => {
@@ -327,26 +322,37 @@ function selectExportFormat(fmt) {
 function executeRealExport() {
     const selectedFormat = document.querySelector('input[name="exportFormat"]:checked')?.value || 'csv';
     const btnText = document.getElementById('btnDownloadExportText');
+    const data = getFilteredExportData();
+
+    if (!data || data.length === 0) {
+        if (window.showToast) {
+            window.showToast("No orders found matching the selected export criteria.", "warning");
+        } else {
+            alert("No orders found matching the selected export criteria.");
+        }
+        return;
+    }
 
     btnText.textContent = "Generating " + selectedFormat.toUpperCase() + " Export...";
 
     setTimeout(() => {
         if (selectedFormat === 'csv') {
-            downloadCSVSpreadsheet();
+            downloadCSVSpreadsheet(data);
         } else if (selectedFormat === 'xml') {
-            downloadTallyXML();
+            downloadTallyXML(data);
         } else if (selectedFormat === 'pdf') {
-            downloadPDFRegister();
+            downloadPDFRegister(data);
         }
 
         btnText.textContent = "Download Real Export File";
         if (window.showToast) {
-            window.showToast("✓ " + selectedFormat.toUpperCase() + " export generated & downloaded successfully!", "success");
+            window.showToast(selectedFormat.toUpperCase() + " export generated and downloaded successfully.", "success");
         }
     }, 300);
 }
 
-function downloadCSVSpreadsheet() {
+function downloadCSVSpreadsheet(dataset) {
+    const data = dataset || getFilteredExportData();
     let csv = "\uFEFF"; // UTF-8 BOM
     csv += "DT BRAND'S & JAI HANUMAN TEX — MASTER WHOLESALE ORDERS MANIFEST\r\n";
     csv += "Export Date: " + new Date().toLocaleDateString('en-GB') + " • Surat Central Depot\r\n\r\n";
@@ -354,7 +360,7 @@ function downloadCSVSpreadsheet() {
     // Headers
     csv += "Order ID,Date & Time,Customer Name,Firm Name,Phone Number,City,State,Shipping Address,SKU,Items Summary,Qty (pcs),Taxable Valuation (INR),CGST 2.5% (INR),SGST 2.5% (INR),Grand Total (INR),Payment Mode,Payment Status,Carrier,Tracking No,Fulfillment Status,Channel\r\n";
     
-    window.REAL_EXPORT_DATA.forEach(o => {
+    data.forEach(o => {
         csv += `"${o.id}","${o.date}","${o.customer}","${o.firm}","${o.phone}","${o.city}","${o.state}","${o.shipping_address}","${o.sku}","${o.items}",${o.qty},${o.taxable_amount.toFixed(2)},${o.cgst.toFixed(2)},${o.sgst.toFixed(2)},${o.total_amount.toFixed(2)},"${o.payment_mode}","${o.payment_status}","${o.carrier}","${o.tracking}","${o.status}","${o.channel}"\r\n`;
     });
 
@@ -369,11 +375,12 @@ function downloadCSVSpreadsheet() {
     URL.revokeObjectURL(url);
 }
 
-function downloadTallyXML() {
+function downloadTallyXML(dataset) {
+    const data = dataset || getFilteredExportData();
     let xml = '<' + '?xml version="1.0" encoding="UTF-8"?' + '>\n';
     xml += '<ENVELOPE>\n  <HEADER>\n    <TALLYREQUEST>Import Data</TALLYREQUEST>\n  </HEADER>\n  <BODY>\n    <IMPORTDATA>\n      <REQUESTDESC>\n        <REPORTNAME>Vouchers</REPORTNAME>\n        <STATICVARIABLES>\n          <SVCURRENTCOMPANY>DT BRAND\'S &amp; JAI HANUMAN TEX</SVCURRENTCOMPANY>\n        </STATICVARIABLES>\n      </REQUESTDESC>\n      <REQUESTDATA>\n';
 
-    window.REAL_EXPORT_DATA.forEach(o => {
+    data.forEach(o => {
         const tallyDate = o.date.slice(0, 10).replace(/-/g, '');
         xml += `        <TALLYMESSAGE xmlns:UDF="TallyUDF">
           <VOUCHER VCHTYPE="Sales" ACTION="Create" OBJVIEW="Accounting Voucher View">
@@ -422,10 +429,11 @@ function downloadTallyXML() {
     URL.revokeObjectURL(url);
 }
 
-function downloadPDFRegister() {
+function downloadPDFRegister(dataset) {
+    const data = dataset || getFilteredExportData();
     const printWindow = window.open('', '_blank');
     let rowsHtml = '';
-    window.REAL_EXPORT_DATA.forEach((o, idx) => {
+    data.forEach((o, idx) => {
         rowsHtml += `
             <tr style="border-bottom:1px solid #E2E8F0;">
                 <td style="padding:8px 10px;">${idx + 1}</td>
@@ -467,7 +475,7 @@ function downloadPDFRegister() {
                 <div style="text-align:right; font-size:11px;">
                     <strong style="font-size:15px; color:#8A681F;">ORDERS AUDIT REGISTER</strong><br>
                     Generated: ${new Date().toLocaleString('en-IN')}<br>
-                    Total Records: <strong>${window.REAL_EXPORT_DATA.length} Consignments</strong>
+                    Total Records: <strong>${data.length} Consignments</strong>
                 </div>
             </div>
             <table>

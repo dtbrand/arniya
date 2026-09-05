@@ -6,8 +6,12 @@
 (function() {
     'use strict';
 
-    // ════ SAMPLE STATE & DATASETS ════
-    let products = [
+    // ════ LIVE DATASETS & REAL DYNAMIC ENGINE ════
+    let products = (window.DT_DASH && Array.isArray(window.DT_DASH.products) && window.DT_DASH.products.length)
+        ? window.DT_DASH.products
+        : ((window.DT_GLOBAL_PRODS && Array.isArray(window.DT_GLOBAL_PRODS) && window.DT_GLOBAL_PRODS.length)
+            ? window.DT_GLOBAL_PRODS
+            : [
         {
             id: 111,
             sku: 'KLN-SR-111',
@@ -144,9 +148,13 @@
             fabric: '60x60 Cambric Cotton',
             status: 'In Stock'
         }
-    ];
+    ]);
 
-    let orders = [
+    let orders = (window.DT_DASH && Array.isArray(window.DT_DASH.orders) && window.DT_DASH.orders.length)
+        ? window.DT_DASH.orders
+        : ((window.DT_GLOBAL_ORDERS && Array.isArray(window.DT_GLOBAL_ORDERS) && window.DT_GLOBAL_ORDERS.length)
+            ? window.DT_GLOBAL_ORDERS
+            : [
         {
             id: 'ORD-9842',
             date: 'Today, 04:30 PM',
@@ -163,7 +171,7 @@
         {
             id: 'ORD-9841',
             date: 'Today, 02:15 PM',
-            customer: 'Vardhman Textiles (Rajesh K.)',
+            customer: 'Vardhman Textiles',
             phone: '7046363528',
             city: 'Surat, GJ',
             channel: 'Wholesale B2B',
@@ -176,7 +184,7 @@
         {
             id: 'ORD-9840',
             date: 'Today, 11:45 AM',
-            customer: 'Pooja Varma (Reseller #RS-402)',
+            customer: 'Pooja Varma',
             phone: '7046363528',
             city: 'Jaipur, RJ',
             channel: 'Reseller',
@@ -212,12 +220,16 @@
             status: 'Delivered',
             tracking: 'DELHIVERY: DL782019283'
         }
-    ];
+    ]);
 
-    let partners = [
+    let partners = (window.DT_DASH && Array.isArray(window.DT_DASH.partners) && window.DT_DASH.partners.length)
+        ? window.DT_DASH.partners
+        : ((window.DT_GLOBAL_PARTNERS && Array.isArray(window.DT_GLOBAL_PARTNERS) && window.DT_GLOBAL_PARTNERS.length)
+            ? window.DT_GLOBAL_PARTNERS
+            : [
         {
             id: 'WS-101',
-            name: 'Rajesh Kumar (Vardhman Tex)',
+            name: 'Kalyan Brocade Hub',
             phone: '7046363528',
             type: 'Wholesaler',
             tier: 'Tier 1 (Diamond)',
@@ -228,7 +240,7 @@
         },
         {
             id: 'RS-402',
-            name: 'Pooja Varma (Pooja Collection)',
+            name: 'Pooja Collection',
             phone: '7046363528',
             type: 'Reseller',
             tier: 'Gold Reseller',
@@ -238,28 +250,28 @@
             kyc: 'Verified'
         },
         {
-            id: 'WS-104',
-            name: 'Sunil Aggarwal (Radha Silks)',
-            phone: '7046363528',
-            type: 'Wholesaler',
-            tier: 'Tier 2 (Gold)',
-            gst: '07AAACR1122K1Z9',
-            orders_count: 6,
-            total_spend: '₹1,42,000',
-            kyc: 'Pending KYC'
-        },
-        {
-            id: 'RT-209',
-            name: 'Meera Singhania (Meera Boutique)',
+            id: 'RET-305',
+            name: 'Radha Krishna Silks',
             phone: '7046363528',
             type: 'Retailer',
-            tier: 'VIP Retailer',
-            gst: '29AAACR3920L1Z4',
+            tier: 'Silver Retailer',
+            gst: '24BBBCR5921M1Z1',
+            orders_count: 6,
+            total_spend: '₹68,900',
+            kyc: 'Pending Review'
+        },
+        {
+            id: 'WS-102',
+            name: 'Shree Balaji Sarees',
+            phone: '7046363528',
+            type: 'Wholesaler',
+            tier: 'Tier 2 (Platinum)',
+            gst: '19AAECJ1928K1Z5',
             orders_count: 14,
-            total_spend: '₹3,60,000',
+            total_spend: '₹3,42,000',
             kyc: 'Verified'
         }
-    ];
+    ]);
 
     let waLeads = [
         {
@@ -1443,7 +1455,7 @@
 
             function updatePreview() {
                 let text = msgTextarea.value || '';
-                text = text.replace('{Name}', 'Rajesh Kumar');
+                text = text.replace('{Name}', 'Customer Name');
                 previewBox.innerHTML = text.replace(/\n/g, '<br>').replace(/\*(.*?)\*/g, '<strong>$1</strong>').replace(/_(.*?)_/g, '<em>$1</em>');
             }
         }

@@ -5,71 +5,74 @@
  * shipping-label.php — Courier Shipping Label Page
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
 
-$all_labels = [
-    'DTB-001624' => [
-        'id' => 'DTB-001624',
-        'carrier' => 'Surat Central Depot Express',
-        'tracking_id' => 'VRL-99821',
-        'customer' => 'Rajesh Kumar (Vardhman Tex)',
-        'phone' => '+91 70463 63528',
-        'items_count' => 25,
-        'items_summary' => 'Kanjivaram Pure Silk Zari Weave Saree',
-        'size' => 'Free Size (6.3m with Blouse)',
-        'sku' => 'DTB-KANJI-1624',
-        'weight' => '18.5 Kg (2 Master Cartons)',
-        'address' => [
-            'shipping' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002"
-        ]
-    ],
-    'DTB-001623' => [
-        'id' => 'DTB-001623',
-        'carrier' => 'BlueDart Express Air',
-        'tracking_id' => 'BD-88291',
-        'customer' => 'Pooja Sharma',
-        'phone' => '+91 70463 63528',
-        'items_count' => 1,
-        'items_summary' => 'Banarasi Georgette Handloom Saree',
-        'size' => 'Free Size (6.3m)',
-        'sku' => 'DTB-BAN-1623',
-        'weight' => '0.8 Kg (Pouch Pack)',
-        'address' => [
-            'shipping' => "Flat 402, Lotus Heights, Andheri West, Mumbai, Maharashtra - 400053"
-        ]
-    ],
-    'DTB-001622' => [
-        'id' => 'DTB-001622',
-        'carrier' => 'DTDC Priority Cargo',
-        'tracking_id' => 'DTDC-4491',
-        'customer' => 'Surat Central Saree Depot (Direct Consignment)',
-        'phone' => '+91 70463 63528',
-        'items_count' => 10,
-        'items_summary' => 'Chanderi Cotton Silk Resham Border Saree',
-        'size' => 'Free Size (Unstitched Blouse)',
-        'sku' => 'DTB-CHAN-1622',
-        'weight' => '7.5 Kg (1 Heavy Carton)',
-        'address' => [
-            'shipping' => "Godown B, Transport Nagar, Ring Road, Surat, Gujarat - 395010"
-        ]
-    ]
-];
+use DTBrand\Database;
+use DTBrand\OrderManager;
 
-$order = isset($all_labels[$order_id]) ? $all_labels[$order_id] : [
-    'id' => $order_id,
-    'carrier' => 'Surat Central Depot Express',
-    'tracking_id' => 'SCT-' . substr($order_id, -5),
-    'customer' => 'Wholesale Consignee (Surat Depot)',
-    'phone' => '+91 70463 63528',
-    'items_count' => 15,
-    'items_summary' => 'Kanjivaram Pure Silk Zari Weave Saree',
-    'size' => 'Free Size (6.3m with Blouse)',
-    'sku' => 'DTB-KANJI-' . substr($order_id, -4),
-    'weight' => '12.0 Kg',
-    'address' => [
-        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
-    ]
-];
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : '';
+$rawOrder = null;
+
+if (!empty($order_id)) {
+    $rawOrder = OrderManager::getOrderDetails($order_id);
+}
+
+if (!$rawOrder) {
+    $recentOrders = OrderManager::getAll();
+    if (!empty($recentOrders[0]['id'])) {
+        $rawOrder = OrderManager::getOrderDetails($recentOrders[0]['id']);
+    }
+}
+
+if ($rawOrder) {
+    $totalQty = 0;
+    $firstItemTitle = 'Handloom Pure Silk Saree';
+    $firstSku = 'DT-SR';
+    if (!empty($rawOrder['items']) && is_array($rawOrder['items'])) {
+        foreach ($rawOrder['items'] as $it) {
+            $totalQty += (int)($it['quantity'] ?? 1);
+        }
+        if (!empty($rawOrder['items'][0])) {
+            $firstItemTitle = $rawOrder['items'][0]['product_title'] ?? $firstItemTitle;
+            $firstSku = $rawOrder['items'][0]['sku'] ?? $firstSku;
+        }
+    }
+    $totalQty = max(1, $totalQty);
+    $summary = $firstItemTitle . ($totalQty > 1 ? " (Total {$totalQty} pcs)" : "");
+
+    $order = [
+        'id'            => $rawOrder['order_number'] ?? ('DTB-' . str_pad($rawOrder['id'], 6, '0', STR_PAD_LEFT)),
+        'carrier'       => !empty($rawOrder['courier_name']) ? $rawOrder['courier_name'] : 'Surat Central Depot Express',
+        'tracking_id'   => !empty($rawOrder['tracking_number']) ? $rawOrder['tracking_number'] : '-',
+        'customer'      => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'phone'         => !empty($rawOrder['customer_phone']) ? $rawOrder['customer_phone'] : '+91 70463 63528',
+        'items_count'   => $totalQty,
+        'items_summary' => $summary,
+        'size'          => 'Free Size (6.3m with Blouse)',
+        'sku'           => $firstSku,
+        'weight'        => round($totalQty * 0.75, 1) . ' Kg',
+        'address'       => [
+            'shipping'  => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395002"
+        ]
+    ];
+} else {
+    $order = [
+        'id'            => '—',
+        'carrier'       => 'Surat Central Depot Express',
+        'tracking_id'   => '—',
+        'customer'      => 'No Order Found',
+        'phone'         => '+91 70463 63528',
+        'items_count'   => 0,
+        'items_summary' => 'No items recorded',
+        'size'          => '—',
+        'sku'           => '—',
+        'weight'        => '0.0 Kg',
+        'address'       => [
+            'shipping'  => "Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002"
+        ]
+    ];
+}
 
 $page_title = "Shipping Label " . $order['id'];
 ?>

@@ -96,6 +96,16 @@ $dtRows = function (string $sql) use ($db, $dbLive): array {
 if ($dbLive) {
     $recentOrdersList = $dtRows("SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 10");
     $totalOrdersCount = (int)$dtNum("SELECT COUNT(*) FROM `orders`");
+    $allReviews = $dtRows("SELECT r.*, p.title as product_title, p.sku as product_sku FROM `reviews` r LEFT JOIN `products` p ON r.product_id = p.id ORDER BY r.id DESC LIMIT 20");
+    $shippingOrders = $dtRows("SELECT * FROM `orders` WHERE (`awb_number` IS NOT NULL AND `awb_number` != '') OR `order_status` IN ('packed','shipped','delivered') OR `fulfillment_status` IN ('processing','dispatched','delivered') ORDER BY `id` DESC LIMIT 20");
+    $paymentTransactions = $dtRows("SELECT * FROM `payment_transactions` ORDER BY `id` DESC LIMIT 20");
+    if (empty($paymentTransactions)) {
+        $paymentTransactions = $dtRows("SELECT id, order_number, customer_name, payment_method, total_amount as amount, payment_status as status, payment_utr as utr_reference, created_at FROM `orders` WHERE `payment_status` = 'paid' OR `payment_method` IS NOT NULL ORDER BY `id` DESC LIMIT 20");
+    }
+} else {
+    $allReviews = [];
+    $shippingOrders = [];
+    $paymentTransactions = [];
 }
 
 
@@ -447,6 +457,49 @@ $dashPayload = [
         'range'    => $revRangeLabel,
     ],
     'categories' => ['mode' => $catMode, 'items' => $catBreakdown],
+    'orders'     => array_map(function($o) {
+        return [
+            'id'       => (string)($o['order_number'] ?? ('ORD-' . $o['id'])),
+            'date'     => date('d M Y, h:i A', strtotime($o['created_at'] ?? 'now')),
+            'customer' => (string)($o['customer_name'] ?? 'Customer'),
+            'phone'    => (string)($o['customer_phone'] ?? ''),
+            'city'     => trim(($o['shipping_city'] ?? '') . ', ' . ($o['shipping_state'] ?? ''), ', '),
+            'channel'  => ucfirst((string)($o['channel'] ?? 'Retail')),
+            'items'    => 'Order Items',
+            'total'    => (float)($o['total_amount'] ?? 0),
+            'payment'  => ucfirst((string)($o['payment_method'] ?? 'UPI')),
+            'status'   => ucfirst((string)($o['fulfillment_status'] ?? ($o['order_status'] ?? 'Processing'))),
+            'tracking' => (string)($o['awb_number'] ?? '-')
+        ];
+    }, $recentOrdersList),
+    'products'   => array_map(function($p) {
+        return [
+            'id'              => (int)$p['id'],
+            'sku'             => (string)($p['sku'] ?? ''),
+            'name'            => (string)($p['title'] ?? ''),
+            'category'        => (string)($p['category_name'] ?? 'Sarees'),
+            'retail_price'    => (float)($p['retail_price'] ?? 0),
+            'wholesale_price' => (float)($p['wholesale_price'] ?? 0),
+            'reseller_price'  => (float)($p['reseller_price'] ?? 0),
+            'stock'           => (int)($p['stock_qty'] ?? 0),
+            'image'           => (string)($p['primary_image'] ?? '/assets/images/product1.png'),
+            'badge'           => (string)($p['badge'] ?? ''),
+            'fabric'          => (string)($p['fabric'] ?? ''),
+            'status'          => (($p['stock_qty'] ?? 0) > 0) ? 'In Stock' : 'Out of Stock'
+        ];
+    }, array_slice($allProducts, 0, 25)),
+    'partners'   => array_map(function($c) {
+        return [
+            'id'           => 'CUST-' . $c['id'],
+            'name'         => (string)($c['name'] ?? ''),
+            'phone'        => (string)($c['phone'] ?? ''),
+            'type'         => ucfirst((string)($c['type'] ?? 'Wholesale')),
+            'tier'         => (string)($c['tier'] ?? 'Standard'),
+            'orders_count' => (int)($c['total_orders'] ?? 0),
+            'total_spend'  => '₹' . number_format((float)($c['lifetime_spend'] ?? 0)),
+            'city'         => trim(($c['city'] ?? '') . ', ' . ($c['state'] ?? ''), ', ')
+        ];
+    }, array_slice($allCustomers, 0, 25)),
 ];
 ?>
 <!DOCTYPE html>
@@ -2111,32 +2164,41 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </tr>
                             </thead>
                             <tbody id="admCustomersTableBody">
-                                <tr>
-                                    <td><strong>Ananya Sharma</strong></td>
-                                    <td>+91 7046363528<br><small style="color:#7A7266;">ananya@gmail.com</small></td>
-                                    <td>Mumbai, MH</td>
-                                    <td>6 Orders</td>
-                                    <td><strong>₹28,450</strong></td>
-                                    <td><span class="adm-badge gold">VIP Retail</span></td>
-                                    <td>
-                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('7046363528', 'Namaste Ananya ji, regarding your order with DT Brand...')">
-                                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Sneha Patel</strong></td>
-                                    <td>+91 7046363528<br><small style="color:#7A7266;">sneha.patel@yahoo.com</small></td>
-                                    <td>Ahmedabad, GJ</td>
-                                    <td>4 Orders</td>
-                                    <td><strong>₹16,900</strong></td>
-                                    <td><span class="adm-badge info">Frequent Buyer</span></td>
-                                    <td>
-                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('7046363528', 'Namaste Sneha ji, from DT Brand...')">
-                                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php if (!empty($allCustomers)): ?>
+                                    <?php foreach (array_slice($allCustomers, 0, 15) as $cust): ?>
+                                    <?php 
+                                        $cName = htmlspecialchars($cust['name'] ?: 'Customer #' . $cust['id']);
+                                        $cPhone = htmlspecialchars($cust['phone'] ?: '-');
+                                        $cEmail = htmlspecialchars($cust['email'] ?: 'No email registered');
+                                        $cCity = htmlspecialchars(trim(($cust['city'] ?? '') . ', ' . ($cust['state'] ?? ''), ', ') ?: 'Surat, Gujarat');
+                                        $cOrders = (int)($cust['total_orders'] ?? 0);
+                                        $cSpend = (float)($cust['lifetime_spend'] ?? 0);
+                                        $cType = strtoupper($cust['type'] ?? 'RETAIL');
+                                        $rawPhone = preg_replace('/[^0-9]/', '', (string)$cust['phone']);
+                                        if (strlen($rawPhone) === 10) $rawPhone = '91' . $rawPhone;
+                                    ?>
+                                    <tr>
+                                        <td><strong><?= $cName ?></strong></td>
+                                        <td><?= $cPhone ?><br><small style="color:#7A7266;"><?= $cEmail ?></small></td>
+                                        <td><?= $cCity ?></td>
+                                        <td><?= $cOrders ?> Orders</td>
+                                        <td><strong>₹<?= number_format($cSpend, 2) ?></strong></td>
+                                        <td><span class="adm-badge <?= ($cType === 'WHOLESALE' ? 'gold' : ($cType === 'RESELLER' ? 'warning' : 'info')) ?>"><?= $cType ?></span></td>
+                                        <td>
+                                            <button type="button" class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('<?= $rawPhone ?>', 'Namaste <?= addslashes($cust['name'] ?: 'Customer') ?> ji, from DT Brand &amp; Jai Hanuman Tex...')">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; padding:32px 16px; color:#8C8478;">
+                                            <div style="font-weight:700; font-size:0.95rem; color:#181512; margin-bottom:4px;">No customer records registered yet</div>
+                                            <div style="font-size:0.8rem; color:#64748B;">Registered wholesale buyers, retailers, and online customers will automatically appear here.</div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -2453,34 +2515,44 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>Sunita Rao</strong><br><small style="color:#7A7266;">Hyderabad • Verified Buyer</small></td>
-                                    <td><strong>Kanjivaram Pure Silk Gold Zari Saree</strong><br><small style="color:#8A681F;">SKU: KLN-SR-111</small></td>
-                                    <td><span style="color:#F59E0B; font-weight:800;">★★★★★ 5.0</span></td>
-                                    <td>"Authentic Kanjivaram pure silk fabric and the gold zari border has royal luster. Fast 2-day delivery!"</td>
-                                    <td>Today, 11:20 AM</td>
-                                    <td><span class="adm-badge success">Approved</span></td>
-                                    <td>
-                                        <div class="adm-action-btn-group">
-                                            <button class="adm-action-btn" title="Pin to Homepage" onclick="window.showToast('📌 Pinned to Homepage showcase!')">📌</button>
-                                            <button class="adm-action-btn wa" title="WhatsApp Thank You" onclick="window.showToast('WhatsApp appreciation message sent!')">💬</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Vardhman Textiles (Rajesh K.)</strong><br><small style="color:#8A681F;">Surat • Wholesale Partner</small></td>
-                                    <td><strong>Pure Dola Silk Lot (24 pcs)</strong><br><small style="color:#8A681F;">SKU: KLN-SR-111-LOT</small></td>
-                                    <td><span style="color:#F59E0B; font-weight:800;">★★★★★ 5.0</span></td>
-                                    <td>"Our retail boutique customers loved every color. Excellent packaging and GST invoice provided promptly."</td>
-                                    <td>Yesterday</td>
-                                    <td><span class="adm-badge gold">B2B Verified</span></td>
-                                    <td>
-                                        <div class="adm-action-btn-group">
-                                            <button class="adm-action-btn" title="Pin to B2B Testimonials" onclick="window.showToast('📌 Pinned to B2B page!')">📌</button>
-                                            <button class="adm-action-btn wa" title="WhatsApp Thank You" onclick="window.showToast('WhatsApp message sent!')">💬</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (!empty($allReviews)): ?>
+                                    <?php foreach ($allReviews as $rev): ?>
+                                    <?php
+                                        $rCust = htmlspecialchars($rev['customer_name'] ?: 'Verified Customer');
+                                        $rProd = htmlspecialchars($rev['product_title'] ?: ('Product #' . $rev['product_id']));
+                                        $rSku = htmlspecialchars($rev['product_sku'] ?: '-');
+                                        $rRating = number_format((float)($rev['rating'] ?? 5), 1);
+                                        $rText = htmlspecialchars($rev['review_text'] ?: 'Authentic luxury handloom weave with fine craftsmanship.');
+                                        $rDate = !empty($rev['created_at']) ? date('d M Y, h:i A', strtotime($rev['created_at'])) : 'Recent';
+                                        $rStatus = strtolower($rev['status'] ?? 'approved');
+                                    ?>
+                                    <tr>
+                                        <td><strong><?= $rCust ?></strong><br><small style="color:#7A7266;"><?= !empty($rev['verified_buyer']) ? 'Verified Buyer' : 'Customer Review' ?></small></td>
+                                        <td><strong><?= $rProd ?></strong><br><small style="color:#8A681F;">SKU: <?= $rSku ?></small></td>
+                                        <td><span style="color:#F59E0B; font-weight:800;">★ <?= $rRating ?></span></td>
+                                        <td>"<?= $rText ?>"</td>
+                                        <td><?= $rDate ?></td>
+                                        <td><span class="adm-badge <?= ($rStatus === 'approved' ? 'success' : ($rStatus === 'pending' ? 'warning' : 'danger')) ?>"><?= ucfirst($rStatus) ?></span></td>
+                                        <td>
+                                            <div class="adm-action-btn-group">
+                                                <button type="button" class="adm-action-btn" title="Approve Review" onclick="window.showToast('Review approved successfully!')">
+                                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </button>
+                                                <button type="button" class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.showToast('WhatsApp appreciation queued!')">
+                                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; padding:32px 16px; color:#8C8478;">
+                                            <div style="font-weight:700; font-size:0.95rem; color:#181512; margin-bottom:4px;">No customer reviews submitted yet</div>
+                                            <div style="font-size:0.8rem; color:#64748B;">Reviews submitted by buyers on the storefront will appear here for moderation.</div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -2495,7 +2567,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
                             <span>Warehouse Inventory &amp; Stock Hubs</span>
-                            <span class="adm-badge gold">14,850 Total Units</span>
+                            <span class="adm-badge gold"><?= number_format($totalStockQty) ?> Total Units</span>
                         </h1>
                         <p class="adm-page-subtitle">Track stock allocations across Surat Central Mill Depot and Bhiwandi Logistics Hub.</p>
                     </div>
@@ -2509,7 +2581,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <a href="/admin/inventory/" class="adm-prod-pill active"><span>📦 All Inventory</span></a>
                     <a href="/admin/inventory/stock-in.php" class="adm-prod-pill"><span>📥 Stock In</span></a>
                     <a href="/admin/inventory/stock-out.php" class="adm-prod-pill"><span>📤 Stock Out</span></a>
-                    <a href="/admin/inventory/low-stock.php" class="adm-prod-pill"><span>⚠️ Low Stock (14)</span></a>
+                    <a href="/admin/inventory/low-stock.php" class="adm-prod-pill"><span>⚠️ Low Stock</span></a>
                     <a href="/admin/inventory/adjustment.php" class="adm-prod-pill"><span>⚖️ Stock Adjustment</span></a>
                 </div>
 
@@ -2528,24 +2600,39 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>KLN-SR-111</strong><br><small>Kanjivaram Silk Saree</small></td>
-                                    <td>Surat Central Depot</td>
-                                    <td><strong>110 units</strong></td>
-                                    <td>15 units (Order #ORD-9841)</td>
-                                    <td><strong style="color:#15803D;">95 units</strong></td>
-                                    <td><span class="adm-badge success">Optimal</span></td>
-                                    <td><a href="/admin/inventory/adjustment.php" class="adm-btn-secondary adm-btn-sm">Adjust</a></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>BRD-LH-902</strong><br><small>Bridal Zardosi Lehenga</small></td>
-                                    <td>Surat Central Depot</td>
-                                    <td><strong>4 units</strong></td>
-                                    <td>1 unit</td>
-                                    <td><strong style="color:#DC2626;">3 units</strong></td>
-                                    <td><span class="adm-badge warning">Low Stock</span></td>
-                                    <td><a href="/admin/inventory/stock-in.php" class="adm-btn-secondary adm-btn-sm">Restock</a></td>
-                                </tr>
+                                <?php if (!empty($allProducts)): ?>
+                                    <?php foreach (array_slice($allProducts, 0, 15) as $prod): ?>
+                                    <?php
+                                        $pSku = htmlspecialchars($prod['sku'] ?? 'SKU-');
+                                        $pTitle = htmlspecialchars($prod['title'] ?? 'Ethnic Saree');
+                                        $pStock = (int)($prod['stock_qty'] ?? 0);
+                                        $pHealth = ($pStock > 10) ? 'Optimal' : (($pStock > 0) ? 'Low Stock' : 'Out of Stock');
+                                        $pBadgeClass = ($pStock > 10) ? 'success' : (($pStock > 0) ? 'warning' : 'danger');
+                                    ?>
+                                    <tr>
+                                        <td><strong><?= $pSku ?></strong><br><small><?= $pTitle ?></small></td>
+                                        <td>Surat Central Depot</td>
+                                        <td><strong><?= $pStock ?> units</strong></td>
+                                        <td>0 units</td>
+                                        <td><strong style="color:<?= ($pStock > 10 ? '#15803D' : '#DC2626') ?>;"><?= $pStock ?> units</strong></td>
+                                        <td><span class="adm-badge <?= $pBadgeClass ?>"><?= $pHealth ?></span></td>
+                                        <td>
+                                            <?php if ($pStock <= 5): ?>
+                                                <a href="/admin/inventory/stock-in.php?sku=<?= urlencode($prod['sku'] ?? '') ?>" class="adm-btn-secondary adm-btn-sm">Restock</a>
+                                            <?php else: ?>
+                                                <a href="/admin/inventory/adjustment.php?sku=<?= urlencode($prod['sku'] ?? '') ?>" class="adm-btn-secondary adm-btn-sm">Adjust</a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; padding:32px 16px; color:#8C8478;">
+                                            <div style="font-weight:700; font-size:0.95rem; color:#181512; margin-bottom:4px;">No products in warehouse catalog</div>
+                                            <div style="font-size:0.8rem; color:#64748B;">Add items via the product manager to begin tracking warehouse inventory.</div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -2592,24 +2679,34 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><code>DELHIVERY: DL789234901</code></td>
-                                    <td><strong>ORD-9842</strong></td>
-                                    <td>Delhivery Express (Air)</td>
-                                    <td>Mumbai, MH (400001)</td>
-                                    <td>0.85 kg</td>
-                                    <td><span class="adm-badge info">In Transit</span></td>
-                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.sendOrderWhatsApp('ORD-9842')">Track</button></td>
-                                </tr>
-                                <tr>
-                                    <td><code>TCI FREIGHT: TCI-66291</code></td>
-                                    <td><strong>ORD-9841</strong></td>
-                                    <td>TCI B2B Surface Heavy</td>
-                                    <td>Surat, GJ (395002)</td>
-                                    <td>18.50 kg (Lot)</td>
-                                    <td><span class="adm-badge gold">Packed &amp; Manifested</span></td>
-                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.sendOrderWhatsApp('ORD-9841')">Track</button></td>
-                                </tr>
+                                <?php if (!empty($shippingOrders)): ?>
+                                    <?php foreach ($shippingOrders as $shp): ?>
+                                    <?php
+                                        $sAwb = htmlspecialchars($shp['awb_number'] ?: ('AWB-PND-' . $shp['id']));
+                                        $sOrder = htmlspecialchars($shp['order_number'] ?: ('ORD-' . $shp['id']));
+                                        $sCourier = htmlspecialchars($shp['courier_partner'] ?: 'Delhivery Express');
+                                        $sDest = htmlspecialchars(trim(($shp['shipping_city'] ?? '') . ', ' . ($shp['shipping_state'] ?? ''), ', ') ?: 'Surat, Gujarat');
+                                        if (!empty($shp['shipping_pincode'])) $sDest .= ' (' . htmlspecialchars($shp['shipping_pincode']) . ')';
+                                        $sStatus = ucfirst($shp['fulfillment_status'] ?? ($shp['order_status'] ?? 'Processing'));
+                                    ?>
+                                    <tr>
+                                        <td><code><?= $sAwb ?></code></td>
+                                        <td><strong><?= $sOrder ?></strong></td>
+                                        <td><?= $sCourier ?></td>
+                                        <td><?= $sDest ?></td>
+                                        <td>1.2 kg</td>
+                                        <td><span class="adm-badge <?= ($sStatus === 'Delivered' ? 'success' : ($sStatus === 'Dispatched' || $sStatus === 'Shipped' ? 'info' : 'gold')) ?>"><?= $sStatus ?></span></td>
+                                        <td><button type="button" class="adm-btn-secondary adm-btn-sm" onclick="window.sendOrderWhatsApp('<?= $sOrder ?>')">Track</button></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; padding:32px 16px; color:#8C8478;">
+                                            <div style="font-weight:700; font-size:0.95rem; color:#181512; margin-bottom:4px;">No active shipments or manifests</div>
+                                            <div style="font-size:0.8rem; color:#64748B;">Orders marked as packed or dispatched will appear here with courier AWB tracking.</div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -2654,22 +2751,33 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><code>TXN-90218273</code></td>
-                                    <td>ORD-9842</td>
-                                    <td>Ananya Sharma</td>
-                                    <td>UPI (Razorpay)</td>
-                                    <td><strong>₹4,899</strong></td>
-                                    <td><span class="adm-badge success">Captured</span></td>
-                                </tr>
-                                <tr>
-                                    <td><code>RTGS-SURAT-8910</code></td>
-                                    <td>ORD-9841</td>
-                                    <td>Vardhman Textiles</td>
-                                    <td>Bank RTGS Direct</td>
-                                    <td><strong style="color:#8A681F;">₹33,576</strong></td>
-                                    <td><span class="adm-badge success">Settled</span></td>
-                                </tr>
+                                <?php if (!empty($paymentTransactions)): ?>
+                                    <?php foreach ($paymentTransactions as $txn): ?>
+                                    <?php
+                                        $tId = htmlspecialchars($txn['utr_reference'] ?: ('TXN-' . ($txn['id'] ?? rand(10000, 99999))));
+                                        $tOrder = htmlspecialchars($txn['order_number'] ?: ('ORD-' . ($txn['id'] ?? '')));
+                                        $tCust = htmlspecialchars($txn['customer_name'] ?: 'Direct Customer');
+                                        $tMode = htmlspecialchars(ucfirst($txn['gateway'] ?? ($txn['payment_method'] ?? 'Instant UPI')));
+                                        $tAmt = (float)($txn['amount'] ?? 0);
+                                        $tStatus = ucfirst($txn['status'] ?? 'Captured');
+                                    ?>
+                                    <tr>
+                                        <td><code><?= $tId ?></code></td>
+                                        <td><?= $tOrder ?></td>
+                                        <td><?= $tCust ?></td>
+                                        <td><?= $tMode ?></td>
+                                        <td><strong>₹<?= number_format($tAmt, 2) ?></strong></td>
+                                        <td><span class="adm-badge <?= (in_array(strtolower($tStatus), ['captured','settled','paid']) ? 'success' : 'warning') ?>"><?= $tStatus ?></span></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="6" style="text-align:center; padding:32px 16px; color:#8C8478;">
+                                            <div style="font-weight:700; font-size:0.95rem; color:#181512; margin-bottom:4px;">No recorded payment transactions yet</div>
+                                            <div style="font-size:0.8rem; color:#64748B;">UPI transactions, gateway webhooks, and bank settlements will automatically record here.</div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -3082,8 +3190,8 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <p style="font-size:0.72rem; color:#7A7266;">Jai Hanuman Tex • GSTIN: 24AAACR4920M1Z2<br>Ring Road, Surat, Gujarat</p>
                 </div>
                 <div style="text-align:right;">
-                    <strong>Invoice #: <span id="invOrderNumber">ORD-9842</span></strong><br>
-                    <small style="color:#7A7266;">Date: <span id="invOrderDate">Today</span></small>
+                    <strong>Invoice #: <span id="invOrderNumber">ORD-—</span></strong><br>
+                    <small style="color:#7A7266;">Date: <span id="invOrderDate">—</span></small>
                 </div>
             </div>
 
@@ -3091,12 +3199,12 @@ _Special 15% VIP Discount Applied!_</textarea>
                 <div>
                     <strong style="color:#8A681F; font-size:0.76rem; text-transform:uppercase;">Billed To:</strong><br>
                     <strong id="invCustomerName">Customer Name</strong><br>
-                    <span id="invCustomerPhone">+91 7046363528</span><br>
-                    <span id="invCustomerCity">City, State</span>
+                    <span id="invCustomerPhone">—</span><br>
+                    <span id="invCustomerCity">—</span>
                 </div>
                 <div style="text-align:right;">
                     <strong style="color:#8A681F; font-size:0.76rem; text-transform:uppercase;">Payment:</strong><br>
-                    <span>Status: <strong>PAID</strong></span>
+                    <span>Status: <strong id="invPaymentStatus">PAID</strong></span>
                 </div>
             </div>
 
@@ -3111,13 +3219,13 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <tbody>
                         <tr>
                             <td style="padding:10px 0;" id="invItemDesc">Product Name</td>
-                            <td style="padding:10px 0; text-align:right;" id="invItemTotal">₹4,899</td>
+                            <td style="padding:10px 0; text-align:right;" id="invItemTotal">₹0.00</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr style="border-top:1.5px solid #8A681F; font-weight:800; font-size:0.95rem;">
                             <td style="padding:10px 0;">Grand Total (Incl. GST):</td>
-                            <td style="padding:10px 0; text-align:right; color:#8A681F;" id="invGrandTotal">₹4,899</td>
+                            <td style="padding:10px 0; text-align:right; color:#8A681F;" id="invGrandTotal">₹0.00</td>
                         </tr>
                     </tfoot>
                 </table>

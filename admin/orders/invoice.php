@@ -11,60 +11,70 @@ require_once __DIR__ . '/../../src/OrderManager.php';
 use DTBrand\Database;
 use DTBrand\OrderManager;
 
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : '';
 $rawOrder = null;
 
 if (!empty($order_id)) {
     $rawOrder = OrderManager::getOrderDetails($order_id);
 }
 
+// If no specific order requested or order not found, get the latest real order
+if (!$rawOrder) {
+    $recentOrders = OrderManager::getAll();
+    if (!empty($recentOrders[0]['id'])) {
+        $rawOrder = OrderManager::getOrderDetails($recentOrders[0]['id']);
+    }
+}
+
 if ($rawOrder) {
     $parsedItems = [];
-    foreach ($rawOrder['items'] as $it) {
-        $parsedItems[] = [
-            'name'  => $it['product_title'] ?? 'Handloom Silk Saree',
-            'sku'   => $it['sku'] ?? 'DT-SR',
-            'qty'   => (int)($it['quantity'] ?? 1),
-            'price' => (float)($it['unit_price'] ?? 0),
-            'image' => $it['primary_image'] ?? '/assets/images/product1.png',
-            'variant' => trim(($it['variant_color'] ?? '') . ' ' . ($it['variant_size'] ?? ''))
-        ];
+    if (!empty($rawOrder['items']) && is_array($rawOrder['items'])) {
+        foreach ($rawOrder['items'] as $it) {
+            $parsedItems[] = [
+                'name'    => $it['product_title'] ?? 'Handloom Pure Silk Saree',
+                'sku'     => $it['sku'] ?? 'DT-SR',
+                'qty'     => (int)($it['quantity'] ?? 1),
+                'price'   => (float)($it['unit_price'] ?? 0),
+                'image'   => !empty($it['primary_image']) ? $it['primary_image'] : '/assets/images/product1.png',
+                'variant' => trim(($it['variant_color'] ?? '') . ' ' . ($it['variant_size'] ?? ''))
+            ];
+        }
     }
 
     $order = [
-        'id' => $rawOrder['order_number'] ?? ('DTB-' . str_pad($rawOrder['id'], 6, '0', STR_PAD_LEFT)),
-        'date' => !empty($rawOrder['created_at']) ? date('d M Y', strtotime($rawOrder['created_at'])) : date('d M Y'),
-        'customer' => $rawOrder['customer_name'] ?? 'Direct Customer',
-        'amount' => (float)($rawOrder['subtotal'] ?? $rawOrder['total_amount'] ?? 0),
-        'total_amount' => (float)($rawOrder['total_amount'] ?? 0),
-        'gst_amount' => (float)($rawOrder['gst_amount'] ?? round(((float)($rawOrder['total_amount'] ?? 0)) * 0.05)),
-        'payment_status' => $rawOrder['payment_status'] ?? 'paid',
+        'id'             => $rawOrder['order_number'] ?? ('DTB-' . str_pad($rawOrder['id'], 6, '0', STR_PAD_LEFT)),
+        'date'           => !empty($rawOrder['created_at']) ? date('d M Y', strtotime($rawOrder['created_at'])) : date('d M Y'),
+        'customer'       => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'customer_name'  => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'company_name'   => '',
+        'amount'         => (float)($rawOrder['subtotal'] ?? $rawOrder['total_amount'] ?? 0),
+        'total_amount'   => (float)($rawOrder['total_amount'] ?? 0),
+        'gst_amount'     => (float)($rawOrder['gst_amount'] ?? round(((float)($rawOrder['total_amount'] ?? 0)) * 0.05, 2)),
+        'payment_status' => $rawOrder['payment_status'] ?? 'pending',
         'payment_method' => $rawOrder['payment_method'] ?? 'UPI / Bank Wire',
-        'address' => [
-            'billing' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395002",
-            'shipping' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        'address'        => [
+            'billing'  => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395002",
+            'shipping' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395010"
         ],
-        'items' => !empty($parsedItems) ? $parsedItems : [
-            ['name' => 'Handloom Pure Silk Saree', 'sku' => 'DT-SR-001', 'qty' => 1, 'price' => (float)($rawOrder['total_amount'] ?? 0), 'image' => '/assets/images/product1.png']
-        ]
+        'items'          => $parsedItems
     ];
 } else {
     $order = [
-        'id' => $order_id,
-        'date' => date('d M Y'),
-        'customer' => 'Rajesh Kumar (Vardhman Tex)',
-        'amount' => 112250,
-        'total_amount' => 117862.5,
-        'gst_amount' => 5612.5,
-        'payment_status' => 'paid',
-        'payment_method' => 'Bank Wire / RTGS',
-        'address' => [
-            'billing' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5",
-            'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        'id'             => '—',
+        'date'           => date('d M Y'),
+        'customer'       => 'No Order Found',
+        'customer_name'  => 'No Order Selected',
+        'company_name'   => '',
+        'amount'         => 0.0,
+        'total_amount'   => 0.0,
+        'gst_amount'     => 0.0,
+        'payment_status' => 'pending',
+        'payment_method' => '—',
+        'address'        => [
+            'billing'  => "Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002",
+            'shipping' => "Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002"
         ],
-        'items' => [
-            ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'qty' => 25, 'price' => 4490, 'image' => '/assets/images/product1.png']
-        ]
+        'items'          => []
     ];
 }
 

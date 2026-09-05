@@ -72,7 +72,7 @@
             orderId: 'DTB-001595',
             type: 'rto',
             typeLabel: 'RTO Consignment (Carrier Return)',
-            customer: 'Vardhman Tex Godown',
+            customer: 'Wholesale Partner Godown',
             contact: '+91 70463 63528',
             city: 'Surat Central Depot Dock',
             product: 'Pure Kanjivaram Bridal Silk (x2)',

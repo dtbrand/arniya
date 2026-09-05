@@ -76,22 +76,22 @@
                 if (found) {
                     result.push(found);
                 } else {
-                    const cust = row.getAttribute('data-customer') || row.querySelector('.dt-customer-name')?.textContent?.trim() || 'Wholesale Consignee';
-                    const ph = row.getAttribute('data-phone') || row.querySelector('.dt-customer-phone')?.textContent?.trim() || '+91 70463 63528';
-                    const amt = row.querySelector('.dt-amount-cell span')?.textContent?.replace(/,/g, '') || '45000';
-                    const items = row.querySelector('.dt-items-pill')?.textContent?.trim() || '15 pcs';
+                    const cust = row.getAttribute('data-customer') || row.querySelector('.dt-customer-name')?.textContent?.trim() || 'Consignee';
+                    const ph = row.getAttribute('data-phone') || row.querySelector('.dt-customer-phone')?.textContent?.trim() || '';
+                    const amt = row.querySelector('.dt-amount-cell span')?.textContent?.replace(/,/g, '') || '0';
+                    const items = row.querySelector('.dt-items-pill')?.textContent?.trim() || '1 pcs';
                     result.push({
-                        id: id || 'DTB-001624',
+                        id: id || row.getAttribute('data-order-id') || '',
                         customer: cust,
-                        firm: 'Surat Textile Hub',
+                        firm: 'Wholesale Partner',
                         phone: ph,
                         amount: Number(amt),
                         items_count: items,
-                        items_summary: 'Handloom Pure Silk Zari Saree Consignment (' + items + ')',
-                        shipping: 'VRL Logistics Depot',
-                        tracking: 'VRL-' + Math.floor(10000 + Math.random() * 90000),
+                        items_summary: 'Consignment (' + items + ')',
+                        shipping: 'Logistics Partner',
+                        tracking: '—',
                         status: row.getAttribute('data-status') || 'pending',
-                        date: '21 Aug 2026'
+                        date: new Date().toLocaleDateString('en-GB')
                     });
                 }
             });
@@ -377,14 +377,14 @@
                             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                 <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Billed Customer (Consignee)</div>
                                 <div style="font-weight:800; font-size:12.5px; color:#181512;">${order.customer}</div>
-                                <div style="font-size:11px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                                <div style="font-size:11px; color:#475569;">${order.firm ? order.firm : ''}</div>
                                 <div style="font-size:11px; color:#475569;">Phone: ${order.phone}</div>
                             </div>
                             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                 <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Settlement &amp; Logistics</div>
                                 <div style="font-weight:800; font-size:12px; color:#15803D;">● Settlement: ${order.status?.toUpperCase() || 'CONFIRMED'}</div>
-                                <div style="font-size:11px; color:#475569;">Carrier: ${order.shipping || 'VRL Logistics Depot'}</div>
-                                <div style="font-size:11px; color:#475569;">Tracking: ${order.tracking || 'VRL-99821'}</div>
+                                <div style="font-size:11px; color:#475569;">Carrier: ${order.shipping || 'Standard Surface Logistics'}</div>
+                                <div style="font-size:11px; color:#475569;">Tracking: ${order.tracking || '-'}</div>
                             </div>
                         </div>
 
@@ -489,14 +489,14 @@
                             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                 <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Consignee Destination</div>
                                 <div style="font-weight:800; font-size:12.5px; color:#181512;">${order.customer}</div>
-                                <div style="font-size:11px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                                <div style="font-size:11px; color:#475569;">${order.firm ? order.firm : ''}</div>
                                 <div style="font-size:11px; color:#475569;">TEL: ${order.phone}</div>
                             </div>
                             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                 <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Transport Logistics</div>
-                                <div style="font-weight:800; font-size:12px; color:#181512;">${order.shipping || 'VRL Logistics Depot'}</div>
-                                <div style="font-size:11px; color:#475569;">AWB: ${order.tracking || 'VRL-99821'}</div>
-                                <div style="font-size:11px; color:#15803D; font-weight:700;">QC Status: SILK MARK PASSED</div>
+                                <div style="font-weight:800; font-size:12px; color:#181512;">${order.shipping || 'Standard Surface Logistics'}</div>
+                                <div style="font-size:11px; color:#475569;">AWB: ${order.tracking || '-'}</div>
+                                <div style="font-size:11px; color:#15803D; font-weight:700;">QC Status: QUALITY VERIFIED</div>
                             </div>
                         </div>
 

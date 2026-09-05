@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Update Order Status &amp; Fulfillment</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Dock • Order <strong id="modalOrderIdText" style="color:#8A681F; font-weight:800;">DTB-001624</strong></p>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Dock • Order <strong id="modalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
             <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
@@ -160,7 +160,7 @@
         </div>
         <div style="padding:16px 18px; display:flex; flex-direction:column; gap:12px; font-size:12px;">
             <div style="color:#475569;">
-                Are you sure you want to cancel order <strong id="cancelModalOrderIdText" style="color:#DC2626;">DTB-001624</strong>?
+                Are you sure you want to cancel order <strong id="cancelModalOrderIdText" style="color:#DC2626;">—</strong>?
             </div>
 
             <div>
@@ -187,7 +187,7 @@
 <!-- ══ GST Tax Invoice Preview Modal ══ -->
 <div id="orderInvoiceModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeInvoiceModal()">
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
-        <span id="invoiceModalOrderId" style="display:none;">DTB-001624</span>
+        <span id="invoiceModalOrderId" style="display:none;">—</span>
         
         <!-- Top Action Controls (Fixed Luxury Full Page Box) -->
         <div style="position:absolute; top:16px; right:18px; z-index:20;">
@@ -219,7 +219,7 @@
 <!-- ══ Warehouse Packing Slip Preview Modal ══ -->
 <div id="orderPackingSlipModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closePackingSlipModal()">
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
-        <span id="packingModalOrderId" style="display:none;">DTB-001624</span>
+        <span id="packingModalOrderId" style="display:none;">—</span>
         
         <!-- Top Action Controls (Fixed Luxury Full Page Box) -->
         <div style="position:absolute; top:16px; right:18px; z-index:20;">
@@ -251,7 +251,7 @@
 <!-- ══ Courier Shipping Label & Box Barcode Preview Modal ══ -->
 <div id="orderShippingLabelModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeShippingLabelModal()">
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:540px; max-height:92vh; box-shadow:0 14px 44px rgba(0,0,0,0.35); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
-        <span id="shippingLabelModalOrderId" style="display:none;">DTB-001624</span>
+        <span id="shippingLabelModalOrderId" style="display:none;">—</span>
         
         <!-- Top Action Controls -->
         <div style="position:absolute; top:14px; right:16px; z-index:20;">
@@ -269,7 +269,7 @@
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Shipping Label &amp; Packing Manifest</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="shippingLabelOrderIdTitle" style="color:#8A681F;">DTB-001624</strong></p>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="shippingLabelOrderIdTitle" style="color:#8A681F;">—</strong></p>
                 </div>
             </div>
         </div>
@@ -316,7 +316,7 @@
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Edit Shipping &amp; Billing Addresses</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Consignment Destination • Order <strong id="editAddressModalOrderIdText" style="color:#8A681F; font-weight:800;">DTB-001620</strong></p>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Consignment Destination • Order <strong id="editAddressModalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
             <button type="button" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
@@ -381,7 +381,7 @@
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                     <div>
                         <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Billing Firm / Entity Name *</label>
-                        <input type="text" id="editBillingFirm" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Vardhman Tex Private Limited">
+                        <input type="text" id="editBillingFirm" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Wholesale Trading Entity">
                     </div>
                     <div>
                         <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">GSTIN (Tax ID)</label>

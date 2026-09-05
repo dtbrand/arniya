@@ -13,7 +13,8 @@
 
         downloadPdf: function(docType, docId) {
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`📄 Preparing ${docType} PDF for ${docId || 'DTB-001624'}...`);
+                const idStr = docId ? ` for ${docId}` : '';
+                window.DT_ORDERS.showToast(`Preparing ${docType} document${idStr}...`);
             }
             setTimeout(() => {
                 window.print();

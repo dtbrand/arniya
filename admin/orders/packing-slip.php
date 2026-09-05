@@ -5,30 +5,73 @@
  * packing-slip.php — Warehouse Packing Slip Page
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
 
-$order = [
-    'id' => $order_id,
-    'date' => '21 Aug 2026',
-    'customer' => 'Rajesh Kumar (Vardhman Tex)',
-    'customer_name' => 'Rajesh Kumar',
-    'company_name' => 'Vardhman Tex',
-    'phone' => '+91 70463 63528',
-    'address' => [
-        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
-    ],
-    'items' => [
-        [
-            'name' => 'Kanjivaram Silk Saree Pure Zari Weave',
-            'sku' => 'KNJ-001',
-            'variant' => 'Royal Ruby / 5.5m',
-            'color_name' => 'Royal Ruby',
-            'color_hex' => '#9B111E',
-            'image' => '/assets/images/product1.png',
-            'qty' => 25
-        ]
-    ]
-];
+use DTBrand\Database;
+use DTBrand\OrderManager;
+
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : '';
+$rawOrder = null;
+
+if (!empty($order_id)) {
+    $rawOrder = OrderManager::getOrderDetails($order_id);
+}
+
+if (!$rawOrder) {
+    $recentOrders = OrderManager::getAll();
+    if (!empty($recentOrders[0]['id'])) {
+        $rawOrder = OrderManager::getOrderDetails($recentOrders[0]['id']);
+    }
+}
+
+if ($rawOrder) {
+    $parsedItems = [];
+    if (!empty($rawOrder['items']) && is_array($rawOrder['items'])) {
+        foreach ($rawOrder['items'] as $it) {
+            $parsedItems[] = [
+                'name'       => $it['product_title'] ?? 'Handloom Pure Silk Saree',
+                'sku'        => $it['sku'] ?? 'DT-SR',
+                'variant'    => trim(($it['variant_color'] ?? '') . ' ' . ($it['variant_size'] ?? '')),
+                'color_name' => $it['variant_color'] ?? '',
+                'color_hex'  => '#8A681F',
+                'image'      => !empty($it['primary_image']) ? $it['primary_image'] : '/assets/images/product1.png',
+                'qty'        => (int)($it['quantity'] ?? 1)
+            ];
+        }
+    }
+
+    $order = [
+        'id'            => $rawOrder['order_number'] ?? ('DTB-' . str_pad($rawOrder['id'], 6, '0', STR_PAD_LEFT)),
+        'date'          => !empty($rawOrder['created_at']) ? date('d M Y', strtotime($rawOrder['created_at'])) : date('d M Y'),
+        'customer'      => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'customer_name' => $rawOrder['customer_name'] ?? 'Direct Customer',
+        'company_name'  => '',
+        'phone'         => !empty($rawOrder['customer_phone']) ? $rawOrder['customer_phone'] : '+91 70463 63528',
+        'shipping'      => $rawOrder['courier_name'] ?? 'Surface Logistics',
+        'tracking'      => $rawOrder['tracking_number'] ?? '-',
+        'address'       => [
+            'billing'  => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Textile Market, Ring Road, Surat, Gujarat - 395002",
+            'shipping' => !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        ],
+        'items'         => $parsedItems
+    ];
+} else {
+    $order = [
+        'id'            => '—',
+        'date'          => date('d M Y'),
+        'customer'      => 'No Order Found',
+        'customer_name' => 'No Order Selected',
+        'company_name'  => '',
+        'phone'         => '+91 70463 63528',
+        'shipping'      => '—',
+        'tracking'      => '—',
+        'address'       => [
+            'shipping' => "Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002"
+        ],
+        'items'         => []
+    ];
+}
 
 $page_title = "Packing Slip " . $order['id'];
 ?>

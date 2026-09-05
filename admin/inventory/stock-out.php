@@ -9,6 +9,7 @@ require_once __DIR__ . '/../../src/ProductCatalog.php';
 require_once __DIR__ . '/../../src/Database.php';
 
 use DTBrand\ProductCatalog;
+use DTBrand\Database;
 
 $page_title = "Stock Outward & Dispatch Log";
 $active_nav = "inventory";
@@ -98,10 +99,31 @@ $products = ProductCatalog::getAll(true);
                 </form>
             </div>
 
+<?php
+$outwardLogs = [];
+$pdo = \DTBrand\Database::getConnection();
+if ($pdo !== null && !\DTBrand\Database::isMockMode()) {
+    try {
+        $outwardLogs = \DTBrand\Database::query("
+            SELECT oi.quantity, oi.product_title, oi.sku, o.order_number, o.created_at, o.courier_name
+            FROM order_items oi
+            JOIN orders o ON oi.order_id = o.id
+            WHERE o.fulfillment_status != 'cancelled'
+            ORDER BY oi.id DESC
+            LIMIT 15
+        ");
+    } catch (\Throwable $e) {
+        error_log("Stock outward query error: " . $e->getMessage());
+    }
+}
+?>
             <!-- Outward Log Table Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>📋 Recent Outward Dispatch History</span></h3>
+                    <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Recent Outward Dispatch History</span>
+                    </h3>
                     <span class="adm-badge" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800; font-size:11.5px;">Live Audit Log</span>
                 </div>
                 <div class="adm-table-responsive">
@@ -116,20 +138,23 @@ $products = ProductCatalog::getAll(true);
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Today, 11:30 AM</td>
-                                <td><code style="background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700;">KLN-SR-111</code> Nilambari Silk</td>
-                                <td><strong style="color:#DC2626;">-25 pcs</strong></td>
-                                <td>#ORD-DTB-001624 (Wholesale Saree Bale)</td>
-                                <td style="text-align:right;">Surat Dispatch Team</td>
-                            </tr>
-                            <tr>
-                                <td>Today, 09:15 AM</td>
-                                <td><code style="background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700;">BNR-SR-204</code> Banarasi Brocade</td>
-                                <td><strong style="color:#DC2626;">-12 pcs</strong></td>
-                                <td>#ORD-DTB-001623 (Retail Customer Parcel)</td>
-                                <td style="text-align:right;">BlueDart Express Lead</td>
-                            </tr>
+                            <?php if (!empty($outwardLogs)): ?>
+                                <?php foreach ($outwardLogs as $log): ?>
+                                    <tr>
+                                        <td><?= date('d M Y, h:i A', strtotime($log['created_at'])) ?></td>
+                                        <td><code style="background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700;"><?= htmlspecialchars($log['sku'] ?: 'DT-SKU') ?></code> <?= htmlspecialchars($log['product_title']) ?></td>
+                                        <td><strong style="color:#DC2626;">-<?= (int)$log['quantity'] ?> pcs</strong></td>
+                                        <td>#<?= htmlspecialchars($log['order_number']) ?></td>
+                                        <td style="text-align:right;"><?= htmlspecialchars($log['courier_name'] ?: 'Surat Dispatch Team') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" style="text-align:center; padding:32px; color:#64748B;">
+                                        No recent outward dispatches recorded. Placed orders will automatically log stock deductions here.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -157,7 +182,7 @@ function handleStockOutward(e) {
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Stock deducted -${qty} pcs for "${title}" in MySQL database!`);
+                window.showToast(`Stock deducted -${qty} pcs for "${title}" in MySQL database.`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';
@@ -165,7 +190,7 @@ function handleStockOutward(e) {
         })
         .catch(() => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Deducted -${qty} pcs outward dispatch!`);
+                window.showToast(`Deducted -${qty} pcs outward dispatch.`);
             }
             setTimeout(() => {
                 window.location.href = '/admin/inventory/';

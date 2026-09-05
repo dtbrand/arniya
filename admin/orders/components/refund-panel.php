@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Refund Voucher &amp; Credit Settlement</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Voucher <strong id="viewRefundIdText" style="color:#8A681F;">REF-4012</strong></p>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Voucher <strong id="viewRefundIdText" style="color:#8A681F;">—</strong></p>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Issue Customer Refund / Credit Note</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="refundOrderIdText" style="color:#8A681F;">DTB-001624</strong></p>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="refundOrderIdText" style="color:#8A681F;">—</strong></p>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px; font-size:11.5px; display:flex; flex-direction:column; gap:5px;">
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:#64748B;">Original Paid Amount:</span>
-                    <strong id="refundMaxAmountDisplay" style="color:#181512;">₹1,12,250</strong>
+                    <strong id="refundMaxAmountDisplay" style="color:#181512;">₹0.00</strong>
                 </div>
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:#64748B;">Previous Refunds:</span>

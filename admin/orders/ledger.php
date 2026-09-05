@@ -5,16 +5,99 @@
  * ledger.php — Printable B2B Customer Account & Financial Ledger Statement
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
+
+use DTBrand\Database;
+use DTBrand\OrderManager;
+
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : '';
 $auto_print = isset($_GET['print']) && $_GET['print'] === '1';
 
-$customer_name = 'Rajesh Kumar (Vardhman Tex)';
-$gstin = '24AAECJ1928K1Z5';
+$rawOrder = null;
+if (!empty($order_id)) {
+    $rawOrder = OrderManager::getOrderDetails($order_id);
+}
+
+if (!$rawOrder) {
+    $recentOrders = OrderManager::getAll();
+    if (!empty($recentOrders[0]['id'])) {
+        $rawOrder = OrderManager::getOrderDetails($recentOrders[0]['id']);
+    }
+}
+
+$db = Database::getConnection();
+$customer_name = 'Customer Account';
 $phone = '+91 70463 63528';
-$email = 'rajesh@vardhmantex.com';
-$address = 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
-$account_tier = 'Verified Wholesale VIP';
-$credit_limit = '15,00,000 (Net 15 Days)';
+$email = '—';
+$address = 'Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002';
+$gstin = '24AAECJ1928K1Z5';
+$account_tier = 'Verified Wholesale Account';
+$credit_limit = '5,00,000 (Net 15 Days)';
+
+$transactions = [];
+$totalDebit = 0.0;
+$totalCredit = 0.0;
+
+if ($rawOrder) {
+    $customer_name = $rawOrder['customer_name'] ?? 'Direct Customer';
+    $phone = !empty($rawOrder['customer_phone']) ? $rawOrder['customer_phone'] : '+91 70463 63528';
+    $address = !empty($rawOrder['shipping_address']) ? $rawOrder['shipping_address'] : $address;
+
+    $custOrders = [];
+    if ($db !== null && !Database::isMockMode()) {
+        try {
+            $cQuery = "SELECT * FROM orders WHERE (customer_id = ? AND customer_id > 0) OR customer_phone = ? OR customer_name = ? ORDER BY id ASC";
+            $stmt = $db->prepare($cQuery);
+            $stmt->execute([(int)($rawOrder['customer_id'] ?? 0), $phone, $customer_name]);
+            $custOrders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\Throwable $e) {
+            $custOrders = [$rawOrder];
+        }
+    }
+    if (empty($custOrders)) {
+        $custOrders = [$rawOrder];
+    }
+
+    $runningBalance = 0.0;
+    foreach ($custOrders as $co) {
+        $ordNum = $co['order_number'] ?? ('DTB-' . str_pad($co['id'], 6, '0', STR_PAD_LEFT));
+        $ordDate = !empty($co['created_at']) ? date('d-M-Y', strtotime($co['created_at'])) : date('d-M-Y');
+        $amt = (float)($co['total_amount'] ?? 0);
+        
+        // 1. Order Debit
+        $runningBalance += $amt;
+        $totalDebit += $amt;
+        $transactions[] = [
+            'date' => $ordDate,
+            'ref' => $ordNum,
+            'desc' => 'Consignment Order Invoice #' . $ordNum,
+            'debit' => $amt,
+            'credit' => null,
+            'balance' => $runningBalance,
+            'status' => 'Billed',
+            'status_color' => '#B45309'
+        ];
+
+        // 2. If Paid, Credit
+        if (strtolower($co['payment_status'] ?? '') === 'paid') {
+            $runningBalance -= $amt;
+            $totalCredit += $amt;
+            $payRef = 'TXN-' . str_pad($co['id'], 6, '0', STR_PAD_LEFT);
+            $transactions[] = [
+                'date' => $ordDate,
+                'ref' => $payRef,
+                'desc' => 'Settlement via ' . ($co['payment_method'] ?? 'Online / UPI'),
+                'debit' => null,
+                'credit' => $amt,
+                'balance' => $runningBalance,
+                'status' => 'PAID',
+                'status_color' => '#15803D'
+            ];
+        }
+    }
+}
+$outstandingBalance = $totalDebit - $totalCredit;
 
 $page_title = "Financial Ledger — " . $customer_name;
 ?>
@@ -61,24 +144,20 @@ $page_title = "Financial Ledger — " . $customer_name;
                 visibility: hidden;
             }
             .dt-ledger-doc, .dt-ledger-doc * {
-                visibility: visible !important;
+                visibility: visible;
+            }
+            .dt-ledger-doc {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                max-width: 100% !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
             }
             .dt-doc-actions-bar {
                 display: none !important;
-            }
-            .dt-ledger-doc {
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                border: 1.5px solid #000000 !important;
-                box-shadow: none !important;
-                padding: 16px !important;
-                margin: 0 !important;
-                border-radius: 0 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
             }
         }
     </style>
@@ -87,14 +166,14 @@ $page_title = "Financial Ledger — " . $customer_name;
 
 <!-- Actions Bar -->
 <div class="dt-doc-actions-bar" style="max-width:860px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/admin/orders/view.php?id=<?php echo htmlspecialchars($order_id); ?>" class="dt-btn dt-btn-pale">
+    <a href="/admin/orders/" class="dt-btn dt-btn-pale">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        <span>Back to Order</span>
+        <span>Back to Orders</span>
     </a>
     <div style="display:flex; gap:8px;">
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW ? window.DT_ORDER_VIEW.exportLedgerCSV() : window.print()">
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_DOCS.exportLedgerExcel()">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            <span>Export Excel (.xls)</span>
+            <span>Export Excel</span>
         </button>
         <button type="button" class="dt-btn dt-btn-gold" onclick="window.print()">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
@@ -120,7 +199,7 @@ $page_title = "Financial Ledger — " . $customer_name;
         </div>
         <div style="text-align:right;">
             <div style="font-size:16px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.5px;">ACCOUNT LEDGER</div>
-            <div style="font-size:11px; color:#64748B; margin-top:2px;">Statement Period: <strong>FY 2026-27</strong></div>
+            <div style="font-size:11px; color:#64748B; margin-top:2px;">Statement Period: <strong>FY <?= date('Y') ?>-<?= date('y', strtotime('+1 year')) ?></strong></div>
             <div style="font-size:11px; color:#64748B;">Date: <strong><?php echo date('d M Y'); ?></strong></div>
         </div>
     </div>
@@ -137,7 +216,7 @@ $page_title = "Financial Ledger — " . $customer_name;
             <div style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:3px;">Wholesale Terms:</div>
             <strong>Account Tier:</strong> <?php echo htmlspecialchars($account_tier); ?><br>
             <strong>Credit Limit:</strong> ₹ <?php echo htmlspecialchars($credit_limit); ?><br>
-            <strong>Ledger Balance:</strong> <strong style="color:#15803D;">₹ 0.00 (All Invoices Settled)</strong>
+            <strong>Ledger Balance:</strong> <strong style="color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;">₹ <?= number_format($outstandingBalance, 2) ?> (<?= $outstandingBalance <= 0 ? 'All Invoices Settled' : 'Payment Due' ?>)</strong>
         </div>
     </div>
 
@@ -145,22 +224,22 @@ $page_title = "Financial Ledger — " . $customer_name;
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:16px;">
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Lifetime Business</div>
-            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ 8,42,500.00</div>
-            <div style="font-size:9.5px; color:#64748B;">14 Consignments</div>
+            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ <?= number_format($totalDebit, 2) ?></div>
+            <div style="font-size:9.5px; color:#64748B;"><?= count($transactions) ?> Entries Recorded</div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#15803D; text-transform:uppercase;">Total Settled</div>
-            <div style="font-size:15px; font-weight:800; color:#15803D; margin-top:2px;">₹ 8,42,500.00</div>
-            <div style="font-size:9.5px; color:#16A34A; font-weight:700;">100% Paid / Cleared</div>
+            <div style="font-size:15px; font-weight:800; color:#15803D; margin-top:2px;">₹ <?= number_format($totalCredit, 2) ?></div>
+            <div style="font-size:9.5px; color:#16A34A; font-weight:700;"><?= $totalDebit > 0 ? round(($totalCredit / $totalDebit) * 100, 1) . '% Cleared' : '100% Cleared' ?></div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#64748B; text-transform:uppercase;">Current Balance</div>
-            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ 0.00</div>
-            <div style="font-size:9.5px; color:#15803D; font-weight:700;">All Cleared</div>
+            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ <?= number_format($outstandingBalance, 2) ?></div>
+            <div style="font-size:9.5px; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>; font-weight:700;"><?= $outstandingBalance <= 0 ? 'All Cleared' : 'Pending' ?></div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Credit Facility</div>
-            <div style="font-size:15px; font-weight:800; color:#8A681F; margin-top:2px;">₹ 15,00,000</div>
+            <div style="font-size:15px; font-weight:800; color:#8A681F; margin-top:2px;">₹ 5,00,000</div>
             <div style="font-size:9.5px; color:#64748B;">Net 15 Days Term</div>
         </div>
     </div>
@@ -179,86 +258,31 @@ $page_title = "Financial Ledger — " . $customer_name;
             </tr>
         </thead>
         <tbody>
+            <?php if (empty($transactions)): ?>
+            <tr>
+                <td colspan="7" style="text-align:center; padding:20px; color:#64748B;">No ledger transactions recorded for this account.</td>
+            </tr>
+            <?php else: ?>
+            <?php foreach ($transactions as $t): ?>
             <tr style="border-bottom:1px solid #E2E8F0;">
-                <td style="padding:7px 10px;">21-Aug-2026</td>
-                <td style="padding:7px 10px; font-weight:800; color:#8A681F;">DTB-001624</td>
-                <td style="padding:7px 10px;">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,12,250.00</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,12,250.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#B45309;">Billed</td>
+                <td style="padding:7px 10px;"><?= htmlspecialchars($t['date']) ?></td>
+                <td style="padding:7px 10px; font-weight:800; color:#8A681F;"><?= htmlspecialchars($t['ref']) ?></td>
+                <td style="padding:7px 10px;"><?= htmlspecialchars($t['desc']) ?></td>
+                <td style="padding:7px 10px; text-align:right; font-weight:700;"><?= $t['debit'] !== null ? number_format($t['debit'], 2) : '—' ?></td>
+                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;"><?= $t['credit'] !== null ? number_format($t['credit'], 2) : '—' ?></td>
+                <td style="padding:7px 10px; text-align:right; font-weight:700;"><?= number_format($t['balance'], 2) ?></td>
+                <td style="padding:7px 10px; text-align:center; font-weight:700; color:<?= $t['status_color'] ?>;"><?= htmlspecialchars($t['status']) ?></td>
             </tr>
-            <tr style="border-bottom:1px solid #E2E8F0; background:#F8FAFC;">
-                <td style="padding:7px 10px;">21-Aug-2026</td>
-                <td style="padding:7px 10px; font-family:monospace; font-weight:700;">UTR-9821039812</td>
-                <td style="padding:7px 10px; color:#15803D; font-weight:600;">Bank Wire / RTGS Full Settlement</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">1,12,250.00</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">0.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">PAID</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0;">
-                <td style="padding:7px 10px;">10-Aug-2026</td>
-                <td style="padding:7px 10px; font-weight:800; color:#8A681F;">DTB-001605</td>
-                <td style="padding:7px 10px;">Banarasi Silk Lot Consignment (40pcs)</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">2,45,000.00</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">2,45,000.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">Delivered</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0; background:#F8FAFC;">
-                <td style="padding:7px 10px;">11-Aug-2026</td>
-                <td style="padding:7px 10px; font-family:monospace; font-weight:700;">UTR-882910398</td>
-                <td style="padding:7px 10px; color:#15803D; font-weight:600;">RTGS ICICI Bank Full Settlement</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">2,45,000.00</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">0.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">PAID</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0;">
-                <td style="padding:7px 10px;">25-Jul-2026</td>
-                <td style="padding:7px 10px; font-weight:800; color:#8A681F;">DTB-001582</td>
-                <td style="padding:7px 10px;">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,85,250.00</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,85,250.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">Delivered</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0; background:#F8FAFC;">
-                <td style="padding:7px 10px;">26-Jul-2026</td>
-                <td style="padding:7px 10px; font-family:monospace; font-weight:700;">UTR-771829301</td>
-                <td style="padding:7px 10px; color:#15803D; font-weight:600;">HDFC NetBanking Direct Settlement</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">1,85,250.00</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">0.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">PAID</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0;">
-                <td style="padding:7px 10px;">08-Jul-2026</td>
-                <td style="padding:7px 10px; font-weight:800; color:#8A681F;">DTB-001550</td>
-                <td style="padding:7px 10px;">Paithani Heritage Zari Collection (20pcs)</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,42,000.00</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700;">1,42,000.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">Delivered</td>
-            </tr>
-            <tr style="border-bottom:1px solid #E2E8F0; background:#F8FAFC;">
-                <td style="padding:7px 10px;">09-Jul-2026</td>
-                <td style="padding:7px 10px; font-family:monospace; font-weight:700;">UTR-662918274</td>
-                <td style="padding:7px 10px; color:#15803D; font-weight:600;">SBI Corporate Direct Wire Transfer</td>
-                <td style="padding:7px 10px; text-align:right; color:#94A3B8;">—</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">1,42,000.00</td>
-                <td style="padding:7px 10px; text-align:right; font-weight:700; color:#15803D;">0.00</td>
-                <td style="padding:7px 10px; text-align:center; font-weight:700; color:#15803D;">PAID</td>
-            </tr>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
         <tfoot>
             <tr style="background:#FAF5E8; font-weight:800; border-top:2px solid #8A681F; border-bottom:2px solid #8A681F;">
                 <td colspan="3" style="padding:10px; text-align:right; color:#181512; text-transform:uppercase;">RECONCILED TOTALS:</td>
-                <td style="padding:10px; text-align:right; color:#181512;">₹ 6,84,500.00</td>
-                <td style="padding:10px; text-align:right; color:#15803D;">₹ 6,84,500.00</td>
-                <td style="padding:10px; text-align:right; color:#15803D;">₹ 0.00</td>
-                <td style="padding:10px; text-align:center; color:#15803D;">ALL CLEAR</td>
+                <td style="padding:10px; text-align:right; color:#181512;">₹ <?= number_format($totalDebit, 2) ?></td>
+                <td style="padding:10px; text-align:right; color:#15803D;">₹ <?= number_format($totalCredit, 2) ?></td>
+                <td style="padding:10px; text-align:right; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;">₹ <?= number_format($outstandingBalance, 2) ?></td>
+                <td style="padding:10px; text-align:center; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;"><?= $outstandingBalance <= 0 ? 'ALL CLEAR' : 'DUE' ?></td>
             </tr>
         </tfoot>
     </table>

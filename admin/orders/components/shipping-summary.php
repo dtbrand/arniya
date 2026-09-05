@@ -31,13 +31,13 @@ $tracking_id = isset($order['tracking_id']) ? $order['tracking_id'] : 'VRL-SURAT
         </div>
         <div style="display:flex; justify-content:space-between;">
             <span style="color:#64748B;">Est. Delivery:</span>
-            <strong style="color:#15803D;">22 Aug 2026 (Depot Dock)</strong>
+            <strong style="color:#15803D;"><?php echo htmlspecialchars($order['estimated_delivery'] ?? (date('d M Y', strtotime($order['date'] ?? 'now') + 86400 * 2) . ' (Depot Dock)')); ?></strong>
         </div>
         <div style="display:flex; gap:6px; margin-top:4px;">
-            <a href="/admin/orders/shipping-label.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
+            <a href="/admin/orders/shipping-label.php?id=<?php echo htmlspecialchars($order['id'] ?? ''); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
                 <span>Print Label</span>
             </a>
-            <a href="/admin/orders/packing-slip.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
+            <a href="/admin/orders/packing-slip.php?id=<?php echo htmlspecialchars($order['id'] ?? ''); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
                 <span>Packing Slip</span>
             </a>
         </div>

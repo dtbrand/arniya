@@ -746,33 +746,41 @@ if (!headers_sent()) {
     </div>
 </div>
 
+<?php
+if (!class_exists('\DTBrand\Database')) {
+    $__dbPath = __DIR__ . '/../../src/Database.php';
+    if (file_exists($__dbPath)) {
+        require_once $__dbPath;
+    }
+}
+
+$hdrProds = [];
+$hdrOrders = [];
+$hdrPartners = [];
+
+if (class_exists('\DTBrand\Database')) {
+    $hdrPdo = \DTBrand\Database::getConnection();
+    if ($hdrPdo !== null && !\DTBrand\Database::isMockMode()) {
+        try {
+            $hdrProds = \DTBrand\Database::query("SELECT id, sku, title as name, category_name as category, wholesale_price, retail_price, stock_qty as stock, primary_image as image FROM `products` WHERE `status` != 'draft' ORDER BY `id` DESC LIMIT 50") ?: [];
+        } catch (\Throwable $e) {}
+        try {
+            $hdrOrders = \DTBrand\Database::query("SELECT id, order_number, customer_name as customer, CONCAT(COALESCE(shipping_city,''), IF(shipping_state IS NOT NULL, CONCAT(', ', shipping_state), '')) as city, total_amount as amount, order_status as status FROM `orders` ORDER BY `id` DESC LIMIT 50") ?: [];
+        } catch (\Throwable $e) {}
+        try {
+            $hdrPartners = \DTBrand\Database::query("SELECT name, CONCAT(COALESCE(city,''), IF(state IS NOT NULL, CONCAT(', ', state), '')) as city, phone, tier FROM `customers` WHERE `type` IN ('wholesale', 'retailer', 'reseller') ORDER BY `id` DESC LIMIT 50") ?: [];
+        } catch (\Throwable $e) {}
+    }
+}
+?>
 <script>
 (function() {
     'use strict';
 
-    // Fallback Mock Data for Universal Global Search across all Admin pages
-    window.DT_GLOBAL_PRODS = [
-        { id: 111, sku: 'KLN-SR-111', name: 'Pure Dola Silk Meenakari Saree', category: 'Sarees', wholesale_price: 1399, retail_price: 3499, stock: 95, image: '/assets/images/product2.png' },
-        { id: 109, sku: 'KLN-KT-109', name: 'Party Festive Sharara Suit Set', category: 'Kurtis', wholesale_price: 989, retail_price: 2699, stock: 125, image: '/assets/images/product5.png' },
-        { id: 110, sku: 'KLN-SR-110', name: 'Paithani Rich Pallu Saree', category: 'Sarees', wholesale_price: 1249, retail_price: 3199, stock: 110, image: '/assets/images/product1.png' },
-        { id: 106, sku: 'KLN-SR-106', name: 'Chanderi Silk Festive Saree', category: 'Sarees', wholesale_price: 649, retail_price: 1599, stock: 190, image: '/assets/images/product1.png' },
-        { id: 6,   sku: 'KLN-LH-006', name: 'Bridal Zardosi Lehenga Set', category: 'Lehengas', wholesale_price: 16499, retail_price: 24999, stock: 35, image: '/assets/images/product6.png' },
-        { id: 114, sku: 'KLN-GW-114', name: 'Indo-Western Embroidered Gown', category: 'Gowns', wholesale_price: 1999, retail_price: 4599, stock: 65, image: '/assets/images/product6.png' },
-        { id: 116, sku: 'KLN-DM-116', name: 'Pure Cotton Unstitched Suit Lot', category: 'Dress Materials', wholesale_price: 599, retail_price: 1499, stock: 180, image: '/assets/images/product3.png' }
-    ];
-
-    window.DT_GLOBAL_ORDERS = [
-        { id: 'DTB-001620', customer: 'Surat Central Depot (Wholesale Consignee)', city: 'Surat, Gujarat', amount: 54900, status: 'Processing' },
-        { id: 'ORD-9842',   customer: 'Shree Balaji Sarees (Kolkata Wholesaler)', city: 'Kolkata, WB', amount: 62450, status: 'Processing' },
-        { id: 'DTB-001624', customer: 'Kalyan Brocade Hub (Bangalore Depot)', city: 'Bangalore, KA', amount: 38200, status: 'Delivered' },
-        { id: 'DTB-001618', customer: 'Mahalakshmi Silk Mart (Varanasi)', city: 'Varanasi, UP', amount: 48900, status: 'Delivered' }
-    ];
-
-    window.DT_GLOBAL_PARTNERS = [
-        { name: 'Kalyan Brocade Hub', city: 'Surat / Bangalore', phone: '+91 70463 63528', tier: 'Verified Wholesaler' },
-        { name: 'Shree Balaji Sarees', city: 'Kolkata Central Market', phone: '+91 70463 63528', tier: 'Gold Distributor' },
-        { name: 'Radha Krishna Silks', city: 'Ahmedabad Ring Road', phone: '+91 70463 63528', tier: 'VIP Partner' }
-    ];
+    // Universal Global Search across all Admin pages — Live Database Datasets
+    window.DT_GLOBAL_PRODS = <?= json_encode($hdrProds, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.DT_GLOBAL_ORDERS = <?= json_encode($hdrOrders, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.DT_GLOBAL_PARTNERS = <?= json_encode($hdrPartners, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
 
     // ════ ⚡ UNIVERSAL AUTO CLEAR CACHE ENGINE ════
     window.dtAutoClearCache = function() {

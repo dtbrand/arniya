@@ -763,8 +763,8 @@ class OrderManager
                             'amount' => (float)($r['total_amount'] ?? 0),
                             'payment' => $r['payment_method'] ?? 'Bank Wire / RTGS',
                             'payment_status' => $r['payment_status'] ?? 'paid',
-                            'shipping' => $r['courier_name'] ?? 'Delhivery Express',
-                            'tracking' => $r['tracking_number'] ?? ('DEL-' . rand(10000, 99999)),
+                            'shipping' => !empty($r['courier_name']) ? $r['courier_name'] : 'Standard Logistics',
+                            'tracking' => !empty($r['tracking_number']) ? $r['tracking_number'] : '-',
                             'status' => $r['fulfillment_status'] ?? 'processing',
                             'source' => ucfirst($r['channel'] ?? 'Online Shop'),
                             'updated' => 'Just now'

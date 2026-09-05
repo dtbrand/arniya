@@ -11,15 +11,15 @@
             const modal = document.getElementById('updateStatusModal');
             if (!modal) return;
 
-            orderId = orderId || 'DTB-001624';
+            orderId = orderId || '';
             currentStatus = currentStatus || 'pending';
 
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId,
                 status: currentStatus,
-                shipping: 'VRL Logistics Depot',
-                tracking: 'VRL-99821'
+                shipping: 'Delhivery Express',
+                tracking: '—'
             };
 
             const orderIdEl = document.getElementById('modalOrderIdText');
@@ -44,7 +44,7 @@
             if (carrierEl && order.shipping) carrierEl.value = order.shipping;
 
             const trackingEl = document.getElementById('modalTrackingInput');
-            if (trackingEl) trackingEl.value = order.tracking || `VRL-${Math.floor(10000 + Math.random() * 90000)}`;
+            if (trackingEl) trackingEl.value = order.tracking || '—';
 
             modal.style.display = 'flex';
         },
@@ -86,10 +86,10 @@
         },
 
         confirmStatusUpdate: function() {
-            const orderId = document.getElementById('modalOrderIdText')?.textContent || 'DTB-001624';
+            const orderId = document.getElementById('modalOrderIdText')?.textContent || '';
             const newStatus = document.getElementById('modalNewStatus')?.value || 'shipped';
-            const carrier = document.getElementById('modalCarrierSelect')?.value || 'VRL Logistics Depot';
-            const tracking = document.getElementById('modalTrackingInput')?.value || 'VRL-99821';
+            const carrier = document.getElementById('modalCarrierSelect')?.value || 'Delhivery Express';
+            const tracking = document.getElementById('modalTrackingInput')?.value || '—';
             const notifyWA = document.getElementById('modalNotifyWhatsApp')?.checked;
 
             // Live API persistence to database
@@ -154,7 +154,7 @@
         openCancelModal: function(orderId) {
             const modal = document.getElementById('cancelOrderModal');
             if (modal) {
-                document.getElementById('cancelModalOrderIdText').textContent = orderId || 'DTB-001624';
+                document.getElementById('cancelModalOrderIdText').textContent = orderId || '';
                 modal.style.display = 'flex';
             }
         },

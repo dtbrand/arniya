@@ -65,7 +65,7 @@
         'REF-4009': {
             refundId: 'REF-4009',
             orderId: 'DTB-001598',
-            customer: 'Vardhman Tex Godown',
+            customer: 'Wholesale Partner Godown',
             contact: '+91 70463 63528',
             location: 'Surat Central Depot',
             payoutMethod: 'HDFC Bank Wire Transfer',
@@ -212,13 +212,13 @@
             if (!drawer) return;
 
             const orderIdEl = document.getElementById('refundOrderIdText');
-            if (orderIdEl) orderIdEl.textContent = orderId || 'DTB-001624';
+            if (orderIdEl) orderIdEl.textContent = orderId || '';
 
             const maxDisplay = document.getElementById('refundMaxAmountDisplay');
-            if (maxDisplay) maxDisplay.textContent = '₹' + Number(maxAmount || 112250).toLocaleString('en-IN');
+            if (maxDisplay) maxDisplay.textContent = '₹' + Number(maxAmount || 0).toLocaleString('en-IN');
 
             const amountInput = document.getElementById('refundAmountInput');
-            if (amountInput) amountInput.value = maxAmount || 112250;
+            if (amountInput) amountInput.value = maxAmount || 0;
 
             drawer.style.display = 'flex';
         },
@@ -229,8 +229,8 @@
         },
 
         confirmRefund: function() {
-            const orderId = document.getElementById('refundOrderIdText')?.textContent || 'DTB-001624';
-            const amount = document.getElementById('refundAmountInput')?.value || '112250';
+            const orderId = document.getElementById('refundOrderIdText')?.textContent || '';
+            const amount = document.getElementById('refundAmountInput')?.value || '0';
             const method = document.getElementById('refundMethodSelect')?.value || 'Original Payment Gateway';
 
             this.closeRefundDrawer();
@@ -410,18 +410,22 @@
                 const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_refund_cols') || '{}');
                 hiddenCols[colClass] = !isChecked;
                 localStorage.setItem('dt_hidden_refund_cols', JSON.stringify(hiddenCols));
-            } catch (e) {}
+            } catch {
+                // Ignore storage access error
+            }
 
             if (window.DT_ORDERS) {
                 const cleanName = colClass.replace('col-ref-', '').toUpperCase();
-                window.DT_ORDERS.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+                window.DT_ORDERS.showToast(isChecked ? cleanName + ' column visible' : cleanName + ' column hidden');
             }
         },
 
         resetAllColumns: function() {
             try {
                 localStorage.removeItem('dt_hidden_refund_cols');
-            } catch (e) {}
+            } catch {
+                // Ignore storage access error
+            }
 
             const checkboxes = document.querySelectorAll('#refundColumnVisibilityMenu input[type="checkbox"]');
             checkboxes.forEach(cb => {
@@ -433,7 +437,7 @@
                 }
             });
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ All refund columns restored to default view');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('All refund columns restored to default view');
         },
 
         initColumnPreferences: function() {
@@ -448,7 +452,9 @@
                         if (cb) cb.checked = false;
                     }
                 });
-            } catch (e) {}
+            } catch {
+                // Ignore storage access error
+            }
         }
     };
 
