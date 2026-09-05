@@ -3210,7 +3210,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     } else if (srvType === 'reseller') {
                         window.location.href = '/reseller.php';
                     } else {
-                        // Customer ➔ Show member dashboard on account.php
+                        // Customer -> Show member dashboard on account.php
                         checkUserAuth();
                     }
                 } else {

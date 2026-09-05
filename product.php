@@ -369,7 +369,7 @@ function pdp_relative_date(string $ts): string
             <div class="pdp-rating-row">
                 <?php if ($pReviewCount > 0 && $pRating > 0): ?>
                 <div class="pdp-rating-pill">
-                    <span>★ <?= number_format($pRating, 1) ?></span>
+                    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><?= number_format($pRating, 1) ?></span>
                 </div>
                 <span class="pdp-review-count"><?= (int)$pReviewCount ?> Verified Review<?= $pReviewCount === 1 ? '' : 's' ?></span>
                 <?php else: ?>
@@ -408,7 +408,7 @@ function pdp_relative_date(string $ts): string
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
-                    <span>Inclusive of all taxes</span> • <span class="green">✓ In Stock &amp; Ready to Ship</span>
+                    <span>Inclusive of all taxes</span> • <span class="green"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>In Stock &amp; Ready to Ship</span>
                 </div>
                 <!-- ════════════ 2-BADGE ULTRA-PREMIUM TRUST STRIP ════════════ -->
                 <div class="pdp-trust-dual-strip">
@@ -475,7 +475,7 @@ function pdp_relative_date(string $ts): string
                     <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:6px; max-height:140px; overflow-y:auto; padding-right:4px;">
                         <?php foreach ($product['full_set_variants'] ?? $product['variants'] as $fsv): ?>
                         <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:4px; padding:4px 8px; font-size:11px;">
-                            <span style="color:#22C55E; font-weight:800;">✓</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span style="width:8px; height:8px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($fsv['color'] ?? '')) ?>; display:inline-block; border:1px solid #fff;"></span>
                             <strong style="color:#FAF5E8;"><?= htmlspecialchars($fsv['color'] ?? 'Standard') ?></strong>
                             <span style="color:#D4AF37;">/</span>
@@ -747,7 +747,12 @@ function pdp_relative_date(string $ts): string
         <div class="pdp-rev-header-grid">
             <div class="pdp-overall-score">
                 <div class="pdp-big-rating"><?= number_format($pRating, 1) ?></div>
-                <div class="pdp-big-stars"><?= str_repeat('★', max(1, min(5, (int)round($pRating)))) ?></div>
+                <?php $bigStarScore = max(1, min(5, (int)round($pRating))); ?>
+                <div class="pdp-big-stars" aria-label="<?= $bigStarScore ?> of 5 stars">
+                    <?php for ($si = 0; $si < 5; $si++): ?>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="<?= $si < $bigStarScore ? '#D4AF37' : '#E2E8F0' ?>" stroke="none" style="display:inline-block; vertical-align:middle; margin-right:2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <?php endfor; ?>
+                </div>
                 <span class="pdp-rec-pill">
                     <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     100% Recommended
@@ -813,7 +818,11 @@ function pdp_relative_date(string $ts): string
                             <span class="pdp-rc-loc-date"><?= htmlspecialchars($revWhen) ?></span>
                             <?php endif; ?>
                         </div>
-                        <div class="pdp-rc-stars"><?= str_repeat('★', $revRating) ?></div>
+                        <div class="pdp-rc-stars" aria-label="<?= $revRating ?> of 5 stars">
+                            <?php for ($rsi = 0; $rsi < $revRating; $rsi++): ?>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#D4AF37" stroke="none" style="display:inline-block; vertical-align:middle; margin-right:1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <?php endfor; ?>
+                        </div>
                     </div>
 
                     <?php if (trim((string)$rev['title']) !== ''): ?>
@@ -843,8 +852,9 @@ function pdp_relative_date(string $ts): string
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             Verified Boutique Purchase
                         </span>
-                        <button type="button" class="pdp-rc-helpful-btn" onclick="this.classList.toggle('voted'); this.innerHTML = this.classList.contains('voted') ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> Helpful (1)' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> Helpful';">
-                            👍 Helpful
+                        <button type="button" class="pdp-rc-helpful-btn" onclick="this.classList.toggle('voted'); this.innerHTML = this.classList.contains('voted') ? '<svg width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2.2\' stroke-linecap=\'round\' stroke-linejoin=\'round\' style=\'display:inline-block;vertical-align:-1px;margin-right:4px;\'><path d=\'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3\'></path></svg> Helpful (1)' : '<svg width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2.2\' stroke-linecap=\'round\' stroke-linejoin=\'round\' style=\'display:inline-block;vertical-align:-1px;margin-right:4px;\'><path d=\'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3\'></path></svg> Helpful';">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                            Helpful
                         </button>
                     </div>
                 </article>
@@ -1041,11 +1051,11 @@ function pdp_relative_date(string $ts): string
                 <div>
                     <label style="font-size:0.72rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Your Overall Rating *</label>
                     <div id="pdpStarRatingSelector" style="display:flex; gap:6px; font-size:1.5rem; color:#F59E0B; cursor:pointer;">
-                        <span data-val="1" onclick="setReviewRating(1)">★</span>
-                        <span data-val="2" onclick="setReviewRating(2)">★</span>
-                        <span data-val="3" onclick="setReviewRating(3)">★</span>
-                        <span data-val="4" onclick="setReviewRating(4)">★</span>
-                        <span data-val="5" onclick="setReviewRating(5)">★</span>
+                        <span data-val="1" onclick="setReviewRating(1)" aria-label="1 star"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-val="2" onclick="setReviewRating(2)" aria-label="2 stars"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-val="3" onclick="setReviewRating(3)" aria-label="3 stars"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-val="4" onclick="setReviewRating(4)" aria-label="4 stars"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                        <span data-val="5" onclick="setReviewRating(5)" aria-label="5 stars"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                     </div>
                 </div>
 
@@ -1114,7 +1124,7 @@ function pdp_relative_date(string $ts): string
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
                             <span class="pdp-wa-modal-price" id="pdpWaModalPrice"><?= $pPrice > 0 ? '₹' . number_format($pPrice) : 'Price on request' ?></span>
-                            <span style="font-size:0.65rem; color:#2E7D32; font-weight:800; background:#E8F5E9; padding:2px 7px; border-radius:4px;">⚡ Free Delivery (3–5 Days)</span>
+                            <span style="font-size:0.65rem; color:#2E7D32; font-weight:800; background:#E8F5E9; padding:2px 7px; border-radius:4px; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg> Free Delivery (3–5 Days)</span>
                         </div>
                     </div>
                 </div>

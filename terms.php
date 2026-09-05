@@ -3,6 +3,32 @@
  * terms.php — DT Brand's & Jai Hanuman Tex
  * Luxury Master Terms of Wholesale, Manufacturing & Commercial Supply
  */
+require_once __DIR__ . '/src/Database.php';
+use DTBrand\Database;
+
+$contactSettings = [];
+try {
+    foreach (Database::query('SELECT key_name, `value` FROM settings WHERE key_name LIKE "contact_%"') as $r) {
+        $contactSettings[$r['key_name']] = (string)$r['value'];
+    }
+} catch (\Throwable $e) {}
+
+function getContactSetting(string $k, string $def, array $settings): string {
+    $v = trim((string)($settings[$k] ?? ''));
+    return $v !== '' ? $v : $def;
+}
+
+$showroomAddress = getContactSetting('contact_showroom_address', 'Ring Road, Surat Textile Market, Surat, Gujarat 395002', $contactSettings);
+$whatsappHotline = getContactSetting('contact_whatsapp_hotline', '+91 70463 63528', $contactSettings);
+$wholesaleLine   = getContactSetting('contact_wholesale_line', '+91 70463 63528', $contactSettings);
+$supportEmail    = getContactSetting('contact_support_email', 'care@jaihanumantex.in', $contactSettings);
+$businessHours   = getContactSetting('contact_business_hours', '10:00 AM – 8:00 PM IST (Mon–Sat)', $contactSettings);
+
+$cleanPhone = preg_replace('/[^0-9]/', '', $whatsappHotline);
+if (!$cleanPhone) {
+    $cleanPhone = '917046363528';
+}
+
 $pageTitle = "Terms of Wholesale & Supply — DT Brand's & Jai Hanuman Tex";
 ?>
 <!DOCTYPE html>
@@ -83,7 +109,8 @@ $pageTitle = "Terms of Wholesale & Supply — DT Brand's & Jai Hanuman Tex";
                 <div class="dt-sidebar-concierge">
                     <h4>Wholesale Assistance</h4>
                     <p>Connect directly with our Surat Mill Dealership Desk for volume quota booking.</p>
-                    <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Mill%20Desk,%20I%20want%20to%20discuss%20wholesale%20supply%20terms." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px;">
+                    <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Mill Desk, I want to discuss wholesale supply terms.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span>WhatsApp B2B Desk</span>
                     </a>
                 </div>
@@ -176,7 +203,8 @@ $pageTitle = "Terms of Wholesale & Supply — DT Brand's & Jai Hanuman Tex";
                             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             <span>Explore Wholesale Catalog</span>
                         </a>
-                        <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20agree%20to%20terms%20and%20want%20to%20place%20a%20bale%20order." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
+                        <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Team, I agree to terms and want to place a bale order.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>Place B2B Lot Order</span>
                         </a>
                     </div>

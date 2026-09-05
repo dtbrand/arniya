@@ -3,6 +3,32 @@
  * privacy.php — DT Brand's & Jai Hanuman Tex
  * Luxury Master Privacy Policy & B2B Data Safeguards
  */
+require_once __DIR__ . '/src/Database.php';
+use DTBrand\Database;
+
+$contactSettings = [];
+try {
+    foreach (Database::query('SELECT key_name, `value` FROM settings WHERE key_name LIKE "contact_%"') as $r) {
+        $contactSettings[$r['key_name']] = (string)$r['value'];
+    }
+} catch (\Throwable $e) {}
+
+function getContactSetting(string $k, string $def, array $settings): string {
+    $v = trim((string)($settings[$k] ?? ''));
+    return $v !== '' ? $v : $def;
+}
+
+$showroomAddress = getContactSetting('contact_showroom_address', 'Ring Road, Surat Textile Market, Surat, Gujarat 395002', $contactSettings);
+$whatsappHotline = getContactSetting('contact_whatsapp_hotline', '+91 70463 63528', $contactSettings);
+$wholesaleLine   = getContactSetting('contact_wholesale_line', '+91 70463 63528', $contactSettings);
+$supportEmail    = getContactSetting('contact_support_email', 'care@jaihanumantex.in', $contactSettings);
+$businessHours   = getContactSetting('contact_business_hours', '10:00 AM – 8:00 PM IST (Mon–Sat)', $contactSettings);
+
+$cleanPhone = preg_replace('/[^0-9]/', '', $whatsappHotline);
+if (!$cleanPhone) {
+    $cleanPhone = '917046363528';
+}
+
 $pageTitle = "Privacy Policy — DT Brand's & Jai Hanuman Tex";
 ?>
 <!DOCTYPE html>
@@ -83,7 +109,8 @@ $pageTitle = "Privacy Policy — DT Brand's & Jai Hanuman Tex";
                 <div class="dt-sidebar-concierge">
                     <h4>Have Privacy Inquiries?</h4>
                     <p>Our dedicated legal &amp; compliance desk in Surat is available to assist you.</p>
-                    <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Compliance%20Desk,%20I%20have%20a%20privacy%20query." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px;">
+                    <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Compliance Desk, I have a privacy query.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span>WhatsApp Legal Desk</span>
                     </a>
                 </div>
@@ -177,15 +204,16 @@ $pageTitle = "Privacy Policy — DT Brand's & Jai Hanuman Tex";
                     </div>
                     <p>If you have any questions, wish to review your registered business details, or seek data removal, please connect with our Grievance Officer:</p>
                     <div class="dt-card-btn-row">
-                        <a href="tel:+917046363528" class="dt-btn-pale">
+                        <a href="tel:<?= htmlspecialchars($cleanPhone) ?>" class="dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            <span>+91 70463 63528</span>
+                            <span><?= htmlspecialchars($whatsappHotline) ?></span>
                         </a>
-                        <a href="mailto:care@jaihanumantex.in" class="dt-btn-pale">
+                        <a href="mailto:<?= htmlspecialchars($supportEmail) ?>" class="dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            <span>care@jaihanumantex.in</span>
+                            <span><?= htmlspecialchars($supportEmail) ?></span>
                         </a>
-                        <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Team,%20I%20have%20a%20privacy%20question." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
+                        <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Team, I have a privacy question.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>Instant WhatsApp Support</span>
                         </a>
                     </div>

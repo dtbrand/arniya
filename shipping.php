@@ -3,6 +3,32 @@
  * shipping.php — DT Brand's & Jai Hanuman Tex
  * Luxury Master Shipping, Transport Logistics & Dispatch Policy
  */
+require_once __DIR__ . '/src/Database.php';
+use DTBrand\Database;
+
+$contactSettings = [];
+try {
+    foreach (Database::query('SELECT key_name, `value` FROM settings WHERE key_name LIKE "contact_%"') as $r) {
+        $contactSettings[$r['key_name']] = (string)$r['value'];
+    }
+} catch (\Throwable $e) {}
+
+function getContactSetting(string $k, string $def, array $settings): string {
+    $v = trim((string)($settings[$k] ?? ''));
+    return $v !== '' ? $v : $def;
+}
+
+$showroomAddress = getContactSetting('contact_showroom_address', 'Ring Road, Surat Textile Market, Surat, Gujarat 395002', $contactSettings);
+$whatsappHotline = getContactSetting('contact_whatsapp_hotline', '+91 70463 63528', $contactSettings);
+$wholesaleLine   = getContactSetting('contact_wholesale_line', '+91 70463 63528', $contactSettings);
+$supportEmail    = getContactSetting('contact_support_email', 'care@jaihanumantex.in', $contactSettings);
+$businessHours   = getContactSetting('contact_business_hours', '10:00 AM – 8:00 PM IST (Mon–Sat)', $contactSettings);
+
+$cleanPhone = preg_replace('/[^0-9]/', '', $whatsappHotline);
+if (!$cleanPhone) {
+    $cleanPhone = '917046363528';
+}
+
 $pageTitle = "Shipping & Logistics Policy — DT Brand's & Jai Hanuman Tex";
 ?>
 <!DOCTYPE html>
@@ -83,7 +109,8 @@ $pageTitle = "Shipping & Logistics Policy — DT Brand's & Jai Hanuman Tex";
                 <div class="dt-sidebar-concierge">
                     <h4>Need Dispatch Status?</h4>
                     <p>Send your Order ID or LR Number to get real-time location updates.</p>
-                    <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Logistics,%20I%20want%20to%20track%20my%20dispatch%20LR." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px;">
+                    <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Logistics, I want to track my dispatch LR.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald" style="width:100%; box-sizing:border-box; font-size:0.75rem; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span>Track on WhatsApp</span>
                     </a>
                 </div>
@@ -164,12 +191,13 @@ $pageTitle = "Shipping & Logistics Policy — DT Brand's & Jai Hanuman Tex";
                     <p>Track your shipment directly via our automated WhatsApp concierge or speak with our dedicated Surat transport coordinator:</p>
 
                     <div class="dt-card-btn-row">
-                        <a href="https://wa.me/917046363528?text=Hello%20DT%20Brand%20Logistics,%20please%20track%20my%20order." target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
+                        <a href="https://wa.me/<?= htmlspecialchars($cleanPhone) ?>?text=<?= urlencode("Hello DT Brand Logistics, please track my order.") ?>" target="_blank" rel="noopener noreferrer" class="dt-btn-emerald">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>Live WhatsApp LR Track</span>
                         </a>
-                        <a href="tel:+917046363528" class="dt-btn-pale">
-                            <span>Call Logistics Desk: +91 70463 63528</span>
+                        <a href="tel:<?= htmlspecialchars($cleanPhone) ?>" class="dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>Call Logistics Desk: <?= htmlspecialchars($whatsappHotline) ?></span>
                         </a>
                     </div>
                 </article>

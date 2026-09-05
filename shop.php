@@ -84,7 +84,7 @@ $total_products = count($products);
                 <!-- Slide 2: Designer Kurtis Extravaganza -->
                 <div class="hero-banner-slide hero-slide-2" onclick="if(typeof window.filterByBanner==='function') window.filterByBanner('Kurtis');">
                     <div class="hero-slide-content">
-                        <span class="hero-slide-tag">🌸 NEW SEASON DROP</span>
+                        <span class="hero-slide-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>NEW SEASON DROP</span>
                         <h2 class="hero-slide-title">Designer Anarkali & Kurtis</h2>
                         <p class="hero-slide-desc">From ₹1,499 &bull; Pure Georgette & Cotton</p>
                         <button class="hero-slide-btn">Shop Kurtis &rarr;</button>

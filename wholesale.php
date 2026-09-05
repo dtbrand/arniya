@@ -344,7 +344,7 @@ $catalogHasProducts = $catalogProducts !== [];
                 <a href="#" style="display:flex; align-items:center; text-decoration:none;">
                     <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
                 </a>
-                <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
+                <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
 
             <div class="ws-sidebar-scroll">
@@ -906,7 +906,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
                             <?php foreach ($catalogProducts as $prod): 
                                 $badge_raw = $prod['badge'] ?? 'Bestseller';
-                                $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                                $badge_slug = strtolower(preg_replace('/[^a-z0-9_-]/i', '', str_replace(' ', '-', (string)$badge_raw)));
                                 // Guarded: retail_price is 0 for a product still awaiting pricing, and
                                 // dividing by it threw DivisionByZeroError and blanked the dashboard.
                                 $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
@@ -1221,7 +1221,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                             Edit Billing Address
                                         </h4>
                                     </div>
-                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                    <button type="button" onclick="closeEditAddressDrawer()" aria-label="Close" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
 
                                 <div class="ws-form-grid">
@@ -1278,7 +1278,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                             Edit Delivery Address
                                         </h4>
                                     </div>
-                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                    <button type="button" onclick="closeEditAddressDrawer()" aria-label="Close" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
 
                                 <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
@@ -1412,7 +1412,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-luxury-search-wrap">
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier, AWB..." oninput="filterOrdersTable()">
-                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                     </div>
 
@@ -1499,7 +1499,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-luxury-search-wrap">
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU, lot..." oninput="handleReportSearch(this.value)">
-                            <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                     </div>
 
@@ -1785,25 +1785,25 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                             <span id="wsFilterCategoryPill" style="display:none; background:#B45309; color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActiveCatName">Kurtis</span>
-                                <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Category">✕</span>
+                                <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Category"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsFilterSubCategoryPill" style="display:none; background:linear-gradient(135deg, #F59E0B, #D97706); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActiveSubCatName">Sharara Sets</span>
-                                <span onclick="event.stopPropagation(); clearSubCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Sub-Category">✕</span>
+                                <span onclick="event.stopPropagation(); clearSubCategoryOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Sub-Category"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsFilterPricePill" style="display:none; background:linear-gradient(135deg, #D97706, #B45309); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActivePriceName">Under ₹1,000</span>
-                                <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Price Filter">✕</span>
+                                <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Price Filter"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:800;">(5 Lots Available)</span>
                         </div>
-                        <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0;">✕ Clear All</button>
+                        <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0; display:inline-flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Clear All</button>
                     </div>
 
                     <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
                         <?php foreach ($catalogProducts as $prod): 
                             $badge_raw = $prod['badge'] ?? 'Bestseller';
-                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                            $badge_slug = strtolower(preg_replace('/[^a-z0-9_-]/i', '', str_replace(' ', '-', (string)$badge_raw)));
                             // Guarded: retail_price is 0 for a product still awaiting pricing, and
                             // dividing by it threw DivisionByZeroError and blanked the dashboard.
                             $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
@@ -2676,7 +2676,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <svg class="ws-ico gold" style="width:18px;height:18px;margin-right:6px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     Filter Analytics Date Range
                 </div>
-                <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close">✕</button>
+                <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <div class="ws-modal-body" style="padding: 16px 20px;">
                 <div style="font-size:0.78rem; font-weight:700; color:var(--ws-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">

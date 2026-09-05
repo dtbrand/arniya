@@ -1522,7 +1522,7 @@ body.mobile-search-open #mobileBottomBar {
 
     <!-- ═══ Mobile In-Header Sticky Search Bar (Wide & Clean Full-Width, Replaces Normal View on Search/Scroll) ═══ -->
     <div class="mobile-full-search-bar" id="mobileFullSearchBar">
-        <!-- Center: Full-Width Search Input Bar with Gold Search Icon & Clear '✕' -->
+        <!-- Center: Full-Width Search Input Bar with Gold Search Icon & Clear Button -->
         <div class="mobile-search-input-wrap">
             <svg class="mobile-search-lead-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" style="color:var(--dark-gold, #8A681F); flex-shrink:0; margin-right:4px;">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -1938,7 +1938,7 @@ window.closeWishlistDrawer = function() {
                         '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;stroke-width:2.2;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
                         '<span>' + highlightedName + '</span>' +
                         '</div>' +
-                        '<span style="font-size:0.70rem;color:#8A681F;font-weight:700;">Explore Category ➔</span>' +
+                        '<span style="font-size:0.70rem;color:#8A681F;font-weight:700;display:inline-flex;align-items:center;gap:3px;">Explore Category <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>' +
                         '</a>';
             });
         }
@@ -1965,7 +1965,7 @@ window.closeWishlistDrawer = function() {
                             (p.discount_pct > 0 ? '<span class="mobile-sugg-disc">' + p.discount_pct + '% OFF</span>' : '') +
                             '</div>' +
                             '</div>' +
-                            '<div style="font-size:0.70rem;color:#8A681F;font-weight:800;padding:4px 8px;background:#FAF5E8;border:1px solid #D4AF37;border-radius:12px;flex-shrink:0;">View ➔</div>' +
+                            '<div style="font-size:0.70rem;color:#8A681F;font-weight:800;padding:4px 8px;background:#FAF5E8;border:1px solid #D4AF37;border-radius:12px;flex-shrink:0;display:inline-flex;align-items:center;gap:3px;">View <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>' +
                             '</a>';
                 });
             } else {
@@ -1987,7 +1987,7 @@ window.closeWishlistDrawer = function() {
                             (p.discount_pct > 0 ? '<span class="dt-sugg-disc">' + p.discount_pct + '% OFF</span>' : '') +
                             '</div>' +
                             '</div>' +
-                            '<span class="dt-sugg-view-btn">View Product ➔</span>' +
+                            '<span class="dt-sugg-view-btn">View Product <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:-1px;margin-left:3px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>' +
                             '</a>';
                 });
             }

@@ -448,7 +448,7 @@ $catalogHasProducts = $catalogProducts !== [];
                 </button>
             </div>
 
-            <!-- Right Close '✕' Button (Closes mobile search overlay) -->
+            <!-- Right Close Button (Closes mobile search overlay) -->
             <button type="button" class="mobile-search-close-btn" id="wsMobileSearchCloseBtn" onclick="closeMobileSearchOverlay()" aria-label="Close search">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
@@ -464,7 +464,7 @@ $catalogHasProducts = $catalogProducts !== [];
                 <a href="#" style="display:flex; align-items:center; text-decoration:none;">
                     <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
                 </a>
-                <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
+                <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
 
             <div class="ws-sidebar-scroll">
@@ -1065,7 +1065,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
                             <?php foreach ($catalogProducts as $prod): 
                                 $badge_raw = $prod['badge'] ?? 'Bestseller';
-                                $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                                $badge_slug = strtolower(preg_replace('/[^a-z0-9_-]/i', '', str_replace(' ', '-', (string)$badge_raw)));
                                 // Guarded: retail_price is 0 for a product still awaiting pricing, and
                                 // dividing by it threw DivisionByZeroError and blanked the dashboard.
                                 $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
@@ -1380,7 +1380,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                             Edit Billing Address
                                         </h4>
                                     </div>
-                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                    <button type="button" onclick="closeEditAddressDrawer()" aria-label="Close" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
 
                                 <div class="ws-form-grid">
@@ -1437,7 +1437,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                             Edit Delivery Address
                                         </h4>
                                     </div>
-                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                    <button type="button" onclick="closeEditAddressDrawer()" aria-label="Close" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
 
                                 <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
@@ -1571,7 +1571,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-luxury-search-wrap">
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier, AWB..." oninput="filterOrdersTable()">
-                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                             <button type="button" class="ws-search-action-btn" aria-label="Search">
                                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             </button>
@@ -1661,7 +1661,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-luxury-search-wrap">
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU, lot..." oninput="handleReportSearch(this.value)">
-                            <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                             <button type="button" class="ws-search-action-btn" aria-label="Search">
                                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             </button>
@@ -1950,25 +1950,25 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                             <span id="wsFilterCategoryPill" style="display:none; background:#B45309; color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActiveCatName">Kurtis</span>
-                                <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Category">✕</span>
+                                <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Category"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsFilterSubCategoryPill" style="display:none; background:linear-gradient(135deg, #F59E0B, #D97706); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActiveSubCatName">Sharara Sets</span>
-                                <span onclick="event.stopPropagation(); clearSubCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Sub-Category">✕</span>
+                                <span onclick="event.stopPropagation(); clearSubCategoryOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Sub-Category"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsFilterPricePill" style="display:none; background:linear-gradient(135deg, #D97706, #B45309); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActivePriceName">Under ₹1,000</span>
-                                <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Price Filter">✕</span>
+                                <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; display:inline-flex; align-items:center;" title="Remove Price Filter"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                             </span>
                             <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:800;">(5 Lots Available)</span>
                         </div>
-                        <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0;">✕ Clear All</button>
+                        <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0; display:inline-flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Clear All</button>
                     </div>
 
                     <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
                         <?php foreach ($catalogProducts as $prod): 
                             $badge_raw = $prod['badge'] ?? 'Bestseller';
-                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                            $badge_slug = strtolower(preg_replace('/[^a-z0-9_-]/i', '', str_replace(' ', '-', (string)$badge_raw)));
                             // Guarded: retail_price is 0 for a product still awaiting pricing, and
                             // dividing by it threw DivisionByZeroError and blanked the dashboard.
                             $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
@@ -2183,7 +2183,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                             <input type="text" id="customerSearchInput" class="ws-luxury-search-input" placeholder="Search by name, phone, city..." oninput="handleCustomerSearch(this.value)" autocomplete="off">
-                            <button class="ws-luxury-search-clear" id="customerSearchClear" onclick="clearCustomerSearch()" aria-label="Clear Search">✕</button>
+                            <button class="ws-luxury-search-clear" id="customerSearchClear" onclick="clearCustomerSearch()" aria-label="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                     </div>
 
@@ -2382,7 +2382,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-smart-search-wrap">
                             <svg class="ws-smart-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:12px!important;top:50%!important;transform:translateY(-50%)!important;pointer-events:none!important;display:inline-block!important;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="followupSearchInput" class="ws-smart-search-input" placeholder="Search follow-ups by customer name, note, mobile..." oninput="handleFollowupSearch(this.value)">
-                            <button type="button" class="ws-input-clear-btn" id="followupSearchClear" onclick="clearFollowupSearch()" title="Clear">✕</button>
+                            <button type="button" class="ws-input-clear-btn" id="followupSearchClear" onclick="clearFollowupSearch()" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
                         <div class="ws-filter-pills" id="followupFilterPills">
                             <button class="ws-filter-pill active" onclick="filterFollowups('all', this)">
@@ -3279,7 +3279,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <svg class="ws-ico gold" style="width:18px;height:18px;margin-right:6px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     Filter Analytics Date Range
                 </div>
-                <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close">✕</button>
+                <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <div class="ws-modal-body" style="padding: 16px 20px;">
                 <div style="font-size:0.78rem; font-weight:700; color:var(--ws-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">
@@ -3558,7 +3558,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-modal-luxury-subtitle">Customer profile for 1-tap WhatsApp sharing & orders</div>
                     </div>
                 </div>
-                <button type="button" class="ws-modal-luxury-close" onclick="closeAddCustomerModal()" title="Close">&times;</button>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeAddCustomerModal()" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <form onsubmit="event.preventDefault(); handleSaveCustomerSubmit();" style="display: flex; flex-direction: column; height: 100%;">
                 <input type="hidden" id="custFormId">
@@ -3579,7 +3579,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <input type="text" id="custFormName" class="ws-smart-input" placeholder="e.g. Rahul Sharma" required oninput="handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormName')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormName')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                             <div>
@@ -3587,7 +3587,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                     <input type="tel" id="custFormMobile" class="ws-smart-input" placeholder="10-digit mobile" required maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormMobile')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormMobile')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                         </div>
@@ -3604,7 +3604,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                     <input type="tel" id="custFormWhatsapp" class="ws-smart-input" placeholder="WhatsApp number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormWhatsapp')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormWhatsapp')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                             <div>
@@ -3612,7 +3612,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                     <input type="email" id="custFormEmail" class="ws-smart-input" placeholder="customer@example.com" oninput="handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormEmail')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormEmail')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                         </div>
@@ -3632,7 +3632,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             <div class="ws-smart-input-wrap">
                                 <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 <input type="text" id="custFormAddress" class="ws-smart-input" placeholder="Flat / Shop No., Building, Road, Landmark..." oninput="handleSmartInputChange(this)">
-                                <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormAddress')" title="Clear">✕</button>
+                                <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormAddress')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                             </div>
                         </div>
 
@@ -3642,7 +3642,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>
                                     <input type="text" id="custFormCity" class="ws-smart-input" placeholder="e.g. Surat" oninput="handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormCity')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormCity')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                             <div>
@@ -3650,7 +3650,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                                     <input type="text" id="custFormState" class="ws-smart-input" placeholder="e.g. Gujarat" oninput="handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormState')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormState')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                             <div>
@@ -3658,7 +3658,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
                                     <input type="text" id="custFormPincode" class="ws-smart-input" placeholder="395002" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartPinAutoFill(this.value); handleSmartInputChange(this)">
-                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormPincode')" title="Clear">✕</button>
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormPincode')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                             </div>
                         </div>
@@ -3677,7 +3677,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-smart-input-wrap">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                             <input type="text" id="custFormTags" class="ws-smart-input" placeholder="e.g. VIP, REPEAT, BRIDAL" oninput="syncCustTagChips(); handleSmartInputChange(this)">
-                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormTags'); syncCustTagChips();" title="Clear">✕</button>
+                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormTags'); syncCustTagChips();" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
 
                         <div class="ws-smart-chips-wrap" id="custSmartTagChips">
@@ -4102,7 +4102,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         <div class="ws-smart-input-wrap" style="margin-bottom:8px;">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
                             <input type="text" id="followupFormNote" class="ws-smart-input" placeholder="e.g. Send Diwali catalog, call for reorder..." required oninput="handleSmartInputChange(this)">
-                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('followupFormNote')" title="Clear">✕</button>
+                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('followupFormNote')" title="Clear" aria-label="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </div>
 
                         <div class="ws-note-prompts-wrap">
