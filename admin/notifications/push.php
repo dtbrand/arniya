@@ -70,8 +70,8 @@ $active_nav = "notifications";
                 <!-- Composer Card -->
                 <div class="adm-card">
                     <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                        <h3 class="adm-card-title"><span>🔔 Compose Push Broadcast</span></h3>
-                        <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 48,500 Devices Ready</span>
+                        <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span>Compose Push Broadcast</span></h3>
+                        <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><span style="width:7px; height:7px; border-radius:50%; background:#16A34A; display:inline-block;"></span><span>48,500 Devices Ready</span></span>
                     </div>
                     <form onsubmit="handleSendPush(event)" style="padding:18px 20px;">
                         <div style="display:flex; flex-direction:column; gap:14px;">
@@ -86,7 +86,7 @@ $active_nav = "notifications";
                             </div>
                             <div>
                                 <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Notification Title *</label>
-                                <input type="text" id="pushTitle" value="✨ Fresh Festive Silk Drop is Live!" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;" oninput="updatePreview()">
+                                <input type="text" id="pushTitle" value="Fresh Festive Silk Drop is Live!" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;" oninput="updatePreview()">
                             </div>
                             <div>
                                 <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Notification Body Message *</label>
@@ -102,7 +102,7 @@ $active_nav = "notifications";
                             <button type="button" class="dt-btn dt-btn-pale" onclick="showToastSafe('Push delivery requires FCM/APNs server keys in .env. Without them this console records templates only — nothing is claimed as sent.')">Test on My Device</button>
                             <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                <span>🚀 Broadcast Push Notification</span>
+                                <span>Broadcast Push Notification</span>
                             </button>
                         </div>
                     </form>
@@ -111,16 +111,16 @@ $active_nav = "notifications";
                 <!-- Live Preview Card -->
                 <div class="dt-phone-preview">
                     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #EAE5D9; padding-bottom:8px; margin-bottom:14px;">
-                        <span style="font-size:11px; font-weight:800; color:#78716C; text-transform:uppercase;">📱 Lock Screen Preview</span>
+                        <span style="font-size:11px; font-weight:800; color:#78716C; text-transform:uppercase; display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg><span>Lock Screen Preview</span></span>
                         <span class="adm-badge gold" style="font-size:10px;">Instant Delivery</span>
                     </div>
                     <div class="dt-push-bubble">
                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-                            <span style="font-size:14px;">👑</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
                             <strong style="font-size:11.5px; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">DT BRAND'S OFFICIAL</strong>
                             <span style="margin-left:auto; font-size:10px; color:#78716C;">Now</span>
                         </div>
-                        <div id="previewTitle" style="font-size:13px; font-weight:800; color:#181512; margin-bottom:4px;">✨ Fresh Festive Silk Drop is Live!</div>
+                        <div id="previewTitle" style="font-size:13px; font-weight:800; color:#181512; margin-bottom:4px;">Fresh Festive Silk Drop is Live!</div>
                         <div id="previewBody" style="font-size:11.5px; color:#475569; line-height:1.4;">Explore brand new pure zari Kanjivaram &amp; Banarasi handloom weaves directly from Surat powerlooms with instant festive discounts!</div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@ $active_nav = "notifications";
 
 <script>
 function updatePreview() {
-    const t = document.getElementById('pushTitle').value || '✨ Fresh Festive Silk Drop is Live!';
+    const t = document.getElementById('pushTitle').value || 'Fresh Festive Silk Drop is Live!';
     const b = document.getElementById('pushBody').value || 'Explore brand new weaves...';
     document.getElementById('previewTitle').textContent = t;
     document.getElementById('previewBody').textContent = b;
@@ -142,7 +142,7 @@ function handleSendPush(e) {
     e.preventDefault();
     const title = document.getElementById('pushTitle').value.trim();
     if (typeof window.showToast === 'function') {
-        window.showToast(`🚀 Push Broadcast "${title}" dispatched successfully!`);
+        window.showToast(`Push Broadcast "${title}" dispatched successfully!`);
     }
 }
 </script>

@@ -31,8 +31,8 @@
                         <span class="dt-badge green" style="cursor:pointer;" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Banner status updated!')">Active</span>
                     </div>
                     <div class="dt-size-badge-wrap">
-                        <span class="dt-size-pill desktop">🖥️ 1920 × 600 (16:5)</span>
-                        <span class="dt-size-pill mobile">📱 1080 × 1350 (4:5)</span>
+                        <span class="dt-size-pill desktop"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>1920 × 600 (16:5)</span>
+                        <span class="dt-size-pill mobile"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>1080 × 1350 (4:5)</span>
                     </div>
                     <div style="font-size:11px; color:#64748b; margin:2px 0;">Target: <code>/shop/silk-sarees</code></div>
                     <div class="dt-banner-meta">
@@ -62,8 +62,8 @@
                         <span class="dt-badge green" style="cursor:pointer;" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Banner status updated!')">Active</span>
                     </div>
                     <div class="dt-size-badge-wrap">
-                        <span class="dt-size-pill desktop">🖥️ 1920 × 450 (4:1)</span>
-                        <span class="dt-size-pill mobile">📱 1080 × 1080 (1:1)</span>
+                        <span class="dt-size-pill desktop"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>1920 × 450 (4:1)</span>
+                        <span class="dt-size-pill mobile"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>1080 × 1080 (1:1)</span>
                     </div>
                     <div style="font-size:11px; color:#64748b; margin:2px 0;">Target: <code>/shop/bridal-lehengas</code></div>
                     <div class="dt-banner-meta">
@@ -93,8 +93,8 @@
                         <span class="dt-badge green" style="cursor:pointer;" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Banner status updated!')">Active</span>
                     </div>
                     <div class="dt-size-badge-wrap">
-                        <span class="dt-size-pill desktop">🖥️ 1200 × 500 (12:5)</span>
-                        <span class="dt-size-pill mobile">📱 1080 × 1350 (4:5)</span>
+                        <span class="dt-size-pill desktop"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>1200 × 500 (12:5)</span>
+                        <span class="dt-size-pill mobile"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>1080 × 1350 (4:5)</span>
                     </div>
                     <div style="font-size:11px; color:#64748b; margin:2px 0;">Target: <code>/collection/reseller-low-moq</code></div>
                     <div class="dt-banner-meta">

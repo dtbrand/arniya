@@ -102,7 +102,7 @@ $existing_notes = [
             <?php endforeach; ?>
         </div>
 
-        <!-- ✍️ Next-Level Note Composer Section -->
+        <!-- Next-Level Note Composer Section -->
         <div style="background:#FDFBF7; border:1.5px solid #D4AF37; border-radius:8px; padding:12px 14px; margin-top:4px; box-shadow:0 2px 6px rgba(212,175,55,0.1);">
             
             <!-- Category Chips Selector -->
@@ -113,11 +113,11 @@ $existing_notes = [
                 </div>
                 <input type="hidden" id="adminNoteSelectedTag" value="Dispatch Verification">
                 <div id="adminNoteTagChips" style="display:flex; flex-wrap:wrap; gap:4px;">
-                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Dispatch Verification')" class="dt-note-tag-chip is-active" style="padding:2px 8px; font-size:10px; font-weight:800; border-radius:4px; border:1px solid #D4AF37; background:#8A681F; color:#FFFFFF; cursor:pointer; transition:all 0.15s ease;">📦 Dispatch</button>
-                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'QC Audit')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">🔍 QC Check</button>
-                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Payment Verification')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">💳 Payment</button>
-                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Customer Follow-up')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">📞 Call Log</button>
-                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Urgent Attention')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">⚠️ Urgent</button>
+                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Dispatch Verification')" class="dt-note-tag-chip is-active" style="padding:2px 8px; font-size:10px; font-weight:800; border-radius:4px; border:1px solid #D4AF37; background:#8A681F; color:#FFFFFF; cursor:pointer; transition:all 0.15s ease;" style="display:inline-flex; align-items:center; gap:4px; padding:2px 8px; font-size:10px; font-weight:800; border-radius:4px; border:1px solid #D4AF37; background:#8A681F; color:#FFFFFF; cursor:pointer; transition:all 0.15s ease;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16.5 9.4L7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg><span>Dispatch</span></button>
+                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'QC Audit')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">QC Check</button>
+                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Payment Verification')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">Payment</button>
+                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Customer Follow-up')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">Call Log</button>
+                    <button type="button" onclick="window.DT_ORDER_VIEW.selectNoteTag(this, 'Urgent Attention')" class="dt-note-tag-chip" style="padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; border:1px solid #CBD5E1; background:#FFFFFF; color:#475569; cursor:pointer; transition:all 0.15s ease;">Urgent</button>
                 </div>
             </div>
 

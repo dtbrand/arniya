@@ -66,8 +66,8 @@ if (empty($coupons)) {
             <!-- Coupons Table Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>🎟️ Active Checkout Promo Codes</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Instant Checkout Redemption</span>
+                    <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Active Checkout Promo Codes</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><span style="width:7px; height:7px; border-radius:50%; background:#16A34A; display:inline-block;"></span><span>Instant Checkout Redemption</span></span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -124,7 +124,7 @@ if (empty($coupons)) {
 <div id="createCouponModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
     <div style="background:#FFFFFF; border-radius:12px; width:95%; max-width:440px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1.5px solid #D4AF37;">
         <h3 style="margin:0 0 14px 0; font-size:1.1rem; font-weight:800; color:#181512; display:flex; align-items:center; gap:8px;">
-            <span>🎟️ Create New Promo Code</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Create New Promo Code</span>
         </h3>
         <form onsubmit="submitNewCoupon(event)">
             <div style="display:flex; flex-direction:column; gap:12px;">
@@ -204,14 +204,14 @@ function submitNewCoupon(e) {
         .then(data => {
             if (data && data.success) {
                 closeCreateCouponModal();
-                dtCouponToast(data.message || `✨ Coupon "${code}" saved in MySQL database!`);
+                dtCouponToast(data.message || `Coupon "${code}" saved in MySQL database!`);
                 setTimeout(() => { window.location.reload(); }, 600);
             } else {
-                dtCouponToast('⚠ ' + ((data && data.message) || `Could not save coupon "${code}".`));
+                dtCouponToast(((data && data.message) || `Could not save coupon "${code}".`));
             }
         })
         .catch(() => {
-            dtCouponToast(`⚠ Network error — coupon "${code}" was NOT saved. Please try again.`);
+            dtCouponToast(`Network error — coupon "${code}" was NOT saved. Please try again.`);
         });
 }
 
@@ -230,13 +230,13 @@ function deleteCoupon(id, code) {
             if (data && data.success) {
                 const r = document.getElementById('couponRow_' + id);
                 if (r) r.remove();
-                dtCouponToast(data.message || `✓ Coupon "${code}" deleted from database.`);
+                dtCouponToast(data.message || `Coupon "${code}" deleted from database.`);
             } else {
-                dtCouponToast('⚠ ' + ((data && data.message) || `Could not delete coupon "${code}".`));
+                dtCouponToast(((data && data.message) || `Could not delete coupon "${code}".`));
             }
         })
         .catch(() => {
-            dtCouponToast(`⚠ Network error — coupon "${code}" was NOT deleted.`);
+            dtCouponToast(`Network error — coupon "${code}" was NOT deleted.`);
         });
 }
 </script>

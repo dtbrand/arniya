@@ -251,7 +251,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <div style="font-size:12px; color:#646970;">
-                        Download Sample Template: <a href="#" onclick="downloadSampleTemplate(); return false;" style="color:#8A681F; font-weight:700; text-decoration:none;">📄 DT_Brand_Wholesale_Template.csv</a>
+                        Download Sample Template: <a href="#" onclick="downloadSampleTemplate(); return false;" style="color:#8A681F; font-weight:700; text-decoration:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>DT_Brand_Wholesale_Template.csv</a>
                     </div>
                     <button type="button" class="wp-button primary" onclick="uploadAndImport()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; display:inline-flex; align-items:center; gap:6px;">
                         <span>Upload &amp; Import Now</span>
@@ -405,7 +405,7 @@ $active_subnav = "imports";
                 </div>
 
                 <div style="background:#DCFCE7; border:1px solid #86EFAC; border-radius:6px; padding:14px; margin-bottom:16px;">
-                    <strong style="color:#15803D; font-size:13px; display:block; margin-bottom:4px;">✓ Zero Critical Blocking Errors</strong>
+                    <strong style="color:#15803D; font-size:13px; display:flex; align-items:center; gap:6px; margin-bottom:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Zero Critical Blocking Errors</span></strong>
                     <span style="font-size:12px; color:#166534;">The result message lists exactly which rows were imported and which were rejected.</span>
                 </div>
 
@@ -495,8 +495,8 @@ function handleFileSelected(input) {
     if (input.files && input.files[0]) {
         const name = input.files[0].name;
         const title = document.getElementById('dropzoneTitle');
-        if (title) title.textContent = `✓ Selected: ${name}`;
-        if (typeof window.showToast === 'function') window.showToast(`✨ File loaded: ${name}`);
+        if (title) title.textContent = `Selected: ${name}`;
+        if (typeof window.showToast === 'function') window.showToast(`File loaded: ${name}`);
     }
 }
 
@@ -517,17 +517,17 @@ function downloadSampleTemplate() {
 function uploadAndImport() {
     const input = document.getElementById('csvFileInput');
     if (!input.files || !input.files[0]) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Choose a .csv file first');
+        if (typeof window.showToast === 'function') window.showToast('Choose a .csv file first');
         return;
     }
     const fd = new FormData();
     fd.append('file', input.files[0]);
-    if (typeof window.showToast === 'function') window.showToast('🚀 Uploading and importing…');
+    if (typeof window.showToast === 'function') window.showToast('Uploading and importing catalog...');
     fetch('/api/products/import.php', { method: 'POST', body: fd, credentials: 'same-origin' })
         .then(r => r.json().then(d => ({ status: r.status, data: d })))
         .then(({ status, data }) => {
             if (status !== 200 || !data || data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + ((data && data.message) || 'Import failed'));
+                if (typeof window.showToast === 'function') window.showToast(((data && data.message) || 'Import failed'));
                 return;
             }
             const doneTitle = document.querySelector('#stepPane7 h2');
@@ -535,10 +535,10 @@ function uploadAndImport() {
             if (doneTitle) doneTitle.textContent = data.failed > 0 ? 'Import finished with warnings' : 'Import Completed Successfully!';
             if (doneText) doneText.textContent = data.message + (data.errors && data.errors.length ? ' First issues: ' + data.errors.slice(0, 5).join(' | ') : '');
             goToStep(7);
-            if (typeof window.showToast === 'function') window.showToast('✓ ' + data.message);
+            if (typeof window.showToast === 'function') window.showToast(data.message);
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
         });
 }
 

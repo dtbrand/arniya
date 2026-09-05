@@ -40,7 +40,7 @@ $active_subnav = "banners";
                 </div>
             </div>
 
-            <form onsubmit="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ New Banner successfully published live!'); return false;" class="dt-form-grid">
+            <form onsubmit="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('New Banner successfully published live!'); return false;" class="dt-form-grid">
                 <!-- Left 2-Col Main Form -->
                 <div>
                     <!-- 1. Banner Copy & Links -->
@@ -88,7 +88,7 @@ $active_subnav = "banners";
                         <!-- Desktop Banner Frame -->
                         <div style="margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                <label class="dt-form-label" style="margin:0;">🖥️ Desktop Banner Asset</label>
+                                <label class="dt-form-label" style="margin:0; display:flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg><span>Desktop Banner Asset</span></label>
                                 <span class="dt-size-pill desktop">Recommended: 1920 × 600 px (16:5)</span>
                             </div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px;">
@@ -120,7 +120,7 @@ $active_subnav = "banners";
                         <!-- Mobile Banner Frame -->
                         <div>
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                <label class="dt-form-label" style="margin:0;">📱 Mobile Smartphone Banner Asset</label>
+                                <label class="dt-form-label" style="margin:0; display:flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg><span>Mobile Smartphone Banner Asset</span></label>
                                 <span class="dt-size-pill mobile" id="mobileSizeTag">Selected: 1080 × 520 px (2:1)</span>
                             </div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px;">
@@ -207,8 +207,8 @@ $active_subnav = "banners";
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                             <h4 class="dt-form-card-title" style="margin:0; padding:0; border:none;">Live Preview</h4>
                             <div class="dt-device-switcher">
-                                <button type="button" class="dt-device-btn" id="btnPrevDesk" onclick="window.DT_CATALOGUE.switchDevicePreview('desk')">🖥️ Desk</button>
-                                <button type="button" class="dt-device-btn active" id="btnPrevMob" onclick="window.DT_CATALOGUE.switchDevicePreview('mob')">📱 Mobile</button>
+                                <button type="button" class="dt-device-btn" id="btnPrevDesk" onclick="window.DT_CATALOGUE.switchDevicePreview('desk')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg><span>Desk</span></button>
+                                <button type="button" class="dt-device-btn active" id="btnPrevMob" onclick="window.DT_CATALOGUE.switchDevicePreview('mob')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg><span>Mobile</span></button>
                             </div>
                         </div>
 
@@ -222,7 +222,7 @@ $active_subnav = "banners";
                             <div class="dt-mobile-phone-device">
                                 <div class="dt-mobile-phone-notch"></div>
                                 <div class="dt-mobile-app-header">
-                                    <span>👑 DT BRAND'S</span>
+                                    <span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" style="vertical-align:middle; margin-right:3px;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>DT BRAND'S</span>
                                     <span style="font-size:8px; background:#D4AF37; color:#181512; padding:1px 4px; border-radius:3px;">SURAT B2B</span>
                                 </div>
                                 <div class="dt-mobile-banner-slot" id="mobBannerSlot">
@@ -234,7 +234,7 @@ $active_subnav = "banners";
                                     <span class="dt-mobile-dot"></span>
                                 </div>
                                 <div class="dt-mobile-mini-body">
-                                    <div style="font-size:9px; font-weight:800; color:#181512; margin-bottom:4px;">🔥 SURAT READY STOCK LOTS</div>
+                                    <div style="font-size:9px; font-weight:800; color:#181512; margin-bottom:4px; display:flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span>SURAT READY STOCK LOTS</span></div>
                                     <div class="dt-mobile-mini-grid">
                                         <div class="dt-mobile-mini-card">
                                             <img src="/assets/images/product1.png">

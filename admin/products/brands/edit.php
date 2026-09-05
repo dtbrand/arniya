@@ -234,7 +234,7 @@ if ($cur_brand === null) {
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Brand Search Engine Optimization (SEO)</h3>
                                 </div>
-                                <button type="button" class="wp-button" onclick="autoGenerateBrandSeo()" style="height:26px; font-size:11px; padding:0 8px; background:#FAF5E8; border-color:#D4AF37; color:#8A681F; font-weight:700;">⚡ Auto SEO</button>
+                                <button type="button" class="wp-button" onclick="autoGenerateBrandSeo()" style="height:26px; font-size:11px; padding:0 8px; background:#FAF5E8; border-color:#D4AF37; color:#8A681F; font-weight:700; display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg><span>Auto SEO</span></button>
                             </div>
                             <div class="dt-card-body">
                                 <div class="dt-form-group">
@@ -322,7 +322,7 @@ if ($cur_brand === null) {
                             <div class="dt-card-body">
                                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
                                     <span style="font-size:12px; color:#646970;">Status:</span>
-                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;">🟢 Active &amp; Live</span>
+                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px; display:inline-flex; align-items:center; gap:4px;"><span style="width:6px; height:6px; border-radius:50%; background:#16A34A; display:inline-block;"></span><span>Active &amp; Live</span></span>
                                 </div>
                                 <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:6px;">
                                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -332,7 +332,7 @@ if ($cur_brand === null) {
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                                     <span>View Products in Label (<?= htmlspecialchars($skuCountTxt) ?>)</span>
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand from database?')) { fetch('/api/brands.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$brand_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('🗑️ Brand deleted from database'); setTimeout(() => window.location.href = '/admin/products/brands/', 400); }); }">
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand from database?')) { fetch('/api/brands.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$brand_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('Brand deleted from database'); setTimeout(() => window.location.href = '/admin/products/brands/', 400); }); }">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                     <span>Move Brand to Trash</span>
                                 </button>
@@ -358,7 +358,7 @@ function handleEditPageLogoUpload(input) {
             if (preview) {
                 preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
             }
-            if (typeof window.showToast === 'function') window.showToast('📷 Brand emblem preview updated!');
+            if (typeof window.showToast === 'function') window.showToast('Brand emblem preview updated!');
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -376,7 +376,7 @@ function autoGenerateBrandSeo() {
     const name = document.getElementById('editBrandName')?.value || 'Brand';
     document.getElementById('brandSeoTitle').value = `${name} Online Collection | DT Brand's Factory Surat`;
     document.getElementById('brandSeoDesc').value = `Explore official ${name} catalog at factory wholesale prices from DT Brand's & Jai Hanuman Tex Surat. High quality craftsmanship with fast dispatch.`;
-    if (typeof window.showToast === 'function') window.showToast('✨ Auto SEO tags generated!');
+    if (typeof window.showToast === 'function') window.showToast('Auto SEO tags generated!');
 }
 
 function handleSaveBrand() {
@@ -387,7 +387,7 @@ function handleSaveBrand() {
     const desc = document.getElementById('editBrandDesc')?.value?.trim();
 
     if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Brand name is required');
+        if (typeof window.showToast === 'function') window.showToast('Brand name is required');
         return;
     }
 
@@ -407,11 +407,11 @@ function handleSaveBrand() {
     fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
         .then(res => res.json())
         .then(data => {
-            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated and saved to database!`);
+            if (typeof window.showToast === 'function') window.showToast(`Brand "${name}" updated and saved to database!`);
             setTimeout(() => window.location.href = '/admin/products/brands/', 500);
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast(`⚠️ Could not save — check your connection and retry.`);
+            if (typeof window.showToast === 'function') window.showToast(`Could not save — check your connection and retry.`);
         });
 }
 </script>

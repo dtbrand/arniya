@@ -27,10 +27,10 @@ $stBadge = trim((string)($prod['badge'] ?? ''));
                 <label class="adm-form-label" for="pFormStockStatus">Catalog Publishing Status</label>
                 <select id="pFormStockStatus" class="adm-form-select" style="height:34px; font-weight:700; color:#181512; border-color:#D4AF37;">
                     <?php $statusVal = $prod['status'] ?? 'in_stock'; ?>
-                    <option value="in_stock" <?php echo ($statusVal === 'in_stock') ? 'selected' : ''; ?>>🟢 In Stock (Live on Shop)</option>
-                    <option value="low_stock" <?php echo ($statusVal === 'low_stock') ? 'selected' : ''; ?>>🟡 Low Stock</option>
-                    <option value="out_of_stock" <?php echo ($statusVal === 'out_of_stock') ? 'selected' : ''; ?>>🔴 Out of Stock</option>
-                    <option value="draft" <?php echo ($statusVal === 'draft') ? 'selected' : ''; ?>>⚪ Draft (Hidden)</option>
+                    <option value="in_stock" <?php echo ($statusVal === 'in_stock') ? 'selected' : ''; ?>>In Stock (Live on Shop)</option>
+                    <option value="low_stock" <?php echo ($statusVal === 'low_stock') ? 'selected' : ''; ?>>Low Stock Alert</option>
+                    <option value="out_of_stock" <?php echo ($statusVal === 'out_of_stock') ? 'selected' : ''; ?>>Out of Stock</option>
+                    <option value="draft" <?php echo ($statusVal === 'draft') ? 'selected' : ''; ?>>Draft (Hidden)</option>
                 </select>
                 <small style="font-size:10px; color:#64748B;">Controls live customer &amp; wholesale visibility.</small>
             </div>
@@ -65,11 +65,11 @@ $stBadge = trim((string)($prod['badge'] ?? ''));
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; cursor:pointer; color:#181512;">
                         <input type="checkbox" id="pFormFeatured" <?php echo $stFeatured ? 'checked' : ''; ?> style="accent-color:#8A681F; width:15px; height:15px;">
-                        <span style="color:#B8860B;">★ Featured on Homepage</span>
+                        <span style="color:#B8860B; display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#B8860B" stroke="#8A681F" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Featured on Homepage</span></span>
                     </label>
                     <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; cursor:pointer; color:#181512;">
                         <input type="checkbox" id="pFormBestseller" <?php echo $stBest ? 'checked' : ''; ?> style="accent-color:#8A681F; width:15px; height:15px;">
-                        <span style="color:#EA580C;">🔥 Best Seller Collection</span>
+                        <span style="color:#EA580C; display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span>Best Seller Collection</span></span>
                     </label>
                 </div>
             </div>

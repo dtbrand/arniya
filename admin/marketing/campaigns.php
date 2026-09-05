@@ -102,8 +102,8 @@ $active_nav = "marketing";
             <!-- Campaigns Table Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>📢 Active Marketing Broadcasts</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Telemetry Connected</span>
+                    <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span>Active Marketing Broadcasts</span></h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><span style="width:7px; height:7px; border-radius:50%; background:#16A34A; display:inline-block;"></span><span>Telemetry Connected</span></span>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -182,7 +182,7 @@ $active_nav = "marketing";
 <div id="newCampaignModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
     <div style="background:#FFFFFF; border-radius:12px; width:95%; max-width:460px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,0.25); border:1.5px solid #D4AF37;">
         <h3 style="margin:0 0 14px 0; font-size:1.1rem; font-weight:800; color:#181512; display:flex; align-items:center; gap:8px;">
-            <span>📢 Launch New Marketing Broadcast</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg><span>Launch New Marketing Broadcast</span>
         </h3>
         <form onsubmit="handleLaunchCampaign(event)">
             <div style="display:flex; flex-direction:column; gap:12px;">
@@ -200,12 +200,12 @@ $active_nav = "marketing";
                 </div>
                 <div>
                     <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">WhatsApp Message Template</label>
-                    <textarea id="campaignMsg" rows="3" style="width:100%; border:1.5px solid #EAE5D9; border-radius:6px; padding:8px 10px; font-weight:600; font-size:12px; box-sizing:border-box; resize:none;">🌟 Exclusive Handloom Pure Silk Collection is now LIVE at DT Brand's! Reply 'CATALOG' to receive instant wholesale PDF.</textarea>
+                    <textarea id="campaignMsg" rows="3" style="width:100%; border:1.5px solid #EAE5D9; border-radius:6px; padding:8px 10px; font-weight:600; font-size:12px; box-sizing:border-box; resize:none;">Exclusive Handloom Pure Silk Collection is now LIVE at DT Brand's! Reply 'CATALOG' to receive instant wholesale PDF.</textarea>
                 </div>
             </div>
             <div style="margin-top:18px; display:flex; justify-content:flex-end; gap:8px;">
                 <button type="button" class="dt-btn dt-btn-pale" onclick="closeNewCampaignModal()">Cancel</button>
-                <button type="submit" class="dt-btn dt-btn-emerald">🚀 Broadcast Now</button>
+                <button type="submit" class="dt-btn dt-btn-emerald" style="display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg><span>Broadcast Now</span></button>
             </div>
         </form>
     </div>
@@ -237,13 +237,13 @@ function handleLaunchCampaign(e) {
         .then(data => {
             closeNewCampaignModal();
             if (typeof window.showToast === 'function') {
-                window.showToast(`🚀 Campaign "${title}" broadcast dispatched via WhatsApp Business API!`);
+                window.showToast(`Campaign "${title}" broadcast dispatched via WhatsApp Business API!`);
             }
         })
         .catch(() => {
             closeNewCampaignModal();
             if (typeof window.showToast === 'function') {
-                window.showToast(`🚀 Campaign "${title}" broadcast dispatched!`);
+                window.showToast(`Campaign "${title}" broadcast dispatched!`);
             }
         });
 }
