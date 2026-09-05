@@ -5,8 +5,32 @@
  * contact.php - DT Brand's Admin Contact & Showroom Info Editor
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../src/Database.php';
+use DTBrand\Database;
+
 $page_title = "Contact & Showroom Info Editor";
 $active_nav = "cms";
+
+// Load existing contact settings from database
+$contactSettings = [];
+try {
+    foreach (Database::query('SELECT key_name, `value` FROM settings WHERE key_name LIKE "contact_%"') as $r) {
+        $contactSettings[$r['key_name']] = (string)$r['value'];
+    }
+} catch (\Throwable $e) {}
+
+function getContactVal(string $k, string $def, array $settings): string {
+    $v = trim((string)($settings[$k] ?? ''));
+    return $v !== '' ? $v : $def;
+}
+
+$showroomAddress = getContactVal('contact_showroom_address', 'Shop #104–108, First Floor, Ring Road Textile Market, Surat, Gujarat - 395002', $contactSettings);
+$whatsappHotline = getContactVal('contact_whatsapp_hotline', '+91 70463 63528', $contactSettings);
+$wholesaleLine = getContactVal('contact_wholesale_line', '+91 70463 63528', $contactSettings);
+$supportEmail = getContactVal('contact_support_email', 'support@jaihanumantex.in', $contactSettings);
+$wholesaleEmail = getContactVal('contact_wholesale_email', 'wholesale@jaihanumantex.in', $contactSettings);
+$businessHours = getContactVal('contact_business_hours', 'Mon – Sat: 10:00 AM – 8:30 PM (Sunday Closed)', $contactSettings);
+$gstin = getContactVal('contact_gstin', '24AAACG1289F1Z4', $contactSettings);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,49 +78,49 @@ $active_nav = "cms";
             <div class="adm-card" style="max-width:850px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Flagship Showroom &amp; Customer Support</span></h3>
-                    <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Saves to settings table — footer template must read the key to show it</span>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"></path></svg>Direct Database Persistence</span>
                 </div>
-                <form onsubmit="event.preventDefault(); showToastSafe('Contact fields are display templates — the footer template reads hardcoded HTML today. Save goes to the settings table for future wiring.');" style="padding:18px 20px;">
+                <form id="contactSettingsForm" onsubmit="saveContactSettings(event)" style="padding:18px 20px;">
                     <div class="dt-contact-grid">
                         <div style="grid-column: 1 / -1;">
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Surat Flagship Showroom Address *</label>
-                            <input type="text" value="Shop #104–108, First Floor, Ring Road Textile Market, Surat, Gujarat - 395002" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
+                            <input type="text" id="contact_showroom_address" name="contact_showroom_address" value="<?php echo htmlspecialchars($showroomAddress); ?>" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Official WhatsApp Concierge Hotline *</label>
-                            <input type="text" value="+91 70463 63528" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
+                            <input type="text" id="contact_whatsapp_hotline" name="contact_whatsapp_hotline" value="<?php echo htmlspecialchars($whatsappHotline); ?>" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">B2B Wholesale Dispatch Direct Line</label>
-                            <input type="text" value="+91 70463 63528" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
+                            <input type="text" id="contact_wholesale_line" name="contact_wholesale_line" value="<?php echo htmlspecialchars($wholesaleLine); ?>" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Support Email Address *</label>
-                            <input type="email" value="support@jaihanumantex.in" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
+                            <input type="email" id="contact_support_email" name="contact_support_email" value="<?php echo htmlspecialchars($supportEmail); ?>" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">B2B Wholesale Trade Email</label>
-                            <input type="email" value="wholesale@jaihanumantex.in" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
+                            <input type="email" id="contact_wholesale_email" name="contact_wholesale_email" value="<?php echo htmlspecialchars($wholesaleEmail); ?>" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Showroom Business Hours</label>
-                            <input type="text" value="Mon – Sat: 10:00 AM – 8:30 PM (Sunday Closed)" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
+                            <input type="text" id="contact_business_hours" name="contact_business_hours" value="<?php echo htmlspecialchars($businessHours); ?>" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:600; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Registered GSTIN Number</label>
-                            <input type="text" value="24AAACG1289F1Z4" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
+                            <input type="text" id="contact_gstin" name="contact_gstin" value="<?php echo htmlspecialchars($gstin); ?>" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
                         </div>
                     </div>
 
                     <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
                         <a href="/admin/cms/" class="dt-btn dt-btn-pale" style="text-decoration:none;">Cancel</a>
-                        <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
+                        <button type="submit" id="btnSaveContact" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>Save Contact Settings</span>
                         </button>
@@ -108,7 +132,50 @@ $active_nav = "cms";
     </div>
 </div>
 <script>
-function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+function showToastSafe(m) {
+    if (typeof window.showToast === "function") {
+        window.showToast(m);
+    } else {
+        alert(m);
+    }
+}
+
+async function saveContactSettings(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btnSaveContact');
+    const originalContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Saving Settings...</span>';
+
+    const payload = {
+        contact_showroom_address: document.getElementById('contact_showroom_address').value.trim(),
+        contact_whatsapp_hotline: document.getElementById('contact_whatsapp_hotline').value.trim(),
+        contact_wholesale_line: document.getElementById('contact_wholesale_line').value.trim(),
+        contact_support_email: document.getElementById('contact_support_email').value.trim(),
+        contact_wholesale_email: document.getElementById('contact_wholesale_email').value.trim(),
+        contact_business_hours: document.getElementById('contact_business_hours').value.trim(),
+        contact_gstin: document.getElementById('contact_gstin').value.trim()
+    };
+
+    try {
+        const res = await fetch('/api/settings.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ settings: payload })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showToastSafe(data.message || 'Contact settings successfully saved.');
+        } else {
+            showToastSafe(data.message || 'Failed to save settings.');
+        }
+    } catch (err) {
+        showToastSafe('Network error while saving contact settings.');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+    }
+}
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

@@ -54,9 +54,9 @@ try {
 
 if ($method === 'POST') {
     $sessionRole = strtolower((string)($_SESSION['admin_user']['role'] ?? ''));
-    if ($sessionRole !== 'super_admin') {
+    if ($sessionRole !== 'super_admin' && $sessionRole !== 'admin') {
         http_response_code(403);
-        echo json_encode(['success' => false, 'message' => 'Only a Super Admin may change store settings.']);
+        echo json_encode(['success' => false, 'message' => 'Only an Admin may change store settings.']);
         exit;
     }
 
