@@ -958,7 +958,7 @@ body.reels-open #dtMobileBottomNav {
                             navigator.clipboard.writeText(shareText);
                         }
                         if (typeof window.showToast === 'function') {
-                            window.showToast('🔗 Product link copied to clipboard!');
+                            window.showToast('Product link copied to clipboard successfully.');
                         }
                     }
                 });

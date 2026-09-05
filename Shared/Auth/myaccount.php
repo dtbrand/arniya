@@ -705,13 +705,18 @@
             overflow: hidden;
         }
         .profile-hero::after {
-            content: '👑';
+            content: '';
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: clamp(3rem, 10vw, 6rem);
-            opacity: 0.08;
+            width: clamp(60px, 12vw, 100px);
+            height: clamp(60px, 12vw, 100px);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            opacity: 0.12;
             pointer-events: none;
         }
         .profile-main-group {
@@ -1078,7 +1083,7 @@
                             </div>
                             <div class="custom-select-menu" id="countryDropdownMenu">
                                 <div class="dropdown-search-box">
-                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="🔍 Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
                                 </div>
                                 <div class="dropdown-options-scroll" id="countryOptionsList">
                                     <!-- Populated dynamically by JS with All World Countries -->
@@ -1110,7 +1115,7 @@
                             />
                         </div>
                         <div class="validation-error-msg" id="phoneErrorMsg">
-                            ⚠️ Please enter a valid 10-digit WhatsApp number.
+                            Please enter a valid 10-digit WhatsApp number.
                         </div>
                     </div>
 
@@ -1134,7 +1139,7 @@
                                 </div>
                                 <div class="custom-select-menu" id="stateDropdownMenu">
                                     <div class="dropdown-search-box">
-                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
                                     </div>
                                     <div class="dropdown-options-scroll" id="stateOptionsList">
                                         <!-- Populated dynamically by JS with States of Selected Country -->
@@ -1237,14 +1242,14 @@
                     <div class="profile-details">
                         <h2 id="dashUserName">Gautam Vaishnav</h2>
                         <div class="profile-phone" id="dashUserPhone">+91 8890639215</div>
-                        <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
-                        <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
+                        <div class="profile-location" id="dashUserLocation"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Surat, Gujarat, India</div>
+                        <div class="vip-badge" id="dashUserRoleBadge">Retailer Member</div>
                     </div>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
-                        <span>🛍️ Open Retailer Dashboard</span>
+                        <span>Open Retailer Dashboard</span>
                         <span>→</span>
                     </a>
                     <button class="logout-btn" onclick="handleLogoutClick()">
@@ -1257,7 +1262,7 @@
             <div class="ws-vip-access-banner" id="wsVipAccessBanner" style="display:flex; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:2px solid var(--dark-gold, #8A681F); border-radius:14px; padding:16px 20px; margin-bottom:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 16px rgba(138, 104, 31, 0.12);">
                 <div>
                     <div id="wsVipBannerTitle" style="font-family:var(--font-serif, 'Cinzel', serif); font-size:1.1rem; font-weight:800; color:var(--dark-gold, #8A681F);">
-                        🛍️ Retailer B2B VIP Hub Ready
+                        Retailer B2B VIP Hub Ready
                     </div>
                     <div id="wsVipBannerSubtitle" style="font-size:0.82rem; color:var(--mid-text, #423C34); margin-top:3px;">
                         Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
@@ -1611,7 +1616,7 @@
             if (clean.length > 0 && clean.length !== expected) {
                 group.classList.add('is-invalid');
                 errorMsg.style.display = 'block';
-                errorMsg.textContent = `⚠️ ${selectedCountry.name} WhatsApp number must be exactly ${expected} digits (currently ${clean.length}).`;
+                errorMsg.textContent = `${selectedCountry.name} WhatsApp number must be exactly ${expected} digits (currently ${clean.length}).`;
                 return false;
             } else {
                 group.classList.remove('is-invalid');
@@ -1643,12 +1648,11 @@
                 if (nameEl) nameEl.textContent = user.name || 'Luxury Member';
                 if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
                 if (locEl && user.city && user.state) {
-                    locEl.textContent = `📍 ${user.city}, ${user.state}, ${user.country || 'India'}`;
+                    locEl.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>' + user.city + ', ' + user.state + ', ' + (user.country || 'India');
                 }
                 if (roleEl) {
                     var r = user.role || 'Retailer';
-                    var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '🛍️');
-                    roleEl.textContent = `${icon} ${r} Member`;
+                    roleEl.textContent = `${r} Member`;
                 }
 
                 var role = (user.role || 'Retailer').toLowerCase();
@@ -1660,7 +1664,7 @@
 
                 if (role === 'wholesaler') {
                     if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
+                    if (titleEl) titleEl.textContent = 'Wholesaler B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
                     if (linkEl) {
                         linkEl.href = '/wholesale.php';
@@ -1669,11 +1673,11 @@
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/wholesale.php';
-                        heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Wholesaler Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'retailer') {
                     if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
+                    if (titleEl) titleEl.textContent = 'Retailer B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
                         linkEl.href = '/retailer.php';
@@ -1682,11 +1686,11 @@
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/retailer.php';
-                        heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Retailer Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'reseller') {
                     if (wsBanner) wsBanner.style.display = 'flex';
-                    if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
+                    if (titleEl) titleEl.textContent = 'Reseller B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
                         linkEl.href = '/reseller.php';
@@ -1695,7 +1699,7 @@
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/reseller.php';
-                        heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Reseller Dashboard</span><span>→</span>';
                     }
                 } else {
                     if (wsBanner) wsBanner.style.display = 'none';
@@ -1892,7 +1896,7 @@
 
             var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
             window.open(waUrl, '_blank');
-            alert('📩 Password reset request sent to WhatsApp Concierge!');
+            alert('Password reset request initiated. Redirecting to WhatsApp Concierge.');
         };
 
         window.handleLogoutClick = function() {

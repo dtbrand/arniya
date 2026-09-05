@@ -1998,7 +1998,7 @@ window.closeWishlistDrawer = function() {
                     '</a>';
         } else if (q) {
             html += '<div style="padding:24px 16px;text-align:center;color:#6B7280;font-size:0.82rem;">' +
-                    '<div style="font-size:1.4rem;margin-bottom:6px;">🔍</div>' +
+                    '<div style="display:flex;align-items:center;justify-content:center;margin-bottom:8px;color:#8A681F;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>' +
                     '<div style="font-weight:700;color:#111827;margin-bottom:4px;">No matching ethnic wear found for &ldquo;' + query + '&rdquo;</div>' +
                     '<div>Try searching for <strong>Silk Sarees</strong>, <strong>Bridal Lehengas</strong>, or <strong>Kurtis</strong></div>' +
                     '</div>';

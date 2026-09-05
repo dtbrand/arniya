@@ -174,7 +174,7 @@ body.drawer-open .shop-smart-bottom-footer {
     opacity: 1;
 }
 
-/* ── PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated 🔥 HOT Badge) ── */
+/* ── PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated HOT Badge) ── */
 .shop-smart-nav-hero-reels {
     position: relative;
     flex: 1.15;
@@ -668,7 +668,7 @@ input[type=range].mf-range::-moz-range-thumb {
             <span class="shop-smart-nav-label">Sort By</span>
         </a>
 
-        <!-- 3: PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated 🔥 HOT Badge) -->
+        <!-- 3: PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated HOT Badge) -->
         <a href="javascript:void(0)" class="shop-smart-nav-hero-reels" id="smartNavReels" data-tab="reels" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
             <div class="shop-smart-hero-bubble">
                 <svg viewBox="0 0 24 24">
@@ -679,7 +679,7 @@ input[type=range].mf-range::-moz-range-thumb {
                     <line x1="19" y1="3" x2="17" y2="8"></line>
                     <polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>
                 </svg>
-                <!-- Animated Glowing 🔥 HOT Badge -->
+                <!-- Animated Glowing HOT Badge -->
                 <span class="shop-smart-hero-hot-badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>HOT</span>
             </div>
             <span class="shop-smart-nav-hero-label">Reels</span>
@@ -1351,7 +1351,7 @@ input[type=range].mf-range::-moz-range-thumb {
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
-    if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('🔗 Page link copied to clipboard'); });
+    if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('Page link copied to clipboard successfully.'); });
     if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
 
     function syncShopBottomFooterBadges() {

@@ -236,7 +236,7 @@ body.sort-open .home-smart-bottom-footer {
     50% { transform: scale(1.08); }
 }
 
-/* ── STYLED ANIMATED 🔥 HOT BADGE ── */
+/* ── STYLED ANIMATED VECTOR HOT BADGE ── */
 .smart-hero-hot-badge {
     position: absolute;
     top: -5px;
@@ -1043,7 +1043,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
             <span class="smart-nav-label">Shop</span>
         </a>
 
-        <!-- 3: PERMANENT HERO REELS (Elevated Center Floating Bubble with 🔥 HOT Badge) -->
+        <!-- 3: PERMANENT HERO REELS (Elevated Center Floating Bubble with HOT Badge) -->
         <a href="javascript:void(0)" class="smart-nav-hero-reels" id="smartNavReels" data-tab="reels" onclick="handleSmartFooterAction(event, '', 'reels')" aria-label="Watch Video Reels">
             <div class="smart-hero-bubble">
                 <svg viewBox="0 0 24 24">
@@ -1054,7 +1054,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                     <line x1="19" y1="3" x2="17" y2="8"></line>
                     <polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>
                 </svg>
-                <!-- Animated Glowing 🔥 HOT Badge -->
+                <!-- Animated Glowing HOT Badge -->
                 <span class="smart-hero-hot-badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>HOT</span>
             </div>
             <span class="smart-nav-hero-label">Reels</span>

@@ -654,7 +654,7 @@
         var total = media.total;
 
         if (total === 0) {
-            showShareToast('📸 No photos or videos uploaded for this product yet.');
+            showShareToast('No photos or videos uploaded for this product yet.');
             return Promise.resolve({ success: false, total: 0 });
         }
 
@@ -677,7 +677,7 @@
             });
         });
 
-        showShareToast('📥 Downloading ' + media.images.length + ' Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' directly... (Click "Allow" once if browser asks)');
+        showShareToast('Downloading ' + media.images.length + ' Photo' + (media.images.length === 1 ? '' : 's') + (media.videos.length ? (' & ' + media.videos.length + ' Video' + (media.videos.length === 1 ? '' : 's')) : '') + ' directly... (Click "Allow" once if browser asks)');
 
         var completed = 0;
         return new Promise(function(resolve) {
@@ -686,7 +686,7 @@
                     triggerSingleDownload(fileItem.url, fileItem.filename).then(function() {
                         completed++;
                         if (completed === total) {
-                            showShareToast('✅ All ' + total + ' HD Photos & Videos Downloaded to your device!');
+                            showShareToast('All ' + total + ' HD photos and videos downloaded successfully!');
                             resolve({ success: true, total: total, type: 'direct' });
                         }
                     });
@@ -701,7 +701,7 @@
         var total = media.total;
 
         if (total === 0) {
-            showShareToast('📸 No photos or videos uploaded for this product yet.');
+            showShareToast('No photos or videos uploaded for this product yet.');
             return Promise.resolve({ success: false, total: 0 });
         }
 
@@ -794,7 +794,7 @@
         document.body.removeChild(t);
     }
 
-    /* 🟢 THE ULTIMATE 1-CLICK DIRECT ALL MEDIA (PHOTOS + VIDEOS) DOWNLOAD & WHATSAPP SHARE */
+    /* Master 1-Click Direct All Media (Photos + Videos) Download & WhatsApp Share */
     window.oneClickAllDownloadAndShare = function(itemData) {
         var item = Object.assign({}, currentShareItem, itemData || {});
         currentShareItem = item;
@@ -819,7 +819,7 @@
         }, 600);
     };
 
-    /* 🟢 Open Smart Share Modal with Product Snapshot */
+    /* Open Smart Share Modal with Product Snapshot */
     window.openSmartShareModal = function(itemData) {
         if (itemData) {
             currentShareItem = Object.assign({}, currentShareItem, itemData);
@@ -912,13 +912,13 @@
         }
     };
 
-    /* 🟢 1-Click Direct Download & WhatsApp Share from Modal */
+    /* 1-Click Direct Download & WhatsApp Share from Modal */
     window.executeSmartMeeshoShare = function() {
         window.closeSmartShareModal();
         window.oneClickAllDownloadAndShare(currentShareItem);
     };
 
-    /* 🟢 Download All Product Media (Direct Files by default or ZIP if specified) */
+    /* Download All Product Media (Direct Files by default or ZIP if specified) */
     window.downloadSmartProductMedia = function(type) {
         if (type === 'zip') {
             downloadZipProductMedia(currentShareItem);
@@ -927,19 +927,19 @@
         }
     };
 
-    /* 🟢 Copy Product Details to Clipboard */
+    /* Copy Product Details to Clipboard */
     window.copySmartProductText = function() {
         var formattedText = buildFormattedWhatsAppMessage(currentShareItem);
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(formattedText).then(function() {
-                showShareToast('📋 Full Product Details Copied to Clipboard!');
+                showShareToast('Full product details copied to clipboard successfully.');
             }).catch(function() {
                 fallbackCopyText(formattedText);
-                showShareToast('📋 Full Product Details Copied to Clipboard!');
+                showShareToast('Full product details copied to clipboard successfully.');
             });
         } else {
             fallbackCopyText(formattedText);
-            showShareToast('📋 Full Product Details Copied to Clipboard!');
+            showShareToast('Full product details copied to clipboard successfully.');
         }
     };
 
