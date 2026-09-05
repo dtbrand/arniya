@@ -211,4 +211,36 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
     expect([400, 401, 403, 503]).toContain(webhookRes.status());
   });
 
+  test('11. Atelier Contact Form & Policy Suite', async ({ page }) => {
+    await page.goto('/contact.php', { waitUntil: 'domcontentloaded' });
+    expect(page.url()).toContain('contact');
+    await expect(page.locator('h1')).toContainText(/Contact/i);
+
+    // Verify contact form inputs and submit button
+    const nameInput = page.locator('#contactName');
+    const phoneInput = page.locator('#contactPhone');
+    const msgInput = page.locator('#contactMessage');
+    const submitBtn = page.locator('#dtSubmitBtn');
+
+    await expect(nameInput).toBeVisible();
+    await expect(phoneInput).toBeVisible();
+    await expect(msgInput).toBeVisible();
+    await expect(submitBtn).toBeVisible();
+
+    await nameInput.fill('Aarav Sharma');
+    await phoneInput.fill('917046363528');
+    await msgInput.fill('Inquiry regarding pure silk Korvai wholesale lot availability.');
+
+    // Verify policy pages load cleanly
+    const shippingRes = await page.goto('/shipping.php', { waitUntil: 'domcontentloaded' });
+    expect(shippingRes?.status()).toBe(200);
+
+    const privacyRes = await page.goto('/privacy.php', { waitUntil: 'domcontentloaded' });
+    expect(privacyRes?.status()).toBe(200);
+
+    const termsRes = await page.goto('/terms.php', { waitUntil: 'domcontentloaded' });
+    expect(termsRes?.status()).toBe(200);
+  });
+
 });
+
