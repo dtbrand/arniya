@@ -41,7 +41,7 @@ $orders_list = OrderManager::getAll();
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('confirmed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Confirmed</button>
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('packed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Packed</button>
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('shipped')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Shipped</button>
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.clearSelection()" style="height:32px; padding:0 10px; font-size:11px; font-weight:700; color:#DC2626;">✕ Deselect</button>
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.clearSelection()" style="height:32px; padding:0 10px; font-size:11px; font-weight:700; color:#DC2626; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Deselect</span></button>
     </div>
 </div>
 

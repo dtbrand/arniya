@@ -13,7 +13,7 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
             <span>Advanced Order Filters</span>
         </h3>
-        <button type="button" class="dt-drawer-close" onclick="window.DT_ORDER_FILTERS.closeDrawer()" title="Close Drawer">✕</button>
+        <button type="button" class="dt-drawer-close" onclick="window.DT_ORDER_FILTERS.closeDrawer()" title="Close Drawer" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
 
     <form id="orderFilterForm" class="dt-drawer-body">

@@ -20,7 +20,7 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Dock • Order <strong id="modalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
+            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s ease;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Modal Scrollable Body -->
@@ -206,7 +206,7 @@
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</div>
             <div style="display:flex; gap:8px; align-items:center;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="height:32px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="height:32px; padding:0 12px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close</span></button>
                 <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.downloadInvoicePDF()" style="height:32px; padding:0 14px; font-size:11.5px;" title="Download PDF Tax Invoice">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download PDF</span>
@@ -225,7 +225,7 @@
         <div style="position:absolute; top:16px; right:18px; z-index:20;">
             <a id="packingModalFullPageLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 10px; font-size:11px; font-weight:700; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; box-shadow:0 1px 4px rgba(212,175,55,0.18); transition:all 0.15s ease;" title="Open Packing Manifest in Full Tab">
                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                <span>Full Page ↗</span>
+                <span>Full Page</span>
             </a>
         </div>
 
@@ -238,7 +238,7 @@
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Internal Depot Manifest • QC Pass Verified</div>
             <div style="display:flex; gap:8px; align-items:center;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="height:32px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="height:32px; padding:0 12px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close</span></button>
                 <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.downloadPackingSlipPDF()" style="height:32px; padding:0 14px; font-size:11.5px;" title="Download PDF Manifest">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download PDF</span>
@@ -257,7 +257,7 @@
         <div style="position:absolute; top:14px; right:16px; z-index:20;">
             <a id="shippingLabelModalFullPageLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 10px; font-size:11px; font-weight:700; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; box-shadow:0 1px 4px rgba(212,175,55,0.18); transition:all 0.15s ease;" title="Open Label in Full Tab">
                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                <span>Full Page ↗</span>
+                <span>Full Page</span>
             </a>
         </div>
 
@@ -295,7 +295,7 @@
         <div style="padding:12px 18px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div id="shippingLabelFooterNote" style="font-size:11px; color:#64748B;">Official Courier AWB Barcode • 4×6 Standard Label</div>
             <div style="display:flex; gap:8px; align-items:center;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeShippingLabelModal()" style="height:34px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeShippingLabelModal()" style="height:34px; padding:0 12px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close</span></button>
                 <button type="button" id="shippingLabelDirectPrintBtn" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.printShippingLabelDirect()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800;" title="Direct Print Label">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     <span id="shippingLabelDirectPrintBtnText">Print 4×6 Label</span>
@@ -319,7 +319,7 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Consignment Destination • Order <strong id="editAddressModalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
+            <button type="button" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s ease;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Scrollable Form Body -->

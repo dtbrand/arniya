@@ -179,7 +179,7 @@ try {
                 <div class="dt-refund-toolbar">
                     <div class="dt-refund-toolbar-left">
                         <input type="text" id="refundSearchInput" oninput="window.DT_REFUNDS.handleSearch(this.value)" placeholder="Search Refund ID, Order ID, Customer, UTR..." class="dt-order-search-input" style="height:36px; padding-left:12px; width:100%; border-radius:6px; box-sizing:border-box;">
-                        <button type="button" onclick="document.getElementById('refundSearchInput').value=''; window.DT_REFUNDS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; font-size:12px;">✕</button>
+                        <button type="button" onclick="document.getElementById('refundSearchInput').value=''; window.DT_REFUNDS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; font-size:12px;" title="Clear Search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                     </div>
                     <div class="dt-refund-toolbar-right">
                         <!-- Quick Payout Method Filter -->

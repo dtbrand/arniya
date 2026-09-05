@@ -58,15 +58,15 @@
             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:10px 12px;">
                 <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px;">Fulfillment Stage Tracker</div>
                 <div id="drawerStepper" style="display:flex; align-items:center; justify-content:space-between; font-size:9.5px; font-weight:700; color:#64748B;">
-                    <div style="text-align:center; color:#15803D;">● Placed</div>
+                    <div style="text-align:center; color:#15803D; display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span> Placed</div>
                     <div style="flex:1; height:2px; background:#16A34A; margin:0 4px;"></div>
-                    <div id="stepConfirmed" style="text-align:center; color:#15803D;">● Confirmed</div>
+                    <div id="stepConfirmed" style="text-align:center; color:#15803D; display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span> Confirmed</div>
                     <div style="flex:1; height:2px; background:#16A34A; margin:0 4px;"></div>
-                    <div id="stepPacked" style="text-align:center; color:#15803D;">● Packed</div>
+                    <div id="stepPacked" style="text-align:center; color:#15803D; display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span> Packed</div>
                     <div style="flex:1; height:2px; background:#D4AF37; margin:0 4px;"></div>
-                    <div id="stepTransit" style="text-align:center; color:#8A681F;">🚚 In Transit</div>
+                    <div id="stepTransit" style="text-align:center; color:#8A681F; display:inline-flex; align-items:center; gap:3px;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> In Transit</div>
                     <div style="flex:1; height:2px; background:#E2E8F0; margin:0 4px;"></div>
-                    <div id="stepDelivered" style="text-align:center; color:#94A3B8;">○ Delivered</div>
+                    <div id="stepDelivered" style="text-align:center; color:#94A3B8; display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; border:1px solid #94A3B8; display:inline-block;"></span> Delivered</div>
                 </div>
             </div>
 

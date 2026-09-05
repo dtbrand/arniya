@@ -90,7 +90,7 @@ $items = !empty($order['items']) ? $order['items'] : [];
                     <span style="font-weight:800; font-size:14px; color:#181512;"><?php echo (int)($it['qty'] ?? 1); ?></span> <span style="font-size:11px; color:#64748B;">pcs</span>
                 </td>
                 <td style="padding:10px; text-align:center; vertical-align:middle;">
-                    <span style="display:inline-block; font-size:10px; font-weight:800; color:#15803D; background:#DCFCE7; border:1px solid #86EFAC; padding:3px 8px; border-radius:4px;">✓ PASS (Silk Mark)</span>
+                    <span style="display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:800; color:#15803D; background:#DCFCE7; border:1px solid #86EFAC; padding:3px 8px; border-radius:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>PASS (Silk Mark)</span></span>
                 </td>
             </tr>
             <?php endforeach; ?>

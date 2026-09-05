@@ -31,7 +31,7 @@
         <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">GSTIN: 24AAECJ1928K1Z5 • 100% Verified Ledger</div>
             <div style="display:flex; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_REFUNDS.closeViewRefundModal()" style="height:32px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_REFUNDS.closeViewRefundModal()" style="height:32px; padding:0 12px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Close</span></button>
                 <button type="button" id="viewRefundWhatsAppBtn" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:32px; padding:0 14px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 1px 6px rgba(21,128,61,0.25);">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
                     <span>WhatsApp Slip</span>
@@ -101,7 +101,7 @@
         </div>
 
         <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:flex-end; gap:8px;">
-            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_REFUNDS.closeRefundDrawer()" style="height:34px; padding:0 14px; font-size:11.5px;">✕ Cancel</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_REFUNDS.closeRefundDrawer()" style="height:34px; padding:0 14px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Cancel</span></button>
             <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_REFUNDS.confirmRefund()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800; display:inline-flex; align-items:center; gap:5px;">
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>Authorize &amp; Issue</span>
