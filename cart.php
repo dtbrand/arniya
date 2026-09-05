@@ -50,7 +50,7 @@ $catalogProducts = ProductCatalog::getAll();
             <div id="cartItemsList" style="display:flex; flex-direction:column; gap:16px;">
                 <!-- Filled dynamically via localStorage / shared/cart.php -->
                 <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size:2.5rem; margin-bottom:12px;">🛍️</div>
+                    <div style="display:flex; justify-content:center; margin-bottom:12px;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
                     <h3 style="font-size:1.1rem; font-weight:800; margin:0 0 6px 0;">Your Bag is Ready</h3>
                     <p style="font-size:0.85rem; color:#78716C; margin:0 0 20px 0;">Explore our 2026 pure handloom collection and wholesale sets.</p>
                     <a href="/shop" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:10px 24px; border-radius:8px; font-weight:800; text-decoration:none; border:1px solid #8A681F;">Explore Handloom Edit</a>
@@ -117,7 +117,7 @@ $catalogProducts = ProductCatalog::getAll();
         if (!cart.length) {
             list.innerHTML =
                 '<div style="text-align:center; padding:40px 20px;">' +
-                '<div style="font-size:2.5rem; margin-bottom:12px;">🛍️</div>' +
+                '<div style="display:flex; justify-content:center; margin-bottom:12px;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>' +
                 '<h3 style="font-size:1.1rem; font-weight:800; margin:0 0 6px 0;">Your Bag is Empty</h3>' +
                 '<p style="font-size:0.85rem; color:#78716C; margin:0 0 20px 0;">Explore our 2026 pure handloom collection and wholesale sets.</p>' +
                 '<a href="/shop" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:10px 24px; border-radius:8px; font-weight:800; text-decoration:none; border:1px solid #8A681F;">Explore Handloom Edit</a>' +

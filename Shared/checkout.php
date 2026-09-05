@@ -789,7 +789,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                             <div class="co-pay-text">
                                 <div class="co-pay-name">
                                     <span>Instant UPI / Apps / QR</span>
-                                    <span class="co-pay-tag">⚡ Recommended (0% Fee)</span>
+                                    <span class="co-pay-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle; margin-right:3px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Recommended (0% Fee)</span>
                                 </div>
                                 <div class="co-pay-desc">Auto-opens GPay, PhonePe, Paytm, CRED on mobile or dynamic QR on desktop</div>
                             </div>
@@ -872,7 +872,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                         <span id="coDiscountVal">-₹0</span>
                     </div>
                     <div class="co-price-row">
-                        <span>⚡ Express Priority Delivery</span>
+                        <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Express Priority Delivery</span>
                         <span style="color: var(--co-green); font-weight: 800;">FREE DISPATCH</span>
                     </div>
                     <div class="co-price-row">
@@ -906,12 +906,12 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         <div class="co-upi-modal-overlay" id="coUpiModalOverlay">
             <div class="co-upi-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                    <h3 style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; font-weight:800; color:#8A681F;">⚡ Instant UPI Payment</h3>
+                    <h3 style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; font-weight:800; color:#8A681F; display:inline-flex; align-items:center; gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Instant UPI Payment</h3>
                     <button type="button" style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748B;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')">✕</button>
                 </div>
 
                 <div style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; background:#FEF3C7; color:#B45309; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:12px;">
-                    <span>⏱ Session Expires in: <strong id="coUpiCountdown">04:59</strong></span>
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Session Expires in: <strong id="coUpiCountdown">04:59</strong></span>
                 </div>
 
                 <!-- Order Amount Header -->
@@ -935,7 +935,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                 <!-- Mobile 1-Tap App Launcher Buttons -->
                 <div style="margin-bottom:12px;">
                     <a href="#" id="coDirectUpiIntentBtn" class="co-submit-btn" style="padding:11px; font-size:0.84rem; margin-bottom:10px; text-decoration:none;">
-                        <span>📱 Open Default UPI App (Pay Now)</span>
+                        <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>Open Default UPI App (Pay Now)</span>
                     </a>
                     <div class="co-upi-app-grid">
                         <a href="#" id="coGpayLink" class="co-upi-app-btn"><span>Google Pay</span></a>
@@ -1137,7 +1137,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             if (msg) {
                 msg.style.display = 'block';
                 msg.style.color = '#15803D';
-                msg.textContent = '✨ Coupon ROYAL10 applied! 10% Royal Festive discount saved.';
+                msg.textContent = 'Coupon ROYAL10 applied! 10% Royal Festive discount saved.';
             }
         } else if (code === 'FESTIVE500') {
             appliedDiscountAmount = Math.min(subtotal, 500);
@@ -1145,7 +1145,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             if (msg) {
                 msg.style.display = 'block';
                 msg.style.color = '#15803D';
-                msg.textContent = '✨ Coupon FESTIVE500 applied! Flat ₹500 discount saved.';
+                msg.textContent = 'Coupon FESTIVE500 applied! Flat ₹500 discount saved.';
             }
         } else {
             appliedDiscountAmount = 0;
@@ -1153,7 +1153,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             if (msg) {
                 msg.style.display = 'block';
                 msg.style.color = '#DC2626';
-                msg.textContent = '❌ Invalid Coupon Code. Try "ROYAL10" for 10% off!';
+                msg.textContent = 'Invalid Coupon Code. Try "ROYAL10" for 10% off!';
             }
         }
         window.renderCheckoutItems();
