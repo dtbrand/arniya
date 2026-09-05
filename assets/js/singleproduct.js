@@ -78,7 +78,7 @@
             iconSvg +
             '</div>' +
             '<div class="ws-toast-msg toast-msg">' + cleanText + '</div>' +
-            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close">✕</button>' +
+            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
             '<div class="ws-toast-progress toast-progress"></div>';
 
         var closeBtn = t.querySelector('.ws-toast-close-btn');
@@ -473,7 +473,7 @@
             }
         }
 
-        window.showToast('🛍️ Added ' + (currentProduct.name || 'item') + ' to Bag!');
+        window.showToast('Added ' + (currentProduct.name || 'item') + ' to Bag!');
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
         if (typeof window.openCartDrawer === 'function') {
             window.openCartDrawer();
@@ -513,7 +513,7 @@
         if (typeof window.toggleWishlistProduct === 'function') {
             var added = window.toggleWishlistProduct(currentProduct);
             if (wishBtn) wishBtn.classList.toggle('active', added);
-            window.showToast(added ? '♡ Saved to wishlist' : 'Removed from wishlist');
+            window.showToast(added ? 'Saved to wishlist' : 'Removed from wishlist');
             if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
         }
     };
@@ -536,7 +536,7 @@
         if (!/^[1-9][0-9]{5}$/.test(pin)) {
             res.style.display = 'block';
             res.style.color = '#D32F2F';
-            res.textContent = '⚠️ Please enter a valid 6-digit Indian pincode.';
+            res.textContent = 'Please enter a valid 6-digit Indian pincode.';
             return;
         }
 
@@ -926,7 +926,7 @@
         var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
 
         if (!name) {
-            window.showToast('⚠️ Please enter Customer Full Name.');
+            window.showToast('Please enter Customer Full Name.');
             if (nameInput) nameInput.focus();
             return;
         }
@@ -941,7 +941,7 @@
         }
 
         if (cleanPhone.length < 10) {
-            window.showToast('⚠️ Please enter a valid 10-digit WhatsApp mobile number.');
+            window.showToast('Please enter a valid 10-digit WhatsApp mobile number.');
             if (phoneInput) phoneInput.focus();
             return;
         }
@@ -1012,7 +1012,7 @@
         var waUrl = "https://api.whatsapp.com/send?phone=" + encodeURIComponent(waNumber) + "&text=" + encodeURIComponent(waMessage);
 
         window.closePdpWhatsAppOrderModal();
-        window.showToast('🚀 Opening WhatsApp to confirm your order...');
+        window.showToast('Opening WhatsApp to confirm your order...');
 
         setTimeout(function() {
             window.open(waUrl, '_blank');

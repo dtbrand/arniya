@@ -48,7 +48,7 @@
             iconSvg +
             '</div>' +
             '<div class="ws-toast-msg toast-msg">' + cleanText + '</div>' +
-            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close">✕</button>' +
+            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
             '<div class="ws-toast-progress toast-progress"></div>';
 
         var closeBtn = t.querySelector('.ws-toast-close-btn');
@@ -222,7 +222,7 @@
     /* ── Build Master Sub-Category Dictionary ── */
     var subCategoryData = {
         'All': [
-            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' }
+            { label: 'All Items', icon: '', gradient: 'gradient-1', type: 'all', val: 'All' }
         ]
     };
 
@@ -250,8 +250,8 @@
         // 1st circle: All Categories (Return to all categories)
         // 2nd circle: All <Category> (View all items in this category)
         var list = [
-            { label: 'All Categories', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' },
-            { label: 'All ' + displayName, img: cImg, icon: '👑', type: 'cat_all', val: displayName }
+            { label: 'All Categories', icon: '', gradient: 'gradient-1', type: 'all', val: 'All' },
+            { label: 'All ' + displayName, img: cImg, icon: '', type: 'cat_all', val: displayName }
         ];
 
         // Gather curated + live DB subcategories
@@ -335,7 +335,7 @@
             if (item.img) {
                 circleContent = '<img src="' + dtEsc(item.img) + '" alt="' + dtEsc(item.label) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + DT_NO_IMAGE + '\';this.style.opacity=\'.5\';" />';
             } else {
-                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '✦') + '</span>';
+                circleContent = '<span class="cat-icon" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>';
             }
 
             return '<button class="cat-item ' + (isAct ? 'active' : '') + '" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +

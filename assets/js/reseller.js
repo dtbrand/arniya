@@ -137,7 +137,7 @@ window.animateTargetGauge = animateTargetGauge;
                 iconSvg +
                 '</div>' +
                 '<div class="ws-toast-msg toast-msg">' + cleanText + '</div>' +
-                '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close">✕</button>' +
+                '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
                 '<div class="ws-toast-progress toast-progress"></div>';
 
             var closeBtn = t.querySelector('.ws-toast-close-btn');
@@ -412,7 +412,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (notice) notice.style.display = 'block';
                 if (customForm) customForm.style.display = 'none';
                 if (statusPill) {
-                    statusPill.textContent = '✓ Default Active';
+                    statusPill.innerHTML = '<span style="display:inline-flex;align-items:center;gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Default Active</span></span>';
                     statusPill.style.background = '#DCFCE7';
                     statusPill.style.color = '#15803D';
                     statusPill.style.borderColor = '#BBF7D0';
@@ -427,7 +427,7 @@ window.animateTargetGauge = animateTargetGauge;
                 if (notice) notice.style.display = 'none';
                 if (customForm) customForm.style.display = 'block';
                 if (statusPill) {
-                    statusPill.textContent = '📦 Custom Godown Active';
+                    statusPill.innerHTML = '<span style="display:inline-flex;align-items:center;gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg><span>Custom Godown Active</span></span>';
                     statusPill.style.background = '#E0F2FE';
                     statusPill.style.color = '#0369A1';
                     statusPill.style.borderColor = '#BAE6FD';
@@ -668,7 +668,7 @@ window.animateTargetGauge = animateTargetGauge;
                 var prefix = val.substring(0, 2);
                 var detectedState = stateMap[prefix];
                 if (detectedState && stateTag) {
-                    stateTag.textContent = '📍 State: ' + detectedState + ' (' + prefix + ')';
+                    stateTag.textContent = 'State: ' + detectedState + ' (' + prefix + ')';
                 }
             }
         };
@@ -986,19 +986,19 @@ window.animateTargetGauge = animateTargetGauge;
                 var tierVal = (data.cards && data.cards[0] && data.cards[0].val) ? data.cards[0].val.toLowerCase() : '';
                 if (tierVal.includes('5') || tierVal.includes('platinum')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag platinum';
-                    ribbonText.textContent = '★ PLATINUM';
+                    ribbonText.textContent = 'PLATINUM';
                 } else if (tierVal.includes('4') || tierVal.includes('diamond')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag diamond';
-                    ribbonText.textContent = '★ DIAMOND';
+                    ribbonText.textContent = 'DIAMOND';
                 } else if (tierVal.includes('3') || tierVal.includes('gold')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag gold';
-                    ribbonText.textContent = '★ GOLD';
+                    ribbonText.textContent = 'GOLD';
                 } else if (tierVal.includes('2') || tierVal.includes('silver')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag silver';
-                    ribbonText.textContent = '★ SILVER';
+                    ribbonText.textContent = 'SILVER';
                 } else {
                     ribbonTag.className = 'ws-tier-ribbon-tag non-vip';
-                    ribbonText.textContent = '★ NON VIP';
+                    ribbonText.textContent = 'NON VIP';
                 }
             }
 
@@ -1515,13 +1515,13 @@ window.animateTargetGauge = animateTargetGauge;
                             <span style="font-size:0.70rem; color:var(--ws-text-muted);">• Ref: <strong>${t.orderId}</strong></span>
                         </div>
                         <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:${statusBg}; border:1px solid ${statusBorder}; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center;">
-                            ${isResolved ? '✓ ' + t.status : '<span class="ws-pulse-dot"></span> ' + t.status}
+                            ${isResolved ? t.status : '<span class="ws-pulse-dot"></span> ' + t.status}
                         </span>
                     </div>
                     <div style="font-size:0.82rem; font-weight:700; color:var(--ws-text-main); margin:4px 0 2px;">${t.category}</div>
                     <p style="font-size:0.78rem; color:var(--ws-text-sub); margin:0; line-height:1.4; background:#FAF8F4; padding:8px 10px; border-radius:6px; border:1px solid var(--ws-border);">"${t.message}"</p>
                     <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <span>📅 ${t.date}</span>
+                        <span>${t.date}</span>
                         <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
                             <span>WhatsApp Followup →</span>
@@ -2446,7 +2446,7 @@ window.animateTargetGauge = animateTargetGauge;
                     btn.setAttribute('aria-pressed', added ? 'true' : 'false');
                 }
                 if (typeof showToast === 'function') {
-                    showToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    showToast(added ? 'Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 } else if (typeof window.showWsToast === 'function') {
                     showWsToast(added ? ' Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 }
@@ -2689,7 +2689,7 @@ window.animateTargetGauge = animateTargetGauge;
             if (!list || list.length === 0) {
                 if (headerBadge) {
                     headerBadge.className = 'ws-status-badge';
-                    headerBadge.innerHTML = '⚡ No Shipments';
+                    headerBadge.innerHTML = 'No Shipments';
                 }
                 heroContainer.innerHTML = `
                     <div style="text-align:center; padding:36px 20px; color:var(--ws-text-muted);">
@@ -2711,7 +2711,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (headerBadge) {
                 headerBadge.className = 'ws-status-badge ' + currentOrder.status.toLowerCase();
-                headerBadge.innerHTML = '⚡ ' + currentOrder.courier;
+                headerBadge.innerHTML = currentOrder.courier;
             }
 
             // 1. Render Active Hero Card
@@ -2729,7 +2729,7 @@ window.animateTargetGauge = animateTargetGauge;
                         <span class="ws-status-badge ${currentOrder.status.toLowerCase()}" style="font-size:0.75rem; padding:3px 8px;">${currentOrder.status}</span>
                     </div>
                     <div style="font-size:0.80rem; font-weight:800; color:${etaColor};">
-                        📅 ${etaText}
+                        ${etaText}
                     </div>
                 </div>
 
@@ -3333,7 +3333,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 ${tagsHtml}
                             </div>
                             <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:3px;">
-                                📞 ${c.mobile} &bull; 📍 ${c.city}, ${c.state} &bull; ✉️ ${c.email || 'N/A'}
+                                ${c.mobile} &bull; ${c.city}, ${c.state} &bull; ${c.email || 'N/A'}
                             </div>
                         </div>
                     </div>
@@ -3584,7 +3584,7 @@ window.animateTargetGauge = animateTargetGauge;
             container.innerHTML = custOrders.map(function(o) {
                 return `
                     <div class="crm-timeline-item">
-                        <div class="crm-timeline-dot">✓</div>
+                        <div class="crm-timeline-dot" style="display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                         <div class="crm-timeline-content">
                             <div class="crm-timeline-title">Order #${o.order_number || o.id} (${o.status || 'Confirmed'})</div>
                             <div class="crm-timeline-time">${o.date || o.created_at || 'Recently'} &bull; ${o.items_count || 1} Pcs</div>
@@ -3689,7 +3689,7 @@ window.animateTargetGauge = animateTargetGauge;
                 handleSmartInputChange(whatsapp);
                 if (btn) {
                     var origHtml = btn.innerHTML;
-                    btn.innerHTML = '<span>✓ Synced!</span>';
+                    btn.innerHTML = '<span>Synced!</span>';
                     btn.style.background = '#10B981';
                     btn.style.color = '#FFFFFF';
                     btn.style.borderColor = '#10B981';
@@ -3940,7 +3940,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div class="ws-qo-item-avatar">${initials}</div>
                                 <div>
                                     <div class="ws-qo-item-name">${c.name}</div>
-                                    <div class="ws-qo-item-sub">📞 ${c.mobile || c.whatsapp || 'N/A'} &bull; 📍 ${c.city || 'Surat'}</div>
+                                    <div class="ws-qo-item-sub">${c.mobile || c.whatsapp || 'N/A'} &bull; ${c.city || 'Surat'}</div>
                                 </div>
                             </div>
                             <div>${tagHtml}</div>
@@ -3992,7 +3992,7 @@ window.animateTargetGauge = animateTargetGauge;
             if (avatar) avatar.textContent = (c.name || 'C').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
             if (name) name.textContent = c.name;
             if (phone) phone.textContent = (c.mobile || c.whatsapp || '');
-            if (city) city.textContent = '📍 ' + (c.city || 'Surat') + ', ' + (c.state || 'Gujarat');
+            if (city) city.textContent = (c.city || 'Surat') + ', ' + (c.state || 'Gujarat');
 
             if (searchRow) searchRow.style.display = 'none';
             if (card) card.style.display = 'flex';
@@ -4646,13 +4646,13 @@ window.animateTargetGauge = animateTargetGauge;
             var html = '';
 
             if (customers.length > 0) {
-                html += '<div class="ws-search-group-title">👥 Customers (' + customers.length + ')</div>';
+                html += '<div class="ws-search-group-title">Customers (' + customers.length + ')</div>';
                 customers.slice(0, 4).forEach(function(c) {
                     html += `
                         <div class="ws-search-item" onclick="openCustomerProfileModal(${c.id}); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
                             <div>
                                 <div class="ws-search-item-title">${c.name}</div>
-                                <div class="ws-search-item-sub">📞 ${c.mobile} &bull; 📍 ${c.city || 'Surat'}</div>
+                                <div class="ws-search-item-sub">${c.mobile} &bull; ${c.city || 'Surat'}</div>
                             </div>
                             <span class="crm-tag crm-tag-vip">Profile →</span>
                         </div>
@@ -4661,7 +4661,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             if (orders.length > 0) {
-                html += '<div class="ws-search-group-title">📦 Consignments & Orders (' + orders.length + ')</div>';
+                html += '<div class="ws-search-group-title">Consignments & Orders (' + orders.length + ')</div>';
                 orders.slice(0, 4).forEach(function(o) {
                     var oId = o.orderId || o.id;
                     html += `
@@ -4677,7 +4677,7 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             if (prods.length > 0) {
-                html += '<div class="ws-search-group-title">👗 Catalog Lots (' + prods.length + ')</div>';
+                html += '<div class="ws-search-group-title">Catalog Lots (' + prods.length + ')</div>';
                 prods.slice(0, 4).forEach(function(p) {
                     html += `
                         <div class="ws-search-item" onclick="openResellerQuickOrderDrawer(); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
@@ -5076,7 +5076,7 @@ ${senderName} (Reseller Partner)`;
                                         <div class="ws-followup-avatar-initial">${(item.customer.name || 'C').charAt(0)}</div>
                                         <div>
                                             <div style="font-weight:800; color:#1E293B;">${item.customer.name}</div>
-                                            <div style="font-size:0.68rem; color:#7D7162; font-weight:600;">📍 ${item.customer.city || 'Surat'}</div>
+                                            <div style="font-size:0.68rem; color:#7D7162; font-weight:600;">${item.customer.city || 'Surat'}</div>
                                         </div>
                                     </div>
                                 </td>
