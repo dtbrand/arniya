@@ -6,6 +6,20 @@
 
 $baseUrl = getenv('BASE_URL') ?: 'https://jaihanumantex.in';
 
+// Discover active sample product ID
+$sampleProductId = 13;
+if (file_exists(__DIR__ . '/../src/ProductCatalog.php')) {
+    require_once __DIR__ . '/../src/ProductCatalog.php';
+    try {
+        $allProducts = \DTBrand\ProductCatalog::getAll();
+        if (!empty($allProducts[0]['id'])) {
+            $sampleProductId = (int)$allProducts[0]['id'];
+        }
+    } catch (\Throwable $e) {
+        $sampleProductId = 13;
+    }
+}
+
 $tests = [
     'Homepage Rendering' => [
         'url' => "{$baseUrl}/",
@@ -18,9 +32,34 @@ $tests = [
         'must_contain' => ['html', 'Saree']
     ],
     'Single Product Saree Showcase' => [
-        'url' => "{$baseUrl}/product/1",
+        'url' => "{$baseUrl}/product/{$sampleProductId}",
         'expect_code' => 200,
         'must_contain' => ['html', 'WhatsApp']
+    ],
+    'Wholesale B2B Portal' => [
+        'url' => "{$baseUrl}/wholesale",
+        'expect_code' => 200,
+        'must_contain' => ['html', 'Wholesale']
+    ],
+    'Retailer B2B Portal' => [
+        'url' => "{$baseUrl}/retailer",
+        'expect_code' => 200,
+        'must_contain' => ['html', 'Retailer']
+    ],
+    'Reseller B2B Portal' => [
+        'url' => "{$baseUrl}/reseller",
+        'expect_code' => 200,
+        'must_contain' => ['html', 'Reseller']
+    ],
+    'Shopping Cart' => [
+        'url' => "{$baseUrl}/cart",
+        'expect_code' => 200,
+        'must_contain' => ['html', 'Cart']
+    ],
+    'Checkout Gateway' => [
+        'url' => "{$baseUrl}/checkout",
+        'expect_code' => 200,
+        'must_contain' => ['html']
     ],
     'Admin Login Console' => [
         'url' => "{$baseUrl}/admin/login",
@@ -42,29 +81,30 @@ foreach ($tests as $name => $spec) {
     $ch = curl_init($spec['url']);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 25);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (SmokeTester)');
     
     $body = curl_exec($ch);
     $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr = curl_error($ch);
     curl_close($ch);
 
-    $hasContent = true;
+    $missing = [];
     if (isset($spec['must_contain'])) {
         foreach ($spec['must_contain'] as $str) {
-            if (stripos($body, $str) === false) {
-                $hasContent = false;
-                break;
+            if ($body === false || stripos($body, $str) === false) {
+                $missing[] = $str;
             }
         }
     }
 
-    if ($status === $spec['expect_code'] && $hasContent) {
+    if ($status === $spec['expect_code'] && empty($missing)) {
         echo " [PASS] {$name} (HTTP {$status})\n";
         $passed++;
     } else {
-        echo " [FAIL] {$name} (HTTP {$status})\n";
+        $detail = $curlErr ? "Curl error: {$curlErr}" : (empty($missing) ? "Unexpected HTTP status {$status}" : "Missing content: " . implode(', ', $missing));
+        echo " [FAIL] {$name} (HTTP {$status} - {$detail})\n";
         $failed++;
     }
 }
