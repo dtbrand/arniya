@@ -1,21 +1,23 @@
 openapi: 3.0.3
 info:
-  title: "DT Brand's & Jai Hanuman Tex — Commerce & CRM API"
-  description: "Official REST & AJAX API specification for DT Brand's wholesale, reseller, retail, and WhatsApp CRM platform."
-  version: "1.0.0"
+  title: "DT Brand's & Jai Hanuman Tex — Enterprise Commerce & CRM API"
+  description: "Official REST API specification for DT Brand's wholesale, reseller, retail, multi-gateway payments, and WhatsApp CRM platform."
+  version: "3.5.0"
   contact:
-    name: "DT Brand's Technical Architecture"
-    email: "admin@jaihanumantex.in"
+    name: "DT Brand's & Jai Hanuman Tex Engineering Desk"
+    email: "care@jaihanumantex.in"
+    url: "https://jaihanumantex.in/contact"
 servers:
   - url: "https://jaihanumantex.in"
-    description: "Production Server"
+    description: "Hostinger Production Server"
   - url: "http://localhost"
     description: "Local Development Server"
+
 paths:
   /health.php:
     get:
-      summary: "System Health Status"
-      description: "Returns uptime, database latency, and service readiness."
+      summary: "System Health & Database Connectivity"
+      description: "Returns uptime, server timestamp, MySQL connectivity status, and service health."
       responses:
         '200':
           description: "System is healthy"
@@ -29,50 +31,18 @@ paths:
                     example: "healthy"
                   timestamp:
                     type: string
-                    example: "2026-08-23T18:00:00Z"
+                    example: "2026-09-06T04:00:00Z"
                   database:
                     type: string
                     example: "connected"
                   version:
                     type: string
-                    example: "1.0.0"
+                    example: "3.5.0"
 
-  /Frontend/Admin/system/database.php:
-    get:
-      summary: "Database Diagnostics"
-      description: "Retrieves table statistics, latency and row count status."
-      responses:
-        '200':
-          description: "Database diagnostic view rendered"
-
-  /Shared/Includes/cart.php:
+  /api/cart.php:
     post:
-      summary: "Cart Operations"
-      description: "Add, update, or remove items from shopping cart."
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                action:
-                  type: string
-                  enum: [add, update, remove, clear]
-                product_id:
-                  type: integer
-                quantity:
-                  type: integer
-                variant_id:
-                  type: string
-      responses:
-        '200':
-          description: "Cart updated"
-
-  /Frontend/Admin/whatsapp/broadcast.php:
-    post:
-      summary: "Trigger WhatsApp Broadcast"
-      description: "Dispatches catalog or promotional message to selected customer segment."
+      summary: "Calculate Shopping Cart & Validate Items"
+      description: "Computes subtotal, tiered volume discounts, promo coupons, role-based pricing (Retail, Wholesaler, Reseller), and Indian GST."
       requestBody:
         required: true
         content:
@@ -80,12 +50,240 @@ paths:
             schema:
               type: object
               properties:
-                segment_id:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: integer
+                        example: 13
+                      qty:
+                        type: integer
+                        example: 2
+                      color:
+                        type: string
+                        example: "Royal Peacock Blue"
+                      size:
+                        type: string
+                        example: "Free Size (6.3m)"
+                coupon:
                   type: string
-                template:
+                  example: "WELCOME10"
+                user_type:
                   type: string
-                catalog_url:
-                  type: string
+                  enum: [customer, wholesale, reseller, retailer]
+                  default: customer
       responses:
         '200':
-          description: "Broadcast queued"
+          description: "Cart calculated successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  item_count:
+                    type: integer
+                    example: 1
+                  total_qty:
+                    type: integer
+                    example: 2
+                  pricing:
+                    type: object
+                    properties:
+                      subtotal:
+                        type: number
+                        example: 5000.00
+                      discount:
+                        type: number
+                        example: 500.00
+                      taxable:
+                        type: number
+                        example: 4500.00
+                      gst:
+                        type: number
+                        example: 225.00
+                      shipping:
+                        type: number
+                        example: 0.00
+                      grand_total:
+                        type: number
+                        example: 4725.00
+
+  /api/orders.php:
+    get:
+      summary: "Fetch Orders Ledger"
+      description: "Retrieves customer or admin orders with channel filters and status badges."
+      parameters:
+        - name: channel
+          in: query
+          schema:
+            type: string
+            enum: [all, retail, wholesale, reseller, whatsapp]
+            default: all
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [all, pending, paid, credit, refunded]
+            default: all
+      responses:
+        '200':
+          description: "Orders array returned"
+    post:
+      summary: "Create New Order"
+      description: "Submits a new order, creates line items, records customer details, and initializes payment session."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_name:
+                  type: string
+                  example: "Pooja Sharma"
+                customer_phone:
+                  type: string
+                  example: "9876543210"
+                shipping_address:
+                  type: string
+                  example: "102 Ring Road, Surat, Gujarat"
+                payment_method:
+                  type: string
+                  enum: [upi, razorpay, cashfree, cod, whatsapp]
+                items:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: "Order created successfully"
+
+  /api/products.php:
+    get:
+      summary: "Browse Product Catalogue"
+      description: "Search products by name, SKU, fabric, category, and price range with wholesale lot pricing support."
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: fabric
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Products list returned"
+
+  /api/coupons.php:
+    post:
+      summary: "Validate Promotional Coupon"
+      description: "Validates promo code against live `coupons` table and computes discount cap."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: "FESTIVE20"
+                subtotal:
+                  type: number
+                  example: 10000.00
+      responses:
+        '200':
+          description: "Coupon validation result"
+
+  /api/settings.php:
+    get:
+      summary: "Retrieve System & Contact Settings"
+      description: "Returns showroom address, telephone numbers, support emails, business hours, and payment configurations."
+      responses:
+        '200':
+          description: "Settings object returned"
+    post:
+      summary: "Update System Settings"
+      description: "Super Admin and Admin action to update company metadata and concierge contact details."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: "Settings saved successfully"
+        '403':
+          description: "Forbidden: Insufficient privileges"
+
+  /api/webhooks/razorpay.php:
+    post:
+      summary: "Razorpay Webhook Handler"
+      description: "Secure webhook receiver requiring `HTTP_X_RAZORPAY_SIGNATURE` HMAC-SHA256 authentication."
+      parameters:
+        - name: X-Razorpay-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Webhook processed and ledger updated"
+        '401':
+          description: "Unauthorized: Invalid or missing webhook signature"
+        '503':
+          description: "Service Unavailable: Webhook secret unconfigured"
+
+  /api/webhooks/cashfree.php:
+    post:
+      summary: "Cashfree Webhook Handler"
+      description: "Secure webhook receiver requiring `HTTP_X_WEBHOOK_SIGNATURE` and `HTTP_X_WEBHOOK_TIMESTAMP`."
+      parameters:
+        - name: X-Webhook-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Webhook-Timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Payment captured, stock decremented, and transaction recorded"
+        '401':
+          description: "Unauthorized: Invalid or missing signature/timestamp"
+        '503':
+          description: "Service Unavailable: Webhook secret unconfigured"
+
+  /api/system/backup.php:
+    get:
+      summary: "Database Backup Snapshots"
+      description: "Super Admin authenticated endpoint to trigger on-demand database dumps or download verified snapshots."
+      parameters:
+        - name: action
+          in: query
+          schema:
+            type: string
+            enum: [list, create, download]
+        - name: file
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Backup list or snapshot file stream returned"
+        '403':
+          description: "Forbidden: Authenticated Super Admin session required"
