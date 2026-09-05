@@ -197,15 +197,15 @@ function dtDecideTradeAccount(id, newStatus, name, tierLabel) {
                 var row = document.getElementById('pendingRow_' + id);
                 if (row) row.remove();
                 dtApprovalToast(approving
-                    ? '✓ ' + name + ' approved for ' + tierLabel + ' pricing.'
-                    : '✓ ' + name + '\'s application was rejected.');
+                    ? name + ' approved for ' + tierLabel + ' pricing.'
+                    : name + '\'s application was rejected.');
                 dtRefreshPendingCount();
             } else {
-                dtApprovalToast('⚠ ' + ((data && data.message) || 'Could not update this application.'));
+                dtApprovalToast((data && data.message) || 'Could not update this application.');
             }
         })
         .catch(function () {
-            dtApprovalToast('⚠ Network error — nothing was changed. Please try again.');
+            dtApprovalToast('Network error — nothing was changed. Please try again.');
         });
 }
 

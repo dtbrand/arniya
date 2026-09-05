@@ -1,6 +1,6 @@
 <?php
 /**
- * 👑 DT BRAND'S & JAI HANUMAN TEX — SECURE ADMIN LOGOUT HANDLER
+ * DT BRAND'S & JAI HANUMAN TEX — SECURE ADMIN LOGOUT HANDLER
  * Destroys executive session, clears auth cookies, and redirects to login gateway.
  */
 if (session_status() === PHP_SESSION_NONE) {

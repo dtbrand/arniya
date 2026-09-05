@@ -76,7 +76,7 @@
     function runBulkStatus(status, verb) {
         var ids = selectedIds();
         if (ids === null) {
-            toast('⚠ The customer list is not ready — reload the page and try again.');
+            toast('The customer list is not ready — reload the page and try again.');
             return;
         }
         if (!ids.length) {
@@ -99,7 +99,7 @@
             var failed = results.length - done;
 
             if (done === 0) {
-                toast('⚠ Nothing was ' + verb + ' — none of the ' + plural(results.length, 'customer') + ' could be updated.');
+                toast('Nothing was ' + verb + ' — none of the ' + plural(results.length, 'customer') + ' could be updated.');
                 return;
             }
 
@@ -110,9 +110,9 @@
             }
 
             if (failed > 0) {
-                toast('⚠ ' + plural(done, 'customer') + ' ' + verb + ', but ' + failed + ' failed. Reload to see the stored state.');
+                toast('' + plural(done, 'customer') + ' ' + verb + ', but ' + failed + ' failed. Reload to see the stored state.');
             } else {
-                toast('✓ ' + plural(done, 'customer') + ' ' + verb + '.');
+                toast('' + plural(done, 'customer') + ' ' + verb + '.');
             }
         });
     }
@@ -138,15 +138,15 @@
 
     // There is no tags table in this database, and no column on `customers` that
     // could hold one. The old handler prompted for a tag name, toasted
-    // '✓ Tag "..." Assigned to Selected Customers!' and stored nothing — so an
+    // 'Tag "..." Assigned to Selected Customers!' and stored nothing — so an
     // admin who segmented their base by tag was building on nothing. Tier is the
     // one classification that is really stored.
     window.bulkAddTagModal = function () {
         var ids = selectedIds();
         var n = ids ? ids.length : 0;
         toast(n > 0
-            ? '⚠ Tags are not stored anywhere in this database. Use the Tier field on each customer instead — Edit → Classification.'
-            : '⚠ Tags are not stored anywhere in this database. Use the Tier field on each customer instead.');
+            ? 'Tags are not stored anywhere in this database. Use the Tier field on each customer instead — Edit → Classification.'
+            : 'Tags are not stored anywhere in this database. Use the Tier field on each customer instead.');
     };
 
 })();

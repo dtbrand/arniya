@@ -79,8 +79,14 @@ $initials = strtoupper(
                 $pillClass = $cStatus === 'active' ? 'active' : ($cStatus === 'pending' ? 'vip' : 'inactive');
                 $pillText  = $cStatus === 'active' ? 'Active' : ($cStatus === 'pending' ? 'Awaiting Approval' : 'Suspended');
                 ?>
-                <span class="dt-status-pill <?= $pillClass ?>" style="font-size:0.65rem;">● <?= $pillText ?></span>
-                <span class="dt-status-pill vip" style="font-size:0.65rem;">★ <?= htmlspecialchars($cType) ?></span>
+                <span class="dt-status-pill <?= $pillClass ?>" style="font-size:0.65rem; display:inline-flex; align-items:center; gap:4px;">
+                    <svg width="6" height="6" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg>
+                    <span><?= $pillText ?></span>
+                </span>
+                <span class="dt-status-pill vip" style="font-size:0.65rem; display:inline-flex; align-items:center; gap:4px;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span><?= htmlspecialchars($cType) ?></span>
+                </span>
             </div>
             <span class="dt-cust-id-badge" style="display:block; margin-top:4px;">
                 #<?= (int)$customer_id ?><?= $cDate !== '' ? ' • Registered ' . htmlspecialchars($cDate) : '' ?>
@@ -222,8 +228,9 @@ $initials = strtoupper(
         </div>
         <?php if ($cGstin === '' || $cKyc !== 'verified'): ?>
         <div style="background:#FEF3C7; border:1px solid #FCD34D; border-radius:6px; padding:8px 10px; margin-top:10px;">
-            <span style="font-size:0.68rem; color:#92400E; font-weight:700;">
-                ⚠ <?= $cGstin === '' ? 'GSTIN missing — capture it before invoicing B2B orders.' : 'KYC not verified — trade pricing stays locked until verification.' ?>
+            <span style="font-size:0.68rem; color:#92400E; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span><?= $cGstin === '' ? 'GSTIN missing — capture it before invoicing B2B orders.' : 'KYC not verified — trade pricing stays locked until verification.' ?></span>
             </span>
         </div>
         <?php endif; ?>

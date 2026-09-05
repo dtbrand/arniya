@@ -3,7 +3,7 @@
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  *
  * applyCustomerAdvancedFilters used to close the modal and raise
- * "✓ Advanced Filters Applied (12 Matches)" — a hardcoded count, with no
+ * "Advanced Filters Applied (12 Matches)" — a hardcoded count, with no
  * filtering performed. The table kept showing every customer while the admin
  * believed they were looking at twelve matches, so any decision taken from that
  * screen ("only 12 wholesale buyers in Gujarat") was taken from nothing.
@@ -63,7 +63,7 @@
         if (e) e.preventDefault();
 
         if (typeof window.applyCustomerListFilter !== 'function') {
-            toast('⚠ The customer list is not ready — reload the page and try again.');
+            toast('The customer list is not ready — reload the page and try again.');
             return;
         }
 

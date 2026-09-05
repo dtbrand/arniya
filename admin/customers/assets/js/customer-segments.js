@@ -277,8 +277,8 @@
             // Writing a headers-only file and calling it an export would read as
             // "these customers were exported" when there were none.
             toast(rows.length === 0
-                ? '⚠ There are no customers in the database yet, so nothing was exported.'
-                : '⚠ No customer matches these criteria — nothing was exported.');
+                ? 'There are no customers in the database yet, so nothing was exported.'
+                : 'No customer matches these criteria — nothing was exported.');
             return;
         }
 
@@ -302,7 +302,7 @@
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
 
-        toast('✓ CSV saved — ' + lastMatches.length + ' customer' + (lastMatches.length === 1 ? '' : 's') + '.');
+        toast('CSV saved — ' + lastMatches.length + ' customer' + (lastMatches.length === 1 ? '' : 's') + '.');
     };
 
     window.copySegmentPhones = function () {
@@ -312,14 +312,14 @@
 
         if (!phones.length) {
             toast(lastMatches.length
-                ? '⚠ None of the ' + lastMatches.length + ' matching customers has a phone number recorded.'
-                : '⚠ No customer matches these criteria.');
+                ? 'None of the ' + lastMatches.length + ' matching customers has a phone number recorded.'
+                : 'No customer matches these criteria.');
             return;
         }
 
         var text = phones.join('\n');
         var done = function () {
-            toast('✓ ' + phones.length + ' phone number' + (phones.length === 1 ? '' : 's') + ' copied — paste into WhatsApp Business.');
+            toast('' + phones.length + ' phone number' + (phones.length === 1 ? '' : 's') + ' copied — paste into WhatsApp Business.');
         };
 
         // Report a copy only once the clipboard actually accepted it: the API
@@ -345,7 +345,7 @@
         try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
         document.body.removeChild(ta);
         if (ok) { done(); return; }
-        toast('⚠ The browser blocked the clipboard. Use Export CSV instead — the phone column is in the file.');
+        toast('The browser blocked the clipboard. Use Export CSV instead — the phone column is in the file.');
     }
 
     document.addEventListener('DOMContentLoaded', function () {

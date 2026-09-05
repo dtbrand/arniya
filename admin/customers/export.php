@@ -611,7 +611,7 @@ function downloadCsvFile(records, fields) {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    window.showToast(`✓ CSV saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}.`);
+    window.showToast(`CSV saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}.`);
 }
 
 // ── 2. Excel Workbook (.xls XML/HTML) Generator ──
@@ -665,14 +665,14 @@ function downloadExcelFile(records, fields) {
     // An HTML table with an .xls extension, which Excel opens after warning that
     // the format and the extension do not match. Saying so beats the admin
     // thinking the file is corrupt.
-    window.showToast(`✓ Excel file saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}. Excel may warn about the file format; opening it is safe.`);
+    window.showToast(`Excel file saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}. Excel may warn about the file format; opening it is safe.`);
 }
 
 // ── 3. Printable PDF Dossier Generator ──
 function generatePdfDossier(records, fields) {
     const printWin = window.open('', '_blank', 'width=900,height=700');
     if (!printWin) {
-        window.showToast('⚠️ Popups blocked. Please allow popups for PDF printing.');
+        window.showToast('Popups blocked. Please allow popups for PDF printing.');
         return;
     }
 
@@ -702,7 +702,7 @@ function generatePdfDossier(records, fields) {
     <body>
         <div class="header">
             <div>
-                <div class="logo">👑 DT BRAND'S &amp; JAI HANUMAN TEX</div>
+                <div class="logo">DT BRAND'S &amp; JAI HANUMAN TEX</div>
                 <div style="font-size:12px; font-weight:700; color:#181512; margin-top:2px;">Official Customer Executive Dossier</div>
             </div>
             <div class="meta">
@@ -775,7 +775,7 @@ function generatePdfDossier(records, fields) {
     // No PDF is produced here: this opens the browser print dialog, where the
     // admin chooses "Save as PDF". Claiming a PDF had been generated sent people
     // looking in their downloads folder for a file that was never written.
-    window.showToast(`✓ Print preview opened for ${records.length} customer${records.length === 1 ? '' : 's'} \u2014 choose "Save as PDF" to keep a copy.`);
+    window.showToast(`Print preview opened for ${records.length} customer${records.length === 1 ? '' : 's'} \u2014 choose "Save as PDF" to keep a copy.`);
 }
 </script>
 </body>

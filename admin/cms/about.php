@@ -45,19 +45,30 @@ $active_nav = "cms";
                     </h1>
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Update Surat weaving legacy narrative, craftsmanship credentials, and brand values displayed on /about-us.</p>
                 </div>
-                <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/cms/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← CMS Hub</a>
-                    <a href="/about-us" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; color:#1D4ED8;">View Live Page ↗</a>
+                    <a href="/admin/cms/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:5px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>CMS Hub</span>
+                    </a>
+                    <a href="/about-us" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; color:#1D4ED8; display:inline-flex; align-items:center; gap:5px;">
+                        <span>View Live Page</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
                 </div>
             </div>
 
             <!-- Page Editor Card -->
             <div class="adm-card" style="max-width:900px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title"><span>🏛️ Brand Heritage Story Editor</span></h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">🟢 Published Live</span>
+                    <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2L2 7h20L12 2z"></path></svg>
+                        <span>Brand Heritage Story Editor</span>
+                    </h3>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="#15803D" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg>
+                        <span>Published Live</span>
+                    </span>
                 </div>
-                <form onsubmit="event.preventDefault(); window.showToast('✨ About Us story updated and published live!');" style="padding:18px 20px;">
+                <form onsubmit="event.preventDefault(); window.showToast('About Us story updated and published live!');" style="padding:18px 20px;">
                     <div style="display:flex; flex-direction:column; gap:16px;">
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Main Heritage Headline *</label>

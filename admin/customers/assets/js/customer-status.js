@@ -33,7 +33,7 @@
 
         if (!targetId) {
             window.closeCustomerStatusModal();
-            toast('⚠ No customer was selected, so nothing was changed.');
+            toast('No customer was selected, so nothing was changed.');
             return;
         }
 
@@ -53,14 +53,14 @@
                 window.closeCustomerStatusModal();
                 if (data && data.success) {
                     paintRowStatus(targetId, newStatus);
-                    toast('✓ Customer #' + targetId + ' is now ' + newStatus.toUpperCase() + '.');
+                    toast('Customer #' + targetId + ' is now ' + newStatus.toUpperCase() + '.');
                 } else {
-                    toast('⚠ ' + ((data && data.message) || 'Customer #' + targetId + ' was NOT updated.'));
+                    toast('' + ((data && data.message) || 'Customer #' + targetId + ' was NOT updated.'));
                 }
             })
             .catch(function () {
                 window.closeCustomerStatusModal();
-                toast('⚠ Network error — customer #' + targetId + ' was NOT updated.');
+                toast('Network error — customer #' + targetId + ' was NOT updated.');
             });
     };
 

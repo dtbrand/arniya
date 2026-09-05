@@ -139,7 +139,7 @@ $cmsPages = [
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Static &amp; Policy Content Pages</span></h3>
-                    <button type="button" class="dt-btn dt-btn-gold" style="font-weight:800; font-size:12px; height:32px; padding:0 14px;" onclick="window.showToast('✨ All CMS policy pages synchronized and published live!');">
+                    <button type="button" class="dt-btn dt-btn-gold" style="font-weight:800; font-size:12px; height:32px; padding:0 14px;" onclick="window.showToast('All CMS policy pages synchronized and published live!');">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Publish All Changes</span>
                     </button>
@@ -167,7 +167,7 @@ $cmsPages = [
                                     <td>
                                         <div style="display:flex; gap:6px;">
                                             <a href="<?= htmlspecialchars($p['slug']) ?>" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none;">View</a>
-                                            <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="window.showToast('📝 CMS Editor ready for <?= htmlspecialchars($p['title']) ?>');">Edit</button>
+                                            <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="window.showToast('CMS Editor ready for <?= htmlspecialchars($p['title']) ?>');">Edit</button>
                                         </div>
                                     </td>
                                 </tr>

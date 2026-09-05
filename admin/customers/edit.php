@@ -357,14 +357,23 @@ $cust = [
                                      existed. Nothing verifies an address, so a value typed in by
                                      staff was presented as confirmed by the customer. */ ?>
                             <?php if (empty($cust['email'])): ?>
-                                <span class="dt-status-pill inactive" style="font-size:0.65rem; background:#FEF3C7; color:#B45309; border-color:#FCD34D;">⚠️ Missing Email</span>
+                                <span class="dt-status-pill inactive" style="font-size:0.65rem; background:#FEF3C7; color:#B45309; border-color:#FCD34D; display:inline-flex; align-items:center; gap:4px;">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    <span>Missing Email</span>
+                                </span>
                             <?php endif; ?>
                         </h1>
                         <p class="dt-cust-subtitle">Update contact details, account type, tier and standing. Addresses are managed on the dossier.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Customer List</a>
-                        <a href="/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold">View 360° Dossier ↗</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale" style="display:inline-flex; align-items:center; gap:5px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>Customer List</span>
+                        </a>
+                        <a href="/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:5px;">
+                            <span>View 360° Dossier</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
                     </div>
                 </div>
 
@@ -377,7 +386,7 @@ $cust = [
                         <div>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <strong class="dt-hero-title"><?php echo htmlspecialchars(trim($cust['first_name'] . ' ' . $cust['last_name'])); ?></strong>
-                                <?php /* A hardcoded "★ VIP" pill used to sit here on every customer,
+                                <?php /* A hardcoded "VIP" pill used to sit here on every customer,
                                          next to an "Registered Member" line, regardless of tier or
                                          standing. Show the real tier and the real status instead. */ ?>
                                 <?php if (trim($cust['tier']) !== ''): ?>
@@ -477,12 +486,15 @@ $cust = [
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">
                                         <span>Customer Email Address</span>
-                                        <?php /* This said "✓ Verified" whenever an email was present.
+                                        <?php /* This said "Verified" whenever an email was present.
                                                  Nothing verifies it: there is no email_verified column
                                                  and no mailer in the project, so an address typed in by
                                                  staff was labelled confirmed by the customer. */ ?>
                                         <?php if (empty($cust['email'])): ?>
-                                            <span style="color:#B45309; font-size:0.65rem; font-weight:800;">⚠️ Missing / Unlinked</span>
+                                            <span style="color:#B45309; font-size:0.65rem; font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                                <span>Missing / Unlinked</span>
+                                            </span>
                                         <?php endif; ?>
                                     </label>
                                     <div class="dt-input-icon-wrap">
@@ -501,7 +513,10 @@ $cust = [
                                         </div>
                                     <?php else: ?>
                                         <div class="dt-email-status-box missing">
-                                            <span>⚠️ No email address on file. Customer is registered via WhatsApp only.</span>
+                                            <span style="display:inline-flex; align-items:center; gap:6px;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                                <span>No email address on file. Customer is registered via WhatsApp only.</span>
+                                            </span>
                                             <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.68rem;" onclick="document.getElementById('dtCustEmailField').focus(); window.showToast('Please type customer email address above.');">+ Add Email</button>
                                         </div>
                                     <?php endif; ?>
@@ -743,14 +758,14 @@ function dtDeactivateCustomer(id) {
         .then(function (res) { return res.json(); })
         .then(function (data) {
             if (data && data.success) {
-                dtCustomerToast('✓ Account #' + id + ' deactivated.');
+                dtCustomerToast('Account #' + id + ' deactivated.');
                 setTimeout(function () { window.location.href = '/admin/customers/view.php?id=' + id; }, 600);
             } else {
-                dtCustomerToast('⚠ ' + ((data && data.message) || 'The account was NOT deactivated.'));
+                dtCustomerToast((data && data.message) || 'The account was NOT deactivated.');
             }
         })
         .catch(function () {
-            dtCustomerToast('⚠ Network error — the account was NOT deactivated.');
+            dtCustomerToast('Network error — the account was NOT deactivated.');
         });
 }
 
@@ -761,7 +776,7 @@ function dtSendResetLink(phone, name) {
     var digits = String(phone || '').replace(/\D+/g, '');
     if (digits.length === 10) { digits = '91' + digits; }
     if (!digits) {
-        dtCustomerToast('⚠ This customer has no phone number on file.');
+        dtCustomerToast('This customer has no phone number on file.');
         return;
     }
     var msg = 'Namaste ' + (name || 'ji') + ', this is DT Brand\'s & Jai Hanuman Tex. '
@@ -794,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const lName = val('input[name="last_name"]');
             const name  = (fName + ' ' + lName).trim();
             if (!name) {
-                dtCustomerToast('⚠ A customer name is required.');
+                dtCustomerToast('A customer name is required.');
                 return;
             }
 
@@ -826,15 +841,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (!data || !data.success) {
                         if (saveBtn) saveBtn.disabled = false;
-                        dtCustomerToast('⚠ ' + ((data && data.message) || `"${name}" was NOT saved. Your changes are still on screen.`));
+                        dtCustomerToast((data && data.message) || `"${name}" was NOT saved. Your changes are still on screen.`);
                         return;
                     }
 
                     /* The memo is a separate row in customer_notes, so it is a
-                       second request. The profile is already saved at this point;
-                       if the note fails, say so instead of implying both stored. */
+                        second request. The profile is already saved at this point;
+                        if the note fails, say so instead of implying both stored. */
                     if (!memo) {
-                        dtCustomerToast(`✨ Customer "${name}" saved to database!`);
+                        dtCustomerToast(`Customer "${name}" saved to database!`);
                         setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 500);
                         return;
                     }
@@ -848,20 +863,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(r => r.json().catch(() => ({ success: false })))
                         .then(nd => {
                             if (nd && nd.success) {
-                                dtCustomerToast(`✨ Customer "${name}" and the staff note were saved!`);
+                                dtCustomerToast(`Customer "${name}" and the staff note were saved!`);
                             } else {
-                                dtCustomerToast('✓ Profile saved, but the staff note was not: ' + ((nd && nd.message) || 'notes storage is unavailable.'));
+                                dtCustomerToast('Profile saved, but the staff note was not: ' + ((nd && nd.message) || 'notes storage is unavailable.'));
                             }
                             setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 900);
                         })
                         .catch(() => {
-                            dtCustomerToast('✓ Profile saved, but the staff note could not be sent.');
+                            dtCustomerToast('Profile saved, but the staff note could not be sent.');
                             setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 900);
                         });
                 })
                 .catch(() => {
                     if (saveBtn) saveBtn.disabled = false;
-                    dtCustomerToast(`⚠ Network error — "${name}" was NOT saved. Your changes are still on screen.`);
+                    dtCustomerToast(`Network error — "${name}" was NOT saved. Your changes are still on screen.`);
                 });
         });
     }

@@ -29,7 +29,7 @@
     };
 
     /* Saves the note to customer_notes via /api/customer_notes.php.
-       This used to prepend a card to the DOM and toast "✓ Internal Note Saved!"
+       This used to prepend a card to the DOM and toast "Internal Note Saved!"
        without contacting the server at all — there was no notes table and no
        endpoint, so every memo was lost on the next page load while the admin
        had been told it was stored. The card is only rendered after the server
@@ -44,7 +44,7 @@
         const noteText = textarea ? textarea.value.trim() : '';
 
         if (!noteText) {
-            toast('⚠ Please enter a note description.', 'danger');
+            toast('Please enter a note description.', 'danger');
             return;
         }
 
@@ -56,7 +56,7 @@
             customerId = parseInt(String(fromUrl).replace(/[^0-9]/g, ''), 10) || 0;
         }
         if (!customerId) {
-            toast('⚠ Cannot tell which customer this note belongs to.', 'danger');
+            toast('Cannot tell which customer this note belongs to.', 'danger');
             return;
         }
 
@@ -76,7 +76,7 @@
             .then(r => r.json().catch(() => ({ success: false, message: 'The server did not return a valid response.' })))
             .then(data => {
                 if (!data || data.success !== true) {
-                    toast('⚠ ' + ((data && data.message) || 'The note could not be saved.'), 'danger');
+                    toast('' + ((data && data.message) || 'The note could not be saved.'), 'danger');
                     return;
                 }
 
@@ -92,7 +92,7 @@
                         '<div class="dt-cust-note-head">' +
                             '<span>' + esc(saved.author_name || 'Admin') + ' • Just now</span>' +
                             (isImportant
-                                ? '<span class="dt-status-pill suspended" style="font-size:0.6rem; padding:1px 5px;">★ Important</span>'
+                                ? '<span class="dt-status-pill suspended" style="font-size:0.6rem; padding:1px 5px; display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Important</span></span>'
                                 : '<span style="font-size:0.65rem; color:#78716C;">General Note</span>') +
                         '</div>' +
                         // esc() matters here: the note text is typed by staff but
@@ -103,9 +103,9 @@
 
                 if (textarea) textarea.value = '';
                 if (importantChk) importantChk.checked = false;
-                toast('✓ Note saved.');
+                toast('Note saved.');
             })
-            .catch(() => toast('⚠ Could not reach the server, so the note was not saved.', 'danger'))
+            .catch(() => toast('Could not reach the server, so the note was not saved.', 'danger'))
             .finally(() => { if (submitBtn) submitBtn.disabled = false; });
     };
 
@@ -118,7 +118,7 @@
         let digits = String(phone || '').replace(/\D+/g, '');
         if (digits.length === 10) { digits = '91' + digits; }
         if (!digits) {
-            toast('⚠ This customer has no phone number on file.', 'danger');
+            toast('This customer has no phone number on file.', 'danger');
             return;
         }
         const msg = 'Namaste ' + (name || 'ji') + ', this is DT Brand\'s & Jai Hanuman Tex. '
@@ -130,7 +130,7 @@
     /* Kept so any older markup that still calls it cannot silently claim an
        email was sent. */
     window.triggerPasswordResetEmail = function () {
-        toast('⚠ Email reset is not available — use "Send Reset Link on WhatsApp" instead.', 'danger');
+        toast('Email reset is not available — use "Send Reset Link on WhatsApp" instead.', 'danger');
     };
 
 })();

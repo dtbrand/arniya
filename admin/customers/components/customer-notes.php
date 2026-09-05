@@ -101,7 +101,10 @@ if ($pdo === null || Database::isMockMode()) {
                 <div class="dt-cust-note-head">
                     <span><?php echo htmlspecialchars((string)$n['author_name']); ?><?php echo $when !== '' ? ' • ' . htmlspecialchars($when) : ''; ?></span>
                     <?php if ($important): ?>
-                        <span class="dt-status-pill suspended" style="font-size:0.6rem; padding:1px 5px;">★ Important</span>
+                        <span class="dt-status-pill suspended" style="font-size:0.6rem; padding:1px 5px; display:inline-flex; align-items:center; gap:4px;">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>Important</span>
+                        </span>
                     <?php else: ?>
                         <span style="font-size:0.65rem; color:#78716C;">General Note</span>
                     <?php endif; ?>

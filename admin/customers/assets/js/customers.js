@@ -41,7 +41,7 @@
     window.copyToClipboard = function (text, label) {
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).then(() => {
-                window.showToast(`✓ Copied ${label || 'text'} to clipboard!`);
+                window.showToast(`Copied ${label || 'text'} to clipboard!`);
             }).catch(() => {
                 fallbackCopyTextToClipboard(text, label);
             });
@@ -61,9 +61,9 @@
         textArea.select();
         try {
             document.execCommand('copy');
-            window.showToast(`✓ Copied ${label || 'text'} to clipboard!`);
+            window.showToast(`Copied ${label || 'text'} to clipboard!`);
         } catch (err) {
-            window.showToast(`⚠️ Could not copy ${label}`);
+            window.showToast(`Could not copy ${label}`);
         }
         document.body.removeChild(textArea);
     }
