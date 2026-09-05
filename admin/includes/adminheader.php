@@ -590,7 +590,7 @@ if (!headers_sent()) {
                 <div class="adm-search-amazon-bar" id="admDesktopSearchBox">
                     <div class="adm-search-input-wrap">
                         <input type="text" id="admGlobalSearch" class="adm-search-input-amazon" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off" style="padding-left:14px;">
-                        <button type="button" id="admGlobalSearchClear" class="adm-search-clear-btn" title="Clear Search">✕</button>
+                        <button type="button" id="admGlobalSearchClear" class="adm-search-clear-btn" title="Clear Search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                     </div>
 
                     <button type="button" class="adm-search-submit-btn" id="admGlobalSearchSubmitBtn" aria-label="Search" onclick="if(typeof window.executeGlobalSearch==='function') window.executeGlobalSearch(document.getElementById('admGlobalSearch').value)">
@@ -615,13 +615,13 @@ if (!headers_sent()) {
                 <span class="adm-wa-text">WhatsApp Live</span>
             </div>
 
-            <!-- Fast Action: ⚡ Clear Cache & Purge Asset Memory -->
+            <!-- Fast Action: Clear Cache & Purge Asset Memory -->
             <button type="button" class="adm-hdr-btn" id="admClearCacheBtn" onclick="window.dtAutoClearCache()" title="Purge Cache & Reload Fresh Assets">
                 <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
             </button>
 
             <!-- Notification Bell -->
-            <button type="button" class="adm-hdr-btn" title="Notifications" onclick="if(typeof window.showToast==='function') window.showToast('🔔 3 new wholesale orders received today!')">
+            <button type="button" class="adm-hdr-btn" title="Notifications" onclick="if(typeof window.showToast==='function') window.showToast('3 new wholesale orders received today!')">
                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 <span class="adm-hdr-badge">3</span>
             </button>
@@ -656,7 +656,7 @@ if (!headers_sent()) {
                         <div class="adm-dd-identity">
                             <div class="adm-dd-name">Gautam Sethi</div>
                             <div class="adm-dd-email">admin@dtbrand.in</div>
-                            <div class="adm-dd-badge">👑 Super Admin</div>
+                            <div class="adm-dd-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>Super Admin</div>
                         </div>
                     </div>
                     
@@ -710,7 +710,7 @@ if (!headers_sent()) {
     <div class="adm-mobile-full-search-bar" id="admMobileFullSearchBar">
         <div class="adm-mobile-search-input-wrap">
             <input type="text" id="admMobileGlobalSearch" class="adm-mobile-search-input-field" placeholder="Search orders, sarees, customers, SKUs..." autocomplete="off" style="padding-left:14px;">
-            <button type="button" id="admMobileGlobalSearchClear" class="adm-mobile-search-clear-btn" title="Clear Search">✕</button>
+            <button type="button" id="admMobileGlobalSearchClear" class="adm-mobile-search-clear-btn" title="Clear Search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         <button type="button" class="adm-mobile-search-close-btn" onclick="window.closeAdmMobileSearch()" title="Close Search">
             <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -782,7 +782,7 @@ if (class_exists('\DTBrand\Database')) {
     window.DT_GLOBAL_ORDERS = <?= json_encode($hdrOrders, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
     window.DT_GLOBAL_PARTNERS = <?= json_encode($hdrPartners, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
 
-    // ════ ⚡ UNIVERSAL AUTO CLEAR CACHE ENGINE ════
+    // ════ UNIVERSAL AUTO CLEAR CACHE ENGINE ════
     window.dtAutoClearCache = function() {
         try {
             // 1. Clear Web Application Cache Storage
@@ -804,7 +804,7 @@ if (class_exists('\DTBrand\Database')) {
 
             // 4. Show Instant Feedback Toast
             if (typeof window.showToast === 'function') {
-                window.showToast('🧹 Cache successfully purged! Reloading fresh assets...');
+                window.showToast('Cache successfully purged! Reloading fresh assets...');
             }
 
             // 5. Force Browser to Request Fresh Uncached Assets with Timestamp
@@ -883,7 +883,7 @@ if (class_exists('\DTBrand\Database')) {
         if (totalMatches === 0) {
             targetContainer.innerHTML = `
                 <div class="adm-live-search-empty">
-                    <div style="font-size:22px; margin-bottom:6px;">🔍</div>
+                    <div style="display:flex; justify-content:center; margin-bottom:6px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
                     <div style="font-weight:700; color:#181512; margin-bottom:3px;">No direct records for "${query}"</div>
                     <div style="font-size:11px; color:#64748B;">Try searching <i>Saree</i>, <i>KLN-SR-111</i>, or <i>DTB-001620</i>.</div>
                 </div>
@@ -894,7 +894,7 @@ if (class_exists('\DTBrand\Database')) {
 
         let html = `
             <div class="adm-live-search-header">
-                <span>🔍 Live Results for "<b>${query}</b>"</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Live Results for "<b>${query}</b>"</span></span>
                 <span class="adm-live-search-count-badge">${totalMatches} Record${totalMatches === 1 ? '' : 's'}</span>
             </div>
         `;
@@ -941,7 +941,7 @@ if (class_exists('\DTBrand\Database')) {
                 const statusBg = o.status === 'Delivered' ? '#DCFCE7' : (o.status === 'Processing' ? '#FEF3C7' : '#EFF6FF');
                 html += `
                     <div class="adm-live-search-item" onclick="window.selectSearchOrder('${o.id}')">
-                        <div class="adm-live-search-avatar" style="border-radius:6px; font-size:10px;">📦</div>
+                        <div class="adm-live-search-avatar" style="border-radius:6px; display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
                         <div class="adm-live-search-info">
                             <div class="adm-live-search-title">Order #${o.id} — ${o.customer}</div>
                             <div class="adm-live-search-sub">
@@ -988,7 +988,7 @@ if (class_exists('\DTBrand\Database')) {
         html += `
             <div class="adm-live-search-footer">
                 <span>Click any record to open</span>
-                <span style="color:#8A681F; font-weight:800; cursor:pointer;" onclick="window.executeGlobalSearch('${query}')">View in CRM ➔</span>
+                <span style="color:#8A681F; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" onclick="window.executeGlobalSearch('${query}')"><span>View in CRM</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
             </div>
         `;
 
@@ -1008,7 +1008,7 @@ if (class_exists('\DTBrand\Database')) {
         } else {
             window.location.href = `/admin/admin.php#products`;
         }
-        if (window.showToast) window.showToast(`👗 Navigated to Product SKU: ${sku}`);
+        if (window.showToast) window.showToast(`Navigated to Product SKU: ${sku}`);
     };
 
     window.selectSearchOrder = function(orderId) {
@@ -1028,7 +1028,7 @@ if (class_exists('\DTBrand\Database')) {
         } else {
             window.location.href = `/admin/admin.php#partners`;
         }
-        if (window.showToast) window.showToast(`👤 Navigated to Partner: ${partnerName}`);
+        if (window.showToast) window.showToast(`Navigated to Partner: ${partnerName}`);
     };
 
     window.executeGlobalSearch = function(query) {
@@ -1160,7 +1160,7 @@ if (class_exists('\DTBrand\Database')) {
         });
     }
 
-    // ════ 👑 PROFILE DROPDOWN & LOGOUT MODAL CONTROLLERS ════
+    // ════ PROFILE DROPDOWN & LOGOUT MODAL CONTROLLERS ════
     window.toggleAdmProfileDropdown = function(e) {
         if (e) {
             e.preventDefault();

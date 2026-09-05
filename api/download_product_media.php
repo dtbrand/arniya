@@ -94,43 +94,54 @@ try {
     $discount = (int)($product['discount'] ?? 0);
 
     $txt = "========================================================\r\n";
-    $txt .= "👑 DT BRAND'S — ETHNIC LUXURY COUTURE\r\n";
+    $txt .= "DT BRAND'S — ETHNIC LUXURY COUTURE\r\n";
     $txt .= "========================================================\r\n\r\n";
-    $txt .= "✨ Product Name: " . $name . "\r\n";
-    if (!empty($product['sku'])) $txt .= "🏷️ SKU: " . $product['sku'] . "\r\n";
-    if (!empty($product['category'])) $txt .= "📂 Category: " . $product['category'] . "\r\n";
+    $txt .= "Product Name: " . $name . "\r\n";
+    if (!empty($product['sku'])) $txt .= "SKU: " . $product['sku'] . "\r\n";
+    if (!empty($product['category'])) $txt .= "Category: " . $product['category'] . "\r\n";
+    // Fetch WhatsApp hotline dynamically
+    $waDisplay = '+91 70463 63528';
+    try {
+        $db = \DTBrand\Database::getConnection();
+        if ($db) {
+            $stmt = $db->query("SELECT setting_value FROM settings WHERE setting_key = 'contact_whatsapp_hotline' LIMIT 1");
+            $val = $stmt->fetchColumn();
+            if (!empty($val)) $waDisplay = trim($val);
+        }
+    } catch (\Throwable $e) {}
+
     if ($price > 0) {
-        $txt .= "💰 Deal Price: Rs. " . number_format($price);
+        $txt .= "Deal Price: ₹" . number_format($price);
         if ($oldPrice > $price) {
-            $txt .= " (MRP: Rs. " . number_format($oldPrice) . ")";
+            $txt .= " (MRP: ₹" . number_format($oldPrice) . ")";
             if ($discount > 0) $txt .= " [" . $discount . "% OFF]";
         }
         $txt .= "\r\n";
     } else {
-        $txt .= "💰 Price: On Request\r\n";
+        $txt .= "Price: On Request\r\n";
     }
-    if (!empty($product['fabric'])) $txt .= "🧵 Fabric: " . $product['fabric'] . "\r\n";
+    if (!empty($product['fabric'])) $txt .= "Fabric: " . $product['fabric'] . "\r\n";
     if (!empty($product['colors'])) {
         $colorsStr = is_array($product['colors']) ? implode(', ', $product['colors']) : $product['colors'];
-        $txt .= "🎨 Colors: " . $colorsStr . "\r\n";
+        $txt .= "Colors: " . $colorsStr . "\r\n";
     }
     if (!empty($product['sizes'])) {
         $sizesStr = is_array($product['sizes']) ? implode(', ', $product['sizes']) : $product['sizes'];
-        $txt .= "📏 Sizes: " . $sizesStr . "\r\n";
+        $txt .= "Sizes: " . $sizesStr . "\r\n";
     }
     if (!empty($product['description'])) {
-        $txt .= "\r\n📝 Description:\r\n" . strip_tags($product['description']) . "\r\n";
+        $txt .= "\r\nDescription:\r\n" . strip_tags($product['description']) . "\r\n";
     }
 
     $txt .= "\r\n--------------------------------------------------------\r\n";
-    $txt .= "🌟 Highlights:\r\n";
+    $txt .= "Highlights:\r\n";
     $txt .= "• 100% Original Certified Handloom Heritage\r\n";
     $txt .= "• Fast Express Delivery (Dispatched in 24-48 Hours)\r\n";
     $txt .= "• 7-Day Fast Doorstep Exchange\r\n";
     $txt .= "• Complimentary Royal Box Packaging\r\n";
     $txt .= "--------------------------------------------------------\r\n";
-    $txt .= "🔗 View Online: https://jaihanumantex.in/product.php?id=" . (int)$product['id'] . "\r\n";
-    $txt .= "💬 Order on WhatsApp: +91 70463 63528\r\n";
+    $txt .= "View Online: https://jaihanumantex.in/product.php?id=" . (int)$product['id'] . "\r\n";
+    $txt .= "Order on WhatsApp: " . $waDisplay . "\r\n";
 
     if ($mode === 'json') {
         header('Content-Type: application/json; charset=utf-8');

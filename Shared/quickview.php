@@ -1220,7 +1220,7 @@ body.qv-modal-open #dtMobileBottomNav {
                     var added = window.toggleWishlistProduct(p);
                     qvWish.classList.toggle('active', added);
                     if (typeof window.showToast === 'function') {
-                        window.showToast(added ? '♡ Saved to wishlist' : 'Removed from wishlist');
+                        window.showToast(added ? 'Saved to wishlist' : 'Removed from wishlist');
                     }
                 }
             });

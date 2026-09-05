@@ -1993,8 +1993,9 @@ window.closeWishlistDrawer = function() {
             }
 
             // Master Bottom View All Button
-            html += '<a href="javascript:void(0)" class="dt-sugg-footer-btn" onclick="if(typeof performSearch===\'function\'){performSearch(\'' + (isMobile ? 'mobile' : 'desktop') + '\', true);}">' +
-                    '<span>Explore All ' + (data.total || data.products.length) + ' Results ' + (query ? 'for &ldquo;' + query + '&rdquo;' : '') + ' ➔</span>' +
+            html += '<a href="javascript:void(0)" class="dt-sugg-footer-btn" onclick="if(typeof performSearch===\'function\'){performSearch(\'' + (isMobile ? 'mobile' : 'desktop') + '\', true);}" style="display:flex;align-items:center;justify-content:center;gap:6px;">' +
+                    '<span>Explore All ' + (data.total || data.products.length) + ' Results ' + (query ? 'for &ldquo;' + query + '&rdquo;' : '') + '</span>' +
+                    '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
                     '</a>';
         } else if (q) {
             html += '<div style="padding:24px 16px;text-align:center;color:#6B7280;font-size:0.82rem;">' +

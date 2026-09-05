@@ -761,7 +761,7 @@
                         document.body.removeChild(a);
                         setTimeout(function() { URL.revokeObjectURL(blobUrl); }, 1200);
 
-                        showShareToast('✅ All ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos Downloaded in 1 ZIP!');
+                        showShareToast('All ' + media.images.length + ' Photos & ' + media.videos.length + ' Videos Downloaded in 1 ZIP!');
                         resolve({ success: true, total: total, type: 'client_zip' });
                     }).catch(function(err) {
                         if (item.id) {

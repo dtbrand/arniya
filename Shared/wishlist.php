@@ -308,7 +308,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                     <span class="wd-subtitle" id="wishlistBadgeSub" style="font-size:0.56rem;">0 Saved Items</span>
                 </div>
             </div>
-            <button class="wd-close-btn" id="closeWishlistDrawerBtn" onclick="if(typeof window.closeWishlistDrawer==='function') window.closeWishlistDrawer();" aria-label="Close Wishlist">✕</button>
+            <button class="wd-close-btn" id="closeWishlistDrawerBtn" onclick="if(typeof window.closeWishlistDrawer==='function') window.closeWishlistDrawer();" aria-label="Close Wishlist" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <div class="wd-body" id="wishlistItemsWrap">

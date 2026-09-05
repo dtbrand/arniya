@@ -10,13 +10,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     unset($_SESSION['admin_logged_in']);
     unset($_SESSION['admin_user']);
     session_destroy();
-    header("Location: /admin/login?logged_out=1");
+    // Trailing slash: `admin/login` is a real directory, so the slashless form
+    // costs an extra 301 hop on every sign-out.
+    header("Location: /admin/login/?logged_out=1");
     exit;
 }
 
 // If already logged in, redirect to Admin Dashboard
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header("Location: /admin");
+    header("Location: /admin/");
     exit;
 }
 
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $authRes = \DTBrand\Auth::adminLogin($email, $password);
 
     if ($authRes['success']) {
-        header("Location: /admin");
+        header("Location: /admin/");
         exit;
     } else {
         $error = $authRes['message'] ?? 'Invalid credentials. Please verify your admin email and password.';
@@ -586,20 +588,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Error or Success Alert -->
             <?php if (!empty($error)): ?>
                 <div class="adm-alert danger">
-                    <span>⚠️</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     <span><?php echo htmlspecialchars($error); ?></span>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($success)): ?>
                 <div class="adm-alert success">
-                    <span>✓</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span><?php echo htmlspecialchars($success); ?></span>
                 </div>
             <?php endif; ?>
 
             <!-- Login Form -->
-            <form action="/admin/login" method="POST" class="adm-login-form">
+            <form action="/admin/login/" method="POST" class="adm-login-form">
                 
                 <!-- Email Field -->
                 <div class="adm-field-group">
@@ -642,15 +644,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Security Footer -->
             <div class="adm-security-footer">
                 <div class="adm-sec-item">
-                    <span>🛡️</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     <span>256-bit SSL</span>
                 </div>
                 <div class="adm-sec-item">
-                    <span>🔒</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                     <span>Session Guard</span>
                 </div>
                 <div class="adm-sec-item">
-                    <span>📱</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
                     <span>WhatsApp 2FA</span>
                 </div>
             </div>
@@ -663,7 +665,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="adm-modal-box">
             <div class="adm-modal-head">
                 <h3 class="adm-modal-title">Reset Admin Password</h3>
-                <button type="button" class="adm-modal-close" onclick="closeForgotModal()">✕</button>
+                <button type="button" class="adm-modal-close" onclick="closeForgotModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <p style="font-size:0.82rem; color:#7A7266; line-height:1.4;">
                 Enter your registered admin email or WhatsApp number. A secure recovery link/OTP will be transmitted instantly.
@@ -673,12 +675,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="adm-field-label">Admin Email or WhatsApp Number</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 9822019283" required>
+                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 7046363528" required>
                     </div>
                 </div>
 
                 <div id="forgotStatusMsg" style="display:none; padding:10px; border-radius:8px; font-size:0.8rem; background:#DCFCE7; color:#15803D; border:1px solid #BBF7D0;">
-                    ✓ <strong>OTP Sent!</strong> A verification code has been dispatched to your WhatsApp/Email.
+                    <span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>OTP Sent!</strong></span> A verification code has been dispatched to your WhatsApp/Email.
                 </div>
 
                 <button type="submit" class="adm-submit-btn" id="forgotSubmitBtn">

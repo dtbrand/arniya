@@ -893,7 +893,7 @@ body.reels-open #dtMobileBottomNav {
                         if (btnCircle) btnCircle.classList.toggle('liked', added);
                         var lbl = wishAction.querySelector('.reel-action-label');
                         if (lbl) lbl.textContent = added ? 'Saved' : 'Save';
-                        if (typeof window.showToast === 'function') window.showToast(added ? '♡ Saved to wishlist' : 'Removed from wishlist');
+                        if (typeof window.showToast === 'function') window.showToast(added ? 'Saved to wishlist' : 'Removed from wishlist');
                     }
                 });
             }

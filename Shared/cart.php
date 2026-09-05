@@ -344,7 +344,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                     <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
                 </div>
             </div>
-            <button class="cd-close-btn" id="closeCartDrawerBtn" onclick="if(typeof window.closeCartDrawer==='function') window.closeCartDrawer();" aria-label="Close Cart">✕</button>
+            <button class="cd-close-btn" id="closeCartDrawerBtn" onclick="if(typeof window.closeCartDrawer==='function') window.closeCartDrawer();" aria-label="Close Cart" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <div class="cd-body" id="cartDrawerItemsWrap">
@@ -357,7 +357,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 <span class="cd-total-val" id="cartTotalVal">₹0</span>
             </div>
             <div class="cd-summary-row cd-shipping">
-                <span>⚡ Fast Express Delivery & Fast Exchange</span>
+                <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg><span>Fast Express Delivery &amp; Fast Exchange</span></span>
                 <span class="cd-free-txt">FAST DISPATCH</span>
             </div>
             <button class="cd-checkout-btn" id="cartCheckoutBtn">
@@ -534,7 +534,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 
                     '<div class="cd-recommend-section">' +
                         '<div class="cd-rec-head">' +
-                            '<span>✨ TRENDING LUXURY PICKS</span>' +
+                            '<span style="display:inline-flex; align-items:center; gap:5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>TRENDING LUXURY PICKS</span></span>' +
                             '<span style="font-size:0.65rem; opacity:0.8;">SWIPE &rsaquo;</span>' +
                         '</div>' +
                         '<div class="cd-rec-track" id="cdRecTrack">' +
@@ -669,7 +669,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         saveCart(window.cartState);
         window.renderCart();
         if (typeof window.showToast === 'function') {
-            window.showToast('Added ' + (product.name || 'item') + ' to bag ✓', 'cart');
+            window.showToast('Added ' + (product.name || 'item') + ' to bag', 'cart');
         }
         window.openCartDrawer();
     };

@@ -689,7 +689,9 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                     <span>DT Brand's &amp; Jai Hanuman Tex</span>
                 </div>
             </div>
-            <button class="co-close-btn" id="closeCheckoutBtn" aria-label="Close Checkout">✕</button>
+            <button class="co-close-btn" id="closeCheckoutBtn" aria-label="Close Checkout" style="display:inline-flex; align-items:center; justify-content:center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
 
         <!-- Progress Steps -->
@@ -780,7 +782,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                     </div>
                     <div class="co-payment-options">
                         
-                        <!-- ⚡ Option 1: Instant Direct UPI (Recommended - 0% Fee) -->
+                        <!-- Option 1: Instant Direct UPI (Recommended - 0% Fee) -->
                         <div class="co-pay-option selected" data-method="direct_upi" onclick="window.selectPaymentMethod('direct_upi')">
                             <div class="co-pay-radio"></div>
                             <div class="co-pay-icon upi">
@@ -795,7 +797,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                             </div>
                         </div>
 
-                        <!-- 💳 Option 2: Razorpay Online Cards & NetBanking -->
+                        <!-- Option 2: Razorpay Online Cards & NetBanking -->
                         <div class="co-pay-option" data-method="razorpay" onclick="window.selectPaymentMethod('razorpay')">
                             <div class="co-pay-radio"></div>
                             <div class="co-pay-icon cards">
@@ -810,7 +812,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                             </div>
                         </div>
 
-                        <!-- 🚚 Option 3: Cash on Delivery (COD) -->
+                        <!-- Option 3: Cash on Delivery (COD) -->
                         <div class="co-pay-option" data-method="cod" onclick="window.selectPaymentMethod('cod')">
                             <div class="co-pay-radio"></div>
                             <div class="co-pay-icon cod">
@@ -822,7 +824,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                             </div>
                         </div>
 
-                        <!-- 💬 Option 4: Direct WhatsApp Concierge Order -->
+                        <!-- Option 4: Direct WhatsApp Concierge Order -->
                         <div class="co-pay-option" data-method="whatsapp" onclick="window.selectPaymentMethod('whatsapp')">
                             <div class="co-pay-radio"></div>
                             <div class="co-pay-icon wa">
@@ -907,7 +909,9 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             <div class="co-upi-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                     <h3 style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; font-weight:800; color:#8A681F; display:inline-flex; align-items:center; gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Instant UPI Payment</h3>
-                    <button type="button" style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748B;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')">✕</button>
+                    <button type="button" style="background:none; border:none; padding:4px; cursor:pointer; color:#64748B; display:inline-flex; align-items:center; justify-content:center;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')" aria-label="Close UPI Studio">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                 </div>
 
                 <div style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; background:#FEF3C7; color:#B45309; border-radius:20px; font-size:0.75rem; font-weight:800; margin-bottom:12px;">

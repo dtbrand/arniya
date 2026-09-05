@@ -181,8 +181,9 @@ $waCfg = $waGate['config'] ?? [];
                     <p class="adm-page-subtitle">Configure Instant Direct UPI, Dynamic QR Studio, Razorpay, Cashfree, COD &amp; WhatsApp Pay.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <button type="button" class="adm-btn-secondary" onclick="simulateTestWebhook('direct_upi')">
-                        ⚡ Simulate Test Webhook
+                    <button type="button" class="adm-btn-secondary" onclick="simulateTestWebhook('direct_upi')" style="display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        <span>Simulate Test Webhook</span>
                     </button>
                     <a href="/admin/payments/" class="adm-btn-secondary">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
@@ -227,7 +228,10 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>⚡ Instant Direct UPI &amp; Dynamic QR Studio</span></h3>
+                                <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        <span>Instant Direct UPI &amp; Dynamic QR Studio</span>
+    </h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">Auto-opens Google Pay, PhonePe, Paytm, BHIM, CRED on mobile. Generates dynamic real-time QR on desktop with 0% processing fee.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -238,7 +242,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-primary" style="padding:7px 16px;">Save UPI Studio</button>
+                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save UPI Studio</span></button>
                             </div>
                         </div>
 
@@ -280,7 +284,10 @@ $waCfg = $waGate['config'] ?? [];
                                 </label>
                                 <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer;">
                                     <input type="checkbox" name="is_recommended" value="1" <?= !empty($upiGate['is_recommended']) ? 'checked' : '' ?>>
-                                    <span style="color:#8A681F;">⭐ Mark as "Recommended" on Checkout</span>
+                                    <span style="color:#8A681F; display:inline-flex; align-items:center; gap:5px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Mark as "Recommended" on Checkout</span>
+    </span>
                                 </label>
                             </div>
                         </div>
@@ -313,7 +320,10 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>💳 Razorpay Payment Gateway</span></h3>
+                                <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        <span>Razorpay Payment Gateway</span>
+    </h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">Accept Credit/Debit Cards, NetBanking (50+ Indian Banks), UPI, Wallets, and EMI.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -324,7 +334,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-primary" style="padding:7px 16px;">Save Razorpay Settings</button>
+                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Razorpay Settings</span></button>
                             </div>
                         </div>
 
@@ -358,7 +368,7 @@ $waCfg = $waGate['config'] ?? [];
                                     <span id="rzpWebhookUrl">https://jaihanumantex.in/api/webhooks/razorpay.php</span>
                                     <button type="button" class="dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/razorpay.php', this)">Copy URL</button>
                                 </div>
-                                <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into your Razorpay Dashboard ➔ Settings ➔ Webhooks with events: <code>payment.captured</code>, <code>order.paid</code>, <code>payment.failed</code>.</span>
+                                <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into your Razorpay Dashboard -> Settings -> Webhooks with events: <code>payment.captured</code>, <code>order.paid</code>, <code>payment.failed</code>.</span>
                             </div>
                         </div>
                     </div>
@@ -373,7 +383,10 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>🚀 Cashfree Payment Gateway</span></h3>
+                                <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span>Cashfree Payment Gateway</span>
+    </h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">Accept payments via Cashfree Drop PG, Instant UPI Intent, Cards &amp; Netbanking.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -384,7 +397,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-primary" style="padding:7px 16px;">Save Cashfree Settings</button>
+                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Cashfree Settings</span></button>
                             </div>
                         </div>
 
@@ -418,7 +431,7 @@ $waCfg = $waGate['config'] ?? [];
                                     <span id="cfWebhookUrl">https://jaihanumantex.in/api/webhooks/cashfree.php</span>
                                     <button type="button" class="dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/cashfree.php', this)">Copy URL</button>
                                 </div>
-                                <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into Cashfree Merchant Dashboard ➔ Developers ➔ Webhooks with event: <code>PAYMENT_SUCCESS_WEBHOOK</code>.</span>
+                                <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into Cashfree Merchant Dashboard -> Developers -> Webhooks with event: <code>PAYMENT_SUCCESS_WEBHOOK</code>.</span>
                             </div>
                         </div>
                     </div>
@@ -433,7 +446,10 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>🚚 Cash on Delivery (COD) Rules</span></h3>
+                                <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        <span>Cash on Delivery (COD) Rules</span>
+    </h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">Allow customers to pay in cash upon doorstep delivery across serviceable pincodes.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -444,7 +460,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-primary" style="padding:7px 16px;">Save COD Settings</button>
+                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save COD Settings</span></button>
                             </div>
                         </div>
 
@@ -484,7 +500,10 @@ $waCfg = $waGate['config'] ?? [];
                     <div class="adm-card">
                         <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 class="adm-card-title"><span>💬 Direct WhatsApp Order &amp; Pay</span></h3>
+                                <h3 class="adm-card-title" style="display:inline-flex; align-items:center; gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <span>Direct WhatsApp Order &amp; Pay</span>
+    </h3>
                                 <p style="font-size:12px; color:#64748B; margin-top:3px;">1-Click Concierge ordering routing customer directly to DT Brand's official WhatsApp.</p>
                             </div>
                             <div style="display:flex; align-items:center; gap:12px;">
@@ -495,7 +514,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-primary" style="padding:7px 16px;">Save WhatsApp Settings</button>
+                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save WhatsApp Settings</span></button>
                             </div>
                         </div>
 
@@ -568,7 +587,7 @@ function simulateTestWebhook(gateway) {
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            alert(`✓ Success: ${data.message}\nOrder: ${data.order_number}\nTx ID: ${data.transaction_id}`);
+            alert(`Success: ${data.message}\nOrder: ${data.order_number}\nTx ID: ${data.transaction_id}`);
         } else {
             alert('Simulation error: ' + (data.error || 'Failed'));
         }

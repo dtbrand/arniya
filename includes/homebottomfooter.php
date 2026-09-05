@@ -819,7 +819,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                 <div class="home-menu-user-info">
                     <div class="home-menu-user-name" id="homeMenuUserName">Welcome Guest Shopper</div>
                     <div class="home-menu-user-tier" id="homeMenuUserTier">
-                        <span>★ Tap to Sign In / Register</span>
+                        <span style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Tap to Sign In / Register</span></span>
                     </div>
                 </div>
                 <span class="home-menu-tier-badge" id="homeMenuTierBadge">SIGN IN</span>
@@ -890,7 +890,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                         <ul class="home-menu-sub-list">
                             <li>
                                 <a href="/shop.php?category=<?= urlencode($dcName) ?>" class="home-menu-sub-viewall">
-                                    <span>✦ View All <?= htmlspecialchars($dcName) ?> Designs</span>
+                                    <span style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>View All <?= htmlspecialchars($dcName) ?> Designs</span></span>
                                     <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 </a>
                             </li>
@@ -1189,7 +1189,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                 var uName = user.name || user.full_name || 'VIP Member';
                 nameEl.textContent = uName;
                 var role = user.role || 'Member';
-                if (tierEl) tierEl.innerHTML = '<span>★ Verified ' + (role.charAt(0).toUpperCase() + role.slice(1)) + '</span>';
+                if (tierEl) tierEl.innerHTML = '<span style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Verified ' + (role.charAt(0).toUpperCase() + role.slice(1)) + '</span></span>';
                 if (badgeEl) badgeEl.textContent = role.toUpperCase();
                 if (avatarWrap && user.avatar) {
                     avatarWrap.innerHTML = '<img src="' + user.avatar + '" alt="' + uName + '" onerror="this.onerror=null; this.src=\'/assets/images/product1.png\';">';
@@ -1197,7 +1197,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
             } catch(e) {}
         } else if (nameEl) {
             nameEl.textContent = 'Welcome Guest Shopper';
-            if (tierEl) tierEl.innerHTML = '<span>★ Tap to Sign In / Register</span>';
+            if (tierEl) tierEl.innerHTML = '<span style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Tap to Sign In / Register</span></span>';
             if (badgeEl) badgeEl.textContent = 'SIGN IN';
         }
     }
