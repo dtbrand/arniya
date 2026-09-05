@@ -82,6 +82,7 @@ Options -Indexes -MultiViews
     RewriteRule ^checkout/?$ checkout.php [QSA,L]
     RewriteRule ^wishlist/?$ wishlist.php [QSA,L]
     RewriteRule ^contact/?$ contact.php [QSA,L]
+    RewriteRule ^about/?$ about-us.php [QSA,L]
     RewriteRule ^about-us/?$ about-us.php [QSA,L]
     RewriteRule ^privacy/?$ privacy.php [QSA,L]
     RewriteRule ^shipping/?$ shipping.php [QSA,L]

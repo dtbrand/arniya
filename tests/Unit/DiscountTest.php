@@ -42,4 +42,23 @@ class DiscountTest extends TestCase
         $this->assertEquals(0.0, $result['discount']);
         $this->assertStringContainsString('unavailable', strtolower((string)($result['message'] ?? '')));
     }
+
+    public function testFormatDiscountBadge(): void
+    {
+        $flatCoupon = ['discount_type' => 'flat', 'discount_value' => 500.0];
+        $this->assertEquals('₹500 FLAT OFF', DiscountEngine::formatDiscountBadge($flatCoupon));
+
+        $percentWithCap = ['discount_type' => 'percentage', 'discount_value' => 15.0, 'max_discount' => 1000.0];
+        $this->assertEquals('15% OFF (Up to ₹1,000)', DiscountEngine::formatDiscountBadge($percentWithCap));
+
+        $purePercent = ['discount_type' => 'percentage', 'discount_value' => 10.0, 'max_discount' => 0.0];
+        $this->assertEquals('10% OFF', DiscountEngine::formatDiscountBadge($purePercent));
+    }
+
+    public function testCalculateCartDiscountReturnsZeroOnInvalid(): void
+    {
+        Database::reset();
+        $disc = DiscountEngine::calculateCartDiscount('INVALID_CODE', 10000.0);
+        $this->assertEquals(0.0, $disc);
+    }
 }

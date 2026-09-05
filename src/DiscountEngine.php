@@ -91,4 +91,53 @@ class DiscountEngine
             'message' => 'Coupon ' . $code . ' applied! You saved ₹' . number_format($discount, 2) . '.'
         ];
     }
+
+    /**
+     * Retrieve active promotional coupons for storefront / checkout display
+     */
+    public static function getActiveCoupons(int $limit = 10): array
+    {
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return [];
+        }
+
+        try {
+            $stmt = $pdo->prepare("SELECT code, discount_type, discount_value, min_order_value, max_discount FROM coupons WHERE status = 'active' ORDER BY id DESC LIMIT " . max(1, (int)$limit));
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+        } catch (\Throwable $e) {
+            error_log('[DiscountEngine] getActiveCoupons failed: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Format a luxury readable discount badge from coupon record
+     */
+    public static function formatDiscountBadge(array $coupon): string
+    {
+        $type = $coupon['discount_type'] ?? 'percentage';
+        $val = (float)($coupon['discount_value'] ?? 0);
+        $max = (float)($coupon['max_discount'] ?? 0);
+
+        if ($type === 'flat') {
+            return '₹' . number_format($val, 0) . ' FLAT OFF';
+        }
+
+        if ($max > 0) {
+            return number_format($val, 0) . '% OFF (Up to ₹' . number_format($max, 0) . ')';
+        }
+
+        return number_format($val, 0) . '% OFF';
+    }
+
+    /**
+     * Calculate discount amount without full payload wrapper
+     */
+    public static function calculateCartDiscount(string $code, float $subtotal, string $channel = 'all'): float
+    {
+        $result = self::applyCoupon($code, $subtotal, null, $channel);
+        return $result['valid'] ? (float)($result['discount'] ?? 0.0) : 0.0;
+    }
 }
