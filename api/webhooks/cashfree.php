@@ -25,7 +25,7 @@ if (empty($rawBody)) {
 
 $cfGate = PaymentManager::getGateway('cashfree');
 $cfg = $cfGate['config'] ?? [];
-$webhookSecret = trim((string)($cfg['webhook_secret'] ?? ''));
+$webhookSecret = trim((string)($cfg['webhook_secret'] ?? ($cfg['secret_key'] ?? (getenv('CASHFREE_WEBHOOK_SECRET') ?: getenv('CASHFREE_SECRET_KEY') ?: ''))));
 
 if (empty($signature) || empty($timestamp)) {
     http_response_code(401);
@@ -33,16 +33,15 @@ if (empty($signature) || empty($timestamp)) {
     exit;
 }
 
-if (!empty($webhookSecret)) {
-    $expected = base64_encode(hash_hmac('sha256', $timestamp . $rawBody, $webhookSecret, true));
-    if (!hash_equals($expected, $signature)) {
-        http_response_code(401);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid Cashfree webhook signature']);
-        exit;
-    }
-} else {
+if (empty($webhookSecret)) {
     http_response_code(503);
     echo json_encode(['status' => 'error', 'message' => 'Cashfree webhook secret not configured']);
+    exit;
+}
+
+if (!PaymentManager::verifyCashfreeWebhookSignature($rawBody, $signature, $timestamp)) {
+    http_response_code(401);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid Cashfree webhook signature']);
     exit;
 }
 

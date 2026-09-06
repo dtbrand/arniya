@@ -267,6 +267,40 @@ class PaymentManager
     }
 
     /**
+     * Verify Razorpay webhook signature
+     */
+    public static function verifyRazorpayWebhookSignature(string $rawBody, string $signature): bool
+    {
+        $rzpGate = self::getGateway('razorpay');
+        $cfg = $rzpGate['config'] ?? [];
+        $webhookSecret = trim((string)($cfg['webhook_secret'] ?? (getenv('RAZORPAY_WEBHOOK_SECRET') ?: '')));
+
+        if (empty($webhookSecret) || empty($signature)) {
+            return false;
+        }
+
+        $expected = hash_hmac('sha256', $rawBody, $webhookSecret);
+        return hash_equals($expected, $signature);
+    }
+
+    /**
+     * Verify Cashfree webhook signature
+     */
+    public static function verifyCashfreeWebhookSignature(string $rawBody, string $signature, string|int $timestamp = ''): bool
+    {
+        $cfGate = self::getGateway('cashfree');
+        $cfg = $cfGate['config'] ?? [];
+        $webhookSecret = trim((string)($cfg['webhook_secret'] ?? ($cfg['secret_key'] ?? (getenv('CASHFREE_WEBHOOK_SECRET') ?: getenv('CASHFREE_SECRET_KEY') ?: ''))));
+
+        if (empty($webhookSecret) || empty($signature) || empty($timestamp)) {
+            return false;
+        }
+
+        $expected = base64_encode(hash_hmac('sha256', (string)$timestamp . $rawBody, $webhookSecret, true));
+        return hash_equals($expected, $signature);
+    }
+
+    /**
      * Create Cashfree Order
      */
     public static function createCashfreeOrder(string $orderNumber, float $amount, string $customerPhone, string $customerName = 'Customer', string $customerEmail = 'customer@dtbrands.com'): array
@@ -423,9 +457,29 @@ class PaymentManager
             $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
 
             if (!empty($items)) {
+                $col = 'stock_qty';
+                try {
+                    if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                        $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(\PDO::FETCH_ASSOC);
+                        $colNames = array_column($pInfo, 'name');
+                        if (in_array('stock_qty', $colNames, true)) {
+                            $col = 'stock_qty';
+                        } elseif (in_array('stock', $colNames, true)) {
+                            $col = 'stock';
+                        }
+                    } else {
+                        $check = $db->query("SHOW COLUMNS FROM `products` LIKE 'stock_qty'");
+                        if ($check && !$check->fetch()) {
+                            $col = 'stock';
+                        }
+                    }
+                } catch (\Throwable $te) {
+                    $col = 'stock_qty';
+                }
+
                 $stmtDec = $db->prepare("
                     UPDATE `products` 
-                    SET `stock` = GREATEST(0, `stock` - :qty)
+                    SET `{$col}` = GREATEST(0, `{$col}` - :qty)
                     WHERE `id` = :pid
                 ");
                 foreach ($items as $item) {
@@ -464,20 +518,37 @@ class PaymentManager
             $sortOrder = isset($data['sort_order']) ? (int)$data['sort_order'] : (int)($existing['sort_order'] ?? 0);
             $config = $data['config'] ?? ($existing['config'] ?? []);
 
-            $stmt = $db->prepare("
-                INSERT INTO `payment_gateways` (
-                    `gateway_key`, `name`, `description`, `is_active`, `is_test_mode`, `is_recommended`, `config_json`, `sort_order`
-                ) VALUES (
-                    :key, :name, :desc, :active, :test, :rec, :cfg, :sort
-                ) ON DUPLICATE KEY UPDATE
-                    `name` = VALUES(`name`),
-                    `description` = VALUES(`description`),
-                    `is_active` = VALUES(`is_active`),
-                    `is_test_mode` = VALUES(`is_test_mode`),
-                    `is_recommended` = VALUES(`is_recommended`),
-                    `config_json` = VALUES(`config_json`),
-                    `sort_order` = VALUES(`sort_order`)
-            ");
+            if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                $stmt = $db->prepare("
+                    INSERT INTO `payment_gateways` (
+                        `gateway_key`, `name`, `description`, `is_active`, `is_test_mode`, `is_recommended`, `config_json`, `sort_order`
+                    ) VALUES (
+                        :key, :name, :desc, :active, :test, :rec, :cfg, :sort
+                    ) ON CONFLICT(`gateway_key`) DO UPDATE SET
+                        `name` = excluded.`name`,
+                        `description` = excluded.`description`,
+                        `is_active` = excluded.`is_active`,
+                        `is_test_mode` = excluded.`is_test_mode`,
+                        `is_recommended` = excluded.`is_recommended`,
+                        `config_json` = excluded.`config_json`,
+                        `sort_order` = excluded.`sort_order`
+                ");
+            } else {
+                $stmt = $db->prepare("
+                    INSERT INTO `payment_gateways` (
+                        `gateway_key`, `name`, `description`, `is_active`, `is_test_mode`, `is_recommended`, `config_json`, `sort_order`
+                    ) VALUES (
+                        :key, :name, :desc, :active, :test, :rec, :cfg, :sort
+                    ) ON DUPLICATE KEY UPDATE
+                        `name` = VALUES(`name`),
+                        `description` = VALUES(`description`),
+                        `is_active` = VALUES(`is_active`),
+                        `is_test_mode` = VALUES(`is_test_mode`),
+                        `is_recommended` = VALUES(`is_recommended`),
+                        `config_json` = VALUES(`config_json`),
+                        `sort_order` = VALUES(`sort_order`)
+                ");
+            }
 
             return $stmt->execute([
                 ':key'    => $gatewayKey,

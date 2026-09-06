@@ -32,16 +32,9 @@ if (empty($signature)) {
     exit;
 }
 
-if (!empty($webhookSecret)) {
-    $expected = hash_hmac('sha256', $rawBody, $webhookSecret);
-    if (!hash_equals($expected, $signature)) {
-        http_response_code(401);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid webhook signature']);
-        exit;
-    }
-} else {
-    http_response_code(503);
-    echo json_encode(['status' => 'error', 'message' => 'Razorpay webhook secret not configured']);
+if (!PaymentManager::verifyRazorpayWebhookSignature($rawBody, $signature)) {
+    http_response_code(401);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid webhook signature']);
     exit;
 }
 

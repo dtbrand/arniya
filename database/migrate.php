@@ -8,6 +8,7 @@ class DatabaseMigrationRunner {
     private string $migrationsPath;
     private ?string $masterSqlFile;
     private ?\PDO $pdo = null;
+    private bool $pdoExplicitlySet = false;
 
     public function __construct(string $migrationsPath = __DIR__ . '/migrations', ?string $masterSqlFile = null) {
         $this->migrationsPath = $migrationsPath;
@@ -15,7 +16,7 @@ class DatabaseMigrationRunner {
     }
 
     public function getPDO(): ?\PDO {
-        if ($this->pdo !== null) {
+        if ($this->pdoExplicitlySet || $this->pdo !== null) {
             return $this->pdo;
         }
 
@@ -43,6 +44,7 @@ class DatabaseMigrationRunner {
 
     public function setPDO(?\PDO $pdo): void {
         $this->pdo = $pdo;
+        $this->pdoExplicitlySet = true;
     }
 
     public function listMigrations(): array {
