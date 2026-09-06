@@ -17,6 +17,8 @@ require_once __DIR__ . '/../src/DiscountEngine.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/OrderManager.php';
 require_once __DIR__ . '/../src/CustomerManager.php';
+require_once __DIR__ . '/../src/PaymentManager.php';
+require_once __DIR__ . '/../database/migrate.php';
 
 if (session_status() === PHP_SESSION_NONE && PHP_SAPI === 'cli') {
     @session_set_save_handler(new \SessionHandler(), true);

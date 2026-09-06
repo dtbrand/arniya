@@ -6,6 +6,9 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__ . '/Shared',
         __DIR__ . '/src',
         __DIR__ . '/tests',
+        __DIR__ . '/database',
+        __DIR__ . '/api',
+        __DIR__ . '/admin',
     ])
     ->exclude(['vendor', 'node_modules', 'scratch', '.uix'])
     ->name('*.php')

@@ -205,6 +205,89 @@ paths:
         '200':
           description: "Coupon validation result"
 
+  /api/customers.php:
+    get:
+      summary: "Fetch Customers Roster"
+      description: "Admin authenticated endpoint to list registered customers with type and tier filtering."
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [all, retail, wholesale, reseller]
+            default: all
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Customer roster array returned"
+        '403':
+          description: "Forbidden: Admin session required"
+    post:
+      summary: "Create, Update, or Delete Customer"
+      description: "Performs CRM mutations on customer identity, credit limits, and partnership tiers."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [create, update, delete, update_status]
+                name:
+                  type: string
+                phone:
+                  type: string
+                type:
+                  type: string
+                  enum: [retail, wholesale, reseller]
+      responses:
+        '200':
+          description: "Operation executed successfully"
+        '400':
+          description: "Validation error"
+        '403':
+          description: "Forbidden: Admin session required"
+
+  /api/payments.php:
+    get:
+      summary: "Get Payment Gateway Methods"
+      description: "Returns enabled payment channels (Razorpay, Direct UPI, COD, RTGS Bank Transfer, Reseller Wallet)."
+      parameters:
+        - name: channel
+          in: query
+          schema:
+            type: string
+            enum: [retail, wholesale, reseller, retailer]
+            default: retail
+      responses:
+        '200':
+          description: "List of payment gateways and credentials returned"
+    post:
+      summary: "Create Order or Verify Signature"
+      description: "Generates server-side payment order or validates gateway callback."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [create_order, verify_signature]
+                amount:
+                  type: number
+                order_number:
+                  type: string
+      responses:
+        '200':
+          description: "Payment order created or signature verified"
+
   /api/settings.php:
     get:
       summary: "Retrieve System & Contact Settings"
