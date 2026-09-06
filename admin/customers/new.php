@@ -157,7 +157,7 @@ $active_subnav = "new";
                         <p class="dt-cust-subtitle">Create a direct retail customer account with verified phone, email credentials, and delivery address.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Directory</a>
                     </div>
                 </div>
 

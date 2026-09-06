@@ -707,7 +707,7 @@ $cust = [
                                 <textarea id="custEditMemo" name="staff_memo" class="dt-input-field no-icon" style="height:70px; resize:none; padding-top:8px;" placeholder="Add an internal note — preferred courier, packaging remarks, call outcome..."></textarea>
                                 <p style="font-size:0.68rem; color:#78716C; margin:5px 0 0 0;">
                                     Saved as a new dated note on this customer.
-                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" style="color:#8A681F; font-weight:700;">View all notes →</a>
+                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" style="color:#8A681F; font-weight:700;">View all notes <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                                 </p>
                             </div>
                         </div>

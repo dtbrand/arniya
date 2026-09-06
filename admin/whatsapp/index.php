@@ -50,7 +50,7 @@ $active_nav = "whatsapp";
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Engage B2B buyers and retail customers via official WhatsApp Cloud API.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/admin.php" class="adm-btn-secondary dt-btn-pale" style="text-decoration:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px;">← Back to Main Console</a>
+                    <a href="/admin/admin.php" class="adm-btn-secondary dt-btn-pale" style="text-decoration:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Main Console</a>
                 </div>
             </div>
 

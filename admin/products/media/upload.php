@@ -100,7 +100,7 @@ function uploadOne(file) {
         .then(({ status, data }) => {
             if (status === 200 && data && data.success) {
                 row.className = 'upload-result ok';
-                row.textContent = 'Uploaded: ' + file.name + ' → ' + data.url;
+                row.textContent = 'Uploaded: ' + file.name + ' -> ' + data.url;
             } else {
                 row.className = 'upload-result err';
                 row.textContent = 'Failed: ' + file.name + ' — ' + ((data && data.message) || ('HTTP ' + status));

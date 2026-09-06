@@ -92,7 +92,7 @@ $page_title = "Shipping Label " . $order['id'];
 <body style="background:#F1F5F9; padding:24px 0;">
 
 <div class="dt-doc-actions-bar" style="max-width:440px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">← Back to Order</a>
+    <a href="/admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Order</a>
     <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_DOCS.printDoc()">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         <span>Print Label</span>

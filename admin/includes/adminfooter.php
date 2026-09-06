@@ -22,7 +22,7 @@ $curr_nav = isset($active_nav) ? $active_nav : 'dashboard';
 
     <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
         <span>© <?php echo date('Y'); ?> <strong>DT Brand's & Jai Hanuman Tex</strong>. All Rights Reserved.</span>
-        <a href="https://jaihanumantex.in/" target="_blank" style="color:#8A681F; font-weight:700; text-decoration:none;">jaihanumantex.in ↗</a>
+        <a href="https://jaihanumantex.in/" target="_blank" style="color:#8A681F; font-weight:700; text-decoration:none;">jaihanumantex.in <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:3px; vertical-align:middle;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
     </div>
 </footer>
 

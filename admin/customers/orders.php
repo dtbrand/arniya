@@ -39,7 +39,7 @@ $active_subnav = "orders";
                         <p class="dt-cust-subtitle">Monitor retail customer orders, tracking numbers, invoice downloads, and delivery TAT.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
+                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold"><span>Open Master Orders Console</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     </div>
                 </div>
 

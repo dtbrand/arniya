@@ -169,20 +169,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             gap: 6px;
             padding: 7px 14px;
             border-radius: 8px;
-            border: 1.4px solid var(--adm-gold);
-            background: #FFFFFF;
+            border: 1px solid var(--adm-gold-light);
+            background: var(--adm-gold-pale);
             color: var(--adm-gold-deep);
             font-size: 0.78rem;
             font-weight: 700;
             text-decoration: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
             transition: var(--adm-transition);
         }
 
         .adm-return-btn:hover {
-            background: var(--adm-gold);
-            color: #FFFFFF;
+            background: #F5ECCE;
+            color: #5A4210;
+            border-color: var(--adm-gold);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.2);
+            box-shadow: 0 3px 8px rgba(184, 134, 11, 0.2);
         }
 
         /* Main Login Wrapper */
@@ -333,11 +335,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: var(--adm-transition);
         }
 
+        @property --dt-border-angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        @keyframes dtBorderRotate {
+            to { --dt-border-angle: 360deg; }
+        }
+
+        @keyframes dtGoldPlatinumGlow {
+            0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35); }
+            100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6); }
+        }
+
         .adm-form-input:focus {
-            background: #FFFFFF;
-            border-color: var(--adm-gold);
-            box-shadow: 0 0 0 4px var(--adm-gold-glow);
-            outline: none;
+            outline: none !important;
+            border: 2px solid transparent !important;
+            background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                        conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+            animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+            color: #111827 !important;
         }
 
         .adm-pwd-toggle {
@@ -406,22 +425,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             gap: 10px;
             width: 100%;
             padding: 13px;
-            background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+            border: 1px solid #8A681F;
+            color: #111827;
             font-size: 0.92rem;
             font-weight: 800;
+            letter-spacing: -0.011em;
             border-radius: 10px;
-            border: none;
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(138, 104, 31, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35);
             transition: var(--adm-transition);
             margin-top: 4px;
         }
 
         .adm-submit-btn:hover {
-            background: linear-gradient(135deg, var(--adm-gold-bright) 0%, var(--adm-gold) 100%);
-            box-shadow: 0 6px 22px rgba(138, 104, 31, 0.42);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48);
+            transform: translateY(-1px);
+            border-color: #8A681F;
+            color: #111827;
         }
 
         .adm-submit-btn:active {
@@ -449,20 +471,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .adm-demo-btn {
-            padding: 4px 10px;
-            background: var(--adm-gold);
-            color: #FFFFFF;
+            padding: 5px 12px;
+            background: var(--adm-gold-pale);
+            border: 1px solid var(--adm-gold-light);
+            color: var(--adm-gold-deep);
             font-size: 0.72rem;
             font-weight: 800;
             border-radius: 6px;
-            border: none;
             cursor: pointer;
             white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
             transition: var(--adm-transition);
         }
 
         .adm-demo-btn:hover {
-            background: var(--adm-gold-deep);
+            background: #F5ECCE;
+            color: #5A4210;
+            border-color: var(--adm-gold);
+            transform: translateY(-1px);
         }
 
         /* Security Badges Footer */
@@ -567,8 +593,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="adm-login-brand-sub">Enterprise CRM</span>
             </div>
         </a>
-        <a href="/shop" class="adm-return-btn">
-            <span>← Return to Shop</span>
+        <a href="/shop" class="adm-return-btn dt-btn dt-btn-pale">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Return to Shop</span>
         </a>
     </header>
 
@@ -647,7 +674,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="dt-btn dt-btn-gold adm-submit-btn">
+                <button type="submit" class="adm-submit-btn dt-btn dt-btn-gold">
                     <span>Sign In to Admin Portal</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
@@ -695,7 +722,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>OTP Sent!</strong></span> A verification code has been dispatched to your WhatsApp/Email.
                 </div>
 
-                <button type="submit" class="dt-btn dt-btn-gold adm-submit-btn" id="forgotSubmitBtn">
+                <button type="submit" class="adm-submit-btn dt-btn dt-btn-gold" id="forgotSubmitBtn">
                     <span>Send Password Reset OTP</span>
                 </button>
             </form>

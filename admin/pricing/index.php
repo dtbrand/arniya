@@ -45,7 +45,7 @@ $allProducts = ProductCatalog::getAll(true);
                     <p class="adm-page-subtitle">Define customized wholesale MOQ pricing, reseller margins, and bulk tier configurations directly connected to product catalogs.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Main Console</a>
                 </div>
             </div>
 

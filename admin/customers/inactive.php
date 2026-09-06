@@ -52,7 +52,7 @@ $active_filter = "inactive";
                         <p class="dt-cust-subtitle">Shoppers with no purchases in the last 60+ days or accounts pending re-engagement campaigns.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← All Customers</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All Customers</a>
                         <a href="/admin/customers/export.php" class="dt-btn dt-btn-gold">Export Dormant List</a>
                     </div>
                 </div>

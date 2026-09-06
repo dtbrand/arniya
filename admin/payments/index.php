@@ -221,7 +221,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                     </div>
                     <div class="adm-kpi-val" style="color:<?= $pendingVerificationsCount > 0 ? '#B45309' : '#15803D' ?>;"><?= $pendingVerificationsCount ?></div>
                     <div class="adm-kpi-bottom">
-                        <a href="/admin/payments/pending.php" style="font-size:0.75rem; color:#8A681F; font-weight:700; text-decoration:none;">Review Pending UTRs →</a>
+                        <a href="/admin/payments/pending.php" style="font-size:0.75rem; color:#8A681F; font-weight:700; text-decoration:none;">Review Pending UTRs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     </div>
                 </div>
             </div>

@@ -666,7 +666,7 @@ $dashPayload = [
                         <div class="adm-app-balance-box">
                             <div>
                                 <div class="adm-app-bal-lbl">Today's Wholesale Revenue</div>
-                                <div class="adm-app-bal-val">₹<?= number_format($todaySales) ?> <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;"><?= $todaySales > 0 ? '↑ Live' : 'Live Sync' ?></small></div>
+                                <div class="adm-app-bal-val">₹<?= number_format($todaySales) ?> <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;"><?= $todaySales > 0 ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Live' : 'Live Sync' ?></small></div>
                             </div>
                             <a href="/admin/products/add.php" class="adm-app-action-btn">
                                 <svg viewBox="0 0 24 24" width="12" height="12" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -715,7 +715,7 @@ $dashPayload = [
                     <div>
                         <div class="adm-app-section-head">
                             <span class="adm-app-section-title">Wholesale Operations Hub</span>
-                            <a href="javascript:void(0)" onclick="switchAdmTab('products')" class="adm-app-section-link">See All ↗</a>
+                            <a href="javascript:void(0)" onclick="switchAdmTab('products')" class="adm-app-section-link">See All <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px; vertical-align:middle;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                         </div>
                         <div class="adm-app-stream-grid">
                             <a href="javascript:void(0)" onclick="switchAdmTab('reports')" class="adm-app-stream-card">
@@ -788,7 +788,7 @@ $dashPayload = [
                     <div>
                         <div class="adm-app-section-head">
                             <span class="adm-app-section-title">Recent Activity Stream</span>
-                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-section-link">View Orders ↗</a>
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-section-link">View Orders <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px; vertical-align:middle;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                         </div>
                         <?php
                             // All four rows here were hardcoded: "Banarasi Silk Zari Saree
@@ -1079,7 +1079,7 @@ $dashPayload = [
                                         <span class="adm-ref-pill emerald" style="font-size:0.65rem; padding:2px 7px;">Live Feed</span>
                                         <?php endif; ?>
                                     </div>
-                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn" style="font-size:0.75rem; padding:5px 12px;">View All Orders (<?php echo number_format($totalOrdersCount); ?>) ↗</a>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn dt-btn dt-btn-pale" style="font-size:0.75rem; padding:5px 12px;">View All Orders (<?php echo number_format($totalOrdersCount); ?>) <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:3px;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                                 </div>
                                 <div class="adm-ref-table-wrap">
                                     <table class="adm-ref-table">
@@ -1171,7 +1171,7 @@ $dashPayload = [
                                                             </svg>
                                                         </a>
                                                         <?php endif; ?>
-                                                        <a href="/admin/orders/view.php?id=<?= (int)($ord['id'] ?? 0) ?>" class="adm-ref-view-ord-btn">View ↗</a>
+                                                        <a href="/admin/orders/view.php?id=<?= (int)($ord['id'] ?? 0) ?>" class="adm-ref-view-ord-btn dt-btn dt-btn-pale">View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1304,7 +1304,7 @@ $dashPayload = [
                                         <line x1="12" y1="20" x2="12" y2="4"></line>
                                         <line x1="6" y1="20" x2="6" y2="14"></line>
                                     </svg>
-                                    View Full Performance Analytics ↗
+                                    View Full Performance Analytics <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:3px; vertical-align:middle;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                                 </button>
 
                                 <div class="adm-ref-perf-stats-grid">
@@ -1341,7 +1341,7 @@ $dashPayload = [
                             <div class="adm-ref-card" style="padding: 18px 20px;">
                                 <div class="adm-ref-card-head" style="margin-bottom:12px;">
                                     <h3 class="adm-ref-card-title"><?php echo !empty($fastMovingRows) ? 'Fast Moving Catalog Lots' : 'Catalogue Stock Levels'; ?></h3>
-                                    <a href="javascript:void(0)" onclick="switchAdmTab('products')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none;">Stock Health ↗</a>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('products')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:2px;">Stock Health <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
                                 </div>
 
                                 <div class="adm-ref-cat-list">
@@ -1431,7 +1431,7 @@ $dashPayload = [
                         <h3 class="adm-card-title">
                             <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Order Status Fulfillment Pipeline</span>
                         </h3>
-                        <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="switchAdmTab('orders')">All Orders ↗</button>
+                        <button type="button" class="adm-btn-secondary adm-btn-sm dt-btn dt-btn-pale" onclick="switchAdmTab('orders')">All Orders <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:3px;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></button>
                     </div>
                     <?php
                         /*
@@ -1486,7 +1486,7 @@ $dashPayload = [
                                     <p class="adm-saas-card-sub">Multi-channel sales &bull; <?php echo htmlspecialchars($revRangeLabel, ENT_QUOTES); ?></p>
                                 </div>
                             </div>
-                            <button type="button" class="adm-ref-view-ord-btn" onclick="switchAdmTab('reports')">View Report ↗</button>
+                            <button type="button" class="adm-ref-view-ord-btn dt-btn dt-btn-pale" onclick="switchAdmTab('reports')">View Report <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></button>
                         </div>
 
                         <div class="adm-saas-kpi-row" style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
@@ -1540,7 +1540,7 @@ $dashPayload = [
                                     <p class="adm-saas-card-sub"><?php echo $catMode === 'sales' ? 'Sold value by category &bull; all time' : 'Catalogue share &bull; nothing sold yet'; ?></p>
                                 </div>
                             </div>
-                            <button type="button" class="adm-ref-view-ord-btn" onclick="switchAdmTab('products')">View Catalog ↗</button>
+                            <button type="button" class="adm-ref-view-ord-btn dt-btn dt-btn-pale" onclick="switchAdmTab('products')">View Catalog <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></button>
                         </div>
 
                         <div class="adm-saas-canvas-wrap" style="height:175px; display:flex; align-items:center; justify-content:center;">
@@ -1606,8 +1606,8 @@ $dashPayload = [
                             <h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800; color:#181512;">Recent Order Stream</h3>
                             <p style="font-size:0.75rem; color:#7A7266;">The 6 newest orders across every channel</p>
                         </div>
-                        <button class="adm-btn-secondary" onclick="switchAdmTab('orders')">
-                            <span>View All Orders →</span>
+                        <button class="adm-btn-secondary dt-btn dt-btn-pale" onclick="switchAdmTab('orders')">
+                            <span>View All Orders</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </button>
                     </div>
                     <div class="adm-table-responsive">
@@ -1889,7 +1889,7 @@ $dashPayload = [
                                 <option value="Out of Stock">Out of Stock</option>
                             </select>
 
-                            <button type="button" class="adm-btn-secondary" style="height:34px; padding:0 10px; font-size:0.75rem;" onclick="document.getElementById('admProdSearch').value=''; document.getElementById('admProdCatFilter').value='all'; document.getElementById('admProdBrandFilter').value='all'; document.getElementById('admProdStockFilter').value='all'; filterProducts();">↺ Reset</button>
+                            <button type="button" class="adm-btn-secondary dt-btn dt-btn-pale" style="height:34px; padding:0 10px; font-size:0.75rem;" onclick="document.getElementById('admProdSearch').value=''; document.getElementById('admProdCatFilter').value='all'; document.getElementById('admProdBrandFilter').value='all'; document.getElementById('admProdStockFilter').value='all'; filterProducts();"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>Reset</button>
                         </div>
                     </div>
 

@@ -56,7 +56,7 @@ if ($pdoAdm !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">All staff accounts, highest privilege first.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/users/" class="adm-btn-secondary">← Back to Users Suite</a>
+                    <a href="/admin/users/" class="adm-btn-secondary dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Users Suite</a>
                 </div>
             </div>
 

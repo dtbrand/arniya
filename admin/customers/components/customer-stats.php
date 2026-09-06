@@ -111,7 +111,7 @@ $tradeCust = $wholesaleCust + $resellerCust;
             <span class="dt-cust-kpi-delta">Cannot sign in</span>
             <?php if ($pendingCust > 0): ?>
                 <a href="/admin/customers/pending.php" onclick="event.stopPropagation();" style="color:#8A681F; font-weight:800; text-decoration:none;">
-                    <?php echo number_format($pendingCust); ?> awaiting approval →
+                    <?php echo number_format($pendingCust); ?> awaiting approval <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             <?php else: ?>
                 <span style="color:#78716C;">No pending applications</span>

@@ -183,7 +183,7 @@ $active_subnav = "";
                 <div class="dt-orders-head">
                     <div class="dt-orders-title-group">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <a href="/admin/orders/index.php" style="color:#64748B; text-decoration:none; font-size:12px; font-weight:700;">← Orders</a>
+                            <a href="/admin/orders/index.php" style="color:#64748B; text-decoration:none; font-size:12px; font-weight:700;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Orders</a>
                             <span style="color:#CBD5E1;">/</span>
                             <h1 class="dt-orders-title" style="margin:0; font-size:18px;">
                                 <span>Order #<?php echo htmlspecialchars($order['id']); ?></span>

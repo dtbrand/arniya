@@ -40,7 +40,7 @@ if ($pdo !== null && !empty($rawPayload)) {
             }
 
             if ($newOrderStatus) {
-                $updStmt = $pdo->prepare("UPDATE orders SET order_status = ?, updated_at = NOW() WHERE awb_number = ?");
+                $updStmt = $pdo->prepare("UPDATE orders SET fulfillment_status = ?, updated_at = NOW() WHERE awb_number = ?");
                 $updStmt->execute([$newOrderStatus, $awb]);
             }
         }

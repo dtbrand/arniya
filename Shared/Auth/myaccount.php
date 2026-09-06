@@ -1223,7 +1223,7 @@
                     </button>
 
                     <div style="text-align:center; font-size:0.78rem; margin-top:14px; color:var(--mid-text); font-weight:600;">
-                        Remembered your password? <button type="button" class="auth-link" onclick="switchAuthTab('login')">← Back to Login</button>
+                        Remembered your password? <button type="button" class="auth-link" onclick="switchAuthTab('login')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Login</button>
                     </div>
                 </form>
 
@@ -1248,7 +1248,7 @@
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
                         <span>Open Retailer Dashboard</span>
-                        <span>→</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>
                     <button class="logout-btn" onclick="handleLogoutClick()">
                         Logout
@@ -1267,7 +1267,7 @@
                     </div>
                 </div>
                 <a href="/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
-                    Open Retailer Portal →
+                    Open Retailer Portal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             </div>
 
@@ -1679,7 +1679,7 @@
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
                         linkEl.href = '/retailer.php';
-                        linkEl.textContent = 'Open Retailer Portal →';
+                        linkEl.textContent = 'Open Retailer Portal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';

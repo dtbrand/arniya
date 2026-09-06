@@ -982,7 +982,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Avg. Reseller Margin</div>
                                     <div class="ws-kpi-num"><?= $realKpis['commission_rate'] ?? 15 ?>%</div>
-                                    <div class="ws-kpi-sub"><?= $totalOrders > 0 ? '↑ Direct Atelier Margins' : '15% Standard Margin' ?></div>
+                                    <div class="ws-kpi-sub"><?= $totalOrders > 0 ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Direct Atelier Margins' : '15% Standard Margin' ?></div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Customer Delivery TAT</div>
@@ -1056,7 +1056,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('trending')" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
                             <span>View All (<?= count($catalogProducts) ?>)</span>
-                            <span style="font-size:1rem; line-height:1;">→</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </button>
                     </div>
 
@@ -1163,7 +1163,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('orders')" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
                             <span>Full Order Book</span>
-                            <span style="font-size:1rem; line-height:1;">→</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </button>
                     </div>
 
@@ -2538,7 +2538,7 @@ $catalogHasProducts = $catalogProducts !== [];
             
             <div class="ws-modal-header" style="padding: 14px 18px 12px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <button id="wsCatModalBackBtn" onclick="renderMainCategoriesInModal()" type="button" style="display:none; background:rgba(180,83,9,0.1); border:1px solid rgba(180,83,9,0.25); color:#92400E; font-size:0.72rem; font-weight:800; padding:4px 8px; border-radius:8px; cursor:pointer;">← Main</button>
+                    <button id="wsCatModalBackBtn" onclick="renderMainCategoriesInModal()" type="button" style="display:none; background:rgba(180,83,9,0.1); border:1px solid rgba(180,83,9,0.25); color:#92400E; font-size:0.72rem; font-weight:800; padding:4px 8px; border-radius:8px; cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:3px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Main</button>
                     <div id="wsCatModalIconWrap" style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(217,119,6,0.18);">
                         <svg style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
                             <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-7z" fill="url(#catModalGoldGrad)" stroke="#B45309" stroke-width="1.2"/>
@@ -3262,7 +3262,7 @@ $catalogHasProducts = $catalogProducts !== [];
                         Register as New Reseller
                     </a>
                     <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px; text-align:center;">
-                        ← Return to Retail Store
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Return to Retail Store
                     </a>
                 </div>
             </div>

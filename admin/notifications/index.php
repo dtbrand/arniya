@@ -57,7 +57,7 @@ $triggerRules = []; // No editable rules table exists in the schema yet — the 
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Dispatch order dispatch alerts, WhatsApp notices, and restock alarms.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/admin.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Back to Console</a>
+                    <a href="/admin/admin.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Console</a>
                 </div>
             </div>
 

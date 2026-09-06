@@ -2474,7 +2474,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 <span>Send Recovery via WhatsApp</span>
                             </button>
                             <div style="text-align:center;">
-                                <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Sign In</a>
+                                <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color:var(--dt-gold); font-size:0.8rem; font-weight:700; text-decoration:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Sign In</a>
                             </div>
                         </form>
 
@@ -2503,7 +2503,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <span>Open Wholesale Depot</span>
-                            <span>→</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
                         <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
                             Sign Out
@@ -2561,7 +2561,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         </div>
 
                         <a href="/shop.php" class="dt-btn-gold" style="text-decoration:none; text-align:center;">
-                            Browse Luxury Catalog →
+                            Browse Luxury Catalog <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
 
                     </div>
@@ -2971,15 +2971,15 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     if (roleLower.includes('wholesale')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/wholesale.php';
-                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span>Open Wholesale Depot</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><span>Open Wholesale Depot</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
                     } else if (roleLower.includes('reseller')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/reseller.php';
-                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Open Reseller Hub</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Open Reseller Hub</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
                     } else if (roleLower.includes('retailer')) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/retailer.php';
-                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span>Open Retailer Hub</span><span>→</span>';
+                        heroBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span>Open Retailer Hub</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
                     } else {
                         heroBtn.style.display = 'none';
                     }
@@ -3010,7 +3010,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (!data || !data.success || !Array.isArray(data.orders) || data.orders.length === 0) {
-                        listEl.innerHTML = '<div style="padding: 32px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">Explore our pure handloom silk sarees, bridal lehengas, and designer fabrics.</p><a href="/shop.php" class="dt-btn-gold" style="display: inline-flex; width: auto; padding: 10px 24px; font-size: 0.84rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection →</a></div>';
+                        listEl.innerHTML = '<div style="padding: 32px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">Explore our pure handloom silk sarees, bridal lehengas, and designer fabrics.</p><a href="/shop.php" class="dt-btn-gold" style="display: inline-flex; width: auto; padding: 10px 24px; font-size: 0.84rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>';
                         return;
                     }
 
@@ -3381,7 +3381,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             <div class="ac-policy-modal-foot">
                 <a href="/privacy.php" target="_blank" class="dt-btn-pale" id="policyFullPageLink" style="font-size:0.75rem; text-decoration:none; padding:7px 14px;">
                     <span>View Full Legal Document</span>
-                    <span>→</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
                 <button type="button" class="dt-btn-gold" onclick="closePolicyModal()" style="font-size:0.78rem; padding:7px 18px;">
                     <span>I Understand</span>

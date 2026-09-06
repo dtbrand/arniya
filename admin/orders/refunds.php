@@ -114,7 +114,7 @@ try {
                         </div>
                         <div class="dt-kpi-footer">
                             <span><?php echo count($refundOrders); ?> Total Records</span>
-                            <span class="dt-kpi-arrow">→</span>
+                            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                         </div>
                     </div>
 
@@ -134,7 +134,7 @@ try {
                         </div>
                         <div class="dt-kpi-footer">
                             <span>Claims &amp; Return Reviews</span>
-                            <span class="dt-kpi-arrow">→</span>
+                            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                         </div>
                     </div>
 
@@ -154,7 +154,7 @@ try {
                         </div>
                         <div class="dt-kpi-footer">
                             <span>UPI &amp; Razorpay Auto-Sync</span>
-                            <span class="dt-kpi-arrow">→</span>
+                            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                         </div>
                     </div>
 
@@ -174,7 +174,7 @@ try {
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                                 <span><?php echo number_format($creditNotesBalance); ?> Wholesale Ledger Bal.</span>
                             </span>
-                            <span class="dt-kpi-arrow">→</span>
+                            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                         </div>
                     </div>
                 </div>
@@ -266,7 +266,7 @@ try {
                                             <h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No Active Refund Claims or Disputes</h4>
                                             <p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">All retail customer orders, reseller disbursements, and wholesale shipments are 100% verified and cleared with zero active chargebacks.</p>
                                             <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold" style="display:inline-flex; width:auto; padding:8px 20px; font-size:0.82rem; text-decoration:none; margin:0 auto;">
-                                                <span>View Live Orders Center →</span>
+                                                <span>View Live Orders Center <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                                             </a>
                                         </td>
                                     </tr>

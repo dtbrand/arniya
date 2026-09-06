@@ -83,7 +83,7 @@ $status_pills = [
         </div>
         <div class="dt-kpi-footer">
             <span>Wholesale + Retail Orders</span>
-            <span class="dt-kpi-arrow">→</span>
+            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
     </a>
 
@@ -103,7 +103,7 @@ $status_pills = [
         </div>
         <div class="dt-kpi-footer">
             <span><?php echo $statusCounts['processing']; ?> In Prep • <?php echo $statusCounts['packed']; ?> Ready</span>
-            <span class="dt-kpi-arrow">→</span>
+            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
     </a>
 
@@ -123,7 +123,7 @@ $status_pills = [
         </div>
         <div class="dt-kpi-footer">
             <span><?php echo $statusCounts['shipped']; ?> In Transit</span>
-            <span class="dt-kpi-arrow">→</span>
+            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
     </a>
 
@@ -146,7 +146,7 @@ $status_pills = [
                 <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#15803D" stroke-width="2.4"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                 <strong>₹<?php echo number_format($totalSalesVal); ?> Settled</strong>
             </span>
-            <span class="dt-kpi-arrow">→</span>
+            <span class="dt-kpi-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
     </a>
 </div>

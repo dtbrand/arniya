@@ -46,7 +46,7 @@ require_once __DIR__ . "/_shared.php"; include_once __DIR__ . '/../includes/admi
                     <p class="adm-page-subtitle">Store identity and customer-facing contact details.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/settings/" class="adm-btn-secondary">← Back to Settings Suite</a>
+                    <a href="/admin/settings/" class="adm-btn-secondary dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Settings Suite</a>
                     <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>

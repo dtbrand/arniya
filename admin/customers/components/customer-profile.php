@@ -61,7 +61,7 @@ $initials = strtoupper(
         This account may have been deleted, or the link may be stale. Nothing on
         this page refers to a real shopper.
     </p>
-    <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale" style="width:100%;">← Back to Customers</a>
+    <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale" style="width:100%;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Customers</a>
 </div>
 <?php else: ?>
 

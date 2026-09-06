@@ -16,15 +16,15 @@
                     <input type="checkbox" id="dtCustSelectAll" onchange="toggleCustomerSelectAll(this.checked)" title="Select All Customers">
                 </th>
                 <th class="sortable" onclick="sortCustomersBy('name')">
-                    Customer Profile ↕
+                    Customer Profile <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px; vertical-align:middle;" aria-hidden="true"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
                 </th>
                 <th>Contact Details</th>
                 <th>Account Type</th>
                 <th style="text-align:center;" class="sortable" onclick="sortCustomersBy('orders')">
-                    Orders ↕
+                    Orders <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px; vertical-align:middle;" aria-hidden="true"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
                 </th>
                 <th class="sortable" onclick="sortCustomersBy('spent')">
-                    Lifetime Spend ↕
+                    Lifetime Spend <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px; vertical-align:middle;" aria-hidden="true"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
                 </th>
                 <th>Last Order</th>
                 <th>Joined Date</th>

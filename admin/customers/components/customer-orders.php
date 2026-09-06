@@ -66,7 +66,7 @@ if (!function_exists('dt_ord_pill')) {
             Purchase History (<?php echo number_format($ordCount); ?> <?php echo $ordCount === 1 ? 'Order' : 'Orders'; ?>)
         </h4>
         <?php if ($ordCount > 0): ?>
-            <a href="/admin/orders/index.php?search=<?php echo (int)$ordCustId; ?>" class="dt-btn dt-btn-pale dt-btn-sm">View Full Order Stream →</a>
+            <a href="/admin/orders/index.php?search=<?php echo (int)$ordCustId; ?>" class="dt-btn dt-btn-pale dt-btn-sm"><span>View Full Order Stream</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         <?php endif; ?>
     </div>
 
