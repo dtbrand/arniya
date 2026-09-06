@@ -389,12 +389,14 @@ class OrderManager
                         $custVals = "?, ?, ?, ?, 'active', NOW()";
                         $custParams = [$customerName, $customerPhone, $orderData['customer_email'] ?? '', $custType];
                         try {
-                            $pwStmt = $pdo->query("SHOW COLUMNS FROM `customers` LIKE 'password_hash'");
-                            $pwCol = $pwStmt ? $pwStmt->fetch(\PDO::FETCH_ASSOC) : null;
-                            if ($pwCol && ($pwCol['Null'] ?? 'YES') === 'NO' && ($pwCol['Default'] ?? null) === null) {
-                                $custCols = "name, phone, email, password_hash, type, status, created_at";
-                                $custVals = "?, ?, ?, ?, ?, 'active', NOW()";
-                                $custParams = [$customerName, $customerPhone, $orderData['customer_email'] ?? '', '', $custType];
+                            if ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) !== 'sqlite') {
+                                $pwStmt = $pdo->query("SHOW COLUMNS FROM `customers` LIKE 'password_hash'");
+                                $pwCol = $pwStmt ? $pwStmt->fetch(\PDO::FETCH_ASSOC) : null;
+                                if ($pwCol && ($pwCol['Null'] ?? 'YES') === 'NO' && ($pwCol['Default'] ?? null) === null) {
+                                    $custCols = "name, phone, email, password_hash, type, status, created_at";
+                                    $custVals = "?, ?, ?, ?, ?, 'active', NOW()";
+                                    $custParams = [$customerName, $customerPhone, $orderData['customer_email'] ?? '', '', $custType];
+                                }
                             }
                         } catch (\Exception $pwEx) {
                             // Column introspection is a convenience, not a
@@ -596,6 +598,18 @@ class OrderManager
             return $cache[$column];
         }
         try {
+            if ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                $stmt = $pdo->query("PRAGMA table_info(orders)");
+                $cols = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
+                $found = false;
+                foreach ($cols as $c) {
+                    if (strcasecmp((string)($c['name'] ?? ''), $column) === 0) {
+                        $found = true;
+                        break;
+                    }
+                }
+                return $cache[$column] = $found;
+            }
             $stmt = $pdo->prepare("SHOW COLUMNS FROM orders LIKE ?");
             $stmt->execute([$column]);
             $cache[$column] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);
@@ -620,6 +634,18 @@ class OrderManager
             return $cache[$key] = false;
         }
         try {
+            if ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                $stmt = $pdo->query("PRAGMA table_info(`{$table}`)");
+                $cols = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
+                $found = false;
+                foreach ($cols as $c) {
+                    if (strcasecmp((string)($c['name'] ?? ''), $column) === 0) {
+                        $found = true;
+                        break;
+                    }
+                }
+                return $cache[$key] = $found;
+            }
             $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$table}` LIKE ?");
             $stmt->execute([$column]);
             $cache[$key] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);

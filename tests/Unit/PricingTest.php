@@ -154,4 +154,103 @@ class PricingTest extends TestCase {
         $this->assertEquals('₹999.00', PricingCalculator::formatInr(999.0));
         $this->assertEquals('0.00', PricingCalculator::formatInr(0.0, false));
     }
+
+    public function testTieredVolumeDiscountExactBoundaryQuantities(): void {
+        $base = 2000.0;
+
+        // 9 units -> Standard Lot (0%)
+        $q9 = PricingCalculator::calculateTieredVolumeDiscount($base, 9);
+        $this->assertEquals(0.0, $q9['discount_percent']);
+        $this->assertEquals('Standard Lot (1-9)', $q9['tier_name']);
+
+        // 10 units -> Half Bale (5%)
+        $q10 = PricingCalculator::calculateTieredVolumeDiscount($base, 10);
+        $this->assertEquals(5.0, $q10['discount_percent']);
+        $this->assertEquals('Half Bale (10+)', $q10['tier_name']);
+
+        // 49 units -> Half Bale (5%)
+        $q49 = PricingCalculator::calculateTieredVolumeDiscount($base, 49);
+        $this->assertEquals(5.0, $q49['discount_percent']);
+
+        // 50 units -> Full Bale (10%)
+        $q50 = PricingCalculator::calculateTieredVolumeDiscount($base, 50);
+        $this->assertEquals(10.0, $q50['discount_percent']);
+        $this->assertEquals('Full Bale (50+)', $q50['tier_name']);
+
+        // 99 units -> Full Bale (10%)
+        $q99 = PricingCalculator::calculateTieredVolumeDiscount($base, 99);
+        $this->assertEquals(10.0, $q99['discount_percent']);
+
+        // 100 units -> Master Lot (15%)
+        $q100 = PricingCalculator::calculateTieredVolumeDiscount($base, 100);
+        $this->assertEquals(15.0, $q100['discount_percent']);
+        $this->assertEquals('Master Lot (100+)', $q100['tier_name']);
+    }
+
+    public function testTieredVolumeDiscountZeroOrNegativeQuantityThrowsException(): void {
+        $this->expectException(\InvalidArgumentException::class);
+        PricingCalculator::calculateTieredVolumeDiscount(1000.0, 0);
+    }
+
+    public function testTieredVolumeDiscountNegativeBasePriceThrowsException(): void {
+        $this->expectException(\InvalidArgumentException::class);
+        PricingCalculator::calculateTieredVolumeDiscount(-50.0, 10);
+    }
+
+    public function testGstSplitCaseInsensitiveAndTrimming(): void {
+        // Customer state with spaces and mixed case ' gujarat ' vs seller 'Gujarat'
+        $split = PricingCalculator::calculateGstSplit(20000.0, 5.0, ' gujarat ', 'Gujarat');
+        $this->assertFalse($split['is_interstate']);
+        $this->assertEquals(2.5, $split['cgst_rate']);
+        $this->assertEquals(500.0, $split['cgst_amount']);
+        $this->assertEquals(500.0, $split['sgst_amount']);
+        $this->assertEquals(1000.0, $split['total_gst']);
+
+        // Empty customer state defaults safely to intra-state
+        $emptyState = PricingCalculator::calculateGstSplit(10000.0, 5.0, '', 'Gujarat');
+        $this->assertFalse($emptyState['is_interstate']);
+    }
+
+    public function testGstSplitCustomRates(): void {
+        // 12% intra-state (6% CGST + 6% SGST)
+        $split12 = PricingCalculator::calculateGstSplit(10000.0, 12.0, 'Gujarat', 'Gujarat');
+        $this->assertEquals(6.0, $split12['cgst_rate']);
+        $this->assertEquals(600.0, $split12['cgst_amount']);
+        $this->assertEquals(6.0, $split12['sgst_rate']);
+        $this->assertEquals(600.0, $split12['sgst_amount']);
+        $this->assertEquals(1200.0, $split12['total_gst']);
+
+        // 18% inter-state (18% IGST)
+        $split18 = PricingCalculator::calculateGstSplit(10000.0, 18.0, 'Karnataka', 'Gujarat');
+        $this->assertTrue($split18['is_interstate']);
+        $this->assertEquals(18.0, $split18['igst_rate']);
+        $this->assertEquals(1800.0, $split18['igst_amount']);
+        $this->assertEquals(1800.0, $split18['total_gst']);
+    }
+
+    public function testResellerMarginBreakEven(): void {
+        $cost = 1500.0;
+        $retail = 1500.0;
+        $margin = PricingCalculator::calculateResellerMargin($cost, $retail);
+
+        $this->assertEquals(0.0, $margin['margin_amount']);
+        $this->assertEquals(0.0, $margin['margin_percent']);
+        $this->assertEquals(0.0, $margin['profit_margin_on_sale']);
+        $this->assertTrue($margin['is_profitable']);
+    }
+
+    public function testResellerMarginInvalidWholesaleCostThrowsException(): void {
+        $this->expectException(\InvalidArgumentException::class);
+        PricingCalculator::calculateResellerMargin(-100.0, 500.0);
+    }
+
+    public function testFormatInrCroresAndTenCrores(): void {
+        // 1 Crore = 1,00,00,000.00
+        $this->assertEquals('₹1,00,00,000.00', PricingCalculator::formatInr(10000000.0));
+        // 10 Crore = 10,00,00,000.00
+        $this->assertEquals('₹10,00,00,000.00', PricingCalculator::formatInr(100000000.0));
+        // 10.5 Crore with paisa
+        $this->assertEquals('₹10,50,75,320.75', PricingCalculator::formatInr(105075320.75));
+    }
 }
+
