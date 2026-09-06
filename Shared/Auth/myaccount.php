@@ -1033,8 +1033,8 @@
 
             <!-- Tabs (Only Login & Register) -->
             <div class="auth-tabs">
-                <button class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Register</button>
+                <button class="dt-btn auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
+                <button class="dt-btn auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Register</button>
             </div>
 
             <!-- Forms -->
@@ -1053,7 +1053,7 @@
                         </label>
                         <input type="password" id="loginPass" class="auth-input" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="auth-btn-submit">
+                    <button type="submit" class="dt-btn dt-btn-gold auth-btn-submit">
                         <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                         <span>Sign In to My Account</span>
                     </button>
@@ -1198,7 +1198,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="auth-btn-submit" id="regSubmitBtn">
+                    <button type="submit" class="dt-btn dt-btn-gold auth-btn-submit" id="regSubmitBtn">
                         <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                         <span>Create My Account</span>
                     </button>
@@ -1217,7 +1217,7 @@
                         <label class="auth-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
                         <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
                     </div>
-                    <button type="submit" class="auth-btn-submit">
+                    <button type="submit" class="dt-btn dt-btn-gold auth-btn-submit">
                         <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                         <span>Send Reset Link via WhatsApp</span>
                     </button>
@@ -1246,12 +1246,13 @@
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
+                    <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; align-items:center; gap:6px;" class="dt-btn dt-btn-gold">
                         <span>Open Retailer Dashboard</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>
-                    <button class="logout-btn" onclick="handleLogoutClick()">
-                        Logout
+                    <button class="dt-btn dt-btn-pale logout-btn" onclick="handleLogoutClick()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Logout</span>
                     </button>
                 </div>
             </div>
@@ -1266,7 +1267,7 @@
                         Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
                     </div>
                 </div>
-                <a href="/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
+                <a href="/retailer.php" id="wsVipBannerLink" class="dt-btn dt-btn-gold auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px;">
                     Open Retailer Portal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
             </div>
@@ -1353,13 +1354,13 @@
                     <div class="concierge-card">
                         <h4>Royal Concierge Desk</h4>
                         <p>Need custom blouse stitching, bulk wholesale pricing, or reseller catalog? Our fashion stylists are available.</p>
-                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
-                            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="dt-btn dt-btn-emerald concierge-btn">
+                            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>WhatsApp Stylist</span>
                         </a>
                     </div>
 
-                    <a href="/shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
+                    <a href="/shop.php" class="dt-btn dt-btn-gold auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
                         Browse Luxury Catalog
                     </a>
 

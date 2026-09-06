@@ -515,7 +515,7 @@
         </nav>
 
         <!-- Right Share Button (Mobile Only) -->
-        <button type="button" class="pdp-mobile-share-btn" id="pdpMobileShareBtn" aria-label="Share Product" title="Share" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
+        <button type="button" class="dt-btn dt-btn-pale pdp-mobile-share-btn" id="pdpMobileShareBtn" aria-label="Share Product" title="Share" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
             <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         </button>
 
@@ -523,18 +523,18 @@
         <div class="pdp-header-actions">
 
             <!-- Share Product Button (Desktop) -->
-            <button class="pdp-icon-btn pdp-share-btn" id="pdpShareBtn" aria-label="Share Product" title="Share Product" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
+            <button class="dt-btn dt-btn-pale pdp-icon-btn pdp-share-btn" id="pdpShareBtn" aria-label="Share Product" title="Share Product" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
                 <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             </button>
 
             <!-- Wishlist Button -->
-            <button class="pdp-icon-btn" id="pdpWishlistBtn" aria-label="Wishlist" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}">
+            <button class="dt-btn dt-btn-pale pdp-icon-btn" id="pdpWishlistBtn" aria-label="Wishlist" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 <span class="pdp-badge-count" id="pdpWishlistCount" style="display:none;">0</span>
             </button>
 
             <!-- Bag / Cart Button -->
-            <button class="pdp-icon-btn" id="pdpCartBtn" aria-label="Shopping Bag" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}">
+            <button class="dt-btn dt-btn-pale pdp-icon-btn" id="pdpCartBtn" aria-label="Shopping Bag" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}">
                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="pdp-badge-count" id="pdpCartCount" style="display:none;">0</span>
             </button>

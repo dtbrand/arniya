@@ -2176,8 +2176,8 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
 
                         <!-- Smooth Segmented Pill Switcher -->
                         <div class="ac-pill-switcher">
-                            <button type="button" class="ac-pill-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
-                            <button type="button" class="ac-pill-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
+                            <button type="button" class="dt-btn ac-pill-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+                            <button type="button" class="dt-btn ac-pill-btn" id="tabBtnRegister" onclick="switchAuthTab('register')">Create Account</button>
                         </div>
                     </div>
 
@@ -2208,7 +2208,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 </div>
                             </div>
 
-                            <button type="submit" class="dt-btn-gold" id="loginSubmitBtn">
+                            <button type="submit" class="dt-btn dt-btn-gold" id="loginSubmitBtn">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                                 <span>Sign In to Account</span>
                             </button>
@@ -2293,7 +2293,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                     </span>
                                     <span class="ac-flow-sub" id="regFlowSub">Retail pricing &amp; instant order tracking</span>
                                 </div>
-                                <button type="button" class="ac-flow-change-btn" onclick="resetRegFlow()">
+                                <button type="button" class="dt-btn dt-btn-pale ac-flow-change-btn" onclick="resetRegFlow()">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                     <span>Switch Type</span>
                                 </button>
@@ -2449,7 +2449,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                 </div>
                             </div>
 
-                            <button type="submit" class="dt-btn-gold" id="regSubmitBtn">
+                            <button type="submit" class="dt-btn dt-btn-gold" id="regSubmitBtn">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                                 <span id="regSubmitBtnSpan">Create Customer Account</span>
                             </button>
@@ -2469,7 +2469,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                                     <input type="text" id="forgotInput" class="ac-text-input" placeholder="e.g. 70463***** or client@example.com" required>
                                 </div>
                             </div>
-                            <button type="submit" class="dt-btn-gold">
+                            <button type="submit" class="dt-btn dt-btn-gold">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                                 <span>Send Recovery via WhatsApp</span>
                             </button>
@@ -2500,13 +2500,14 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     </div>
 
                     <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                        <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn-gold">
+                        <a href="/wholesale.php" id="dashHeroPortalBtn" style="display:none;" class="dt-btn dt-btn-gold">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <span>Open Wholesale Depot</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
-                        <button type="button" class="ac-logout-btn" onclick="handleLogoutClick()">
-                            Sign Out
+                        <button type="button" class="dt-btn dt-btn-pale ac-logout-btn" onclick="handleLogoutClick()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Sign Out</span>
                         </button>
                     </div>
                 </div>
@@ -3371,7 +3372,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                     </div>
                     <h3 class="ac-policy-modal-title" id="policyModalTitle">Privacy Policy &amp; Data Safeguards</h3>
                 </div>
-                <button type="button" class="ac-policy-close-btn" onclick="closePolicyModal()" aria-label="Close modal">
+                <button type="button" class="dt-btn dt-btn-pale ac-policy-close-btn" onclick="closePolicyModal()" aria-label="Close modal">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
@@ -3379,11 +3380,11 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 <!-- Dynamically Populated by window.openPolicyModal -->
             </div>
             <div class="ac-policy-modal-foot">
-                <a href="/privacy.php" target="_blank" class="dt-btn-pale" id="policyFullPageLink" style="font-size:0.75rem; text-decoration:none; padding:7px 14px;">
+                <a href="/privacy.php" target="_blank" class="dt-btn dt-btn-pale" id="policyFullPageLink" style="font-size:0.75rem; text-decoration:none; padding:7px 14px;">
                     <span>View Full Legal Document</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
-                <button type="button" class="dt-btn-gold" onclick="closePolicyModal()" style="font-size:0.78rem; padding:7px 18px;">
+                <button type="button" class="dt-btn dt-btn-gold" onclick="closePolicyModal()" style="font-size:0.78rem; padding:7px 18px;">
                     <span>I Understand</span>
                 </button>
             </div>
