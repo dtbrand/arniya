@@ -137,5 +137,29 @@ test.describe('DT Brand\'s Master UI Regression Suite', () => {
     await closeBtn.click();
     await expect(mfOverlay).not.toHaveClass(/open/);
   });
+
+  test('Shop mobile sort bottom sheet opens, displays sort options, and closes', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/shop.php', { waitUntil: 'domcontentloaded' });
+
+    const sortBtn = page.locator('#sortBtn');
+    await expect(sortBtn).toBeVisible();
+    await sortBtn.click();
+
+    // Verify sort bottom sheet opens
+    const sortSheet = page.locator('#sortSheet');
+    await expect(sortSheet).toHaveClass(/open/);
+
+    // Verify sort options exist
+    const sortOptions = page.locator('.sort-option');
+    const count = await sortOptions.count();
+    expect(count).toBeGreaterThanOrEqual(4);
+
+    // Close sort sheet
+    const closeBtn = page.locator('#sortCloseBtn');
+    await expect(closeBtn).toBeVisible();
+    await closeBtn.click();
+    await expect(sortSheet).not.toHaveClass(/open/);
+  });
 });
 
