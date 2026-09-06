@@ -1438,9 +1438,9 @@
         const previewBox = document.getElementById('admBroadcastPreview');
 
         const templates = {
-            'catalogue': "✨ *DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE* ✨\n\nDear {Name},\nExplore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.\n\n👉 *View & Order Online:* https://jaihanumantex.in/shop\n\n_Special 15% VIP Discount Applied!_",
-            'festive': "🔥 *EXCLUSIVE FESTIVE BONANZA — 40% OFF* 🔥\n\nNamaste {Name},\nStock up your boutique with high-margin Silk Sarees & Sharara Suits before wedding season rush.\n\n📦 *Wholesale MOQ:* Only 8 pcs\n🚚 *Dispatch:* 24 Hours Express",
-            'wholesale_drop': "💎 *WHOLESALE BULK LOT PRICE DROP ALERT* 💎\n\nDear Partner,\nPrices on Chanderi & Dola Silk lots reduced by up to ₹250/pc for 30+ pc lots.\n\n📲 Reply YES to receive full PDF Catalogue with HSN codes."
+            'catalogue': "*DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE*\n\nDear {Name},\nExplore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.\n\n*View & Order Online:* https://jaihanumantex.in/shop\n\n_Special 15% VIP Discount Applied!_",
+            'festive': "*EXCLUSIVE FESTIVE BONANZA — 40% OFF*\n\nNamaste {Name},\nStock up your boutique with high-margin Silk Sarees & Sharara Suits before wedding season rush.\n\n*Wholesale MOQ:* Only 8 pcs\n*Dispatch:* 24 Hours Express",
+            'wholesale_drop': "*WHOLESALE BULK LOT PRICE DROP ALERT*\n\nDear Partner,\nPrices on Chanderi & Dola Silk lots reduced by up to ₹250/pc for 30+ pc lots.\n\nReply YES to receive full PDF Catalogue with HSN codes."
         };
 
         if (templateSelect && msgTextarea && previewBox) {
@@ -1590,7 +1590,7 @@
         const order = orders.find(o => o.id === orderId);
         if (!order) return;
 
-        const msg = `*DT BRAND'S ORDER UPDATE — ${order.id}*\n\nNamaste ${order.customer},\nYour order for *${order.items}* (Total: ₹${order.total.toLocaleString('en-IN')}) is now *${order.status}*.\n\n📦 *Tracking:* ${order.tracking}\n\nThank you for choosing DT Brand's Heritage Luxury.`;
+        const msg = `*DT BRAND'S ORDER UPDATE — ${order.id}*\n\nNamaste ${order.customer},\nYour order for *${order.items}* (Total: ₹${order.total.toLocaleString('en-IN')}) is now *${order.status}*.\n\n*Tracking:* ${order.tracking}\n\nThank you for choosing DT Brand's Heritage Luxury.`;
         window.openDirectWhatsApp(order.phone, msg);
     };
 

@@ -161,5 +161,41 @@ test.describe('DT Brand\'s Master UI Regression Suite', () => {
     await closeBtn.click();
     await expect(sortSheet).not.toHaveClass(/open/);
   });
+
+  test('Mobile mega menu drawer category accordions toggle and reveal subcategories', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/index.php', { waitUntil: 'domcontentloaded' });
+
+    const menuBtn = page.locator('#smartNavMenu');
+    await expect(menuBtn).toBeVisible();
+    await menuBtn.click();
+
+    const drawerBackdrop = page.locator('#homeMenuDrawerBackdrop');
+    await expect(drawerBackdrop).toHaveClass(/active/);
+
+    // Accordion interaction
+    const accordionHeader = page.locator('.home-menu-accordion-header').first();
+    await expect(accordionHeader).toBeVisible();
+    await accordionHeader.click();
+
+    const accordionItem = page.locator('.home-menu-accordion-item').first();
+    await expect(accordionItem).toHaveClass(/open/);
+
+    // Sub-viewall link or sub-links are visible inside the opened panel
+    const viewAllLink = accordionItem.locator('.home-menu-sub-viewall');
+    await expect(viewAllLink).toBeVisible();
+
+    // Verify WhatsApp concierge button in drawer footer has valid master WhatsApp link
+    const waBtn = page.locator('.home-menu-wa-btn');
+    await expect(waBtn).toBeVisible();
+    const href = await waBtn.getAttribute('href');
+    expect(href).toContain('917046363528');
+
+    // Close drawer
+    const closeBtn = page.locator('.home-menu-close-btn');
+    await closeBtn.click();
+    await expect(drawerBackdrop).not.toHaveClass(/active/);
+  });
 });
+
 
