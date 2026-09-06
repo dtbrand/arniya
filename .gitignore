@@ -13,6 +13,7 @@ composer.phar
 .php-cs-fixer.cache
 .phpstan.cache/
 .eslintcache
+.stylelintcache
 .lighthouseci/
 playwright-report/
 test-results/
