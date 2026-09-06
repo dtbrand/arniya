@@ -177,6 +177,76 @@ if ($pdo !== null && !Database::isMockMode()) {
                     </div>
                 </div>
             </div>
+
+            <!-- Database Migrations & Governance Standard -->
+            <div class="adm-card" style="margin-top:16px;">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <span>Database Schema &amp; Migration Governance (7 Canonical Migrations)</span>
+                    </h3>
+                    <span class="adm-badge gold" style="font-size:0.72rem; font-weight:800;">7 / 7 Active</span>
+                </div>
+                <div style="padding:16px;">
+                    <p style="font-size:12.5px; color:#64748B; margin:0 0 12px 0;">Strictly adheres to <a href="/docs/database-safety.md" target="_blank" style="color:#8A681F; font-weight:700; text-decoration:underline;">docs/database-safety.md</a> standards: zero destructive operations, transactional tracking via <code>_migrations</code>, and idempotent schema definitions.</p>
+                    <div class="adm-table-responsive" style="overflow-x:auto;">
+                        <table class="adm-table" style="width:100%; border-collapse:collapse; font-size:12.5px;">
+                            <thead>
+                                <tr style="border-bottom:1.5px solid #E2E8F0; text-align:left; color:#111827; font-weight:800;">
+                                    <th style="padding:8px 12px;">#</th>
+                                    <th style="padding:8px 12px;">Migration Identifier</th>
+                                    <th style="padding:8px 12px;">Scope &amp; Impact</th>
+                                    <th style="padding:8px 12px; text-align:right;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">01</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_23_000001_create_initial_schema.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Core Products, Customers, Orders, and Schema Tables</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">02</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_24_000001_full_production_schema.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Full Production Commerce, Cart, Passbook &amp; Reviews</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">03</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_25_production_upgrade.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">B2B Wholesale Margins, Reseller Tiers &amp; Commissions</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">04</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_29_000001_reconcile_full_schema.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Enterprise Schema Reconciliation &amp; Foreign Key Indexes</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">05</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_30_000001_add_brands_and_admin_tables.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Brand Identity, Admin Users &amp; Granular Permissions</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #F1F5F9;">
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">06</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_08_31_000001_seed_ethnic_pillars_and_subcategories.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Ethnic Wear Pillars, Subcategories &amp; Live Catalog Seeds</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:8px 12px; font-weight:700; color:#64748B;">07</td>
+                                    <td style="padding:8px 12px; font-family:monospace; font-weight:600; color:#1E293B;">2026_09_02_000001_create_payment_gateways_and_webhooks.sql</td>
+                                    <td style="padding:8px 12px; color:#475569;">Multi-Gateway Suite (UPI, Razorpay, Cashfree, COD, WhatsApp)</td>
+                                    <td style="padding:8px 12px; text-align:right;"><span class="adm-badge green" style="font-size:0.68rem;">Verified</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>

@@ -43,4 +43,10 @@ test.describe('DT Brand\'s Core E-Commerce & Admin Flows', () => {
     const response = await page.goto('/admin/orders/index.php', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
   });
+
+  test('Admin system diagnostics page loads with HTTP 200 or secure admin gate', async ({ page }) => {
+    const response = await page.goto('/admin/system/index.php', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(200);
+  });
 });
+

@@ -6,10 +6,12 @@
 
 class DatabaseMigrationRunner {
     private string $migrationsPath;
+    private ?string $masterSqlFile;
     private ?\PDO $pdo = null;
 
-    public function __construct(string $migrationsPath = __DIR__ . '/migrations') {
+    public function __construct(string $migrationsPath = __DIR__ . '/migrations', ?string $masterSqlFile = null) {
         $this->migrationsPath = $migrationsPath;
+        $this->masterSqlFile = ($masterSqlFile !== null) ? $masterSqlFile : (__DIR__ . '/arniya_master_production.sql');
     }
 
     public function getPDO(): ?\PDO {
@@ -37,6 +39,10 @@ class DatabaseMigrationRunner {
         }
 
         return $this->pdo;
+    }
+
+    public function setPDO(?\PDO $pdo): void {
+        $this->pdo = $pdo;
     }
 
     public function listMigrations(): array {
@@ -73,13 +79,26 @@ class DatabaseMigrationRunner {
             return ['status' => 'error', 'message' => 'Cannot connect to MySQL database'];
         }
 
+        $driver = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
+        $insertSql = ($driver === 'sqlite')
+            ? "INSERT OR IGNORE INTO `_migrations` (`migration`) VALUES (?)"
+            : "INSERT IGNORE INTO `_migrations` (`migration`) VALUES (?)";
+
         // Create migrations tracking table if not exists
         try {
-            $pdo->exec("CREATE TABLE IF NOT EXISTS `_migrations` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `migration` VARCHAR(255) NOT NULL UNIQUE,
-                `applied_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+            if ($driver === 'sqlite') {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `_migrations` (
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+                    `migration` VARCHAR(255) NOT NULL UNIQUE,
+                    `applied_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                );");
+            } else {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `_migrations` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `migration` VARCHAR(255) NOT NULL UNIQUE,
+                    `applied_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+            }
         } catch (\PDOException $e) {
             // ignore if creation fails
         }
@@ -94,20 +113,20 @@ class DatabaseMigrationRunner {
         $results = [];
 
         // 1. Run master production SQL if available
-        $masterSqlFile = __DIR__ . '/arniya_master_production.sql';
-        if (file_exists($masterSqlFile) && !in_array('arniya_master_production.sql', $applied, true)) {
-            $sql = file_get_contents($masterSqlFile);
+        if (!empty($this->masterSqlFile) && file_exists($this->masterSqlFile) && !in_array(basename($this->masterSqlFile), $applied, true)) {
+            $masterName = basename($this->masterSqlFile);
+            $sql = file_get_contents($this->masterSqlFile);
             try {
                 $pdo->exec($sql);
-                $stmt = $pdo->prepare("INSERT IGNORE INTO `_migrations` (`migration`) VALUES (?)");
-                $stmt->execute(['arniya_master_production.sql']);
+                $stmt = $pdo->prepare($insertSql);
+                $stmt->execute([$masterName]);
                 $results[] = [
-                    'file' => 'arniya_master_production.sql',
+                    'file' => $masterName,
                     'status' => 'EXECUTED_SUCCESSFULLY'
                 ];
             } catch (\PDOException $e) {
                 $results[] = [
-                    'file' => 'arniya_master_production.sql',
+                    'file' => $masterName,
                     'status' => 'ERROR',
                     'error' => $e->getMessage()
                 ];
@@ -131,7 +150,7 @@ class DatabaseMigrationRunner {
                     $sql = file_get_contents($filePath);
                     try {
                         $pdo->exec($sql);
-                        $stmt = $pdo->prepare("INSERT IGNORE INTO `_migrations` (`migration`) VALUES (?)");
+                        $stmt = $pdo->prepare($insertSql);
                         $stmt->execute([$mFile]);
                         $results[] = [
                             'file' => $mFile,
@@ -152,7 +171,11 @@ class DatabaseMigrationRunner {
         $tables = [];
         $tableCounts = [];
         try {
-            $stmt = $pdo->query("SHOW TABLES");
+            if ($driver === 'sqlite') {
+                $stmt = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+            } else {
+                $stmt = $pdo->query("SHOW TABLES");
+            }
             $tables = $stmt->fetchAll(\PDO::FETCH_COLUMN);
             foreach ($tables as $t) {
                 try {
@@ -175,35 +198,52 @@ class DatabaseMigrationRunner {
     }
 }
 
-// Support execution via Web with Auth or CLI
-$isCli = (php_sapi_name() === 'cli');
-$authKey = $_GET['key'] ?? '';
-
-if ($isCli || $authKey === 'Gautam9006MasterInstall' || $authKey === 'dt_audit_key_2026') {
-    $runner = new DatabaseMigrationRunner();
-    $action = $_GET['action'] ?? ($isCli ? 'cli' : 'status');
-
-    if ($action === 'run' || $action === 'run_all' || $action === 'migrate') {
-        header('Content-Type: application/json');
-        echo json_encode($runner->runMigrations(true), JSON_PRETTY_PRINT);
-        exit;
-    }
-
-    if ($isCli) {
-        echo "=== DT Brand's Database Migration Runner ===\n";
-        $status = $runner->status();
-        foreach ($status as $s) {
-            echo " - [{$s['status']}] {$s['migration']}\n";
-        }
-        echo "Total migrations detected: " . count($status) . "\n";
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['status' => 'ready', 'migrations' => $runner->status()], JSON_PRETTY_PRINT);
-        exit;
-    }
+// Support direct execution via Web with Auth or CLI
+$isDirectRun = false;
+if (php_sapi_name() === 'cli') {
+    $script = basename($argv[0] ?? '');
+    $isDirectRun = ($script === 'migrate.php');
 } else {
-    http_response_code(403);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Forbidden: Invalid key'], JSON_PRETTY_PRINT);
-    exit;
+    $script = basename($_SERVER['SCRIPT_FILENAME'] ?? '');
+    $isDirectRun = ($script === 'migrate.php');
+}
+
+if ($isDirectRun) {
+    $isCli = (php_sapi_name() === 'cli');
+    $authKey = $_GET['key'] ?? '';
+
+    if ($isCli || $authKey === 'Gautam9006MasterInstall' || $authKey === 'dt_audit_key_2026') {
+        $runner = new DatabaseMigrationRunner();
+        $cliArg = ($isCli && isset($argv[1])) ? $argv[1] : '';
+        $action = $_GET['action'] ?? ($cliArg ?: ($isCli ? 'cli' : 'status'));
+
+        if ($action === 'run' || $action === 'run_all' || $action === 'migrate' || $action === '--run') {
+            $result = $runner->runMigrations(true);
+            if ($isCli) {
+                echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n";
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode($result, JSON_PRETTY_PRINT);
+            }
+            exit(isset($result['status']) && $result['status'] === 'success' ? 0 : 1);
+        }
+
+        if ($isCli) {
+            echo "=== DT Brand's Database Migration Runner ===\n";
+            $status = $runner->status();
+            foreach ($status as $s) {
+                echo " - [{$s['status']}] {$s['migration']}\n";
+            }
+            echo "Total migrations detected: " . count($status) . "\n";
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'ready', 'migrations' => $runner->status()], JSON_PRETTY_PRINT);
+            exit;
+        }
+    } else {
+        http_response_code(403);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Forbidden: Invalid key'], JSON_PRETTY_PRINT);
+        exit;
+    }
 }
