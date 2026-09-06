@@ -278,15 +278,15 @@ function pdp_relative_date(string $ts): string
                 <span class="pdp-badge-tag"><?= htmlspecialchars($product['badge']) ?></span>
                 <?php endif; ?>
 
-                <button class="pdp-zoom-btn" title="View Fullscreen Image" onclick="openFullscreenImage()">
+                <button class="pdp-zoom-btn dt-btn dt-btn-pale" title="View Fullscreen Image" onclick="openFullscreenImage()">
                     <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
                 </button>
 
                 <!-- Navigation Arrows (Desktop) -->
-                <button class="pdp-slider-arrow prev" id="pdpSlidePrev" aria-label="Previous image" onclick="slidePdpGallery(-1)">
+                <button class="pdp-slider-arrow prev dt-btn dt-btn-pale" id="pdpSlidePrev" aria-label="Previous image" onclick="slidePdpGallery(-1)">
                     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
-                <button class="pdp-slider-arrow next" id="pdpSlideNext" aria-label="Next image" onclick="slidePdpGallery(1)">
+                <button class="pdp-slider-arrow next dt-btn dt-btn-pale" id="pdpSlideNext" aria-label="Next image" onclick="slidePdpGallery(1)">
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
@@ -570,12 +570,12 @@ function pdp_relative_date(string $ts): string
                 </div>
 
                 <div class="pdp-btn-row">
-                    <button class="pdp-atc-btn" onclick="handlePdpAddToCart()">
+                    <button class="pdp-atc-btn dt-btn dt-btn-gold" onclick="handlePdpAddToCart()">
                         <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         <span><?= $isFullSetProduct ? 'Add Full Set To Bag' : 'Add To Bag' ?></span>
                     </button>
 
-                    <button class="pdp-buy-btn" onclick="handlePdpBuyNow()">
+                    <button class="pdp-buy-btn dt-btn dt-btn-dark" onclick="handlePdpBuyNow()">
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                         <span><?= $isFullSetProduct ? 'Buy Full Set Now' : 'Buy Now' ?></span>
                     </button>
@@ -584,7 +584,7 @@ function pdp_relative_date(string $ts): string
                 <!-- Direct WhatsApp Order Checkout Trigger -->
                 <button
                     type="button"
-                    class="pdp-wa-order-btn"
+                    class="pdp-wa-order-btn dt-btn dt-btn-emerald"
                     onclick="openPdpWhatsAppOrderModal()"
                     aria-label="Instant Order via WhatsApp"
                 >
@@ -597,12 +597,12 @@ function pdp_relative_date(string $ts): string
             <!-- Pincode Delivery Estimator -->
             <div class="pdp-delivery-box">
                 <div class="pdp-del-title">
-                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                     <span>Check Estimated Delivery & COD</span>
                 </div>
                 <div class="pdp-pincode-input-row">
                     <input type="text" id="pdpPincodeInput" class="pdp-pincode-input" placeholder="Enter 6-digit Pincode (e.g. 395002)" maxlength="6" />
-                    <button class="pdp-pincode-btn" onclick="checkPincodeDelivery()">Check</button>
+                    <button class="pdp-pincode-btn dt-btn dt-btn-gold" onclick="checkPincodeDelivery()">Check</button>
                 </div>
                 <div class="pdp-pincode-result" id="pdpPincodeResult"></div>
             </div>
@@ -777,7 +777,7 @@ function pdp_relative_date(string $ts): string
             </div>
 
             <div class="pdp-rev-cta-col">
-                <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
+                <button type="button" class="pdp-write-rev-gold-btn dt-btn dt-btn-gold" onclick="openWriteReviewModal()">
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9"></path>
                         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
@@ -789,10 +789,10 @@ function pdp_relative_date(string $ts): string
 
         <!-- Auto-Sliding Carousel Wrapper -->
         <div class="pdp-reviews-carousel-wrap" id="pdpRevCarouselWrap">
-            <button class="pdp-rev-arrow prev" id="pdpRevPrev" aria-label="Previous review" onclick="slidePdpReviews(-1)">
+            <button class="pdp-rev-arrow prev dt-btn dt-btn-pale" id="pdpRevPrev" aria-label="Previous review" onclick="slidePdpReviews(-1)">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <button class="pdp-rev-arrow next" id="pdpRevNext" aria-label="Next review" onclick="slidePdpReviews(1)">
+            <button class="pdp-rev-arrow next dt-btn dt-btn-pale" id="pdpRevNext" aria-label="Next review" onclick="slidePdpReviews(1)">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
@@ -878,7 +878,7 @@ function pdp_relative_date(string $ts): string
             <p class="pdp-rev-empty-text">
                 Have you purchased or worn this design? Share your thoughts on fabric softness, stitching perfection, and silhouette comfort with fellow shoppers.
             </p>
-            <button type="button" class="pdp-write-rev-gold-btn" onclick="openWriteReviewModal()">
+            <button type="button" class="pdp-write-rev-gold-btn dt-btn dt-btn-gold" onclick="openWriteReviewModal()">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 20h9"></path>
                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
@@ -899,10 +899,10 @@ function pdp_relative_date(string $ts): string
 
         <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
             <!-- Navigation Arrows (Desktop) -->
-            <button class="pdp-rel-arrow prev" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
+            <button class="pdp-rel-arrow prev dt-btn dt-btn-pale" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <button class="pdp-rel-arrow next" id="pdpRelNext" aria-label="Next related products" onclick="slidePdpRelated(1)">
+            <button class="pdp-rel-arrow next dt-btn dt-btn-pale" id="pdpRelNext" aria-label="Next related products" onclick="slidePdpRelated(1)">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
@@ -974,15 +974,15 @@ function pdp_relative_date(string $ts): string
                     <p class="pdp-modal-subtitle">Find your exact fit with standard Indian ethnic comfort allowances</p>
                 </div>
             </div>
-            <button type="button" class="pdp-modal-close-btn" onclick="closeSizeGuideModal()" aria-label="Close size guide">
+            <button type="button" class="pdp-modal-close-btn dt-btn dt-btn-pale" onclick="closeSizeGuideModal()" aria-label="Close size guide">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
         <div class="pdp-modal-body">
             <!-- Unit Switcher Tabs (INCHES / CM) -->
             <div class="pdp-size-unit-tabs">
-                <button type="button" class="pdp-unit-tab active" id="unitTabIn" onclick="switchSizeUnits('in')">INCHES (in)</button>
-                <button type="button" class="pdp-unit-tab" id="unitTabCm" onclick="switchSizeUnits('cm')">CENTIMETERS (cm)</button>
+                <button type="button" class="pdp-unit-tab active dt-btn" id="unitTabIn" onclick="switchSizeUnits('in')">INCHES (in)</button>
+                <button type="button" class="pdp-unit-tab dt-btn" id="unitTabCm" onclick="switchSizeUnits('cm')">CENTIMETERS (cm)</button>
             </div>
 
             <!-- Responsive Table Container -->
@@ -1042,7 +1042,7 @@ function pdp_relative_date(string $ts): string
                     <p class="pdp-modal-subtitle">Your genuine review helps other shoppers choose the perfect piece</p>
                 </div>
             </div>
-            <button type="button" class="pdp-modal-close-btn" onclick="closeWriteReviewModal()" aria-label="Close write review modal">
+            <button type="button" class="pdp-modal-close-btn dt-btn dt-btn-pale" onclick="closeWriteReviewModal()" aria-label="Close write review modal">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
@@ -1074,7 +1074,7 @@ function pdp_relative_date(string $ts): string
                     <textarea id="revText" required rows="3" placeholder="Describe the fabric quality, sizing fit and overall satisfaction..." class="pdp-review-textarea"></textarea>
                 </div>
 
-                <button type="submit" id="revSubmitBtn" class="pdp-submit-rev-btn">
+                <button type="submit" id="revSubmitBtn" class="pdp-submit-rev-btn dt-btn dt-btn-gold">
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -1100,7 +1100,7 @@ function pdp_relative_date(string $ts): string
                     <span>Luxury Ethnic • WhatsApp Checkout</span>
                 </div>
             </div>
-            <button class="pdp-wa-co-close-btn" onclick="closePdpWhatsAppOrderModal()" aria-label="Close">&times;</button>
+            <button type="button" class="pdp-wa-co-close-btn dt-btn dt-btn-pale" onclick="closePdpWhatsAppOrderModal()" aria-label="Close" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <div class="pdp-wa-modal-body">
@@ -1158,13 +1158,13 @@ function pdp_relative_date(string $ts): string
 
                 <!-- Section 2: Delivery & Billing Address Card (COLLAPSIBLE / OPTIONAL) -->
                 <div class="pdp-wa-sec-card pdp-wa-addr-collapse-wrap" id="pdpWaAddrCollapseWrap">
-                    <button type="button" class="pdp-wa-addr-toggle-btn" onclick="togglePdpWaAddressSection()" aria-expanded="false">
+                    <button type="button" class="pdp-wa-addr-toggle-btn dt-btn dt-btn-pale" onclick="togglePdpWaAddressSection()" aria-expanded="false">
                         <div class="pdp-wa-card-title">
                             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             <span>Delivery & Billing Address</span>
                             <span style="font-size:0.62rem; background:#FAF5E8; color:#8A681F; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid rgba(138,104,31,0.2);">Optional</span>
                         </div>
-                        <span class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="font-size:0.75rem; color:#8A681F; transition:transform 0.25s;">▼</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="color:#8A681F; transition:transform 0.25s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
 
                     <div class="pdp-wa-addr-collapsible-body" id="pdpWaAddrBody" style="display:none; flex-direction:column; gap:9px; margin-top:10px; padding-top:8px; border-top:1px dashed rgba(138,104,31,0.25);">
@@ -1229,7 +1229,7 @@ function pdp_relative_date(string $ts): string
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="pdp-wa-submit-btn">
+                <button type="submit" class="pdp-wa-submit-btn dt-btn dt-btn-emerald">
                     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     <span>Confirm Order & Send to WhatsApp</span>
                 </button>
@@ -1283,16 +1283,16 @@ function pdp_relative_date(string $ts): string
             <span class="pdp-lightbox-title"><?= htmlspecialchars($pName) ?></span>
         </div>
         <div class="pdp-lightbox-actions">
-            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomOut" onclick="zoomLightbox(-0.25)" title="Zoom Out ( - )" aria-label="Zoom Out">
+            <button type="button" class="pdp-lb-act-btn dt-btn dt-btn-pale" id="pdpLbZoomOut" onclick="zoomLightbox(-0.25)" title="Zoom Out ( - )" aria-label="Zoom Out">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             </button>
-            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomIn" onclick="zoomLightbox(0.25)" title="Zoom In ( + )" aria-label="Zoom In">
+            <button type="button" class="pdp-lb-act-btn dt-btn dt-btn-pale" id="pdpLbZoomIn" onclick="zoomLightbox(0.25)" title="Zoom In ( + )" aria-label="Zoom In">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             </button>
-            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomReset" onclick="resetLightboxZoom()" title="Reset View" aria-label="Reset View">
+            <button type="button" class="pdp-lb-act-btn dt-btn dt-btn-pale" id="pdpLbZoomReset" onclick="resetLightboxZoom()" title="Reset View" aria-label="Reset View">
                 <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
             </button>
-            <button type="button" class="pdp-lb-close-btn" id="pdpLbCloseBtn" onclick="closeFullscreenImage()" title="Close Viewer (Esc)" aria-label="Close">
+            <button type="button" class="pdp-lb-close-btn dt-btn dt-btn-pale" id="pdpLbCloseBtn" onclick="closeFullscreenImage()" title="Close Viewer (Esc)" aria-label="Close">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
         </div>
@@ -1300,7 +1300,7 @@ function pdp_relative_date(string $ts): string
 
     <!-- Main Stage Track -->
     <div class="pdp-lightbox-stage" id="pdpLbStage">
-        <button type="button" class="pdp-lb-nav-btn prev" id="pdpLbPrev" onclick="navigateLightbox(-1)" aria-label="Previous Media">
+        <button type="button" class="pdp-lb-nav-btn prev dt-btn dt-btn-pale" id="pdpLbPrev" onclick="navigateLightbox(-1)" aria-label="Previous Media">
             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
 
@@ -1308,7 +1308,7 @@ function pdp_relative_date(string $ts): string
             <div class="pdp-lightbox-slider" id="pdpLbSlider"></div>
         </div>
 
-        <button type="button" class="pdp-lb-nav-btn next" id="pdpLbNext" onclick="navigateLightbox(1)" aria-label="Next Media">
+        <button type="button" class="pdp-lb-nav-btn next dt-btn dt-btn-pale" id="pdpLbNext" onclick="navigateLightbox(1)" aria-label="Next Media">
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
     </div>
