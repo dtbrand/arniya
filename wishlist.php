@@ -31,7 +31,7 @@ $catalogProducts = ProductCatalog::getAll();
 </head>
 <body style="background:#FAF8F5; margin:0; padding:0; color:#181512;">
 
-<?php include_once __DIR__ . '/includes/singelprodutbottomfotoer.php'; ?>
+<?php include_once __DIR__ . '/includes/singleproductbottomfooter.php'; ?>
 
 <div class="dt-wsh-container">
     <div class="dt-wsh-hero">

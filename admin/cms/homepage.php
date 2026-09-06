@@ -34,11 +34,11 @@ $active_nav = "cms";
                     <p class="adm-page-subtitle">Arrange featured collections, trending reels, and customer testimonials.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/cms/" class="adm-btn-secondary" style="display:inline-flex; align-items:center; gap:5px;">
+                    <a href="/admin/cms/" class="dt-btn dt-btn-pale" style="display:inline-flex; align-items:center; gap:5px; text-decoration:none; height:32px; padding:0 12px; font-size:12px; font-weight:700;">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to CMS Suite</span>
                     </a>
-                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; padding:0 12px; font-size:12px; font-weight:700;">Main Console</a>
                 </div>
             </div>
 
@@ -50,8 +50,8 @@ $active_nav = "cms";
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                     <span>Homepage Sections Manager</span>
                 </h3>
-                <button class="adm-btn-gold" style="display:inline-flex; align-items:center; gap:6px;" onclick="window.showToast('Homepage Layout Saved!')">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <button class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; font-size:12.5px; font-weight:800;" onclick="window.showToast('Homepage Layout Saved!')">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>Save Layout</span>
                 </button>
             </div>

@@ -104,7 +104,10 @@ foreach ($reviewsList as $r) {
                     <p class="adm-page-subtitle">Review authentic customer ratings, buyer testimonials, and photo reviews.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; height:32px; padding:0 12px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Main Console</span>
+                    </a>
                 </div>
             </div>
 
@@ -199,9 +202,9 @@ foreach ($reviewsList as $r) {
                                     <td>
                                         <div style="display:flex; gap:6px;">
                                             <?php if ($rStatus === 'pending'): ?>
-                                                <button type="button" class="adm-btn-gold adm-btn-sm" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'approve')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Approve</span></button>
+                                                <button type="button" class="dt-btn dt-btn-gold adm-btn-sm" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'approve')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Approve</span></button>
                                             <?php endif; ?>
-                                            <button type="button" class="adm-btn-pale adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2; display:inline-flex; align-items:center; gap:4px;" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'delete')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>Delete</span></button>
+                                            <button type="button" class="dt-btn dt-btn-pale adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2; display:inline-flex; align-items:center; gap:4px;" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'delete')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>Delete</span></button>
                                         </div>
                                     </td>
                                 </tr>

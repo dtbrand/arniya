@@ -1260,7 +1260,7 @@ function pdp_relative_date(string $ts): string
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 
 <!-- ════ FOOTER PARTIAL ════ -->
-<?php include_once __DIR__ . '/includes/singelprodutbottomfotoer.php'; ?>
+<?php include_once __DIR__ . '/includes/singleproductbottomfooter.php'; ?>
 
 <!-- ════ CART DRAWER PARTIAL ════ -->
 <?php include_once __DIR__ . '/Shared/quickview.php'; ?>

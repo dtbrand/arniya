@@ -231,8 +231,8 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                         </div>
 
                         <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
-                            <button type="submit" class="dt-btn-action-sm gold" style="height:36px; justify-content:center; font-size:12px; font-weight:800;">Save Changes</button>
-                            <a href="/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel</a>
+                            <button type="submit" class="dt-btn dt-btn-gold dt-btn-action-sm gold" style="height:36px; justify-content:center; font-size:12px; font-weight:800;">Save Changes</button>
+                            <a href="/admin/catalogue/banners/" class="dt-btn dt-btn-pale dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel</a>
                         </div>
                     </div>
 
