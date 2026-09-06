@@ -26,7 +26,7 @@
         if (explicitType === 'cart' || lower.indexOf('cart') !== -1 || lower.indexOf('bag') !== -1 || lower.indexOf('lot') !== -1 || lower.indexOf('pcs') !== -1) {
             badgeType = 'cart';
             iconSvg = '<svg class="toast-svg-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
-        } else if (explicitType === 'wishlist' || lower.indexOf('wishlist') !== -1 || lower.indexOf('saved') !== -1 || lower.indexOf('♡') !== -1 || lower.indexOf('❤️') !== -1 || lower.indexOf('heart') !== -1) {
+        } else if (explicitType === 'wishlist' || lower.indexOf('wishlist') !== -1 || lower.indexOf('saved') !== -1 || lower.indexOf('heart') !== -1) {
             badgeType = 'wishlist';
             iconSvg = '<svg class="toast-svg-heart" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
         } else if (explicitType === 'filter' || lower.indexOf('filter') !== -1 || lower.indexOf('lots') !== -1 || lower.indexOf('category') !== -1 || lower.indexOf('saree') !== -1 || lower.indexOf('lehenga') !== -1 || lower.indexOf('kurti') !== -1 || lower.indexOf('available') !== -1) {
@@ -48,7 +48,7 @@
             iconSvg +
             '</div>' +
             '<div class="ws-toast-msg toast-msg">' + cleanText + '</div>' +
-            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close">✕</button>' +
+            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
             '<div class="ws-toast-progress toast-progress"></div>';
 
         var closeBtn = t.querySelector('.ws-toast-close-btn');
@@ -124,7 +124,7 @@
     /* ── Sub-Category Data for Round Circles (Dynamically Built from Live DB) ── */
     var subCategoryData = {
         'All': [
-            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all' }
+            { label: 'All Items', icon: '', gradient: 'gradient-1', type: 'all' }
         ]
     };
 
@@ -164,6 +164,8 @@
             var circleContent = '';
             if (item.img) {
                 circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\'" />';
+            } else if (item.type === 'all') {
+                circleContent = '<span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>';
             } else {
                 circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
             }
@@ -352,7 +354,7 @@
             bar.classList.add('has-tags');
             wrap.innerHTML = tags.map(function(t) {
                 return '<span class="active-filter-tag">' + t.label + 
-                       ' <button onclick="removeFilterTag(\'' + t.type + '\', \'' + (t.val || '') + '\')" aria-label="Remove filter">✕</button></span>';
+                       ' <button onclick="removeFilterTag(\'' + t.type + '\', \'' + (t.val || '') + '\')" aria-label="Remove filter" style="display:inline-flex;align-items:center;margin-left:4px;background:none;border:none;cursor:pointer;padding:0;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>';
             }).join('');
         } else {
             bar.classList.remove('has-tags');
@@ -626,7 +628,7 @@
                     var added = window.toggleWishlistProduct(p);
                     wishBtn.classList.toggle('active', added);
                     wishBtn.setAttribute('aria-pressed', added ? 'true' : 'false');
-                    if (typeof showToast === 'function') showToast(added ? '♡ Saved ' + p.name + ' to wishlist' : 'Removed from wishlist');
+                    if (typeof showToast === 'function') showToast(added ? 'Saved ' + p.name + ' to wishlist' : 'Removed from wishlist', 'wishlist');
                 }
                 return;
             }
@@ -1154,7 +1156,7 @@
         }
 
         if (typeof window.showToast === 'function') {
-            window.showToast('✨ Filtered to ' + catName + ' Collection', 'filter');
+            window.showToast('Filtered to ' + catName + ' Collection', 'filter');
         }
     };
 
@@ -1481,7 +1483,7 @@
                 soundBtn.innerHTML = isMuted 
                     ? '<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>'
                     : '<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
-                window.showToast(isMuted ? '🔇 Video Muted' : '🔊 Sound Enabled');
+                window.showToast(isMuted ? 'Video Muted' : 'Sound Enabled');
             });
         }
 

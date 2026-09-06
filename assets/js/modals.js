@@ -107,7 +107,7 @@
         if (fill && delText) {
             if (subtotal >= 2999) {
                 fill.style.width = '100%';
-                delText.innerHTML = '🎉 You have unlocked <strong>FREE Express Shipping!</strong>';
+                delText.innerHTML = '<span style="display:inline-flex; align-items:center; gap:4px; color:#15803D; font-weight:800;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> You have unlocked <strong>FREE Express Shipping!</strong></span>';
             } else {
                 var diff = 2999 - subtotal;
                 var pct = Math.min(100, Math.round((subtotal / 2999) * 100));
@@ -498,9 +498,9 @@
     /* Rewritten to fill every slot in shared/quickview_modal.php from the row.
        Before this, the modal set only image/category/title/sku/price and printed
        `p.rating || '4.9'` and `(p.discount || 25) + '% OFF'`, while the reviews
-       count, thumbnails, badge, colours, sizes, stock and video were left at the
-       markup's hardcoded placeholders — so every product quick-viewed as
-       "★ 4.9 (142 reviews)" with a fixed 4-piece / 8-piece lot ladder. */
+        count, thumbnails, badge, colours, sizes, stock and video were left at the
+        markup's hardcoded placeholders — so every product quick-viewed as
+        "4.9 (142 reviews)" with a fixed 4-piece / 8-piece lot ladder. */
     function qvShow(el, on) { if (el) { el.style.display = on ? '' : 'none'; } }
     var DT_QV_NO_IMAGE = '/assets/images/no-image.svg';
 
@@ -905,7 +905,7 @@
         var count = document.getElementById('dtReelLikesCount');
         if (likeBtn && count) {
             count.textContent = '2.5k';
-            window.showToast('Liked this video reel! ❤️');
+            window.showToast('Liked this video reel!', 'wishlist');
         }
     };
 

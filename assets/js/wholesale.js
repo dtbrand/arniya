@@ -38,6 +38,9 @@
             } else if (explicitType === 'order' || lower.indexOf('order') !== -1 || lower.indexOf('tracking') !== -1 || lower.indexOf('awb') !== -1 || lower.indexOf('pdf') !== -1 || lower.indexOf('csv') !== -1 || lower.indexOf('statement') !== -1) {
                 badgeType = 'order';
                 iconSvg = '<svg class="toast-svg-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>';
+            } else if (explicitType === 'error' || lower.indexOf('failed') !== -1 || lower.indexOf('invalid') !== -1 || lower.indexOf('error') !== -1 || lower.indexOf('enter') !== -1) {
+                badgeType = 'error';
+                iconSvg = '<svg class="toast-svg-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
             } else {
                 badgeType = 'success';
                 iconSvg = '<svg class="toast-svg-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
@@ -255,7 +258,7 @@
             var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
 
             if (!name) {
-                window.showWsToast('️ Please enter your Full Name.');
+                window.showWsToast('Please enter your Full Name.', 'error');
                 return false;
             }
 
@@ -284,14 +287,14 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
                     if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
                     if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
-                    window.showWsToast(' Wholesale Profile updated in live database!');
+                    window.showWsToast('Wholesale profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Failed to update profile'));
+                    window.showWsToast(res.error || 'Failed to update profile', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
-                window.showWsToast(' Profile saved locally.');
+                window.showWsToast('Profile saved locally.', 'success');
             });
 
             return false;
@@ -324,14 +327,14 @@
                     user.gst_number = gstin;
                     user.gstin = gstin;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                    window.showWsToast(' GST Tax Profile updated in live database!');
+                    window.showWsToast('GST Tax profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Invalid GST details'));
+                    window.showWsToast(res.error || 'Invalid GST details', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
-                window.showWsToast(' GST profile saved.');
+                window.showWsToast('GST profile saved.', 'success');
             });
 
             return false;
@@ -618,7 +621,7 @@
             closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedWholesalerData();
-            window.showWsToast(' Address configuration saved successfully!');
+            window.showWsToast('Address configuration saved successfully!', 'success');
         };
 
         /* ── GST Mode Toggle ── */
@@ -1108,7 +1111,7 @@
                 btn.classList.add('active');
             }
             updateDashboardAnalytics();
-            window.showWsToast(' Switched to ' + mode.toUpperCase() + ' Analytics Mode');
+            window.showWsToast('Switched to ' + mode.toUpperCase() + ' Analytics Mode', 'order');
         };
 
         /* ── Date Range Modal Controller ── */
@@ -1137,7 +1140,7 @@
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast(' Applied Date Filter: ' + label);
+            window.showWsToast('Applied Date Filter: ' + label, 'filter');
         };
 
         window.applyCustomDateRange = function() {
@@ -1170,7 +1173,7 @@
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast(' Applied Custom Calendar Range: ' + label);
+            window.showWsToast('Applied Custom Calendar Range: ' + label, 'filter');
         };
 
         window.handleGlobalQuickSearch = function(input) {
@@ -1571,7 +1574,7 @@
             activeTicketsList.unshift(newTicket);
             renderTicketsView();
             document.getElementById('wsTicketForm').reset();
-            window.showWsToast(' Support ticket created! Concierge assigned.');
+            window.showWsToast('Support ticket created! Concierge assigned.', 'success');
         };
 
         /* ── Order Details Modal ── */
@@ -1689,10 +1692,10 @@
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    window.showWsToast(' ' + o.productName + ' added to wholesale cart!');
+                    window.showWsToast(o.productName + ' added to wholesale cart!', 'cart');
                 }
-            } catch(e) {
-                window.showWsToast(' Added to cart!');
+            } catch {
+                window.showWsToast('Added to cart!', 'cart');
             }
         };
 
@@ -2300,15 +2303,15 @@
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast(' Showing All Available Wholesale Lots');
+                    window.showWsToast('Showing All Available Wholesale Lots', 'filter');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    window.showWsToast(' ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    window.showWsToast('️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    window.showWsToast(activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)', 'filter');
                 } else if (activeCatalogCategory !== 'All') {
-                    window.showWsToast(' ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(activeCatalogCategory + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activePriceTier !== null) {
-                    window.showWsToast('️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast('Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)', 'filter');
                 }
             }
 
@@ -2418,7 +2421,7 @@
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    window.showWsToast('Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!', 'cart');
                 }
             } catch(e) {
                 console.error(e);
@@ -2466,9 +2469,9 @@
                     btn.setAttribute('aria-pressed', added ? 'true' : 'false');
                 }
                 if (typeof showToast === 'function') {
-                    showToast(added ? 'Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    showToast(added ? 'Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist', 'wishlist');
                 } else if (typeof window.showWsToast === 'function') {
-                    window.showWsToast(added ? ' Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    window.showWsToast(added ? 'Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist', 'wishlist');
                 }
                 return;
             }
@@ -2904,7 +2907,7 @@
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            window.showWsToast(' Loaded tracking timeline for ' + orderId);
+            window.showWsToast('Loaded tracking timeline for ' + orderId, 'order');
         };
 
         window.filterTrackingOrders = function(status, btn) {
@@ -2919,7 +2922,7 @@
         window.copyAwbNumber = function(awb) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(awb).then(function() {
-                    window.showWsToast(' AWB ' + awb + ' copied to clipboard!');
+                    window.showWsToast('AWB ' + awb + ' copied to clipboard!', 'success');
                 }).catch(function() {
                     window.showWsToast('AWB: ' + awb);
                 });
@@ -3059,10 +3062,10 @@
                 closeEditMainAddressModal();
                 loadSavedWholesalerData();
                 renderAddressBookData(user);
-                window.showWsToast(' Billing address updated successfully!');
-            } catch(err) {
+                window.showWsToast('Billing address updated successfully!', 'success');
+            } catch {
                 closeEditMainAddressModal();
-                window.showWsToast(' Billing address saved!');
+                window.showWsToast('Billing address saved!', 'success');
             }
         };
 
@@ -3095,7 +3098,7 @@
             try {
                 var saved = localStorage.getItem('dtbrands_wallet_cash');
                 if (saved) current = Number(saved);
-            } catch(e) {}
+            } catch {}
             var newBal = current + amount;
             localStorage.setItem('dtbrands_wallet_cash', newBal);
             
@@ -3106,15 +3109,15 @@
             if (availEl) availEl.textContent = (newBal + 100000).toLocaleString('en-IN');
             if (modalBal) modalBal.textContent = '₹' + newBal.toLocaleString('en-IN');
 
-            window.showWsToast(' Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
+            window.showWsToast('Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!', 'success');
         };
 
         window.requestCreditLimitBoost = function() {
-            window.showWsToast(' Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
+            window.showWsToast('Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!', 'success');
         };
 
         window.requestWalletWithdrawal = function() {
-            window.showWsToast(' Payout withdrawal request for available balance submitted to registered Bank A/C!');
+            window.showWsToast('Payout withdrawal request for available balance submitted to registered Bank A/C!', 'success');
         };
 
         /* ── Wholesale Cart Badge Synchronization ── */
@@ -3218,7 +3221,7 @@ function directAddWholesaleToCart(prodOrId, btn) {
         if (typeof window.renderCart === 'function') window.renderCart();
         if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
         if (typeof window.openCartDrawer === 'function') window.openCartDrawer();
-        if (typeof showWsToast === 'function') showWsToast(' Added ' + addQty + ' pcs of ' + prod.name + ' to Cart!');
+        if (typeof showWsToast === 'function') showWsToast('Added ' + addQty + ' pcs of ' + prod.name + ' to Cart!', 'cart');
     } catch(e) { console.error('directAddWholesaleToCart error:', e); }
 }
 window.directAddWholesaleToCart = directAddWholesaleToCart;
@@ -3259,7 +3262,7 @@ function toggleWholesaleWishlist(prodOrId, btn) {
         if (btn) btn.classList.toggle('active', isAdded);
         if (typeof window.renderWishlist === 'function') window.renderWishlist();
         if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
-        if (typeof showWsToast === 'function') showWsToast(isAdded ? ' Saved ' + prod.name + ' to Wishlist!' : 'Removed from Wishlist');
+        if (typeof showWsToast === 'function') showWsToast(isAdded ? 'Saved ' + prod.name + ' to Wishlist!' : 'Removed from Wishlist', 'wishlist');
     } catch(e) { console.error('toggleWholesaleWishlist error:', e); }
 }
 window.toggleWholesaleWishlist = toggleWholesaleWishlist;

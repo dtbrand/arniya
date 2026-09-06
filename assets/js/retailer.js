@@ -38,6 +38,9 @@
             } else if (explicitType === 'order' || lower.indexOf('order') !== -1 || lower.indexOf('tracking') !== -1 || lower.indexOf('awb') !== -1 || lower.indexOf('pdf') !== -1 || lower.indexOf('csv') !== -1 || lower.indexOf('statement') !== -1) {
                 badgeType = 'order';
                 iconSvg = '<svg class="toast-svg-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>';
+            } else if (explicitType === 'error' || lower.indexOf('failed') !== -1 || lower.indexOf('invalid') !== -1 || lower.indexOf('error') !== -1 || lower.indexOf('enter') !== -1) {
+                badgeType = 'error';
+                iconSvg = '<svg class="toast-svg-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
             } else {
                 badgeType = 'success';
                 iconSvg = '<svg class="toast-svg-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
@@ -255,7 +258,7 @@
             var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
 
             if (!name) {
-                window.showWsToast('️ Please enter your Full Name.');
+                window.showWsToast('Please enter your Full Name.', 'error');
                 return false;
             }
 
@@ -284,14 +287,14 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
                     if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
                     if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
-                    window.showWsToast(' Profile updated in live database!');
+                    window.showWsToast('Profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Failed to update profile'));
+                    window.showWsToast(res.error || 'Failed to update profile', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
-                window.showWsToast(' Profile saved locally.');
+                window.showWsToast('Profile saved locally.', 'success');
             });
 
             return false;
@@ -324,14 +327,14 @@
                     user.gst_number = gstin;
                     user.gstin = gstin;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                    window.showWsToast(' GST Tax Profile updated in live database!');
+                    window.showWsToast('GST Tax Profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Invalid GST details'));
+                    window.showWsToast(res.error || 'Invalid GST details', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
-                window.showWsToast(' GST profile saved.');
+                window.showWsToast('GST profile saved.', 'success');
             });
 
             return false;
@@ -2300,15 +2303,15 @@
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast(' Showing All Available Retail Lots');
+                    window.showWsToast('Showing All Available Retail Lots', 'filter');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    window.showWsToast(' ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    window.showWsToast('️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    window.showWsToast(activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)', 'filter');
                 } else if (activeCatalogCategory !== 'All') {
-                    window.showWsToast(' ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast(activeCatalogCategory + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activePriceTier !== null) {
-                    window.showWsToast('️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    window.showWsToast('Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)', 'filter');
                 }
             }
 
@@ -2418,7 +2421,7 @@
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    window.showWsToast('Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!', 'cart');
                 }
             } catch(e) {
                 console.error(e);
@@ -3390,7 +3393,7 @@ function handleGlobalSearch(query) {
     }
 
     if (prods.length > 0) {
-        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:#047857; background:#F0FDF4;">👗 Catalog Lots (' + prods.length + ')</div>';
+        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:#047857; background:#F0FDF4; display:flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg> <span>Catalog Lots (' + prods.length + ')</span></div>';
         prods.slice(0, 4).forEach(function(p) {
             html += `
                 <div class="ws-search-item" style="padding:8px 12px; border-bottom:1px solid #F4EFE6; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="if(typeof openQuickOrderModal==='function') openQuickOrderModal(${p.id}); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">

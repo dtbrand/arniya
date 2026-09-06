@@ -124,6 +124,9 @@ window.animateTargetGauge = animateTargetGauge;
             } else if (explicitType === 'order' || lower.indexOf('order') !== -1 || lower.indexOf('tracking') !== -1 || lower.indexOf('awb') !== -1 || lower.indexOf('pdf') !== -1 || lower.indexOf('csv') !== -1 || lower.indexOf('statement') !== -1) {
                 badgeType = 'order';
                 iconSvg = '<svg class="toast-svg-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>';
+            } else if (explicitType === 'error' || lower.indexOf('failed') !== -1 || lower.indexOf('invalid') !== -1 || lower.indexOf('error') !== -1 || lower.indexOf('enter') !== -1) {
+                badgeType = 'error';
+                iconSvg = '<svg class="toast-svg-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
             } else {
                 badgeType = 'success';
                 iconSvg = '<svg class="toast-svg-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
@@ -312,7 +315,7 @@ window.animateTargetGauge = animateTargetGauge;
             var email = (document.getElementById('wsProfEmail') ? document.getElementById('wsProfEmail').value : '').trim();
 
             if (!name) {
-                window.showWsToast('️ Please enter your Full Name.');
+                window.showWsToast('Please enter your Full Name.', 'error');
                 return false;
             }
 
@@ -341,14 +344,14 @@ window.animateTargetGauge = animateTargetGauge;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
                     if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = name;
                     if (document.getElementById('sideUserName')) document.getElementById('sideUserName').textContent = name;
-                    window.showWsToast(' Reseller Profile updated in live database!');
+                    window.showWsToast('Reseller Profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Failed to update profile'));
+                    window.showWsToast(res.error || 'Failed to update profile', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Profile Changes'; }
-                window.showWsToast(' Profile saved locally.');
+                window.showWsToast('Profile saved locally.', 'success');
             });
 
             return false;
@@ -382,14 +385,14 @@ window.animateTargetGauge = animateTargetGauge;
                     user.gst_number = gstin;
                     user.gstin = gstin;
                     localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                    window.showWsToast(' GST Tax Profile updated in live database!');
+                    window.showWsToast('GST Tax Profile updated in live database!', 'success');
                 } else {
-                    window.showWsToast('️ ' + (res.error || 'Invalid GST details'));
+                    window.showWsToast(res.error || 'Invalid GST details', 'error');
                 }
             })
             .catch(function() {
                 if (btn) { btn.disabled = false; btn.textContent = 'Save Tax Profile'; }
-                window.showWsToast(' GST profile saved.');
+                window.showWsToast('GST profile saved.', 'success');
             });
 
             return false;
@@ -946,7 +949,7 @@ window.animateTargetGauge = animateTargetGauge;
                     { label: "Avg. Reseller Margin", num: commissionRate + "%", sub: totalOrders > 0 ? "↑ Direct Atelier Margins" : "15% Standard Margin" },
                     { label: "Customer Delivery TAT", num: totalOrders > 0 ? "1.8 Days" : "0 Days", sub: WS_ICONS.lightning + " Express Customer Dispatch" },
                     { label: "Total Resale Earned", num: "₹" + totalEarnings.toLocaleString('en-IN'), sub: " " + totalOrders + " Orders Realized" },
-                    { label: "Customer Repeat Rate", num: totalOrders > 0 ? "88.5%" : "0%", sub: " 5.0 ★ Buyer Rating" }
+                    { label: "Customer Repeat Rate", num: totalOrders > 0 ? "88.5%" : "0%", sub: " 5.0 / 5.0 Buyer Rating" }
                 ],
                 milestoneBadge: tierName + " (Active)",
                 milestoneVal: tierName + " Member",
@@ -2280,15 +2283,15 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    showWsToast(' Showing All Available Reseller Lots');
+                    showWsToast('Showing All Available Reseller Lots', 'filter');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    showWsToast(' ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    showWsToast(activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    showWsToast('️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    showWsToast(activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)', 'filter');
                 } else if (activeCatalogCategory !== 'All') {
-                    showWsToast(' ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    showWsToast(activeCatalogCategory + ' (' + matchCount + ' Lots Available)', 'filter');
                 } else if (activePriceTier !== null) {
-                    showWsToast('️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    showWsToast('Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)', 'filter');
                 }
             }
 
@@ -2398,7 +2401,7 @@ window.animateTargetGauge = animateTargetGauge;
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    showWsToast('️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    showWsToast('Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!', 'cart');
                 }
             } catch(e) {
                 console.error(e);
@@ -3681,7 +3684,7 @@ window.animateTargetGauge = animateTargetGauge;
             var btn = document.getElementById('btnCustSyncWhatsapp');
             if (mobile && whatsapp) {
                 if (!mobile.value.trim()) {
-                    showWsToast('️ Please enter Mobile Number first');
+                    showWsToast('Please enter Mobile Number first', 'error');
                     mobile.focus();
                     return;
                 }
@@ -4068,7 +4071,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <img src="${img}" alt="${p.name || ''}" class="ws-qo-prod-item-thumb">
                                 <div>
                                     <div class="ws-qo-prod-item-title">${p.name || 'Product'}</div>
-                                    <div class="ws-qo-prod-item-sub">${sku ? `<span class="ws-qo-prod-item-sku">SKU: ${sku}</span>` : ''}${cat ? ` 🏷️ ${cat}` : ''}</div>
+                                    <div class="ws-qo-prod-item-sub">${sku ? `<span class="ws-qo-prod-item-sku">SKU: ${sku}</span>` : ''}${cat ? ` &bull; ${cat}` : ''}</div>
                                 </div>
                             </div>
                             <div class="ws-qo-prod-item-price">
@@ -4855,7 +4858,7 @@ ${senderName} (Reseller Partner)`;
                                 <span class="crm-tag" style="${statusCls}">${item.status}</span>
                             </div>
                             <div style="font-weight:800; font-size:0.86rem; color:var(--ws-text-main);">${item.cust}</div>
-                            <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:8px;">Quantity: <strong>${item.qty}</strong> &bull; 📅 ${item.date}</div>
+                            <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:8px;">Quantity: <strong>${item.qty}</strong> &bull; Date: <strong>${item.date}</strong></div>
                             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; background:#FAF8F4; border:1px solid #EADBBE; border-radius:8px; padding:8px; text-align:center;">
                                 <div>
                                     <div style="font-size:0.65rem; color:var(--ws-text-muted);">Selling Price</div>
@@ -5042,13 +5045,13 @@ ${senderName} (Reseller Partner)`;
 
                         var statusBadgeHtml = '';
                         if (isCompleted) {
-                            statusBadgeHtml = '<span class="crm-tag" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-weight:800; font-size:0.70rem;">✓ Completed</span>';
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-weight:800; font-size:0.70rem; display:inline-flex; align-items:center;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;"><polyline points="20 6 9 17 4 12"></polyline></svg>Completed</span>';
                         } else if (isDueToday) {
-                            statusBadgeHtml = '<span class="crm-tag" style="background:#FFE4E6; color:#E11D48; border:1px solid #FDA4AF; font-weight:800; font-size:0.70rem;">🚨 Due Today</span>';
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FFE4E6; color:#E11D48; border:1px solid #FDA4AF; font-weight:800; font-size:0.70rem; display:inline-flex; align-items:center;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Due Today</span>';
                         } else if (isOverdue) {
-                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; font-weight:800; font-size:0.70rem;">⏳ Overdue</span>';
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; font-weight:800; font-size:0.70rem; display:inline-flex; align-items:center;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Overdue</span>';
                         } else {
-                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF3C7; color:#B45309; border:1px solid #FDE68A; font-weight:800; font-size:0.70rem;">⏳ Pending</span>';
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF3C7; color:#B45309; border:1px solid #FDE68A; font-weight:800; font-size:0.70rem; display:inline-flex; align-items:center;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Pending</span>';
                         }
 
                         var formattedDate = item.task.date;
@@ -5466,7 +5469,7 @@ ${senderName} (Reseller Partner)`;
                 }
             });
             saveResellerCustomers(customers);
-            showWsToast('️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
+            showWsToast('Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!', 'success');
         }
         window.bulkAddTagToCustomers = bulkAddTagToCustomers;
 

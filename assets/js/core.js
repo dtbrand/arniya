@@ -18,13 +18,18 @@
 
         var t = document.createElement('div');
         t.className = 'dt-toast';
-        var icon = '✨';
-        if (explicitType === 'cart' || msg.toLowerCase().indexOf('bag') !== -1) icon = '🛍️';
-        if (explicitType === 'wishlist' || msg.toLowerCase().indexOf('wishlist') !== -1) icon = '♡';
-        if (explicitType === 'success') icon = '✓';
-        if (explicitType === 'error') icon = '⚠️';
+        var iconSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+        if (explicitType === 'cart' || msg.toLowerCase().indexOf('bag') !== -1) {
+            iconSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
+        } else if (explicitType === 'wishlist' || msg.toLowerCase().indexOf('wishlist') !== -1) {
+            iconSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+        } else if (explicitType === 'success') {
+            iconSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#15803D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        } else if (explicitType === 'error') {
+            iconSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+        }
 
-        t.innerHTML = '<span>' + icon + '</span><span>' + msg + '</span>';
+        t.innerHTML = '<span style="display:inline-flex; align-items:center; flex-shrink:0;">' + iconSvg + '</span><span>' + msg + '</span>';
         container.appendChild(t);
 
         setTimeout(function () {
@@ -49,7 +54,7 @@
                 }
                 return item;
             }).filter(Boolean);
-        } catch (e) {
+        } catch {
             return [];
         }
     };
@@ -100,7 +105,7 @@
     window.getWishlist = function () {
         try {
             return JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
-        } catch (e) {
+        } catch {
             return [];
         }
     };

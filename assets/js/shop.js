@@ -645,7 +645,7 @@
             bar.classList.add('has-tags');
             wrap.innerHTML = tags.map(function(t) {
                 return '<span class="active-filter-tag">' + t.label + 
-                       ' <button onclick="removeFilterTag(\'' + t.type + '\', \'' + (t.val || '') + '\')" aria-label="Remove filter">✕</button></span>';
+                       ' <button onclick="removeFilterTag(\'' + t.type + '\', \'' + (t.val || '') + '\')" aria-label="Remove filter" style="display:inline-flex;align-items:center;justify-content:center;line-height:1;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>';
             }).join('');
         } else {
             bar.classList.remove('has-tags');
@@ -951,7 +951,7 @@
                     var added = window.toggleWishlistProduct(p);
                     wishBtn.classList.toggle('active', added);
                     wishBtn.setAttribute('aria-pressed', added ? 'true' : 'false');
-                    if (typeof showToast === 'function') showToast(added ? '♡ Saved ' + p.name + ' to wishlist' : 'Removed from wishlist');
+                    if (typeof showToast === 'function') showToast(added ? 'Saved ' + p.name + ' to wishlist' : 'Removed from wishlist', 'wishlist');
                 }
                 return;
             }
