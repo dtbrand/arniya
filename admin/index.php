@@ -1591,7 +1591,7 @@ $dashPayload = [
                                 </div>
                                 <div class="adm-saas-cat-footer">
                                     <span><?= $catMode === 'sales' ? number_format($cb['units']) . ' pcs sold' : number_format($cb['units']) . ' product' . ((int)$cb['units'] === 1 ? '' : 's') ?></span>
-                                    <span style="color:<?= $cbOut > 0 ? '#D97706' : '#15803D' ?>; font-weight:700;">● <?= $cbOut > 0 ? number_format($cbOut) . ' not in stock' : ($cbSkus > 0 ? 'In Stock' : 'No SKUs') ?></span>
+                                    <span style="color:<?= $cbOut > 0 ? '#D97706' : '#15803D' ?>; font-weight:700; display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor;"></span><?= $cbOut > 0 ? number_format($cbOut) . ' not in stock' : ($cbSkus > 0 ? 'In Stock' : 'No SKUs') ?></span>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -2007,7 +2007,7 @@ $dashPayload = [
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
                             <span>WhatsApp CRM & Broadcast Hub</span>
-                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D;">● Connected</span>
+                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>Connected</span>
                         </h1>
                         <p class="adm-page-subtitle">Engage customers, convert wholesale catalog inquiries, and broadcast promotional campaigns.</p>
                     </div>
@@ -2721,7 +2721,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
                             <span>Payments &amp; Financial Ledger</span>
-                            <span class="adm-badge green">● Gateway Active</span>
+                            <span class="adm-badge green" style="display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>Gateway Active</span>
                         </h1>
                         <p class="adm-page-subtitle">Track incoming UPI, NetBanking, RTGS transfers, COD remittances, and reseller commission payouts.</p>
                     </div>
@@ -3058,7 +3058,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
                             <span>System Health, Database &amp; APIs</span>
-                            <span class="adm-badge green">● All Systems Nominal</span>
+                            <span class="adm-badge green" style="display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>All Systems Nominal</span>
                         </h1>
                         <p class="adm-page-subtitle">Monitor server response time, MySQL database connections, and create instant backup snapshots.</p>
                     </div>

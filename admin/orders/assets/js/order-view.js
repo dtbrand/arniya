@@ -859,7 +859,7 @@
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                             <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">Payment &amp; Clearance Details</div>
-                            <div style="font-weight:800; font-size:12px; color:#15803D;">● Settlement: ${order.payment_status || 'PAID & CLEARED'}</div>
+                            <div style="font-weight:800; font-size:12px; color:#15803D; display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>Settlement: ${order.payment_status || 'PAID & CLEARED'}</div>
                             <div style="font-size:11px; color:#475569;">Mode: ${order.payment || 'Online Payment'}</div>
                             <div style="font-size:11px; color:#475569;">Depot: Surat Central Dock 1</div>
                         </div>
@@ -1149,8 +1149,8 @@
                             <div style="font-size:11.5px; color:#475569;">Contact: ${order.phone}</div>
                         </div>
                         <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
-                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Payment &amp; Clearance</div>
-                            <div style="font-weight:800; font-size:13px; color:#15803D; margin-top:2px;">● Status: ${order.payment_status}</div>
+                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:4px;">Payment &amp; Clearance</div>
+                            <div style="font-weight:800; font-size:13px; color:#15803D; margin-top:2px; display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>Status: ${order.payment_status}</div>
                             <div style="font-size:12px; color:#475569;">Mode: ${order.payment}</div>
                             <div style="font-size:11.5px; color:#475569;">Bank: ICICI Corporate Direct Wire</div>
                         </div>

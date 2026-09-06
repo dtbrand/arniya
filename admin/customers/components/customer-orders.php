@@ -115,7 +115,7 @@ if (!function_exists('dt_ord_pill')) {
                         <?php echo htmlspecialchars(strtoupper((string)($o['payment_method'] ?? '')) . ' · ' . ucfirst($ps)); ?>
                     </span>
                 </td>
-                <td><span class="dt-status-pill <?php echo dt_ord_pill($fs); ?>" style="font-size:0.65rem;">● <?php echo htmlspecialchars(ucfirst($fs)); ?></span></td>
+                <td><span class="dt-status-pill <?php echo dt_ord_pill($fs); ?>" style="font-size:0.65rem; display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor;"></span><?php echo htmlspecialchars(ucfirst($fs)); ?></span></td>
                 <td style="text-align:right;">
                     <a href="/admin/orders/view.php?id=<?php echo $oid; ?>" class="dt-cust-act-btn" title="View Order Details">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>

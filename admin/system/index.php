@@ -92,6 +92,7 @@ if ($pdo !== null && !Database::isMockMode()) {
 
             <?php if (!empty($flashMessage)): ?>
                 <div style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     <span><?= htmlspecialchars($flashMessage) ?></span>
                 </div>
             <?php endif; ?>
@@ -158,17 +159,21 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <a href="/api/db_health.php?action=status" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:28px; font-size:11.5px; font-weight:700;">View JSON Status</a>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; padding:16px;">
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
-                        ● Web Engine: Active (<?= htmlspecialchars($_SERVER['SERVER_SOFTWARE'] ?? 'Hostinger Apache') ?>)
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                        <span>Web Engine: Active (<?= htmlspecialchars($_SERVER['SERVER_SOFTWARE'] ?? 'Hostinger Apache') ?>)</span>
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
-                        ● MySQL Database: <?= htmlspecialchars($dbStatus) ?>
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        <span>MySQL Database: <?= htmlspecialchars($dbStatus) ?></span>
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
-                        ● SSL Certificate: Valid HTTPS (256-bit TLS)
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                        <span>SSL Certificate: Valid HTTPS (256-bit TLS)</span>
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
-                        ● Cloud API: 100% Operational
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                        <span>Cloud API: 100% Operational</span>
                     </div>
                 </div>
             </div>

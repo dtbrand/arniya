@@ -382,7 +382,7 @@
                             </div>
                             <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
                                 <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Settlement &amp; Logistics</div>
-                                <div style="font-weight:800; font-size:12px; color:#15803D;">● Settlement: ${order.status?.toUpperCase() || 'CONFIRMED'}</div>
+                                <div style="font-weight:800; font-size:12px; color:#15803D; display:inline-flex; align-items:center; gap:5px;"><span class="dt-pulse-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#15803D;"></span>Settlement: ${order.status?.toUpperCase() || 'CONFIRMED'}</div>
                                 <div style="font-size:11px; color:#475569;">Carrier: ${order.shipping || 'Standard Surface Logistics'}</div>
                                 <div style="font-size:11px; color:#475569;">Tracking: ${order.tracking || '-'}</div>
                             </div>

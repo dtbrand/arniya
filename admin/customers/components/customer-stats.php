@@ -91,7 +91,7 @@ $tradeCust = $wholesaleCust + $resellerCust;
         <div class="dt-cust-kpi-val" style="color:#15803D;"><?php echo number_format($activeCust); ?></div>
         <div class="dt-cust-kpi-bot">
             <span class="dt-cust-kpi-delta"><?php echo $activePct; ?>% of shoppers</span>
-            <span style="color:#15803D; font-weight:800;">● Can sign in</span>
+            <span style="color:#15803D; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor;"></span>Can sign in</span>
         </div>
     </div>
 
