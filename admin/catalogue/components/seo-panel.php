@@ -80,7 +80,7 @@ $current_seo_tab = basename($_SERVER['SCRIPT_NAME']);
                         <div class="dt-serp-favicon">DT</div>
                         <div class="dt-serp-meta">
                             <div class="dt-serp-sitename">DT Brand's &amp; Jai Hanuman Tex</div>
-                            <div class="dt-serp-url">https://jaihanumantex.in › shop › <?php echo htmlspecialchars($seo_cat_slug); ?></div>
+                            <div class="dt-serp-url">https://jaihanumantex.in <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><polyline points="9 18 15 12 9 6"></polyline></svg> shop <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><polyline points="9 18 15 12 9 6"></polyline></svg> <?php echo htmlspecialchars($seo_cat_slug); ?></div>
                         </div>
                     </div>
                     <a href="javascript:void(0)" class="dt-serp-title" id="serpTitleDisplay"><?php echo htmlspecialchars($seo_title); ?></a>

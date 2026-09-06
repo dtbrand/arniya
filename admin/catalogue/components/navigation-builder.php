@@ -203,7 +203,7 @@
                     <div class="dt-mob-drawer-body">
                         <a href="javascript:void(0)" class="dt-mob-menu-link">
                             <span>Silk Sarees</span>
-                            <span>›</span>
+                            <span style="display:inline-flex; align-items:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </a>
                         <a href="javascript:void(0)" class="dt-mob-menu-link is-sub">
                             <span>└ Kanjivaram Silk</span>
@@ -213,14 +213,14 @@
                         </a>
                         <a href="javascript:void(0)" class="dt-mob-menu-link">
                             <span>Bridal Lehengas</span>
-                            <span>›</span>
+                            <span style="display:inline-flex; align-items:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </a>
                         <a href="javascript:void(0)" class="dt-mob-menu-link is-sub">
                             <span>└ Zardosi Velvet</span>
                         </a>
                         <a href="javascript:void(0)" class="dt-mob-menu-link">
                             <span>Collections</span>
-                            <span>›</span>
+                            <span style="display:inline-flex; align-items:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </a>
                         <a href="javascript:void(0)" class="dt-mob-menu-link">
                             <span>Wholesale Depot</span>

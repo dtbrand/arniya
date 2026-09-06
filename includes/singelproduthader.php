@@ -457,7 +457,7 @@
 <header class="pdp-header" id="pdpHeader">
     <!-- Top Announcement Bar (Auto-Sliding Slider) -->
     <div class="pdp-top-ticker" id="pdpAnnouncementTicker">
-        <button type="button" class="pdp-ticker-arrow prev" onclick="slidePdpTicker(-1)" aria-label="Previous announcement">‹</button>
+        <button type="button" class="pdp-ticker-arrow prev dt-btn dt-btn-pale" onclick="slidePdpTicker(-1)" aria-label="Previous announcement" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
         <div class="pdp-ticker-track" id="pdpTickerTrack">
             <div class="pdp-ticker-slide active">
                 <span class="pdp-ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
@@ -476,14 +476,14 @@
                 <span class="pdp-ticker-text"><strong>Luxury Gift Box</strong> • Complimentary Royal Packaging</span>
             </div>
         </div>
-        <button type="button" class="pdp-ticker-arrow next" onclick="slidePdpTicker(1)" aria-label="Next announcement">›</button>
+        <button type="button" class="pdp-ticker-arrow next dt-btn dt-btn-pale" onclick="slidePdpTicker(1)" aria-label="Next announcement" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
     </div>
 
     <!-- Main Navigation Bar -->
     <div class="pdp-header-main">
         <!-- Left: Back Button & Royal Seal -->
         <div class="pdp-header-left">
-            <a href="/" class="pdp-back-btn" aria-label="Home">
+            <a href="/" class="pdp-back-btn dt-btn dt-btn-pale" aria-label="Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
             </a>
@@ -493,11 +493,7 @@
             </a>
         </div>
 
-        <!-- Center: Breadcrumbs.
-             The category link fell back to "Sarees" and the trail to "Luxury
-             Outfit", so a product in another category was filed under Sarees and
-             a nameless row was announced as a "Luxury Outfit". Each crumb is now
-             only drawn when the catalogue actually has the value. -->
+        <!-- Center: Breadcrumbs -->
         <?php
         $bcCategory = trim((string)($product['category'] ?? ''));
         $bcName     = trim((string)($product['name'] ?? ''));
@@ -505,13 +501,13 @@
         ?>
         <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
             <a href="/">Home</a>
-            <span class="sep">›</span>
+            <span class="sep" style="display:inline-flex; align-items:center; vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
             <?php if ($bcCategory !== ''): ?>
             <a href="/shop?category=<?= urlencode($bcCategory) ?>"><?= htmlspecialchars($bcCategory) ?></a>
-            <span class="sep">›</span>
+            <span class="sep" style="display:inline-flex; align-items:center; vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
             <?php else: ?>
             <a href="/shop">Shop</a>
-            <span class="sep">›</span>
+            <span class="sep" style="display:inline-flex; align-items:center; vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
             <?php endif; ?>
             <?php if ($bcName !== ''): ?>
             <span class="current"><?= htmlspecialchars($bcName) ?></span>

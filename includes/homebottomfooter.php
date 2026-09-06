@@ -804,7 +804,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
             <a href="/" style="display:flex; align-items:center;">
                 <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
             </a>
-            <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">
+            <button class="dt-btn dt-btn-pale home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
@@ -1005,7 +1005,7 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
 
         <!-- Footer Action (WhatsApp Concierge) -->
         <div class="home-menu-footer">
-            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="home-menu-wa-btn">
+            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="dt-btn dt-btn-emerald home-menu-wa-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFFFFF"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                 <span>WhatsApp Stylist Concierge</span>
                 <span style="font-size:0.52rem; background:rgba(255,255,255,0.25); padding:1px 5px; border-radius:8px; font-weight:900;">LIVE 24/7</span>

@@ -474,7 +474,7 @@ window.DT_DISPLAY = {
                         pillBox.style.borderRadius = '4px';
                         pillBox.innerHTML = `Trending #1 in Surat Silk Hub`;
                     }
-                    if (btnText) btnText.textContent = 'Explore Trending Collection ›';
+                    if (btnText) btnText.innerHTML = 'Explore Trending Collection <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>';
                 } else if (this.currentPlacement === 'home-new') {
                     if (pillBox) {
                         pillBox.style.background = '#FAF5E8';
@@ -484,7 +484,7 @@ window.DT_DISPLAY = {
                         pillBox.style.borderRadius = '4px';
                         pillBox.innerHTML = `Fresh Weaver Stock 2026`;
                     }
-                    if (btnText) btnText.textContent = 'View New Arrival Details ›';
+                    if (btnText) btnText.innerHTML = 'View New Arrival Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>';
                 } else if (this.currentPlacement === 'home-sale') {
                     if (pillBox) {
                         pillBox.style.background = '#DCFCE7';
@@ -737,7 +737,7 @@ window.DT_DISPLAY = {
                     actionBtn.style.background = 'linear-gradient(135deg, #181512 0%, #2A241E 100%)';
                     actionBtn.style.color = '#D4AF37';
                     actionBtn.style.border = '1px solid #8A681F';
-                    if (btnText) btnText.textContent = 'View Saree Details ›';
+                    if (btnText) btnText.innerHTML = 'View Saree Details <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>';
                 }
             }
         });

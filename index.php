@@ -406,8 +406,8 @@ $total_products = count($products);
                         </div>
                     </div>
                     <div class="deal-slider-arrows">
-                        <button type="button" class="deal-nav-arrow deal-nav-prev" id="dealScrollPrevBtn" onclick="scrollDealsRail(-1)" aria-label="Previous deals">‹</button>
-                        <button type="button" class="deal-nav-arrow deal-nav-next" id="dealScrollNextBtn" onclick="scrollDealsRail(1)" aria-label="Next deals">›</button>
+                        <button type="button" class="deal-nav-arrow deal-nav-prev dt-btn dt-btn-pale" id="dealScrollPrevBtn" onclick="scrollDealsRail(-1)" aria-label="Previous deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <button type="button" class="deal-nav-arrow deal-nav-next dt-btn dt-btn-pale" id="dealScrollNextBtn" onclick="scrollDealsRail(1)" aria-label="Next deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
             </div>
@@ -634,8 +634,8 @@ $total_products = count($products);
 
                     <!-- 1-Tap Navigation Arrows -->
                     <div class="rev-nav-arrows">
-                        <button type="button" class="rev-arrow-btn" onclick="slideReviews('left')" aria-label="Previous Reviews">‹</button>
-                        <button type="button" class="rev-arrow-btn" onclick="slideReviews('right')" aria-label="Next Reviews">›</button>
+                        <button type="button" class="rev-arrow-btn dt-btn dt-btn-pale" onclick="slideReviews('left')" aria-label="Previous Reviews" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <button type="button" class="rev-arrow-btn dt-btn dt-btn-pale" onclick="slideReviews('right')" aria-label="Next Reviews" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
             </div>
@@ -1079,14 +1079,14 @@ $total_products = count($products);
                 </div>
                 
                 <div class="reels-header-controls">
-                    <button type="button" class="reels-open-all-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);">
+                    <button type="button" class="reels-open-all-btn dt-btn dt-btn-gold" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);">
                         <span>Watch Full Reels</span>
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     </button>
                     <!-- 1-Tap Navigation Arrows -->
                     <div class="reels-nav-arrows">
-                        <button type="button" class="reels-arrow-btn" onclick="scrollReelsRail(-1)" aria-label="Previous Reels">‹</button>
-                        <button type="button" class="reels-arrow-btn" onclick="scrollReelsRail(1)" aria-label="Next Reels">›</button>
+                        <button type="button" class="reels-arrow-btn dt-btn dt-btn-pale" onclick="scrollReelsRail(-1)" aria-label="Previous Reels" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <button type="button" class="reels-arrow-btn dt-btn dt-btn-pale" onclick="scrollReelsRail(1)" aria-label="Next Reels" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
             </div>

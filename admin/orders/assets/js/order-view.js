@@ -1115,7 +1115,7 @@
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Tax Invoice #${order.id} ‹ DT Brand's</title>
+                    <title>Tax Invoice #${order.id} — DT Brand's</title>
                     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
                     <style>
                         @page { size: A4; margin: 15mm; }
@@ -1299,7 +1299,7 @@
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Packing Slip #${order.id} ‹ DT Brand's</title>
+                    <title>Packing Slip #${order.id} — DT Brand's</title>
                     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
                     <style>
                         @page { size: A4; margin: 15mm; }

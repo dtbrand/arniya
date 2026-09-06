@@ -10,7 +10,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
 
     <!-- Top Announcement Auto-Sliding Bar -->
     <div class="dt-top-ticker" id="dtTopTicker">
-        <button type="button" class="dt-ticker-arrow prev" onclick="if(typeof slideDtTicker==='function') slideDtTicker(-1)" aria-label="Previous announcement">‹</button>
+        <button type="button" class="dt-ticker-arrow prev dt-btn dt-btn-pale" onclick="if(typeof slideDtTicker==='function') slideDtTicker(-1)" aria-label="Previous announcement" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
         <div class="dt-ticker-track" id="dtTickerTrack">
             <div class="dt-ticker-slide active">
                 <span class="dt-ticker-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
@@ -29,7 +29,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
                 <span class="dt-ticker-text"><strong>Luxury Gift Box</strong> &bull; Complimentary Royal Packaging</span>
             </div>
         </div>
-        <button type="button" class="dt-ticker-arrow next" onclick="if(typeof slideDtTicker==='function') slideDtTicker(1)" aria-label="Next announcement">›</button>
+        <button type="button" class="dt-ticker-arrow next dt-btn dt-btn-pale" onclick="if(typeof slideDtTicker==='function') slideDtTicker(1)" aria-label="Next announcement" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
     </div>
 
     <!-- Main Navigation Header Row -->
@@ -37,7 +37,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
         <!-- Left: Brand Logo & Back to Home (Non-home pages) -->
         <div class="dt-header-left">
             <?php if (!$isHome): ?>
-            <a href="/" class="dt-header-back-btn" aria-label="Back to Home">
+            <a href="/" class="dt-header-back-btn dt-btn dt-btn-pale" aria-label="Back to Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
             </a>
@@ -76,7 +76,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
                 <div class="dt-search-suggestions" id="dtSearchSuggestions" style="display:none;"></div>
             </div>
 
-            <button type="button" class="dt-search-submit" id="dtSearchSubmit" aria-label="Search">
+            <button type="button" class="dt-search-submit dt-btn dt-btn-gold" id="dtSearchSubmit" aria-label="Search">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </div>
@@ -153,11 +153,11 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
                 aria-label="Search"
             />
             <button type="button" class="dt-mobile-search-clear" id="dtMobileSearchClear" aria-label="Clear Search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-            <button type="button" class="dt-mobile-search-submit" id="dtMobileSearchSubmit" aria-label="Submit Search">
+            <button type="button" class="dt-mobile-search-submit dt-btn dt-btn-gold" id="dtMobileSearchSubmit" aria-label="Submit Search">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </div>
-        <button type="button" class="dt-mobile-search-close" id="dtMobileSearchClose" aria-label="Close Search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        <button type="button" class="dt-mobile-search-close dt-btn dt-btn-pale" id="dtMobileSearchClose" aria-label="Close Search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
 
     <!-- Attached Amazon-Style Luxury Gold Sub-Navigation Bar -->

@@ -230,17 +230,24 @@
 
         let out = '';
         const btn = (page, label, title, extraClass) =>
-            `<button type="button" class="dt-cust-page-btn ${extraClass || ''}" onclick="window.renderCustomersTable(${page})"${title ? ` title="${title}"` : ''}>${label}</button>`;
+            `<button type="button" class="dt-cust-page-btn dt-btn dt-btn-pale ${extraClass || ''}" onclick="window.renderCustomersTable(${page})"${title ? ` title="${title}"` : ''}>${label}</button>`;
 
-        if (currentPage > 1) out += btn(1, '«', 'First page');
-        if (currentPage > 1) out += btn(currentPage - 1, '‹', 'Previous page');
+        const svgChevrons = {
+            first: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>',
+            prev: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>',
+            next: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>',
+            last: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>'
+        };
+
+        if (currentPage > 1) out += btn(1, svgChevrons.first, 'First page');
+        if (currentPage > 1) out += btn(currentPage - 1, svgChevrons.prev, 'Previous page');
         if (from > 1) out += '<span class="dt-cust-page-btn" style="pointer-events:none; border:none;">…</span>';
         for (let p = from; p <= to; p++) {
             out += btn(p, String(p), '', p === currentPage ? 'active' : '');
         }
         if (to < pageCount) out += '<span class="dt-cust-page-btn" style="pointer-events:none; border:none;">…</span>';
-        if (currentPage < pageCount) out += btn(currentPage + 1, '›', 'Next page');
-        if (currentPage < pageCount) out += btn(pageCount, '»', 'Last page');
+        if (currentPage < pageCount) out += btn(currentPage + 1, svgChevrons.next, 'Next page');
+        if (currentPage < pageCount) out += btn(pageCount, svgChevrons.last, 'Last page');
 
         wrap.innerHTML = out;
     }
@@ -378,7 +385,7 @@
         if (pageDefaultFilter() !== 'all') return false;
 
         var params;
-        try { params = new URLSearchParams(window.location.search); } catch (e) { return false; }
+        try { params = new URLSearchParams(window.location.search); } catch { return false; }
 
         var tier = (params.get('tier') || '').trim();
         if (tier) {

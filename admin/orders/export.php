@@ -167,7 +167,7 @@ $active_subnav = "export";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $page_title; ?> ‹ DT Brand's Admin</title>
+    <title><?php echo $page_title; ?> — DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -454,7 +454,7 @@ function downloadPDFRegister(dataset) {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Orders Audit Register ‹ DT Brand's</title>
+            <title>Orders Audit Register — DT Brand's</title>
             <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
             <style>
                 body { font-family:'Plus Jakarta Sans',sans-serif; margin:24px; color:#181512; font-size:12px; }

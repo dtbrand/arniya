@@ -39,7 +39,7 @@ if ($pdoPend !== null && !Database::isMockMode()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pending Reviews ‹ DT Brand's Admin</title>
+    <title>Pending Reviews — DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
 </head>

@@ -54,9 +54,9 @@ $pageTitle = "Contact Atelier & Concierge — DT Brand's & Jai Hanuman Tex";
         <div class="dt-policy-hero-inner">
             <div class="dt-policy-breadcrumb">
                 <a href="/">Home</a>
-                <span class="sep">›</span>
+                <span class="sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                 <span>Atelier Concierge</span>
-                <span class="sep">›</span>
+                <span class="sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                 <span style="color:#FAF5E8;">Contact Us</span>
             </div>
 

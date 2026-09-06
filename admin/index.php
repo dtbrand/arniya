@@ -732,7 +732,7 @@ $dashPayload = [
                                 <div class="adm-app-stream-bottom">
                                     <?php /* Was a hardcoded Rs 28.4L. */ ?>
                                     <span class="adm-app-stream-price"><?= $dtShortInr($wholesaleRevenue) ?></span>
-                                    <span class="adm-app-stream-chevron">›</span>
+                                    <span class="adm-app-stream-chevron"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                 </div>
                             </a>
 
@@ -750,7 +750,7 @@ $dashPayload = [
                                 <div class="adm-app-stream-bottom">
                                     <?php /* Was a hardcoded Rs 14.4L. */ ?>
                                     <span class="adm-app-stream-price"><?= $dtShortInr($resellerRevenue) ?></span>
-                                    <span class="adm-app-stream-chevron">›</span>
+                                    <span class="adm-app-stream-chevron"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                 </div>
                             </a>
 
@@ -765,7 +765,7 @@ $dashPayload = [
                                 <div class="adm-app-stream-sub">Surat Central Depot</div>
                                 <div class="adm-app-stream-bottom">
                                     <span class="adm-app-stream-price"><?= number_format($totalStockQty) ?> Pcs</span>
-                                    <span class="adm-app-stream-chevron">›</span>
+                                    <span class="adm-app-stream-chevron"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                 </div>
                             </a>
 
@@ -778,7 +778,7 @@ $dashPayload = [
                                 </div>
                                 <div class="adm-app-stream-title">Clearance Needed</div>
                                 <div class="adm-app-stream-sub"><?= $pendingPayments > 0 ? ('₹' . number_format($pendingPayments) . ' Pending') : 'All Invoices Cleared' ?></div><div class="adm-app-stream-bottom"><span class="adm-app-stream-price">₹<?= number_format($pendingPayments) ?></span>
-                                    <span class="adm-app-stream-chevron">›</span>
+                                    <span class="adm-app-stream-chevron"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                 </div>
                             </a>
                         </div>
@@ -834,7 +834,7 @@ $dashPayload = [
                                 </div>
                                 <div class="adm-app-act-right">
                                     <span class="adm-app-act-badge" style="background:<?= $actBg ?>; color:<?= $actFg ?>;"><?= htmlspecialchars($actLabel) ?></span>
-                                    <span style="color:#B8860B; font-weight:800; font-size:13px;">›</span>
+                                    <span style="color:#B8860B; display:inline-flex; align-items:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                 </div>
                             </a>
                             <?php endforeach; ?>
@@ -1925,11 +1925,11 @@ $dashPayload = [
                             Showing <strong>1 – 6</strong> of <strong>1,240</strong> products • Per page: <strong>25</strong>
                         </div>
                         <div class="dt-page-nav">
-                            <button type="button" class="dt-page-btn" disabled>«</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-page-btn" disabled aria-label="First page"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg></button>
                             <button type="button" class="dt-page-btn active">1</button>
                             <button type="button" class="dt-page-btn">2</button>
                             <button type="button" class="dt-page-btn">3</button>
-                            <button type="button" class="dt-page-btn">»</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-page-btn" aria-label="Last page"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg></button>
                         </div>
                     </div>
                 </div>

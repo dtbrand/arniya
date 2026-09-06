@@ -1393,7 +1393,7 @@ body.mobile-search-open #mobileBottomBar {
                 </span>
             </button>
             <?php else: ?>
-            <a href="/" class="shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
+            <a href="/" class="dt-btn dt-btn-pale shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
             </a>
@@ -1433,7 +1433,7 @@ body.mobile-search-open #mobileBottomBar {
                 </button>
             </div>
 
-            <button class="search-submit-btn" id="searchSubmitBtn" aria-label="Search">
+            <button class="dt-btn dt-btn-gold search-submit-btn" id="searchSubmitBtn" aria-label="Search">
                 <svg viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -1539,7 +1539,7 @@ body.mobile-search-open #mobileBottomBar {
             <button type="button" class="mobile-search-clear-btn" id="mobileSearchClearBtn" aria-label="Clear search text">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
-            <button type="button" class="mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
+            <button type="button" class="dt-btn dt-btn-gold mobile-search-submit-icon-btn" id="mobileSearchSubmitIconBtn" aria-label="Search">
                 <svg viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -1549,7 +1549,7 @@ body.mobile-search-open #mobileBottomBar {
 
         <!-- Right: Close Button (Replaces Cart Icon) -->
         <div class="header-actions" style="gap:4px; flex-shrink:0;">
-            <button type="button" class="mobile-header-close-btn" id="mobileSearchHeaderCloseBtn" aria-label="Close search">
+            <button type="button" class="dt-btn dt-btn-pale mobile-header-close-btn" id="mobileSearchHeaderCloseBtn" aria-label="Close search">
                 <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>

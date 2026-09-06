@@ -56,9 +56,9 @@ $pageTitle = "About Our Heritage — DT Brand's & Jai Hanuman Tex Surat";
         <div class="dt-policy-hero-inner">
             <div class="dt-policy-breadcrumb">
                 <a href="/">Home</a>
-                <span class="sep">›</span>
+                <span class="sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                 <span>Brand Story</span>
-                <span class="sep">›</span>
+                <span class="sep"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                 <span style="color:#FAF5E8;">About Our Heritage</span>
             </div>
 
@@ -198,15 +198,15 @@ $pageTitle = "About Our Heritage — DT Brand's & Jai Hanuman Tex Surat";
                 <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
                     <a href="/wholesale" class="dt-policy-side-link" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; color:#181512; font-weight:700; font-size:12.5px;">
                         <span>Wholesale B2B Portal</span>
-                        <span style="color:#8A681F;">›</span>
+                        <span style="color:#8A681F; display:inline-flex; align-items:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                     </a>
                     <a href="/retailer" class="dt-policy-side-link" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; color:#181512; font-weight:700; font-size:12.5px;">
                         <span>Retailer Boutique Hub</span>
-                        <span style="color:#8A681F;">›</span>
+                        <span style="color:#8A681F; display:inline-flex; align-items:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                     </a>
                     <a href="/reseller" class="dt-policy-side-link" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; color:#181512; font-weight:700; font-size:12.5px;">
                         <span>Reseller Digital Passbook</span>
-                        <span style="color:#8A681F;">›</span>
+                        <span style="color:#8A681F; display:inline-flex; align-items:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                     </a>
                 </div>
             </div>

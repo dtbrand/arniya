@@ -496,7 +496,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);"><?= $tierName ?></div>
                             <div style="display:flex; align-items:center; gap:5px;">
                                 <div class="ws-roadmap-link-wrap" onclick="event.stopPropagation(); openVipTierModal();" title="View VIP Roadmap">
-                                    <span class="ws-roadmap-link-text">Roadmap ›</span>
+                                    <span class="ws-roadmap-link-text">Roadmap <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                                     <div class="ws-roadmap-running-line"></div>
                                 </div>
                                 <span class="ws-trend-pill up" id="statPill1"><?= $totalOrders ?> / 50 Orders</span>
