@@ -211,7 +211,7 @@ function copyMediaUrl(url) {
     const abs = location.origin + url;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(abs).then(() => {
-            if (typeof window.showToast === 'function') window.showToast('📋 URL copied: ' + url);
+            if (typeof window.showToast === 'function') window.showToast('URL copied: ' + url);
         });
     }
 }
@@ -224,15 +224,15 @@ function deleteMediaFile(filename, btn) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Delete failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed');
                 return;
             }
             const card = btn.closest('.dt-media-card');
             if (card) card.remove();
-            if (typeof window.showToast === 'function') window.showToast('🗑️ "' + filename + '" deleted');
+            if (typeof window.showToast === 'function') window.showToast('"' + filename + '" deleted');
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
         });
 }
 </script>

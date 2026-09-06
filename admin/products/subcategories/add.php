@@ -97,7 +97,7 @@ function submitAddSubcat(ev) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Could not save'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Could not save');
                 return;
             }
             window.location.href = '/admin/products/subcategories/';

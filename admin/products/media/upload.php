@@ -40,12 +40,17 @@ $active_subnav = "media";
                     <h1><span>Upload High-Res Media</span></h1>
                 </div>
                 <div class="dt-prod-actions">
-                    <a href="/admin/products/media/" class="adm-btn-secondary">← Back to Media Library</a>
+                    <a href="/admin/products/media/" class="dt-btn dt-btn-pale" style="height:32px; padding:0 12px; font-size:12px; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <span>Back to Media Library</span>
+                    </a>
                 </div>
             </div>
             <div class="adm-card">
                 <div class="dt-dropzone" id="dropzone" style="padding:40px 20px; border:2px dashed #D4AF37; border-radius:8px; text-align:center; cursor:pointer;" onclick="document.getElementById('mFile').click()">
-                    <div style="font-size:2.5rem; margin-bottom:8px;">📤</div>
+                    <div style="margin-bottom:8px; display:flex; justify-content:center;">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </div>
                     <h3>Click to choose photos or videos (or drop them here)</h3>
                     <p style="font-size:0.8rem; color:#7A7266; margin-top:4px;">Supported: WebP, PNG, JPG, GIF, MP4. Max 10 MB per image, 25 MB per video.</p>
                     <input type="file" id="mFile" style="display:none;" multiple accept="image/*,video/mp4">
@@ -85,7 +90,7 @@ function handleFiles(fileList) {
 function uploadOne(file) {
     const row = document.createElement('div');
     row.className = 'upload-result';
-    row.textContent = '⏳ Uploading ' + file.name + '…';
+    row.textContent = 'Uploading ' + file.name + '...';
     results.prepend(row);
 
     const fd = new FormData();
@@ -95,15 +100,15 @@ function uploadOne(file) {
         .then(({ status, data }) => {
             if (status === 200 && data && data.success) {
                 row.className = 'upload-result ok';
-                row.textContent = '✓ ' + file.name + ' → ' + data.url;
+                row.textContent = 'Uploaded: ' + file.name + ' → ' + data.url;
             } else {
                 row.className = 'upload-result err';
-                row.textContent = '✗ ' + file.name + ' — ' + ((data && data.message) || ('HTTP ' + status));
+                row.textContent = 'Failed: ' + file.name + ' — ' + ((data && data.message) || ('HTTP ' + status));
             }
         })
         .catch(() => {
             row.className = 'upload-result err';
-            row.textContent = '✗ ' + file.name + ' — network error, retry';
+            row.textContent = 'Failed: ' + file.name + ' — network error, retry';
         });
 }
 </script>

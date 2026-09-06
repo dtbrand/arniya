@@ -208,14 +208,14 @@ function postTermAction(action, termName, hex) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Action failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Action failed');
                 return false;
             }
             window.location.reload();
             return true;
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
             return false;
         });
 }
@@ -224,7 +224,7 @@ function submitTerm() {
     const nameInput = document.getElementById('termName');
     const name = nameInput?.value.trim();
     if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter a term name');
+        if (typeof window.showToast === 'function') window.showToast('Please enter a term name');
         return;
     }
     const hex = document.getElementById('termHex')?.value.trim() || '';

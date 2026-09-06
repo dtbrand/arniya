@@ -60,8 +60,11 @@
         <option value="price_low">Price: Low – High</option>
         <option value="price_high">Price: High – Low</option>
         <option value="stock_high">Stock: High – Low</option>
-        <option value="rating_high">Highest Rated ★</option>
+        <option value="rating_high">Highest Rated</option>
     </select>
 
-    <button type="button" class="adm-btn-secondary" style="height:34px; padding:0 12px; font-size:0.75rem;" onclick="if(typeof resetFilters==='function') resetFilters();">↺ Reset</button>
+    <button type="button" class="dt-btn dt-btn-pale" style="height:34px; padding:0 12px; font-size:0.75rem; display:inline-flex; align-items:center; gap:5px;" onclick="if(typeof resetFilters==='function') resetFilters();">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+        <span>Reset</span>
+    </button>
 </div>

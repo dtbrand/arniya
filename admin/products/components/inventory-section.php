@@ -5,7 +5,10 @@
 ?>
 <div class="dt-form-section">
     <div class="dt-form-sec-head">
-        <h3 class="dt-form-sec-title"><span>🏭 Warehouse Stock Allocation</span></h3>
+        <h3 class="dt-form-sec-title" style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M18 17h2"></path><path d="M18 13h2"></path><path d="M14 17h2"></path><path d="M14 13h2"></path></svg>
+            <span>Warehouse Stock Allocation</span>
+        </h3>
     </div>
     <div class="dt-form-sec-body">
         <div class="adm-form-grid">

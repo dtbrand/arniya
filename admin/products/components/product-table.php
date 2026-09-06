@@ -10,7 +10,7 @@
  *     column, and there is no brands table);
  *   - an image fallback that cycled /assets/images/product1..8.png by product
  *     id, so a product with no photo borrowed a stock saree photo;
- *   - "MOQ: 8 pcs", "50 in stock", "4.9 ★" and "(85)" defaults, which showed
+ *   - "MOQ: 8 pcs", "50 in stock", "4.9 rating" and "(85)" defaults, which showed
  *     stock and ratings for products that had none.
  *
  * getAll(true) is used for the default list because this is an admin table and
@@ -102,7 +102,7 @@ $ptNoImage = \DTBrand\ProductCatalog::NO_IMAGE;
                 <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:<?= $pStock > 0 ? '#15803D' : '#DC2626' ?>;"><?= $pStock ?> in stock</strong></td>
                 <td style="padding: 6px 6px; white-space:nowrap;">
                     <?php if ($pReviews > 0): ?>
-                        <span style="color:#F59E0B; font-weight:800;"><?= number_format($pRating, 1) ?> &#9733;</span> <small style="color:#7A7266;">(<?= $pReviews ?>)</small>
+                        <span style="color:#F59E0B; font-weight:800; display:inline-flex; align-items:center; gap:2px;"><?= number_format($pRating, 1) ?> <svg width="10" height="10" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <small style="color:#7A7266;">(<?= $pReviews ?>)</small>
                     <?php else: ?>
                         <small style="color:#a7aaad;">No reviews</small>
                     <?php endif; ?>

@@ -5,7 +5,7 @@
 ?>
 <div class="dt-search-wrap">
     <input type="text" id="dtProductSearch" class="dt-search-input" placeholder="Search by product name, SKU (e.g. KLN-SR-111), barcode, category, brand..." oninput="if(typeof filterProductTable==='function') filterProductTable(this.value);" autocomplete="off" style="padding-left:12px;">
-    <button type="button" id="dtProductSearchClear" class="dt-search-clear" onclick="document.getElementById('dtProductSearch').value=''; if(typeof filterProductTable==='function') filterProductTable('');">✕</button>
+    <button type="button" id="dtProductSearchClear" class="dt-search-clear" onclick="document.getElementById('dtProductSearch').value=''; if(typeof filterProductTable==='function') filterProductTable('');" title="Clear search" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
 
     <!-- Search Suggestions Dropdown with Crisp SVGs -->
     <div class="dt-search-suggestions" id="dtSearchSuggestions">

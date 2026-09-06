@@ -69,11 +69,11 @@ if ($pdoPend !== null && !Database::isMockMode()) {
                             <tr id="pending-row-<?= $pid ?>">
                                 <td><strong><?= htmlspecialchars((string)($pr['customer_name'] ?? 'Customer')) ?></strong></td>
                                 <td><?= htmlspecialchars((string)($pr['product_title'] ?? ('Product #' . ($pr['product_id'] ?? '—')))) ?><code style="display:block; font-size:10px; color:#8A681F;"><?= htmlspecialchars((string)($pr['product_sku'] ?? '')) ?></code></td>
-                                <td><?= (int)($pr['rating'] ?? 5) ?> ★</td>
+                                <td><span style="display:inline-flex; align-items:center; gap:3px; color:#D4AF37; font-weight:800;"><?= (int)($pr['rating'] ?? 5) ?> <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span></td>
                                 <td>"<?= htmlspecialchars(mb_substr((string)($pr['review_text'] ?? ''), 0, 120)) ?>"</td>
                                 <td style="display:flex; gap:6px;">
-                                    <button class="adm-btn-primary adm-btn-sm" onclick="moderatePending(<?= $pid ?>, 'approve')">Approve</button>
-                                    <button class="adm-btn-secondary adm-btn-sm" onclick="moderatePending(<?= $pid ?>, 'reject')">Reject</button>
+                                    <button class="dt-btn dt-btn-gold adm-btn-sm" onclick="moderatePending(<?= $pid ?>, 'approve')" style="display:inline-flex; align-items:center; gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Approve</span></button>
+                                    <button class="dt-btn dt-btn-pale adm-btn-sm" onclick="moderatePending(<?= $pid ?>, 'reject')" style="display:inline-flex; align-items:center; gap:4px; color:#DC2626;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Reject</span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -95,15 +95,15 @@ function moderatePending(id, action) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Action failed'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Action failed');
                 return;
             }
             const row = document.getElementById('pending-row-' + id);
             if (row) row.remove();
-            if (typeof window.showToast === 'function') window.showToast('✓ Review ' + action + 'd');
+            if (typeof window.showToast === 'function') window.showToast('Review ' + action + 'd');
         })
         .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Could not reach the server');
+            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
         });
 }
 </script>

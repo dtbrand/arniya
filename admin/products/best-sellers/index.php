@@ -213,7 +213,7 @@ sort($curCategories);
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Best Sellers Hub</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px;">🔥 Top Volume Movers</span>
+                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px; display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span>Top Volume Movers</span></span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -316,7 +316,7 @@ sort($curCategories);
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
                     <div style="position:relative; display:inline-flex; align-items:center;">
                         <input type="text" id="curatedSearchInput" class="wp-search-input" placeholder="Search SKU, saree name, brand..." style="height:34px; padding-left:12px; padding-right:28px; width:230px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchCuratedProducts(this.value); toggleCuratedSearchClearBtn(this.value)">
-                        <span id="curatedSearchClearBtn" onclick="clearCuratedSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
+                        <span id="curatedSearchClearBtn" onclick="clearCuratedSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; display:none; align-items:center; justify-content:center;" title="Clear search"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                     </div>
                     <button type="button" class="wp-button primary" onclick="searchCuratedProducts(document.getElementById('curatedSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>
                 </div>
@@ -492,13 +492,13 @@ function switchProductView(mode) {
         grd.style.display = 'grid';
         btnGrd.classList.add('active');
         btnTbl.classList.remove('active');
-        if (typeof window.showToast === 'function') window.showToast('🔲 Wholesale Grid View Activated');
+        if (typeof window.showToast === 'function') window.showToast('Wholesale Grid View Activated');
     } else {
         grd.style.display = 'none';
         tbl.style.display = 'block';
         btnTbl.classList.add('active');
         btnGrd.classList.remove('active');
-        if (typeof window.showToast === 'function') window.showToast('📋 Table List View Activated');
+        if (typeof window.showToast === 'function') window.showToast('Table List View Activated');
     }
 }
 
@@ -560,7 +560,7 @@ function handleCuratedBulkAction() {
     if (!action) return;
     const selected = Array.from(document.querySelectorAll('.curated-row-check:checked')).map(c => c.value);
     if (selected.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one product');
+        if (typeof window.showToast === 'function') window.showToast('Select at least one product');
         return;
     }
     if (action === 'remove') {

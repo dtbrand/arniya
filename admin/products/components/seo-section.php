@@ -5,7 +5,10 @@
 ?>
 <div class="dt-form-section">
     <div class="dt-form-sec-head">
-        <h3 class="dt-form-sec-title"><span>🔍 Search Engine Optimization (SEO)</span></h3>
+        <h3 class="dt-form-sec-title" style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span>Search Engine Optimization (SEO)</span>
+        </h3>
     </div>
     <div class="dt-form-sec-body">
         <div class="adm-form-grid">

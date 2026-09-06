@@ -209,7 +209,7 @@ function triggerExport(scope, format) {
        real file; the other formats say so instead of pretending. */
     if (format !== 'csv') {
         if (typeof window.showToast === 'function') {
-            window.showToast(`⚠️ ${format.toUpperCase()} export is not available — use CSV.`);
+            window.showToast(`${format.toUpperCase()} export is not available — use CSV.`);
         }
         return;
     }

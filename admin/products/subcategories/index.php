@@ -216,7 +216,7 @@ function deleteSubcat(id, name) {
         .then(r => r.json())
         .then(data => {
             if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + (data.message || 'Could not delete'));
+                if (typeof window.showToast === 'function') window.showToast(data.message || 'Could not delete');
                 return;
             }
             window.location.reload();
