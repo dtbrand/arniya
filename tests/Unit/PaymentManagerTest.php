@@ -16,7 +16,13 @@ class PaymentManagerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Database::setPdo(null, true);
+    }
+
+    protected function tearDown(): void
+    {
         Database::reset();
+        parent::tearDown();
     }
 
     public function testGetAllGatewaysReturnsCompleteSuite(): void
