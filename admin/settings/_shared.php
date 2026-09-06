@@ -40,7 +40,7 @@ function dt_set_save_button(): string
 {
     global $dtSettingsIsSuper;
     if ($dtSettingsIsSuper) {
-        return '<button class="adm-btn-primary" onclick="dtSettingsSave(this)">Save Settings</button>';
+        return '<button class="dt-btn dt-btn-gold" onclick="dtSettingsSave(this)" style="padding:7px 16px; font-size:12.5px; font-weight:800; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Settings</span></button>';
     }
     return '<span style="font-size:11.5px; color:#94A3B8; font-weight:600;">Read-only — Super Admin required</span>';
 }

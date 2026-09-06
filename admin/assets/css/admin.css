@@ -109,11 +109,15 @@ button {
 .dt-btn-gold,
 .adm-btn-gold,
 .dt-btn-primary,
+.adm-btn-primary,
 .wp-button.primary,
 .dt-btn-action-sm.gold,
+button.adm-btn-primary,
+a.adm-btn-primary,
 button.wp-button.primary,
 a.wp-button.primary,
-input[type="submit"].wp-button.primary {
+input[type="submit"].wp-button.primary,
+input[type="submit"].adm-btn-primary {
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
     border: 1px solid #8A681F !important;
     color: #111827 !important;
@@ -132,11 +136,15 @@ input[type="submit"].wp-button.primary {
 .dt-btn-gold:hover,
 .adm-btn-gold:hover,
 .dt-btn-primary:hover,
+.adm-btn-primary:hover,
 .wp-button.primary:hover,
 .dt-btn-action-sm.gold:hover,
+button.adm-btn-primary:hover,
+a.adm-btn-primary:hover,
 button.wp-button.primary:hover,
 a.wp-button.primary:hover,
-input[type="submit"].wp-button.primary:hover {
+input[type="submit"].wp-button.primary:hover,
+input[type="submit"].adm-btn-primary:hover {
     background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
     transform: translateY(-1px) !important;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
@@ -147,8 +155,12 @@ input[type="submit"].wp-button.primary:hover {
 /* 2. Pale Gold Secondary Action Pill / Button */
 .dt-btn-pale,
 .adm-btn-pale,
+.adm-btn-secondary,
 .wp-button,
 .dt-btn-action-sm.pale-gold,
+button.adm-btn-secondary,
+a.adm-btn-secondary,
+input[type="submit"].adm-btn-secondary,
 a.wp-button:not(.primary),
 button.wp-button:not(.primary) {
     background: #FAF5E8 !important;
@@ -166,8 +178,12 @@ button.wp-button:not(.primary) {
 
 .dt-btn-pale:hover,
 .adm-btn-pale:hover,
+.adm-btn-secondary:hover,
 .wp-button:hover:not(.primary),
 .dt-btn-action-sm.pale-gold:hover,
+button.adm-btn-secondary:hover,
+a.adm-btn-secondary:hover,
+input[type="submit"].adm-btn-secondary:hover,
 a.wp-button:hover:not(.primary),
 button.wp-button:hover:not(.primary) {
     background: #F5ECCE !important;
@@ -251,6 +267,43 @@ button.wp-button:hover:not(.primary) {
     border-color: #93C5FD !important;
     color: #1E40AF !important;
     transform: translateY(-1px) !important;
+}
+
+/* 6. Luxury Search Box & Clear Button */
+.adm-search-box,
+.dt-search-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.adm-search-clear,
+.dt-search-clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FAF5E8 !important;
+    border: 1px solid #D4AF37 !important;
+    color: #8A681F !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.15s ease;
+    line-height: 1;
+}
+
+.adm-search-clear:hover,
+.dt-search-clear-btn:hover {
+    background: #FEE2E2 !important;
+    border-color: #FECACA !important;
+    color: #DC2626 !important;
 }
 
 input, select, textarea {

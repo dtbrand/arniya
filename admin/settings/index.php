@@ -90,7 +90,10 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">Configure company details, GSTIN, WhatsApp API credentials, and payment gateways.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; height:32px; padding:0 12px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Main Console</span>
+                    </a>
                 </div>
             </div>
 
@@ -154,7 +157,10 @@ if ($pdo !== null && !Database::isMockMode()) {
                 <form method="POST" action="">
                     <div class="adm-card-head">
                         <h3 class="adm-card-title"><span>Store Profile Configuration</span></h3>
-                        <button type="submit" name="save_settings" value="1" class="adm-btn-primary">Save Configuration</button>
+                        <button type="submit" name="save_settings" value="1" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Save Configuration</span>
+                        </button>
                     </div>
                     <div class="adm-form-grid">
                         <div class="adm-form-group">

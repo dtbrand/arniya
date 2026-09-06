@@ -164,7 +164,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <p class="adm-page-subtitle">Unified ledger tracking Instant UPI, Razorpay, Cashfree, COD, and UTR settlement verification.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin/settings/payment.php" class="adm-btn-primary">
+                    <a href="/admin/settings/payment.php" class="dt-btn dt-btn-gold" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800; padding:8px 16px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         <span>Gateway Studio</span>
                     </a>
@@ -248,9 +248,12 @@ if ($pdo !== null && !Database::isMockMode()) {
                     <option value="refunded" <?= $filterStatus === 'refunded' ? 'selected' : '' ?>>Refunded</option>
                 </select>
 
-                <button type="submit" class="adm-btn-primary" style="padding:8px 16px;">Filter</button>
+                <button type="submit" class="dt-btn dt-btn-gold" style="padding:8px 16px; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>Filter</span>
+                </button>
                 <?php if (!empty($filterGateway) || !empty($filterStatus) || !empty($searchQuery)): ?>
-                    <a href="/admin/payments/" class="adm-btn-secondary" style="padding:8px 12px;">Reset</a>
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; padding:8px 14px; font-size:12px; font-weight:700;">Reset</a>
                 <?php endif; ?>
             </form>
 

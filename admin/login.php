@@ -647,7 +647,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="adm-submit-btn">
+                <button type="submit" class="dt-btn dt-btn-gold adm-submit-btn">
                     <span>Sign In to Admin Portal</span>
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
@@ -695,7 +695,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>OTP Sent!</strong></span> A verification code has been dispatched to your WhatsApp/Email.
                 </div>
 
-                <button type="submit" class="adm-submit-btn" id="forgotSubmitBtn">
+                <button type="submit" class="dt-btn dt-btn-gold adm-submit-btn" id="forgotSubmitBtn">
                     <span>Send Password Reset OTP</span>
                 </button>
             </form>

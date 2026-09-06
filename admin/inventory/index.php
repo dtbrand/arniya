@@ -64,7 +64,10 @@ $active_nav = "inventory";
                     <p class="adm-page-subtitle">Monitor stock in Surat Hub and Bhiwandi Warehouse with 1-click stock adjustments.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; height:32px; padding:0 12px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Main Console</span>
+                    </a>
                 </div>
             </div>
 
@@ -169,13 +172,18 @@ $active_nav = "inventory";
                                             <strong id="stock-val-<?= $p['id'] ?>" style="<?= $stock <= 15 ? 'color:#DC2626;' : 'color:#15803D;' ?> font-size:0.95rem;"><?= number_format($stock) ?> units</strong>
                                         </div>
                                     </td>
-                                    <td><strong>₹<?= number_format((float)($p['wholesale_price'] ?? 0)) ?></strong></td>
+                                    <td>
+                                        <span style="display:inline-flex; align-items:center; gap:2px; font-weight:800; color:#181512;">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                            <span><?= number_format((float)($p['wholesale_price'] ?? 0)) ?></span>
+                                        </span>
+                                    </td>
                                     <td><span id="stock-badge-<?= $p['id'] ?>" class="adm-badge <?= $statusClass ?>"><?= $statusText ?></span></td>
                                     <td>
                                         <div style="display:flex; gap:4px; align-items:center;">
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, 10, '<?= addslashes($p['sku'] ?? '') ?>')">+10</button>
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, -10, '<?= addslashes($p['sku'] ?? '') ?>')">-10</button>
-                                            <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="adm-btn-secondary adm-btn-sm" style="text-decoration:none; font-size:0.75rem;">Edit</a>
+                                            <button type="button" class="dt-btn dt-btn-pale adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, 10, '<?= addslashes($p['sku'] ?? '') ?>')">+10</button>
+                                            <button type="button" class="dt-btn dt-btn-pale adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, -10, '<?= addslashes($p['sku'] ?? '') ?>')">-10</button>
+                                            <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="dt-btn dt-btn-pale adm-btn-sm" style="text-decoration:none; font-size:0.75rem; padding:2px 8px;">Edit</a>
                                         </div>
                                     </td>
                                 </tr>

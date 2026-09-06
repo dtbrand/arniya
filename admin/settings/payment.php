@@ -181,15 +181,15 @@ $waCfg = $waGate['config'] ?? [];
                     <p class="adm-page-subtitle">Configure Instant Direct UPI, Dynamic QR Studio, Razorpay, Cashfree, COD &amp; WhatsApp Pay.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <button type="button" class="adm-btn-secondary" onclick="simulateTestWebhook('direct_upi')" style="display:inline-flex; align-items:center; gap:6px;">
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="simulateTestWebhook('direct_upi')" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; height:34px; padding:0 12px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                         <span>Simulate Test Webhook</span>
                     </button>
-                    <a href="/admin/payments/" class="adm-btn-secondary">
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; height:34px; padding:0 12px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                         <span>View Ledger &amp; Settlements</span>
                     </a>
-                    <a href="/checkout.php" target="_blank" class="adm-btn-primary">
+                    <a href="/checkout.php" target="_blank" class="dt-btn dt-btn-gold" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800; height:34px; padding:0 14px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                         <span>Preview Storefront Checkout</span>
                     </a>
@@ -242,7 +242,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save UPI Studio</span></button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save UPI Studio</span></button>
                             </div>
                         </div>
 
@@ -334,7 +334,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Razorpay Settings</span></button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Razorpay Settings</span></button>
                             </div>
                         </div>
 
@@ -366,7 +366,7 @@ $waCfg = $waGate['config'] ?? [];
                                 <label class="adm-form-label">Webhook URL for Razorpay Dashboard</label>
                                 <div class="dt-webhook-box">
                                     <span id="rzpWebhookUrl">https://jaihanumantex.in/api/webhooks/razorpay.php</span>
-                                    <button type="button" class="dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/razorpay.php', this)">Copy URL</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/razorpay.php', this)">Copy URL</button>
                                 </div>
                                 <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into your Razorpay Dashboard -> Settings -> Webhooks with events: <code>payment.captured</code>, <code>order.paid</code>, <code>payment.failed</code>.</span>
                             </div>
@@ -397,7 +397,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Cashfree Settings</span></button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save Cashfree Settings</span></button>
                             </div>
                         </div>
 
@@ -429,7 +429,7 @@ $waCfg = $waGate['config'] ?? [];
                                 <label class="adm-form-label">Webhook URL for Cashfree Dashboard</label>
                                 <div class="dt-webhook-box">
                                     <span id="cfWebhookUrl">https://jaihanumantex.in/api/webhooks/cashfree.php</span>
-                                    <button type="button" class="dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/cashfree.php', this)">Copy URL</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-copy-btn" onclick="copyText('https://jaihanumantex.in/api/webhooks/cashfree.php', this)">Copy URL</button>
                                 </div>
                                 <span style="font-size:11px; color:#64748B; margin-top:4px; display:block;">Paste this into Cashfree Merchant Dashboard -> Developers -> Webhooks with event: <code>PAYMENT_SUCCESS_WEBHOOK</code>.</span>
                             </div>
@@ -460,7 +460,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save COD Settings</span></button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save COD Settings</span></button>
                             </div>
                         </div>
 
@@ -514,7 +514,7 @@ $waCfg = $waGate['config'] ?? [];
                                         <span class="dt-toggle-slider"></span>
                                     </label>
                                 </label>
-                                <button type="submit" class="adm-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save WhatsApp Settings</span></button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="padding:7px 16px; display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save WhatsApp Settings</span></button>
                             </div>
                         </div>
 
