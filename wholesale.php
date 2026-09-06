@@ -730,7 +730,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Achieved</div>
-                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹<?= number_format($targetAchieved) ?> ↑</div>
+                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success); display:inline-flex; align-items:center; gap:4px;">₹<?= number_format($targetAchieved) ?> <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
                             </div>
                             <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Velocity</div>

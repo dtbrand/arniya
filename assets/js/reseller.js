@@ -946,7 +946,7 @@ window.animateTargetGauge = animateTargetGauge;
                 catTitle: WS_ICONS.dress + " Category Resale Breakdown",
                 cats: cats,
                 kpis: [
-                    { label: "Avg. Reseller Margin", num: commissionRate + "%", sub: totalOrders > 0 ? "↑ Direct Atelier Margins" : "15% Standard Margin" },
+                    { label: "Avg. Reseller Margin", num: commissionRate + "%", sub: totalOrders > 0 ? "Direct Atelier Margins" : "15% Standard Margin" },
                     { label: "Customer Delivery TAT", num: totalOrders > 0 ? "1.8 Days" : "0 Days", sub: WS_ICONS.lightning + " Express Customer Dispatch" },
                     { label: "Total Resale Earned", num: "₹" + totalEarnings.toLocaleString('en-IN'), sub: " " + totalOrders + " Orders Realized" },
                     { label: "Customer Repeat Rate", num: totalOrders > 0 ? "88.5%" : "0%", sub: " 5.0 / 5.0 Buyer Rating" }
@@ -1527,7 +1527,7 @@ window.animateTargetGauge = animateTargetGauge;
                         <span>${t.date}</span>
                         <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
-                            <span>WhatsApp Followup →</span>
+                            <span>WhatsApp Followup</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </a>
                     </div>
                 `;
@@ -2095,7 +2095,7 @@ window.animateTargetGauge = animateTargetGauge;
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">${c.title}</div>
                         </div>
-                        <div class="ws-cat-tile-arrow">→</div>
+                        <div class="ws-cat-tile-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
                     </div>
                 `;
             });
@@ -2129,7 +2129,7 @@ window.animateTargetGauge = animateTargetGauge;
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">${sub.name}</div>
                         </div>
-                        <div class="ws-cat-tile-arrow">→</div>
+                        <div class="ws-cat-tile-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
                     </div>
                 `;
             });
@@ -4657,7 +4657,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div class="ws-search-item-title">${c.name}</div>
                                 <div class="ws-search-item-sub">${c.mobile} &bull; ${c.city || 'Surat'}</div>
                             </div>
-                            <span class="crm-tag crm-tag-vip">Profile →</span>
+                            <span class="crm-tag crm-tag-vip" style="display:inline-flex; align-items:center; gap:3px;">Profile <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </div>
                     `;
                 });
@@ -4673,7 +4673,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div class="ws-search-item-title">${oId} - ${o.productName}</div>
                                 <div class="ws-search-item-sub">Status: <strong>${o.status}</strong> &bull; Consignment Total: ₹${o.total}</div>
                             </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary);">Track →</span>
+                            <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary); display:inline-flex; align-items:center; gap:3px;">Track <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </div>
                     `;
                 });
@@ -4688,7 +4688,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div class="ws-search-item-title">${p.name}</div>
                                 <div class="ws-search-item-sub">₹${p.wholesale_price || p.price} &bull; ${p.category} &bull; MOQ: ${p.moq || 8} Pcs</div>
                             </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:#047857;">Quick Order →</span>
+                            <span style="font-size:0.70rem; font-weight:800; color:#047857; display:inline-flex; align-items:center; gap:3px;">Quick Order <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
                         </div>
                     `;
                 });

@@ -91,7 +91,7 @@ $catalogProducts = ProductCatalog::getAll();
               '<div class="dt-wsh-card" data-wid="' + p.id + '">' +
                 '<div style="position:relative;">' +
                   '<img src="' + img + '" alt="' + name + '" style="width:100%; height:280px; object-fit:cover;">' +
-                  '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:#B91C1C; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
+                  '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" class="dt-btn dt-btn-pale dt-wsh-remove-btn" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:1px solid #E2E8F0; background:rgba(255,255,255,0.95); color:#DC2626; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.12);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
                 '</div>' +
                 '<div style="padding:14px;">' +
                   (cat ? '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' : '') +
@@ -105,8 +105,8 @@ $catalogProducts = ProductCatalog::getAll();
                     (stockNote ? '<span style="display:inline-flex; align-items:center; gap:4px; font-size:0.78rem; color:#15803D; font-weight:700;"><span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span>' + stockNote + '</span>' : '') +
                   '</div>' +
                   '<div style="display:flex; gap:8px;">' +
-                    '<button data-add-wish="' + p.id + '" style="flex:1; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; border:1px solid #8A681F; cursor:pointer;">Add to Bag</button>' +
-                    '<a href="/product.php?id=' + p.id + '" style="flex:1; text-align:center; background:#181512; color:#FAF5E8; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; text-decoration:none;">View</a>' +
+                    '<button data-add-wish="' + p.id + '" class="dt-btn dt-btn-gold" style="flex:1; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;"><span>Add to Bag</span></button>' +
+                    '<a href="/product.php?id=' + p.id + '" class="dt-btn dt-btn-dark" style="flex:1; text-align:center; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">View</a>' +
                   '</div>' +
                 '</div>' +
               '</div>';
@@ -114,14 +114,14 @@ $catalogProducts = ProductCatalog::getAll();
     };
 
     document.addEventListener('click', function(e) {
-        var t = e.target;
-        if (!t || !t.getAttribute) return;
-        var removeId = t.getAttribute('data-remove-wish');
-        var addId = t.getAttribute('data-add-wish');
+        var btn = e.target && e.target.closest ? e.target.closest('button[data-remove-wish], button[data-add-wish]') : null;
+        if (!btn) return;
+        var removeId = btn.getAttribute('data-remove-wish');
+        var addId = btn.getAttribute('data-add-wish');
 
         if (removeId !== null) {
             if (typeof window.toggleWishlistProduct === 'function') {
-                window.toggleWishlistProduct(removeId); // item is present → toggles off (removes)
+                window.toggleWishlistProduct(removeId); // item is present -> toggles off (removes)
             } else {
                 var kept = readWishlist().filter(function(x) { return String(x.id) !== String(removeId); });
                 localStorage.setItem('dtbrands_wishlist', JSON.stringify(kept));

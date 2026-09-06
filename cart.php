@@ -147,14 +147,14 @@ $catalogProducts = ProductCatalog::getAll();
                 '<div style="flex:1; display:flex; flex-direction:column;">' +
                   '<div style="display:flex; justify-content:space-between; gap:10px;">' +
                     '<strong style="font-size:0.95rem;">' + (item.name || 'Product') + '</strong>' +
-                    '<button data-remove="' + idx + '" aria-label="Remove item" style="background:none; border:none; color:#B91C1C; cursor:pointer; font-weight:800; font-size:1.1rem; line-height:1;">×</button>' +
+                    '<button data-remove="' + idx + '" aria-label="Remove item" class="dt-btn dt-btn-pale dt-cart-remove-btn" style="width:28px; height:28px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; color:#DC2626; border-color:#FECACA; background:#FEF2F2; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
                   '</div>' +
                   '<div style="font-size:0.78rem; color:#78716C; margin:4px 0 auto;">' + variantBits.join(' &nbsp;|&nbsp; ') + '</div>' +
                   '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">' +
-                    '<div style="display:flex; align-items:center; gap:10px; border:1px solid #CBD5E1; border-radius:8px; padding:2px 8px;">' +
-                      '<button data-dec="' + idx + '" aria-label="Decrease quantity" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:#181512;">−</button>' +
-                      '<span style="min-width:20px; text-align:center; font-weight:700;">' + qty + '</span>' +
-                      '<button data-inc="' + idx + '" aria-label="Increase quantity" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:#181512;">+</button>' +
+                    '<div style="display:flex; align-items:center; gap:8px; border:1px solid #CBD5E1; border-radius:8px; padding:3px 6px; background:#FFFFFF;">' +
+                      '<button data-dec="' + idx + '" aria-label="Decrease quantity" class="dt-btn dt-btn-pale dt-qty-btn" style="width:26px; height:26px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; font-weight:800; font-size:1rem; border-color:#E2E8F0; cursor:pointer;">−</button>' +
+                      '<span style="min-width:24px; text-align:center; font-weight:700; font-size:0.9rem; color:#111827;">' + qty + '</span>' +
+                      '<button data-inc="' + idx + '" aria-label="Increase quantity" class="dt-btn dt-btn-pale dt-qty-btn" style="width:26px; height:26px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; font-weight:800; font-size:1rem; border-color:#E2E8F0; cursor:pointer;">+</button>' +
                     '</div>' +
                     '<strong style="color:#8A681F;">' + money(lineTotal) + '</strong>' +
                   '</div>' +
@@ -167,11 +167,11 @@ $catalogProducts = ProductCatalog::getAll();
     };
 
     document.addEventListener('click', function(e) {
-        var t = e.target;
-        if (!t || !t.getAttribute) return;
-        var inc = t.getAttribute('data-inc');
-        var dec = t.getAttribute('data-dec');
-        var rem = t.getAttribute('data-remove');
+        var btn = e.target && e.target.closest ? e.target.closest('button[data-inc], button[data-dec], button[data-remove]') : null;
+        if (!btn) return;
+        var inc = btn.getAttribute('data-inc');
+        var dec = btn.getAttribute('data-dec');
+        var rem = btn.getAttribute('data-remove');
         if (inc === null && dec === null && rem === null) return;
 
         var cart = readCart();

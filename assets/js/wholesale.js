@@ -966,7 +966,7 @@
                 catTitle: WS_ICONS.dress + " Category Procurement Breakdown",
                 cats: cats,
                 kpis: [
-                    { label: "Avg. Order Value", num: "₹" + avgOrderVal.toLocaleString('en-IN'), sub: totalOrders > 0 ? "↑ Verified Average" : "No orders placed" },
+                    { label: "Avg. Order Value", num: "₹" + avgOrderVal.toLocaleString('en-IN'), sub: totalOrders > 0 ? "Verified Average" : "No orders placed" },
                     { label: "Dispatch Turnaround", num: totalOrders > 0 ? "1.8 Days" : "0 Days", sub: WS_ICONS.lightning + " Priority VIP BlueDart" },
                     { label: "GST Input Tax Credit", num: "₹" + gstCredit.toLocaleString('en-IN'), sub: WS_ICONS.shield + " 100% GSTR-1 Matched" },
                     { label: "Lot Reorder Rate", num: totalOrders > 0 ? "100%" : "0%", sub: WS_ICONS.repeat + " " + totalOrders + " Consignments Recorded" }
@@ -1546,7 +1546,7 @@
                         <span>${t.date}</span>
                         <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
-                            <span>WhatsApp Followup →</span>
+                            <span>WhatsApp Followup</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </a>
                     </div>
                 `;
@@ -2115,7 +2115,7 @@
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">${c.title}</div>
                         </div>
-                        <div class="ws-cat-tile-arrow">→</div>
+                        <div class="ws-cat-tile-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
                     </div>
                 `;
             });
@@ -2149,7 +2149,7 @@
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">${sub.name}</div>
                         </div>
-                        <div class="ws-cat-tile-arrow">→</div>
+                        <div class="ws-cat-tile-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
                     </div>
                 `;
             });

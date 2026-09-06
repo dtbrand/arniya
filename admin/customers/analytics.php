@@ -6,7 +6,7 @@
  * DT Brand's & Jai Hanuman Tex - Live Production Standard
  *
  * Every number on this page used to be typed into the HTML. The KPI ribbon read
- * "AVG LIFETIME VALUE (LTV) ₹18,450 / ↑ +14.2% YoY / Across 4,820 Shoppers",
+ * "AVG LIFETIME VALUE (LTV) ₹18,450 / +14.2% YoY / Across 4,820 Shoppers",
  * "REPEAT REORDER RATE 38.4% / 1,850 Repeat Buyers / +3.8% vs Benchmark",
  * "AVG REPURCHASE INTERVAL 26.4 Days" and "VIP REVENUE CONTRIBUTION 62.8%".
  * The growth chart plotted the PHP-free literals [420,580,610,540,690,720] and

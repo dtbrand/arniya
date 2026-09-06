@@ -49,7 +49,7 @@ window.DT_NAVIGATION = {
                 <code class="dt-menu-url" style="font-size:10.5px; color:#64748b;">${url}</code>
             </div>
             <div style="display:flex; gap:4px; align-items:center;">
-                <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_NAVIGATION.toggleIndent(this)" style="height:24px; padding:0 8px; font-size:10.5px;">${isChild ? '← Outdent' : 'Indent →'}</button>
+                <button type="button" class="dt-btn-action-sm pale-gold dt-btn dt-btn-pale" onclick="window.DT_NAVIGATION.toggleIndent(this)" style="height:24px; padding:0 8px; font-size:10.5px; display:inline-flex; align-items:center; gap:3px;">${isChild ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> <span>Outdent</span>' : '<span>Indent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>'}</button>
                 <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_NAVIGATION.removeItem(this)" style="height:24px; padding:0 6px; font-size:10.5px;">
                     <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                 </button>
@@ -68,11 +68,11 @@ window.DT_NAVIGATION = {
 
         if (item.classList.contains('is-child')) {
             item.classList.remove('is-child');
-            btn.textContent = 'Indent →';
+            btn.innerHTML = '<span>Indent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>';
             if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Promoted to Top-Level Menu Link');
         } else {
             item.classList.add('is-child');
-            btn.textContent = '← Outdent';
+            btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> <span>Outdent</span>';
             if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Converted to Submenu Item');
         }
         this.updateBadge();

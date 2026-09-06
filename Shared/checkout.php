@@ -909,7 +909,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             <div class="co-upi-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                     <h3 style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; font-weight:800; color:#8A681F; display:inline-flex; align-items:center; gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Instant UPI Payment</h3>
-                    <button type="button" style="background:none; border:none; padding:4px; cursor:pointer; color:#64748B; display:inline-flex; align-items:center; justify-content:center;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')" aria-label="Close UPI Studio">
+                    <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" style="width:30px; height:30px; padding:0; cursor:pointer; color:#64748B; display:inline-flex; align-items:center; justify-content:center; border-radius:6px;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')" aria-label="Close UPI Studio">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
@@ -952,7 +952,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                 <!-- UPI ID Copy Strip -->
                 <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 12px; background:#F1F5F9; border-radius:8px; margin-bottom:14px; font-size:0.78rem;">
                     <span style="color:#334155; font-weight:600;">UPI VPA: <strong id="coUpiVpaText">917046363528@okaxis</strong></span>
-                    <button type="button" class="co-coupon-btn" style="padding:4px 10px; font-size:0.72rem;" onclick="copyUpiVpa()">Copy</button>
+                    <button type="button" class="co-coupon-btn dt-btn dt-btn-pale" style="padding:4px 10px; font-size:0.72rem;" onclick="copyUpiVpa()">Copy</button>
                 </div>
 
                 <!-- 12-Digit UTR Input Form -->
@@ -960,7 +960,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                     <label style="font-size:0.76rem; font-weight:800; color:#111827; display:block; margin-bottom:5px;">Enter 12-Digit UPI UTR / Reference No. (after paying):</label>
                     <div style="display:flex; gap:6px;">
                         <input type="text" id="coUpiUtrInput" class="co-input" placeholder="e.g. 423891028392" maxlength="12" style="font-size:0.84rem; font-weight:800; letter-spacing:0.06em;">
-                        <button type="button" id="coSubmitUtrBtn" class="co-coupon-btn" style="white-space:nowrap;" onclick="submitUpiUtr()">Submit &amp; Confirm</button>
+                        <button type="button" id="coSubmitUtrBtn" class="co-coupon-btn dt-btn dt-btn-gold" style="white-space:nowrap;" onclick="submitUpiUtr()">Submit &amp; Confirm</button>
                     </div>
                 </div>
             </div>
@@ -979,11 +979,11 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                 Thank you for choosing DT Brand's &amp; Jai Hanuman Tex. Your order invoice has been generated and queued for priority dispatch.
             </p>
             <div style="display:flex; flex-direction:column; gap:10px; width:100%; max-width:320px;">
-                <a href="#" class="co-submit-btn" id="coSuccessWhatsAppLink" target="_blank" style="background:#25D366; border-color:#128C7E; color:#FFFFFF; text-decoration:none;">
+                <a href="#" class="co-submit-btn dt-btn-emerald" id="coSuccessWhatsAppLink" target="_blank" style="background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); border:1px solid #15803D; color:#FFFFFF; text-decoration:none;">
                     <svg style="width:20px;height:20px;stroke:#FFFFFF;" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     <span>Track on Official WhatsApp</span>
                 </a>
-                <button type="button" class="co-coupon-btn" style="background:#FAF8F4; border:1.5px solid #8A681F; color:#8A681F;" onclick="window.closeCheckout(); if(typeof window.renderCart==='function')window.renderCart();">Continue Shopping</button>
+                <button type="button" class="co-coupon-btn dt-btn-pale" style="background:#FAF8F4; border:1.5px solid #8A681F; color:#8A681F;" onclick="window.closeCheckout(); if(typeof window.renderCart==='function')window.renderCart();">Continue Shopping</button>
             </div>
         </div>
 

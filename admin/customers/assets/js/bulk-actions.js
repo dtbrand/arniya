@@ -145,7 +145,7 @@
         var ids = selectedIds();
         var n = ids ? ids.length : 0;
         toast(n > 0
-            ? 'Tags are not stored anywhere in this database. Use the Tier field on each customer instead — Edit → Classification.'
+            ? 'Tags are not stored anywhere in this database. Use the Tier field on each customer instead — Edit / Classification.'
             : 'Tags are not stored anywhere in this database. Use the Tier field on each customer instead.');
     };
 

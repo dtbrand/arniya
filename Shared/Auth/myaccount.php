@@ -1302,8 +1302,10 @@
                             </div>
                             <div class="order-actions-bar">
                                 <div>Total: <span class="order-total-txt">₹24,999</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn">
-                                    Track on WhatsApp →
+                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn dt-btn dt-btn-emerald" style="display:inline-flex; align-items:center; gap:6px; text-decoration:none;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <span>Track on WhatsApp</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 </a>
                             </div>
                         </div>
@@ -1323,8 +1325,10 @@
                             </div>
                             <div class="order-actions-bar">
                                 <div>Total: <span class="order-total-txt">₹12,499</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn">
-                                    Re-Order on WhatsApp →
+                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn dt-btn dt-btn-emerald" style="display:inline-flex; align-items:center; gap:6px; text-decoration:none;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <span>Re-Order on WhatsApp</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 </a>
                             </div>
                         </div>
@@ -1660,18 +1664,20 @@
                 var subEl = document.getElementById('wsVipBannerSubtitle');
                 var linkEl = document.getElementById('wsVipBannerLink');
 
+                var portalArrowSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+
                 if (role === 'wholesaler') {
                     if (wsBanner) wsBanner.style.display = 'flex';
                     if (titleEl) titleEl.textContent = 'Wholesaler B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
                     if (linkEl) {
                         linkEl.href = '/wholesale.php';
-                        linkEl.textContent = 'Open Wholesaler Portal →';
+                        linkEl.innerHTML = '<span>Open Wholesaler Portal</span>' + portalArrowSvg;
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/wholesale.php';
-                        heroBtn.innerHTML = '<span>Open Wholesaler Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Wholesaler Dashboard</span>' + portalArrowSvg;
                     }
                 } else if (role === 'retailer') {
                     if (wsBanner) wsBanner.style.display = 'flex';
@@ -1679,12 +1685,12 @@
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
                         linkEl.href = '/retailer.php';
-                        linkEl.textContent = 'Open Retailer Portal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+                        linkEl.innerHTML = '<span>Open Retailer Portal</span>' + portalArrowSvg;
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/retailer.php';
-                        heroBtn.innerHTML = '<span>Open Retailer Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Retailer Dashboard</span>' + portalArrowSvg;
                     }
                 } else if (role === 'reseller') {
                     if (wsBanner) wsBanner.style.display = 'flex';
@@ -1692,12 +1698,12 @@
                     if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
                         linkEl.href = '/reseller.php';
-                        linkEl.textContent = 'Open Reseller Portal →';
+                        linkEl.innerHTML = '<span>Open Reseller Portal</span>' + portalArrowSvg;
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
                         heroBtn.href = '/reseller.php';
-                        heroBtn.innerHTML = '<span>Open Reseller Dashboard</span><span>→</span>';
+                        heroBtn.innerHTML = '<span>Open Reseller Dashboard</span>' + portalArrowSvg;
                     }
                 } else {
                     if (wsBanner) wsBanner.style.display = 'none';

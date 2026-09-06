@@ -129,7 +129,7 @@ foreach ($files as $file) {
         ok("$name (already applied)");
         continue;
     }
-    out("  → applying $name…");
+    out("  -> applying $name...");
     $sql = file_get_contents($file);
     if ($sql === false) {
         fail("Could not read $name");

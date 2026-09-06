@@ -420,7 +420,7 @@ window.DT_DISPLAY = {
 
         const badgeEl = document.getElementById('liveContextBadge');
         if (badgeEl) {
-            badgeEl.textContent = `${this.userNames[this.currentUserType]} → ${this.placementNames[this.currentPlacement]}`;
+            badgeEl.innerHTML = `${this.userNames[this.currentUserType]} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:middle; margin:0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg> ${this.placementNames[this.currentPlacement]}`;
         }
 
         const cards = grid.querySelectorAll('.dt-sim-card');
@@ -450,7 +450,7 @@ window.DT_DISPLAY = {
                     pillBox.style.color = '#1D4ED8';
                     pillBox.style.padding = '4px 6px';
                     pillBox.style.borderRadius = '4px';
-                    pillBox.innerHTML = `<div>Wholesale ₹${numPrice.toLocaleString()} → Resale Profit: <strong style="color:#15803D;">+₹${Math.round(numPrice*0.6).toLocaleString()} / Pc</strong></div>`;
+                    pillBox.innerHTML = `<div>Wholesale ₹${numPrice.toLocaleString()} • Resale Profit: <strong style="color:#15803D;">+₹${Math.round(numPrice*0.6).toLocaleString()} / Pc</strong></div>`;
                 }
                 if (btnText) btnText.textContent = 'Share on WhatsApp with My Margin';
             } else if (this.currentUserType === 'retailer') {

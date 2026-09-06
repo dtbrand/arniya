@@ -1490,7 +1490,7 @@ $dashPayload = [
                         </div>
 
                         <div class="adm-saas-kpi-row" style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
-                            <?php /* Was a hardcoded Rs 42,85,900 with a hardcoded "↗ +18.4% vs last week". */ ?>
+                            <?php /* Was a hardcoded Rs 42,85,900 with a hardcoded "+18.4% vs last week". */ ?>
                             <div class="adm-saas-kpi-val" style="font-size:1.8rem; font-weight:900; color:#181512; font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:-0.02em;">₹<?php echo number_format($revWeekTotal); ?></div>
                             <?php if ($revWeekTotal > 0 || $revPrevWeekTotal > 0): ?>
                             <?php $revUp = ((float)$revGrowth >= 0); ?>
@@ -2185,7 +2185,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                         <td><strong>₹<?= number_format($cSpend, 2) ?></strong></td>
                                         <td><span class="adm-badge <?= ($cType === 'WHOLESALE' ? 'gold' : ($cType === 'RESELLER' ? 'warning' : 'info')) ?>"><?= $cType ?></span></td>
                                         <td>
-                                            <button type="button" class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('<?= $rawPhone ?>', 'Namaste <?= addslashes($cust['name'] ?: 'Customer') ?> ji, from DT Brand &amp; Jai Hanuman Tex...')">
+                                            <button type="button" class="adm-action-btn wa dt-btn dt-btn-emerald" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('<?= $rawPhone ?>', 'Namaste <?= addslashes($cust['name'] ?: 'Customer') ?> ji, from DT Brand &amp; Jai Hanuman Tex...')">
                                                 <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                             </button>
                                         </td>
@@ -2535,10 +2535,10 @@ _Special 15% VIP Discount Applied!_</textarea>
                                         <td><span class="adm-badge <?= ($rStatus === 'approved' ? 'success' : ($rStatus === 'pending' ? 'warning' : 'danger')) ?>"><?= ucfirst($rStatus) ?></span></td>
                                         <td>
                                             <div class="adm-action-btn-group">
-                                                <button type="button" class="adm-action-btn" title="Approve Review" onclick="window.showToast('Review approved successfully!')">
+                                                <button type="button" class="adm-action-btn dt-btn dt-btn-pale" title="Approve Review" onclick="window.showToast('Review approved successfully!')">
                                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 </button>
-                                                <button type="button" class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.showToast('WhatsApp appreciation queued!')">
+                                                <button type="button" class="adm-action-btn wa dt-btn dt-btn-emerald" title="WhatsApp Customer" onclick="window.showToast('WhatsApp appreciation queued!')">
                                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                                 </button>
                                             </div>
