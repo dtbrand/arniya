@@ -6,10 +6,10 @@ export default defineConfig({
   expect: {
     timeout: 10000
   },
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
-  workers: process.env.CI ? 2 : 2,
+  workers: 1,
   reporter: 'list',
   use: {
     baseURL: process.env.BASE_URL || 'https://jaihanumantex.in',
