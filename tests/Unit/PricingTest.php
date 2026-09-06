@@ -105,4 +105,53 @@ class PricingTest extends TestCase {
         $this->expectException(\InvalidArgumentException::class);
         PricingCalculator::calculateWholesalePrice(-500.0, 10.0);
     }
+
+    public function testInvalidDiscountPercentThrowsException(): void {
+        $this->expectException(\InvalidArgumentException::class);
+        PricingCalculator::calculateWholesalePrice(2000.0, 150.0);
+    }
+
+    public function testNegativeGstThrowsException(): void {
+        $this->expectException(\InvalidArgumentException::class);
+        PricingCalculator::calculateGst(1000.0, -5.0);
+    }
+
+    public function testOrderTotalDiscountExceedingSubtotalClampsToZero(): void {
+        $result = PricingCalculator::calculateOrderTotal(500.0, 800.0, 50.0, 5.0);
+        $this->assertEquals(0.0, $result['taxable']);
+        $this->assertEquals(0.0, $result['gst']);
+        $this->assertEquals(50.0, $result['grand_total']);
+    }
+
+    public function testTieredVolumeDiscountCustomTiers(): void {
+        $customTiers = [
+            ['min_qty' => 500, 'discount_percent' => 25.0, 'tier_name' => 'Mega Factory Lot (500+)'],
+            ['min_qty' => 200, 'discount_percent' => 20.0, 'tier_name' => 'Wholesale Bale (200+)'],
+        ];
+
+        $matched = PricingCalculator::calculateTieredVolumeDiscount(800.0, 250, $customTiers);
+        $this->assertEquals(20.0, $matched['discount_percent']);
+        $this->assertEquals('Wholesale Bale (200+)', $matched['tier_name']);
+        $this->assertEquals(640.0, $matched['discounted_unit_price']);
+        $this->assertEquals(160000.0, $matched['total_price']);
+        $this->assertEquals(40000.0, $matched['total_discount']);
+    }
+
+    public function testResellerMarginUnprofitable(): void {
+        $cost = 1000.0;
+        $retail = 800.0;
+        $margin = PricingCalculator::calculateResellerMargin($cost, $retail);
+
+        $this->assertEquals(-200.0, $margin['margin_amount']);
+        $this->assertEquals(-20.0, $margin['margin_percent']);
+        $this->assertEquals(-25.0, $margin['profit_margin_on_sale']);
+        $this->assertFalse($margin['is_profitable']);
+    }
+
+    public function testFormatInrZeroAndSingleDigits(): void {
+        $this->assertEquals('₹0.00', PricingCalculator::formatInr(0.0));
+        $this->assertEquals('₹5.00', PricingCalculator::formatInr(5.0));
+        $this->assertEquals('₹999.00', PricingCalculator::formatInr(999.0));
+        $this->assertEquals('0.00', PricingCalculator::formatInr(0.0, false));
+    }
 }
