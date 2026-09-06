@@ -340,7 +340,7 @@ if (!array_key_exists($preScope, $scopeCounts)) { $preScope = 'all'; }
                                     </div>
                                     <div>
                                         <strong style="font-size:0.85rem; color:#181512; display:block;">Printable PDF</strong>
-                                        <small style="font-size:0.68rem; color:#78716C;">Print preview &rarr; Save as PDF</small>
+                                        <small style="font-size:0.68rem; color:#78716C;">Print preview <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg> Save as PDF</small>
                                     </div>
                                 </div>
                             </div>

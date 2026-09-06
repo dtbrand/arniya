@@ -453,10 +453,11 @@ function pdp_relative_date(string $ts): string
                         This product is sold as a Complete Catalog Set (<?= $fullSetPieces ?> pieces) exclusively to verified <strong>Retailers &amp; Wholesalers</strong>. Retail customer purchasing is not available for full sets.
                     </p>
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <a href="/account?tab=b2b_apply" class="dt-btn-gold" style="padding:7px 16px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-                            <span>Apply for Wholesale Account</span> &rarr;
+                        <a href="/account?tab=b2b_apply" class="dt-btn dt-btn-gold" style="padding:7px 16px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                            <span>Apply for Wholesale Account</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
-                        <a href="/account" class="dt-btn-pale" style="padding:7px 16px; font-size:12px; text-decoration:none;">Sign In as Trade Partner</a>
+                        <a href="/account" class="dt-btn dt-btn-pale" style="padding:7px 16px; font-size:12px; text-decoration:none;">Sign In as Trade Partner</a>
                     </div>
                 </div>
                 <?php else: ?>

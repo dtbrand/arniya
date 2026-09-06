@@ -81,7 +81,7 @@ $pendingCount = count($pendingRows);
                         </p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">&larr; All Customers</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale" style="display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg><span>All Customers</span></a>
                     </div>
                 </div>
 

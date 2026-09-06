@@ -467,7 +467,7 @@ $total_products = count($products);
                     <div class="col-banner-content">
                         <span class="col-tag">BRIDAL COUTURE</span>
                         <h3 class="col-title">Royal Velvet & Zardozi Lehengas</h3>
-                        <span class="col-link">Explore Bridal &rarr;</span>
+                        <span class="col-link">Explore Bridal <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </div>
                 </div>
 
@@ -475,7 +475,7 @@ $total_products = count($products);
                     <div class="col-banner-content">
                         <span class="col-tag">FESTIVE SILKS</span>
                         <h3 class="col-title">Heritage Banarasi & Kanjivaram</h3>
-                        <span class="col-link">Explore Silks &rarr;</span>
+                        <span class="col-link">Explore Silks <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </div>
                 </div>
 
@@ -483,7 +483,7 @@ $total_products = count($products);
                     <div class="col-banner-content">
                         <span class="col-tag">PARTY WEAR</span>
                         <h3 class="col-title">Anarkali & Sharara Sets</h3>
-                        <span class="col-link">Explore Kurtis &rarr;</span>
+                        <span class="col-link">Explore Kurtis <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </div>
                 </div>
             </div>

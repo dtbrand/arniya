@@ -78,7 +78,7 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                             <strong style="font-size:11.5px; color:#181512; font-weight:800;">SINGLE PIECE</strong>
                             <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:9px; padding:1px 5px; font-weight:700; border-radius:3px;">All 5 Roles</span>
                         </div>
-                        <small style="font-size:10px; color:#64748B; line-height:1.2;">Customer Price + Color &rarr; Size selection</small>
+                        <small style="font-size:10px; color:#64748B; line-height:1.2;">Customer Price + Color <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg> Size selection</small>
                     </div>
                 </label>
                 <label id="dtCardFullSet" style="display:flex; align-items:center; gap:8px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'full_set' ? '#8A681F' : '#E2E8F0'; ?>; padding:6px 10px; border-radius:5px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'full_set' ? '0 1px 4px rgba(138,104,31,0.12)' : 'none'; ?>; transition:all 0.15s ease;">

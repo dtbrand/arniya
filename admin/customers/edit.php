@@ -597,7 +597,7 @@ $cust = [
                                             Street addresses are stored per address, not on the profile, so they are not editable here.
                                         </span>
                                     </div>
-                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" class="dt-btn dt-btn-pale dt-btn-sm" style="white-space:nowrap;">Addresses Tab &rarr;</a>
+                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" class="dt-btn dt-btn-pale dt-btn-sm" style="white-space:nowrap; display:inline-flex; align-items:center; gap:6px;"><span>Addresses Tab</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                                 </div>
                             </div>
                         </div>

@@ -74,7 +74,7 @@ $total_products = count($products);
                         <span class="hero-slide-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>FESTIVE SILK UTSAV</span>
                         <h2 class="hero-slide-title">Royal Banarasi & Kanjeevaram</h2>
                         <p class="hero-slide-desc">Flat 25% OFF &bull; Pure Zari Heritage Weaves</p>
-                        <button class="hero-slide-btn">Explore Sarees &rarr;</button>
+                        <button class="hero-slide-btn dt-btn dt-btn-gold">Explore Sarees <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
                     </div>
                     <div class="hero-slide-img-wrap">
                         <img src="/assets/images/product1.png" alt="Royal Silk Sarees" loading="lazy" />
@@ -87,7 +87,7 @@ $total_products = count($products);
                         <span class="hero-slide-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>NEW SEASON DROP</span>
                         <h2 class="hero-slide-title">Designer Anarkali & Kurtis</h2>
                         <p class="hero-slide-desc">From ₹1,499 &bull; Pure Georgette & Cotton</p>
-                        <button class="hero-slide-btn">Shop Kurtis &rarr;</button>
+                        <button class="hero-slide-btn dt-btn dt-btn-gold">Shop Kurtis <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
                     </div>
                     <div class="hero-slide-img-wrap">
                         <img src="/assets/images/product5.png" alt="Designer Kurtis" loading="lazy" />
@@ -100,7 +100,7 @@ $total_products = count($products);
                         <span class="hero-slide-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:4px;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>ROYAL BRIDAL COUTURE</span>
                         <h2 class="hero-slide-title">Velvet & Zardozi Lehengas</h2>
                         <p class="hero-slide-desc">Complimentary Custom Fit Available</p>
-                        <button class="hero-slide-btn">View Bridal &rarr;</button>
+                        <button class="hero-slide-btn dt-btn dt-btn-gold">View Bridal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
                     </div>
                     <div class="hero-slide-img-wrap">
                         <img src="/assets/images/product6.png" alt="Bridal Lehengas" loading="lazy" />
@@ -110,10 +110,10 @@ $total_products = count($products);
             </div>
 
             <!-- Left / Right Navigation Arrows -->
-            <button class="hero-banner-arrow prev" id="heroBannerPrevBtn" aria-label="Previous Slide">
+            <button class="hero-banner-arrow prev dt-btn dt-btn-pale" id="heroBannerPrevBtn" aria-label="Previous Slide">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
-            <button class="hero-banner-arrow next" id="heroBannerNextBtn" aria-label="Next Slide">
+            <button class="hero-banner-arrow next dt-btn dt-btn-pale" id="heroBannerNextBtn" aria-label="Next Slide">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
 

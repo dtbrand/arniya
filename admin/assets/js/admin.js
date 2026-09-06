@@ -825,7 +825,7 @@
         html += `
             <div class="adm-live-search-footer">
                 <span>Click any record to navigate</span>
-                <span style="color:#8A681F; font-weight:800; cursor:pointer;" onclick="window.executeGlobalSearch('${query}')">View Full Results &rarr;</span>
+                <span style="color:#8A681F; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" onclick="window.executeGlobalSearch('${query}')">View Full Results <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
             </div>
         `;
 
