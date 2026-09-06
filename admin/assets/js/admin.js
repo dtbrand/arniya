@@ -710,7 +710,7 @@
         if (totalMatches === 0) {
             targetContainer.innerHTML = `
                 <div class="adm-live-search-empty">
-                    <div style="font-size:22px; margin-bottom:6px;">🔍</div>
+                    <div style="margin-bottom:6px; color:#8A681F;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
                     <div style="font-weight:700; color:#181512; margin-bottom:3px;">No direct matches found for "${query}"</div>
                     <div style="font-size:11px; color:#64748B;">Try searching by Product Name (e.g. <i>Saree</i>), SKU (e.g. <i>KLN-SR-111</i>), or Order # (e.g. <i>DTB-001620</i>).</div>
                 </div>
@@ -721,12 +721,12 @@
 
         let html = `
             <div class="adm-live-search-header">
-                <span>🔍 Instant Live Results for "<b>${query}</b>"</span>
+                <span style="display:inline-flex; align-items:center; gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Instant Live Results for "<b>${query}</b>"</span>
                 <span class="adm-live-search-count-badge">${totalMatches} Result${totalMatches === 1 ? '' : 's'}</span>
             </div>
         `;
 
-        // 👗 PRODUCTS SECTION
+        // PRODUCTS SECTION
         if (matchingProds.length > 0) {
             html += `
                 <div class="adm-live-search-group">
@@ -756,12 +756,12 @@
             html += `</div>`;
         }
 
-        // 📦 ORDERS SECTION
+        // ORDERS SECTION
         if (matchingOrders.length > 0) {
             html += `
                 <div class="adm-live-search-group">
                     <div class="adm-live-search-group-title">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Wholesale Orders (${matchingOrders.length})</span>
                     </div>
             `;
@@ -770,7 +770,9 @@
                 const statusBg = o.status === 'Delivered' ? '#DCFCE7' : (o.status === 'Processing' ? '#FEF3C7' : '#EFF6FF');
                 html += `
                     <div class="adm-live-search-item" onclick="window.selectSearchOrder('${o.id}')">
-                        <div class="adm-live-search-avatar" style="border-radius:6px; font-size:10px;">📦</div>
+                        <div class="adm-live-search-avatar" style="border-radius:6px; display:inline-flex; align-items:center; justify-content:center;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        </div>
                         <div class="adm-live-search-info">
                             <div class="adm-live-search-title">Order #${o.id} — ${o.customer}</div>
                             <div class="adm-live-search-sub">
@@ -786,7 +788,7 @@
             html += `</div>`;
         }
 
-        // 👤 PARTNERS SECTION
+        // PARTNERS SECTION
         if (matchingPartners.length > 0) {
             html += `
                 <div class="adm-live-search-group">
@@ -819,7 +821,7 @@
         html += `
             <div class="adm-live-search-footer">
                 <span>Click any record to navigate</span>
-                <span style="color:#8A681F; font-weight:800; cursor:pointer;" onclick="window.executeGlobalSearch('${query}')">View Full Results ➔</span>
+                <span style="color:#8A681F; font-weight:800; cursor:pointer;" onclick="window.executeGlobalSearch('${query}')">View Full Results &rarr;</span>
             </div>
         `;
 
@@ -837,7 +839,7 @@
                 if (typeof filterProducts === 'function') filterProducts();
             }
         }
-        if (window.showToast) window.showToast(`👗 Navigated to Product SKU: ${sku}`);
+        if (window.showToast) window.showToast(`Navigated to Product SKU: ${sku}`);
     };
 
     window.selectSearchOrder = function(orderId) {
@@ -855,7 +857,7 @@
                 if (typeof filterPartners === 'function') filterPartners();
             }
         }
-        if (window.showToast) window.showToast(`👤 Navigated to Partner: ${partnerName}`);
+        if (window.showToast) window.showToast(`Navigated to Partner: ${partnerName}`);
     };
 
     window.executeGlobalSearch = function(query) {
@@ -1225,7 +1227,7 @@
             const brand = p.brand || (p.category === 'Silk Sarees' || p.category === 'Sarees' ? 'DT Signature' : (p.category === 'Lehengas' ? 'DT Couture' : 'Arniya Heritage'));
             const variants = p.variants || (p.color ? `Color: ${p.color}` : '3 Colors');
             const resellerPrice = p.reseller_price || Math.round(p.retail_price * 0.77);
-            const rating = p.rating || '5.0 ★';
+            const rating = p.rating ? String(p.rating).replace(/[★\s]/g, '') : '5.0';
 
             return `
                 <tr>
@@ -1253,15 +1255,15 @@
                     </td>
                     <td><span style="font-weight:700; background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:6px; border:1px solid rgba(212,175,55,0.3);">${p.moq} pcs</span></td>
                     <td><strong>${p.stock} units</strong></td>
-                    <td><span style="color:#F59E0B; font-weight:800;">${rating}</span> <small style="color:#7A7266;">(128)</small></td>
+                    <td><span style="color:#D4AF37; font-weight:800; display:inline-flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#D4AF37" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> ${rating}</span> <small style="color:#7A7266;">(128)</small></td>
                     <td><span class="adm-badge ${badgeClass}">${p.status}</span></td>
                     <td>
                         <div class="adm-action-btn-group">
-                            <a href="/admin/products/view.php?id=${p.id}" class="adm-action-btn" title="View Details">👁️</a>
-                            <a href="/admin/products/edit.php?id=${p.id}" class="adm-action-btn" title="Edit">✏️</a>
-                            <a href="/admin/products/duplicate.php?id=${p.id}" class="adm-action-btn" title="Duplicate">📋</a>
-                            <button type="button" class="adm-action-btn wa" title="Share via WhatsApp" onclick="window.shareProductWhatsApp(${p.id})">💬</button>
-                            <button type="button" class="adm-action-btn danger" title="Delete Product" onclick="window.deleteProduct(${p.id})">🗑️</button>
+                            <a href="/admin/products/view.php?id=${p.id}" class="adm-action-btn" title="View Details"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                            <a href="/admin/products/edit.php?id=${p.id}" class="adm-action-btn" title="Edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                            <a href="/admin/products/duplicate.php?id=${p.id}" class="adm-action-btn" title="Duplicate"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></a>
+                            <button type="button" class="adm-action-btn wa" title="Share via WhatsApp" onclick="window.shareProductWhatsApp(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></button>
+                            <button type="button" class="adm-action-btn danger" title="Delete Product" onclick="window.deleteProduct(${p.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
                         </div>
                     </td>
                 </tr>
@@ -1379,7 +1381,7 @@
                             <button class="adm-action-btn wa" title="Chat on WhatsApp" onclick="window.openDirectWhatsApp('${p.phone}', 'Hello ${p.name}, regarding your DT Brand partner account...')">
                                 <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             </button>
-                            ${p.kyc === 'Pending KYC' ? `<button class="adm-action-btn" title="Approve KYC" style="color:#15803D;" onclick="window.approveKYC('${p.id}')">✓</button>` : ''}
+                            ${p.kyc === 'Pending KYC' ? `<button class="adm-action-btn" title="Approve KYC" style="color:#15803D;" onclick="window.approveKYC('${p.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button>` : ''}
                         </div>
                     </td>
                 </tr>
@@ -1687,7 +1689,7 @@
         link.href = URL.createObjectURL(blob);
         link.download = filename;
         link.click();
-        window.showToast(`📥 Exported ${filename} successfully!`);
+        window.showToast(`Exported ${filename} successfully!`);
     };
 
     // ════ COMMAND PALETTE (CTRL+K / CMD+K) ════
@@ -1698,7 +1700,7 @@
             if (searchInput) {
                 searchInput.focus();
                 searchInput.select();
-                window.showToast('🔍 Global search focused. Type to navigate...');
+                window.showToast('Global search focused. Type to navigate...');
             }
         }
     });
@@ -1714,7 +1716,7 @@
                 <div class="adm-modal-card" style="max-width:600px; animation:admScaleIn 0.2s cubic-bezier(0.16,1,0.3,1);">
                     <div class="adm-modal-header">
                         <h3 class="adm-modal-title" id="admUniversalModalTitle"></h3>
-                        <button type="button" class="adm-modal-close" onclick="window.closeUniversalModal()">✕</button>
+                        <button type="button" class="adm-modal-close" onclick="window.closeUniversalModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                     </div>
                     <div class="adm-modal-body" id="admUniversalModalBody" style="padding:20px;"></div>
                 </div>
@@ -1746,7 +1748,7 @@
 
         const toast = document.createElement('div');
         toast.className = 'adm-toast';
-        toast.innerHTML = `<span>✨</span> <span>${msg}</span>`;
+        toast.innerHTML = `<span style="display:inline-flex; align-items:center; color:#8A681F;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span>${msg}</span>`;
         box.appendChild(toast);
 
         setTimeout(() => {
@@ -1771,7 +1773,7 @@
             .then(function(res) { return res.json(); })
             .then(function(data) {
                 if (!data || !data.success || !data.product) {
-                    if (typeof window.showToast === 'function') window.showToast('⚠️ That product could not be loaded, so nothing was shared.');
+                    if (typeof window.showToast === 'function') window.showToast('That product could not be loaded, so nothing was shared.');
                     return;
                 }
                 var p = data.product;
@@ -1788,14 +1790,14 @@
                 window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(lines.join('\n')), '_blank');
             })
             .catch(function() {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ Network error - nothing was shared.');
+                if (typeof window.showToast === 'function') window.showToast('Network error - nothing was shared.');
             });
     };
 
     window.duplicateProduct = function(id) {
         var pid = Number(id) || 0;
         if (pid <= 0) return;
-        if (typeof window.showToast === 'function') window.showToast('📋 Duplicating product in the database...');
+        if (typeof window.showToast === 'function') window.showToast('Duplicating product in the database...');
         fetch('/api/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -1804,7 +1806,7 @@
             .then(function(res) { return res.json(); })
             .then(function(data) {
                 if (data && data.success) {
-                    if (typeof window.showToast === 'function') window.showToast('✨ Duplicated. Reloading...');
+                    if (typeof window.showToast === 'function') window.showToast('Duplicated. Reloading...');
                     setTimeout(function() { window.location.reload(); }, 500);
                 } else {
                     alert('Could not duplicate: ' + ((data && data.message) || 'unknown error'));
@@ -1827,7 +1829,7 @@
             .then(function(res) { return res.json(); })
             .then(function(data) {
                 if (data && data.success) {
-                    if (typeof window.showToast === 'function') window.showToast('📦 Product moved to draft.');
+                    if (typeof window.showToast === 'function') window.showToast('Product moved to draft.');
                     setTimeout(function() { window.location.reload(); }, 500);
                 } else {
                     alert('Could not archive: ' + ((data && data.message) || 'unknown error'));

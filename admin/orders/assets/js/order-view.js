@@ -192,7 +192,7 @@
             const noteVal = input.value.trim();
             input.value = '';
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast('✅ Note saved: "' + noteVal + '"');
+                window.DT_ORDERS.showToast('Note saved: "' + noteVal + '"');
             }
         },
 
@@ -264,7 +264,7 @@
                         const count = noteList.querySelectorAll('.dt-smart-note-card').length;
                         countBadge.textContent = `${count} Note${count === 1 ? '' : 's'}`;
                     }
-                    if (window.DT_ORDERS) window.DT_ORDERS.showToast('🗑️ Note deleted successfully');
+                    if (window.DT_ORDERS) window.DT_ORDERS.showToast('Note deleted successfully');
                 }, 200);
             }
         },
@@ -334,7 +334,7 @@
                     countBadge.textContent = `${count} Note${count === 1 ? '' : 's'}`;
                 }
 
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ Internal admin note posted successfully!');
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Internal admin note posted successfully!');
             }
         },
 
@@ -513,7 +513,7 @@
             this.closeAddressEditModal();
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast('✅ Shipping & Billing addresses updated successfully!');
+                window.DT_ORDERS.showToast('Shipping & Billing addresses updated successfully!');
             }
         },
 
@@ -795,7 +795,7 @@
             URL.revokeObjectURL(url);
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast('📥 Customer ledger exported successfully as formatted Excel statement');
+                window.DT_ORDERS.showToast('Customer ledger exported successfully as formatted Excel statement');
             }
         },
 
@@ -1001,7 +1001,7 @@
                                     </div>
                                 </td>
                                 <td style="padding:8px; text-align:center; font-weight:800; font-size:13px; color:#181512;">${order.items_count || '1 lot'}</td>
-                                <td style="padding:8px; text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">✓ PASS (Silk Mark)</span></td>
+                                <td style="padding:8px; text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">PASS (Silk Mark)</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1071,7 +1071,7 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Tax Invoice Excel downloaded successfully!');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Tax Invoice Excel downloaded successfully!');
         },
 
         downloadInvoicePDF: function(orderId) {
@@ -1216,7 +1216,7 @@
                 }
             }, 250);
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Tax Invoice PDF initiated directly!');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Tax Invoice PDF initiated directly!');
         },
 
         downloadPackingSlipExcel: function(orderId) {
@@ -1261,7 +1261,7 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Warehouse Packing Slip Excel downloaded successfully!');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Warehouse Packing Slip Excel downloaded successfully!');
         },
 
         downloadPackingSlipPDF: function(orderId) {
@@ -1354,7 +1354,7 @@
                                 <td style="text-align:center;">1</td>
                                 <td><strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br><small style="color:#64748B;">SKU: KNJ-001 • Royal Ruby / 5.5m</small></td>
                                 <td style="text-align:center; font-weight:800; font-size:13px;">25 pcs</td>
-                                <td style="text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">✓ PASS (Silk Mark)</span></td>
+                                <td style="text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">PASS (Silk Mark)</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1382,7 +1382,7 @@
                 }
             }, 250);
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Warehouse Packing Slip PDF initiated directly!');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Warehouse Packing Slip PDF initiated directly!');
         },
 
         openShippingLabelModal: function(orderId) {
@@ -1765,7 +1765,7 @@
                 }
             }, 250);
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🖨️ Printing shipping label for ${order.id}`);
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`Printing shipping label for ${order.id}`);
         },
 
         switchDocTab: function(tabName) {
@@ -1853,7 +1853,7 @@
                                             <small style="color:#64748B;">Surat Central Depot Sealed Batch</small>
                                         </td>
                                         <td style="padding:8px; text-align:center; font-weight:800;">${order.items_count || '25 pcs'}</td>
-                                        <td style="padding:8px; text-align:center; color:#15803D; font-weight:800;">✓ PASS (Silk Mark)</td>
+                                        <td style="padding:8px; text-align:center; color:#15803D; font-weight:800;">PASS (Silk Mark)</td>
                                     </tr>
                                 </tbody>
                             </table>

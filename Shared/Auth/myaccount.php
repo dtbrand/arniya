@@ -224,9 +224,12 @@
             gap: 6px;
         }
         .auth-brand-sub::before, .auth-brand-sub::after {
-            content: '❖';
-            font-size: 0.5rem;
-            color: var(--dark-gold);
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--dark-gold);
+            transform: rotate(45deg);
             opacity: 0.7;
         }
 
@@ -517,20 +520,15 @@
         
         /* Active Checkmark Pill Indicator */
         .role-pill-btn.selected::after {
-            content: '✓';
+            content: '';
             position: absolute;
             top: 5px;
             right: 5px;
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            font-size: 0.55rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--dark-gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center;
+            background-size: 8px 8px;
             animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes badgePop {

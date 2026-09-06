@@ -51,7 +51,7 @@
         .then(res => {
             if (res.success) {
                 if (typeof window.showToast === 'function') {
-                    window.showToast(`🗑️ "${prodName}" removed from catalog!`);
+                    window.showToast(`"${prodName}" removed from catalog!`);
                 }
                 const row = document.querySelector(`tr[data-product-id="${id}"]`) || document.querySelector(`.dt-prod-row-check[value="${id}"]`)?.closest('tr');
                 if (row) {
@@ -66,7 +66,7 @@
         })
         .catch(_err => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`🗑️ Product removed!`);
+                window.showToast(`Product removed!`);
             }
         });
     };
@@ -89,7 +89,7 @@
                 alert('Duplicate failed: ' + (res.message || 'Server error'));
             }
         })
-        .catch(err => alert('Network error duplicating product.'));
+        .catch(() => alert('Network error duplicating product.'));
     };
 })();
 

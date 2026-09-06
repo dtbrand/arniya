@@ -5,7 +5,7 @@
 
 window.DT_CATALOGUE = {
     // Show Toast notification using Admin Toast or fallback
-    showToast: function(msg, type = 'gold') {
+    showToast: function(msg, _type = 'gold') {
         if (typeof window.showToast === 'function') {
             window.showToast(msg);
             return;
@@ -19,7 +19,7 @@ window.DT_CATALOGUE = {
         }
         const toast = document.createElement('div');
         toast.style.cssText = 'background:#181512; color:#fff; border:1px solid #D4AF37; border-radius:6px; padding:10px 16px; font-size:12px; font-weight:700; box-shadow:0 4px 14px rgba(0,0,0,0.25); display:flex; align-items:center; gap:8px; animation:fadeIn 0.2s ease;';
-        toast.innerHTML = `<span style="color:#D4AF37;">✦</span> <span>${msg}</span>`;
+        toast.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="#D4AF37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> <span>${msg}</span>`;
         container.appendChild(toast);
         setTimeout(() => {
             toast.style.opacity = '0';
@@ -41,12 +41,10 @@ window.DT_CATALOGUE = {
         }
 
         const rows = table.querySelectorAll('tbody tr');
-        let matches = 0;
         rows.forEach(r => {
             const txt = r.textContent.toLowerCase();
             if (txt.includes(val)) {
                 r.style.display = '';
-                matches++;
             } else {
                 r.style.display = 'none';
             }
@@ -96,7 +94,7 @@ window.DT_CATALOGUE = {
                     }
                 }
             });
-            this.showToast(`✅ Activated ${count} selected categories!`);
+            this.showToast(`Activated ${count} selected categories!`);
         } else if (action === 'deactivate') {
             checkedBoxes.forEach(chk => {
                 const row = chk.closest('tr');
@@ -109,7 +107,7 @@ window.DT_CATALOGUE = {
                     }
                 }
             });
-            this.showToast(`⏸️ Deactivated ${count} selected categories!`);
+            this.showToast(`Deactivated ${count} selected categories!`);
         } else if (action === 'feature') {
             checkedBoxes.forEach(chk => {
                 const row = chk.closest('tr');
@@ -121,7 +119,7 @@ window.DT_CATALOGUE = {
                     }
                 }
             });
-            this.showToast(`⭐ Marked ${count} categories as Featured!`);
+            this.showToast(`Marked ${count} categories as Featured!`);
         } else if (action === 'delete') {
             if (!confirm(`Are you sure you want to delete ${count} selected categories?`)) return;
             checkedBoxes.forEach(chk => {
@@ -133,7 +131,7 @@ window.DT_CATALOGUE = {
                     setTimeout(() => row.remove(), 250);
                 }
             });
-            this.showToast(`🗑️ Deleted ${count} selected categories!`);
+            this.showToast(`Deleted ${count} selected categories!`);
         }
     },
 
@@ -148,7 +146,7 @@ window.DT_CATALOGUE = {
         row.style.transform = 'translateX(20px)';
         setTimeout(() => {
             row.remove();
-            this.showToast(`🗑️ "${itemName}" deleted successfully!`);
+            this.showToast(`"${itemName}" deleted successfully!`);
         }, 250);
     },
 
@@ -206,6 +204,9 @@ window.DT_CATALOGUE = {
         const selectedTitle = aiTitles[Math.floor(Math.random() * aiTitles.length)];
         const selectedDesc = aiDescriptions[Math.floor(Math.random() * aiDescriptions.length)];
 
+        const slugDisplay = document.getElementById('serpSlugDisplay');
+        if (slugDisplay) slugDisplay.textContent = cleanSlug;
+
         if (titleInput) {
             titleInput.value = selectedTitle;
             if (titleDisplay) titleDisplay.textContent = selectedTitle;
@@ -218,7 +219,7 @@ window.DT_CATALOGUE = {
             if (descCount) descCount.textContent = selectedDesc.length + ' / 160';
         }
 
-        this.showToast(`✨ AI SEO Meta Generated for "${cleanName}"!`);
+        this.showToast(`AI SEO Meta Generated for "${cleanName}"!`);
     },
 
     // ════ AI Category Description Auto-Generator ════
@@ -235,7 +236,7 @@ window.DT_CATALOGUE = {
 
         const selected = aiDescs[Math.floor(Math.random() * aiDescs.length)];
         textarea.value = selected;
-        this.showToast(`✨ AI Generated Description for "${cleanName}"!`);
+        this.showToast(`AI Generated Description for "${cleanName}"!`);
     },
 
     // ════ Interactive Device Preview Switcher (Desktop vs Mobile) ════
@@ -273,7 +274,7 @@ window.DT_CATALOGUE = {
                 else if (ratio === '4-1') liveDeskImg.style.height = '70px';
                 else liveDeskImg.style.height = '90px';
             }
-            this.showToast(`🖥️ Desktop banner aspect ratio set to ${ratio}!`);
+            this.showToast(`Desktop banner aspect ratio set to ${ratio}!`);
         } else {
             const mobImg = document.getElementById('mobileBannerPreview');
             const slot = document.getElementById('mobBannerSlot');
@@ -304,7 +305,7 @@ window.DT_CATALOGUE = {
                 if (slot) slot.style.height = '85px';
                 if (sizeTag) sizeTag.textContent = 'Selected: 750 × 320 px (2.3:1)';
             }
-            this.showToast(`📱 Mobile banner size set to ${ratio.replace('-', ' × ')} px!`);
+            this.showToast(`Mobile banner size set to ${ratio.replace('-', ' × ')} px!`);
         }
     },
 
@@ -337,7 +338,7 @@ window.DT_CATALOGUE = {
         if (subInput) subInput.value = chosen.sub;
         if (ctaInput) ctaInput.value = chosen.cta;
 
-        this.showToast(`✨ AI Generated Banner Headlines & CTA!`);
+        this.showToast(`AI Generated Banner Headlines & CTA!`);
     }
 };
 
@@ -348,21 +349,21 @@ window.DT_DISPLAY = {
     currentPlacement: 'shop',
 
     userNames: {
-        'customer': '🛍️ Retail Customer (B2C)',
-        'reseller': '💬 WhatsApp Reseller',
-        'retailer': '🏪 Retailer / Boutique',
-        'wholesaler': '🏢 Wholesale B2B'
+        'customer': 'Retail Customer (B2C)',
+        'reseller': 'WhatsApp Reseller',
+        'retailer': 'Retailer / Boutique',
+        'wholesaler': 'Wholesale B2B'
     },
 
     placementNames: {
-        'shop': '🛒 Shop Grid',
-        'collection': '👑 Collection Page',
-        'single': '🔍 Single Product Related',
-        'home-trending': '🔥 Home: Trending',
-        'home-new': '✨ Home: New Arrivals',
-        'home-sale': '🏷️ Home: Festive Sale',
-        'home-recent': '👁️ Home: Recently Viewed',
-        'home-rec': '🎯 Home: Recommended For You'
+        'shop': 'Shop Grid',
+        'collection': 'Collection Page',
+        'single': 'Single Product Related',
+        'home-trending': 'Home: Trending',
+        'home-new': 'Home: New Arrivals',
+        'home-sale': 'Home: Festive Sale',
+        'home-recent': 'Home: Recently Viewed',
+        'home-rec': 'Home: Recommended For You'
     },
 
     setUserType: function(type) {
@@ -419,7 +420,7 @@ window.DT_DISPLAY = {
 
         const badgeEl = document.getElementById('liveContextBadge');
         if (badgeEl) {
-            badgeEl.textContent = `${this.userNames[this.currentUserType]} ➔ ${this.placementNames[this.currentPlacement]}`;
+            badgeEl.textContent = `${this.userNames[this.currentUserType]} → ${this.placementNames[this.currentPlacement]}`;
         }
 
         const cards = grid.querySelectorAll('.dt-sim-card');
@@ -449,9 +450,9 @@ window.DT_DISPLAY = {
                     pillBox.style.color = '#1D4ED8';
                     pillBox.style.padding = '4px 6px';
                     pillBox.style.borderRadius = '4px';
-                    pillBox.innerHTML = `<div>Wholesale ₹${numPrice.toLocaleString()} ➔ Resale Profit: <strong style="color:#15803D;">+₹${Math.round(numPrice*0.6).toLocaleString()} / Pc</strong></div>`;
+                    pillBox.innerHTML = `<div>Wholesale ₹${numPrice.toLocaleString()} → Resale Profit: <strong style="color:#15803D;">+₹${Math.round(numPrice*0.6).toLocaleString()} / Pc</strong></div>`;
                 }
-                if (btnText) btnText.textContent = '📲 Share on WhatsApp with My Margin';
+                if (btnText) btnText.textContent = 'Share on WhatsApp with My Margin';
             } else if (this.currentUserType === 'retailer') {
                 if (pillBox) {
                     pillBox.style.background = '#FDFBF7';
@@ -459,9 +460,9 @@ window.DT_DISPLAY = {
                     pillBox.style.color = '#8A681F';
                     pillBox.style.padding = '4px 6px';
                     pillBox.style.borderRadius = '4px';
-                    pillBox.innerHTML = `<div>📍 Surat Central Depot Ready • Boutique Pack • GST Input</div>`;
+                    pillBox.innerHTML = `<div>Surat Central Depot Ready • Boutique Pack • GST Input</div>`;
                 }
-                if (btnText) btnText.textContent = '🛒 Add Boutique Pack to PO';
+                if (btnText) btnText.textContent = 'Add Boutique Pack to PO';
             } else {
                 // Customer Placement Specific Content
                 if (this.currentPlacement === 'home-trending') {
@@ -471,7 +472,7 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#92400E';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `🔥 Trending #1 in Surat Silk Hub`;
+                        pillBox.innerHTML = `Trending #1 in Surat Silk Hub`;
                     }
                     if (btnText) btnText.textContent = 'Explore Trending Collection ›';
                 } else if (this.currentPlacement === 'home-new') {
@@ -481,7 +482,7 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#8A681F';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `✨ Fresh Weaver Stock 2026`;
+                        pillBox.innerHTML = `Fresh Weaver Stock 2026`;
                     }
                     if (btnText) btnText.textContent = 'View New Arrival Details ›';
                 } else if (this.currentPlacement === 'home-sale') {
@@ -491,7 +492,7 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#166534';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `🏷️ Festive Special Deal (Save 43%)`;
+                        pillBox.innerHTML = `Festive Special Deal (Save 43%)`;
                     }
                     if (btnText) btnText.textContent = 'Claim Festive Discount Now';
                 } else if (this.currentPlacement === 'home-recent') {
@@ -501,9 +502,9 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#475569';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `👁️ Viewed Today • In Stock (Surat Hub)`;
+                        pillBox.innerHTML = `Viewed Today • In Stock (Surat Hub)`;
                     }
-                    if (btnText) btnText.textContent = '⚡ Instant 1-Tap Reorder';
+                    if (btnText) btnText.textContent = 'Instant 1-Tap Reorder';
                 } else if (this.currentPlacement === 'home-rec') {
                     if (pillBox) {
                         pillBox.style.background = '#FAF5E8';
@@ -511,9 +512,9 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#8A681F';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `🎯 98% AI Match for Your Boutique`;
+                        pillBox.innerHTML = `98% AI Match for Your Boutique`;
                     }
-                    if (btnText) btnText.textContent = '✨ Order Recommended Piece';
+                    if (btnText) btnText.textContent = 'Order Recommended Piece';
                 } else if (this.currentPlacement === 'single') {
                     if (pillBox) {
                         pillBox.style.background = '#EFF6FF';
@@ -521,7 +522,7 @@ window.DT_DISPLAY = {
                         pillBox.style.color = '#1D4ED8';
                         pillBox.style.padding = '3px 6px';
                         pillBox.style.borderRadius = '4px';
-                        pillBox.innerHTML = `✨ Frequently Bundled with Blouse Piece`;
+                        pillBox.innerHTML = `Frequently Bundled with Blouse Piece`;
                     }
                     if (btnText) btnText.textContent = '+ Add Matching Saree Bundle';
                 } else {
@@ -557,7 +558,7 @@ window.DT_DISPLAY = {
         }
         this.updateCustomerStyles();
         if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast(`Switched Live Simulator to ${device === 'mob' ? '📱 Mobile App' : '🖥️ Desktop Grid'} Mode!`);
+            window.DT_CATALOGUE.showToast(`Switched Live Simulator to ${device === 'mob' ? 'Mobile App' : 'Desktop Grid'} Mode!`);
         }
     },
 
@@ -764,7 +765,7 @@ window.DT_DISPLAY = {
             headerEl.classList.toggle('active', !isCollapsed);
             const sign = headerEl.querySelector('.dt-collapse-sign');
             const text = headerEl.querySelector('.dt-collapse-text');
-            if (sign) sign.textContent = isCollapsed ? '➕' : '➖';
+            if (sign) sign.textContent = isCollapsed ? '+' : '−';
             if (text) text.textContent = isCollapsed ? 'Expand' : 'Collapse';
         }
     },
@@ -778,10 +779,10 @@ window.DT_DISPLAY = {
             header.classList.add('active');
             const sign = header.querySelector('.dt-collapse-sign');
             const text = header.querySelector('.dt-collapse-text');
-            if (sign) sign.textContent = '➖';
+            if (sign) sign.textContent = '−';
             if (text) text.textContent = 'Collapse';
         });
-        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('➕ Expanded all Display Setting sections!');
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Expanded all Display Setting sections!');
     },
 
     collapseAll: function() {
@@ -793,10 +794,10 @@ window.DT_DISPLAY = {
             header.classList.remove('active');
             const sign = header.querySelector('.dt-collapse-sign');
             const text = header.querySelector('.dt-collapse-text');
-            if (sign) sign.textContent = '➕';
+            if (sign) sign.textContent = '+';
             if (text) text.textContent = 'Expand';
         });
-        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('➖ Collapsed all Display Setting sections!');
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Collapsed all Display Setting sections!');
     },
 
     toggleSubGroup: function(grpId, btn) {
@@ -856,7 +857,7 @@ window.DT_DISPLAY = {
             
             this.updatePreview();
             this.switchPortal('shop');
-            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('⚡ Applied Surat B2B Wholesale Preset!');
+            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Applied Surat B2B Wholesale Preset!');
         } else if (preset === 'boutique') {
             const chkRating = document.getElementById('chkRating'); if (chkRating) chkRating.checked = true;
             const chkB2b = document.getElementById('chkB2bRate'); if (chkB2b) chkB2b.checked = false;
@@ -877,7 +878,7 @@ window.DT_DISPLAY = {
             
             this.updatePreview();
             this.switchPortal('home');
-            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✨ Applied Luxury Boutique Preset!');
+            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Applied Luxury Boutique Preset!');
         }
     }
 };

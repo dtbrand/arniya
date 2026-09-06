@@ -28,9 +28,9 @@
             note: 'Buyer opened wholesale carton on arrival and noticed color shade deviation across 2 sarees in the 5-piece lot. Unboxing video was recorded continuously without cuts showing carton seal breaking.',
             videoDuration: '0:42 HD (Recorded 20 Aug)',
             photos: [
-                { title: 'Defect Saree 1 vs Master Swatch', tag: 'Shade Mismatch', icon: '🎨' },
-                { title: 'Defect Saree 2 Border Weave', tag: 'Color Deviation', icon: '🔍' },
-                { title: 'Intact Lot Carton Barcode & Seal', tag: 'Outer Box', icon: '📦' }
+                { title: 'Defect Saree 1 vs Master Swatch', tag: 'Shade Mismatch' },
+                { title: 'Defect Saree 2 Border Weave', tag: 'Color Deviation' },
+                { title: 'Intact Lot Carton Barcode & Seal', tag: 'Outer Box' }
             ],
             qcChecklist: [
                 { item: 'Unbroken Outer Parcel Seal in Video', passed: true },
@@ -58,8 +58,8 @@
             note: 'Defect identified during pre-draping inspection. Gold zari thread loop pulled out on pallu end. Video shows close-up macro view.',
             videoDuration: '0:35 HD (Recorded 19 Aug)',
             photos: [
-                { title: 'Pallu Zari Thread Pull Macro', tag: 'Loom Defect', icon: '🧵' },
-                { title: 'Silk Mark Security Hologram', tag: 'Original Tag', icon: '🏷️' }
+                { title: 'Pallu Zari Thread Pull Macro', tag: 'Loom Defect' },
+                { title: 'Silk Mark Security Hologram', tag: 'Original Tag' }
             ],
             qcChecklist: [
                 { item: 'Continuous Unboxing Video Evidence', passed: true },
@@ -87,8 +87,8 @@
             note: 'Package returned to Surat depot due to destination premises shut. Courier driver unboxing scan recorded at Surat depot inbound receiving bay.',
             videoDuration: '1:10 HD (Depot Bay Scan)',
             photos: [
-                { title: 'VRL Cargo Inbound Dock Receipt', tag: 'Dock Seal', icon: '🚛' },
-                { title: 'Sealed Security Bag Condition', tag: 'Tamper Intact', icon: '🔒' }
+                { title: 'VRL Cargo Inbound Dock Receipt', tag: 'Dock Seal' },
+                { title: 'Sealed Security Bag Condition', tag: 'Tamper Intact' }
             ],
             qcChecklist: [
                 { item: 'Tamper-Proof Courier Bag Untouched', passed: true },
@@ -116,8 +116,8 @@
             note: 'Warehouse packing slip human error. Items received back in Surat depot, audited, and credited to buyer B2B ledger.',
             videoDuration: '0:55 HD (Unboxing Verified)',
             photos: [
-                { title: 'Pastel Green Batch Received', tag: 'Catalog Check', icon: '👗' },
-                { title: 'Restock Bin Scan Barcode', tag: 'Surat Depot', icon: '🏢' }
+                { title: 'Pastel Green Batch Received', tag: 'Catalog Check' },
+                { title: 'Restock Bin Scan Barcode', tag: 'Surat Depot' }
             ],
             qcChecklist: [
                 { item: 'All 10 Pieces Present & Sealed', passed: true },
@@ -140,13 +140,13 @@
             const modalBody = document.getElementById('viewRmaModalBody');
             // Build Photos HTML with HD preview badges
             let photosHtml = '';
-            data.photos.forEach((p, idx) => {
+            data.photos.forEach(p => {
                 photosHtml += `
-                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.openPhotoLightbox('${p.title}', '${p.tag}', '${data.id}', '${p.icon}')" title="Click to Open Full View: ${p.title}">
+                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.openPhotoLightbox('${p.title}', '${p.tag}', '${data.id}')" title="Click to Open Full View: ${p.title}">
                         <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #FAF8F4 0%, #F5EFE6 100%); text-align:center; padding:5px; box-sizing:border-box;">
-                            <span style="font-size:24px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">${p.icon}</span>
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.08));"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                             <span style="font-size:8.5px; font-weight:800; color:#8A681F; margin-top:3px; text-transform:uppercase; letter-spacing:0.3px;">${p.tag}</span>
-                            <span style="font-size:7.5px; color:#1D4ED8; font-weight:700;">🔍 Click Full View</span>
+                            <span style="font-size:7.5px; color:#1D4ED8; font-weight:700;">Click Full View</span>
                         </div>
                     </div>
                 `;
@@ -157,7 +157,7 @@
             data.qcChecklist.forEach(qc => {
                 qcHtml += `
                     <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#181512;">
-                        <span style="color:#15803D; font-weight:800; font-size:12px;">✓</span>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>${qc.item}</span>
                     </div>
                 `;
@@ -213,7 +213,7 @@
                     <div class="dt-evidence-box">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                             <span style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.3px;">Unboxing Video Proof</span>
-                            <span style="font-size:10px; color:#15803D; font-weight:800; background:#DCFCE7; border:1px solid #86EFAC; padding:1px 6px; border-radius:3px;">✓ Verified Seal</span>
+                            <span style="font-size:10px; color:#15803D; font-weight:800; background:#DCFCE7; border:1px solid #86EFAC; padding:2px 8px; border-radius:3px; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="10.5" height="10.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified Seal</span>
                         </div>
                         <div id="rmaVideoPlayerCard" class="dt-video-preview-card" onclick="window.DT_RETURNS.openVideoTheater('${data.id}', '${data.videoDuration}')" title="Click to Open Full Video in Theater Mode">
                             <span class="dt-video-badge">${data.videoDuration}</span>
@@ -262,7 +262,7 @@
             document.getElementById('viewRmaModal').style.display = 'none';
         },
 
-        openPhotoLightbox: function(title, tag, rmaId, icon) {
+        openPhotoLightbox: function(title, tag, rmaId) {
             const data = RMA_DATA[rmaId] || {};
             const lightbox = document.getElementById('dtMediaLightboxModal');
             const badge = document.getElementById('lightboxTypeBadge');
@@ -278,25 +278,28 @@
 
             titleEl.textContent = `${title} — ${data.product || rmaId}`;
             subEl.textContent = `Claim ID: ${rmaId} • Consignee: ${data.customer || 'Customer'} • Verified High-Res Weave Inspection`;
-            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800;">✓ Authenticated Defect Capture</span> • Original Upload Timestamp: <strong>${data.date || '20 Aug 2026'}</strong>`;
+            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Authenticated Defect Capture</span> • Original Upload Timestamp: <strong>${data.date || '20 Aug 2026'}</strong>`;
 
             content.innerHTML = `
                 <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
                     <div style="position:relative; width:100%; max-width:640px; height:340px; border-radius:10px; background:radial-gradient(circle, #2A241E 0%, #15110E 100%); border:2px solid #D4AF37; box-shadow:0 12px 36px rgba(0,0,0,0.8); display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
                         <!-- Defect Pin Marker -->
                         <div style="position:absolute; top:28%; left:42%; background:rgba(220,38,38,0.92); border:1.5px solid #FFFFFF; border-radius:20px; padding:3px 10px; font-size:10.5px; font-weight:800; color:#FFFFFF; box-shadow:0 4px 12px rgba(0,0,0,0.4); display:flex; align-items:center; gap:4px; z-index:10; animation:pulse 2s infinite;">
-                            <span>📍</span>
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                             <span>Defect Area: ${tag}</span>
                         </div>
 
                         <!-- Macro Canvas Simulation -->
-                        <div style="font-size:72px; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.5));">${icon || '🎨'}</div>
+                        <div style="width:76px; height:76px; border-radius:50%; background:linear-gradient(135deg, #FAF5E8 0%, #EADBBA 100%); display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; box-shadow:0 6px 20px rgba(0,0,0,0.4);">
+                            <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                        </div>
                         <div style="margin-top:12px; font-size:14px; font-weight:800; color:#FAF5E8; letter-spacing:0.5px;">${title}</div>
                         <div style="font-size:11px; color:#A8A29E; margin-top:4px;">Macro Texture Level • 4000 × 3000 Raw Sensor Data</div>
                         
                         <!-- Zoom Watermark -->
-                        <div style="position:absolute; bottom:12px; right:14px; background:rgba(0,0,0,0.7); border:1px solid #D4AF37; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:800; color:#D4AF37;">
-                            🔍 5.0× Optical Inspection
+                        <div style="position:absolute; bottom:12px; right:14px; background:rgba(0,0,0,0.7); border:1px solid #D4AF37; padding:3px 8px; border-radius:4px; font-size:10px; font-weight:800; color:#D4AF37; display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <span>5.0× Optical Inspection</span>
                         </div>
                     </div>
 
@@ -308,14 +311,14 @@
                         </div>
                         <div style="text-align:right;">
                             <span style="font-size:10px; color:#8A681F; font-weight:800; text-transform:uppercase;">QC Result</span>
-                            <div style="font-size:12px; font-weight:800; color:#22C55E; margin-top:2px;">✓ Approved for Return</div>
+                            <div style="font-size:12px; font-weight:800; color:#22C55E; margin-top:2px; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Approved for Return</div>
                         </div>
                     </div>
                 </div>
             `;
 
             lightbox.style.display = 'flex';
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🔍 Opened Full-Screen Inspection: ${title}`);
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`Opened Full-Screen Inspection: ${title}`);
         },
 
         openVideoTheater: function(rmaId, duration) {
@@ -334,7 +337,7 @@
 
             titleEl.textContent = `Continuous Package Unboxing Stream — ${data.customer || rmaId}`;
             subEl.textContent = `RMA: ${rmaId} • Order: ${data.orderId} • Continuous One-Take Recording (Zero Cuts / Intact Seal)`;
-            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800;">✓ Official Courier Intake Verified</span> • Video Stream Status: <strong>LIVE PLAYBACK</strong>`;
+            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Official Courier Intake Verified</span> • Video Stream Status: <strong>LIVE PLAYBACK</strong>`;
 
             content.innerHTML = `
                 <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
@@ -346,7 +349,7 @@
                                 <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#EF4444; animation:pulse 1.2s infinite;"></span>
                                 <strong style="color:#FFFFFF; letter-spacing:0.5px;">REC • UNBOXING ONE-TAKE</strong>
                             </div>
-                            <span style="background:rgba(21,128,61,0.85); border:1px solid #86EFAC; color:#FFFFFF; font-size:9.5px; font-weight:800; padding:2px 8px; border-radius:4px;">✓ SEAL INTACT</span>
+                            <span style="background:rgba(21,128,61,0.85); border:1px solid #86EFAC; color:#FFFFFF; font-size:9.5px; font-weight:800; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>SEAL INTACT</span>
                         </div>
 
                         <!-- Center Play / Active Display -->
@@ -360,8 +363,8 @@
 
                         <!-- Bottom Video Controls & Time Bar -->
                         <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 16px; background:linear-gradient(transparent, rgba(0,0,0,0.95)); display:flex; flex-direction:column; gap:6px; z-index:10;">
-                            <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#FFFFFF; font-weight:700;">
-                                <span>▶️ 00:24 / ${duration || '00:42'}</span>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:10.5px; color:#FFFFFF; font-weight:700;">
+                                <span style="display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> 00:24 / ${duration || '00:42'}</span>
                                 <span style="color:#D4AF37;">4K Ultra-HD 60fps</span>
                             </div>
                             <div style="width:100%; height:6px; background:rgba(255,255,255,0.25); border-radius:3px; overflow:hidden;">
@@ -373,7 +376,7 @@
             `;
 
             lightbox.style.display = 'flex';
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🎥 Opened 4K Video Theater Mode for ${rmaId}`);
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`Opened 4K Video Theater Mode for ${rmaId}`);
         },
 
         closeLightbox: function() {
@@ -426,11 +429,12 @@
             this.closeRmaModal();
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🛑 Return ${rmaId} rejected: ${reason.substring(0, 32)}...`);
+                window.DT_ORDERS.showToast(`Return ${rmaId} rejected: ${reason.substring(0, 32)}...`);
             }
 
             if (sendWhatsApp) {
-                this.shareWhatsApp(rmaId, `Return Request ${rmaId} was declined by QC Dept. Reason: ${reason}`);
+                const fullReason = remarks ? `${reason} (Remarks: ${remarks})` : reason;
+                this.shareWhatsApp(rmaId, `Return Request ${rmaId} was declined by QC Dept. Reason: ${fullReason}`);
             }
         },
 
@@ -461,7 +465,7 @@
             this.closeRmaModal();
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`⚡ RMA ${returnId} approved for reverse courier pickup`);
+                window.DT_ORDERS.showToast(`RMA ${returnId} approved for reverse courier pickup`);
             }
         },
 
@@ -510,18 +514,22 @@
                 const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_rma_cols') || '{}');
                 hiddenCols[colClass] = !isChecked;
                 localStorage.setItem('dt_hidden_rma_cols', JSON.stringify(hiddenCols));
-            } catch (e) {}
+            } catch {
+                // Ignore storage error
+            }
 
             if (window.DT_ORDERS) {
                 const cleanName = colClass.replace('col-rma-', '').toUpperCase();
-                window.DT_ORDERS.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+                window.DT_ORDERS.showToast(isChecked ? cleanName + ' column visible' : cleanName + ' column hidden');
             }
         },
 
         resetAllColumns: function() {
             try {
                 localStorage.removeItem('dt_hidden_rma_cols');
-            } catch (e) {}
+            } catch {
+                // Ignore storage error
+            }
 
             const checkboxes = document.querySelectorAll('#rmaColumnVisibilityMenu input[type="checkbox"]');
             checkboxes.forEach(cb => {
@@ -533,7 +541,7 @@
                 }
             });
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ All RMA columns restored to default view');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('All RMA columns restored to default view');
         },
 
         initColumnPreferences: function() {
@@ -548,7 +556,9 @@
                         if (cb) cb.checked = false;
                     }
                 });
-            } catch (e) {}
+            } catch {
+                // Ignore storage error
+            }
         }
     };
 

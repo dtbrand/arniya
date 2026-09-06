@@ -20,7 +20,7 @@
         applyFilters: function() {
             this.closeDrawer();
             if (window.DT_ORDER_LIST) window.DT_ORDER_LIST.filterTable();
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('🔍 Advanced filters applied');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Advanced filters applied');
         },
 
         resetFilters: function() {
@@ -28,7 +28,7 @@
             if (form) form.reset();
             this.closeDrawer();
             if (window.DT_ORDER_LIST) window.DT_ORDER_LIST.filterTable();
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('🔄 Filters reset to default');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('Filters reset to default');
         },
 
         setDatePreset: function(preset) {
@@ -52,7 +52,7 @@
             if (startInput) startInput.value = start.toISOString().split('T')[0];
             if (endInput) endInput.value = end.toISOString().split('T')[0];
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`📅 Date preset set to: ${preset}`);
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`Date preset set to: ${preset}`);
         }
     };
 })();

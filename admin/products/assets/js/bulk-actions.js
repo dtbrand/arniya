@@ -45,7 +45,7 @@
         .then(res => {
             if (res.success) {
                 if (typeof window.showToast === 'function') {
-                    window.showToast(`✅ Successfully executed "${action}" on ${ids.length} products!`);
+                    window.showToast(`Successfully executed "${action}" on ${ids.length} products!`);
                 }
 
                 if (action === 'Delete') {
@@ -73,7 +73,7 @@
         })
         .catch(_err => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`✅ Action "${action}" processed!`);
+                window.showToast(`Action "${action}" processed!`);
             }
         });
     };
@@ -107,7 +107,7 @@
         link.download = (filename || 'dt_products_export') + '_' + new Date().toISOString().slice(0,10) + '.csv';
         link.click();
         if (typeof window.showToast === 'function') {
-            window.showToast('📥 Products exported to CSV successfully!');
+            window.showToast('Products exported to CSV successfully!');
         }
     };
 })();

@@ -932,7 +932,7 @@
             applyCountryAutoFields(wrap, code, false);
 
             if (typeof window.showToast === 'function') {
-                window.showToast(`✓ Country Selected: ${flag} ${name} — Regional fields & dial code updated!`);
+                window.showToast(`Country Selected: ${name} (${code}) — Regional fields & dial code updated!`);
             }
         }
 

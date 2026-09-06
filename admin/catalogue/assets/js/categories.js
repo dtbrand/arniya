@@ -11,7 +11,7 @@ window.DT_CATEGORIES = {
         } else {
             btn.classList.add('active');
             btn.style.color = '#D4AF37';
-            window.DT_CATALOGUE.showToast(`🌟 "${catName}" marked as Featured!`);
+            window.DT_CATALOGUE.showToast(`"${catName}" marked as Featured!`);
         }
     },
 
@@ -22,7 +22,7 @@ window.DT_CATEGORIES = {
             alert('Please enter Category Name');
             return false;
         }
-        window.DT_CATALOGUE.showToast('✅ Category saved successfully!', 'gold');
+        window.DT_CATALOGUE.showToast('Category saved successfully!', 'gold');
         setTimeout(() => {
             window.location.href = '/admin/catalogue/categories/';
         }, 800);
@@ -72,7 +72,7 @@ window.DT_BANNERS = {
         } else {
             btn.className = 'dt-badge green';
             btn.textContent = 'Active';
-            window.DT_CATALOGUE.showToast(`🌟 "${bannerTitle}" activated live!`);
+            window.DT_CATALOGUE.showToast(`"${bannerTitle}" activated live!`);
         }
     }
 };
@@ -94,7 +94,7 @@ window.DT_NAVIGATION = {
         li.className = 'dt-menu-nest-item';
         li.innerHTML = `
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="cursor:grab; color:#94a3b8;">☰</span>
+                <span style="cursor:grab; color:#94a3b8; display:inline-flex; align-items:center;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></span>
                 <strong>${title}</strong>
                 <code style="font-size:10.5px; color:#64748b;">${url || '#'}</code>
             </div>
@@ -128,12 +128,12 @@ window.DT_MERCH = {
         const isPinned = card.classList.contains('is-pinned');
         if (isPinned) {
             card.classList.remove('is-pinned');
-            btn.textContent = '📌 Pin to Top';
+            btn.textContent = 'Pin to Top';
             window.DT_CATALOGUE.showToast(`"${prodName}" unpinned`);
         } else {
             card.classList.add('is-pinned');
-            btn.textContent = '⭐ Pinned';
-            window.DT_CATALOGUE.showToast(`🌟 "${prodName}" pinned to Category Top!`);
+            btn.textContent = 'Pinned';
+            window.DT_CATALOGUE.showToast(`"${prodName}" pinned to Category Top!`);
         }
     },
 
@@ -143,11 +143,11 @@ window.DT_MERCH = {
         const isHidden = card.classList.contains('is-hidden');
         if (isHidden) {
             card.classList.remove('is-hidden');
-            btn.textContent = '👁️ Hide';
+            btn.textContent = 'Hide';
             window.DT_CATALOGUE.showToast(`"${prodName}" visible in catalogue`);
         } else {
             card.classList.add('is-hidden');
-            btn.textContent = '🚫 Hidden';
+            btn.textContent = 'Hidden';
             window.DT_CATALOGUE.showToast(`"${prodName}" hidden from catalogue view`);
         }
     }

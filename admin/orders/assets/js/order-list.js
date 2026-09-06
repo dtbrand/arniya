@@ -80,7 +80,7 @@
             if (window.DT_ORDERS) {
                 const count = element?.querySelector('.dt-flow-count')?.textContent || '';
                 const label = element?.querySelector('.dt-flow-label')?.textContent || statusKey;
-                window.DT_ORDERS.showToast(`📊 Filtered: ${label} (${count} orders)`);
+                window.DT_ORDERS.showToast(`Filtered: ${label} (${count} orders)`);
             }
         },
 
@@ -123,7 +123,7 @@
 
             if (window.DT_ORDERS) {
                 const cleanName = colClass.replace('col-', '').toUpperCase();
-                window.DT_ORDERS.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+                window.DT_ORDERS.showToast(isChecked ? cleanName + ' column visible' : cleanName + ' column hidden');
             }
         },
 
@@ -142,7 +142,7 @@
                 }
             });
 
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ All columns restored to default view');
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('All columns restored to default view');
         },
 
         initColumnPreferences: function() {

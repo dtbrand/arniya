@@ -7,7 +7,7 @@ window.DT_NAVIGATION = {
     // Quick Add Preset
     quickAdd: function(title, url) {
         this.insertItem(title, url, false);
-        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`✨ Added "${title}" to navigation tree!`);
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`Added "${title}" to navigation tree!`);
     },
 
     // Add Custom Item from Inputs
@@ -27,7 +27,7 @@ window.DT_NAVIGATION = {
         titleInput.value = '';
         if (urlInput) urlInput.value = '';
 
-        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`✨ Added "${title}" to navigation tree!`);
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`Added "${title}" to navigation tree!`);
     },
 
     // Insert Item DOM
@@ -127,7 +127,7 @@ window.DT_NAVIGATION = {
     // Save Menu
     saveMenu: function() {
         if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast('✅ Navigation tree & Mega Menu saved live!');
+            window.DT_CATALOGUE.showToast('Navigation tree & Mega Menu saved live!');
         }
     },
 

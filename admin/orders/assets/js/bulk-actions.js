@@ -120,7 +120,7 @@
             });
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`⚡ ${checked.length} orders updated to ${newStatus.toUpperCase()}`);
+                window.DT_ORDERS.showToast(`${checked.length} orders updated to ${newStatus.toUpperCase()}`);
             }
         },
 
@@ -329,7 +329,7 @@
             }, 300);
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🏷️ Multi-Label batch print generated for ${selectedOrders.length} selected orders!`);
+                window.DT_ORDERS.showToast(`Multi-Label batch print generated for ${selectedOrders.length} selected orders!`);
             }
         },
 
@@ -445,7 +445,7 @@
             }, 300);
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`📄 Multi-Invoice batch print generated for ${selectedOrders.length} selected orders!`);
+                window.DT_ORDERS.showToast(`Multi-Invoice batch print generated for ${selectedOrders.length} selected orders!`);
             }
         },
 
@@ -512,7 +512,7 @@
                                 <tr style="border-bottom:1px solid #E2E8F0;">
                                     <td style="padding:8px;"><strong>${order.items_summary || 'Surat Pure Silk Saree Consignment'}</strong></td>
                                     <td style="padding:8px; text-align:center; font-weight:800;">${order.items_count || '15 pcs'}</td>
-                                    <td style="padding:8px; text-align:center; color:#15803D; font-weight:800;">✓ PASS</td>
+                                    <td style="padding:8px; text-align:center; color:#15803D; font-weight:800;">PASS</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -549,7 +549,7 @@
             }, 300);
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`📦 Multi-Packing Manifest batch print generated for ${selectedOrders.length} selected orders!`);
+                window.DT_ORDERS.showToast(`Multi-Packing Manifest batch print generated for ${selectedOrders.length} selected orders!`);
             }
         },
 
@@ -561,7 +561,7 @@
             }
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`📥 Exporting ${selectedOrders.length} selected orders to CSV/Excel...`);
+                window.DT_ORDERS.showToast(`Exporting ${selectedOrders.length} selected orders to CSV/Excel...`);
             }
         }
     };

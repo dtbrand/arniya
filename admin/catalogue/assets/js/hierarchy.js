@@ -107,7 +107,7 @@ window.DT_HIERARCHY = {
                     
                     const title = dragged.querySelector('.dt-tree-item a, .dt-tree-item span')?.textContent?.trim() || 'Category';
                     if (window.DT_CATALOGUE) {
-                        window.DT_CATALOGUE.showToast(`✅ Reordered: ${title}`);
+                        window.DT_CATALOGUE.showToast(`Reordered: ${title}`);
                     }
                 }
 

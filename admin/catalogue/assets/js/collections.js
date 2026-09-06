@@ -9,7 +9,7 @@ window.DT_COLLECTIONS = {
 
         const existing = document.getElementById(`assigned-prod-${id}`);
         if (existing) {
-            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`⚠️ "${title}" is already in this collection`);
+            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast(`"${title}" is already in this collection`);
             return;
         }
 
@@ -30,7 +30,7 @@ window.DT_COLLECTIONS = {
         list.appendChild(item);
 
         if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast(`✅ Added "${title}" to collection`);
+            window.DT_CATALOGUE.showToast(`Added "${title}" to collection`);
         }
     },
 
@@ -52,7 +52,7 @@ window.DT_COLLECTIONS = {
     toggleFeatured: function(btn, id, title) {
         const isFeatured = btn.classList.toggle('active');
         if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast(isFeatured ? `⭐ Marked "${title}" as Featured` : `Removed "${title}" from Featured`);
+            window.DT_CATALOGUE.showToast(isFeatured ? `Marked "${title}" as Featured` : `Removed "${title}" from Featured`);
         }
     }
 };
