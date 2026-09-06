@@ -22,7 +22,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
                 <option value="5" <?php echo $display_cat_name === 'Banarasi Brocades' ? 'selected' : ''; ?>>Category: Banarasi Brocades (185 SKUs)</option>
                 <option value="6" <?php echo $display_cat_name === 'Festive Dupattas & Stoles' ? 'selected' : ''; ?>>Category: Festive Dupattas (95 SKUs)</option>
             </select>
-            <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ Merchandising order saved live!')" style="height:28px; padding:0 12px; font-size:11px;">Save Merchandising</button>
+            <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Merchandising order saved live!')" style="height:28px; padding:0 12px; font-size:11px;">Save Merchandising</button>
         </div>
     </div>
 

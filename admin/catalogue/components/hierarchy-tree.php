@@ -198,7 +198,9 @@
                 <li class="dt-tree-node">
                     <div class="dt-tree-item level-1">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span class="dt-tree-drag-handle">☰</span>
+                            <span class="dt-tree-drag-handle" title="Drag to reorder with mouse">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
+                            </span>
                             <span style="font-weight:600; font-size:12px;">Straight Cut Foil Prints</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">

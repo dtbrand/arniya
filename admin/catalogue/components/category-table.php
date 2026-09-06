@@ -73,14 +73,14 @@ $totalCatCount = count($categoriesList);
                         <td><code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;"><?= htmlspecialchars($catSlug) ?></code></td>
                         <td><span class="dt-badge blue">Direct Root</span></td>
                         <td><strong><?= $skuDisplay ?></strong></td>
-                        <td><button type="button" class="wp-star-btn active" onclick="window.DT_CATEGORIES.toggleFeatured(this, <?= $catId ?>, '<?= addslashes($catName) ?>')">★</button></td>
+                        <td><button type="button" class="wp-star-btn active" onclick="window.DT_CATEGORIES.toggleFeatured(this, <?= $catId ?>, '<?= addslashes($catName) ?>')" title="Toggle Featured"><svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button></td>
                         <td><span class="dt-badge gold">Banner + Grid</span></td>
                         <td><span class="dt-badge green">Active</span></td>
                         <td style="text-align:right;">
                             <div style="display:inline-flex; gap:4px;">
                                 <a href="/admin/catalogue/categories/view.php?id=<?= $catId ?>" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">View</a>
                                 <a href="/admin/catalogue/categories/edit.php?id=<?= $catId ?>" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
-                                <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_CATALOGUE.deleteRow('cat-row-<?= $catId ?>', '<?= addslashes($catName) ?>')" style="height:24px; padding:0 6px;">✕</button>
+                                <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_CATALOGUE.deleteRow('cat-row-<?= $catId ?>', '<?= addslashes($catName) ?>')" style="height:24px; padding:0 6px; display:inline-flex; align-items:center; justify-content:center;" title="Delete Category"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                             </div>
                         </td>
                     </tr>

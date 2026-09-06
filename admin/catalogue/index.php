@@ -72,8 +72,9 @@ $active_subnav = "overview";
             $totalProducts = count($allProducts);
             ?>
             <div class="dt-cat-flow-card">
-                <div style="font-size:12px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:10px;">
-                    👑 DT BRAND'S WHOLESALE CATALOGUE TAXONOMY FLOW
+                <div style="font-size:12px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
+                    <span>DT BRAND'S WHOLESALE CATALOGUE TAXONOMY FLOW</span>
                 </div>
                 <div class="dt-cat-flow-steps">
                     <a href="/admin/catalogue/categories/" class="dt-cat-flow-step" style="text-decoration:none;">

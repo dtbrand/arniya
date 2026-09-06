@@ -35,7 +35,7 @@ $active_subnav = "subcategories";
                     <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;">Reorder Subcategories</h1>
                     <p style="font-size:12px; color:#64748b; margin:2px 0 0 0;">Move subcategories up or down within their parent categories.</p>
                 </div>
-                <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ Subcategory sort order saved!')" style="height:30px; padding:0 14px; font-size:11.5px;">Save Order</button>
+                <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Subcategory sort order saved!')" style="height:30px; padding:0 14px; font-size:11.5px;">Save Order</button>
             </div>
 
             <?php include_once __DIR__ . '/../components/hierarchy-tree.php'; ?>

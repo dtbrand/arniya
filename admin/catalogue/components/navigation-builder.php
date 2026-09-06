@@ -12,7 +12,7 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             <span>Visual Navigation &amp; Mega Menu Builder</span>
         </h3>
-        <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_NAVIGATION) window.DT_NAVIGATION.saveMenu(); else if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ Navigation menu updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save Menu Structure</button>
+        <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_NAVIGATION) window.DT_NAVIGATION.saveMenu(); else if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Navigation menu updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save Menu Structure</button>
     </div>
 
     <div style="padding:16px;">
@@ -147,8 +147,14 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0;">Live Navigation Preview</h4>
                 <div class="dt-device-switcher">
-                    <button type="button" class="dt-device-btn active" id="btnNavDesk" onclick="window.DT_NAVIGATION.switchNavPreview('desk')">🖥️ Desktop Mega Menu</button>
-                    <button type="button" class="dt-device-btn" id="btnNavMob" onclick="window.DT_NAVIGATION.switchNavPreview('mob')">📱 Mobile App Drawer</button>
+                    <button type="button" class="dt-device-btn active" id="btnNavDesk" onclick="window.DT_NAVIGATION.switchNavPreview('desk')" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        <span>Desktop Mega Menu</span>
+                    </button>
+                    <button type="button" class="dt-device-btn" id="btnNavMob" onclick="window.DT_NAVIGATION.switchNavPreview('mob')" style="display:inline-flex; align-items:center; gap:5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                        <span>Mobile App Drawer</span>
+                    </button>
                 </div>
             </div>
 
@@ -188,8 +194,11 @@
             <div id="navPrevMob" style="display:none; padding:10px 0;">
                 <div class="dt-mobile-nav-drawer">
                     <div class="dt-mob-drawer-header">
-                        <span>👑 DT BRAND'S MENU</span>
-                        <span style="font-size:12px; color:#D4AF37;">✕</span>
+                        <span style="display:inline-flex; align-items:center; gap:6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
+                            <span>DT BRAND'S MENU</span>
+                        </span>
+                        <span style="display:inline-flex; align-items:center; justify-content:center; color:#D4AF37;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                     </div>
                     <div class="dt-mob-drawer-body">
                         <a href="javascript:void(0)" class="dt-mob-menu-link">

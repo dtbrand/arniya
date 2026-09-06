@@ -30,7 +30,7 @@
     <div style="display:flex; align-items:center; gap:6px;">
         <div style="position:relative; display:inline-flex; align-items:center;">
             <input type="text" id="catSearchInput" placeholder="Search categories, slugs..." style="height:28px; padding-left:10px; padding-right:22px; width:190px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="window.DT_CATALOGUE.filterTable('catSearchInput', 'catListTable', 'catSearchClear')">
-            <span id="catSearchClear" onclick="window.DT_CATALOGUE.clearSearch('catSearchInput', 'catListTable', 'catSearchClear')" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
+            <span id="catSearchClear" onclick="window.DT_CATALOGUE.clearSearch('catSearchInput', 'catListTable', 'catSearchClear')" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; display:none; align-items:center; justify-content:center;" title="Clear search"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
         </div>
         <button type="button" class="dt-btn-action-sm gold" onclick="window.DT_CATALOGUE.filterTable('catSearchInput', 'catListTable')" style="height:28px; font-size:11px; padding:0 10px;">
             <span>Search</span>

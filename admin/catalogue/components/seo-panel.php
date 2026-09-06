@@ -5,8 +5,8 @@
  * seo-panel.php — Category & Collection Search Engine Optimization Panel Component
  * DT Brand's & Jai Hanuman Tex
  */
-$seo_cat_name = isset($cat['name']) ? $cat['name'] : (isset($cat_name) ? $cat_name : 'Silk Sarees & Handlooms');
-$seo_cat_slug = isset($cat['slug']) ? $cat['slug'] : 'silk-sarees';
+$seo_cat_name = (isset($cat) && is_array($cat) && isset($cat['name'])) ? $cat['name'] : (isset($cat_name) ? $cat_name : 'Silk Sarees & Handlooms');
+$seo_cat_slug = (isset($cat) && is_array($cat) && isset($cat['slug'])) ? $cat['slug'] : 'silk-sarees';
 $seo_title = "Pure {$seo_cat_name} Wholesale | DT Brand's Surat";
 $seo_desc = "Buy authentic pure {$seo_cat_name} at direct Surat factory wholesale rates. Certified handloom and luxury weaves with fast depot dispatch.";
 ?>
@@ -40,7 +40,7 @@ $current_seo_tab = basename($_SERVER['SCRIPT_NAME']);
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <span>AI Generate SEO</span>
             </button>
-            <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ SEO Meta tags updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save SEO Settings</button>
+            <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('SEO Meta tags updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save SEO Settings</button>
         </div>
     </div>
 
