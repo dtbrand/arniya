@@ -87,9 +87,9 @@
                 + '<span style="width:10px; height:10px; border-radius:50%; background:' + esc(c.hex)
                 + '; display:inline-block; border:1px solid #fff;"></span>'
                 + '<span>' + esc(c.name) + '</span>'
-                + '<button type="button" data-drop-colour="' + i + '" title="Remove"'
-                + ' style="border:0; background:none; cursor:pointer; font-size:13px; line-height:1;'
-                + ' color:#b32d2e; padding:0 0 0 2px;">&times;</button></span>';
+                + '<button type="button" class="dt-btn-chip-remove" data-drop-colour="' + i + '" title="Remove"'
+                + ' style="border:0; background:none; cursor:pointer; display:inline-flex; align-items:center;'
+                + ' color:#b32d2e; padding:0 0 0 2px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>';
         }).join('');
     }
 
@@ -101,10 +101,10 @@
             return;
         }
         box.innerHTML = sizes.map(function (s, i) {
-            return '<span class="adm-badge gold" style="font-size:11px; padding:3px 8px;">' + esc(s)
-                + '<button type="button" data-drop-size="' + i + '" title="Remove"'
-                + ' style="border:0; background:none; cursor:pointer; font-size:13px; line-height:1;'
-                + ' color:#b32d2e; padding:0 0 0 4px;">&times;</button></span>';
+            return '<span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">' + esc(s)
+                + '<button type="button" class="dt-btn-chip-remove" data-drop-size="' + i + '" title="Remove"'
+                + ' style="border:0; background:none; cursor:pointer; display:inline-flex; align-items:center;'
+                + ' color:#b32d2e; padding:0 0 0 4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>';
         }).join('');
     }
     function rowKey(colour, size) {

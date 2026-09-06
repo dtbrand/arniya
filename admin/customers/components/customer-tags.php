@@ -143,7 +143,9 @@ $listUrl = '/admin/customers/index.php';
             <div style="display:flex; align-items:center; gap:8px;">
                 <div style="position:relative; width:250px;">
                     <input type="text" id="dtTagSearchInput" class="dt-input-field no-icon" placeholder="Search labels, cohorts or rules..." oninput="filterTagsTable(this.value)" style="height:36px; font-size:0.78rem; padding:0 28px 0 12px; width:100%; box-sizing:border-box; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px;">
-                    <button type="button" id="dtTagSearchClearBtn" onclick="filterTagsTable('')" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); background:#EAE5D9; border:none; color:#181512; cursor:pointer; font-size:0.68rem; width:18px; height:18px; border-radius:50%; align-items:center; justify-content:center; padding:0;">&#10005;</button>
+                    <button type="button" id="dtTagSearchClearBtn" class="dt-btn dt-btn-pale dt-search-clear-btn" onclick="filterTagsTable('')" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); width:20px; height:20px; border-radius:50%; padding:0; align-items:center; justify-content:center; cursor:pointer;" title="Clear Filter">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                 </div>
                 <span id="dtTagSearchCount" style="font-size:0.72rem; color:#78716C; font-weight:700;"></span>
             </div>

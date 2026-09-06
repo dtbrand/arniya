@@ -106,7 +106,10 @@ try {
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹<?php echo number_format($totalSettled); ?></span>
+                            <span class="dt-kpi-main-number" style="display:inline-flex; align-items:center; gap:2px;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span><?php echo number_format($totalSettled); ?></span>
+                            </span>
                             <span class="dt-kpi-trend-pill up">100% Audited</span>
                         </div>
                         <div class="dt-kpi-footer">
@@ -123,7 +126,10 @@ try {
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹<?php echo number_format($pendingApproval); ?></span>
+                            <span class="dt-kpi-main-number" style="display:inline-flex; align-items:center; gap:2px;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span><?php echo number_format($pendingApproval); ?></span>
+                            </span>
                             <span class="dt-kpi-trend-pill amber">Live Audit</span>
                         </div>
                         <div class="dt-kpi-footer">
@@ -140,7 +146,10 @@ try {
                             </div>
                         </div>
                         <div class="dt-kpi-number-wrap">
-                            <span class="dt-kpi-main-number">₹<?php echo number_format($inGateway); ?></span>
+                            <span class="dt-kpi-main-number" style="display:inline-flex; align-items:center; gap:2px;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span><?php echo number_format($inGateway); ?></span>
+                            </span>
                             <span class="dt-kpi-trend-pill blue">Gateway Processing</span>
                         </div>
                         <div class="dt-kpi-footer">
@@ -161,7 +170,10 @@ try {
                             <span class="dt-kpi-trend-pill emerald">Active Ledger</span>
                         </div>
                         <div class="dt-kpi-footer">
-                            <span>₹<?php echo number_format($creditNotesBalance); ?> Wholesale Ledger Bal.</span>
+                            <span style="display:inline-flex; align-items:center; gap:2px;">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span><?php echo number_format($creditNotesBalance); ?> Wholesale Ledger Bal.</span>
+                            </span>
                             <span class="dt-kpi-arrow">→</span>
                         </div>
                     </div>
@@ -282,7 +294,12 @@ try {
                                             <div style="font-size:11px; color:#64748B; margin-top:2px;"><?php echo $custCity; ?><?php echo $custPhone ? ' • Ph: ' . $custPhone : ''; ?></div>
                                         </td>
                                         <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;"><?php echo $method; ?></td>
-                                        <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹<?php echo number_format($amount); ?></td>
+                                        <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">
+                                            <span style="display:inline-flex; align-items:center; gap:2px;">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                                <span><?php echo number_format($amount); ?></span>
+                                            </span>
+                                        </td>
                                         <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge <?php echo $statusClass; ?>"><span class="dt-status-dot"></span><span><?php echo $statusLabel; ?></span></span></td>
                                         <td class="col-ref-settlement" style="white-space:nowrap;">
                                             <div style="font-size:11.5px; color:#181512; font-weight:700;"><?php echo $dateStr; ?></div>
@@ -290,7 +307,7 @@ try {
                                         </td>
                                         <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                             <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
-                                                <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('<?php echo $refId; ?>')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('<?php echo $refId; ?>')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="View Full Details">
                                                     <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                     <span>View</span>
                                                 </button>
@@ -298,8 +315,8 @@ try {
                                                     <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                     <span>Voucher</span>
                                                 </button>
-                                                <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('<?php echo $refId; ?>', '<?php echo $amount; ?>', '<?php echo addslashes($custName); ?>')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
-                                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('<?php echo $refId; ?>', '<?php echo $amount; ?>', '<?php echo addslashes($custName); ?>')" class="dt-btn dt-btn-emerald" style="height:28px; padding:0 9px; font-size:11px; display:inline-flex; align-items:center; gap:4px;" title="Share WhatsApp Slip">
+                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                                     <span>WhatsApp</span>
                                                 </button>
                                             </div>

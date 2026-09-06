@@ -199,12 +199,17 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                     <small style="color:#FFE57F; font-size:11px; font-weight:700;">WhatsApp message, catalogue line, or "Field: value" list</small>
                 </div>
             </div>
-            <button type="button" onclick="closeAiImporterModal()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(212,175,55,0.4); border-radius:50%; width:28px; height:28px; color:#FFE57F; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;" onmouseover="this.style.background='rgba(179,45,46,0.3)';this.style.color='#f87171';" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='#FFE57F';">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeAiImporterModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:16px 18px; background:#fff;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
                 <span style="font-size:12px; font-weight:700; color:#181512;">Paste the supplier's own words:</span>
-                <button type="button" class="wp-button" style="font-size:11.5px; height:26px; padding:0 8px; color:#b32d2e; display:inline-flex; align-items:center; gap:4px;" onclick="document.getElementById('aiRawTextInput').value='';">
+                <button type="button" class="dt-btn dt-btn-pale" style="font-size:11.5px; height:26px; padding:0 8px; color:#b32d2e; display:inline-flex; align-items:center; gap:4px;" onclick="document.getElementById('aiRawTextInput').value='';">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     <span>Clear</span>
                 </button>
@@ -228,8 +233,8 @@ Description: ..."></textarea>
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; align-items:center; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAiImporterModal()" style="height:34px; font-size:12px; padding:0 14px;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:34px; font-size:12.5px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); display:inline-flex; align-items:center; gap:6px; border:1px solid #8A681F; color:#111827; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 12px rgba(212,175,55,0.4); cursor:pointer; padding:0 16px; border-radius:6px;">
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeAiImporterModal()" style="height:34px; font-size:12px; padding:0 14px;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="parseAndAutoFillProductData()" style="height:34px; font-size:12.5px; font-weight:800; display:inline-flex; align-items:center; gap:6px; padding:0 16px;">
                 <span>Fill what the text says</span>
             </button>
         </div>

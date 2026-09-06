@@ -288,8 +288,8 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                             <?php endif; ?>
 
                             <!-- WhatsApp Slip Trigger -->
-                            <button type="button" onclick="window.DT_RETURNS.shareWhatsApp('<?php echo $r['id']; ?>')" class="dt-btn dt-btn-emerald" style="height:28px; padding:0 8px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:3px;" title="WhatsApp Update">
-                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                            <button type="button" onclick="window.DT_RETURNS.shareWhatsApp('<?php echo $r['id']; ?>')" class="dt-btn dt-btn-emerald" style="height:28px; padding:0 8px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px;" title="WhatsApp Update">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                 <span>WhatsApp</span>
                             </button>
                         </div>
@@ -333,7 +333,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <span>Reject Claim</span>
                 </button>
                 <button type="button" id="modalWhatsAppBtn" class="dt-btn dt-btn-emerald" style="height:32px; padding:0 12px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:4px;">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     <span>WhatsApp</span>
                 </button>
                 <button type="button" id="modalApproveBtn" class="dt-btn dt-btn-gold" style="height:32px; padding:0 14px; font-size:11.5px; font-weight:800;">
@@ -413,7 +413,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <p id="lightboxSubText" style="margin:2px 0 0 0; font-size:11px; color:#A8A29E;">Surat Central Depot Quality Audit</p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_RETURNS.closeLightbox()" style="background:#2A241E; border:1px solid #5A4210; color:#D4AF37; width:28px; height:28px; border-radius:6px; cursor:pointer; font-weight:800; display:flex; align-items:center; justify-content:center;" aria-label="Close Viewer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="window.DT_RETURNS.closeLightbox()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" aria-label="Close Viewer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Lightbox Canvas Body -->

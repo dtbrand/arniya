@@ -126,12 +126,12 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <a href="/admin/products/" class="wp-button" style="height:32px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <a href="/admin/products/" class="dt-btn dt-btn-pale" style="height:32px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to Products</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openAddReviewModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <button type="button" class="dt-btn dt-btn-gold" onclick="openAddReviewModal()" style="padding:0 14px; height:32px; font-size:12.5px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Manual Review</span>
                     </button>
                 </div>
@@ -194,11 +194,11 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
                         <option value="reject">Reject Selected</option>
                         <option value="delete">Delete Selected</option>
                     </select>
-                    <button type="button" class="wp-button" onclick="handleBulkReviewAction()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Apply</button>
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="handleBulkReviewAction()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px;">Apply</button>
                 </div>
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
                     <input type="text" id="reviewSearchInput" class="wp-search-input" placeholder="Search customer, review text..." style="height:34px; padding-left:12px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchReviews(this.value)">
-                    <button type="button" class="wp-button primary" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search Reviews</button>
+                    <button type="button" class="dt-btn dt-btn-gold" style="height:34px; font-size:12px; font-weight:800; padding:0 14px;">Search Reviews</button>
                 </div>
             </div>
 
@@ -303,7 +303,12 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
     <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Add Verified Customer Review</h3>
-            <button type="button" onclick="closeAddReviewModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeAddReviewModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 20px;">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
@@ -345,8 +350,8 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddReviewModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewReview()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">+ Save Review</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeAddReviewModal()" style="height:32px; font-size:12px; font-weight:700;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitNewReview()" style="height:32px; font-size:12px; font-weight:800;">+ Save Review</button>
         </div>
     </div>
 </div>
@@ -356,7 +361,12 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
     <div style="background:#fff; width:95%; max-width:500px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;" id="replyModalTitle">Store Official Reply</h3>
-            <button type="button" onclick="closeReplyModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeReplyModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 20px;">
             <p style="font-size:12.5px; color:#646970; margin-top:0; margin-bottom:10px;" id="replyTargetText">Replying to customer review...</p>
@@ -364,8 +374,8 @@ if ($statusFilter !== '' && in_array(strtolower($statusFilter), ['approved', 'pe
             <textarea id="replyContent" rows="4" placeholder="Write store's official response to display on product page..." style="width:100%; padding:8px 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;"></textarea>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeReplyModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitReply()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Publish Store Reply</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeReplyModal()" style="height:32px; font-size:12px; font-weight:700;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitReply()" style="height:32px; font-size:12px; font-weight:800;">Publish Store Reply</button>
         </div>
     </div>
 </div>

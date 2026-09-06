@@ -65,7 +65,7 @@
             <div id="columnVisibilityMenu" class="dt-col-menu" style="display:none; position:absolute; right:0; top:calc(100% + 6px); width:220px; background:#FFFFFF; border:1px solid #D4AF37; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.14); padding:10px 12px; z-index:99999;">
                 <div style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #E2DFD7; padding-bottom:6px;">
                     <span>Toggle Visible Columns</span>
-                    <button type="button" onclick="window.DT_ORDER_LIST.resetAllColumns()" style="background:none; border:none; font-size:10px; color:#1D4ED8; font-weight:700; cursor:pointer; padding:0;">Reset All</button>
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_LIST.resetAllColumns()" style="height:20px; font-size:9.5px; padding:0 6px; font-weight:700;">Reset All</button>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#1E293B;">
                     <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-id" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-id', this.checked)"> <span>Order ID</span></label>

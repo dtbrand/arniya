@@ -37,8 +37,8 @@
             <span>Export Studio</span>
         </button>
 
-        <button type="button" onclick="clearCustomerSelection()" style="background:none; border:none; color:#9CA3AF; cursor:pointer; padding:4px 6px; display:inline-flex; align-items:center; justify-content:center;" title="Clear Selection" aria-label="Clear Selection">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="clearCustomerSelection()" style="width:26px; height:26px; border-radius:6px; padding:0; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;" title="Clear Selection" aria-label="Clear Selection">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     </div>
 </div>

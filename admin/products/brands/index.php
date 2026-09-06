@@ -143,20 +143,20 @@ foreach ($brands as $b) {
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/" class="dt-btn dt-btn-pale" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products</span>
                     </a>
-                    <a href="/admin/products/categories/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/categories/" class="dt-btn dt-btn-pale" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                         <span>Categories</span>
                     </a>
-                    <a href="/admin/products/attributes/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/attributes/" class="dt-btn dt-btn-pale" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
                         <span>Attributes</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openAddBrandModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <button type="button" class="dt-btn dt-btn-gold" onclick="openAddBrandModal()" style="padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Brand</span>
                     </button>
                 </div>
@@ -189,7 +189,7 @@ foreach ($brands as $b) {
 
                 <div class="dt-kpi-card">
                     <div style="width:36px; height:36px; border-radius:6px; background:#EFF6FF; border:1px solid #93C5FD; display:flex; align-items:center; justify-content:center; color:#1D4ED8;">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12M6 8h12"></path></svg>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
@@ -298,7 +298,12 @@ foreach ($brands as $b) {
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Edit House Label: <span id="modalBrandTitleName" style="color:#FFE57F;"></span></h3>
             </div>
-            <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeEditBrandModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 22px; max-height:calc(90vh - 120px); overflow-y:auto;">
             <input type="hidden" id="editModalBrandId" value="">
@@ -312,8 +317,8 @@ foreach ($brands as $b) {
                     </div>
                     <div style="flex:1;">
                         <input type="file" id="editBrandLogoFile" accept="image/*" style="display:none;" onchange="previewBrandLogoUpload(this, 'editBrandLogoPreview')">
-                        <button type="button" class="wp-button" onclick="document.getElementById('editBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <button type="button" class="dt-btn dt-btn-pale" onclick="document.getElementById('editBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <span>Change Brand Logo</span>
                         </button>
                         <div style="font-size:11px; color:#64748B; margin-top:4px;">Upload PNG, JPG, WebP or SVG emblem</div>
@@ -342,9 +347,9 @@ foreach ($brands as $b) {
             </div>
         </div>
         <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeEditBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitEditBrandModal()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeEditBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitEditBrandModal()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; display:inline-flex; align-items:center; gap:6px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>Save &amp; Update Brand</span>
             </button>
         </div>
@@ -361,7 +366,12 @@ foreach ($brands as $b) {
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Add New House Label</h3>
             </div>
-            <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeAddBrandModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 22px; max-height:calc(90vh - 120px); overflow-y:auto;">
 
@@ -374,8 +384,8 @@ foreach ($brands as $b) {
                     </div>
                     <div style="flex:1;">
                         <input type="file" id="newBrandLogoFile" accept="image/*" style="display:none;" onchange="previewBrandLogoUpload(this, 'newBrandLogoPreview')">
-                        <button type="button" class="wp-button" onclick="document.getElementById('newBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <button type="button" class="dt-btn dt-btn-pale" onclick="document.getElementById('newBrandLogoFile').click()" style="height:32px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:6px; cursor:pointer; padding:0 12px; border-radius:5px;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <span>Upload Brand Logo</span>
                         </button>
                         <div style="font-size:11px; color:#64748B; margin-top:4px;">Upload PNG, JPG, WebP or SVG emblem</div>
@@ -402,9 +412,9 @@ foreach ($brands as $b) {
             </div>
         </div>
         <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewBrand()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeAddBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitNewBrand()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; display:inline-flex; align-items:center; gap:6px;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Save &amp; Create Label</span>
             </button>
         </div>

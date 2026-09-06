@@ -149,8 +149,8 @@ $totalProducts = count(ProductCatalog::getAll(true));
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>Variants Matrix</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openAddAttributeModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <button type="button" class="dt-btn dt-btn-gold" onclick="openAddAttributeModal()" style="height:32px; padding:0 14px; font-size:12.5px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Attribute</span>
                     </button>
                 </div>
@@ -206,7 +206,7 @@ $totalProducts = count(ProductCatalog::getAll(true));
                         <option value="">Bulk actions</option>
                         <option value="delete">Delete Selected</option>
                     </select>
-                    <button type="button" class="wp-button" onclick="handleAttrBulkAction()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Apply</button>
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="handleAttrBulkAction()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px;">Apply</button>
                 </div>
 
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
@@ -294,7 +294,12 @@ $totalProducts = count(ProductCatalog::getAll(true));
     <div style="background:#fff; width:95%; max-width:520px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Add New Textile Attribute</h3>
-            <button type="button" onclick="closeAddAttributeModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeAddAttributeModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 20px;">
             <div style="margin-bottom:12px;">
@@ -316,8 +321,8 @@ $totalProducts = count(ProductCatalog::getAll(true));
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddAttributeModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewAttribute()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">+ Save Attribute</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeAddAttributeModal()" style="height:32px; font-size:12px; font-weight:700;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitNewAttribute()" style="height:32px; font-size:12px; font-weight:800;">+ Save Attribute</button>
         </div>
     </div>
 </div>
@@ -327,7 +332,12 @@ $totalProducts = count(ProductCatalog::getAll(true));
     <div style="background:#fff; width:95%; max-width:480px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Edit Attribute Details</h3>
-            <button type="button" onclick="closeEditAttrModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeEditAttrModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; padding:0; border-radius:6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div style="padding:18px 20px;">
             <input type="hidden" id="editAttrId">
@@ -350,8 +360,8 @@ $totalProducts = count(ProductCatalog::getAll(true));
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeEditAttrModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="saveEditedAttribute()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Update Changes</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeEditAttrModal()" style="height:32px; font-size:12px; font-weight:700;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="saveEditedAttribute()" style="height:32px; font-size:12px; font-weight:800;">Update Changes</button>
         </div>
     </div>
 </div>

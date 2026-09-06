@@ -143,7 +143,9 @@ $attr_name = (string)$attr['name'];
                             </div>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
-                            <button type="button" style="background:none; border:none; color:#dc2626; cursor:pointer; font-size:16px; font-weight:700; padding:0 4px;" onclick="removeTerm('<?= htmlspecialchars(addslashes((string)($t['name'] ?? ''))) ?>', '<?= htmlspecialchars($hex) ?>')">&times;</button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" style="width:24px; height:24px; border-radius:4px; padding:0; color:#DC2626; border-color:#FECACA; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;" onclick="removeTerm('<?= htmlspecialchars(addslashes((string)($t['name'] ?? ''))) ?>', '<?= htmlspecialchars($hex) ?>')" title="Remove Term">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -160,7 +162,9 @@ $attr_name = (string)$attr['name'];
     <div style="background:#fff; width:95%; max-width:440px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF;">Add Swatch / Term</h3>
-            <button type="button" onclick="closeAddTermModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer;">&times;</button>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="closeAddTermModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" aria-label="Close Modal">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
         <div style="padding:18px 20px;">
             <div style="margin-bottom:12px;">
@@ -176,8 +180,8 @@ $attr_name = (string)$attr['name'];
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddTermModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitTerm()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">+ Save Term</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="closeAddTermModal()" style="height:32px; font-size:12px; font-weight:700;">Cancel</button>
+            <button type="button" class="dt-btn dt-btn-gold" onclick="submitTerm()" style="height:32px; font-size:12px; font-weight:800;">+ Save Term</button>
         </div>
     </div>
 </div>

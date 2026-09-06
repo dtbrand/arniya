@@ -20,7 +20,7 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Dock • Order <strong id="modalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s ease;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Modal Scrollable Body -->
@@ -39,19 +39,19 @@
                 <!-- Recommended 1-Click Fast Presets (100% Real Vector SVGs) -->
                 <div style="font-size:11px; color:#64748B; margin-bottom:6px; font-weight:700;">Recommended Fast Transitions:</div>
                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="padding:5px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span>Packed &amp; QC Pass</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="background:#FFFFFF; border:1px solid #86EFAC; color:#15803D; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="padding:5px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Handover to Courier</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="background:#FFFFFF; border:1px solid #93C5FD; color:#1D4ED8; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="padding:5px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span>Out for Delivery</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="padding:5px 10px; font-size:11px; font-weight:800; display:inline-flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                         <span>Delivered</span>
                     </button>
@@ -112,7 +112,7 @@
             <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:10px 12px; display:flex; align-items:center; gap:10px;">
                 <input type="checkbox" id="modalNotifyWhatsApp" checked style="width:16px; height:16px; accent-color:#15803D; cursor:pointer;">
                 <label for="modalNotifyWhatsApp" style="cursor:pointer; font-size:11.5px; color:#15803D; font-weight:700; display:flex; align-items:center; gap:6px;">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     <span>Send 1-Click WhatsApp Live Tracking Alert to Consignee</span>
                 </label>
             </div>
@@ -154,7 +154,7 @@
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                 <span>Cancel Order Confirmation</span>
             </h3>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeCancelModal()" style="border:none; background:transparent; font-size:16px; cursor:pointer; color:#64748B; padding:0 4px;" title="Close Modal">
+            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="window.DT_ORDER_STATUS.closeCancelModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Close Modal">
                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
@@ -276,11 +276,11 @@
 
         <!-- Mode Switcher Tabs (Shipping Barcode vs Warehouse Manifest) -->
         <div style="display:flex; gap:6px; padding:0 18px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7;">
-            <button type="button" id="tabBtnShippingLabel" onclick="window.DT_ORDER_VIEW.switchDocTab('shipping')" style="flex:1; height:30px; font-size:11px; font-weight:800; border-radius:6px 6px 0 0; border:1px solid #D4AF37; border-bottom:none; cursor:pointer; background:#FFFFFF; color:#8A681F; display:flex; align-items:center; justify-content:center; gap:5px;">
+            <button type="button" id="tabBtnShippingLabel" class="dt-btn dt-tab-btn" onclick="window.DT_ORDER_VIEW.switchDocTab('shipping')" style="flex:1; height:30px; font-size:11px; font-weight:800; border-radius:6px 6px 0 0; border:1px solid #D4AF37; border-bottom:none; cursor:pointer; background:#FFFFFF; color:#8A681F; display:flex; align-items:center; justify-content:center; gap:5px;">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                 <span>4×6 Courier Shipping Label</span>
             </button>
-            <button type="button" id="tabBtnPackingSlip" onclick="window.DT_ORDER_VIEW.switchDocTab('packing')" style="flex:1; height:30px; font-size:11px; font-weight:700; border-radius:6px 6px 0 0; border:1px solid #CBD5E1; border-bottom:none; cursor:pointer; background:#F1F5F9; color:#64748B; display:flex; align-items:center; justify-content:center; gap:5px;">
+            <button type="button" id="tabBtnPackingSlip" class="dt-btn dt-tab-btn" onclick="window.DT_ORDER_VIEW.switchDocTab('packing')" style="flex:1; height:30px; font-size:11px; font-weight:700; border-radius:6px 6px 0 0; border:1px solid #CBD5E1; border-bottom:none; cursor:pointer; background:#F1F5F9; color:#64748B; display:flex; align-items:center; justify-content:center; gap:5px;">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                 <span>Warehouse Packing Manifest</span>
             </button>
@@ -319,7 +319,7 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Consignment Destination • Order <strong id="editAddressModalOrderIdText" style="color:#8A681F; font-weight:800;">—</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.15s ease;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Close Modal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
 
         <!-- Scrollable Form Body -->
