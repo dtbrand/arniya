@@ -72,4 +72,70 @@ test.describe('DT Brand\'s Master UI Regression Suite', () => {
     await closeBtn.click();
     await expect(drawerBackdrop).not.toHaveClass(/active/);
   });
+
+  test('Shop page mobile bottom navigation adapts between mobile and desktop', async ({ page }) => {
+    // 1. Mobile viewport: Bottom navigation must be visible with filter, sort, reels, wishlist, account
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/shop.php', { waitUntil: 'domcontentloaded' });
+    const mobileFooter = page.locator('#shopSmartBottomFooter');
+    await expect(mobileFooter).toBeVisible();
+
+    const filterBtn = page.locator('#filterBtn');
+    const sortBtn = page.locator('#sortBtn');
+    const reelsBtn = page.locator('#smartNavReels');
+    const wishlistBtn = page.locator('#smartNavWishlist');
+    const accountBtn = page.locator('#smartNavAccount');
+
+    await expect(filterBtn).toBeVisible();
+    await expect(sortBtn).toBeVisible();
+    await expect(reelsBtn).toBeVisible();
+    await expect(wishlistBtn).toBeVisible();
+    await expect(accountBtn).toBeVisible();
+
+    // Elevated center reels button has animated HOT badge
+    const hotBadge = reelsBtn.locator('.shop-smart-hero-hot-badge');
+    await expect(hotBadge).toBeVisible();
+    await expect(hotBadge).toContainText('HOT');
+
+    // 2. Desktop viewport: Shop bottom navigation hidden via media query
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect(mobileFooter).toBeHidden();
+  });
+
+  test('Shop mobile filter overlay opens, switches tabs, selects chips, and closes', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/shop.php', { waitUntil: 'domcontentloaded' });
+
+    const filterBtn = page.locator('#filterBtn');
+    await expect(filterBtn).toBeVisible();
+    await filterBtn.click();
+
+    // Verify filter overlay opens
+    const mfOverlay = page.locator('#mfOverlay');
+    await expect(mfOverlay).toHaveClass(/open/);
+
+    // Verify filter tabs are available
+    const categoryTab = page.locator('.mf-tab[data-tab="category"]');
+    const priceTab = page.locator('.mf-tab[data-tab="price"]');
+    await expect(categoryTab).toBeVisible();
+    await expect(priceTab).toBeVisible();
+
+    // Select a category chip
+    const sareeChip = page.locator('.mf-chip[data-mf-val="Sarees"]');
+    await expect(sareeChip).toBeVisible();
+    await sareeChip.click();
+    await expect(sareeChip).toHaveClass(/active/);
+
+    // Switch to price tab
+    await priceTab.click();
+    const pricePanel = page.locator('#mf-panel-price');
+    await expect(pricePanel).toHaveClass(/active/);
+
+    // Close filter overlay
+    const closeBtn = page.locator('#mfCloseBtn');
+    await expect(closeBtn).toBeVisible();
+    await closeBtn.click();
+    await expect(mfOverlay).not.toHaveClass(/open/);
+  });
 });
+

@@ -92,6 +92,16 @@ class Database
     }
 
     /**
+     * Override PDO connection (primarily for testing and in-memory mock fixtures).
+     */
+    public static function setPdo(?\PDO $pdo, bool $isMock = false): void
+    {
+        self::$pdo = $pdo;
+        self::$isMockMode = $isMock;
+        self::$attempted = true;
+    }
+
+    /**
      * Execute parameterized query safely (SELECT)
      */
     public static function query(string $sql, array $params = []): array

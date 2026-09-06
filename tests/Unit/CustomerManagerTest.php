@@ -15,7 +15,7 @@ class CustomerManagerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Database::reset();
+        Database::setPdo(null, true);
     }
 
     public function testGetAllReturnsArrayShape(): void
