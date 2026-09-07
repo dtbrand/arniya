@@ -82,6 +82,19 @@ $ordersPayload = \DTBrand\OrderManager::getAll();
 ?>
 <script>
 window.SERVER_ORDERS = <?php echo json_encode($ordersPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+
+// Global fetch wrapper with CSRF token for admin actions
+window.dtAdminFetch = async function(url, options = {}) {
+    const csrfToken = window.DT_ADMIN_CSRF_TOKEN || '';
+    const headers = new Headers(options.headers || {});
+    if (csrfToken) {
+        headers.set('X-CSRF-Token', csrfToken);
+    }
+    if (!headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    return fetch(url, { ...options, headers });
+};
 </script>
 <script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>

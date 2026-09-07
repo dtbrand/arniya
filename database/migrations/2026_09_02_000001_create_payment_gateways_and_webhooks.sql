@@ -49,12 +49,22 @@ CREATE TABLE IF NOT EXISTS `payment_transactions` (
     INDEX `idx_tx_created` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 3. Ensure orders table has payment tracking columns
-ALTER TABLE `orders` 
-    ADD COLUMN IF NOT EXISTS `payment_gateway` VARCHAR(50) NULL AFTER `payment_method`,
-    ADD COLUMN IF NOT EXISTS `payment_utr` VARCHAR(100) NULL AFTER `payment_gateway`,
-    ADD COLUMN IF NOT EXISTS `gateway_order_id` VARCHAR(120) NULL AFTER `payment_utr`,
-    ADD COLUMN IF NOT EXISTS `gateway_payment_id` VARCHAR(120) NULL AFTER `gateway_order_id`;
+-- 3. Ensure orders table has payment tracking columns (portable — works on MySQL 5.7 & MariaDB)
+SET @_x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='orders' AND COLUMN_NAME='payment_gateway');
+SET @_s = IF(@_x=0, "ALTER TABLE `orders` ADD COLUMN `payment_gateway` VARCHAR(50) NULL", 'SELECT 1');
+PREPARE _st FROM @_s; EXECUTE _st; DEALLOCATE PREPARE _st;
+
+SET @_x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='orders' AND COLUMN_NAME='payment_utr');
+SET @_s = IF(@_x=0, 'ALTER TABLE `orders` ADD COLUMN `payment_utr` VARCHAR(100) NULL', 'SELECT 1');
+PREPARE _st FROM @_s; EXECUTE _st; DEALLOCATE PREPARE _st;
+
+SET @_x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='orders' AND COLUMN_NAME='gateway_order_id');
+SET @_s = IF(@_x=0, 'ALTER TABLE `orders` ADD COLUMN `gateway_order_id` VARCHAR(120) NULL', 'SELECT 1');
+PREPARE _st FROM @_s; EXECUTE _st; DEALLOCATE PREPARE _st;
+
+SET @_x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='orders' AND COLUMN_NAME='gateway_payment_id');
+SET @_s = IF(@_x=0, 'ALTER TABLE `orders` ADD COLUMN `gateway_payment_id` VARCHAR(120) NULL', 'SELECT 1');
+PREPARE _st FROM @_s; EXECUTE _st; DEALLOCATE PREPARE _st;
 
 -- 4. Seed Default Payment Gateway Configs
 INSERT INTO `payment_gateways` (`gateway_key`, `name`, `description`, `is_active`, `is_test_mode`, `is_recommended`, `config_json`, `sort_order`) 

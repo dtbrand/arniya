@@ -3,6 +3,7 @@
 namespace DTBrand;
 
 require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/../config/session.php';
 
 /**
  * Auth — Enterprise Customer & Admin Authentication Engine
@@ -15,9 +16,7 @@ class Auth
      */
     public static function initSession(): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        dt_session_start();
     }
 
     /**
@@ -558,6 +557,54 @@ class Auth
             'success' => true,
             'message' => 'If an account matches those details, password reset instructions have been sent.'
         ];
+    }
+
+    /**
+     * Reset Password using Token
+     */
+    public static function resetPassword(string $token, string $newPassword): array
+    {
+        $token = trim($token);
+        if (empty($token)) {
+            return ['success' => false, 'message' => 'Invalid reset token.'];
+        }
+        
+        if (strlen($newPassword) < 6) {
+            return ['success' => false, 'message' => 'New password must be at least 6 characters.'];
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                // Find user with valid token
+                $stmt = $pdo->prepare("
+                    SELECT id FROM customers 
+                    WHERE reset_token = ? AND reset_expires > NOW()
+                    LIMIT 1
+                ");
+                $stmt->execute([$token]);
+                $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+                if (!$user) {
+                    return ['success' => false, 'message' => 'Invalid or expired reset token. Please request a new one.'];
+                }
+
+                $newHash = password_hash($newPassword, PASSWORD_BCRYPT);
+                $upd = $pdo->prepare("
+                    UPDATE customers 
+                    SET password_hash = ?, reset_token = NULL, reset_expires = NULL 
+                    WHERE id = ?
+                ");
+                $upd->execute([$newHash, (int)$user['id']]);
+
+                return ['success' => true, 'message' => 'Password has been reset successfully. You can now sign in with your new password.'];
+            } catch (\Exception $e) {
+                error_log('DT password reset completion failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Password reset failed. Please try again shortly.'];
+            }
+        }
+
+        return ['success' => false, 'message' => 'Password reset is temporarily unavailable. Please try again shortly.'];
     }
 
     /**

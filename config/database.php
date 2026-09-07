@@ -9,11 +9,11 @@ return [
     'connections' => [
         'mysql' => [
             'driver' => 'mysql',
-            'host' => getenv('DB_HOST') ?: 'localhost',
-            'port' => getenv('DB_PORT') ?: '3306',
-            'database' => getenv('DB_NAME') ?: 'u602484543_demodt121',
-            'username' => getenv('DB_USER') ?: 'u602484543_demodt121',
-            'password' => getenv('DB_PASS') ?: 'Gautam@9006',
+            'host'     => getenv('DB_HOST')     ?: 'localhost',
+            'port'     => getenv('DB_PORT')     ?: '3306',
+            'database' => getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'u602484543_demohrm'),
+            'username' => getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'u602484543_demohrm'),
+            'password' => getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: 'Gautam@9006'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'options' => [

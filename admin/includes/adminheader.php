@@ -11,6 +11,10 @@ if (!headers_sent()) {
     header("Pragma: no-cache");
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 }
+
+// CSRF Token for admin state-changing actions
+require_once __DIR__ . '/../../config/session.php';
+$adminCsrfToken = dt_csrf_token();
 ?>
 <style>
 /* ════════════════════════════════════════════════════════════════
@@ -773,6 +777,9 @@ if (class_exists('\DTBrand\Database')) {
     }
 }
 ?>
+<script>
+window.DT_ADMIN_CSRF_TOKEN = '<?php echo $adminCsrfToken; ?>';
+</script>
 <script>
 (function() {
     'use strict';

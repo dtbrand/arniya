@@ -8,7 +8,8 @@
  *           discount_value, min_order_value, max_discount,
  *           status ENUM('active','expired'))
  */
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/cors.php';
+cors_json();
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/_guard.php';
 

@@ -650,6 +650,19 @@ $active_subnav = "";
 <script>
 window.DT_AVAILABLE_CATEGORIES = <?php echo json_encode(array_values($categoriesList)); ?>;
 
+// Global fetch wrapper with CSRF token for admin actions
+window.dtAdminFetch = async function(url, options = {}) {
+    const csrfToken = window.DT_ADMIN_CSRF_TOKEN || '';
+    const headers = new Headers(options.headers || {});
+    if (csrfToken) {
+        headers.set('X-CSRF-Token', csrfToken);
+    }
+    if (!headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    return fetch(url, { ...options, headers });
+};
+
 function switchProductView(mode) {
     const table = document.getElementById('productTableView');
     const grid = document.getElementById('productGridView');
@@ -1085,15 +1098,14 @@ function saveBulkEdit() {
         if (numericPrice > 0) params.append('wholesale_price', numericPrice);
     }
 
-    if (typeof window.showToast === 'function') {
-        window.showToast('Saving changes to live database...');
-    }
+if (typeof window.showToast === 'function') {
+            window.showToast('Saving changes to live database...');
+        }
 
-    fetch('/api/products.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-    })
+        window.dtAdminFetch('/api/products.php', {
+            method: 'POST',
+            body: params.toString()
+        })
     .then(res => res.json())
     .then(data => {
         closeBulkEditModal();
@@ -1110,15 +1122,14 @@ function saveBulkEdit() {
 
 function duplicateProductRow(rowId) {
     const prodId = rowId.replace('row-prod-', '');
-    if (typeof window.showToast === 'function') {
-        window.showToast('Duplicating product in database...');
-    }
+if (typeof window.showToast === 'function') {
+            window.showToast('Duplicating product in database...');
+        }
 
-    fetch('/api/products.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'action=duplicate&id=' + encodeURIComponent(prodId)
-    })
+        window.dtAdminFetch('/api/products.php', {
+            method: 'POST',
+            body: 'action=duplicate&id=' + encodeURIComponent(prodId)
+        })
     .then(res => res.json())
     .then(data => {
         if (data.success) {
@@ -1146,9 +1157,8 @@ function trashProductRow(rowId, productName) {
     const row = document.getElementById(rowId);
     const prodId = rowId.replace('row-prod-', '');
 
-    fetch('/api/products.php', {
+    window.dtAdminFetch('/api/products.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'action=delete&id=' + encodeURIComponent(prodId)
     })
     .then(res => res.json())

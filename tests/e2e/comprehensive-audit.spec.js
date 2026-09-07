@@ -158,7 +158,7 @@ test.describe('DT Brand\'s Master Comprehensive E2E & Real-World UI Audit', () =
   });
 
   test('9. Admin Portal: Login and Navigation Security', async ({ page }) => {
-    await page.goto('/adminlogin.php', { waitUntil: 'domcontentloaded' });
+    await page.goto('/admin/login/', { waitUntil: 'domcontentloaded' });
     const emailField = page.locator('input[type="email"], input[name="email"]').first();
     const passField = page.locator('input[type="password"], input[name="password"]').first();
     const submitBtn = page.locator('button[type="submit"]').first();

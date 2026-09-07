@@ -3,13 +3,13 @@ import { test, expect } from '@playwright/test';
 test.describe('DT Brand\'s Master UI Regression Suite', () => {
 
   test('Desktop navigation elements are fully styled with no unstyled components', async ({ page }) => {
-    await page.goto('/adminlogin.php', { waitUntil: 'domcontentloaded' });
+    await page.goto('/admin/login/', { waitUntil: 'domcontentloaded' });
     const submitBtn = page.locator('button[type="submit"]').first();
     await expect(submitBtn).toBeVisible();
   });
 
   test('Inputs receive focus state without layout shift', async ({ page }) => {
-    await page.goto('/adminlogin.php', { waitUntil: 'domcontentloaded' });
+    await page.goto('/admin/login/', { waitUntil: 'domcontentloaded' });
     const emailField = page.locator('input[type="email"], input[name="email"]').first();
     await emailField.focus();
     await expect(emailField).toBeFocused();

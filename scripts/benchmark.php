@@ -55,7 +55,7 @@ $endpoints = [
     'Reseller B2B Portal'        => "{$baseUrl}/reseller.php",
     'Shopping Cart'              => "{$baseUrl}/cart.php",
     'Checkout Gateway'           => "{$baseUrl}/checkout.php",
-    'Admin Login Console'        => "{$baseUrl}/adminlogin.php",
+    'Admin Login Console'        => "{$baseUrl}/admin/login/",
     'System Health Endpoint'     => "{$baseUrl}/health.php",
 ];
 

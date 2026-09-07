@@ -16,11 +16,8 @@
  * Action (GET):   list (default)
  */
 
-if (!headers_sent()) {
-    header('Content-Type: application/json; charset=utf-8');
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-}
+require_once __DIR__ . '/cors.php';
+cors_json();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     http_response_code(200);

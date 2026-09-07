@@ -6,6 +6,9 @@
 (function() {
     'use strict';
 
+    // Use the admin fetch wrapper with CSRF token
+    const dtAdminFetch = window.dtAdminFetch || fetch;
+
     window.DT_ORDER_STATUS = {
         openStatusModal: function(orderId, currentStatus) {
             const modal = document.getElementById('updateStatusModal');
@@ -100,7 +103,7 @@
             formData.append('tracking_number', tracking);
             formData.append('courier_name', carrier);
 
-            fetch('/api/orders.php', {
+            dtAdminFetch('/api/orders.php', {
                 method: 'POST',
                 body: formData
             }).then(r => r.json()).catch(err => console.log('Order status network sync:', err));
@@ -174,7 +177,7 @@
             formData.append('order_id', orderId);
             formData.append('status', 'cancelled');
 
-            fetch('/api/orders.php', {
+            dtAdminFetch('/api/orders.php', {
                 method: 'POST',
                 body: formData
             }).then(r => r.json()).catch(err => console.log('Order cancel network sync:', err));

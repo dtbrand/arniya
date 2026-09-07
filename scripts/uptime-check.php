@@ -8,7 +8,7 @@ $endpoints = [
     'Homepage' => 'https://jaihanumantex.in/index.php',
     'Shop Catalog' => 'https://jaihanumantex.in/shop.php',
     'Single Saree' => 'https://jaihanumantex.in/product.php',
-    'Admin Portal' => 'https://jaihanumantex.in/adminlogin.php',
+    'Admin Portal' => 'https://jaihanumantex.in/admin/login/',
     'Health Check' => 'https://jaihanumantex.in/health.php',
 ];
 

@@ -23,7 +23,7 @@ test.describe('DT Brand\'s Core E-Commerce & Admin Flows', () => {
   });
 
   test('Admin login portal loads with security fields', async ({ page }) => {
-    const response = await page.goto('/adminlogin.php', { waitUntil: 'domcontentloaded' });
+    const response = await page.goto('/admin/login/', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     const emailInput = page.locator('input[type="email"], input[name="email"]');
     await expect(emailInput).toBeVisible();

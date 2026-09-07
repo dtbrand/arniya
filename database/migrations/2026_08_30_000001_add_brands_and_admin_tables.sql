@@ -18,10 +18,22 @@ CREATE TABLE IF NOT EXISTS `product_brands` (
 
 -- Link products to their house label. Idempotent column add: MariaDB/MySQL 8
 -- have no "ADD COLUMN IF NOT EXISTS", so we gate on information_schema.
+-- NOTE: The AFTER anchor is determined dynamically — early schema uses `category`,
+--       later schema uses `category_name`. We pick whichever exists.
 SET @col_exists = (SELECT COUNT(*) FROM information_schema.COLUMNS
     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'products' AND COLUMN_NAME = 'brand');
+
+SET @after_col = (
+    SELECT CASE
+        WHEN COUNT(*) > 0 THEN 'category_name'
+        ELSE 'category'
+    END
+    FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'products' AND COLUMN_NAME = 'category_name'
+);
+
 SET @ddl = IF(@col_exists = 0,
-    'ALTER TABLE `products` ADD COLUMN `brand` VARCHAR(150) NULL DEFAULT NULL AFTER `category_name`, ADD INDEX `idx_products_brand` (`brand`)',
+    CONCAT('ALTER TABLE `products` ADD COLUMN `brand` VARCHAR(150) NULL DEFAULT NULL AFTER `', @after_col, '`, ADD INDEX `idx_products_brand` (`brand`)'),
     'SELECT 1');
 PREPARE stmt FROM @ddl;
 EXECUTE stmt;

@@ -231,7 +231,14 @@ $requirements = [
     ],
     'memory_limit' => [
         'label' => 'Memory Limit ≥ 256M',
-        'check' => (int)ini_get('memory_limit') >= 256 * 1024 * 1024 || ini_get('memory_limit') === '-1',
+        'check' => (function() {
+            $v = ini_get('memory_limit');
+            if ($v === '-1') return true; // unlimited
+            $n = (int)$v;
+            $u = strtolower(substr(trim($v), -1));
+            $m = ['k' => 1024, 'm' => 1024 * 1024, 'g' => 1024 * 1024 * 1024];
+            return $n * ($m[$u] ?? 1) >= 256 * 1024 * 1024;
+        })(),
         'current' => ini_get('memory_limit'),
     ],
     'max_execution_time' => [
@@ -410,7 +417,7 @@ if ($step === 5 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo = new PDO(
                     "mysql:host={$db['host']};port={$db['port']};dbname={$db['name']};charset=utf8mb4",
                     $db['user'], $db['pass'],
-                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => false]
+                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => true]
                 );
 
                 // ─── RUN ALL MIGRATIONS ───
@@ -441,7 +448,24 @@ if ($step === 5 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                     $file = __DIR__ . '/database/migrations/' . $migration;
                     if (file_exists($file)) {
                         $sql = file_get_contents($file);
-                        $pdo->exec($sql);
+                        // Split file into individual statements and execute one by one
+                        // This is required because PDO::exec() may not handle multi-statement SQL reliably
+                        $statements = array_filter(
+                            array_map('trim', preg_split('/;\s*$/m', $sql)),
+                            fn($s) => $s !== '' && !preg_match('/^\s*(--.*)$/', $s)
+                        );
+                        foreach ($statements as $stmt) {
+                            if (trim($stmt) === '') continue;
+                            try {
+                                $pdo->exec($stmt);
+                            } catch (PDOException $stmtEx) {
+                                // Re-throw with context about which statement failed
+                                throw new PDOException(
+                                    "[{$migration}] " . $stmtEx->getMessage() . " | Statement: " . substr(trim($stmt), 0, 200),
+                                    (string)$stmtEx->getCode()
+                                );
+                            }
+                        }
                         $pdo->prepare("INSERT IGNORE INTO `_migrations` (`migration`) VALUES (?)")->execute([$migration]);
                     }
                 }
@@ -468,17 +492,23 @@ if ($step === 5 && $_SERVER['REQUEST_METHOD'] === 'POST') {
                     'install_version' => '2.0.0',
                 ];
 
-                // Create settings table if not exists
+                // Ensure settings table uses key_name column (consistent with migrations)
+                // Drop and recreate ONLY if it has the wrong `key` column (from a partial run)
+                $hasKeyCol = $pdo->query("SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='settings' AND COLUMN_NAME='key'")->fetchColumn();
+                if ($hasKeyCol) {
+                    $pdo->exec("DROP TABLE IF EXISTS `settings`");
+                }
                 $pdo->exec("
                     CREATE TABLE IF NOT EXISTS `settings` (
-                        `key` VARCHAR(100) PRIMARY KEY,
-                        `value` TEXT,
-                        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                        `id` INT AUTO_INCREMENT PRIMARY KEY,
+                        `key_name` VARCHAR(100) NOT NULL UNIQUE,
+                        `value` TEXT NULL,
+                        `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
                 ");
 
                 foreach ($settings as $k => $v) {
-                    $pdo->prepare("INSERT INTO `settings` (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)")
+                    $pdo->prepare("INSERT INTO `settings` (`key_name`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)")
                         ->execute([$k, $v]);
                 }
 

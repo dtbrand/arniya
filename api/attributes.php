@@ -4,9 +4,8 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+require_once __DIR__ . '/cors.php';
+cors_json();
 
 require_once __DIR__ . '/../src/Database.php';
 use DTBrand\Database;

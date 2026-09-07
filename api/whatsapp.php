@@ -5,14 +5,10 @@
  * Master Number: +91 70463 63528 (917046363528)
  */
 
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+require_once __DIR__ . '/cors.php';
+cors_json();
 
-if (!headers_sent()) {
-    header('Content-Type: application/json; charset=utf-8');
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-}
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 if ($method === 'OPTIONS') {
     http_response_code(200);

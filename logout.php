@@ -3,9 +3,8 @@
  * logout.php — Universal Secure Session Logout Controller
  * Clears all active sessions and redirects safely
  */
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/config/session.php';
+dt_session_start();
 
 // Clear all session variables
 $_SESSION = [];
@@ -26,7 +25,7 @@ $customRedirect = isset($_GET['redirect']) ? trim($_GET['redirect']) : '';
 if (!empty($customRedirect) && (strpos($customRedirect, '/') === 0 || strpos($customRedirect, 'https://') === 0 || strpos($customRedirect, 'http://') === 0)) {
     header("Location: " . $customRedirect);
 } elseif ($target === 'admin' || (isset($_GET['admin']) && $_GET['admin'] == '1')) {
-    header("Location: /adminlogin.php?logged_out=1");
+    header("Location: /admin/login/?logged_out=1");
 } else {
     header("Location: /?logged_out=1");
 }

@@ -1,16 +1,35 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
-
 /**
- * admin.php — Luxury Executive Admin Dashboard & WhatsApp CRM Control Center
- * DT Brand's & Jai Hanuman Tex
- * 
- * Signature Heritage Gold Theme + Full CRM, Multi-Channel Commerce & Logistics
+ * admin/index.php — DT Brand's Admin Dashboard
+ * Hard auth check runs BEFORE any heavy require_once to prevent 500 on unauth access.
  */
+
+// ── 1. Session must start before guard checks ──
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ── 2. Load .env ──
+$_envFile = dirname(__DIR__) . '/.env';
+if (file_exists($_envFile) && empty(getenv('DB_DATABASE'))) {
+    foreach (file($_envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $_line) {
+        $_line = trim($_line);
+        if ($_line === '' || $_line[0] === '#') continue;
+        if (strpos($_line, '=') !== false) {
+            [$_k, $_v] = explode('=', $_line, 2);
+            putenv(trim($_k) . '=' . trim($_v));
+            $_ENV[trim($_k)] = trim($_v);
+        }
+    }
+}
+
+// ── 3. Hard auth gate — redirect to login BEFORE loading any heavy files ──
+if (empty($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: /admin/login/', true, 302);
+    exit;
+}
+
+// ── 4. Load heavy dependencies only for authenticated users ──
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/CustomerManager.php';

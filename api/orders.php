@@ -4,10 +4,18 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
+$allowedOrigin = 'https://jaihanumantex.in';
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin === $allowedOrigin) {
+    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+} else {
+    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+}
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Credentials: true');
+header('Vary: Origin');
+header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -95,15 +103,22 @@ try {
             exit;
         }
 
-        // Customer Order History (My Orders)
+        // Customer Order History (My Orders) - Requires customer authentication
         if ($action === 'my_orders') {
             if (session_status() === PHP_SESSION_NONE) {
                 @session_start();
             }
-            $reqPhone = trim((string)($_GET['phone'] ?? ''));
-            $sessionPhone = (string)($_SESSION['user']['phone'] ?? ($_SESSION['customer_phone'] ?? ''));
-            $targetPhone = $reqPhone ?: $sessionPhone;
-
+            
+            // Must be logged in as a customer
+            $currentUser = $_SESSION['user'] ?? null;
+            if (!$currentUser || empty($currentUser['id'])) {
+                http_response_code(401);
+                echo json_encode(['success' => false, 'message' => 'Customer authentication required. Please sign in to view your orders.']);
+                exit;
+            }
+            
+            $targetPhone = (string)($currentUser['phone'] ?? '');
+            
             if (!empty($targetPhone)) {
                 $orders = OrderManager::getByPhone($targetPhone);
                 echo json_encode([

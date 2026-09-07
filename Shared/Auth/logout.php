@@ -2,9 +2,8 @@
 /**
  * Shared/Auth/logout.php — Shared Auth Logout Controller
  */
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../../config/session.php';
+dt_session_start();
 
 $_SESSION = [];
 
@@ -20,7 +19,7 @@ session_destroy();
 
 $target = isset($_GET['type']) ? $_GET['type'] : '';
 if ($target === 'admin' || (isset($_GET['admin']) && $_GET['admin'] == '1')) {
-    header("Location: /adminlogin.php?logged_out=1");
+    header("Location: /admin/login/?logged_out=1");
 } else {
     header("Location: /?logged_out=1");
 }

@@ -33,7 +33,7 @@ $copyDirs = [
     'includes', 'src', 'Shared', 'storage', 'public',
 ];
 $rootPhp = [
-    'about-us.php', 'account.php', 'admin.php', 'adminlogin.php',
+    'about-us.php', 'account.php', 'admin.php',
     'cart.php', 'checkout.php', 'contact.php', 'health.php',
     'index.php', 'install.php', 'logout.php', 'privacy.php',
     'product.php', 'reseller.php', 'retailer.php', 'shipping.php',
