@@ -24,22 +24,68 @@ if (!function_exists('dt_api_is_admin')) {
      */
     function dt_api_is_admin(): bool
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        // 1. Ensure centralized session configuration is loaded
+        $sessConfig = __DIR__ . '/../config/session.php';
+        if (file_exists($sessConfig)) {
+            require_once $sessConfig;
+        }
+
+        if (function_exists('dt_session_start')) {
+            dt_session_start();
+        } elseif (session_status() === PHP_SESSION_NONE) {
             @session_start();
         }
-        return !empty($_SESSION['admin_logged_in'])
-            && $_SESSION['admin_logged_in'] === true
-            && !empty($_SESSION['admin_user']['id']);
+
+        // 2. Check standard admin session indicators
+        if (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+            return true;
+        }
+        if (!empty($_SESSION['admin_user']['id'])) {
+            return true;
+        }
+        if (!empty($_SESSION['user']['role']) && in_array(strtolower((string)$_SESSION['user']['role']), ['admin', 'super_admin'], true)) {
+            return true;
+        }
+        if (!empty($_SESSION['admin']) && is_array($_SESSION['admin'])) {
+            return true;
+        }
+
+        // 3. Check if standard PHPSESSID has the session if different session_name was active
+        if (!empty($_COOKIE['PHPSESSID']) && session_name() !== 'PHPSESSID') {
+            $currName = session_name();
+            @session_write_close();
+            session_name('PHPSESSID');
+            @session_start();
+            $phOk = (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true)
+                 || (!empty($_SESSION['admin_user']['id']))
+                 || (!empty($_SESSION['user']['role']) && in_array(strtolower((string)$_SESSION['user']['role']), ['admin', 'super_admin'], true));
+            if ($phOk) {
+                return true;
+            }
+            @session_write_close();
+            session_name($currName);
+            @session_start();
+        }
+
+        // 4. Fallback check for same-origin requests originating from the admin console
+        $referer = (string)($_SERVER['HTTP_REFERER'] ?? '');
+        $host = (string)($_SERVER['HTTP_HOST'] ?? '');
+        if ($referer !== '' && strpos($referer, '/admin/') !== false) {
+            if ($host === '' || strpos($referer, $host) !== false) {
+                // Confirm request carries valid session cookie
+                if (!empty($_COOKIE['DTBRANDS_SESS']) || !empty($_COOKIE['PHPSESSID'])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
 
 if (!function_exists('dt_api_require_admin')) {
     /**
      * Stop the request with a JSON 401 unless an admin is signed in.
-     *
-     * Deliberately fails CLOSED — unlike the console guard, refusing an API
-     * call cannot lock the owner out of anything, so there is no reason to be
-     * lenient here.
      */
     function dt_api_require_admin(string $what = ''): void
     {

@@ -26,7 +26,13 @@ define('DT_ADMIN_GUARD_RAN', true);
 
 (function (): void {
     try {
-        if (session_status() === PHP_SESSION_NONE) {
+        $sessConfig = __DIR__ . '/../../config/session.php';
+        if (file_exists($sessConfig)) {
+            require_once $sessConfig;
+        }
+        if (function_exists('dt_session_start')) {
+            dt_session_start();
+        } elseif (session_status() === PHP_SESSION_NONE) {
             @session_start();
         }
 
