@@ -532,39 +532,203 @@ class Auth
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
+                $name  = trim((string)($data['name'] ?? ''));
+                $email = trim((string)($data['email'] ?? ''));
+                $city  = trim((string)($data['city'] ?? ''));
+                $state = trim((string)($data['state'] ?? ''));
+                $gstin = strtoupper(trim((string)($data['gstin'] ?? '')));
+                $pan   = strtoupper(trim((string)($data['pan'] ?? '')));
+
+                $phoneClean = '';
+                if (!empty($data['phone'])) {
+                    $digits = preg_replace('/\D+/', '', (string)$data['phone']);
+                    if (strlen($digits) >= 10) {
+                        $phoneClean = '+91 ' . substr($digits, -10);
+                    }
+                }
+
                 $stmt = $pdo->prepare("
                     UPDATE customers 
-                    SET name = COALESCE(NULLIF(?, ''), name),
+                    SET name  = COALESCE(NULLIF(?, ''), name),
+                        phone = COALESCE(NULLIF(?, ''), phone),
                         email = COALESCE(NULLIF(?, ''), email),
-                        city = COALESCE(NULLIF(?, ''), city),
-                        state = COALESCE(NULLIF(?, ''), state)
+                        city  = COALESCE(NULLIF(?, ''), city),
+                        state = COALESCE(NULLIF(?, ''), state),
+                        gstin = COALESCE(NULLIF(?, ''), gstin),
+                        pan   = COALESCE(NULLIF(?, ''), pan)
                     WHERE id = ?
                 ");
                 $stmt->execute([
-                    $data['name'] ?? '',
-                    $data['email'] ?? '',
-                    $data['city'] ?? '',
-                    $data['state'] ?? '',
+                    $name,
+                    $phoneClean,
+                    $email,
+                    $city,
+                    $state,
+                    $gstin,
+                    $pan,
                     $customerId
                 ]);
 
-                if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
-                    if (!empty($data['name']))  $_SESSION['user']['name']  = $data['name'];
-                    if (!empty($data['email'])) $_SESSION['user']['email'] = $data['email'];
-                    if (!empty($data['city']))  $_SESSION['user']['city']  = $data['city'];
-                    if (!empty($data['state'])) $_SESSION['user']['state'] = $data['state'];
+                if (isset($_SESSION['user']) && (int)($_SESSION['user']['id'] ?? 0) === $customerId) {
+                    if (!empty($name))       $_SESSION['user']['name']  = $name;
+                    if (!empty($phoneClean)) $_SESSION['user']['phone'] = $phoneClean;
+                    if (!empty($email))      $_SESSION['user']['email'] = $email;
+                    if (!empty($city))       $_SESSION['user']['city']  = $city;
+                    if (!empty($state))      $_SESSION['user']['state'] = $state;
+                    if (!empty($gstin))      $_SESSION['user']['gstin'] = $gstin;
+                    if (!empty($pan))        $_SESSION['user']['pan']   = $pan;
                 }
 
-                return ['success' => true, 'message' => 'Profile updated successfully.'];
+                return ['success' => true, 'message' => 'Profile updated successfully in live database.'];
             } catch (\Exception $e) {
                 error_log('DT profile update failed: ' . $e->getMessage());
-                return ['success' => false, 'message' => 'Your profile could not be saved. Please try again shortly.'];
+                return ['success' => false, 'message' => 'Your profile could not be saved: ' . $e->getMessage()];
             }
         }
-        // No database connection: nothing was written. Saying "Profile updated"
-        // here made the account page re-render the typed values as though they had
-        // been stored, and they were gone on the next page load.
         return ['success' => false, 'message' => 'Your profile could not be saved right now because the account database is unavailable. Please try again shortly.'];
+    }
+
+    /**
+     * Save Customer Address (Billing & Dispatch) in addresses table
+     */
+    public static function saveAddress(int $customerId, array $data): array
+    {
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $recipientName = trim((string)($data['recipient_name'] ?? ($data['company_name'] ?? ($data['name'] ?? ''))));
+                $phone = trim((string)($data['phone'] ?? ''));
+                $addr1 = trim((string)($data['address_line1'] ?? ($data['address'] ?? '')));
+                $addr2 = trim((string)($data['address_line2'] ?? ''));
+                $city  = trim((string)($data['city'] ?? 'Surat'));
+                $state = trim((string)($data['state'] ?? 'Gujarat'));
+                $pincode = trim((string)($data['pincode'] ?? '395002'));
+                $type = in_array($data['address_type'] ?? '', ['home', 'work', 'warehouse'], true) ? $data['address_type'] : 'work';
+
+                if (empty($addr1)) {
+                    return ['success' => false, 'message' => 'Address is required.'];
+                }
+
+                // Check if an address row already exists for this customer and type
+                $checkStmt = $pdo->prepare("SELECT id FROM addresses WHERE customer_id = ? AND (address_type = ? OR is_default = 1) ORDER BY is_default DESC LIMIT 1");
+                $checkStmt->execute([$customerId, $type]);
+                $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+
+                if ($existing && !empty($existing['id'])) {
+                    $upStmt = $pdo->prepare("
+                        UPDATE addresses 
+                        SET recipient_name = ?,
+                            phone = ?,
+                            address_line1 = ?,
+                            address_line2 = ?,
+                            city = ?,
+                            state = ?,
+                            pincode = ?,
+                            address_type = ?,
+                            is_default = 1
+                        WHERE id = ?
+                    ");
+                    $upStmt->execute([
+                        $recipientName,
+                        $phone,
+                        $addr1,
+                        $addr2,
+                        $city,
+                        $state,
+                        $pincode,
+                        $type,
+                        $existing['id']
+                    ]);
+                    $addressId = (int)$existing['id'];
+                } else {
+                    $insStmt = $pdo->prepare("
+                        INSERT INTO addresses (customer_id, recipient_name, phone, address_line1, address_line2, city, state, pincode, address_type, is_default)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+                    ");
+                    $insStmt->execute([
+                        $customerId,
+                        $recipientName,
+                        $phone,
+                        $addr1,
+                        $addr2,
+                        $city,
+                        $state,
+                        $pincode,
+                        $type
+                    ]);
+                    $addressId = (int)$pdo->lastInsertId();
+                }
+
+                // Synchronize city and state to customers table
+                $custStmt = $pdo->prepare("UPDATE customers SET city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
+                $custStmt->execute([$city, $state, $customerId]);
+
+                // Save custom shipping/warehouse address if separate
+                if (!empty($data['custom_shipping']) && is_array($data['custom_shipping'])) {
+                    $cShip = $data['custom_shipping'];
+                    $wName = trim((string)($cShip['warehouse_name'] ?? 'Primary Godown'));
+                    $rPhone = trim((string)($cShip['receiver_phone'] ?? $phone));
+                    $sAddr = trim((string)($cShip['address'] ?? ''));
+                    $sCity = trim((string)($cShip['city'] ?? $city));
+                    $sState = trim((string)($cShip['state'] ?? $state));
+                    $sPin = trim((string)($cShip['pincode'] ?? $pincode));
+                    $sTrans = trim((string)($cShip['transporter'] ?? ''));
+
+                    if (!empty($sAddr)) {
+                        $wCheck = $pdo->prepare("SELECT id FROM addresses WHERE customer_id = ? AND address_type = 'warehouse' LIMIT 1");
+                        $wCheck->execute([$customerId]);
+                        $wExist = $wCheck->fetch(\PDO::FETCH_ASSOC);
+
+                        if ($wExist && !empty($wExist['id'])) {
+                            $wUp = $pdo->prepare("UPDATE addresses SET recipient_name = ?, phone = ?, address_line1 = ?, address_line2 = ?, city = ?, state = ?, pincode = ? WHERE id = ?");
+                            $wUp->execute([$wName, $rPhone, $sAddr, $sTrans, $sCity, $sState, $sPin, $wExist['id']]);
+                        } else {
+                            $wIns = $pdo->prepare("INSERT INTO addresses (customer_id, recipient_name, phone, address_line1, address_line2, city, state, pincode, address_type, is_default) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'warehouse', 0)");
+                            $wIns->execute([$customerId, $wName, $rPhone, $sAddr, $sTrans, $sCity, $sState, $sPin]);
+                        }
+                    }
+                }
+
+                return [
+                    'success' => true,
+                    'message' => 'Address saved successfully in live database.',
+                    'address_id' => $addressId,
+                    'address' => [
+                        'recipient_name' => $recipientName,
+                        'phone' => $phone,
+                        'address_line1' => $addr1,
+                        'address_line2' => $addr2,
+                        'city' => $city,
+                        'state' => $state,
+                        'pincode' => $pincode
+                    ]
+                ];
+            } catch (\Exception $e) {
+                error_log('DT save address failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Failed to save address: ' . $e->getMessage()];
+            }
+        }
+        return ['success' => false, 'message' => 'Database connection unavailable.'];
+    }
+
+    /**
+     * Get Customer Addresses from addresses table
+     */
+    public static function getCustomerAddresses(int $customerId): array
+    {
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode() || $customerId <= 0) {
+            return [];
+        }
+
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? ORDER BY is_default DESC, id ASC");
+            $stmt->execute([$customerId]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+        } catch (\Exception $e) {
+            error_log('DT get addresses failed: ' . $e->getMessage());
+            return [];
+        }
     }
 
     /**
@@ -600,9 +764,6 @@ class Auth
             }
         }
 
-        // No database connection: the new password was NOT stored. Reporting success
-        // here was the worst of the fake-success cases - the customer believed their
-        // password had changed and would then be locked out of their own account.
         return ['success' => false, 'message' => 'Your password could not be changed right now because the account database is unavailable. Please try again shortly.'];
     }
 

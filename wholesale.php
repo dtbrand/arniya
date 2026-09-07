@@ -198,10 +198,20 @@ if ($chartMaxVal <= 0) {
 $activeUserName = $dbUser['name'] ?? ($currentUser['name'] ?? 'Wholesale Partner');
 $activeUserEmail = $dbUser['email'] ?? ($currentUser['email'] ?? '');
 $activeUserPhone = $dbUser['phone'] ?? ($currentUser['phone'] ?? '');
+$activeUserPhoneDigits = preg_replace('/\D+/', '', (string)$activeUserPhone);
+if (strlen($activeUserPhoneDigits) > 10) {
+    $activeUserPhoneDigits = substr($activeUserPhoneDigits, -10);
+}
+if (empty($activeUserEmail) || preg_match('/^\d+$/', $activeUserEmail)) {
+    $activeUserEmail = !empty($activeUserPhoneDigits) ? ($activeUserPhoneDigits . '@dtbrands.in') : 'wholesale@dtbrands.in';
+}
 $activeUserGstin = $dbUser['gstin'] ?? ($currentUser['gstin'] ?? '');
 $activeUserPan = $dbUser['pan'] ?? ($currentUser['pan'] ?? '');
-$activeUserCity = $dbUser['city'] ?? ($currentUser['city'] ?? '');
-$activeUserState = $dbUser['state'] ?? ($currentUser['state'] ?? '');
+$activeUserCity = $dbUser['city'] ?? ($currentUser['city'] ?? 'Surat');
+$activeUserState = $dbUser['state'] ?? ($currentUser['state'] ?? 'Gujarat');
+$activeUserCompanyName = $dbUser['company_name'] ?? ($dbUser['business_name'] ?? ($dbUser['name'] ?? ($currentUser['companyName'] ?? $activeUserName)));
+$activeUserAddress = $dbUser['address'] ?? ($dbUser['address_line1'] ?? 'Commercial Market Address');
+$activeUserPincode = $dbUser['pincode'] ?? '395002';
 $activeUserTier = $realKpis['tier'];
 
 /*
@@ -1032,20 +1042,20 @@ $catalogHasProducts = $catalogProducts !== [];
                             
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfName">Full Name / Authorized Rep <span class="req">*</span></label>
-                                <input type="text" id="wsProfName" class="ws-input" placeholder="Enter Full Name" required>
+                                <input type="text" id="wsProfName" class="ws-input" placeholder="Enter Full Name" value="<?= htmlspecialchars($activeUserName) ?>" required>
                             </div>
 
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfPhone">WhatsApp Mobile Number <span class="req">*</span></label>
                                 <div class="ws-phone-wrap">
                                     <div class="ws-phone-prefix"><img src="https://flagcdn.com/w40/in.png" alt="India" style="width:16px; height:11px; object-fit:cover; border-radius:2px; vertical-align:middle; margin-right:4px;">+91</div>
-                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="10-digit mobile number" maxlength="10" required>
+                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="10-digit mobile number" maxlength="10" value="<?= htmlspecialchars($activeUserPhoneDigits) ?>" required>
                                 </div>
                             </div>
 
                             <div class="ws-form-group">
                                 <label class="ws-label" for="wsProfEmail">Registered Business Email <span class="req">*</span></label>
-                                <input type="email" id="wsProfEmail" class="ws-input" placeholder="business@example.com" required>
+                                <input type="email" id="wsProfEmail" class="ws-input" placeholder="business@example.com" value="<?= htmlspecialchars($activeUserEmail) ?>" required>
                             </div>
 
                             <div class="ws-form-group">
@@ -1094,7 +1104,7 @@ $catalogHasProducts = $catalogProducts !== [];
 
                     <!-- GST Type Selector Cards -->
                     <div class="ws-gst-selector-grid">
-                        <div class="ws-gst-option-card selected" id="gstCardGst" onclick="selectGstMode('gst')">
+                        <div class="ws-gst-option-card<?= !empty($activeUserGstin) ? ' selected' : '' ?>" id="gstCardGst" onclick="selectGstMode('gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
                                 <strong style="font-size:0.88rem; color:var(--ws-text-main);">Registered with GST (Input Tax Credit)</strong>
@@ -1102,7 +1112,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                         </div>
 
-                        <div class="ws-gst-option-card" id="gstCardNonGst" onclick="selectGstMode('non_gst')">
+                        <div class="ws-gst-option-card<?= empty($activeUserGstin) ? ' selected' : '' ?>" id="gstCardNonGst" onclick="selectGstMode('non_gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
                                 <strong style="font-size:0.88rem; color:var(--ws-text-main);">Unregistered / Non-GST Trader</strong>
@@ -1114,20 +1124,20 @@ $catalogHasProducts = $catalogProducts !== [];
                     <form id="wsGstForm" onsubmit="handleSaveGstProfile(event)">
                         <div class="ws-form-grid">
                             
-                            <div class="ws-form-group full" id="wsCompanyNameFieldWrap">
+                            <div class="ws-form-group full" id="wsCompanyNameFieldWrap" style="<?= empty($activeUserGstin) ? 'display:none;' : '' ?>">
                                 <label class="ws-label" for="wsCompanyName">Registered Legal Trade Name / Firm Name <span class="req">*</span></label>
-                                <input type="text" id="wsCompanyName" class="ws-input" placeholder="Enter Registered Business / Enterprise Name" required>
+                                <input type="text" id="wsCompanyName" class="ws-input" placeholder="Enter Registered Business / Enterprise Name" value="<?= htmlspecialchars($activeUserCompanyName) ?>" <?= !empty($activeUserGstin) ? 'required' : '' ?>>
                             </div>
 
-                            <div class="ws-form-group full" id="gstNumberFieldWrap">
+                            <div class="ws-form-group full" id="gstNumberFieldWrap" style="<?= empty($activeUserGstin) ? 'display:none;' : '' ?>">
                                 <label class="ws-label" for="wsGstNumber">
                                     <span>15-Character GSTIN Number <span class="req">*</span></span>
                                     <span id="gstStateDetectTag" style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700;">Format: 15-Digit GSTIN</span>
                                 </label>
-                                <input type="text" id="wsGstNumber" class="ws-input" placeholder="24AAAAA0000A1Z5" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
+                                <input type="text" id="wsGstNumber" class="ws-input" placeholder="24AAAAA0000A1Z5" maxlength="15" value="<?= htmlspecialchars($activeUserGstin) ?>" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
                             </div>
 
-                            <div class="ws-form-group full" id="nonGstNoticeWrap" style="display:none;">
+                            <div class="ws-form-group full" id="nonGstNoticeWrap" style="<?= !empty($activeUserGstin) ? 'display:none;' : 'display:block;' ?>">
                                 <div style="padding:12px 14px; background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:8px; font-size:0.80rem; color:#475569; line-height:1.4;">
                                     <strong style="color:#0F172A; display:block; margin-bottom:2px;">ℹ️ Unregistered / Non-GST Mode Active</strong>
                                     No registered company name or GSTIN number is required. Orders will be processed under your personal account.
@@ -1176,13 +1186,13 @@ $catalogHasProducts = $catalogProducts !== [];
                                     <span>Edit</span>
                                 </button>
                             </div>
-                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp"><?= htmlspecialchars($user['business_name'] ?? $user['name'] ?? 'Registered Commercial Account') ?></div>
+                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp"><?= htmlspecialchars($activeUserCompanyName) ?></div>
                             <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
-                                <?= htmlspecialchars($user['address'] ?? 'Commercial Market Address') ?><br>
-                                <?= htmlspecialchars($user['city'] ?? 'Surat') ?>, <?= htmlspecialchars($user['state'] ?? 'Gujarat') ?> - <?= htmlspecialchars($user['pincode'] ?? '395002') ?><?= !empty($user['gst_number']) ? ' (GSTIN: <strong>' . htmlspecialchars($user['gst_number']) . '</strong>)' : '' ?>
+                                <?= htmlspecialchars($activeUserAddress) ?><br>
+                                <?= htmlspecialchars($activeUserCity ?: 'Surat') ?>, <?= htmlspecialchars($activeUserState ?: 'Gujarat') ?> - <?= htmlspecialchars($activeUserPincode ?: '395002') ?><?= !empty($activeUserGstin) ? ' (GSTIN: <strong>' . htmlspecialchars($activeUserGstin) . '</strong>)' : '' ?>
                             </div>
                             <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
-                                Attn: <?= htmlspecialchars($user['name'] ?? 'Authorized Buyer') ?> (+91 <?= htmlspecialchars($user['phone'] ?? '917046363528') ?>)
+                                Attn: <?= htmlspecialchars($activeUserName) ?> (+91 <?= htmlspecialchars($activeUserPhoneDigits ?: '917046363528') ?>)
                             </div>
                         </div>
 
@@ -1199,7 +1209,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
                             <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
                             <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
-                                Dispatched to: <?= htmlspecialchars($user['address'] ?? 'Registered Commercial Address, ' . ($user['city'] ?? 'Surat')) ?>
+                                Dispatched to: <?= htmlspecialchars($activeUserAddress) ?>, <?= htmlspecialchars($activeUserCity ?: 'Surat') ?> - <?= htmlspecialchars($activeUserPincode ?: '395002') ?>
                             </div>
                             <div style="font-size:0.74rem; font-weight:700; color:var(--ws-text-sub); margin-top:8px;" id="addrPreviewDispatchTransporter">
                                 Preferred Hub: BlueDart Express / Surat Goods Transporter
@@ -1227,44 +1237,44 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <div class="ws-form-grid">
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsMainCompName">Business / Firm / Company Name <span class="req">*</span></label>
-                                        <input type="text" id="wsMainCompName" class="ws-input" placeholder="Enter Registered Business Name">
+                                        <input type="text" id="wsMainCompName" class="ws-input" placeholder="Enter Registered Business Name" value="<?= htmlspecialchars($activeUserCompanyName) ?>">
                                     </div>
 
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsMainContactPhone">Registered Contact Phone <span class="req">*</span></label>
-                                        <input type="tel" id="wsMainContactPhone" class="ws-input" placeholder="10-digit mobile number">
+                                        <input type="tel" id="wsMainContactPhone" class="ws-input" placeholder="10-digit mobile number" value="<?= htmlspecialchars($activeUserPhoneDigits) ?>">
                                     </div>
 
                                     <div class="ws-form-group full">
                                         <label class="ws-label" for="wsFullAddress">Registered Shop / Office / Market Address <span class="req">*</span></label>
-                                        <textarea id="wsFullAddress" class="ws-textarea" placeholder="Shop No, Building Name, Textile Market, Street, Landmark"></textarea>
+                                        <textarea id="wsFullAddress" class="ws-textarea" placeholder="Shop No, Building Name, Textile Market, Street, Landmark"><?= htmlspecialchars($activeUserAddress) ?></textarea>
                                     </div>
 
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsCity">City / District <span class="req">*</span></label>
-                                        <input type="text" id="wsCity" class="ws-input" placeholder="e.g. Surat">
+                                        <input type="text" id="wsCity" class="ws-input" placeholder="e.g. Surat" value="<?= htmlspecialchars($activeUserCity ?: 'Surat') ?>">
                                     </div>
 
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsStateSelect">State / UT (India) <span class="req">*</span></label>
                                         <select id="wsStateSelect" class="ws-select">
-                                            <option value="Gujarat">Gujarat (24)</option>
-                                            <option value="Maharashtra">Maharashtra (27)</option>
-                                            <option value="Rajasthan">Rajasthan (08)</option>
-                                            <option value="Delhi">Delhi (07)</option>
-                                            <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
-                                            <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
-                                            <option value="Karnataka">Karnataka (29)</option>
-                                            <option value="Tamil Nadu">Tamil Nadu (33)</option>
-                                            <option value="Telangana">Telangana (36)</option>
-                                            <option value="West Bengal">West Bengal (19)</option>
+                                            <option value="Gujarat"<?= ($activeUserState === 'Gujarat') ? ' selected' : '' ?>>Gujarat (24)</option>
+                                            <option value="Maharashtra"<?= ($activeUserState === 'Maharashtra') ? ' selected' : '' ?>>Maharashtra (27)</option>
+                                            <option value="Rajasthan"<?= ($activeUserState === 'Rajasthan') ? ' selected' : '' ?>>Rajasthan (08)</option>
+                                            <option value="Delhi"<?= ($activeUserState === 'Delhi') ? ' selected' : '' ?>>Delhi (07)</option>
+                                            <option value="Uttar Pradesh"<?= ($activeUserState === 'Uttar Pradesh') ? ' selected' : '' ?>>Uttar Pradesh (09)</option>
+                                            <option value="Madhya Pradesh"<?= ($activeUserState === 'Madhya Pradesh') ? ' selected' : '' ?>>Madhya Pradesh (23)</option>
+                                            <option value="Karnataka"<?= ($activeUserState === 'Karnataka') ? ' selected' : '' ?>>Karnataka (29)</option>
+                                            <option value="Tamil Nadu"<?= ($activeUserState === 'Tamil Nadu') ? ' selected' : '' ?>>Tamil Nadu (33)</option>
+                                            <option value="Telangana"<?= ($activeUserState === 'Telangana') ? ' selected' : '' ?>>Telangana (36)</option>
+                                            <option value="West Bengal"<?= ($activeUserState === 'West Bengal') ? ' selected' : '' ?>>West Bengal (19)</option>
                                             <option value="Other States">Other Indian State / UT</option>
                                         </select>
                                     </div>
 
                                     <div class="ws-form-group">
                                         <label class="ws-label" for="wsPincode">6-Digit PIN Code <span class="req">*</span></label>
-                                        <input type="text" id="wsPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
+                                        <input type="text" id="wsPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}" value="<?= htmlspecialchars($activeUserPincode ?: '395002') ?>">
                                     </div>
                                 </div>
                             </div>

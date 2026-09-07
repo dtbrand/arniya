@@ -58,9 +58,12 @@ try {
         }
         $res = Auth::updateProfile((int)$current['id'], [
             'name'  => trim($data['name'] ?? ''),
+            'phone' => trim($data['phone'] ?? ''),
             'email' => trim($data['email'] ?? ''),
             'city'  => trim($data['city'] ?? ''),
-            'state' => trim($data['state'] ?? '')
+            'state' => trim($data['state'] ?? ''),
+            'gstin' => trim($data['gstin'] ?? ''),
+            'pan'   => trim($data['pan'] ?? '')
         ]);
         if (!$res['success']) {
             http_response_code(400);
@@ -68,6 +71,21 @@ try {
             // Hand the refreshed session user back so the client can re-render
             // from server truth instead of guessing what was saved.
             $res['user'] = Auth::getCurrentUser();
+        }
+        echo json_encode($res, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'save_address') {
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to save address.']);
+            exit;
+        }
+        $res = Auth::saveAddress((int)$current['id'], $data);
+        if (!$res['success']) {
+            http_response_code(400);
         }
         echo json_encode($res, JSON_PRETTY_PRINT);
         exit;

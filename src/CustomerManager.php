@@ -97,14 +97,30 @@ class CustomerManager
 
         if (!$r) return null;
 
+        $address = null;
+        try {
+            $aStmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? ORDER BY is_default DESC, id ASC LIMIT 1");
+            $aStmt->execute([$id]);
+            $address = $aStmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            // Ignore if addresses table query fails
+        }
+
         return [
             'id'                  => (int)$r['id'],
             'name'                => (string)($r['name'] ?? ''),
+            'company_name'        => (string)($r['name'] ?? ''),
+            'business_name'       => (string)($r['name'] ?? ''),
             'phone'               => (string)($r['phone'] ?? ''),
             'email'               => (string)($r['email'] ?? ''),
             'type'                => (string)($r['type'] ?? 'retail'),
-            'city'                => (string)($r['city'] ?? ''),
-            'state'               => (string)($r['state'] ?? ''),
+            'city'                => (string)($address['city'] ?? ($r['city'] ?? '')),
+            'state'               => (string)($address['state'] ?? ($r['state'] ?? '')),
+            'pincode'             => (string)($address['pincode'] ?? '395002'),
+            'address'             => (string)($address['address_line1'] ?? ''),
+            'address_line1'       => (string)($address['address_line1'] ?? ''),
+            'address_line2'       => (string)($address['address_line2'] ?? ''),
+            'address_type'        => (string)($address['address_type'] ?? 'work'),
             'tier'                => (string)($r['tier'] ?? ''),
             'gstin'               => (string)($r['gstin'] ?? ''),
             'pan'                 => (string)($r['pan'] ?? ''),
