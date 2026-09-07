@@ -9,6 +9,7 @@ FILES_TO_DEPLOY = [
     'api/retailer.php',
     'api/reseller.php',
     'api/auth.php',
+    'api/customer_addresses.php',
     'wholesale.php',
     'retailer.php',
     'reseller.php',
@@ -18,6 +19,8 @@ FILES_TO_DEPLOY = [
     'assets/css/wholesale.css',
     'assets/css/retailer.css',
     'assets/css/reseller.css',
+    'admin/customers/components/customer-addresses.php',
+    'admin/customers/assets/js/customer-view.js',
 ]
 
 SERVERS = [

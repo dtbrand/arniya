@@ -2027,9 +2027,9 @@ $catalogHasProducts = $catalogProducts !== [];
          SMART EDIT MAIN REGISTERED BILLING ADDRESS MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsEditMainAddressModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeEditMainAddressModal();">
-        <div class="ws-modal-box" style="max-width: 560px; border-radius: 18px; background:#FFFFFF; border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22);">
+        <div class="ws-modal-box" style="max-width: 560px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; border-radius: 18px; background:#FFFFFF; border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22);">
             
-            <div class="ws-modal-header" style="padding: 14px 18px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:space-between;">
+            <div class="ws-modal-header" style="padding: 14px 18px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:space-between; flex-shrink: 0;">
                 <div style="display:flex; align-items:center; gap:10px;">
                     <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center;">
                         <svg style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2">
@@ -2046,63 +2046,67 @@ $catalogHasProducts = $catalogProducts !== [];
                 <button class="ws-modal-close-btn" onclick="closeEditMainAddressModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
             </div>
 
-            <form onsubmit="handleSaveMainAddressForm(event)" style="padding: 16px 18px 20px;">
-                <div class="ws-form-grid">
-                    
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditCompName">Business / Company Name <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditCompName" class="ws-input" required placeholder="Enter Registered Business Name">
-                    </div>
+            <form onsubmit="handleSaveMainAddressForm(event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; margin: 0;">
+                <div style="overflow-y: auto; flex: 1; padding: 16px 20px; max-height: calc(90vh - 135px);">
+                    <div class="ws-form-grid">
+                        
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditCompName">Business / Company Name <span class="req">*</span></label>
+                            <input type="text" id="wsMainEditCompName" class="ws-input" required placeholder="Enter Registered Business Name">
+                        </div>
 
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditGstNumber">GSTIN (Tax ID) <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditGstNumber" class="ws-input" maxlength="15" style="text-transform:uppercase;" placeholder="24AAAAA0000A1Z5">
-                    </div>
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditGstNumber">GSTIN (Tax ID)</label>
+                            <input type="text" id="wsMainEditGstNumber" class="ws-input" maxlength="15" style="text-transform:uppercase;" placeholder="24AAAAA0000A1Z5">
+                        </div>
 
-                    <div class="ws-form-group full">
-                        <label class="ws-label" for="wsMainEditAddress">Registered Street Address & Market <span class="req">*</span></label>
-                        <textarea id="wsMainEditAddress" class="ws-textarea" required placeholder="Shop No, Building Name, Textile Market, Street, Landmark"></textarea>
-                    </div>
+                        <div class="ws-form-group full">
+                            <label class="ws-label" for="wsMainEditAddress">Registered Street Address & Market <span class="req">*</span></label>
+                            <textarea id="wsMainEditAddress" class="ws-textarea" required placeholder="Shop No, Building Name, Textile Market, Street, Landmark"></textarea>
+                        </div>
 
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditCity">City / District <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditCity" class="ws-input" required placeholder="e.g. Surat">
-                    </div>
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditCity">City / District <span class="req">*</span></label>
+                            <input type="text" id="wsMainEditCity" class="ws-input" required placeholder="e.g. Surat">
+                        </div>
 
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditState">State / UT <span class="req">*</span></label>
-                        <select id="wsMainEditState" class="ws-select" required>
-                            <option value="Gujarat">Gujarat (24)</option>
-                            <option value="Maharashtra">Maharashtra (27)</option>
-                            <option value="Rajasthan">Rajasthan (08)</option>
-                            <option value="Delhi">Delhi (07)</option>
-                            <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
-                            <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
-                            <option value="Karnataka">Karnataka (29)</option>
-                            <option value="Tamil Nadu">Tamil Nadu (33)</option>
-                            <option value="Telangana">Telangana (36)</option>
-                            <option value="West Bengal">West Bengal (19)</option>
-                            <option value="Other States">Other Indian State / UT</option>
-                        </select>
-                    </div>
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditState">State / UT <span class="req">*</span></label>
+                            <select id="wsMainEditState" class="ws-select" required>
+                                <option value="Gujarat">Gujarat (24)</option>
+                                <option value="Maharashtra">Maharashtra (27)</option>
+                                <option value="Rajasthan">Rajasthan (08)</option>
+                                <option value="Delhi">Delhi (07)</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
+                                <option value="Karnataka">Karnataka (29)</option>
+                                <option value="Tamil Nadu">Tamil Nadu (33)</option>
+                                <option value="Telangana">Telangana (36)</option>
+                                <option value="West Bengal">West Bengal (19)</option>
+                                <option value="Other States">Other Indian State / UT</option>
+                            </select>
+                        </div>
 
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditPincode">6-Digit PIN Code <span class="req">*</span></label>
-                        <input type="text" id="wsMainEditPincode" class="ws-input" required maxlength="6" pattern="[0-9]{6}" placeholder="395002">
-                    </div>
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditPincode">6-Digit PIN Code <span class="req">*</span></label>
+                            <input type="text" id="wsMainEditPincode" class="ws-input" required maxlength="6" pattern="[0-9]{6}" placeholder="395002">
+                        </div>
 
-                    <div class="ws-form-group">
-                        <label class="ws-label" for="wsMainEditContactPhone">Contact Mobile <span class="req">*</span></label>
-                        <input type="tel" id="wsMainEditContactPhone" class="ws-input" required placeholder="10-digit phone">
-                    </div>
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsMainEditContactPhone">Contact Mobile <span class="req">*</span></label>
+                            <input type="tel" id="wsMainEditContactPhone" class="ws-input" required placeholder="10-digit phone">
+                        </div>
 
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeEditMainAddressModal()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span>Update Main Address</span>
+                <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; padding: 12px 20px; background:#FAF8F4; border-top: 1.5px solid rgba(212,175,55,0.3); border-radius: 0 0 16px 16px; flex-shrink: 0;">
+                    <button type="button" class="ws-btn dt-btn-pale" onclick="closeEditMainAddressModal()" style="padding: 0 18px; height: 40px; font-size: 0.85rem;">
+                        Cancel
+                    </button>
+                    <button type="submit" id="wsBtnSaveMainAddress" class="dt-btn-gold" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 22px; border-radius:8px; font-weight:800; font-size:0.86rem; cursor:pointer;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        <span>Save Billing Address</span>
                     </button>
                 </div>
             </form>

@@ -3067,18 +3067,31 @@ window.animateTargetGauge = animateTargetGauge;
         function openEditMainAddressModal() {
             var modal = document.getElementById('wsEditMainAddressModal');
             if (!modal) return;
-            // Pre-fill existing data from localStorage
             try {
-                var user = JSON.parse(localStorage.getItem('dtbrands_user') || '{}');
-                var billing = user.billing_address || {};
+                var userRaw = localStorage.getItem('dtbrands_user');
+                var user = userRaw ? JSON.parse(userRaw) : {};
+                var b2b = window.b2bUser || {};
+                var merged = Object.assign({}, b2b, user);
                 var el = function(id) { return document.getElementById(id); };
-                if (el('wsMainEditCompName'))    el('wsMainEditCompName').value    = billing.company || user.company_name || '';
-                if (el('wsMainEditGstNumber'))  el('wsMainEditGstNumber').value   = billing.gstin   || user.gstin        || '';
-                if (el('wsMainEditAddress'))    el('wsMainEditAddress').value     = billing.address || user.address      || '';
-                if (el('wsMainEditCity'))       el('wsMainEditCity').value        = billing.city    || user.city         || '';
-                if (el('wsMainEditState'))      el('wsMainEditState').value       = billing.state   || user.state        || 'Gujarat';
-                if (el('wsMainEditPincode'))    el('wsMainEditPincode').value     = billing.pincode || user.pincode      || '';
-                if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = billing.phone || user.phone      || '';
+                
+                var comp = merged.companyName || merged.company_name || merged.business_name || merged.name || '';
+                var gstin = merged.gstin || merged.gst_number || '';
+                var addr = merged.address || merged.address_line1 || '';
+                var city = merged.city || 'Surat';
+                var state = merged.state || 'Gujarat';
+                var pin = merged.pincode || '395002';
+                var phone = merged.rawPhone || (merged.phone ? String(merged.phone).replace(/\D/g, '').slice(-10) : '');
+
+                var domComp = document.getElementById('addrPreviewBillingComp');
+                if (!comp && domComp) comp = domComp.textContent.trim();
+
+                if (el('wsMainEditCompName'))      el('wsMainEditCompName').value      = comp;
+                if (el('wsMainEditGstNumber'))    el('wsMainEditGstNumber').value     = gstin;
+                if (el('wsMainEditAddress'))      el('wsMainEditAddress').value       = addr;
+                if (el('wsMainEditCity'))         el('wsMainEditCity').value          = city;
+                if (el('wsMainEditState'))        el('wsMainEditState').value         = state;
+                if (el('wsMainEditPincode'))      el('wsMainEditPincode').value       = pin;
+                if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = phone;
             } catch(e) {}
             showModal('wsEditMainAddressModal');
         };
@@ -3101,11 +3114,26 @@ window.animateTargetGauge = animateTargetGauge;
             var pin = el('wsMainEditPincode') ? el('wsMainEditPincode').value.trim() : '';
             var phone = el('wsMainEditContactPhone') ? el('wsMainEditContactPhone').value.trim() : '';
 
+            if (!addr || !city || !pin) {
+                (window.showWsToast || showWsToast)('Please enter your complete address, city, and 6-digit PIN code.', 'error');
+                return false;
+            }
+
+            var btn = document.getElementById('wsBtnSaveMainAddress') ||
+                      (e && e.target && e.target.querySelector ? e.target.querySelector('button[type="submit"]') : null);
+            var oldHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5" style="animation: wsSpin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25" stroke="currentColor"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> <span>Saving Billing Address...</span>';
+            }
+
             fetch('/api/reseller.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'save_address',
+                    address_type: 'billing',
+                    is_billing: 1,
                     company_name: comp,
                     phone: phone,
                     address: addr,
@@ -3118,16 +3146,31 @@ window.animateTargetGauge = animateTargetGauge;
             })
             .then(function(r) { return r.json(); })
             .then(function(res) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = oldHtml || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> <span>Save Billing Address</span>';
+                }
+
                 var userRaw = localStorage.getItem('dtbrands_user');
                 var user = userRaw ? JSON.parse(userRaw) : {};
-                if (comp) user.companyName = comp;
+                if (comp) { user.companyName = comp; user.company_name = comp; }
                 if (gstin) { user.gst_number = gstin; user.gstin = gstin; }
-                if (addr) user.address = addr;
+                if (addr) { user.address = addr; user.address_line1 = addr; }
                 if (city) user.city = city;
                 if (state) user.state = state;
                 if (pin) user.pincode = pin;
                 if (phone) { user.rawPhone = phone; user.phone = '+91 ' + phone; }
                 localStorage.setItem('dtbrands_user', JSON.stringify(user));
+
+                if (window.b2bUser) {
+                    if (comp) { window.b2bUser.companyName = comp; window.b2bUser.company_name = comp; }
+                    if (gstin) { window.b2bUser.gstin = gstin; window.b2bUser.gst_number = gstin; }
+                    if (addr) { window.b2bUser.address = addr; window.b2bUser.address_line1 = addr; }
+                    if (city) window.b2bUser.city = city;
+                    if (state) window.b2bUser.state = state;
+                    if (pin) window.b2bUser.pincode = pin;
+                    if (phone) { window.b2bUser.rawPhone = phone; window.b2bUser.phone = phone; }
+                }
 
                 if (typeof closeEditMainAddressModal === 'function') closeEditMainAddressModal();
 
@@ -3139,13 +3182,17 @@ window.animateTargetGauge = animateTargetGauge;
                     var gstTxt = gstin ? ' (GSTIN: <strong>' + gstin + '</strong>)' : '';
                     bFullEl.innerHTML = addr + '<br>' + city + ', ' + state + ' - ' + pin + gstTxt;
                 }
-                if (bAttnEl) bAttnEl.textContent = 'Attn: ' + (user.name || 'Authorized Reseller') + ' (+91 ' + (phone || user.phone || '') + ')';
+                if (bAttnEl) bAttnEl.textContent = 'Attn: ' + (comp || user.name || 'Authorized Reseller') + ' (+91 ' + (phone || user.phone || '') + ')';
 
-                window.showWsToast('Billing address saved to database successfully!', 'success');
+                (window.showWsToast || showWsToast)((res && res.message) ? res.message : 'Registered GST Billing Address updated successfully in live database!', 'success');
             })
             .catch(function(err) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = oldHtml;
+                }
                 if (typeof closeEditMainAddressModal === 'function') closeEditMainAddressModal();
-                window.showWsToast('Address saved locally.', 'success');
+                (window.showWsToast || showWsToast)('Billing address updated locally.', 'success');
             });
         };
 

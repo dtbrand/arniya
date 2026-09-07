@@ -704,12 +704,52 @@ class Auth
                 $city  = trim((string)($data['city'] ?? 'Surat'));
                 $state = trim((string)($data['state'] ?? 'Gujarat'));
                 $pincode = trim((string)($data['pincode'] ?? '395002'));
-                $type = in_array($data['address_type'] ?? '', ['home', 'work', 'warehouse'], true) ? $data['address_type'] : 'work';
+                $gstin = strtoupper(trim((string)($data['gstin'] ?? ($data['gst_number'] ?? ''))));
 
-                // Check if an address row already exists for this customer and type
-                $checkStmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? AND (address_type = ? OR is_default = 1) ORDER BY is_default DESC LIMIT 1");
-                $checkStmt->execute([$customerId, $type]);
-                $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                $rawType = strtolower(trim((string)($data['address_type'] ?? '')));
+                $isBilling = !empty($data['is_billing']) || $rawType === 'billing';
+
+                if ($isBilling) {
+                    $type = 'billing';
+                } elseif (in_array($rawType, ['warehouse', 'shipping', 'work', 'home'], true)) {
+                    $type = $rawType;
+                } else {
+                    $type = 'shipping';
+                }
+
+                $explicitDefault = isset($data['is_default']) ? ((int)!empty($data['is_default'])) : null;
+
+                // 1. Resolve targeted address row if specific ID provided
+                $targetId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
+                $existing = null;
+
+                if ($targetId > 0) {
+                    $checkStmt = $pdo->prepare("SELECT * FROM addresses WHERE id = ? AND customer_id = ? LIMIT 1");
+                    $checkStmt->execute([$targetId, $customerId]);
+                    $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                }
+
+                // 2. If no specific ID, find existing row by type
+                if (!$existing) {
+                    if ($type === 'billing') {
+                        $checkStmt = $pdo->prepare("
+                            SELECT * FROM addresses 
+                            WHERE customer_id = ? AND (address_type = 'billing' OR address_type = 'work')
+                            ORDER BY (address_type = 'billing') DESC, is_default DESC, id ASC 
+                            LIMIT 1
+                        ");
+                        $checkStmt->execute([$customerId]);
+                        $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                    } elseif ($type === 'warehouse') {
+                        $checkStmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? AND address_type = 'warehouse' LIMIT 1");
+                        $checkStmt->execute([$customerId]);
+                        $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                    } else {
+                        $checkStmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? AND address_type = ? ORDER BY is_default DESC, id ASC LIMIT 1");
+                        $checkStmt->execute([$customerId, $type]);
+                        $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                    }
+                }
 
                 if (empty($addr1)) {
                     if ($existing && !empty($existing['address_line1'])) {
@@ -720,6 +760,14 @@ class Auth
                     } else {
                         $addr1 = 'Commercial Market Address';
                     }
+                }
+
+                $isDefault = $explicitDefault !== null ? $explicitDefault : ($type === 'billing' ? 1 : ($existing ? (int)$existing['is_default'] : 0));
+
+                // If setting this address as default shipping, reset other non-billing addresses
+                if ($isDefault === 1 && $type !== 'billing') {
+                    $resetStmt = $pdo->prepare("UPDATE addresses SET is_default = 0 WHERE customer_id = ? AND address_type != 'billing'");
+                    $resetStmt->execute([$customerId]);
                 }
 
                 if ($existing && !empty($existing['id'])) {
@@ -733,7 +781,7 @@ class Auth
                             state = ?,
                             pincode = ?,
                             address_type = ?,
-                            is_default = 1
+                            is_default = ?
                         WHERE id = ?
                     ");
                     $upStmt->execute([
@@ -745,13 +793,14 @@ class Auth
                         $state,
                         $pincode,
                         $type,
+                        $isDefault,
                         $existing['id']
                     ]);
                     $addressId = (int)$existing['id'];
                 } else {
                     $insStmt = $pdo->prepare("
                         INSERT INTO addresses (customer_id, recipient_name, phone, address_line1, address_line2, city, state, pincode, address_type, is_default)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ");
                     $insStmt->execute([
                         $customerId,
@@ -762,14 +811,35 @@ class Auth
                         $city,
                         $state,
                         $pincode,
-                        $type
+                        $type,
+                        $isDefault
                     ]);
                     $addressId = (int)$pdo->lastInsertId();
                 }
 
-                // Synchronize city and state to customers table
+                // 3. Synchronize with `customers` table when updating billing address
                 $custUpdates = [];
                 $custParams = [];
+                if ($type === 'billing') {
+                    if ($recipientName !== '') {
+                        $custUpdates[] = "`name` = ?";
+                        $custParams[] = $recipientName;
+                    }
+                    if ($gstin !== '') {
+                        $custUpdates[] = "`gstin` = ?";
+                        $custParams[] = $gstin;
+                    }
+                    if ($phone !== '') {
+                        // Check if phone already in use by another customer
+                        $phCheck = $pdo->prepare("SELECT id FROM customers WHERE phone = ? AND id != ? LIMIT 1");
+                        $phCheck->execute([$phone, $customerId]);
+                        if (!$phCheck->fetch()) {
+                            $custUpdates[] = "`phone` = ?";
+                            $custParams[] = $phone;
+                        }
+                    }
+                }
+
                 if ($city !== '') {
                     $custUpdates[] = "`city` = ?";
                     $custParams[] = $city;
@@ -778,13 +848,14 @@ class Auth
                     $custUpdates[] = "`state` = ?";
                     $custParams[] = $state;
                 }
+
                 if (!empty($custUpdates)) {
                     $custParams[] = $customerId;
                     $custStmt = $pdo->prepare("UPDATE `customers` SET " . implode(', ', $custUpdates) . " WHERE `id` = ?");
                     $custStmt->execute($custParams);
                 }
 
-                // Save custom shipping/warehouse address if separate
+                // 4. Save custom shipping/warehouse address if separate payload provided
                 if (!empty($data['custom_shipping']) && is_array($data['custom_shipping'])) {
                     $cShip = $data['custom_shipping'];
                     $wName = trim((string)($cShip['warehouse_name'] ?? 'Primary Godown Hub'));
@@ -810,8 +881,15 @@ class Auth
                     }
                 }
 
-                // Update session
+                // 5. Update active session if belongs to this customer
                 if (isset($_SESSION['user']) && (int)($_SESSION['user']['id'] ?? 0) === $customerId) {
+                    if ($recipientName !== '') {
+                        $_SESSION['user']['name'] = $recipientName;
+                        $_SESSION['user']['company_name'] = $recipientName;
+                    }
+                    if ($gstin !== '') {
+                        $_SESSION['user']['gstin'] = $gstin;
+                    }
                     $_SESSION['user']['address'] = $addr1;
                     $_SESSION['user']['city'] = $city;
                     $_SESSION['user']['state'] = $state;
@@ -820,16 +898,20 @@ class Auth
 
                 return [
                     'success' => true,
-                    'message' => 'Address book updated successfully in live database.',
+                    'message' => 'Registered address updated successfully in live database.',
                     'address_id' => $addressId,
                     'address' => [
+                        'id' => $addressId,
                         'recipient_name' => $recipientName,
                         'phone' => $phone,
                         'address_line1' => $addr1,
                         'address_line2' => $addr2,
                         'city' => $city,
                         'state' => $state,
-                        'pincode' => $pincode
+                        'pincode' => $pincode,
+                        'address_type' => $type,
+                        'is_default' => $isDefault,
+                        'gstin' => $gstin
                     ]
                 ];
             } catch (\Exception $e) {
@@ -852,9 +934,56 @@ class Auth
 
         try {
             self::ensureAddressTable($pdo);
-            $stmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? ORDER BY is_default DESC, id ASC");
+            $stmt = $pdo->prepare("
+                SELECT * FROM addresses 
+                WHERE customer_id = ? 
+                ORDER BY (address_type = 'billing') DESC, is_default DESC, id ASC
+            ");
             $stmt->execute([$customerId]);
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+            // If customer has no addresses in `addresses` table, seed default billing address from `customers` table
+            if (empty($rows)) {
+                $cStmt = $pdo->prepare("SELECT * FROM customers WHERE id = ? LIMIT 1");
+                $cStmt->execute([$customerId]);
+                $cRow = $cStmt->fetch(\PDO::FETCH_ASSOC);
+
+                if ($cRow) {
+                    $ins = $pdo->prepare("
+                        INSERT INTO addresses (customer_id, recipient_name, phone, address_line1, address_line2, city, state, pincode, address_type, is_default)
+                        VALUES (?, ?, ?, ?, '', ?, ?, ?, 'billing', 1)
+                    ");
+                    $comp = !empty($cRow['name']) ? $cRow['name'] : 'Registered Business';
+                    $ph = !empty($cRow['phone']) ? $cRow['phone'] : '';
+                    $cty = !empty($cRow['city']) ? $cRow['city'] : 'Surat';
+                    $st = !empty($cRow['state']) ? $cRow['state'] : 'Gujarat';
+                    $ins->execute([
+                        $customerId,
+                        $comp,
+                        $ph,
+                        'Commercial Market Address',
+                        $cty,
+                        $st,
+                        '395002'
+                    ]);
+                    $newId = (int)$pdo->lastInsertId();
+                    $rows = [[
+                        'id' => $newId,
+                        'customer_id' => $customerId,
+                        'recipient_name' => $comp,
+                        'phone' => $ph,
+                        'address_line1' => 'Commercial Market Address',
+                        'address_line2' => '',
+                        'city' => $cty,
+                        'state' => $st,
+                        'pincode' => '395002',
+                        'address_type' => 'billing',
+                        'is_default' => 1
+                    ]];
+                }
+            }
+
+            return $rows;
         } catch (\Exception $e) {
             error_log('DT get addresses failed: ' . $e->getMessage());
             return [];

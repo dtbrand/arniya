@@ -133,4 +133,234 @@
         toast('Email reset is not available — use "Send Reset Link on WhatsApp" instead.', 'danger');
     };
 
+    /* ── Customer Address Book Admin Controller ── */
+    window.openAdminAddAddressModal = function (customerId) {
+        var modal = document.getElementById('dtAdminAddressModal');
+        if (!modal) return;
+        var el = function (id) { return document.getElementById(id); };
+
+        var title = el('dtAdminAddressModalTitle');
+        if (title) {
+            title.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> <span>+ Add Customer Address</span>';
+        }
+
+        if (el('dtAdminAddrId')) el('dtAdminAddrId').value = '';
+        if (el('dtAdminAddrCustId')) el('dtAdminAddrCustId').value = customerId || '';
+        if (el('dtAdminAddrType')) el('dtAdminAddrType').value = 'shipping';
+        if (el('dtAdminAddrRecipient')) el('dtAdminAddrRecipient').value = '';
+        if (el('dtAdminAddrPhone')) el('dtAdminAddrPhone').value = '';
+        if (el('dtAdminAddrGst')) el('dtAdminAddrGst').value = '';
+        if (el('dtAdminAddrLine1')) el('dtAdminAddrLine1').value = '';
+        if (el('dtAdminAddrLine2')) el('dtAdminAddrLine2').value = '';
+        if (el('dtAdminAddrCity')) el('dtAdminAddrCity').value = 'Surat';
+        if (el('dtAdminAddrState')) el('dtAdminAddrState').value = 'Gujarat';
+        if (el('dtAdminAddrPin')) el('dtAdminAddrPin').value = '395002';
+        if (el('dtAdminAddrDefault')) el('dtAdminAddrDefault').checked = false;
+
+        modal.style.display = 'flex';
+    };
+
+    window.openAdminEditAddressModal = function (addr) {
+        var modal = document.getElementById('dtAdminAddressModal');
+        if (!modal || !addr) return;
+        var el = function (id) { return document.getElementById(id); };
+
+        var title = el('dtAdminAddressModalTitle');
+        if (title) {
+            title.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> <span>Edit Customer Address</span>';
+        }
+
+        if (el('dtAdminAddrId')) el('dtAdminAddrId').value = addr.id || '';
+        if (el('dtAdminAddrCustId')) el('dtAdminAddrCustId').value = addr.customer_id || '';
+        if (el('dtAdminAddrType')) el('dtAdminAddrType').value = addr.address_type || 'shipping';
+        if (el('dtAdminAddrRecipient')) el('dtAdminAddrRecipient').value = addr.recipient_name || '';
+        if (el('dtAdminAddrPhone')) el('dtAdminAddrPhone').value = addr.phone || '';
+        if (el('dtAdminAddrGst')) el('dtAdminAddrGst').value = addr.gstin || '';
+        if (el('dtAdminAddrLine1')) el('dtAdminAddrLine1').value = addr.address_line1 || '';
+        if (el('dtAdminAddrLine2')) el('dtAdminAddrLine2').value = addr.address_line2 || '';
+        if (el('dtAdminAddrCity')) el('dtAdminAddrCity').value = addr.city || 'Surat';
+        if (el('dtAdminAddrState')) el('dtAdminAddrState').value = addr.state || 'Gujarat';
+        if (el('dtAdminAddrPin')) el('dtAdminAddrPin').value = addr.pincode || '395002';
+        if (el('dtAdminAddrDefault')) el('dtAdminAddrDefault').checked = !!addr.is_default;
+
+        modal.style.display = 'flex';
+    };
+
+    window.closeAdminAddressModal = function () {
+        var modal = document.getElementById('dtAdminAddressModal');
+        if (modal) modal.style.display = 'none';
+    };
+
+    window.handleAdminAddrTypeChange = function (type) {
+        var defaultChk = document.getElementById('dtAdminAddrDefault');
+        if (type === 'billing' && defaultChk) {
+            defaultChk.checked = true;
+        }
+    };
+
+    window.handleAdminSaveAddress = function (e) {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+        var el = function (id) { return document.getElementById(id); };
+
+        var addrId = parseInt(el('dtAdminAddrId') ? el('dtAdminAddrId').value : '0', 10) || 0;
+        var customerId = parseInt(el('dtAdminAddrCustId') ? el('dtAdminAddrCustId').value : '0', 10) || 0;
+        var type = el('dtAdminAddrType') ? el('dtAdminAddrType').value : 'shipping';
+        var recipient = el('dtAdminAddrRecipient') ? el('dtAdminAddrRecipient').value.trim() : '';
+        var phone = el('dtAdminAddrPhone') ? el('dtAdminAddrPhone').value.trim() : '';
+        var gstin = el('dtAdminAddrGst') ? el('dtAdminAddrGst').value.trim().toUpperCase() : '';
+        var addr1 = el('dtAdminAddrLine1') ? el('dtAdminAddrLine1').value.trim() : '';
+        var addr2 = el('dtAdminAddrLine2') ? el('dtAdminAddrLine2').value.trim() : '';
+        var city = el('dtAdminAddrCity') ? el('dtAdminAddrCity').value.trim() : '';
+        var state = el('dtAdminAddrState') ? el('dtAdminAddrState').value : 'Gujarat';
+        var pin = el('dtAdminAddrPin') ? el('dtAdminAddrPin').value.trim() : '';
+        var isDefault = el('dtAdminAddrDefault') && el('dtAdminAddrDefault').checked ? 1 : 0;
+
+        if (!customerId) {
+            toast('Invalid customer ID.', 'danger');
+            return false;
+        }
+        if (!addr1 || !city || !pin) {
+            toast('Please enter address line 1, city, and 6-digit PIN code.', 'danger');
+            return false;
+        }
+
+        var saveBtn = document.getElementById('dtAdminAddrSaveBtn');
+        var oldBtnHtml = saveBtn ? saveBtn.innerHTML : '';
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5" style="animation: dtSpin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25" stroke="currentColor"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> <span>Saving...</span>';
+        }
+
+        fetch('/api/customer_addresses.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                action: 'save',
+                id: addrId,
+                customer_id: customerId,
+                address_type: type,
+                recipient_name: recipient,
+                phone: phone,
+                gstin: gstin,
+                address_line1: addr1,
+                address_line2: addr2,
+                city: city,
+                state: state,
+                pincode: pin,
+                is_default: isDefault
+            })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = oldBtnHtml;
+                }
+                if (!res || !res.success) {
+                    toast(res && res.message ? res.message : 'Failed to save address.', 'danger');
+                    return;
+                }
+                toast(res.message || 'Address saved successfully!', 'success');
+                window.closeAdminAddressModal();
+                setTimeout(function () { window.location.reload(); }, 600);
+            })
+            .catch(function () {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = oldBtnHtml;
+                }
+                toast('Server connection failed while saving address.', 'danger');
+            });
+
+        return false;
+    };
+
+    window.setCustomerDefaultShipping = function (addrId, customerId) {
+        if (!addrId || !customerId) return;
+        fetch('/api/customer_addresses.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                action: 'set_default_shipping',
+                id: addrId,
+                customer_id: customerId
+            })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (!res || !res.success) {
+                    toast(res && res.message ? res.message : 'Could not set default shipping.', 'danger');
+                    return;
+                }
+                toast('Default shipping address updated successfully!', 'success');
+                setTimeout(function () { window.location.reload(); }, 600);
+            })
+            .catch(function () {
+                toast('Could not connect to server.', 'danger');
+            });
+    };
+
+    window.setCustomerDefaultBilling = function (addrId, customerId) {
+        if (!addrId || !customerId) return;
+        fetch('/api/customer_addresses.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                action: 'set_default_billing',
+                id: addrId,
+                customer_id: customerId
+            })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (!res || !res.success) {
+                    toast(res && res.message ? res.message : 'Could not update billing address.', 'danger');
+                    return;
+                }
+                toast('Registered GST Billing Address updated successfully!', 'success');
+                setTimeout(function () { window.location.reload(); }, 600);
+            })
+            .catch(function () {
+                toast('Could not connect to server.', 'danger');
+            });
+    };
+
+    window.deleteCustomerAddress = function (addrId, customerId) {
+        if (!addrId || !customerId) return;
+        if (!confirm('Are you sure you want to remove this saved address?')) return;
+
+        fetch('/api/customer_addresses.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                action: 'delete',
+                id: addrId,
+                customer_id: customerId
+            })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (!res || !res.success) {
+                    toast(res && res.message ? res.message : 'Could not delete address.', 'danger');
+                    return;
+                }
+                toast('Address removed successfully.', 'success');
+                var card = document.getElementById('dtAdminAddrCard-' + addrId);
+                if (card) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(function () { card.remove(); }, 300);
+                } else {
+                    setTimeout(function () { window.location.reload(); }, 600);
+                }
+            })
+            .catch(function () {
+                toast('Could not connect to server.', 'danger');
+            });
+    };
+
 })();
