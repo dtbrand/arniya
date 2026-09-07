@@ -215,11 +215,11 @@ if (empty($activeUserEmail) || preg_match('/^\d+$/', $activeUserEmail)) {
 }
 $activeUserGstin = $dbUser['gstin'] ?? ($currentUser['gstin'] ?? '');
 $activeUserPan = $dbUser['pan'] ?? ($currentUser['pan'] ?? '');
-$activeUserCity = $dbUser['city'] ?? ($currentUser['city'] ?? 'Surat');
-$activeUserState = $dbUser['state'] ?? ($currentUser['state'] ?? 'Gujarat');
-$activeUserCompanyName = $dbUser['company_name'] ?? ($dbUser['business_name'] ?? ($dbUser['name'] ?? ($currentUser['companyName'] ?? $activeUserName)));
-$activeUserAddress = $dbUser['address'] ?? ($dbUser['address_line1'] ?? 'Commercial Market Address');
-$activeUserPincode = $dbUser['pincode'] ?? '395002';
+$activeUserCity = !empty($dbUser['city']) ? $dbUser['city'] : (!empty($currentUser['city']) ? $currentUser['city'] : 'Surat');
+$activeUserState = !empty($dbUser['state']) ? $dbUser['state'] : (!empty($currentUser['state']) ? $currentUser['state'] : 'Gujarat');
+$activeUserCompanyName = !empty($dbUser['company_name']) ? $dbUser['company_name'] : (!empty($dbUser['business_name']) ? $dbUser['business_name'] : (!empty($dbUser['name']) ? $dbUser['name'] : (!empty($currentUser['companyName']) ? $currentUser['companyName'] : $activeUserName)));
+$activeUserAddress = !empty($dbUser['address']) ? $dbUser['address'] : (!empty($dbUser['address_line1']) ? $dbUser['address_line1'] : 'Commercial Market Address');
+$activeUserPincode = !empty($dbUser['pincode']) ? $dbUser['pincode'] : '395002';
 $activeUserTier = $realKpis['tier'];
 
 /*
@@ -1373,10 +1373,12 @@ $catalogHasProducts = $catalogProducts !== [];
                             </div>
 
                             <!-- Action Buttons: Save or Cancel -->
-                            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px;">
-                                <button type="button" class="ws-btn ws-btn-secondary" onclick="closeEditAddressDrawer()">Cancel</button>
-                                <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                            <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:14px;">
+                                <button type="button" class="ws-btn" onclick="closeEditAddressDrawer()" style="background:#FAF5E8; border:1px solid #D4AF37; color:#705114; font-weight:700; border-radius:8px; padding:0 18px; height:40px; cursor:pointer; font-size:0.85rem; transition:all 0.2s ease;">
+                                    Cancel
+                                </button>
+                                <button type="submit" id="wsBtnSaveAddress" class="dt-btn-gold" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 22px; border-radius:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); border:1px solid #8A681F; color:#111827; font-weight:800; font-size:0.86rem; cursor:pointer; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35); transition:all 0.2s ease;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                     <span>Save Address</span>
                                 </button>
                             </div>
@@ -2798,9 +2800,12 @@ $catalogHasProducts = $catalogProducts !== [];
         'gst_number' => $activeUserGstin,
         'gstin' => $activeUserGstin,
         'pan' => $activeUserPan,
+        'address' => $activeUserAddress,
+        'address_line1' => $activeUserAddress,
         'city' => $activeUserCity ?: 'Surat',
         'state' => $activeUserState ?: 'Gujarat',
-        'pincode' => $dbUser['pincode'] ?? $currentUser['pincode'] ?? '395002',
+        'pincode' => $activeUserPincode ?: '395002',
+        'shipping_same_as_billing' => true,
         'tier' => $tierName,
         'credit_limit' => $creditLimit,
         'outstanding_balance' => $outstandingBalance

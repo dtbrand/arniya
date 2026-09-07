@@ -634,13 +634,69 @@ class Auth
     }
 
     /**
+     * Ensure addresses table exists on any MySQL/MariaDB or SQLite database
+     */
+    public static function ensureAddressTable(\PDO $pdo): void
+    {
+        static $ensured = false;
+        if ($ensured) return;
+        try {
+            $isSqlite = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite';
+            if ($isSqlite) {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `addresses` (
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+                    `customer_id` INT NOT NULL,
+                    `recipient_name` VARCHAR(191) NULL,
+                    `phone` VARCHAR(32) NULL,
+                    `address_line1` VARCHAR(255) NOT NULL,
+                    `address_line2` VARCHAR(255) NULL,
+                    `city` VARCHAR(100) NOT NULL,
+                    `state` VARCHAR(100) NOT NULL,
+                    `pincode` VARCHAR(20) NOT NULL,
+                    `address_type` VARCHAR(32) NOT NULL DEFAULT 'work',
+                    `is_default` TINYINT(1) NOT NULL DEFAULT 0,
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                )");
+            } else {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `addresses` (
+                    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    `customer_id` INT NOT NULL,
+                    `recipient_name` VARCHAR(191) NULL,
+                    `phone` VARCHAR(32) NULL,
+                    `address_line1` VARCHAR(255) NOT NULL,
+                    `address_line2` VARCHAR(255) NULL,
+                    `city` VARCHAR(100) NOT NULL,
+                    `state` VARCHAR(100) NOT NULL,
+                    `pincode` VARCHAR(20) NOT NULL,
+                    `address_type` VARCHAR(32) NOT NULL DEFAULT 'work',
+                    `is_default` TINYINT(1) NOT NULL DEFAULT 0,
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX `idx_addresses_cust` (`customer_id`),
+                    INDEX `idx_addresses_default` (`customer_id`, `is_default`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            }
+            $ensured = true;
+        } catch (\Throwable $e) {
+            error_log('Failed to ensure addresses table: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Save Customer Address (Billing & Dispatch) in addresses table
      */
     public static function saveAddress(int $customerId, array $data): array
     {
+        if ($customerId <= 0) {
+            return ['success' => false, 'message' => 'Invalid customer ID.'];
+        }
+
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
+                self::ensureAddressTable($pdo);
+
                 $recipientName = trim((string)($data['recipient_name'] ?? ($data['company_name'] ?? ($data['name'] ?? ''))));
                 $phone = trim((string)($data['phone'] ?? ''));
                 $addr1 = trim((string)($data['address_line1'] ?? ($data['address'] ?? '')));
@@ -650,14 +706,21 @@ class Auth
                 $pincode = trim((string)($data['pincode'] ?? '395002'));
                 $type = in_array($data['address_type'] ?? '', ['home', 'work', 'warehouse'], true) ? $data['address_type'] : 'work';
 
-                if (empty($addr1)) {
-                    return ['success' => false, 'message' => 'Address is required.'];
-                }
-
                 // Check if an address row already exists for this customer and type
-                $checkStmt = $pdo->prepare("SELECT id FROM addresses WHERE customer_id = ? AND (address_type = ? OR is_default = 1) ORDER BY is_default DESC LIMIT 1");
+                $checkStmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? AND (address_type = ? OR is_default = 1) ORDER BY is_default DESC LIMIT 1");
                 $checkStmt->execute([$customerId, $type]);
                 $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+
+                if (empty($addr1)) {
+                    if ($existing && !empty($existing['address_line1'])) {
+                        $addr1 = $existing['address_line1'];
+                        if (empty($city))    $city = $existing['city'] ?: 'Surat';
+                        if (empty($state))   $state = $existing['state'] ?: 'Gujarat';
+                        if (empty($pincode)) $pincode = $existing['pincode'] ?: '395002';
+                    } else {
+                        $addr1 = 'Commercial Market Address';
+                    }
+                }
 
                 if ($existing && !empty($existing['id'])) {
                     $upStmt = $pdo->prepare("
@@ -724,7 +787,7 @@ class Auth
                 // Save custom shipping/warehouse address if separate
                 if (!empty($data['custom_shipping']) && is_array($data['custom_shipping'])) {
                     $cShip = $data['custom_shipping'];
-                    $wName = trim((string)($cShip['warehouse_name'] ?? 'Primary Godown'));
+                    $wName = trim((string)($cShip['warehouse_name'] ?? 'Primary Godown Hub'));
                     $rPhone = trim((string)($cShip['receiver_phone'] ?? $phone));
                     $sAddr = trim((string)($cShip['address'] ?? ''));
                     $sCity = trim((string)($cShip['city'] ?? $city));
@@ -747,9 +810,17 @@ class Auth
                     }
                 }
 
+                // Update session
+                if (isset($_SESSION['user']) && (int)($_SESSION['user']['id'] ?? 0) === $customerId) {
+                    $_SESSION['user']['address'] = $addr1;
+                    $_SESSION['user']['city'] = $city;
+                    $_SESSION['user']['state'] = $state;
+                    $_SESSION['user']['pincode'] = $pincode;
+                }
+
                 return [
                     'success' => true,
-                    'message' => 'Address saved successfully in live database.',
+                    'message' => 'Address book updated successfully in live database.',
                     'address_id' => $addressId,
                     'address' => [
                         'recipient_name' => $recipientName,
@@ -780,6 +851,7 @@ class Auth
         }
 
         try {
+            self::ensureAddressTable($pdo);
             $stmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? ORDER BY is_default DESC, id ASC");
             $stmt->execute([$customerId]);
             return $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];

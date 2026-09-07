@@ -134,6 +134,42 @@ class CustomerManager
         ];
     }
 
+    /**
+     * Look up customer by phone number
+     */
+    public static function getByPhone(string $phone): ?array
+    {
+        $cleanPhone = preg_replace('/\D+/', '', $phone);
+        if (strlen($cleanPhone) < 10) return null;
+        $last10 = substr($cleanPhone, -10);
+
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return null;
+        }
+
+        try {
+            $stmt = $pdo->prepare("
+                SELECT `id`, `name`, `phone`, `email`, `type`, `city`, `state`, `tier`,
+                       `credit_limit`, `outstanding_balance`, `total_orders`,
+                       `lifetime_spend`, `commission_rate`, `gstin`, `pan`,
+                       `status`, `created_at`
+                FROM `customers`
+                WHERE `phone` LIKE ? OR `phone` = ?
+                ORDER BY `id` DESC
+                LIMIT 1
+            ");
+            $stmt->execute(['%' . $last10, $cleanPhone]);
+            $r = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($r && !empty($r['id'])) {
+                return self::getById((int)$r['id']);
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+        return null;
+    }
+
     public static function getByType(string $type): array
     {
         $all = self::getAll();

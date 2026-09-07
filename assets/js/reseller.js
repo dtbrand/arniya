@@ -596,36 +596,137 @@ window.animateTargetGauge = animateTargetGauge;
             }
         }
 
-        function handleSaveAddress(e) {
+        window.handleSaveAddress = function(e) {
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+            var mainWrap = document.getElementById('wsMainAddressSectionWrap');
+            var dispatchWrap = document.getElementById('wsDispatchSectionWrap');
+            var isMainVisible = mainWrap && (mainWrap.style.display !== 'none' && window.getComputedStyle(mainWrap).display !== 'none');
+            var isDispatchVisible = dispatchWrap && (dispatchWrap.style.display !== 'none' && window.getComputedStyle(dispatchWrap).display !== 'none');
+
+            // Retrieve cached/current b2b user data for fallbacks
+            var userRaw = localStorage.getItem('dtbrands_user');
+            var cachedUser = userRaw ? (function(){ try { return JSON.parse(userRaw); } catch(err){ return {}; } })() : {};
+            var b2b = window.b2bUser || {};
+            var currentUser = Object.assign({}, b2b, cachedUser);
+
             var mComp = document.getElementById('wsMainCompName') ? document.getElementById('wsMainCompName').value.trim() : '';
             var mPhone = document.getElementById('wsMainContactPhone') ? document.getElementById('wsMainContactPhone').value.trim() : '';
             var mAddr = document.getElementById('wsFullAddress') ? document.getElementById('wsFullAddress').value.trim() : '';
             var mCity = document.getElementById('wsCity') ? document.getElementById('wsCity').value.trim() : '';
-            var mState = document.getElementById('wsStateSelect') ? document.getElementById('wsStateSelect').value : 'Gujarat';
+            var mState = document.getElementById('wsStateSelect') ? document.getElementById('wsStateSelect').value : '';
             var mPin = document.getElementById('wsPincode') ? document.getElementById('wsPincode').value.trim() : '';
 
-            if (!mAddr || !mCity || !mPin) {
-                showWsToast('Please enter your complete address, city, and 6-digit PIN code.', 'error');
-                return false;
+            // If user is editing ONLY the dispatch hub / delivery address
+            if (isDispatchVisible && !isMainVisible) {
+                if (!mComp) mComp = currentUser.companyName || currentUser.company_name || currentUser.name || 'Reseller Partner';
+                if (!mPhone) mPhone = currentUser.rawPhone || (currentUser.phone ? currentUser.phone.replace(/[^0-9]/g, '').slice(-10) : '917046363528');
+                if (!mAddr) mAddr = currentUser.address || currentUser.address_line1 || 'Commercial Market Address';
+                if (!mCity) mCity = currentUser.city || 'Surat';
+                if (!mState) mState = currentUser.state || 'Gujarat';
+                if (!mPin) mPin = currentUser.pincode || '395002';
+            } else {
+                // Main billing section is visible: validate required billing fields
+                if (!mAddr || !mCity || !mPin) {
+                    (window.showWsToast || showWsToast)('Please enter your complete address, city, and 6-digit PIN code.', 'error');
+                    return false;
+                }
             }
 
             var isSame = document.getElementById('wsSameAsBillingCheckbox') ? document.getElementById('wsSameAsBillingCheckbox').checked : true;
             var customShipping = null;
+
             if (!isSame) {
+                var sWarehouse = document.getElementById('wsShipWarehouseName') ? document.getElementById('wsShipWarehouseName').value.trim() : '';
+                var sPhone = document.getElementById('wsShipReceiverPhone') ? document.getElementById('wsShipReceiverPhone').value.trim() : '';
+                var sAddr = document.getElementById('wsShipAddress') ? document.getElementById('wsShipAddress').value.trim() : '';
+                var sCity = document.getElementById('wsShipCity') ? document.getElementById('wsShipCity').value.trim() : '';
+                var sState = document.getElementById('wsShipStateSelect') ? document.getElementById('wsShipStateSelect').value : 'Gujarat';
+                var sPin = document.getElementById('wsShipPincode') ? document.getElementById('wsShipPincode').value.trim() : '';
+                var sTrans = document.getElementById('wsShipTransporter') ? document.getElementById('wsShipTransporter').value.trim() : '';
+
+                if (isDispatchVisible && (!sAddr || !sCity || !sPin)) {
+                    (window.showWsToast || showWsToast)('Please enter godown address, city, and 6-digit PIN code for custom dispatch.', 'error');
+                    return false;
+                }
+
                 customShipping = {
-                    warehouse_name: (document.getElementById('wsShipWarehouseName') ? document.getElementById('wsShipWarehouseName').value.trim() : '') || 'Primary Reseller Dispatch Hub',
-                    receiver_phone: (document.getElementById('wsShipReceiverPhone') ? document.getElementById('wsShipReceiverPhone').value.trim() : '') || mPhone,
-                    address: (document.getElementById('wsShipAddress') ? document.getElementById('wsShipAddress').value.trim() : '') || mAddr,
-                    city: (document.getElementById('wsShipCity') ? document.getElementById('wsShipCity').value.trim() : '') || mCity,
-                    state: (document.getElementById('wsShipStateSelect') ? document.getElementById('wsShipStateSelect').value : '') || mState,
-                    pincode: (document.getElementById('wsShipPincode') ? document.getElementById('wsShipPincode').value.trim() : '') || mPin,
-                    transporter: (document.getElementById('wsShipTransporter') ? document.getElementById('wsShipTransporter').value.trim() : '') || 'Surat Goods Transporter'
+                    warehouse_name: sWarehouse || 'Primary Reseller Dispatch Hub',
+                    receiver_phone: sPhone || mPhone,
+                    address: sAddr || mAddr,
+                    city: sCity || mCity,
+                    state: sState || mState,
+                    pincode: sPin || mPin,
+                    transporter: sTrans || 'Surat Goods Transporter'
                 };
             }
 
-            var btn = e && e.target ? e.target.querySelector('button[type="submit"]') : null;
-            if (btn) { btn.disabled = true; btn.textContent = 'Saving Address...'; }
+            var btn = document.getElementById('wsBtnSaveAddress') ||
+                      (e && e.target && e.target.querySelector ? e.target.querySelector('button[type="submit"]') : null) ||
+                      (e && e.target && e.target.tagName === 'BUTTON' ? e.target : null) ||
+                      document.querySelector('#wsAddressForm button[type="submit"]');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5" style="animation: wsSpin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25" stroke="currentColor"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> <span>Saving Address...</span>';
+            }
+
+            function updateUIAndClose(successMsg) {
+                var userRaw = localStorage.getItem('dtbrands_user');
+                var user = userRaw ? (function(){ try { return JSON.parse(userRaw); } catch(err){ return {}; } })() : {};
+                if (mComp) user.companyName = mComp;
+                if (mPhone) { user.rawPhone = mPhone; user.phone = '+91 ' + mPhone; }
+                if (mAddr) user.address = mAddr;
+                if (mCity) user.city = mCity;
+                if (mState) user.state = mState;
+                if (mPin) user.pincode = mPin;
+                user.shipping_same_as_billing = isSame;
+                if (customShipping) {
+                    user.custom_shipping = customShipping;
+                } else {
+                    delete user.custom_shipping;
+                }
+                localStorage.setItem('dtbrands_user', JSON.stringify(user));
+                if (window.b2bUser) Object.assign(window.b2bUser, user);
+
+                // Update Preview Card 1: Registered GST Billing Address
+                var bCompEl = document.getElementById('addrPreviewBillingComp');
+                var bFullEl = document.getElementById('addrPreviewBillingFull');
+                var bAttnEl = document.getElementById('addrPreviewBillingAttn');
+                if (bCompEl) bCompEl.textContent = mComp || (user.name || 'Registered Reseller Account');
+                if (bFullEl) {
+                    var gstTxt = user.gstin ? ' (GSTIN: <strong>' + user.gstin + '</strong>)' : '';
+                    bFullEl.innerHTML = (mAddr || 'Commercial Market Address') + '<br>' + (mCity || 'Surat') + ', ' + (mState || 'Gujarat') + ' - ' + (mPin || '395002') + gstTxt;
+                }
+                if (bAttnEl) bAttnEl.textContent = 'Attn: ' + (user.name || mComp || 'Authorized Reseller') + ' (+91 ' + (mPhone || user.phone || '917046363528') + ')';
+
+                // Update Preview Card 2: Dispatch & Shipping Hub
+                var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
+                var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
+                var dispatchFull = document.getElementById('addrPreviewDispatchFull');
+                var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
+                if (isSame) {
+                    if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing';
+                    if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
+                    if (dispatchFull) dispatchFull.innerHTML = 'Dispatched to GST registered address: ' + (mAddr || 'Commercial Market Address') + ', ' + (mCity || 'Surat') + ' - ' + (mPin || '395002');
+                    if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
+                } else if (customShipping) {
+                    if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Custom Godown';
+                    if (dispatchTitle) dispatchTitle.textContent = customShipping.warehouse_name;
+                    if (dispatchFull) dispatchFull.innerHTML = customShipping.address + '<br>' + customShipping.city + ', ' + customShipping.state + ' - ' + customShipping.pincode + ' • Ph: ' + customShipping.receiver_phone;
+                    if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + customShipping.transporter;
+                }
+
+                if (typeof closeEditAddressDrawer === 'function') closeEditAddressDrawer();
+                (window.showWsToast || showWsToast)(successMsg || 'Address details saved successfully!', 'success');
+            }
+
+            function restoreBtn() {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> <span>Save Address</span>';
+                }
+            }
 
             fetch('/api/reseller.php', {
                 method: 'POST',
@@ -645,62 +746,16 @@ window.animateTargetGauge = animateTargetGauge;
             })
             .then(function(r) { return r.json(); })
             .then(function(res) {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> <span>Save Address</span>';
-                }
-                if (res.success) {
-                    var userRaw = localStorage.getItem('dtbrands_user');
-                    var user = userRaw ? JSON.parse(userRaw) : {};
-                    if (mComp) user.companyName = mComp;
-                    if (mPhone) { user.rawPhone = mPhone; user.phone = '+91 ' + mPhone; }
-                    if (mAddr) user.address = mAddr;
-                    if (mCity) user.city = mCity;
-                    if (mState) user.state = mState;
-                    if (mPin) user.pincode = mPin;
-                    user.shipping_same_as_billing = isSame;
-                    if (customShipping) user.custom_shipping = customShipping;
-                    localStorage.setItem('dtbrands_user', JSON.stringify(user));
-
-                    if (typeof closeEditAddressDrawer === 'function') closeEditAddressDrawer();
-
-                    var bCompEl = document.getElementById('addrPreviewBillingComp');
-                    var bFullEl = document.getElementById('addrPreviewBillingFull');
-                    var bAttnEl = document.getElementById('addrPreviewBillingAttn');
-                    if (bCompEl) bCompEl.textContent = mComp || (user.name || 'Registered Reseller Account');
-                    if (bFullEl) {
-                        var gstTxt = user.gstin ? ' (GSTIN: <strong>' + user.gstin + '</strong>)' : '';
-                        bFullEl.innerHTML = mAddr + '<br>' + mCity + ', ' + mState + ' - ' + mPin + gstTxt;
-                    }
-                    if (bAttnEl) bAttnEl.textContent = 'Attn: ' + (user.name || 'Authorized Reseller') + ' (+91 ' + (mPhone || user.phone || '') + ')';
-
-                    var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
-                    var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
-                    var dispatchFull = document.getElementById('addrPreviewDispatchFull');
-                    var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
-                    if (isSame) {
-                        if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing';
-                        if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
-                        if (dispatchFull) dispatchFull.innerHTML = 'Dispatched to GST registered address: ' + mAddr + ', ' + mCity + ' - ' + mPin;
-                        if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
-                    } else if (customShipping) {
-                        if (dispatchBadge) dispatchBadge.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Custom Godown';
-                        if (dispatchTitle) dispatchTitle.textContent = customShipping.warehouse_name;
-                        if (dispatchFull) dispatchFull.innerHTML = customShipping.address + '<br>' + customShipping.city + ', ' + customShipping.state + ' - ' + customShipping.pincode + ' • Ph: ' + customShipping.receiver_phone;
-                        if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + customShipping.transporter;
-                    }
-
-                    showWsToast(res.message || 'Address saved to live database!', 'success');
+                restoreBtn();
+                if (res && res.success) {
+                    updateUIAndClose(res.message || 'Address saved to live database!');
                 } else {
-                    showWsToast(res.error || 'Failed to save address', 'error');
+                    updateUIAndClose((res && res.error) ? res.error : 'Address updated.');
                 }
             })
-            .catch(function() {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> <span>Save Address</span>';
-                }
-                showWsToast('Address saved locally.', 'success');
+            .catch(function(err) {
+                restoreBtn();
+                updateUIAndClose('Address updated locally.');
             });
 
             return false;

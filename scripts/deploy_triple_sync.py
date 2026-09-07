@@ -15,6 +15,9 @@ FILES_TO_DEPLOY = [
     'assets/js/wholesale.js',
     'assets/js/retailer.js',
     'assets/js/reseller.js',
+    'assets/css/wholesale.css',
+    'assets/css/retailer.css',
+    'assets/css/reseller.css',
 ]
 
 SERVERS = [
