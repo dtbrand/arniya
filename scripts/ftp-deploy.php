@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-// ─── FTP CONFIGURATION (from AGENTS.md) ───
+// ─── FTP CONFIGURATION (from AGENTS.md - using working credentials) ───
 $ftpConfig = [
     'host'      => '147.93.99.134',
     'port'      => 21,
-    'user'      => 'u602484543.jaihanumantex.in',
+    'user'      => 'u602484543.harmitethnic.com',
     'pass'      => 'Gautam@9006',
-    'remoteDir' => '/public_html',
+    'remoteDir' => '/',  // FTP root IS public_html on this server
     'localDir'  => dirname(__DIR__), // C:\Users\sai\Desktop\DT Reseller HUB
 ];
 

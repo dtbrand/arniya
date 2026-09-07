@@ -250,7 +250,7 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ### 🌐 Production Credentials
 
-- **FTP Host**: `147.93.99.134:21` (User: `u602484543.jaihanumantex.in`, Pass: `Gautam@9006`, Remote Dir: `/public_html`)
+- **FTP Host**: `147.93.99.134:21` (User: `u602484543.harmitethnic.com`, Pass: `Gautam@9006`, Remote Dir: `/public_html` (FTP root))
 - **MySQL Database**: `u602484543_demodt121` on `localhost:3306` (User: `u602484543_demodt121`, Pass: `Gautam@9006`)
 - **Website Base URL**: `https://jaihanumantex.in/`
 - **Official WhatsApp**: `917046363528` (`+91 70463 63528`)
