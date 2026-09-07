@@ -25,7 +25,7 @@ $resellerCount = 0;
 if ($liveDb) {
     try {
         $rows = Database::query("
-            SELECT COALESCE(NULLIF(channel, ''), 'online') as ch, 
+            SELECT CASE WHEN channel IS NOT NULL AND channel != '' THEN channel ELSE 'online' END as ch, 
                    COUNT(*) as cnt, 
                    COALESCE(SUM(total_amount), 0) as rev 
             FROM orders 

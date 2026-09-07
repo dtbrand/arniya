@@ -695,8 +695,16 @@ class OrderManager
 
                 $stmt = $db->prepare("
                     SELECT o.*,
-                           COALESCE(NULLIF(o.customer_name, ''), c.name, 'Valued Customer') as display_customer_name,
-                           COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as display_customer_phone,
+                           CASE 
+                               WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name 
+                               WHEN c.name IS NOT NULL AND c.name != '' THEN c.name 
+                               ELSE 'Valued Customer' 
+                           END as display_customer_name,
+                           CASE 
+                               WHEN o.customer_phone IS NOT NULL AND o.customer_phone != '' THEN o.customer_phone 
+                               WHEN c.phone IS NOT NULL AND c.phone != '' THEN c.phone 
+                               ELSE '' 
+                           END as display_customer_phone,
                            (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as items_count
                     FROM orders o
                     LEFT JOIN customers c ON o.customer_id = c.id
@@ -762,8 +770,16 @@ class OrderManager
             try {
                 $rows = Database::query("
                     SELECT o.*, 
-                           COALESCE(NULLIF(o.customer_name, ''), c.name, 'Direct Customer') as display_name,
-                           COALESCE(NULLIF(o.customer_phone, ''), c.phone, '+91 70463 63528') as display_phone,
+                           CASE 
+                               WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name 
+                               WHEN c.name IS NOT NULL AND c.name != '' THEN c.name 
+                               ELSE 'Direct Customer' 
+                           END as display_name,
+                           CASE 
+                               WHEN o.customer_phone IS NOT NULL AND o.customer_phone != '' THEN o.customer_phone 
+                               WHEN c.phone IS NOT NULL AND c.phone != '' THEN c.phone 
+                               ELSE '+91 70463 63528' 
+                           END as display_phone,
                            COALESCE(c.type, o.channel, 'Retail') as display_type,
                            (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as real_items_count,
                            (SELECT product_title FROM order_items WHERE order_id = o.id ORDER BY id ASC LIMIT 1) as first_item_name

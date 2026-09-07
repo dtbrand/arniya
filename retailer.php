@@ -50,8 +50,16 @@ if ($currentUser && !empty($currentUser['id'])) {
 
             $orderStmt = $pdo->prepare("
                 SELECT o.*,
-                       COALESCE(NULLIF(o.customer_name, ''), c.name, 'Valued Retailer') as display_customer_name,
-                       COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as display_customer_phone,
+                       CASE 
+                           WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name 
+                           WHEN c.name IS NOT NULL AND c.name != '' THEN c.name 
+                           ELSE 'Valued Retailer' 
+                       END as display_customer_name,
+                       CASE 
+                           WHEN o.customer_phone IS NOT NULL AND o.customer_phone != '' THEN o.customer_phone 
+                           WHEN c.phone IS NOT NULL AND c.phone != '' THEN c.phone 
+                           ELSE '' 
+                       END as display_customer_phone,
                        (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as real_items_count
                 FROM orders o
                 LEFT JOIN customers c ON o.customer_id = c.id

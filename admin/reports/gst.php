@@ -60,7 +60,7 @@ if ($liveDb) {
 
         $itemRows = Database::query("
             SELECT 
-                COALESCE(NULLIF(p.hsn_code, ''), '5007') as hsn,
+                CASE WHEN p.hsn_code IS NOT NULL AND p.hsn_code != '' THEN p.hsn_code ELSE '5007' END as hsn,
                 COALESCE(p.category, 'Silk Sarees') as category,
                 SUM(oi.quantity) as total_qty,
                 SUM(oi.total_price) as total_val

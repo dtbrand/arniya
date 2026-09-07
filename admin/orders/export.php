@@ -19,9 +19,9 @@ if ($db !== null && !Database::isMockMode()) {
     try {
         $dbRows = Database::query("
             SELECT o.*, 
-                   COALESCE(NULLIF(o.customer_name, ''), c.name, 'Direct Customer') as customer_name,
+                   CASE WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name WHEN c.name IS NOT NULL AND c.name != '' THEN c.name ELSE 'Direct Customer' END as customer_name,
                    COALESCE(c.company_name, 'Direct Wholesale') as firm_name,
-                   COALESCE(NULLIF(o.customer_phone, ''), c.phone, '') as customer_phone,
+                   CASE WHEN o.customer_phone IS NOT NULL AND o.customer_phone != '' THEN o.customer_phone WHEN c.phone IS NOT NULL AND c.phone != '' THEN c.phone ELSE '' END as customer_phone,
                    COALESCE(c.city, 'Surat') as city_name,
                    COALESCE(c.state, 'Gujarat') as state_name,
                    (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as total_qty,

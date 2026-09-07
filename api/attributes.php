@@ -76,8 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
         try {
-            $stmt = $db->prepare("UPDATE product_attributes SET name = COALESCE(NULLIF(?, ''), name), slug = COALESCE(NULLIF(?, ''), slug), type = COALESCE(NULLIF(?, ''), type) WHERE id = ?");
-            $stmt->execute([$name, $slug, $type, $id]);
+            $attrFields = [];
+            $attrParams = [];
+            if ($name !== '') { $attrFields[] = "`name` = ?"; $attrParams[] = $name; }
+            if ($slug !== '') { $attrFields[] = "`slug` = ?"; $attrParams[] = $slug; }
+            if ($type !== '') { $attrFields[] = "`type` = ?"; $attrParams[] = $type; }
+            if (!empty($attrFields)) {
+                $attrParams[] = $id;
+                $stmt = $db->prepare("UPDATE product_attributes SET " . implode(', ', $attrFields) . " WHERE id = ?");
+                $stmt->execute($attrParams);
+            }
             echo json_encode(['success' => true, 'message' => 'Attribute updated successfully', 'id' => $id]);
             exit;
         } catch (\Exception $e) {

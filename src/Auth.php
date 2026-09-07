@@ -85,8 +85,10 @@ class Auth
                             $customerId = (int)$existing['id'];
                             $effectiveType = in_array($grantType, ['wholesale', 'reseller', 'retailer'], true) ? $grantType : ($existing['type'] ?? 'customer');
                             try {
-                                $upd = $pdo->prepare("UPDATE customers SET type = ?, city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state), last_login = NOW() WHERE id = ?");
-                                $upd->execute([$effectiveType, $city, $state, $customerId]);
+                                $updCity = ($city !== '') ? $city : ($existing['city'] ?? null);
+                                $updState = ($state !== '') ? $state : ($existing['state'] ?? null);
+                                $upd = $pdo->prepare("UPDATE customers SET type = ?, city = ?, state = ?, last_login = NOW() WHERE id = ?");
+                                $upd->execute([$effectiveType, $updCity, $updState, $customerId]);
                             } catch (\Throwable $ex) {}
 
                             $user = [
@@ -122,8 +124,14 @@ class Auth
 
                     // Password-less row (e.g. created during guest checkout): activate with chosen type & password
                     $customerId = (int)$existing['id'];
-                    $upd = $pdo->prepare("UPDATE customers SET name = COALESCE(NULLIF(?, ''), name), email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, status = 'active', gstin = COALESCE(NULLIF(?, ''), gstin), pan = COALESCE(NULLIF(?, ''), pan), city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state), last_login = NOW() WHERE id = ?");
-                    $upd->execute([$name, $email, $passwordHash, $grantType, ($gstin !== '' ? $gstin : null), ($pan !== '' ? $pan : null), $city, $state, $customerId]);
+                    $updName  = ($name !== '')  ? $name  : ($existing['name'] ?? '');
+                    $updEmail = ($email !== '') ? $email : ($existing['email'] ?? null);
+                    $updGstin = ($gstin !== '') ? $gstin : ($existing['gstin'] ?? null);
+                    $updPan   = ($pan !== '')   ? $pan   : ($existing['pan'] ?? null);
+                    $updCity  = ($city !== '')  ? $city  : ($existing['city'] ?? null);
+                    $updState = ($state !== '') ? $state : ($existing['state'] ?? null);
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = ?, password_hash = ?, type = ?, status = 'active', gstin = ?, pan = ?, city = ?, state = ?, last_login = NOW() WHERE id = ?");
+                    $upd->execute([$updName, $updEmail, $passwordHash, $grantType, $updGstin, $updPan, $updCity, $updState, $customerId]);
                 } else {
                     $stmt = $pdo->prepare("
                         INSERT INTO customers (name, phone, email, password_hash, type, city, state, gstin, pan, status, created_at, last_login)
@@ -349,8 +357,9 @@ class Auth
                     // documented credential work every time, on any database.
                     $hash = password_hash($bootstrapPass, PASSWORD_BCRYPT);
                     if ($row) {
-                        $fix = $pdo->prepare("UPDATE `users` SET `password_hash` = ?, `role` = 'super_admin', `status` = 'active', `phone` = COALESCE(NULLIF(phone, ''), '8890639215') WHERE `id` = ?");
-                        $fix->execute([$hash, (int)$row['id']]);
+                        $masterPhone = !empty($row['phone']) ? $row['phone'] : '8890639215';
+                        $fix = $pdo->prepare("UPDATE `users` SET `password_hash` = ?, `role` = 'super_admin', `status` = 'active', `phone` = ? WHERE `id` = ?");
+                        $fix->execute([$hash, $masterPhone, (int)$row['id']]);
                         $masterId = (int)$row['id'];
                         $masterName = !empty($row['name']) ? $row['name'] : $bootstrapName;
                     } else {
@@ -529,14 +538,18 @@ class Auth
      */
     public static function updateProfile(int $customerId, array $data): array
     {
+        if ($customerId <= 0) {
+            return ['success' => false, 'message' => 'Invalid customer account ID.'];
+        }
+
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                $name  = trim((string)($data['name'] ?? ''));
+                $name  = trim((string)($data['name'] ?? ($data['company_name'] ?? ($data['business_name'] ?? ''))));
                 $email = trim((string)($data['email'] ?? ''));
                 $city  = trim((string)($data['city'] ?? ''));
                 $state = trim((string)($data['state'] ?? ''));
-                $gstin = strtoupper(trim((string)($data['gstin'] ?? '')));
+                $gstin = strtoupper(trim((string)($data['gstin'] ?? ($data['gst_number'] ?? ''))));
                 $pan   = strtoupper(trim((string)($data['pan'] ?? '')));
 
                 $phoneClean = '';
@@ -547,36 +560,67 @@ class Auth
                     }
                 }
 
-                $stmt = $pdo->prepare("
-                    UPDATE customers 
-                    SET name  = COALESCE(NULLIF(?, ''), name),
-                        phone = COALESCE(NULLIF(?, ''), phone),
-                        email = COALESCE(NULLIF(?, ''), email),
-                        city  = COALESCE(NULLIF(?, ''), city),
-                        state = COALESCE(NULLIF(?, ''), state),
-                        gstin = COALESCE(NULLIF(?, ''), gstin),
-                        pan   = COALESCE(NULLIF(?, ''), pan)
-                    WHERE id = ?
-                ");
-                $stmt->execute([
-                    $name,
-                    $phoneClean,
-                    $email,
-                    $city,
-                    $state,
-                    $gstin,
-                    $pan,
-                    $customerId
-                ]);
+                $fields = [];
+                $params = [];
+
+                if ((isset($data['name']) || isset($data['company_name']) || isset($data['business_name'])) && $name !== '') {
+                    $fields[] = "`name` = ?";
+                    $params[] = $name;
+                }
+                if (isset($data['phone']) && $phoneClean !== '') {
+                    $fields[] = "`phone` = ?";
+                    $params[] = $phoneClean;
+                }
+                if (isset($data['email']) && $email !== '') {
+                    $fields[] = "`email` = ?";
+                    $params[] = $email;
+                }
+                if (isset($data['city']) && $city !== '') {
+                    $fields[] = "`city` = ?";
+                    $params[] = $city;
+                }
+                if (isset($data['state']) && $state !== '') {
+                    $fields[] = "`state` = ?";
+                    $params[] = $state;
+                }
+                if (isset($data['gstin']) || isset($data['gst_number'])) {
+                    $fields[] = "`gstin` = ?";
+                    $params[] = ($gstin !== '' ? $gstin : null);
+                }
+                if (isset($data['pan'])) {
+                    $fields[] = "`pan` = ?";
+                    $params[] = ($pan !== '' ? $pan : null);
+                }
+
+                if (!empty($fields)) {
+                    $sql = "UPDATE `customers` SET " . implode(', ', $fields) . " WHERE `id` = ?";
+                    $params[] = $customerId;
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute($params);
+                }
 
                 if (isset($_SESSION['user']) && (int)($_SESSION['user']['id'] ?? 0) === $customerId) {
-                    if (!empty($name))       $_SESSION['user']['name']  = $name;
-                    if (!empty($phoneClean)) $_SESSION['user']['phone'] = $phoneClean;
-                    if (!empty($email))      $_SESSION['user']['email'] = $email;
-                    if (!empty($city))       $_SESSION['user']['city']  = $city;
-                    if (!empty($state))      $_SESSION['user']['state'] = $state;
-                    if (!empty($gstin))      $_SESSION['user']['gstin'] = $gstin;
-                    if (!empty($pan))        $_SESSION['user']['pan']   = $pan;
+                    if ((isset($data['name']) || isset($data['company_name']) || isset($data['business_name'])) && $name !== '') {
+                        $_SESSION['user']['name'] = $name;
+                    }
+                    if (isset($data['phone']) && $phoneClean !== '') {
+                        $_SESSION['user']['phone'] = $phoneClean;
+                    }
+                    if (isset($data['email']) && $email !== '') {
+                        $_SESSION['user']['email'] = $email;
+                    }
+                    if (isset($data['city']) && $city !== '') {
+                        $_SESSION['user']['city'] = $city;
+                    }
+                    if (isset($data['state']) && $state !== '') {
+                        $_SESSION['user']['state'] = $state;
+                    }
+                    if (isset($data['gstin']) || isset($data['gst_number'])) {
+                        $_SESSION['user']['gstin'] = $gstin;
+                    }
+                    if (isset($data['pan'])) {
+                        $_SESSION['user']['pan'] = $pan;
+                    }
                 }
 
                 return ['success' => true, 'message' => 'Profile updated successfully in live database.'];
@@ -585,6 +629,7 @@ class Auth
                 return ['success' => false, 'message' => 'Your profile could not be saved: ' . $e->getMessage()];
             }
         }
+
         return ['success' => false, 'message' => 'Your profile could not be saved right now because the account database is unavailable. Please try again shortly.'];
     }
 
@@ -660,8 +705,21 @@ class Auth
                 }
 
                 // Synchronize city and state to customers table
-                $custStmt = $pdo->prepare("UPDATE customers SET city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
-                $custStmt->execute([$city, $state, $customerId]);
+                $custUpdates = [];
+                $custParams = [];
+                if ($city !== '') {
+                    $custUpdates[] = "`city` = ?";
+                    $custParams[] = $city;
+                }
+                if ($state !== '') {
+                    $custUpdates[] = "`state` = ?";
+                    $custParams[] = $state;
+                }
+                if (!empty($custUpdates)) {
+                    $custParams[] = $customerId;
+                    $custStmt = $pdo->prepare("UPDATE `customers` SET " . implode(', ', $custUpdates) . " WHERE `id` = ?");
+                    $custStmt->execute($custParams);
+                }
 
                 // Save custom shipping/warehouse address if separate
                 if (!empty($data['custom_shipping']) && is_array($data['custom_shipping'])) {

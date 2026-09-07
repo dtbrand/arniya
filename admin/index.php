@@ -345,7 +345,7 @@ $revRangeLabel = date('j M', strtotime('-6 day')) . ' - ' . date('j M, Y');
  * rather than inventing revenue.
  */
 $catRows = $dtRows(
-    "SELECT COALESCE(NULLIF(TRIM(p.`category_name`), ''), 'Uncategorised') AS name,
+    "SELECT CASE WHEN TRIM(p.`category_name`) IS NOT NULL AND TRIM(p.`category_name`) != '' THEN TRIM(p.`category_name`) ELSE 'Uncategorised' END AS name,
             COALESCE(SUM(oi.`total_price`), 0) AS revenue,
             COALESCE(SUM(oi.`quantity`), 0) AS units
        FROM `order_items` oi
@@ -401,7 +401,7 @@ if ($catTotal > 0) {
  * movement, with a bare `25` as the fallback.
  */
 $fastMovingRows = $dtRows(
-    "SELECT COALESCE(NULLIF(TRIM(oi.`product_title`), ''), 'Untitled product') AS title,
+    "SELECT CASE WHEN TRIM(oi.`product_title`) IS NOT NULL AND TRIM(oi.`product_title`) != '' THEN TRIM(oi.`product_title`) ELSE 'Untitled product' END AS title,
             COALESCE(SUM(oi.`quantity`), 0) AS units,
             COALESCE(SUM(oi.`total_price`), 0) AS revenue
        FROM `order_items` oi
@@ -436,7 +436,7 @@ if ($recentOrderIds) {
         "SELECT `order_id`,
                 COUNT(*) AS line_count,
                 COALESCE(SUM(`quantity`), 0) AS units,
-                MIN(COALESCE(NULLIF(TRIM(`product_title`), ''), 'Item')) AS first_title
+                MIN(CASE WHEN TRIM(`product_title`) IS NOT NULL AND TRIM(`product_title`) != '' THEN TRIM(`product_title`) ELSE 'Item' END) AS first_title
            FROM `order_items`
           WHERE `order_id` IN ({$idList})
           GROUP BY `order_id`"

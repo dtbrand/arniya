@@ -17,7 +17,7 @@ if ($pdo !== null && !Database::isMockMode()) {
     try {
         $shippingOrders = Database::query("
             SELECT o.*, 
-                   COALESCE(NULLIF(o.customer_name, ''), c.name, 'Direct Customer') as customer_name,
+                   CASE WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name WHEN c.name IS NOT NULL AND c.name != '' THEN c.name ELSE 'Direct Customer' END as customer_name,
                    COALESCE(c.city, 'Surat') as destination_city
             FROM orders o
             LEFT JOIN customers c ON o.customer_id = c.id

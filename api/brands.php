@@ -136,25 +136,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     $newLogo = $uploadedLogo !== '' ? $uploadedLogo : $logoUrlInput;
 
     try {
-        if ($newLogo !== '') {
-            $stmt = $db->prepare("UPDATE product_brands SET
-                name = COALESCE(NULLIF(?, ''), name),
-                slug = COALESCE(NULLIF(?, ''), slug),
-                description = COALESCE(NULLIF(?, ''), description),
-                tier = COALESCE(NULLIF(?, ''), tier),
-                status = COALESCE(NULLIF(?, ''), status),
-                logo_url = ?
-                WHERE id = ?");
-            $stmt->execute([$name, $slug, $desc, $tier, $status, $newLogo, $id]);
-        } else {
-            $stmt = $db->prepare("UPDATE product_brands SET
-                name = COALESCE(NULLIF(?, ''), name),
-                slug = COALESCE(NULLIF(?, ''), slug),
-                description = COALESCE(NULLIF(?, ''), description),
-                tier = COALESCE(NULLIF(?, ''), tier),
-                status = COALESCE(NULLIF(?, ''), status)
-                WHERE id = ?");
-            $stmt->execute([$name, $slug, $desc, $tier, $status, $id]);
+        $brandFields = [];
+        $brandParams = [];
+        if ($name !== '')   { $brandFields[] = "`name` = ?"; $brandParams[] = $name; }
+        if ($slug !== '')   { $brandFields[] = "`slug` = ?"; $brandParams[] = $slug; }
+        if ($desc !== '')   { $brandFields[] = "`description` = ?"; $brandParams[] = $desc; }
+        if ($tier !== '')   { $brandFields[] = "`tier` = ?"; $brandParams[] = $tier; }
+        if ($status !== '') { $brandFields[] = "`status` = ?"; $brandParams[] = $status; }
+        if ($newLogo !== '') { $brandFields[] = "`logo_url` = ?"; $brandParams[] = $newLogo; }
+
+        if (!empty($brandFields)) {
+            $brandParams[] = $id;
+            $stmt = $db->prepare("UPDATE product_brands SET " . implode(', ', $brandFields) . " WHERE id = ?");
+            $stmt->execute($brandParams);
         }
 
         echo json_encode([
