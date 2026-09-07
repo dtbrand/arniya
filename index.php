@@ -1,9 +1,16 @@
 <?php
 /**
- * home.php — DEDICATED NEW HOME PAGE
- * Premium Meesho-Style Ethnic E-Commerce, Reseller & Wholesale Shopping Hub
- * Preserving DT Brand's Heritage Gold UI, Header, Footer & Architecture as Source of Truth
+ * index.php — DT Brand's & Jai Hanuman Tex — Premium Ethnic E-Commerce Homepage
+ * ─────────────────────────────────────────────────────────────────────────────
+ * INSTALL GUARD: Redirects to installer if site has not been set up yet.
  */
+
+// ─── INSTALL GUARD ─────────────────────────────────────────────────────────
+if (!file_exists(__DIR__ . '/.installed')) {
+    header('Location: install.php');
+    exit;
+}
+// ───────────────────────────────────────────────────────────────────────────
 
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
