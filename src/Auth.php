@@ -676,6 +676,11 @@ class Auth
                     INDEX `idx_addresses_cust` (`customer_id`),
                     INDEX `idx_addresses_default` (`customer_id`, `is_default`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+                // Ensure legacy ENUM('home','work','warehouse') is upgraded to VARCHAR(32) so 'billing'/'shipping' are never dropped
+                try {
+                    $pdo->exec("ALTER TABLE `addresses` MODIFY `address_type` VARCHAR(32) NOT NULL DEFAULT 'work'");
+                } catch (\Throwable $ignored) {}
             }
             $ensured = true;
         } catch (\Throwable $e) {
@@ -735,7 +740,7 @@ class Auth
                     if ($type === 'billing') {
                         $checkStmt = $pdo->prepare("
                             SELECT * FROM addresses 
-                            WHERE customer_id = ? AND (address_type = 'billing' OR address_type = 'work')
+                            WHERE customer_id = ? AND (address_type = 'billing' OR address_type = 'work' OR address_type = '' OR address_type IS NULL)
                             ORDER BY (address_type = 'billing') DESC, is_default DESC, id ASC 
                             LIMIT 1
                         ");
@@ -816,6 +821,12 @@ class Auth
                         $isDefault
                     ]);
                     $addressId = (int)$pdo->lastInsertId();
+                }
+
+                // Ensure only 1 address is marked as billing for this customer
+                if ($type === 'billing' && $addressId > 0) {
+                    $cleanupBillingStmt = $pdo->prepare("UPDATE addresses SET address_type = 'shipping' WHERE customer_id = ? AND id != ? AND address_type = 'billing'");
+                    $cleanupBillingStmt->execute([$customerId, $addressId]);
                 }
 
                 // 3. Synchronize with `customers` table when updating billing address

@@ -3182,9 +3182,13 @@
         };
 
         /* ── Edit Billing Address Modal Controller ── */
-        window.openEditMainAddressModal = function() {
+        window.openEditMainAddressModal = function(addrId) {
             var modal = document.getElementById('wsEditMainAddressModal');
             if (!modal) return;
+            var hiddenIdEl = document.getElementById('wsMainEditAddressId');
+            if (hiddenIdEl) {
+                hiddenIdEl.value = (addrId && parseInt(addrId, 10) > 0) ? parseInt(addrId, 10) : '';
+            }
             try {
                 var userRaw = localStorage.getItem('dtbrands_user');
                 var user = userRaw ? JSON.parse(userRaw) : {};
@@ -3221,6 +3225,7 @@
         window.handleSaveMainAddressForm = function(e) {
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
             var el = function(id) { return document.getElementById(id); };
+            var addrId = el('wsMainEditAddressId') ? parseInt(el('wsMainEditAddressId').value, 10) : 0;
             var comp = el('wsMainEditCompName') ? el('wsMainEditCompName').value.trim() : '';
             var gstin = el('wsMainEditGstNumber') ? el('wsMainEditGstNumber').value.trim().toUpperCase() : '';
             var addr = el('wsMainEditAddress') ? el('wsMainEditAddress').value.trim() : '';
@@ -3247,6 +3252,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'save_address',
+                    id: addrId > 0 ? addrId : undefined,
+                    address_id: addrId > 0 ? addrId : undefined,
                     address_type: 'billing',
                     is_billing: 1,
                     company_name: comp,
@@ -3300,6 +3307,7 @@
                 if (bAttnEl) bAttnEl.textContent = 'Attn: ' + (comp || user.name || 'Authorized Buyer') + ' (+91 ' + (phone || user.phone || '') + ')';
 
                 (window.showWsToast || showWsToast)((res && res.message) ? res.message : 'Registered GST Billing Address updated successfully in live database!', 'success');
+                setTimeout(function() { window.location.reload(); }, 700);
             })
             .catch(function(err) {
                 if (btn) {
@@ -3308,6 +3316,7 @@
                 }
                 if (typeof closeEditMainAddressModal === 'function') closeEditMainAddressModal();
                 (window.showWsToast || showWsToast)('Billing address updated locally.', 'success');
+                setTimeout(function() { window.location.reload(); }, 700);
             });
 
             return false;

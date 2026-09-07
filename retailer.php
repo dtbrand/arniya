@@ -1284,11 +1284,19 @@ $catalogHasProducts = $catalogProducts !== [];
                                 </div>
                             </div>
                         <?php else: ?>
-                            <?php foreach ($userSavedAddresses as $addr): 
+                            <?php 
+                            $hasBillingRendered = false;
+                            foreach ($userSavedAddresses as $addr): 
                                 $aId = (int)($addr['id'] ?? 0);
                                 $aType = strtolower((string)($addr['address_type'] ?? 'shipping'));
                                 $aDef = !empty($addr['is_default']);
-                                $isBill = ($aType === 'billing') || ($aDef && ($aType === 'work' || empty($aType)));
+                                $isBillRaw = ($aType === 'billing') || ($aDef && ($aType === 'work' || empty($aType)));
+                                if ($isBillRaw && !$hasBillingRendered) {
+                                    $isBill = true;
+                                    $hasBillingRendered = true;
+                                } else {
+                                    $isBill = false;
+                                }
                                 $isWh = ($aType === 'warehouse');
                                 $isDefShip = $aDef && !$isBill;
                                 
@@ -1382,7 +1390,7 @@ $catalogHasProducts = $catalogProducts !== [];
 
                                 <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding-top:10px; border-top:1px solid <?= $isBill ? 'rgba(212,175,55,0.2)' : '#F1F5F9' ?>;">
                                     <?php if ($isBill): ?>
-                                        <button type="button" onclick="openEditMainAddressModal()" class="dt-btn-pale" style="font-size:0.72rem; padding:4px 10px; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                        <button type="button" onclick="openEditMainAddressModal(<?= $aId ?>)" class="dt-btn-pale" style="font-size:0.72rem; padding:4px 10px; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
                                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                             <span>Edit Details</span>
                                         </button>
@@ -2195,6 +2203,7 @@ $catalogHasProducts = $catalogProducts !== [];
             </div>
 
             <form onsubmit="handleSaveMainAddressForm(event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; margin: 0;">
+                <input type="hidden" id="wsMainEditAddressId" value="">
                 <div style="overflow-y: auto; flex: 1; padding: 16px 20px; max-height: calc(90vh - 135px);">
                     <div class="ws-form-grid">
                         
