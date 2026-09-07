@@ -1159,7 +1159,10 @@ body.qv-modal-open #dtMobileBottomNav {
         var qvWishlist = document.getElementById('qvWishlist');
         if (qvWishlist) {
             qvWishlist.addEventListener('click', function() {
-                if (typeof window.toggleWishlistProduct === 'function') {
+                if (typeof window.dtToggleWishlist === 'function') {
+                    var inWish = window.dtToggleWishlist(p.id);
+                    qvWishlist.classList.toggle('active', inWish);
+                } else if (typeof window.toggleWishlistProduct === 'function') {
                     window.toggleWishlistProduct(p.id);
                     qvWishlist.classList.toggle('active');
                 } else if (typeof window.toggleWishlist === 'function') {
@@ -1179,7 +1182,9 @@ body.qv-modal-open #dtMobileBottomNav {
                 var activeColorBtn = content.querySelector('.pdp-color-btn.active');
                 var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
 
-                if (typeof window.addToCart === 'function') {
+                if (typeof window.dtAddToCart === 'function') {
+                    window.dtAddToCart(p.id, 1, { size: selSize, color: selColor });
+                } else if (typeof window.addToCart === 'function') {
                     window.addToCart(p, selSize, selColor, 1);
                 }
                 window.closeQV();
@@ -1196,7 +1201,9 @@ body.qv-modal-open #dtMobileBottomNav {
                 var activeColorBtn = content.querySelector('.pdp-color-btn.active');
                 var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
 
-                if (typeof window.addToCart === 'function') {
+                if (typeof window.dtAddToCart === 'function') {
+                    window.dtAddToCart(p.id, 1, { size: selSize, color: selColor });
+                } else if (typeof window.addToCart === 'function') {
                     window.addToCart(p, selSize, selColor, 1);
                 }
                 window.closeQV();

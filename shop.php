@@ -403,7 +403,7 @@ $total_products = count($products);
                     <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars((string)$p['badge']) ?></span>
                     <?php endif; ?>
 
-                    <button class="card-wishlist-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($pName) ?>" aria-pressed="false">
+                    <button class="card-wishlist-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($pName) ?>" aria-pressed="false" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= (int)$p['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= (int)$p['id'] ?>);}">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
 
@@ -461,6 +461,14 @@ $total_products = count($products);
                         <span class="card-price-discount"><?= $pDiscountPct ?>% OFF</span>
                         <?php endif; ?>
                     </div>
+
+                    <!-- 1-Tap Add To Cart -->
+                    <div class="card-btn-row">
+                        <button type="button" class="card-add-cart-btn" data-id="<?= (int)$p['id'] ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtAddToCart==='function'){window.dtAddToCart(<?= (int)$p['id'] ?>);}else if(typeof window.addToCart==='function'){window.addToCart(<?= (int)$p['id'] ?>,1);}">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <span>Add to Cart</span>
+                        </button>
+                    </div>
                 </div>
             </article>
             <?php endforeach; ?>
@@ -509,6 +517,14 @@ $total_products = count($products);
 
 <!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
 <?php include_once __DIR__ . '/Shared/checkout.php'; ?>
+
+<!-- ════ GLOBAL REAL-TIME CART & WISHLIST SYNC ENGINE ════ -->
+<script src="/assets/js/dt-cart-sync.js?v=<?= time() ?>"></script>
+
+<?php include_once __DIR__ . '/includes/footer.php'; ?>
+</body>
+</html>
+
 
 </body>
 </html>

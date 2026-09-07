@@ -444,15 +444,38 @@
     }
     window.pdpSelection = pdpSelection;
 
+    // Sync PDP main wishlist button
+    window.syncPdpWishlistButton = function() {
+        try {
+            if (!currentProduct || !currentProduct.id) return;
+            var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
+            var inWish = wish.some(function(item) {
+                var itemId = (typeof item === 'object' && item !== null) ? item.id : item;
+                return String(itemId) === String(currentProduct.id);
+            });
+            var wishBtn = document.getElementById('pdpMainWishBtn');
+            if (wishBtn) {
+                wishBtn.classList.toggle('active', inWish);
+                var svg = wishBtn.querySelector('.pdp-wish-svg');
+                if (svg) {
+                    svg.setAttribute('fill', inWish ? '#DC2626' : 'none');
+                    svg.setAttribute('stroke', inWish ? '#DC2626' : 'currentColor');
+                }
+                var txt = wishBtn.querySelector('.pdp-wish-text');
+                if (txt) {
+                    txt.textContent = inWish ? 'Saved' : 'Wishlist';
+                }
+            }
+        } catch(e) {}
+    };
+
     // Add To Bag Function (Integrates directly with Cart Drawer)
     window.handlePdpAddToCart = function() {
         var sel = pdpSelection();
 
-        if (typeof window.addToCart === 'function') {
-            // addToCart(product, { qty, size, color }). This used to be called as
-            // (product, selSize, selColor) inside a loop, so the size string landed
-            // in the qty slot (Number('M') -> NaN, giving the line a NaN quantity)
-            // and the colour landed in lot_type.
+        if (typeof window.dtAddToCart === 'function') {
+            window.dtAddToCart(currentProduct.id, currentQty, { size: sel.size, color: sel.color });
+        } else if (typeof window.addToCart === 'function') {
             window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
         } else {
             // Local fallback
@@ -484,9 +507,9 @@
     window.handlePdpBuyNow = function() {
         var sel = pdpSelection();
 
-        if (typeof window.addToCart === 'function') {
-            // One call carrying the quantity, instead of currentQty separate calls
-            // that each passed the size where the quantity belonged.
+        if (typeof window.dtAddToCart === 'function') {
+            window.dtAddToCart(currentProduct.id, currentQty, { size: sel.size, color: sel.color });
+        } else if (typeof window.addToCart === 'function') {
             window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
         }
 
@@ -498,7 +521,11 @@
         }
 
         // Open checkout modal directly
-        if (typeof window.openCheckout === 'function') {
+        if (typeof window.openCheckoutModal === 'function') {
+            setTimeout(function() {
+                window.openCheckoutModal();
+            }, 80);
+        } else if (typeof window.openCheckout === 'function') {
             setTimeout(function() {
                 window.openCheckout();
             }, 80);
@@ -509,13 +536,16 @@
 
     // Wishlist Toggle
     window.handlePdpWishlistClick = function() {
-        var wishBtn = document.getElementById('pdpMobWishBtn');
-        if (typeof window.toggleWishlistProduct === 'function') {
+        if (typeof window.dtToggleWishlist === 'function') {
+            window.dtToggleWishlist(currentProduct.id);
+        } else if (typeof window.toggleWishlistProduct === 'function') {
             var added = window.toggleWishlistProduct(currentProduct);
+            var wishBtn = document.getElementById('pdpMobWishBtn');
             if (wishBtn) wishBtn.classList.toggle('active', added);
             window.showToast(added ? 'Saved to wishlist' : 'Removed from wishlist');
             if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
         }
+        if (typeof window.syncPdpWishlistButton === 'function') window.syncPdpWishlistButton();
     };
 
     // Pincode Delivery Estimator.
@@ -1676,6 +1706,11 @@
         sizeModal.addEventListener('click', function(e) {
             if (e.target === sizeModal) window.closeSizeGuideModal();
         });
+    }
+
+    if (typeof window.syncPdpWishlistButton === 'function') {
+        window.syncPdpWishlistButton();
+        window.addEventListener('storage', window.syncPdpWishlistButton);
     }
 
 })();

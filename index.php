@@ -292,6 +292,7 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 6: TRENDING NOW (MAIN STOREFRONT LISTING) ════════════ -->
+    <?php if (!empty($products)): ?>
     <section class="home-section home-trending-section" id="section-trending">
         <div class="home-section-container">
             <div class="home-section-header home-trending-section-header">
@@ -331,7 +332,7 @@ $total_products = count($products);
                     <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars($p['badge']) ?></span>
                     <?php endif; ?>
 
-                    <button class="card-wishlist-btn" data-id="<?= $p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($p['name']) ?>" onclick="if(typeof window.toggleWishlistProduct==='function'){ window.toggleWishlistProduct(<?= $p['id'] ?>); }">
+                    <button class="card-wishlist-btn" data-id="<?= $p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($p['name']) ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= $p['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= $p['id'] ?>);}">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
 
@@ -378,9 +379,8 @@ $total_products = count($products);
                         <?php endif; ?>
                     </div>
 
-                    <!-- 1-Tap Add To Cart Action Button -->
                     <div class="card-btn-row">
-                        <button type="button" class="card-add-cart-btn" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); } else { showToast('Added to Cart!'); }">
+                        <button type="button" class="card-add-cart-btn" data-id="<?= $p['id'] ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtAddToCart==='function'){window.dtAddToCart(<?= $p['id'] ?>);}else if(typeof window.addToCart==='function'){window.addToCart(<?= $p['id'] ?>,1);}">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                             <span>Add to Cart</span>
                         </button>
@@ -391,11 +391,15 @@ $total_products = count($products);
             </div>
         </div>
     </section>
-
-        </div>
-    </section>
+    <?php endif; /* end Trending Now */ ?>
 
     <!-- ════════════ SECTION 11: DEAL OF THE DAY (WITH COUNTDOWN) ════════════ -->
+    <?php
+    $dealProducts = array_filter($products, function($p){ return !empty($p['discount']) && (int)$p['discount'] > 0; });
+    if (empty($dealProducts)) $dealProducts = $products;
+    $dealProducts = array_values($dealProducts);
+    ?>
+    <?php if (!empty($dealProducts)): ?>
     <section class="home-section home-deals-section" id="section-deals">
         <div class="home-section-container">
             <div class="home-deal-header">
@@ -413,22 +417,22 @@ $total_products = count($products);
                         </div>
                     </div>
                     <div class="deal-slider-arrows">
-                        <button type="button" class="deal-nav-arrow deal-nav-prev dt-btn dt-btn-pale" id="dealScrollPrevBtn" onclick="scrollDealsRail(-1)" aria-label="Previous deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <button type="button" class="deal-nav-arrow deal-nav-next dt-btn dt-btn-pale" id="dealScrollNextBtn" onclick="scrollDealsRail(1)" aria-label="Next deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        <button type="button" class="deal-nav-arrow deal-nav-prev dt-btn dt-btn-pale" id="dealScrollPrevBtn" onclick="if(typeof scrollDealsRail==='function') scrollDealsRail(-1);" aria-label="Previous deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <button type="button" class="deal-nav-arrow deal-nav-next dt-btn dt-btn-pale" id="dealScrollNextBtn" onclick="if(typeof scrollDealsRail==='function') scrollDealsRail(1);" aria-label="Next deals" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
             </div>
 
             <!-- 1 Line Continuous Scroll on Desktop / 2 Lines Synchronized Scroll on Mobile -->
             <div class="home-deals-grid" id="homeDealsGrid">
-                <?php foreach (array_slice($products, 0, 10) as $p): ?>
+                <?php foreach (array_slice($dealProducts, 0, 10) as $p): ?>
                 <div class="home-deal-card">
                     <div class="deal-card-img-wrap">
                         <span class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</span>
                         <a href="/product.php?id=<?= $p['id'] ?>">
                             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" loading="lazy" />
                         </a>
-                        <button type="button" class="deal-card-wish-btn" onclick="toggleWishlistProduct(<?= $p['id'] ?>)" aria-label="Add to wishlist">
+                        <button type="button" class="deal-card-wish-btn card-wishlist-btn" data-id="<?= $p['id'] ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= $p['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= $p['id'] ?>);}" aria-label="Add to wishlist">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         </button>
                     </div>
@@ -448,7 +452,7 @@ $total_products = count($products);
                             <div class="deal-stock-bar" style="width: <?= min(90, max(30, ($p['in_stock'] % 70) + 25)) ?>%;"></div>
                             <span class="deal-stock-text"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>Only <?= max(3, $p['in_stock'] % 12) ?> sets left</span>
                         </div>
-                        <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); }">
+                        <button type="button" class="deal-btn-claim card-add-cart-btn" data-id="<?= $p['id'] ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtAddToCart==='function'){window.dtAddToCart(<?= $p['id'] ?>);}else if(typeof window.addToCart==='function'){window.addToCart(<?= $p['id'] ?>,1);}">
                             <span>Claim Deal</span>
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
@@ -458,6 +462,7 @@ $total_products = count($products);
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- ════════════ SECTION 19: COLLECTION BANNERS ════════════ -->
     <section class="home-section" id="section-collections">
@@ -498,6 +503,7 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 20: RECOMMENDED FOR YOU (2-LINE HORIZONTAL SCROLL) ════════════ -->
+    <?php if (!empty($products)): ?>
     <section class="home-section rec-section" id="section-recommended">
         <div class="home-section-container">
             <!-- Luxury Section Header with Badges, Subtitle and Controls -->
@@ -560,7 +566,7 @@ $total_products = count($products);
 
                             <!-- Quick Action Buttons Overlay -->
                             <div class="rec-overlay-actions">
-                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist" title="Add to Wishlist">
+                                <button type="button" class="rec-action-btn rec-wishlist-btn card-wishlist-btn" data-id="<?= $p['id'] ?>" onclick="event.preventDefault();event.stopPropagation();if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= $p['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= $p['id'] ?>);}" aria-label="Add to Wishlist" title="Add to Wishlist">
                                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                                 </button>
                                 <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='/product.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
@@ -579,6 +585,7 @@ $total_products = count($products);
             </div>
         </div>
     </section>
+    <?php endif; /* end Recommended For You */ ?>
 
     <!-- ════════════ SECTION 21: RECENTLY VIEWED ════════════ -->
     <section class="home-section" id="section-recently-viewed" style="display:none;">
@@ -1184,12 +1191,16 @@ $total_products = count($products);
 <?php include_once __DIR__ . '/includes/homebottomfooter.php'; ?>
 
 <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
+<!-- ════ GLOBAL REAL-TIME CART & WISHLIST SYNC ENGINE ════ -->
+<script src="/assets/js/dt-cart-sync.js?v=<?= time() ?>"></script>
+
 <?php include_once __DIR__ . '/Shared/quickview.php'; ?>
 <?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 <?php include_once __DIR__ . '/Shared/reels.php'; ?>
 <?php include_once __DIR__ . '/Shared/cart.php'; ?>
 <?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
 <?php include_once __DIR__ . '/Shared/checkout.php'; ?>
+
 
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 

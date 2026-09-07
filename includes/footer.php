@@ -22,6 +22,7 @@ if (class_exists('\DTBrand\Database')) {
 }
 $footerCleanPhone = preg_replace('/[^0-9]/', '', $footerPhone) ?: '917046363528';
 ?>
+<link rel="stylesheet" href="/assets/css/footer.css?v=<?= time() ?>">
 <footer class="dt-master-footer" id="dtMasterFooter">
     <!-- ════ TOP LUXURY TRUST USP RIBBON (1-Line Pure CSS Seamless Marquee) ════ -->
     <div class="dt-footer-perks-ribbon">

@@ -379,28 +379,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 if (Array.isArray(parsed)) return parsed;
             }
         } catch(e) {}
-        return [
-            {
-                id: 2,
-                name: 'Banarasi Zari Saree',
-                price: 8499,
-                old_price: 11000,
-                image: '/assets/images/product2.png',
-                size: 'Free Size',
-                color: 'Maroon',
-                qty: 1
-            },
-            {
-                id: 6,
-                name: 'Bridal Zardosi Lehenga',
-                price: 24999,
-                old_price: 32000,
-                image: '/assets/images/product6.png',
-                size: 'S',
-                color: 'Red',
-                qty: 1
-            }
-        ];
+        return []; // Always start with empty cart for new visitors
     }
 
     function saveCart(cart) {

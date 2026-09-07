@@ -894,41 +894,27 @@
 
         try {
             var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || 'null');
-            // If empty, load real catalog items or curated fallback so section is always lively and useful
+
+            // ── REAL RECENTLY VIEWED ONLY: hide section if user has no actual history ──
             if (!Array.isArray(items) || items.length === 0) {
-                var catalog = (window.allProducts || window.catalogProducts || window.products || []);
-                if (Array.isArray(catalog) && catalog.length > 0) {
-                    items = catalog.slice(0, 8).map(function(p) {
-                        var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
-                        var pOldPrice = Number(p.old_price || p.mrp) || 0;
-                        var pDiscount = p.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
-                        return {
-                            id: p.id,
-                            name: p.name || p.title || ('Product #' + p.id),
-                            price: pPrice,
-                            old_price: pOldPrice,
-                            discount: pDiscount,
-                            image: p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg',
-                            category: String(p.category || 'ETHNIC WEAR').toUpperCase()
-                        };
-                    });
-                } else {
-                    items = DEFAULT_RECENT_PRODUCTS.slice(0, 8);
-                }
+                sec.style.display = 'none';
+                return; // Nothing to show — user hasn't visited any products yet
             }
 
             sec.style.display = 'block';
 
-            var isFrontendPath = window.location.pathname.indexOf('/Frontend/') !== -1;
+
 
             track.innerHTML = items.map(function(item) {
-                var pdpUrl = isFrontendPath
-                    ? ('/product.php?id=' + encodeURIComponent(item.id))
-                    : ('/product.php?id=' + encodeURIComponent(item.id));
+                var pdpUrl = '/product.php?id=' + encodeURIComponent(item.id);
                 var disc = item.discount ? (typeof item.discount === 'number' ? (item.discount + '% OFF') : String(item.discount)) : '';
                 var priceNum = Number(item.price) || 0;
                 var oldP = (Number(item.old_price) > priceNum) ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
                 var imgUrl = item.image || '/assets/images/no-image.svg';
+                // Check if in wishlist
+                var wishList = [];
+                try { wishList = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]'); } catch(_e) { wishList = []; }
+                var inWish = wishList.some(function(w) { return parseInt(w.id) === parseInt(item.id); });
 
                 return '<div class="recently-viewed-card" data-product-id="' + dtEsc(item.id) + '">' +
                     '<div class="rv-img-box">' +
@@ -936,6 +922,10 @@
                             '<img src="' + dtEsc(imgUrl) + '" alt="' + dtEsc(item.name) + '" class="rv-card-img" loading="lazy" />' +
                         '</a>' +
                         (disc ? '<span class="rv-discount-badge">' + dtEsc(disc) + '</span>' : '') +
+                        // ── Wishlist Heart Button ──
+                        '<button type="button" class="rv-wish-btn card-wishlist-btn' + (inWish ? ' active' : '') + '" data-id="' + dtEsc(item.id) + '" onclick="event.stopPropagation();if(typeof window.dtToggleWishlist===\'function\'){window.dtToggleWishlist(' + dtEsc(item.id) + ');}else if(typeof window.toggleWishlistProduct===\'function\'){window.toggleWishlistProduct(' + dtEsc(item.id) + ');}" aria-label="Wishlist" aria-pressed="' + (inWish ? 'true' : 'false') + '" style="position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:3;transition:transform 0.2s;">' +
+                            '<svg viewBox="0 0 24 24" width="15" height="15" fill="' + (inWish ? '#DC2626' : 'none') + '" stroke="' + (inWish ? '#DC2626' : '#6B7280') + '" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+                        '</button>' +
                         '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + dtEsc(item.id) + ');}else{window.location.href=\'' + dtEsc(pdpUrl) + '\';}" aria-label="Quick View">' +
                             '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
                         '</button>' +
@@ -949,7 +939,8 @@
                             '<span class="rv-price-curr">₹' + priceNum.toLocaleString('en-IN') + '</span>' +
                             (oldP ? '<span class="rv-price-old">' + oldP + '</span>' : '') +
                         '</div>' +
-                        '<button type="button" class="rv-add-btn" onclick="if(typeof directAddToCart===\'function\'){directAddToCart(' + dtEsc(item.id) + ');}else if(typeof addToCart===\'function\'){addToCart(' + dtEsc(item.id) + ');}; event.stopPropagation();">' +
+                        // ── Add to Cart button ──
+                        '<button type="button" class="rv-add-btn card-add-cart-btn" data-id="' + dtEsc(item.id) + '" onclick="event.stopPropagation();if(typeof window.dtAddToCart===\'function\'){window.dtAddToCart(' + dtEsc(item.id) + ');}else if(typeof window.addToCart===\'function\'){window.addToCart(' + dtEsc(item.id) + ');}">' +
                             '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
                             '<span>Add</span>' +
                         '</button>' +

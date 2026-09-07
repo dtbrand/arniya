@@ -35,10 +35,38 @@ class Database
         }
         self::$attempted = true;
 
+        // Auto-load .env if not loaded yet
+        if (!getenv('DB_DATABASE') && !getenv('DB_NAME')) {
+            $envFile = dirname(__DIR__) . '/.env';
+            if (!file_exists($envFile)) {
+                $envFile = dirname(dirname(__DIR__)) . '/.env';
+            }
+            if (!file_exists($envFile) && isset($_SERVER['DOCUMENT_ROOT'])) {
+                $envFile = rtrim((string)$_SERVER['DOCUMENT_ROOT'], '/\\') . '/.env';
+            }
+            if (file_exists($envFile)) {
+                $lines = @file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if ($line === '' || $line[0] === '#') continue;
+                    if (strpos($line, '=') !== false) {
+                        [$k, $v] = explode('=', $line, 2);
+                        $k = trim($k);
+                        $v = trim($v, " \t\"'");
+                        if (!getenv($k)) {
+                            putenv("{$k}={$v}");
+                            $_ENV[$k] = $v;
+                            $_SERVER[$k] = $v;
+                        }
+                    }
+                }
+            }
+        }
+
         $host     = getenv('DB_HOST')     ?: 'localhost';
         $port     = getenv('DB_PORT')     ?: '3306';
-        $dbName   = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'u602484543_demohrm');
-        $username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'u602484543_demohrm');
+        $dbName   = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'u602484543_demodt121');
+        $username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'u602484543_demodt121');
         $password = getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: 'Gautam@9006');
 
         $candidates = [
@@ -47,19 +75,25 @@ class Database
             '127.0.0.1',
         ];
 
-        foreach (array_unique($candidates) as $h) {
-            try {
-                $dsn = "mysql:host={$h};port={$port};dbname={$dbName};charset=utf8mb4";
-                $options = [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::ATTR_EMULATE_PREPARES => false
-                ];
-                self::$pdo = new \PDO($dsn, $username, $password, $options);
-                self::$isMockMode = false;
-                return self::$pdo;
-            } catch (\PDOException $e) {
-                // Try next candidate
+        // Ensure both the configured and master production db name are attempted
+        $dbCandidates = array_unique([$dbName, 'u602484543_demodt121']);
+
+        foreach ($dbCandidates as $dbTarget) {
+            $userTarget = ($dbTarget === 'u602484543_demodt121') ? 'u602484543_demodt121' : $username;
+            foreach (array_unique($candidates) as $h) {
+                try {
+                    $dsn = "mysql:host={$h};port={$port};dbname={$dbTarget};charset=utf8mb4";
+                    $options = [
+                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                        \PDO::ATTR_EMULATE_PREPARES => false
+                    ];
+                    self::$pdo = new \PDO($dsn, $userTarget, $password, $options);
+                    self::$isMockMode = false;
+                    return self::$pdo;
+                } catch (\PDOException $e) {
+                    // Try next candidate
+                }
             }
         }
 

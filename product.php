@@ -580,6 +580,11 @@ function pdp_relative_date(string $ts): string
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                         <span><?= $isFullSetProduct ? 'Buy Full Set Now' : 'Buy Now' ?></span>
                     </button>
+
+                    <button type="button" class="pdp-wish-btn dt-btn dt-btn-pale" id="pdpMainWishBtn" onclick="if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= (int)$product['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= (int)$product['id'] ?>);}" title="Save to Wishlist" style="padding:0 14px; min-width:48px; height:46px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="pdp-wish-svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <span class="pdp-wish-text" style="font-weight:700; font-size:0.75rem;">Wishlist</span>
+                    </button>
                 </div>
 
                 <!-- Direct WhatsApp Order Checkout Trigger -->
@@ -1330,9 +1335,28 @@ function pdp_relative_date(string $ts): string
     </script>
     <script src="/assets/js/singleproduct.js?v=<?= time() ?>"></script>
 
+<!-- ════════════ MOBILE STICKY BOTTOM ACTION BAR ════════════ -->
+<?php include_once __DIR__ . '/includes/singleproductbottomfooter.php'; ?>
+
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/Shared/smartshare.php'; ?>
 
+<!-- ════════════ INSTAGRAM REELS VIDEO FEED PARTIAL ════════════ -->
 <?php include_once __DIR__ . '/Shared/reels.php'; ?>
+
+<!-- ════════════ CART PARTIAL ════════════ -->
+<?php include_once __DIR__ . '/Shared/cart.php'; ?>
+
+<!-- ════════════ WISHLIST PARTIAL ════════════ -->
+<?php include_once __DIR__ . '/Shared/wishlist.php'; ?>
+
+<!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
+<?php include_once __DIR__ . '/Shared/checkout.php'; ?>
+
+<!-- ════ GLOBAL REAL-TIME CART & WISHLIST SYNC ENGINE ════ -->
+<script src="/assets/js/dt-cart-sync.js?v=<?= time() ?>"></script>
+
+<!-- ════════════ MASTER LUXURY FOOTER ════════════ -->
+<?php include_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 </html>
