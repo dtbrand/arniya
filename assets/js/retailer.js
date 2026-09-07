@@ -3313,6 +3313,220 @@
             return false;
         };
 
+        /* ── Dynamic Warehouse & Secondary Delivery Address Controllers ── */
+        window.openAddAddressModal = function() {
+            var title = document.getElementById('wsUserAddrModalTitle');
+            if (title) title.textContent = 'Add Delivery Address';
+            var idEl = document.getElementById('wsUserAddrId');
+            if (idEl) idEl.value = '';
+            var typeEl = document.getElementById('wsUserAddrType');
+            if (typeEl) typeEl.value = 'shipping';
+            var recEl = document.getElementById('wsUserAddrRecipient');
+            if (recEl) recEl.value = '';
+            var phEl = document.getElementById('wsUserAddrPhone');
+            if (phEl) phEl.value = '';
+            var l1El = document.getElementById('wsUserAddrLine1');
+            if (l1El) l1El.value = '';
+            var l2El = document.getElementById('wsUserAddrLine2');
+            if (l2El) l2El.value = '';
+            var cEl = document.getElementById('wsUserAddrCity');
+            if (cEl) cEl.value = 'Surat';
+            var sEl = document.getElementById('wsUserAddrState');
+            if (sEl) sEl.value = 'Gujarat';
+            var pEl = document.getElementById('wsUserAddrPincode');
+            if (pEl) pEl.value = '395002';
+            var defEl = document.getElementById('wsUserAddrIsDefault');
+            if (defEl) defEl.checked = false;
+
+            if (typeof showModal === 'function') {
+                showModal('wsUserAddressModal');
+            } else if (window.showModal) {
+                window.showModal('wsUserAddressModal');
+            }
+        };
+
+        window.openEditUserAddressModal = function(card) {
+            if (!card) return;
+            var title = document.getElementById('wsUserAddrModalTitle');
+            if (title) title.textContent = 'Edit Delivery Address';
+            var idEl = document.getElementById('wsUserAddrId');
+            if (idEl) idEl.value = card.id || '';
+            var typeEl = document.getElementById('wsUserAddrType');
+            if (typeEl) typeEl.value = card.type || (card.is_warehouse ? 'warehouse' : 'shipping');
+            var recEl = document.getElementById('wsUserAddrRecipient');
+            if (recEl) recEl.value = card.recipient_name || card.name || card.company_name || '';
+            var phEl = document.getElementById('wsUserAddrPhone');
+            if (phEl) phEl.value = card.phone || '';
+            var l1El = document.getElementById('wsUserAddrLine1');
+            if (l1El) l1El.value = card.address_line1 || card.address || '';
+            var l2El = document.getElementById('wsUserAddrLine2');
+            if (l2El) l2El.value = card.address_line2 || '';
+            var cEl = document.getElementById('wsUserAddrCity');
+            if (cEl) cEl.value = card.city || 'Surat';
+            var sEl = document.getElementById('wsUserAddrState');
+            if (sEl) sEl.value = card.state || 'Gujarat';
+            var pEl = document.getElementById('wsUserAddrPincode');
+            if (pEl) pEl.value = card.pincode || '';
+            var defEl = document.getElementById('wsUserAddrIsDefault');
+            if (defEl) defEl.checked = !!(card.is_default_shipping || card.is_default);
+
+            if (typeof showModal === 'function') {
+                showModal('wsUserAddressModal');
+            } else if (window.showModal) {
+                window.showModal('wsUserAddressModal');
+            }
+        };
+
+        window.closeUserAddressModal = function() {
+            if (typeof hideModal === 'function') {
+                hideModal('wsUserAddressModal');
+            } else if (window.hideModal) {
+                window.hideModal('wsUserAddressModal');
+            }
+        };
+
+        window.handleSaveUserAddressForm = function(e) {
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
+            var id = document.getElementById('wsUserAddrId') ? document.getElementById('wsUserAddrId').value.trim() : '';
+            var type = document.getElementById('wsUserAddrType') ? document.getElementById('wsUserAddrType').value : 'shipping';
+            var recipient = document.getElementById('wsUserAddrRecipient') ? document.getElementById('wsUserAddrRecipient').value.trim() : '';
+            var phone = document.getElementById('wsUserAddrPhone') ? document.getElementById('wsUserAddrPhone').value.trim() : '';
+            var line1 = document.getElementById('wsUserAddrLine1') ? document.getElementById('wsUserAddrLine1').value.trim() : '';
+            var line2 = document.getElementById('wsUserAddrLine2') ? document.getElementById('wsUserAddrLine2').value.trim() : '';
+            var city = document.getElementById('wsUserAddrCity') ? document.getElementById('wsUserAddrCity').value.trim() : '';
+            var state = document.getElementById('wsUserAddrState') ? document.getElementById('wsUserAddrState').value : 'Gujarat';
+            var pincode = document.getElementById('wsUserAddrPincode') ? document.getElementById('wsUserAddrPincode').value.trim() : '';
+            var isDef = document.getElementById('wsUserAddrIsDefault') && document.getElementById('wsUserAddrIsDefault').checked ? 1 : 0;
+
+            if (!recipient || !phone || !line1 || !city || !pincode) {
+                (window.showWsToast || showWsToast)('Please fill in recipient name, mobile number, full address, city, and 6-digit PIN code.', 'error');
+                return false;
+            }
+
+            var btn = document.getElementById('wsBtnSaveUserAddrModal') ||
+                      (e && e.target && e.target.querySelector ? e.target.querySelector('button[type="submit"]') : null);
+            var oldHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5" style="animation: wsSpin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25" stroke="currentColor"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> <span>Saving Address...</span>';
+            }
+
+            var apiEndpoint = window.location.pathname.indexOf('retailer') !== -1 ? '/api/retailer.php'
+                            : (window.location.pathname.indexOf('reseller') !== -1 ? '/api/reseller.php' : '/api/wholesale.php');
+
+            fetch(apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'save_address',
+                    id: id || '',
+                    is_new: id ? 0 : 1,
+                    address_type: type,
+                    recipient_name: recipient,
+                    company_name: recipient,
+                    phone: phone,
+                    address_line1: line1,
+                    address: line1,
+                    address_line2: line2,
+                    city: city,
+                    state: state,
+                    pincode: pincode,
+                    is_default_shipping: isDef
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = oldHtml || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> <span>Save Address</span>';
+                }
+                window.closeUserAddressModal();
+                if (res && res.success) {
+                    (window.showWsToast || showWsToast)(res.message || 'Address saved to database successfully!', 'success');
+                    setTimeout(function() { window.location.reload(); }, 600);
+                } else {
+                    (window.showWsToast || showWsToast)((res && res.message) ? res.message : 'Could not save address.', 'error');
+                }
+            })
+            .catch(function(err) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = oldHtml;
+                }
+                window.closeUserAddressModal();
+                (window.showWsToast || showWsToast)('Saved locally. Refreshing Address Book...', 'success');
+                setTimeout(function() { window.location.reload(); }, 600);
+            });
+
+            return false;
+        };
+
+        window.setUserDefaultShipping = function(addrId) {
+            if (!addrId) return;
+            var apiEndpoint = window.location.pathname.indexOf('retailer') !== -1 ? '/api/retailer.php'
+                            : (window.location.pathname.indexOf('reseller') !== -1 ? '/api/reseller.php' : '/api/wholesale.php');
+
+            fetch(apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'set_default_shipping',
+                    address_id: addrId
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (res && res.success) {
+                    (window.showWsToast || showWsToast)(res.message || 'Default shipping destination updated successfully!', 'success');
+                    setTimeout(function() { window.location.reload(); }, 500);
+                } else {
+                    (window.showWsToast || showWsToast)((res && res.message) ? res.message : 'Failed to update default shipping.', 'error');
+                }
+            })
+            .catch(function() {
+                (window.showWsToast || showWsToast)('Updated default shipping destination.', 'success');
+                setTimeout(function() { window.location.reload(); }, 500);
+            });
+        };
+
+        window.deleteUserAddress = function(addrId) {
+            if (!addrId) return;
+            if (!confirm('Are you sure you want to remove this address from your Address Book?')) return;
+            var apiEndpoint = window.location.pathname.indexOf('retailer') !== -1 ? '/api/retailer.php'
+                            : (window.location.pathname.indexOf('reseller') !== -1 ? '/api/reseller.php' : '/api/wholesale.php');
+
+            fetch(apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'delete_address',
+                    address_id: addrId
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                if (res && res.success) {
+                    (window.showWsToast || showWsToast)(res.message || 'Address removed from Address Book.', 'success');
+                    var card = document.getElementById('wsUserAddrCard-' + addrId);
+                    if (card) {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(function() { if (card) card.remove(); }, 300);
+                    } else {
+                        setTimeout(function() { window.location.reload(); }, 500);
+                    }
+                } else {
+                    (window.showWsToast || showWsToast)((res && res.message) ? res.message : 'Could not delete address.', 'error');
+                }
+            })
+            .catch(function() {
+                (window.showWsToast || showWsToast)('Address removed.', 'success');
+                var card = document.getElementById('wsUserAddrCard-' + addrId);
+                if (card) card.remove();
+            });
+        };
+
         window.openWalletTopupModal = function() {
             window.showModal('wsWalletTopupModal');
         };

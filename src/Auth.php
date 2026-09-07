@@ -729,8 +729,9 @@ class Auth
                     $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
                 }
 
-                // 2. If no specific ID, find existing row by type
-                if (!$existing) {
+                // 2. If no specific ID, find existing row by type (unless explicitly adding new)
+                $isAddNew = !empty($data['is_new']) || !empty($data['add_new']);
+                if (!$existing && !$isAddNew) {
                     if ($type === 'billing') {
                         $checkStmt = $pdo->prepare("
                             SELECT * FROM addresses 

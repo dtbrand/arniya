@@ -214,6 +214,34 @@ $activeUserAddress = !empty($dbUser['address']) ? $dbUser['address'] : (!empty($
 $activeUserPincode = !empty($dbUser['pincode']) ? $dbUser['pincode'] : '395002';
 $activeUserTier = $realKpis['tier'];
 
+// ── Real Customer Addresses from addresses table ──
+$userSavedAddresses = [];
+if (!empty($currentUser['id'])) {
+    try {
+        $userSavedAddresses = Auth::getCustomerAddresses((int)$currentUser['id']);
+    } catch (\Throwable $e) {
+        $userSavedAddresses = [];
+    }
+}
+// Automatically sync billing variables with up-to-date primary registered billing address
+if (!empty($userSavedAddresses)) {
+    foreach ($userSavedAddresses as $sa) {
+        if (($sa['address_type'] ?? '') === 'billing') {
+            if (!empty($sa['recipient_name'])) $activeUserCompanyName = $sa['recipient_name'];
+            if (!empty($sa['address_line1']))  $activeUserAddress = $sa['address_line1'];
+            if (!empty($sa['city']))          $activeUserCity = $sa['city'];
+            if (!empty($sa['state']))         $activeUserState = $sa['state'];
+            if (!empty($sa['pincode']))       $activeUserPincode = $sa['pincode'];
+            if (!empty($sa['phone'])) {
+                $activeUserPhone = $sa['phone'];
+                $activeUserPhoneDigits = preg_replace('/\D+/', '', (string)$activeUserPhone);
+                if (strlen($activeUserPhoneDigits) > 10) $activeUserPhoneDigits = substr($activeUserPhoneDigits, -10);
+            }
+            break;
+        }
+    }
+}
+
 /*
  * B2B catalogue, read straight from the products table.
  */
@@ -1203,61 +1231,181 @@ $catalogHasProducts = $catalogProducts !== [];
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneAddress">
                 <div class="ws-card" style="padding: clamp(14px, 3vw, 22px);">
-                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid rgba(212,175,55,0.25);">
-                        <div class="ws-card-title-group">
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:12px; border-bottom:1px solid rgba(212,175,55,0.25);">
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
                             <h3 style="margin:0; font-size:clamp(1.05rem, 3vw, 1.2rem); font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
                                 Address Book
                             </h3>
+                            <span id="wsAddressCountBadge" style="background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1px solid rgba(217,119,6,0.35); color:#92400E; font-size:0.75rem; font-weight:800; padding:2px 8px; border-radius:12px;">
+                                <?= count($userSavedAddresses) ?>
+                            </span>
                         </div>
-                        <span class="ws-status-badge delivered" style="font-size:0.70rem; padding:4px 9px; font-weight:800; border-radius:6px; flex-shrink:0;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>GST Verified Dispatch
-                        </span>
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <span class="ws-status-badge delivered" style="font-size:0.70rem; padding:4px 9px; font-weight:800; border-radius:6px; flex-shrink:0;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>GST Verified Dispatch
+                            </span>
+                            <button type="button" class="dt-btn-gold" onclick="openAddAddressModal()" style="font-size:0.75rem; padding:6px 14px; font-weight:800; border-radius:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer; box-shadow:0 2px 6px rgba(184,134,11,0.25);">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>+ Add Address</span>
+                            </button>
+                        </div>
                     </div>
+                    <p style="margin:0 0 16px 0; font-size:0.78rem; color:var(--ws-text-muted);">
+                        Verified GST billing headquarters, default transport destinations, and warehouse hubs.
+                    </p>
 
-                    <!-- 2 Saved Address Preview Cards (Billing vs Shipping) -->
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:16px;">
-                        
-                        <!-- Card 1: Registered GST Billing Address -->
-                        <div style="background:linear-gradient(145deg, #FFFCF7 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(180,83,9,0.05);">
-                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
-                                <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px;">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2" style="vertical-align:-1px; margin-right:3px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Registered GST Billing Address
-                                </span>
-                                <button type="button" id="btnEditMainAddr" onclick="openEditMainAddressModal()" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Billing Address">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                                    <span>Edit</span>
-                                </button>
+                    <!-- Dynamic Saved Address Cards Grid (Renders ALL User Addresses from Database) -->
+                    <div id="wsUserAddressListContainer" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:16px; margin-bottom:20px;">
+                        <?php if (empty($userSavedAddresses)): ?>
+                            <!-- Fallback Initial Billing Card -->
+                            <div style="background:linear-gradient(145deg, #FFFCF7 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.45); border-radius:14px; padding:16px; position:relative; box-shadow:0 3px 12px rgba(180,83,9,0.06); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
+                                        <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px; display:inline-flex; align-items:center; gap:4px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Registered GST Billing Address
+                                        </span>
+                                        <span style="font-size:0.65rem; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 7px; border-radius:5px;">Official Invoicing</span>
+                                    </div>
+                                    <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp"><?= htmlspecialchars($activeUserCompanyName) ?></div>
+                                    <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
+                                        <?= htmlspecialchars($activeUserAddress) ?><br>
+                                        <?= htmlspecialchars($activeUserCity ?: 'Surat') ?>, <?= htmlspecialchars($activeUserState ?: 'Gujarat') ?> - <?= htmlspecialchars($activeUserPincode ?: '395002') ?><?= !empty($activeUserGstin) ? ' (GSTIN: <strong>' . htmlspecialchars($activeUserGstin) . '</strong>)' : '' ?>
+                                    </div>
+                                    <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        <span>Attn: <?= htmlspecialchars($activeUserName) ?> (+91 <?= htmlspecialchars($activeUserPhoneDigits ?: '917046363528') ?>)</span>
+                                    </div>
+                                </div>
+                                <div style="padding-top:10px; border-top:1px solid rgba(212,175,55,0.2); display:flex; align-items:center; gap:8px;">
+                                    <button type="button" onclick="openEditMainAddressModal()" class="dt-btn-pale" style="font-size:0.74rem; padding:5px 12px; font-weight:800; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                        <span>Edit Billing Details</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp"><?= htmlspecialchars($activeUserCompanyName) ?></div>
-                            <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
-                                <?= htmlspecialchars($activeUserAddress) ?><br>
-                                <?= htmlspecialchars($activeUserCity ?: 'Surat') ?>, <?= htmlspecialchars($activeUserState ?: 'Gujarat') ?> - <?= htmlspecialchars($activeUserPincode ?: '395002') ?><?= !empty($activeUserGstin) ? ' (GSTIN: <strong>' . htmlspecialchars($activeUserGstin) . '</strong>)' : '' ?>
-                            </div>
-                            <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
-                                Attn: <?= htmlspecialchars($activeUserName) ?> (+91 <?= htmlspecialchars($activeUserPhoneDigits ?: '917046363528') ?>)
-                            </div>
-                        </div>
+                        <?php else: ?>
+                            <?php foreach ($userSavedAddresses as $addr): 
+                                $aId = (int)($addr['id'] ?? 0);
+                                $aType = strtolower((string)($addr['address_type'] ?? 'shipping'));
+                                $aDef = !empty($addr['is_default']);
+                                $isBill = ($aType === 'billing') || ($aDef && ($aType === 'work' || empty($aType)));
+                                $isWh = ($aType === 'warehouse');
+                                $isDefShip = $aDef && !$isBill;
+                                
+                                $rName = trim((string)($addr['recipient_name'] ?? ''));
+                                if ($rName === '') $rName = $activeUserCompanyName ?: 'Valued Partner';
+                                $aPhone = trim((string)($addr['phone'] ?? ''));
+                                $aLine1 = trim((string)($addr['address_line1'] ?? ''));
+                                $aLine2 = trim((string)($addr['address_line2'] ?? ''));
+                                $aCity  = trim((string)($addr['city'] ?? 'Surat'));
+                                $aState = trim((string)($addr['state'] ?? 'Gujarat'));
+                                $aPin   = trim((string)($addr['pincode'] ?? '395002'));
+                                
+                                $cardJson = htmlspecialchars(json_encode([
+                                    'id' => $aId,
+                                    'recipient_name' => $rName,
+                                    'phone' => $aPhone,
+                                    'address_line1' => $aLine1,
+                                    'address_line2' => $aLine2,
+                                    'city' => $aCity,
+                                    'state' => $aState,
+                                    'pincode' => $aPin,
+                                    'address_type' => $aType,
+                                    'is_default' => $aDef ? 1 : 0
+                                ]), ENT_QUOTES, 'UTF-8');
 
-                        <!-- Card 2: Active Dispatch & Shipping Hub -->
-                        <div style="background:linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%); border:1.5px solid #E2E8F0; border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(0,0,0,0.03);" id="addrPreviewDispatchCard">
-                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
-                                <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase; letter-spacing:0.3px;" id="addrPreviewDispatchBadge">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px; margin-right:4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>Dispatch: Same as Billing
-                                </span>
-                                <button type="button" id="btnEditDispatchAddr" onclick="toggleEditAddressSection('dispatch')" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Dispatch Hub">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                                    <span>Edit</span>
-                                </button>
-                            </div>
-                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
-                            <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
-                                Dispatched to: <?= htmlspecialchars($activeUserAddress) ?>, <?= htmlspecialchars($activeUserCity ?: 'Surat') ?> - <?= htmlspecialchars($activeUserPincode ?: '395002') ?>
-                            </div>
-                            <div style="font-size:0.74rem; font-weight:700; color:var(--ws-text-sub); margin-top:8px;" id="addrPreviewDispatchTransporter">
-                                Preferred Hub: BlueDart Express / Surat Goods Transporter
-                            </div>
-                        </div>
+                                if ($isBill) {
+                                    $cBg = 'linear-gradient(145deg, #FFFCF7 0%, #FAF5E8 100%)';
+                                    $cBorder = 'rgba(212,175,55,0.45)';
+                                    $cShadow = '0 3px 12px rgba(180,83,9,0.06)';
+                                } elseif ($isDefShip) {
+                                    $cBg = 'linear-gradient(145deg, #F0FDF4 0%, #FFFFFF 100%)';
+                                    $cBorder = '#86EFAC';
+                                    $cShadow = '0 3px 12px rgba(22,163,74,0.06)';
+                                } elseif ($isWh) {
+                                    $cBg = 'linear-gradient(145deg, #F0F9FF 0%, #FFFFFF 100%)';
+                                    $cBorder = '#BAE6FD';
+                                    $cShadow = '0 3px 12px rgba(2,132,199,0.05)';
+                                } else {
+                                    $cBg = 'linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)';
+                                    $cBorder = '#E2E8F0';
+                                    $cShadow = '0 3px 12px rgba(0,0,0,0.03)';
+                                }
+                            ?>
+                            <div class="ws-user-address-card" id="wsUserAddrCard-<?= $aId ?>" style="background:<?= $cBg ?>; border:1.5px solid <?= $cBorder ?>; border-radius:14px; padding:16px; position:relative; box-shadow:<?= $cShadow ?>; display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed <?= $isBill ? 'rgba(212,175,55,0.35)' : '#E2E8F0' ?>;">
+                                        <?php if ($isBill): ?>
+                                            <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="#D4AF37" stroke="#8A681F" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                                <span>Registered GST Billing Address</span>
+                                            </span>
+                                            <span style="font-size:0.62rem; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 7px; border-radius:5px;">Official Invoicing</span>
+                                        <?php elseif ($isDefShip): ?>
+                                            <span style="font-size:0.68rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #86EFAC; text-transform:uppercase; letter-spacing:0.3px; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                                <span>Default Shipping Destination</span>
+                                            </span>
+                                            <span style="font-size:0.62rem; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #BBF7D0; padding:2px 7px; border-radius:5px;">Primary Dispatch</span>
+                                        <?php elseif ($isWh): ?>
+                                            <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase; letter-spacing:0.3px; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                                <span>Warehouse / Godown Hub</span>
+                                            </span>
+                                        <?php else: ?>
+                                            <span style="font-size:0.68rem; font-weight:800; background:#F1F5F9; color:#475569; padding:3px 8px; border-radius:6px; border:1px solid #CBD5E1; text-transform:uppercase; letter-spacing:0.3px; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                                <span>Secondary Delivery Address</span>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
 
+                                    <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;"><?= htmlspecialchars($rName) ?></div>
+                                    <div style="font-size:0.80rem; color:var(--ws-text-muted); line-height:1.45;">
+                                        <?= htmlspecialchars($aLine1) ?>
+                                        <?php if ($aLine2 !== ''): ?><br><?= htmlspecialchars($aLine2) ?><?php endif; ?><br>
+                                        <strong><?= htmlspecialchars($aCity . ', ' . $aState . ' — ' . $aPin) ?></strong>
+                                    </div>
+                                    <?php if ($aPhone !== ''): ?>
+                                        <div style="margin-top:6px; font-size:0.75rem; color:<?= $isBill ? 'var(--ws-gold-primary)' : ($isWh ? '#0369A1' : '#475569') ?>; font-weight:700; display:flex; align-items:center; gap:5px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                            <span>Phone: <?= htmlspecialchars($aPhone) ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($isBill && !empty($activeUserGstin)): ?>
+                                        <div style="margin-top:6px; font-size:0.73rem; background:rgba(212,175,55,0.12); padding:3px 8px; border-radius:5px; border:1px solid rgba(212,175,55,0.3); display:inline-flex; align-items:center; gap:5px; color:#705114;">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            <span>GSTIN: <strong><?= htmlspecialchars($activeUserGstin) ?></strong></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding-top:10px; border-top:1px solid <?= $isBill ? 'rgba(212,175,55,0.2)' : '#F1F5F9' ?>;">
+                                    <?php if ($isBill): ?>
+                                        <button type="button" onclick="openEditMainAddressModal()" class="dt-btn-pale" style="font-size:0.72rem; padding:4px 10px; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                            <span>Edit Details</span>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" onclick='openEditUserAddressModal(<?= $cardJson ?>)' class="dt-btn-pale" style="font-size:0.72rem; padding:4px 10px; font-weight:800; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            <span>Edit</span>
+                                        </button>
+                                        <?php if (!$isDefShip): ?>
+                                            <button type="button" onclick="setUserDefaultShipping(<?= $aId ?>)" class="dt-btn-pale" style="font-size:0.70rem; padding:4px 8px; font-weight:800; color:#15803D; border-color:#86EFAC; background:#F0FDF4; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span>Set Default Shipping</span>
+                                            </button>
+                                        <?php endif; ?>
+                                        <button type="button" onclick="deleteUserAddress(<?= $aId ?>)" style="font-size:0.70rem; padding:4px 8px; font-weight:700; color:#DC2626; border:1px solid #FECACA; background:#FEF2F2; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                            <span>Delete</span>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
                     <!-- COLLAPSIBLE EDIT FORM CONTAINER (HIDDEN BY DEFAULT!) -->
@@ -2107,6 +2255,113 @@ $catalogHasProducts = $catalogProducts !== [];
                     <button type="submit" id="wsBtnSaveMainAddress" class="dt-btn-gold" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 22px; border-radius:8px; font-weight:800; font-size:0.86rem; cursor:pointer;">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                         <span>Save Billing Address</span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SMART ADD / EDIT DELIVERY OR WAREHOUSE ADDRESS MODAL
+    ═══════════════════════════════════════════ -->
+    <div class="ws-modal-overlay" id="wsUserAddressModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeUserAddressModal();">
+        <div class="ws-modal-box" style="max-width: 560px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; border-radius: 18px; background:#FFFFFF; border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22);">
+            
+            <div class="ws-modal-header" style="padding: 14px 18px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:space-between; flex-shrink: 0;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center;">
+                        <svg style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2">
+                            <rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 style="font-family:var(--ws-font-serif); font-size:1.02rem; font-weight:900; color:#1E1B18; margin:0;" id="wsUserAddrModalTitle">
+                            Add / Edit Delivery Address
+                        </h3>
+                        <div style="font-size:0.70rem; color:var(--ws-text-muted);">Warehouse hubs, storefront godowns & dispatch destinations</div>
+                    </div>
+                </div>
+                <button class="ws-modal-close-btn" onclick="closeUserAddressModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
+            </div>
+
+            <form onsubmit="handleSaveUserAddressForm(event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; margin: 0;">
+                <input type="hidden" id="wsUserAddrId" value="">
+                <div style="overflow-y: auto; flex: 1; padding: 16px 20px; max-height: calc(90vh - 135px);">
+                    <div class="ws-form-grid">
+                        
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrType">Address Classification <span class="req">*</span></label>
+                            <select id="wsUserAddrType" class="ws-select" required>
+                                <option value="shipping">Delivery Destination / Secondary Shop</option>
+                                <option value="warehouse">Warehouse / Godown Transport Hub</option>
+                            </select>
+                        </div>
+
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrRecipient">Destination / Hub Name <span class="req">*</span></label>
+                            <input type="text" id="wsUserAddrRecipient" class="ws-input" required placeholder="e.g. Surat Hub or Storefront Delivery">
+                        </div>
+
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrPhone">Receiver / Gate Phone <span class="req">*</span></label>
+                            <input type="tel" id="wsUserAddrPhone" class="ws-input" required placeholder="10-digit mobile number">
+                        </div>
+
+                        <div class="ws-form-group full">
+                            <label class="ws-label" for="wsUserAddrLine1">Detailed Street Address & Market <span class="req">*</span></label>
+                            <textarea id="wsUserAddrLine1" class="ws-textarea" required placeholder="Gate No, Plot No, Transport Nagar, Street, Landmark"></textarea>
+                        </div>
+
+                        <div class="ws-form-group full">
+                            <label class="ws-label" for="wsUserAddrLine2">Preferred Transporter / Logistics Note</label>
+                            <input type="text" id="wsUserAddrLine2" class="ws-input" placeholder="e.g. DTDC, Surat Ring Road Transporter, BlueDart Hub">
+                        </div>
+
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrCity">City / District <span class="req">*</span></label>
+                            <input type="text" id="wsUserAddrCity" class="ws-input" required placeholder="e.g. Surat">
+                        </div>
+
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrState">State / UT <span class="req">*</span></label>
+                            <select id="wsUserAddrState" class="ws-select" required>
+                                <option value="Gujarat">Gujarat (24)</option>
+                                <option value="Maharashtra">Maharashtra (27)</option>
+                                <option value="Rajasthan">Rajasthan (08)</option>
+                                <option value="Delhi">Delhi (07)</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
+                                <option value="Karnataka">Karnataka (29)</option>
+                                <option value="Tamil Nadu">Tamil Nadu (33)</option>
+                                <option value="Telangana">Telangana (36)</option>
+                                <option value="West Bengal">West Bengal (19)</option>
+                                <option value="Other States">Other Indian State / UT</option>
+                            </select>
+                        </div>
+
+                        <div class="ws-form-group">
+                            <label class="ws-label" for="wsUserAddrPincode">6-Digit PIN Code <span class="req">*</span></label>
+                            <input type="text" id="wsUserAddrPincode" class="ws-input" required maxlength="6" pattern="[0-9]{6}" placeholder="395002">
+                        </div>
+
+                        <div class="ws-form-group full" style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                            <label style="display:inline-flex; align-items:center; gap:8px; cursor:pointer; margin:0; font-size:0.84rem; font-weight:700; color:var(--ws-text-main);">
+                                <input type="checkbox" id="wsUserAddrIsDefault" style="width:16px; height:16px; accent-color:var(--ws-gold-primary); cursor:pointer;">
+                                <span>Set as Default Shipping Destination</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; padding: 12px 20px; background:#FAF8F4; border-top: 1.5px solid rgba(212,175,55,0.3); border-radius: 0 0 16px 16px; flex-shrink: 0;">
+                    <button type="button" class="ws-btn dt-btn-pale" onclick="closeUserAddressModal()" style="padding: 0 18px; height: 40px; font-size: 0.85rem;">
+                        Cancel
+                    </button>
+                    <button type="submit" id="wsBtnSaveUserAddrModal" class="dt-btn-gold" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 22px; border-radius:8px; font-weight:800; font-size:0.86rem; cursor:pointer;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#111827" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        <span>Save Address</span>
                     </button>
                 </div>
             </form>
