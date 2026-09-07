@@ -7,21 +7,28 @@
  * consistent CORS policy and security headers.
  */
 
-// Production domain - only this origin is allowed for credentialed requests
-define('CORS_ALLOWED_ORIGIN', 'https://jaihanumantex.in');
+$allowedOrigins = [
+    'https://harmitethnic.com',
+    'https://www.harmitethnic.com',
+    'https://jaihanumantex.in',
+    'https://www.jaihanumantex.in',
+    'http://localhost',
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1'
+];
 
 function cors_headers(): void
 {
-    $allowedOrigin = CORS_ALLOWED_ORIGIN;
+    global $allowedOrigins;
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     
-    // Allow the production origin for credentialed requests
-    if ($origin === $allowedOrigin) {
-        header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+    if (in_array($origin, $allowedOrigins, true)) {
+        header('Access-Control-Allow-Origin: ' . $origin);
     } else {
-        // For non-credentialed requests (health checks, etc.), still allow production origin
-        header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+        header('Access-Control-Allow-Origin: https://harmitethnic.com');
     }
+
     
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');

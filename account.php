@@ -3175,6 +3175,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             var regBtn = document.getElementById('regSubmitBtn');
             var submitSpan = document.getElementById('regSubmitBtnSpan');
             if (submitSpan) submitSpan.textContent = 'Creating Account...';
+            if (regBtn) regBtn.disabled = true;
 
             fetch('/api/auth.php', {
                 method: 'POST',
@@ -3182,6 +3183,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
+                if (regBtn) regBtn.disabled = false;
                 if (submitSpan) {
                     submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
                 }
@@ -3214,17 +3216,26 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         // Customer -> Show member dashboard on account.php
                         checkUserAuth();
                     }
+                } else if (data && data.already_registered && !data.success) {
+                    alert(data.message || 'This WhatsApp number is already registered. Switching to Sign In.');
+                    switchAuthTab('login');
+                    var loginInput = document.getElementById('loginPhone');
+                    var loginPassInput = document.getElementById('loginPass');
+                    if (loginInput) loginInput.value = phone;
+                    if (loginPassInput && pass) loginPassInput.value = pass;
                 } else {
                     alert((data && data.message) ? data.message : 'Registration failed. Please check your details.');
                 }
             })
             .catch(function() {
+                if (regBtn) regBtn.disabled = false;
                 if (submitSpan) {
                     submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
                 }
                 alert('Unable to reach server. Please try again.');
             });
         };
+
 
         window.handleForgotSubmit = function() {
             var input = document.getElementById('forgotInput').value.trim();

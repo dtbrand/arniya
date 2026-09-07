@@ -102,9 +102,10 @@ try {
     }
 
     if ($action === 'admin_login') {
-        $email = trim($data['email'] ?? ($data['username'] ?? ''));
+        $email = trim($data['email'] ?? ($data['username'] ?? ($data['phone'] ?? ($data['identity'] ?? ''))));
         $password = $data['password'] ?? '';
         $res = Auth::adminLogin($email, $password);
+
         if (!$res['success']) {
             http_response_code(401);
         }

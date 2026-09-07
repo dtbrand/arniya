@@ -3,8 +3,13 @@
  * login.php — Luxury Executive Admin Login & Recovery Portal
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/../../config/session.php';
+if (file_exists(__DIR__ . '/../config/session.php')) {
+    require_once __DIR__ . '/../config/session.php';
+} elseif (file_exists(__DIR__ . '/../../config/session.php')) {
+    require_once __DIR__ . '/../../config/session.php';
+}
 dt_session_start();
+
 
 // Handle Logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
