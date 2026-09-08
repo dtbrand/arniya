@@ -169,6 +169,19 @@ try {
         }
         $qty = (int)($product['moq_lots'][$lotType] ?? 0);
         if ($qty <= 0) {
+            if ($lotType === 'full_set') {
+                $qty = max(1, (int)($product['full_set_pieces'] ?? ($product['moq'] ?? 1)));
+            } elseif ($lotType === 'half_set') {
+                $fsPieces = (int)($product['full_set_pieces'] ?? ($product['moq'] ?? 2));
+                $qty = max(1, (int)ceil($fsPieces / 2));
+            } elseif ($lotType === 'single') {
+                $qty = 1;
+            } elseif ($lotType === 'master_bale') {
+                $fsPieces = (int)($product['full_set_pieces'] ?? ($product['moq'] ?? 10));
+                $qty = max(10, $fsPieces * 4);
+            }
+        }
+        if ($qty <= 0) {
             echo json_encode([
                 'success' => false,
                 'lot_type' => $lotType,

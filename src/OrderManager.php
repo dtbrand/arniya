@@ -261,7 +261,7 @@ class OrderManager
 
                 $price = $row['price'];
                 $item['price'] = $price;
-                $item['sku'] = $row['sku'];
+                $item['sku'] = !empty($item['sku']) ? $item['sku'] : $row['sku'];
                 $item['title'] = $row['title'];
                 $item['selling_type'] = $sellingType;
                 $item['variants'] = $row['variants'];
@@ -373,17 +373,18 @@ class OrderManager
                 $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
             }
 
-            // Step 2: Check for duplicate order from same customer phone & channel in last 120 seconds
-            if (!$existing && !empty($last10Phone)) {
+            // Step 2: Check for rapid double-click duplicate (exact same total & phone within 15 seconds)
+            if (!$existing && empty($passedOrderNum) && !empty($last10Phone)) {
                 $dedupStmt = $pdo->prepare("
                     SELECT * FROM orders 
                     WHERE (customer_phone LIKE ? OR customer_phone = ?)
                       AND channel = ?
+                      AND ABS(total_amount - ?) < 0.01
                       AND payment_status IN ('pending', 'unpaid')
-                      AND created_at >= (NOW() - INTERVAL 120 SECOND)
+                      AND created_at >= (NOW() - INTERVAL 15 SECOND)
                     ORDER BY id DESC LIMIT 1
                 ");
-                $dedupStmt->execute(['%' . $last10Phone, $cleanDigits, $channel]);
+                $dedupStmt->execute(['%' . $last10Phone, $cleanDigits, $channel, $grandTotal]);
                 $found = $dedupStmt->fetch(\PDO::FETCH_ASSOC);
                 if ($found) {
                     $existing = $found;
@@ -614,13 +615,35 @@ class OrderManager
                     } else {
                         $totalItemPrice = round($unitPrice * $qty, 2);
                         $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
-                        $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['free size', 'one size']);
+                        $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['standard']);
                         $varId  = !empty($it['variant_id']) ? (int)$it['variant_id'] : null;
 
+                        // If variant_id is provided, populate variant color, size, and SKU from product variants if empty
+                        if ($varId > 0 && !empty($it['variants']) && is_array($it['variants'])) {
+                            foreach ($it['variants'] as $vCandidate) {
+                                if ((int)$vCandidate['id'] === $varId) {
+                                    if (empty($vColor) && !empty($vCandidate['color_name'])) {
+                                        $vColor = $vCandidate['color_name'];
+                                    }
+                                    if (empty($vSize) && !empty($vCandidate['size_name'])) {
+                                        $vSize = $vCandidate['size_name'];
+                                    }
+                                    if (!empty($vCandidate['sku'])) {
+                                        $prodSku = $vCandidate['sku'];
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        // If varId is not provided, try to match by color & size
                         if (!$varId && !empty($it['variants']) && is_array($it['variants'])) {
                             foreach ($it['variants'] as $vCandidate) {
-                                if (strcasecmp((string)($vCandidate['color_name'] ?? ''), $vColor) === 0 && strcasecmp((string)($vCandidate['size_name'] ?? ''), $vSize) === 0) {
+                                if (strcasecmp((string)($vCandidate['color_name'] ?? ''), (string)$vColor) === 0 && strcasecmp((string)($vCandidate['size_name'] ?? ''), (string)$vSize) === 0) {
                                     $varId = (int)$vCandidate['id'];
+                                    if (!empty($vCandidate['sku'])) {
+                                        $prodSku = $vCandidate['sku'];
+                                    }
                                     break;
                                 }
                             }
@@ -697,30 +720,7 @@ class OrderManager
      */
     private static function ordersHasColumn(\PDO $pdo, string $column): bool
     {
-        static $cache = [];
-        if (array_key_exists($column, $cache)) {
-            return $cache[$column];
-        }
-        try {
-            if ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
-                $stmt = $pdo->query("PRAGMA table_info(orders)");
-                $cols = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
-                $found = false;
-                foreach ($cols as $c) {
-                    if (strcasecmp((string)($c['name'] ?? ''), $column) === 0) {
-                        $found = true;
-                        break;
-                    }
-                }
-                return $cache[$column] = $found;
-            }
-            $stmt = $pdo->prepare("SHOW COLUMNS FROM orders LIKE ?");
-            $stmt->execute([$column]);
-            $cache[$column] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);
-        } catch (\Exception $e) {
-            $cache[$column] = false;
-        }
-        return $cache[$column];
+        return self::tableHasColumn($pdo, 'orders', $column);
     }
 
     /**
@@ -750,10 +750,23 @@ class OrderManager
                 }
                 return $cache[$key] = $found;
             }
-            $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$table}` LIKE ?");
-            $stmt->execute([$column]);
-            $cache[$key] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);
-        } catch (\Exception $e) {
+
+            // Standard ANSI / MariaDB / MySQL information_schema check
+            $stmt = $pdo->prepare("SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ? LIMIT 1");
+            $stmt->execute([$table, $column]);
+            $found = (bool)$stmt->fetchColumn();
+            if (!$found) {
+                // Direct SHOW COLUMNS query inspection fallback
+                $colRows = $pdo->query("SHOW COLUMNS FROM `{$table}`")->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+                foreach ($colRows as $cr) {
+                    if (strcasecmp((string)($cr['Field'] ?? ''), $column) === 0) {
+                        $found = true;
+                        break;
+                    }
+                }
+            }
+            return $cache[$key] = $found;
+        } catch (\Throwable $e) {
             $cache[$key] = false;
         }
         return $cache[$key];
@@ -972,51 +985,111 @@ class OrderManager
                 // 1. Get current order state
                 $currentOrder = null;
                 if (is_numeric($orderIdentifier)) {
-                    $cStmt = $db->prepare("SELECT id, fulfillment_status FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
+                    $cStmt = $db->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
                     $cStmt->execute([(int)$orderIdentifier, (string)$orderIdentifier]);
                     $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
                 } else {
-                    $cStmt = $db->prepare("SELECT id, fulfillment_status FROM orders WHERE order_number = ? LIMIT 1");
+                    $cStmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
                     $cStmt->execute([(string)$orderIdentifier]);
                     $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
                 }
 
-                $prevStatus = $currentOrder['fulfillment_status'] ?? 'pending';
-                $orderDbId = (int)($currentOrder['id'] ?? 0);
-
-                if (is_numeric($orderIdentifier)) {
-                    $stmt = $db->prepare("
-                        UPDATE orders 
-                        SET fulfillment_status = ?,
-                            order_status = ?,
-                            tracking_number = COALESCE(?, tracking_number),
-                            courier_name = COALESCE(?, courier_name)
-                        WHERE id = ? OR order_number = ?
-                    ");
-                    $res = $stmt->execute([$status, $status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
-                } else {
-                    $stmt = $db->prepare("
-                        UPDATE orders 
-                        SET fulfillment_status = ?,
-                            order_status = ?,
-                            tracking_number = COALESCE(?, tracking_number),
-                            courier_name = COALESCE(?, courier_name)
-                        WHERE order_number = ?
-                    ");
-                    $res = $stmt->execute([$status, $status, $trackingNumber, $courier, (string)$orderIdentifier]);
+                if (!$currentOrder) {
+                    return false;
                 }
 
-                // 2. Log in order_status_history
+                $prevStatus = $currentOrder['fulfillment_status'] ?? ($currentOrder['order_status'] ?? ($currentOrder['status'] ?? 'pending'));
+                $orderDbId = (int)($currentOrder['id'] ?? 0);
+                $orderNumber = (string)($currentOrder['order_number'] ?? $orderIdentifier);
+
+                // Build dynamic update SET based on available columns
+                $setCols = [];
+                $params = [];
+
+                if (self::ordersHasColumn($db, 'fulfillment_status')) {
+                    $setCols[] = "fulfillment_status = ?";
+                    $params[] = $status;
+                }
+                if (self::ordersHasColumn($db, 'order_status')) {
+                    $setCols[] = "order_status = ?";
+                    $params[] = $status;
+                }
+                if (self::ordersHasColumn($db, 'status')) {
+                    $setCols[] = "status = ?";
+                    $params[] = $status;
+                }
+                if (self::ordersHasColumn($db, 'tracking_number')) {
+                    $setCols[] = "tracking_number = COALESCE(?, tracking_number)";
+                    $params[] = $trackingNumber;
+                }
+                if (self::ordersHasColumn($db, 'courier_name')) {
+                    $setCols[] = "courier_name = COALESCE(?, courier_name)";
+                    $params[] = $courier;
+                }
+                if (self::ordersHasColumn($db, 'updated_at')) {
+                    $setCols[] = "updated_at = NOW()";
+                }
+
+                if (empty($setCols)) {
+                    return false;
+                }
+
+                $setSql = implode(', ', $setCols);
+                $params[] = $orderDbId;
+                $params[] = $orderNumber;
+
+                $stmt = $db->prepare("UPDATE orders SET {$setSql} WHERE id = ? OR order_number = ?");
+                $res = $stmt->execute($params);
+
+                // 2. Log in order_status_history if table exists
                 if ($res && $orderDbId > 0) {
                     try {
-                        $hStmt = $db->prepare("
-                            INSERT INTO order_status_history (order_id, previous_status, new_status, comment, updated_by, created_at)
-                            VALUES (?, ?, ?, ?, ?, NOW())
-                        ");
-                        $comment = "Order status updated to " . ucfirst($status) . ($trackingNumber ? " (AWB: {$trackingNumber})" : "");
-                        $hStmt->execute([$orderDbId, $prevStatus, $status, $comment, $updatedBy]);
-                    } catch (\Exception $ex) {
-                        // Safe fallback if history table not yet migrated
+                        $hasHistory = self::tableHasColumn($db, 'order_status_history', 'order_id');
+                        if ($hasHistory) {
+                            $hasPrev = self::tableHasColumn($db, 'order_status_history', 'previous_status');
+                            $hasNew = self::tableHasColumn($db, 'order_status_history', 'new_status');
+                            $hasFrom = self::tableHasColumn($db, 'order_status_history', 'from_status');
+                            $hasTo = self::tableHasColumn($db, 'order_status_history', 'to_status');
+                            $hasComment = self::tableHasColumn($db, 'order_status_history', 'comment');
+                            $hasNotes = self::tableHasColumn($db, 'order_status_history', 'notes');
+                            $hasUpdatedBy = self::tableHasColumn($db, 'order_status_history', 'updated_by');
+                            $hasCreatedBy = self::tableHasColumn($db, 'order_status_history', 'created_by');
+
+                            $comment = "Order status updated to " . ucfirst(str_replace('_', ' ', $status)) . ($trackingNumber ? " (AWB: {$trackingNumber})" : "");
+
+                            $hCols = ['order_id'];
+                            $hVals = ['?'];
+                            $hParams = [$orderDbId];
+
+                            if ($hasPrev && $hasNew) {
+                                $hCols[] = 'previous_status'; $hVals[] = '?'; $hParams[] = $prevStatus;
+                                $hCols[] = 'new_status'; $hVals[] = '?'; $hParams[] = $status;
+                            } elseif ($hasFrom && $hasTo) {
+                                $hCols[] = 'from_status'; $hVals[] = '?'; $hParams[] = $prevStatus;
+                                $hCols[] = 'to_status'; $hVals[] = '?'; $hParams[] = $status;
+                            }
+
+                            if ($hasComment) {
+                                $hCols[] = 'comment'; $hVals[] = '?'; $hParams[] = $comment;
+                            } elseif ($hasNotes) {
+                                $hCols[] = 'notes'; $hVals[] = '?'; $hParams[] = $comment;
+                            }
+
+                            if ($hasUpdatedBy) {
+                                $hCols[] = 'updated_by'; $hVals[] = '?'; $hParams[] = $updatedBy;
+                            } elseif ($hasCreatedBy) {
+                                $hCols[] = 'created_by'; $hVals[] = '?'; $hParams[] = $updatedBy;
+                            }
+
+                            $hCols[] = 'created_at';
+                            $hVals[] = 'NOW()';
+
+                            $hSql = "INSERT INTO order_status_history (" . implode(', ', $hCols) . ") VALUES (" . implode(', ', $hVals) . ")";
+                            $hStmt = $db->prepare($hSql);
+                            $hStmt->execute($hParams);
+                        }
+                    } catch (\Throwable $ex) {
+                        error_log("order_status_history insert warning: " . $ex->getMessage());
                     }
                 }
 

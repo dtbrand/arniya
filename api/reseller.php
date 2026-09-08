@@ -177,6 +177,15 @@ try {
             exit;
         }
 
+        if (($product['selling_type'] ?? 'single_piece') === 'full_set' || !empty($product['is_full_set'])) {
+            http_response_code(403);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Full Set products are exclusive to Wholesale & Retail trade channels. Reseller partners can only calculate margins and share single piece catalog.'
+            ]);
+            exit;
+        }
+
         $resellerBase = (float)($product['effective_reseller_price'] ?? ($product['reseller_price'] ?? 0));
         if ($resellerBase <= 0) {
             $resellerBase = (float)($product['retail_price'] ?? 0);

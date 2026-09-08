@@ -59,11 +59,11 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
         assert item0.get('sku') == 'DTB-SAR-001-ROY-1', f"Expected SKU, got {item0.get('sku')}"
 
     # 3. Check stock of variant 57 before order
-    audit_url = f"https://{domain}/api/audit_test.php?token=audit_dt_2026"
-    req = urllib.request.Request(audit_url, headers={'User-Agent': 'Mozilla/5.0'})
+    prod_url = f"https://{domain}/api/products.php?action=get&id=13"
+    req = urllib.request.Request(prod_url, headers={'User-Agent': 'Mozilla/5.0'})
     with urllib.request.urlopen(req, context=ctx) as res:
-        audit_data = json.loads(res.read().decode('utf-8'))
-        v57 = next((v for v in audit_data.get('sample_variants', []) if v['id'] == 57), None)
+        prod_data = json.loads(res.read().decode('utf-8'))
+        v57 = next((v for v in prod_data.get('product', {}).get('variants', []) if v['id'] == 57), None)
         stock_before = v57['stock_qty'] if v57 else 25
         print(f"    Variant 57 stock before order: {stock_before}")
 
@@ -108,14 +108,15 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
         print(f"    Total Amount: INR {order_info.get('total_amount')}")
         assert order_res.get('success') is True, "Expected success: true"
 
-    # 5. Check stock after order placement & simulated payment capture
-    with urllib.request.urlopen(urllib.request.Request(audit_url, headers={'User-Agent': 'Mozilla/5.0'}), context=ctx) as res:
-        audit_data_after = json.loads(res.read().decode('utf-8'))
-        v57_after = next((v for v in audit_data_after.get('sample_variants', []) if v['id'] == 57), None)
+    # 5. Check stock after order placement & stock decrement
+    with urllib.request.urlopen(urllib.request.Request(prod_url, headers={'User-Agent': 'Mozilla/5.0'}), context=ctx) as res:
+        prod_data_after = json.loads(res.read().decode('utf-8'))
+        v57_after = next((v for v in prod_data_after.get('product', {}).get('variants', []) if v['id'] == 57), None)
         stock_after = v57_after['stock_qty'] if v57_after else None
-        print(f"    Variant 57 stock after order: {stock_after} (Before: {stock_before})")
-        if stock_after is not None:
-            print(f">>> [PASS] Precision Variant Inventory Audit: Stock decremented from {stock_before} to {stock_after}!")
+        print(f"    Variant 57 stock after order: {stock_after}")
+        if stock_before is not None and stock_after is not None:
+            print(f">>> [PASS] Stock decremented by 2: {stock_before} -> {stock_after}")
+            assert stock_after == stock_before - 2, f"Expected {stock_before - 2}, got {stock_after}"
 
     # 6. Test Idempotency: Re-submitting the exact same order_number must NOT duplicate
     req_dup = urllib.request.Request(orders_url, data=encoded_order, headers={'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0'})
