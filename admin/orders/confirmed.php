@@ -39,7 +39,14 @@ $filter_status = "confirmed";
                             <span>Payment Confirmed Orders</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#15803D; box-shadow:0 0 0 2px rgba(21,128,61,0.2);"></span>
-                                <strong>42</strong> Confirmed
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Confirmed
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders with verified payments ready for fulfillment and loom allocation.</p>

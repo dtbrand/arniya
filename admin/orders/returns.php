@@ -38,7 +38,14 @@ $active_subnav = "returns";
                             <span>Return Merchandise Authorizations (RMA)</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#B45309; box-shadow:0 0 0 2px rgba(180,83,9,0.2);"></span>
-                                <strong>8</strong> Active RMAs
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) {
+    return in_array($o['status'] ?? '', ['returned', 'return_requested', 'return_in_transit', 'return_received'], true);
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Active RMAs
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Manage customer returns, defect reviews, Surat depot dock inspections, and reverse pickups.</p>

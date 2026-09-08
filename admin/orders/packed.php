@@ -39,7 +39,14 @@ $filter_status = "packed";
                             <span>Packed &amp; QC Passed Orders</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#8A681F; box-shadow:0 0 0 2px rgba(138,104,31,0.2);"></span>
-                                <strong>15</strong> Packed
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Packed
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Consignments sealed with Silk Mark QC tags ready for courier pickup.</p>

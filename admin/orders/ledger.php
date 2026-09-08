@@ -35,6 +35,9 @@ $gstin = '24AAECJ1928K1Z5';
 $account_tier = 'Verified Wholesale Account';
 $credit_limit = '5,00,000 (Net 15 Days)';
 
+$rupeeSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1.5px; margin-right:2px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
+$rupeeSvgSm = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1px; margin-right:1px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
+
 $transactions = [];
 $totalDebit = 0.0;
 $totalCredit = 0.0;
@@ -215,8 +218,8 @@ $page_title = "Financial Ledger — " . $customer_name;
         <div style="border-left:1px dashed #D4AF37; padding-left:16px;">
             <div style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:3px;">Wholesale Terms:</div>
             <strong>Account Tier:</strong> <?php echo htmlspecialchars($account_tier); ?><br>
-            <strong>Credit Limit:</strong> ₹ <?php echo htmlspecialchars($credit_limit); ?><br>
-            <strong>Ledger Balance:</strong> <strong style="color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;">₹ <?= number_format($outstandingBalance, 2) ?> (<?= $outstandingBalance <= 0 ? 'All Invoices Settled' : 'Payment Due' ?>)</strong>
+            <strong>Credit Limit:</strong> <?= $rupeeSvg ?><?php echo htmlspecialchars($credit_limit); ?><br>
+            <strong>Ledger Balance:</strong> <strong style="color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>; display:inline-flex; align-items:center;"><?= $rupeeSvg ?><?= number_format($outstandingBalance, 2) ?>&nbsp;(<?= $outstandingBalance <= 0 ? 'All Invoices Settled' : 'Payment Due' ?>)</strong>
         </div>
     </div>
 
@@ -224,22 +227,22 @@ $page_title = "Financial Ledger — " . $customer_name;
     <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:16px;">
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Lifetime Business</div>
-            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ <?= number_format($totalDebit, 2) ?></div>
+            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px; display:inline-flex; align-items:center;"><?= $rupeeSvg ?><?= number_format($totalDebit, 2) ?></div>
             <div style="font-size:9.5px; color:#64748B;"><?= count($transactions) ?> Entries Recorded</div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#15803D; text-transform:uppercase;">Total Settled</div>
-            <div style="font-size:15px; font-weight:800; color:#15803D; margin-top:2px;">₹ <?= number_format($totalCredit, 2) ?></div>
+            <div style="font-size:15px; font-weight:800; color:#15803D; margin-top:2px; display:inline-flex; align-items:center;"><?= $rupeeSvg ?><?= number_format($totalCredit, 2) ?></div>
             <div style="font-size:9.5px; color:#16A34A; font-weight:700;"><?= $totalDebit > 0 ? round(($totalCredit / $totalDebit) * 100, 1) . '% Cleared' : '100% Cleared' ?></div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#64748B; text-transform:uppercase;">Current Balance</div>
-            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px;">₹ <?= number_format($outstandingBalance, 2) ?></div>
+            <div style="font-size:15px; font-weight:800; color:#181512; margin-top:2px; display:inline-flex; align-items:center;"><?= $rupeeSvg ?><?= number_format($outstandingBalance, 2) ?></div>
             <div style="font-size:9.5px; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>; font-weight:700;"><?= $outstandingBalance <= 0 ? 'All Cleared' : 'Pending' ?></div>
         </div>
         <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:8px 12px;">
             <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Credit Facility</div>
-            <div style="font-size:15px; font-weight:800; color:#8A681F; margin-top:2px;">₹ 5,00,000</div>
+            <div style="font-size:15px; font-weight:800; color:#8A681F; margin-top:2px; display:inline-flex; align-items:center;"><?= $rupeeSvg ?>5,00,000</div>
             <div style="font-size:9.5px; color:#64748B;">Net 15 Days Term</div>
         </div>
     </div>
@@ -251,9 +254,9 @@ $page_title = "Financial Ledger — " . $customer_name;
                 <th style="padding:8px 10px; text-align:left; font-size:10px; text-transform:uppercase;">Date</th>
                 <th style="padding:8px 10px; text-align:left; font-size:10px; text-transform:uppercase;">Reference ID</th>
                 <th style="padding:8px 10px; text-align:left; font-size:10px; text-transform:uppercase;">Transaction Description</th>
-                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Debit (₹)</th>
-                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Credit (₹)</th>
-                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Balance (₹)</th>
+                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Debit (<?= $rupeeSvgSm ?>)</th>
+                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Credit (<?= $rupeeSvgSm ?>)</th>
+                <th style="padding:8px 10px; text-align:right; font-size:10px; text-transform:uppercase;">Balance (<?= $rupeeSvgSm ?>)</th>
                 <th style="padding:8px 10px; text-align:center; font-size:10px; text-transform:uppercase;">Status</th>
             </tr>
         </thead>
@@ -279,9 +282,9 @@ $page_title = "Financial Ledger — " . $customer_name;
         <tfoot>
             <tr style="background:#FAF5E8; font-weight:800; border-top:2px solid #8A681F; border-bottom:2px solid #8A681F;">
                 <td colspan="3" style="padding:10px; text-align:right; color:#181512; text-transform:uppercase;">RECONCILED TOTALS:</td>
-                <td style="padding:10px; text-align:right; color:#181512;">₹ <?= number_format($totalDebit, 2) ?></td>
-                <td style="padding:10px; text-align:right; color:#15803D;">₹ <?= number_format($totalCredit, 2) ?></td>
-                <td style="padding:10px; text-align:right; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;">₹ <?= number_format($outstandingBalance, 2) ?></td>
+                <td style="padding:10px; text-align:right; color:#181512;"><span style="display:inline-flex; align-items:center; justify-content:flex-end;"><?= $rupeeSvg ?><?= number_format($totalDebit, 2) ?></span></td>
+                <td style="padding:10px; text-align:right; color:#15803D;"><span style="display:inline-flex; align-items:center; justify-content:flex-end;"><?= $rupeeSvg ?><?= number_format($totalCredit, 2) ?></span></td>
+                <td style="padding:10px; text-align:right; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;"><span style="display:inline-flex; align-items:center; justify-content:flex-end;"><?= $rupeeSvg ?><?= number_format($outstandingBalance, 2) ?></span></td>
                 <td style="padding:10px; text-align:center; color:<?= $outstandingBalance <= 0 ? '#15803D' : '#B45309' ?>;"><?= $outstandingBalance <= 0 ? 'ALL CLEAR' : 'DUE' ?></td>
             </tr>
         </tfoot>

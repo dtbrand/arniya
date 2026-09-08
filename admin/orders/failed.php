@@ -39,7 +39,14 @@ $filter_status = "failed";
                             <span>Failed Transactions &amp; Orders</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#DC2626; box-shadow:0 0 0 2px rgba(220,38,38,0.2);"></span>
-                                <strong>3</strong> Failed
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Failed
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders with gateway timeouts, card authorization drops, or bank declines.</p>

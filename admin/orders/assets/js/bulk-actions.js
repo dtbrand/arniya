@@ -425,7 +425,7 @@
                                 <tr style="background:#181512; color:#FAF5E8;">
                                     <th style="padding:6px 8px; text-align:left;">Item Details &amp; SKU</th>
                                     <th style="padding:6px 8px; text-align:center;">Qty</th>
-                                    <th style="padding:6px 8px; text-align:right;">Taxable (₹)</th>
+                                    <th style="padding:6px 8px; text-align:right;">Taxable (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -435,14 +435,14 @@
                                         <small style="color:#64748B;">Surat Central Depot Verified Lot • Silk Mark Certified</small>
                                     </td>
                                     <td style="padding:8px; text-align:center; font-weight:800;">${order.items_count || '15 pcs'}</td>
-                                    <td style="padding:8px; text-align:right; font-weight:700;">₹${taxable.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                                    <td style="padding:8px; text-align:right; font-weight:700;"><span style="display:inline-flex; align-items:center; justify-content:flex-end;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:1px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>${taxable.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span></td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF5E8; border:1.5px solid #8A681F; border-radius:6px; padding:10px 14px;">
                             <div style="font-size:10.5px; color:#8A681F; font-weight:700;">Includes 5% Textile GST (2.5% CGST + 2.5% SGST)</div>
-                            <div style="font-size:14px; font-weight:800; color:#181512;">Grand Total: ₹${grandTotal.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
+                            <div style="font-size:14px; font-weight:800; color:#181512; display:inline-flex; align-items:center;">Grand Total:&nbsp;<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:2px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>${grandTotal.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
                         </div>
                     </div>
                 `;

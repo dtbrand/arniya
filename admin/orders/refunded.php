@@ -39,7 +39,14 @@ $filter_status = "refunded";
                             <span>Refunded Orders &amp; Credit Notes</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#8A681F; box-shadow:0 0 0 2px rgba(138,104,31,0.2);"></span>
-                                <strong>6</strong> Refunded
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Refunded
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders with settled refunds processed through original gateways or B2B credit ledger adjustments.</p>

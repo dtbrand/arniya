@@ -39,7 +39,14 @@ $filter_status = "shipped";
                             <span>Dispatched &amp; In-Transit Consignments</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#1D4ED8; box-shadow:0 0 0 2px rgba(29,78,216,0.2);"></span>
-                                <strong>84</strong> Shipped
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Shipped
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Active carrier consignments en route via VRL Logistics, BlueDart, Delhivery, and DTDC.</p>

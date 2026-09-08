@@ -39,7 +39,14 @@ $filter_status = "out_for_delivery";
                             <span>Out For Local Delivery</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot" style="background:#1D4ED8; box-shadow:0 0 0 2px rgba(29,78,216,0.2);"></span>
-                                <strong>32</strong> Out for Delivery
+<?php
+require_once __DIR__ . '/../../src/OrderManager.php';
+$orders_all = \DTBrand\OrderManager::getAll();
+$matching_count = count(array_filter($orders_all, function($o) use ($active_status_key) {
+    return ($o['status'] ?? '') === $active_status_key;
+}));
+?>
+                                <strong><?php echo number_format($matching_count); ?></strong> Out for Delivery
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Consignments loaded for destination hub dispatch and local doorstep delivery.</p>
