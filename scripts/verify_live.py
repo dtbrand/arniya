@@ -24,6 +24,10 @@ urls = [
     ('https://harmitethnic.com/admin/shipping/methods.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/payments/index.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/payments/pending.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/reports/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/reports/gst.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/reports/revenue.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/reports/sales.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/api/shipping.php?action=get_rates', 200, 'json'),
     ('https://jaihanumantex.in/wholesale.php', 200, 'html'),
     ('https://jaihanumantex.in/retailer.php', 200, 'html'),
@@ -42,6 +46,10 @@ urls = [
     ('https://jaihanumantex.in/admin/shipping/methods.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/payments/index.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/payments/pending.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/reports/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/reports/gst.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/reports/revenue.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/reports/sales.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/api/shipping.php?action=get_rates', 200, 'json'),
 ]
 

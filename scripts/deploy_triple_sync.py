@@ -56,6 +56,10 @@ FILES_TO_DEPLOY = [
     'admin/payments/pending.php',
     'admin/payments/refunds.php',
     'admin/payments/successful.php',
+    'admin/reports/index.php',
+    'admin/reports/gst.php',
+    'admin/reports/revenue.php',
+    'admin/reports/sales.php',
 ]
 
 SERVERS = [
