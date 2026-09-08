@@ -34,6 +34,7 @@ FILES_TO_DEPLOY = [
     'assets/css/reseller.css',
     'admin/customers/components/customer-addresses.php',
     'admin/customers/assets/js/customer-view.js',
+    'assets/js/modals.js',
 ]
 
 SERVERS = [

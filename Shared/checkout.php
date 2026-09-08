@@ -95,6 +95,16 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
     100% { transform: scale(1); opacity: 1; }
 }
 
+@keyframes dtSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.dt-spin {
+    animation: dtSpin 0.9s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /* Modal Backdrop */
 .checkout-backdrop {
     position: fixed;
@@ -1312,7 +1322,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
             <div class="co-upi-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                     <h3 style="margin:0; font-family:'Cinzel', serif; font-size:1.1rem; font-weight:800; color:#8A681F; display:inline-flex; align-items:center; gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Instant UPI Payment</h3>
-                    <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" style="width:30px; height:30px; padding:0; cursor:pointer; color:#64748B; display:inline-flex; align-items:center; justify-content:center; border-radius:6px;" onclick="document.getElementById('coUpiModalOverlay').classList.remove('active')" aria-label="Close UPI Studio">
+                    <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" style="width:30px; height:30px; padding:0; cursor:pointer; color:#64748B; display:inline-flex; align-items:center; justify-content:center; border-radius:6px;" onclick="window.closeUpiStudio()" aria-label="Close UPI Studio">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
@@ -1405,6 +1415,9 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
     var appliedCouponCode = '';
     var currentOrderData = null;
     var upiTimerInterval = null;
+    var coIsPlacingOrder = false;
+    var coActiveOrderNumber = null;
+    window.coActiveOrderNumber = null;
 
     var BRAND_WHATSAPP_NUMBER = '917046363528';
 
@@ -1717,9 +1730,31 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         }
         document.body.style.overflow = '';
         if (upiTimerInterval) clearInterval(upiTimerInterval);
+        coIsPlacingOrder = false;
+        var placeBtn = document.getElementById('coPlaceOrderBtn');
+        if (placeBtn) {
+            placeBtn.disabled = false;
+            placeBtn.style.opacity = '1';
+            placeBtn.style.cursor = 'pointer';
+            window.selectPaymentMethod(activePaymentMethod);
+        }
     };
 
     window.closeCheckoutModal = window.closeCheckout;
+
+    window.closeUpiStudio = function() {
+        var modal = document.getElementById('coUpiModalOverlay');
+        if (modal) modal.classList.remove('active');
+        if (upiTimerInterval) clearInterval(upiTimerInterval);
+        coIsPlacingOrder = false;
+        var placeBtn = document.getElementById('coPlaceOrderBtn');
+        if (placeBtn) {
+            placeBtn.disabled = false;
+            placeBtn.style.opacity = '1';
+            placeBtn.style.cursor = 'pointer';
+            window.selectPaymentMethod(activePaymentMethod);
+        }
+    };
 
     window.selectPaymentMethod = function(method) {
         activePaymentMethod = method;
@@ -1840,8 +1875,13 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         window.renderCheckoutItems();
     }
 
-    /* Master Order Placement */
+    /* Master Order Placement — With Enterprise Idempotency & Double-Submission Locking */
     function handlePlaceOrder() {
+        if (coIsPlacingOrder) {
+            console.warn('[Checkout] Order placement already in progress.');
+            return;
+        }
+
         var fullName = document.getElementById('coFullName').value.trim();
         var whatsApp = document.getElementById('coWhatsApp').value.trim();
         var email = document.getElementById('coEmail').value.trim();
@@ -1860,13 +1900,22 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         if (cart.length === 0) { alert('Your bag is empty.'); return; }
 
+        // IMMEDIATE IN-FLIGHT LOCK: Prevent rapid double-clicks from creating duplicate orders
+        coIsPlacingOrder = true;
+
         var subtotal = cart.reduce(function(sum, item) {
             var p = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
             return sum + (p * (item.qty || 1));
         }, 0);
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
-        var randomNum = Math.floor(100000 + Math.random() * 900000);
-        var orderNum = 'KLN-' + randomNum;
+
+        // Reuse active session order number if user switches gateways, otherwise generate fresh
+        if (!coActiveOrderNumber) {
+            var randomHex = Math.floor(100000 + Math.random() * 900000);
+            coActiveOrderNumber = 'DT-ORD-' + randomHex;
+        }
+        var orderNum = coActiveOrderNumber;
+        window.coActiveOrderNumber = orderNum;
 
         var fullAddr = [address, (landmark ? 'Near ' + landmark : ''), city, state, pincode].filter(Boolean).join(', ');
 
@@ -1897,8 +1946,12 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         };
 
         var placeBtn = document.getElementById('coPlaceOrderBtn');
-        placeBtn.disabled = true;
-        placeBtn.innerHTML = '<span>Processing Order...</span>';
+        if (placeBtn) {
+            placeBtn.disabled = true;
+            placeBtn.style.opacity = '0.7';
+            placeBtn.style.cursor = 'not-allowed';
+            placeBtn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><svg class="dt-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg>Securing Order...</span>';
+        }
 
         // Auto-save delivery address to customer profile if enabled
         var saveRow = document.getElementById('coSaveAddressRow');
@@ -1927,9 +1980,10 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
             }).catch(function() {});
         }
 
-        // 1. Save Base Order in MySQL
+        // 1. Save or Reuse Base Order in MySQL with full Idempotency
         var orderFormData = new URLSearchParams();
         orderFormData.append('action', 'create');
+        orderFormData.append('order_number', orderNum);
         orderFormData.append('customer_name', fullName);
         orderFormData.append('customer_phone', whatsApp);
         orderFormData.append('channel', resolvedChannel);
@@ -1954,10 +2008,12 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         orderFormData.append('items', JSON.stringify(cart));
 
         fetch('/api/orders.php', { method: 'POST', body: orderFormData })
-        .then(r => r.json())
-        .then(res => {
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
             if (res.order && res.order.order_number) {
                 orderNum = res.order.order_number;
+                coActiveOrderNumber = orderNum;
+                window.coActiveOrderNumber = orderNum;
                 orderPayload.order_number = orderNum;
             }
             return fetch('/api/payment/create_order.php', {
@@ -1966,10 +2022,15 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
                 body: JSON.stringify(orderPayload)
             });
         })
-        .then(r => r.json())
-        .then(data => {
-            placeBtn.disabled = false;
-            window.selectPaymentMethod(activePaymentMethod);
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            coIsPlacingOrder = false;
+            if (placeBtn) {
+                placeBtn.disabled = false;
+                placeBtn.style.opacity = '1';
+                placeBtn.style.cursor = 'pointer';
+                window.selectPaymentMethod(activePaymentMethod);
+            }
 
             currentOrderData = {
                 order_number: orderNum,
@@ -1990,9 +2051,14 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
                 completeOrderSuccess(orderNum, currentOrderData);
             }
         })
-        .catch(err => {
-            placeBtn.disabled = false;
-            window.selectPaymentMethod(activePaymentMethod);
+        .catch(function(err) {
+            coIsPlacingOrder = false;
+            if (placeBtn) {
+                placeBtn.disabled = false;
+                placeBtn.style.opacity = '1';
+                placeBtn.style.cursor = 'pointer';
+                window.selectPaymentMethod(activePaymentMethod);
+            }
             // Fallback: Direct WhatsApp Order Routing
             completeOrderSuccess(orderNum, {
                 order_number: orderNum,
@@ -2111,6 +2177,18 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
                     email: order.customer_email || ''
                 },
                 theme: { color: '#8A681F' },
+                modal: {
+                    ondismiss: function() {
+                        coIsPlacingOrder = false;
+                        var placeBtn = document.getElementById('coPlaceOrderBtn');
+                        if (placeBtn) {
+                            placeBtn.disabled = false;
+                            placeBtn.style.opacity = '1';
+                            placeBtn.style.cursor = 'pointer';
+                            window.selectPaymentMethod(activePaymentMethod);
+                        }
+                    }
+                },
                 handler: function(response) {
                     fetch('/api/payment/verify.php', {
                         method: 'POST',
@@ -2144,6 +2222,9 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
 
     /* Complete Order Success Screen & WhatsApp Sync */
     function completeOrderSuccess(orderNum, order, refId) {
+        coIsPlacingOrder = false;
+        coActiveOrderNumber = null;
+        window.coActiveOrderNumber = null;
         var successOverlay = document.getElementById('coSuccessOverlay');
         var successOrderId = document.getElementById('coSuccessOrderId');
         var successWaLink = document.getElementById('coSuccessWhatsAppLink');
@@ -2202,6 +2283,13 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         if (backdrop) {
             backdrop.addEventListener('click', function(e) {
                 if (e.target === backdrop) window.closeCheckout();
+            });
+        }
+
+        var upiOverlay = document.getElementById('coUpiModalOverlay');
+        if (upiOverlay) {
+            upiOverlay.addEventListener('click', function(e) {
+                if (e.target === upiOverlay) window.closeUpiStudio();
             });
         }
 

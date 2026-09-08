@@ -214,7 +214,7 @@ class OrderManager
      */
     public static function createOrder(array $orderData): array
     {
-        $orderNumber = 'DT-ORD-' . strtoupper(substr(uniqid(), -6));
+        $orderNumber = !empty($orderData['order_number']) ? trim((string)$orderData['order_number']) : ('DT-ORD-' . strtoupper(substr(uniqid(), -6)));
         $items = $orderData['items'] ?? [];
 
         $pdo = Database::getConnection();
@@ -346,14 +346,90 @@ class OrderManager
         $shippingAddress = trim((string)($orderData['shipping_address'] ?? ''));
         // $channel was already resolved from the session above — do not re-read
         // it from the request here.
-        $paymentMethod = $orderData['payment_method'] ?? 'razorpay';
-        $paymentStatus = $orderData['payment_status'] ?? 'paid';
-        $fulfillmentStatus = $orderData['fulfillment_status'] ?? 'confirmed';
+        $paymentMethod = $orderData['payment_method'] ?? 'direct_upi';
+        $paymentStatus = $orderData['payment_status'] ?? 'pending';
+        $fulfillmentStatus = $orderData['fulfillment_status'] ?? 'processing';
 
         // A signed-in customer's order always belongs to them, so a posted
         // customer_id cannot be used to attribute spend to somebody else.
         if (empty($_SESSION['admin_logged_in']) && !empty($_SESSION['user']['id'])) {
             $customerId = (int)$_SESSION['user']['id'];
+        }
+
+        // ── ENTERPRISE IDEMPOTENCY & ACTIVE ORDER REUSE GUARD ──
+        // Eliminates duplicate order creation when users change payment methods,
+        // retry failed payments, or double-click submit during checkout.
+        if ($liveDb) {
+            $passedOrderNum = trim((string)($orderData['order_number'] ?? ''));
+            $cleanDigits = preg_replace('/[^\d]/', '', $customerPhone);
+            $last10Phone = strlen($cleanDigits) >= 10 ? substr($cleanDigits, -10) : $cleanDigits;
+
+            $existing = null;
+
+            // Step 1: Check by explicit order_number if provided
+            if (!empty($passedOrderNum)) {
+                $checkStmt = $pdo->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
+                $checkStmt->execute([$passedOrderNum]);
+                $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+            }
+
+            // Step 2: Check for duplicate order from same customer phone & channel in last 120 seconds
+            if (!$existing && !empty($last10Phone)) {
+                $dedupStmt = $pdo->prepare("
+                    SELECT * FROM orders 
+                    WHERE (customer_phone LIKE ? OR customer_phone = ?)
+                      AND channel = ?
+                      AND payment_status IN ('pending', 'unpaid')
+                      AND created_at >= (NOW() - INTERVAL 120 SECOND)
+                    ORDER BY id DESC LIMIT 1
+                ");
+                $dedupStmt->execute(['%' . $last10Phone, $cleanDigits, $channel]);
+                $found = $dedupStmt->fetch(\PDO::FETCH_ASSOC);
+                if ($found) {
+                    $existing = $found;
+                }
+            }
+
+            // Step 3: If an active pending order exists, update payment details and return existing order
+            if ($existing && in_array(strtolower((string)($existing['payment_status'] ?? '')), ['pending', 'unpaid', 'credit'], true)) {
+                $dbOrderId = (int)$existing['id'];
+                $orderNumber = (string)$existing['order_number'];
+                $orderTotal = (float)$existing['total_amount'];
+
+                try {
+                    $updCols = "payment_method = ?, customer_name = ?";
+                    $updParams = [$paymentMethod, $customerName];
+                    if ($shippingAddress !== '' && self::ordersHasColumn($pdo, 'shipping_address')) {
+                        $updCols .= ", shipping_address = ?";
+                        $updParams[] = $shippingAddress;
+                    }
+                    $updParams[] = $dbOrderId;
+                    $pdo->prepare("UPDATE orders SET {$updCols} WHERE id = ?")->execute($updParams);
+                } catch (\Throwable $uex) {
+                    error_log('DT Order deduplication update failed: ' . $uex->getMessage());
+                }
+
+                return [
+                    'success' => true,
+                    'id' => $dbOrderId,
+                    'order_number' => $orderNumber,
+                    'customer_name' => $customerName,
+                    'customer_phone' => $customerPhone,
+                    'shipping_address' => $shippingAddress,
+                    'customer_email' => $orderData['customer_email'] ?? ($existing['customer_email'] ?? ''),
+                    'channel' => $existing['channel'] ?? $channel,
+                    'items' => $items,
+                    'items_count' => count($items),
+                    'pricing' => $calc,
+                    'total_amount' => $orderTotal,
+                    'payment_status' => $existing['payment_status'] ?? 'pending',
+                    'fulfillment_status' => $existing['fulfillment_status'] ?? 'processing',
+                    'created_at' => $existing['created_at'] ?? date('Y-m-d H:i:s'),
+                    'whatsapp_notice' => self::generateWhatsAppNotice($orderNumber, $orderTotal, $customerName),
+                    'reused' => true,
+                    'message' => 'Active order session reused and updated.'
+                ];
+            }
         }
 
         $dbOrderId = 0;
@@ -412,7 +488,7 @@ class OrderManager
 
                 // Map and validate status enums
                 $validFulfillment = in_array($fulfillmentStatus, ['unfulfilled','processing','dispatched','delivered','cancelled']) ? $fulfillmentStatus : 'processing';
-                $validPayment = in_array($paymentStatus, ['pending','paid','credit','refunded']) ? $paymentStatus : 'paid';
+                $validPayment = in_array($paymentStatus, ['pending','paid','credit','refunded']) ? $paymentStatus : 'pending';
 
                 // Insert into orders table. shipping_address is included only when the
                 // live table actually has the column, so order creation never fails on a

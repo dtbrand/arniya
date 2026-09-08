@@ -323,7 +323,19 @@
     };
 
     window.submitFinalOrder = function () {
+        if (window.dtIsPlacingOrder) {
+            console.warn('[Checkout Modal] Order placement already in progress.');
+            return;
+        }
+
         var cart = window.getCart();
+        if (!cart || cart.length === 0) {
+            if (typeof window.showToast === 'function') window.showToast('Your bag is empty.', 'error');
+            return;
+        }
+
+        window.dtIsPlacingOrder = true;
+
         var name = (document.getElementById('dtCoName') || {}).value;
         var phone = (document.getElementById('dtCoPhone') || {}).value;
         var email = (document.getElementById('dtCoEmail') || {}).value;
@@ -337,12 +349,18 @@
         var checkedMode = document.querySelector('input[name="dtPaymentMode"]:checked');
         if (checkedMode) mode = checkedMode.value;
 
+        if (!window.dtActiveOrderNumber) {
+            window.dtActiveOrderNumber = 'DT-ORD-' + Math.floor(100000 + Math.random() * 900000);
+        }
+
         var payload = {
+            order_number: window.dtActiveOrderNumber,
             customer_name: name,
             customer_phone: phone,
             customer_email: email,
             shipping_address: addr + ', ' + city + ', ' + state + ' - ' + pin,
             payment_method: mode,
+            gst_number: gst,
             items: cart
         };
 
@@ -356,10 +374,13 @@
         })
             .then(function (r) { return r.json(); })
             .then(function (res) {
+                window.dtIsPlacingOrder = false;
                 if (btn) { btn.disabled = false; btn.innerHTML = '<span>Place Order</span>'; }
                 if (res.success) {
+                    var orderNum = (res.order && res.order.order_number) ? res.order.order_number : (res.order_number || window.dtActiveOrderNumber);
                     var ordNum = document.getElementById('dtSuccessOrderNumber');
-                    if (ordNum) ordNum.textContent = res.order_number || ('DT-ORD-' + Math.floor(100000 + Math.random() * 900000));
+                    if (ordNum) ordNum.textContent = orderNum;
+                    window.dtActiveOrderNumber = null;
                     window.saveCart([]);
                     window.goToCheckoutStep(3);
                 } else {
@@ -367,10 +388,12 @@
                 }
             })
             .catch(function () {
+                window.dtIsPlacingOrder = false;
                 if (btn) { btn.disabled = false; btn.innerHTML = '<span>Place Order</span>'; }
                 // Graceful fallback
                 var ordNum = document.getElementById('dtSuccessOrderNumber');
-                if (ordNum) ordNum.textContent = 'DT-ORD-' + Math.floor(100000 + Math.random() * 900000);
+                if (ordNum) ordNum.textContent = window.dtActiveOrderNumber || ('DT-ORD-' + Math.floor(100000 + Math.random() * 900000));
+                window.dtActiveOrderNumber = null;
                 window.saveCart([]);
                 window.goToCheckoutStep(3);
             });
