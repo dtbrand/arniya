@@ -76,6 +76,18 @@ try {
         exit;
     }
 
+    if ($action === 'get_addresses') {
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to view saved addresses.']);
+            exit;
+        }
+        $addresses = Auth::getCustomerAddresses((int)$current['id']);
+        echo json_encode(['success' => true, 'addresses' => $addresses], JSON_PRETTY_PRINT);
+        exit;
+    }
+
     if ($action === 'save_address') {
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
@@ -86,6 +98,8 @@ try {
         $res = Auth::saveAddress((int)$current['id'], $data);
         if (!$res['success']) {
             http_response_code(400);
+        } else {
+            $res['addresses'] = Auth::getCustomerAddresses((int)$current['id']);
         }
         echo json_encode($res, JSON_PRETTY_PRINT);
         exit;

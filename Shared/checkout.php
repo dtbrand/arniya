@@ -7,9 +7,24 @@
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/PaymentManager.php';
+require_once __DIR__ . '/../src/Auth.php';
+require_once __DIR__ . '/../src/CustomerManager.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\PaymentManager;
+use DTBrand\Auth;
+use DTBrand\CustomerManager;
+
+Auth::initSession();
+$coCurrentUser = Auth::getCurrentUser();
+$coCustomerProfile = null;
+$coSavedAddresses = [];
+
+if ($coCurrentUser && !empty($coCurrentUser['id'])) {
+    $coCustomerId = (int)$coCurrentUser['id'];
+    $coCustomerProfile = CustomerManager::getById($coCustomerId);
+    $coSavedAddresses = Auth::getCustomerAddresses($coCustomerId);
+}
 
 $dbProductsForCheckout = ProductCatalog::getAll();
 $paymentGateways = PaymentManager::getPublicConfig();
@@ -17,6 +32,9 @@ $paymentGateways = PaymentManager::getPublicConfig();
 <script>
 window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
+window.DT_LOGGED_USER = <?php echo json_encode($coCurrentUser ?: null); ?>;
+window.DT_CUSTOMER_PROFILE = <?php echo json_encode($coCustomerProfile ?: null); ?>;
+window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
 </script>
 
 <!-- ════════════════════════════════════════════════════
@@ -355,6 +373,336 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
     background: transparent !important;
     box-shadow: none !important;
     padding: 0 10px !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   LOGGED-IN CUSTOMER & SAVED ADDRESS LUXURY STYLES
+═══════════════════════════════════════════════════ */
+
+/* Verified Logged-In Customer Banner */
+.co-auth-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
+    border: 1.5px solid rgba(138, 104, 31, 0.35);
+    border-radius: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.08);
+}
+.co-auth-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.co-auth-banner-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF3DE;
+    border: 1px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #8A681F;
+}
+.co-auth-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.co-auth-user-name {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.co-auth-user-meta {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.co-auth-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #FAF3DE 0%, #F5ECCE 100%);
+    border: 1px solid #D4AF37;
+    color: #705114;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+.co-auth-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #DCFCE7;
+    border: 1px solid #86EFAC;
+    color: #15803D;
+    font-size: 0.68rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* Pale Gold Mini Action Button */
+.co-btn-pale-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    font-family: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+.co-btn-pale-mini:hover {
+    background: #F5ECCE;
+    color: #5A4210;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.16);
+}
+
+/* Saved Addresses Section & Cards Grid */
+.co-saved-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.co-saved-label {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #1F2937;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.co-saved-addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+@media (max-width: 600px) {
+    .co-saved-addresses-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.co-address-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+.co-address-card:hover {
+    border-color: #D4AF37;
+    background: #FCFDFE;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.12);
+}
+.co-address-card.selected {
+    border-color: #8A681F !important;
+    background: linear-gradient(180deg, #FAF6EE 0%, #FFFFFF 100%) !important;
+    box-shadow: 0 0 0 2px #8A681F, 0 6px 18px rgba(138, 104, 31, 0.18) !important;
+}
+.co-address-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+.co-address-card-recipient {
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.2;
+}
+.co-address-radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.co-address-card.selected .co-address-radio {
+    border-color: #8A681F;
+    background: #8A681F;
+}
+.co-address-radio-inner {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.co-address-card.selected .co-address-radio-inner {
+    opacity: 1;
+}
+
+.co-address-badges {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.co-addr-badge {
+    font-size: 0.64rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+.co-addr-badge.default {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #BBF7D0;
+}
+.co-addr-badge.billing {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+}
+.co-addr-badge.warehouse {
+    background: #EFF6FF;
+    color: #1E40AF;
+    border: 1px solid #BFDBFE;
+}
+.co-addr-badge.shipping {
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+}
+
+.co-address-card-phone {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.co-address-card-body {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #334155;
+    line-height: 1.38;
+}
+.co-address-card-loc {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 2px;
+}
+.co-address-card-selected-bar {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(138, 104, 31, 0.3);
+    font-size: 0.70rem;
+    font-weight: 800;
+    color: #8A681F;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.co-address-card.selected .co-address-card-selected-bar {
+    display: flex;
+}
+
+/* Save Address Custom Checkbox */
+.co-save-address-row {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    padding: 10px 12px;
+    background: #FAF9F5;
+    border: 1px solid #E5E1D5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+.co-custom-checkbox-wrap {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+}
+.co-custom-checkbox-wrap input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.co-checkbox-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.8px solid #8A681F;
+    background: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.co-checkbox-box svg {
+    display: none;
+    stroke: #FFFFFF;
+}
+.co-custom-checkbox-wrap input[type="checkbox"]:checked ~ .co-checkbox-box {
+    background: #8A681F;
+    border-color: #8A681F;
+}
+.co-custom-checkbox-wrap input[type="checkbox"]:checked ~ .co-checkbox-box svg {
+    display: block;
+}
+.co-checkbox-text {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1F2937;
 }
 
 /* Payment Selector Cards */
@@ -719,6 +1067,10 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         <h3 class="co-sec-title">1. Customer Information</h3>
                     </div>
+
+                    <!-- Verified Logged-In Customer Banner -->
+                    <div id="coAuthUserBanner" class="co-auth-banner" style="display:none;"></div>
+
                     <div class="co-grid-2">
                         <div class="co-input-group">
                             <label class="co-label" for="coFullName">Full Name <span class="required">*</span></label>
@@ -740,10 +1092,26 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
 
                 <!-- 2. Shipping Address -->
                 <div class="co-section-card">
-                    <div class="co-sec-header">
-                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <h3 class="co-sec-title">2. Delivery Address</h3>
+                    <div class="co-sec-header" style="justify-content:space-between;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <h3 class="co-sec-title">2. Delivery Address</h3>
+                        </div>
+                        <button type="button" class="co-btn-pale-mini" id="coNewAddressBtn" style="display:none;" onclick="window.coUseNewAddress()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>+ New Address</span>
+                        </button>
                     </div>
+
+                    <!-- Saved Delivery Addresses Container -->
+                    <div id="coSavedAddressesSection" style="display:none; margin-bottom:12px;">
+                        <div class="co-saved-header-row">
+                            <span class="co-saved-label">Saved Delivery Destinations:</span>
+                            <span id="coSavedCountPill" class="co-addr-badge shipping" style="font-size:0.68rem;">0 Saved</span>
+                        </div>
+                        <div id="coSavedAddressesGrid" class="co-saved-addresses-grid"></div>
+                    </div>
+
                     <div class="co-input-group">
                         <label class="co-label" for="coAddress">Address / Building / Street <span class="required">*</span></label>
                         <input type="text" id="coAddress" class="co-input" placeholder="e.g. 402, Royal Residency, M.G. Road" required>
@@ -768,7 +1136,19 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
                             <input type="text" id="coLandmark" class="co-input" placeholder="Near Golden Temple">
                         </div>
                     </div>
-                    <div class="co-input-group">
+
+                    <!-- Save Address Checkbox Option -->
+                    <div id="coSaveAddressRow" class="co-save-address-row" style="display:none;">
+                        <label class="co-custom-checkbox-wrap">
+                            <input type="checkbox" id="coSaveAddressCheckbox" checked>
+                            <span class="co-checkbox-box">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            <span class="co-checkbox-text">Save this address to my account for future 1-click orders</span>
+                        </label>
+                    </div>
+
+                    <div class="co-input-group" style="margin-top:10px;">
                         <label class="co-label" for="coNote">Special Custom Stitching Instructions / Box Note</label>
                         <textarea id="coNote" class="co-textarea" placeholder="e.g. Blouse size 38 stitching, or luxury gift packing requested"></textarea>
                     </div>
@@ -1023,11 +1403,239 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         if (upiOverlay) upiOverlay.classList.remove('active');
 
         window.renderCheckoutItems();
+        syncCheckoutAuthUser();
         modal.removeAttribute('inert');
         modal.setAttribute('aria-hidden', 'false');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
+
+    /* ── Logged-in Customer Profile & Saved Address Book Controller ── */
+    function syncCheckoutAuthUser() {
+        var user = window.DT_LOGGED_USER;
+        var profile = window.DT_CUSTOMER_PROFILE;
+        var banner = document.getElementById('coAuthUserBanner');
+        var fullNameInput = document.getElementById('coFullName');
+        var whatsAppInput = document.getElementById('coWhatsApp');
+        var emailInput = document.getElementById('coEmail');
+
+        if (!user || !user.id) {
+            if (banner) banner.style.display = 'none';
+            var savedSec = document.getElementById('coSavedAddressesSection');
+            if (savedSec) savedSec.style.display = 'none';
+            var newBtn = document.getElementById('coNewAddressBtn');
+            if (newBtn) newBtn.style.display = 'none';
+            var saveRow = document.getElementById('coSaveAddressRow');
+            if (saveRow) saveRow.style.display = 'none';
+            return;
+        }
+
+        var displayName = user.name || (profile && profile.company_name) || 'Registered Member';
+        var phone = user.phone || (profile && profile.phone) || '';
+        var email = user.email || (profile && profile.email) || '';
+        var tier = (user.tier || (profile && profile.tier) || 'Standard').toUpperCase();
+        var userType = (user.type || (profile && profile.type) || 'B2B Partner').toUpperCase();
+
+        if (banner) {
+            banner.style.display = 'flex';
+            banner.innerHTML = `
+                <div class="co-auth-banner-left">
+                    <div class="co-auth-banner-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="co-auth-banner-text">
+                        <div class="co-auth-user-name">${escapeHtml(displayName)}</div>
+                        <div class="co-auth-user-meta">
+                            <span class="co-auth-tier-badge">${escapeHtml(userType)} • ${escapeHtml(tier)}</span>
+                            ${phone ? `<span>• +91 ${escapeHtml(phone)}</span>` : ''}
+                            ${email ? `<span>• ${escapeHtml(email)}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="co-auth-status-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M20 6L9 17l-5-5"></path>
+                    </svg>
+                    <span>Verified</span>
+                </div>
+            `;
+        }
+
+        if (fullNameInput && !fullNameInput.value.trim() && displayName) {
+            fullNameInput.value = displayName;
+        }
+        if (whatsAppInput && !whatsAppInput.value.trim() && phone) {
+            whatsAppInput.value = phone.replace(/\D/g, '').slice(-10);
+        }
+        if (emailInput && !emailInput.value.trim() && email) {
+            emailInput.value = email;
+        }
+
+        renderCustomerAddresses();
+    }
+
+    function renderCustomerAddresses() {
+        var addresses = window.DT_SAVED_ADDRESSES || [];
+        var savedSec = document.getElementById('coSavedAddressesSection');
+        var countPill = document.getElementById('coSavedCountPill');
+        var grid = document.getElementById('coSavedAddressesGrid');
+        var newBtn = document.getElementById('coNewAddressBtn');
+        var saveRow = document.getElementById('coSaveAddressRow');
+
+        if (!savedSec || !grid) return;
+
+        if (addresses.length === 0) {
+            savedSec.style.display = 'none';
+            if (newBtn) newBtn.style.display = 'none';
+            if (saveRow) saveRow.style.display = 'flex';
+            return;
+        }
+
+        savedSec.style.display = 'block';
+        if (newBtn) newBtn.style.display = 'inline-flex';
+        if (countPill) countPill.textContent = addresses.length + ' Saved';
+
+        var html = '';
+        addresses.forEach(function(addr, idx) {
+            var recName = addr.recipient_name || addr.company_name || addr.name || 'Delivery Hub';
+            var phone = addr.phone || addr.mobile || '';
+            var line1 = addr.address_line1 || addr.address || '';
+            var line2 = addr.address_line2 || '';
+            var fullLine = [line1, line2].filter(Boolean).join(', ');
+            var loc = `${addr.city || 'Surat'}, ${addr.state || 'Gujarat'} - ${addr.pincode || '395002'}`;
+            var type = (addr.address_type || 'shipping').toLowerCase();
+            var isDef = (Number(addr.is_default) === 1 || addr.is_default === true);
+
+            var typeBadgeClass = 'shipping';
+            var typeLabel = 'Shipping';
+            if (type === 'billing') { typeBadgeClass = 'billing'; typeLabel = 'Billing'; }
+            else if (type === 'warehouse') { typeBadgeClass = 'warehouse'; typeLabel = 'Godown'; }
+
+            html += `
+                <div class="co-address-card" data-idx="${idx}">
+                    <div class="co-address-card-top">
+                        <div class="co-address-card-recipient">
+                            <span class="co-address-radio"><span class="co-address-radio-inner"></span></span>
+                            <span>${escapeHtml(recName)}</span>
+                        </div>
+                        <div class="co-address-badges">
+                            ${isDef ? '<span class="co-addr-badge default">Default</span>' : ''}
+                            <span class="co-addr-badge ${typeBadgeClass}">${typeLabel}</span>
+                        </div>
+                    </div>
+                    ${phone ? `
+                        <div class="co-address-card-phone">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>+91 ${escapeHtml(phone)}</span>
+                        </div>
+                    ` : ''}
+                    <div class="co-address-card-body">${escapeHtml(fullLine)}</div>
+                    <div class="co-address-card-loc">${escapeHtml(loc)}</div>
+                    <div class="co-address-card-selected-bar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Selected for Delivery</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        grid.innerHTML = html;
+
+        grid.querySelectorAll('.co-address-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                var idx = parseInt(card.dataset.idx, 10);
+                selectAddressByIndex(idx);
+            });
+        });
+
+        var defaultIdx = addresses.findIndex(function(a) { return (Number(a.is_default) === 1 && (a.address_type || 'shipping') === 'shipping'); });
+        if (defaultIdx === -1) {
+            defaultIdx = addresses.findIndex(function(a) { return Number(a.is_default) === 1; });
+        }
+        if (defaultIdx === -1) defaultIdx = 0;
+
+        selectAddressByIndex(defaultIdx);
+    }
+
+    function selectAddressByIndex(idx) {
+        var addresses = window.DT_SAVED_ADDRESSES || [];
+        var addr = addresses[idx];
+        if (!addr) return;
+
+        var grid = document.getElementById('coSavedAddressesGrid');
+        if (grid) {
+            grid.querySelectorAll('.co-address-card').forEach(function(c, i) {
+                c.classList.toggle('selected', i === idx);
+            });
+        }
+
+        var addrInput = document.getElementById('coAddress');
+        var pinInput = document.getElementById('coPincode');
+        var cityInput = document.getElementById('coCity');
+        var stateInput = document.getElementById('coState');
+        var landmarkInput = document.getElementById('coLandmark');
+        var saveRow = document.getElementById('coSaveAddressRow');
+
+        var line1 = addr.address_line1 || addr.address || '';
+        var line2 = addr.address_line2 || '';
+        var fullLine = [line1, line2].filter(Boolean).join(', ');
+
+        if (addrInput) addrInput.value = fullLine;
+        if (pinInput) pinInput.value = addr.pincode || '';
+        if (cityInput) cityInput.value = addr.city || '';
+        if (stateInput) stateInput.value = addr.state || '';
+        if (landmarkInput) landmarkInput.value = addr.landmark || '';
+
+        if (addr.recipient_name && (!document.getElementById('coFullName').value.trim() || document.getElementById('coFullName').value === 'Guest')) {
+            document.getElementById('coFullName').value = addr.recipient_name;
+        }
+        if (addr.phone && !document.getElementById('coWhatsApp').value.trim()) {
+            document.getElementById('coWhatsApp').value = addr.phone.replace(/\D/g, '').slice(-10);
+        }
+
+        if (saveRow) saveRow.style.display = 'none';
+    }
+
+    window.coUseNewAddress = function() {
+        var grid = document.getElementById('coSavedAddressesGrid');
+        if (grid) {
+            grid.querySelectorAll('.co-address-card').forEach(function(c) {
+                c.classList.remove('selected');
+            });
+        }
+
+        var addrInput = document.getElementById('coAddress');
+        var pinInput = document.getElementById('coPincode');
+        var cityInput = document.getElementById('coCity');
+        var stateInput = document.getElementById('coState');
+        var landmarkInput = document.getElementById('coLandmark');
+        var saveRow = document.getElementById('coSaveAddressRow');
+        var saveCb = document.getElementById('coSaveAddressCheckbox');
+
+        if (addrInput) { addrInput.value = ''; addrInput.focus(); }
+        if (pinInput) pinInput.value = '';
+        if (cityInput) cityInput.value = '';
+        if (stateInput) stateInput.value = '';
+        if (landmarkInput) landmarkInput.value = '';
+
+        if (saveRow && window.DT_LOGGED_USER) {
+            saveRow.style.display = 'flex';
+            if (saveCb) saveCb.checked = true;
+        }
+    };
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
 
     window.openCheckoutModal = window.openCheckout;
 
@@ -1172,6 +1780,7 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         var pincode = document.getElementById('coPincode').value.trim();
         var city = document.getElementById('coCity').value.trim();
         var state = document.getElementById('coState').value.trim();
+        var landmark = document.getElementById('coLandmark') ? document.getElementById('coLandmark').value.trim() : '';
         var note = document.getElementById('coNote').value.trim();
 
         if (!fullName) { alert('Please enter your Full Name.'); document.getElementById('coFullName').focus(); return; }
@@ -1190,6 +1799,8 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         var randomNum = Math.floor(100000 + Math.random() * 900000);
         var orderNum = 'KLN-' + randomNum;
 
+        var fullAddr = [address, (landmark ? 'Near ' + landmark : ''), city, state, pincode].filter(Boolean).join(', ');
+
         var orderPayload = {
             order_number: orderNum,
             customer_name: fullName,
@@ -1197,10 +1808,11 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
             customer_email: email,
             gateway: activePaymentMethod,
             amount: grandTotal,
-            address: address,
+            address: fullAddr,
             city: city,
             state: state,
             pincode: pincode,
+            landmark: landmark,
             note: note,
             items: cart
         };
@@ -1209,13 +1821,39 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         placeBtn.disabled = true;
         placeBtn.innerHTML = '<span>Processing Order...</span>';
 
+        // Auto-save delivery address to customer profile if enabled
+        var saveRow = document.getElementById('coSaveAddressRow');
+        var saveCheckbox = document.getElementById('coSaveAddressCheckbox');
+        if (saveRow && saveRow.style.display !== 'none' && saveCheckbox && saveCheckbox.checked && window.DT_LOGGED_USER) {
+            fetch('/api/auth.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'save_address',
+                    is_new: 1,
+                    recipient_name: fullName,
+                    phone: whatsApp,
+                    address_line1: address,
+                    address_line2: landmark,
+                    city: city,
+                    state: state,
+                    pincode: pincode,
+                    address_type: 'shipping',
+                    is_default: (window.DT_SAVED_ADDRESSES && window.DT_SAVED_ADDRESSES.length === 0) ? 1 : 0
+                })
+            }).then(function(r) { return r.json(); }).then(function(res) {
+                if (res && res.addresses) {
+                    window.DT_SAVED_ADDRESSES = res.addresses;
+                }
+            }).catch(function() {});
+        }
+
         // 1. Save Base Order in MySQL
         var orderFormData = new URLSearchParams();
         orderFormData.append('action', 'create');
         orderFormData.append('customer_name', fullName);
         orderFormData.append('customer_phone', whatsApp);
         orderFormData.append('payment_method', activePaymentMethod);
-        var fullAddr = [address, city, state, pincode].filter(Boolean).join(', ');
         orderFormData.append('shipping_address', fullAddr);
         orderFormData.append('shipping_city', city);
         orderFormData.append('shipping_state', state);
@@ -1462,6 +2100,8 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
 
     /* Event Listeners */
     document.addEventListener('DOMContentLoaded', function() {
+        syncCheckoutAuthUser();
+
         var closeBtn = document.getElementById('closeCheckoutBtn');
         if (closeBtn) closeBtn.addEventListener('click', window.closeCheckout);
 
