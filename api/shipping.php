@@ -152,7 +152,187 @@ try {
         exit;
     }
 
-    // ── 3. TRACK AWB SHIPMENT ──
+    // ── 3. GET SHIPPING RATE MATRIX ──
+    if ($action === 'get_rates') {
+        $defaultSlabs = [
+            [
+                'zone_code' => 'zone_a',
+                'zone_name' => 'Zone A — Gujarat & Surat Local',
+                'coverage' => 'Surat, Ahmedabad, Vadodara, Rajkot',
+                'base_rate' => 40.00,
+                'per_unit_rate' => 20.00,
+                'free_threshold' => 999.00,
+                'sla' => '24–48 Hours'
+            ],
+            [
+                'zone_code' => 'zone_b',
+                'zone_name' => 'Zone B — Tier-1 Metro Cities',
+                'coverage' => 'Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Kolkata',
+                'base_rate' => 60.00,
+                'per_unit_rate' => 30.00,
+                'free_threshold' => 1499.00,
+                'sla' => '2–3 Days'
+            ],
+            [
+                'zone_code' => 'zone_c',
+                'zone_name' => 'Zone C — Rest of India (Air / Surface)',
+                'coverage' => 'All Tier-2 & Tier-3 Cities & Towns',
+                'base_rate' => 80.00,
+                'per_unit_rate' => 40.00,
+                'free_threshold' => 1999.00,
+                'sla' => '3–5 Days'
+            ],
+            [
+                'zone_code' => 'zone_d',
+                'zone_name' => 'Zone D — Special Regions (NE & J&K)',
+                'coverage' => 'Assam, Meghalaya, Manipur, Jammu & Kashmir, Ladakh',
+                'base_rate' => 120.00,
+                'per_unit_rate' => 60.00,
+                'free_threshold' => 2999.00,
+                'sla' => '5–7 Days'
+            ],
+            [
+                'zone_code' => 'wholesale_b2b',
+                'zone_name' => 'Wholesale Master B2B Bales (>20 kg)',
+                'coverage' => 'Heavy surface transport via TCI Freight / V-Trans',
+                'base_rate' => 18.00,
+                'per_unit_rate' => 18.00,
+                'free_threshold' => 25000.00,
+                'sla' => '3–6 Days Regional'
+            ]
+        ];
+
+        $pdo = Database::getConnection();
+        $slabs = $defaultSlabs;
+
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `shipping_zone_rates` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `zone_code` VARCHAR(50) NOT NULL UNIQUE,
+                    `zone_name` VARCHAR(150) NOT NULL,
+                    `coverage` VARCHAR(255) NULL,
+                    `base_rate` DECIMAL(10,2) NOT NULL DEFAULT 40.00,
+                    `per_unit_rate` DECIMAL(10,2) NOT NULL DEFAULT 20.00,
+                    `free_threshold` DECIMAL(10,2) NOT NULL DEFAULT 999.00,
+                    `sla` VARCHAR(100) NOT NULL DEFAULT '24–48 Hours',
+                    `is_active` TINYINT(1) DEFAULT 1,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+                $count = (int)$pdo->query("SELECT COUNT(*) FROM `shipping_zone_rates`")->fetchColumn();
+                if ($count === 0) {
+                    $ins = $pdo->prepare("INSERT INTO `shipping_zone_rates` (zone_code, zone_name, coverage, base_rate, per_unit_rate, free_threshold, sla) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    foreach ($defaultSlabs as $d) {
+                        $ins->execute([$d['zone_code'], $d['zone_name'], $d['coverage'], $d['base_rate'], $d['per_unit_rate'], $d['free_threshold'], $d['sla']]);
+                    }
+                }
+
+                $rows = $pdo->query("SELECT * FROM `shipping_zone_rates` ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
+                if (!empty($rows)) {
+                    $slabs = array_map(function($r) {
+                        return [
+                            'id' => (int)$r['id'],
+                            'zone_code' => $r['zone_code'],
+                            'zone_name' => $r['zone_name'],
+                            'coverage' => $r['coverage'] ?? '',
+                            'base_rate' => (float)$r['base_rate'],
+                            'per_unit_rate' => (float)$r['per_unit_rate'],
+                            'free_threshold' => (float)$r['free_threshold'],
+                            'sla' => $r['sla'] ?? '2–4 Days'
+                        ];
+                    }, $rows);
+                }
+            } catch (\Throwable $e) {
+                // Return default slabs
+            }
+        }
+
+        echo json_encode([
+            'success' => true,
+            'rates' => $slabs
+        ], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    // ── 4. UPDATE SHIPPING RATE MATRIX (ADMIN ONLY) ──
+    if ($action === 'update_rates') {
+        require_once __DIR__ . '/_guard.php';
+        dt_api_require_admin('update shipping rates');
+
+        $ratesInput = $data['rates'] ?? [];
+        if (is_string($ratesInput)) {
+            $ratesInput = json_decode($ratesInput, true) ?: [];
+        }
+
+        if (!is_array($ratesInput) || empty($ratesInput)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Valid rates array required.']);
+            exit;
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `shipping_zone_rates` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `zone_code` VARCHAR(50) NOT NULL UNIQUE,
+                    `zone_name` VARCHAR(150) NOT NULL,
+                    `coverage` VARCHAR(255) NULL,
+                    `base_rate` DECIMAL(10,2) NOT NULL DEFAULT 40.00,
+                    `per_unit_rate` DECIMAL(10,2) NOT NULL DEFAULT 20.00,
+                    `free_threshold` DECIMAL(10,2) NOT NULL DEFAULT 999.00,
+                    `sla` VARCHAR(100) NOT NULL DEFAULT '24–48 Hours',
+                    `is_active` TINYINT(1) DEFAULT 1,
+                    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+                $upsert = $pdo->prepare("
+                    INSERT INTO `shipping_zone_rates` (zone_code, zone_name, coverage, base_rate, per_unit_rate, free_threshold, sla)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE
+                        zone_name = VALUES(zone_name),
+                        coverage = VALUES(coverage),
+                        base_rate = VALUES(base_rate),
+                        per_unit_rate = VALUES(per_unit_rate),
+                        free_threshold = VALUES(free_threshold),
+                        sla = VALUES(sla),
+                        updated_at = NOW()
+                ");
+
+                foreach ($ratesInput as $r) {
+                    $code = trim((string)($r['zone_code'] ?? ''));
+                    if (empty($code)) continue;
+                    $name = trim((string)($r['zone_name'] ?? $code));
+                    $coverage = trim((string)($r['coverage'] ?? ''));
+                    $base = (float)($r['base_rate'] ?? 0);
+                    $perUnit = (float)($r['per_unit_rate'] ?? 0);
+                    $free = (float)($r['free_threshold'] ?? 0);
+                    $sla = trim((string)($r['sla'] ?? '2–4 Days'));
+
+                    $upsert->execute([$code, $name, $coverage, $base, $perUnit, $free, $sla]);
+                }
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Shipping freight rate slabs saved to database successfully.'
+                ]);
+                exit;
+            } catch (\Throwable $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'error' => 'Database error: ' . $e->getMessage()]);
+                exit;
+            }
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Shipping freight rates validated and saved.'
+        ]);
+        exit;
+    }
+
+    // ── 5. TRACK AWB SHIPMENT ──
     if ($action === 'track') {
         $awb = trim((string)($data['awb'] ?? ($_GET['awb'] ?? '')));
         if (empty($awb)) {

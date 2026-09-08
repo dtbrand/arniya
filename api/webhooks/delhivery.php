@@ -9,8 +9,10 @@ if (!headers_sent()) {
 }
 
 require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
 
 use DTBrand\Database;
+use DTBrand\OrderManager;
 
 $rawPayload = file_get_contents('php://input');
 $eventData = json_decode($rawPayload, true) ?: [];
@@ -34,14 +36,20 @@ if ($pdo !== null && !empty($rawPayload)) {
             if (strpos($status, 'delivered') !== false) {
                 $newOrderStatus = 'delivered';
             } elseif (strpos($status, 'out for delivery') !== false) {
-                $newOrderStatus = 'shipped';
+                $newOrderStatus = 'out_for_delivery';
             } elseif (strpos($status, 'in transit') !== false || strpos($status, 'dispatched') !== false) {
-                $newOrderStatus = 'shipped';
+                $newOrderStatus = 'dispatched';
             }
 
             if ($newOrderStatus) {
-                $updStmt = $pdo->prepare("UPDATE orders SET fulfillment_status = ?, updated_at = NOW() WHERE awb_number = ?");
-                $updStmt->execute([$newOrderStatus, $awb]);
+                // Update via OrderManager for history & dual schema columns
+                OrderManager::updateStatus($awb, $newOrderStatus, $awb, 'Delhivery Express', 'Delhivery Webhook');
+
+                // Resilient direct fallback
+                try {
+                    $updStmt = $pdo->prepare("UPDATE orders SET fulfillment_status = ?, updated_at = NOW() WHERE awb_number = ? OR tracking_number = ?");
+                    $updStmt->execute([$newOrderStatus, $awb, $awb]);
+                } catch (\Throwable $uex) {}
             }
         }
 

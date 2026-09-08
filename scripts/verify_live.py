@@ -18,6 +18,13 @@ urls = [
     ('https://harmitethnic.com/api/reseller.php?action=get_orders', 200, 'json'),
     ('https://harmitethnic.com/admin/login.php', 200, 'html'),
     ('https://harmitethnic.com/admin/orders/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/shipping/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/shipping/tracking.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/shipping/rates.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/shipping/methods.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/payments/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/payments/pending.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/api/shipping.php?action=get_rates', 200, 'json'),
     ('https://jaihanumantex.in/wholesale.php', 200, 'html'),
     ('https://jaihanumantex.in/retailer.php', 200, 'html'),
     ('https://jaihanumantex.in/reseller.php', 200, 'html'),
@@ -29,6 +36,13 @@ urls = [
     ('https://jaihanumantex.in/api/reseller.php?action=get_orders', 200, 'json'),
     ('https://jaihanumantex.in/admin/login.php', 200, 'html'),
     ('https://jaihanumantex.in/admin/orders/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/shipping/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/shipping/tracking.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/shipping/rates.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/shipping/methods.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/payments/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/payments/pending.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/api/shipping.php?action=get_rates', 200, 'json'),
 ]
 
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')

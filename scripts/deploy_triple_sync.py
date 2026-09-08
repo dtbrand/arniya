@@ -46,6 +46,16 @@ FILES_TO_DEPLOY = [
     'api/brands.php',
     'admin/products/index.php',
     'admin/products/brands/index.php',
+    'admin/shipping/index.php',
+    'admin/shipping/methods.php',
+    'admin/shipping/rates.php',
+    'admin/shipping/tracking.php',
+    'api/shipping.php',
+    'api/webhooks/delhivery.php',
+    'admin/payments/index.php',
+    'admin/payments/pending.php',
+    'admin/payments/refunds.php',
+    'admin/payments/successful.php',
 ]
 
 SERVERS = [

@@ -28,6 +28,8 @@ if ($pdo !== null && !Database::isMockMode()) {
         $refundsList = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (\Throwable $e) {}
 }
+
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +89,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                                         <td>#<?= $r['id'] ?></td>
                                         <td><strong><?= htmlspecialchars($r['order_number']) ?></strong></td>
                                         <td><?= htmlspecialchars($r['customer_name'] ?? 'Customer') ?></td>
-                                        <td><strong style="color:#DC2626;">₹<?= number_format((float)$r['amount'], 2) ?></strong></td>
+                                        <td><strong style="color:#DC2626;"><?= $rupeeSvg ?> <?= number_format((float)$r['amount'], 2) ?></strong></td>
                                         <td><code><?= htmlspecialchars($r['gateway_payment_id'] ?: 'RF_DIRECT') ?></code></td>
                                         <td style="font-size:0.75rem; color:#64748B;"><?= date('d M Y', strtotime($r['created_at'])) ?></td>
                                         <td><span class="adm-badge danger">Refunded</span></td>

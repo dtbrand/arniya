@@ -53,6 +53,8 @@ if ($pdo !== null && !Database::isMockMode()) {
         $pendingTransactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (\Throwable $e) {}
 }
+
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,7 +133,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                                                 <?= strtoupper(htmlspecialchars($tx['gateway'])) ?>
                                             </span>
                                         </td>
-                                        <td><strong style="color:#8A681F;">₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
+                                        <td><strong style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format((float)$tx['amount'], 2) ?></strong></td>
                                         <td>
                                             <?php if (!empty($tx['utr_reference'])): ?>
                                                 <code style="background:#FAF5E8; padding:3px 8px; border-radius:4px; font-weight:800; color:#8A681F;"><?= htmlspecialchars($tx['utr_reference']) ?></code>

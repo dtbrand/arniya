@@ -984,15 +984,19 @@ class OrderManager
             try {
                 // 1. Get current order state
                 $currentOrder = null;
-                if (is_numeric($orderIdentifier)) {
-                    $cStmt = $db->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
-                    $cStmt->execute([(int)$orderIdentifier, (string)$orderIdentifier]);
-                    $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
-                } else {
-                    $cStmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
-                    $cStmt->execute([(string)$orderIdentifier]);
-                    $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
+                $whereClauses = ["id = ?", "order_number = ?"];
+                $whereParams = [is_numeric($orderIdentifier) ? (int)$orderIdentifier : 0, (string)$orderIdentifier];
+                if (self::ordersHasColumn($db, 'tracking_number')) {
+                    $whereClauses[] = "tracking_number = ?";
+                    $whereParams[] = (string)$orderIdentifier;
                 }
+                if (self::ordersHasColumn($db, 'awb_number')) {
+                    $whereClauses[] = "awb_number = ?";
+                    $whereParams[] = (string)$orderIdentifier;
+                }
+                $cStmt = $db->prepare("SELECT * FROM orders WHERE " . implode(' OR ', $whereClauses) . " LIMIT 1");
+                $cStmt->execute($whereParams);
+                $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
 
                 if (!$currentOrder) {
                     return false;
@@ -1022,8 +1026,16 @@ class OrderManager
                     $setCols[] = "tracking_number = COALESCE(?, tracking_number)";
                     $params[] = $trackingNumber;
                 }
+                if (self::ordersHasColumn($db, 'awb_number')) {
+                    $setCols[] = "awb_number = COALESCE(?, awb_number)";
+                    $params[] = $trackingNumber;
+                }
                 if (self::ordersHasColumn($db, 'courier_name')) {
                     $setCols[] = "courier_name = COALESCE(?, courier_name)";
+                    $params[] = $courier;
+                }
+                if (self::ordersHasColumn($db, 'courier_partner')) {
+                    $setCols[] = "courier_partner = COALESCE(?, courier_partner)";
                     $params[] = $courier;
                 }
                 if (self::ordersHasColumn($db, 'updated_at')) {
@@ -1111,15 +1123,19 @@ class OrderManager
         if ($db !== null && !Database::isMockMode()) {
             try {
                 $order = null;
-                if (is_numeric($orderIdentifier)) {
-                    $stmt = $db->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
-                    $stmt->execute([(int)$orderIdentifier, (string)$orderIdentifier]);
-                    $order = $stmt->fetch(\PDO::FETCH_ASSOC);
-                } else {
-                    $stmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
-                    $stmt->execute([(string)$orderIdentifier]);
-                    $order = $stmt->fetch(\PDO::FETCH_ASSOC);
+                $whereClauses = ["id = ?", "order_number = ?"];
+                $whereParams = [is_numeric($orderIdentifier) ? (int)$orderIdentifier : 0, (string)$orderIdentifier];
+                if (self::ordersHasColumn($db, 'tracking_number')) {
+                    $whereClauses[] = "tracking_number = ?";
+                    $whereParams[] = (string)$orderIdentifier;
                 }
+                if (self::ordersHasColumn($db, 'awb_number')) {
+                    $whereClauses[] = "awb_number = ?";
+                    $whereParams[] = (string)$orderIdentifier;
+                }
+                $stmt = $db->prepare("SELECT * FROM orders WHERE " . implode(' OR ', $whereClauses) . " LIMIT 1");
+                $stmt->execute($whereParams);
+                $order = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($order) {
                     $orderId = (int)$order['id'];
@@ -1138,9 +1154,9 @@ class OrderManager
                     unset($it);
                     $order['items'] = $items;
 
-                    $order['status'] = $order['fulfillment_status'] ?? ($order['order_status'] ?? 'processing');
-                    $order['courier'] = $order['courier_name'] ?? 'Delhivery Logistics';
-                    $order['awb'] = $order['tracking_number'] ?? '';
+                    $order['status'] = $order['fulfillment_status'] ?? ($order['order_status'] ?? ($order['status'] ?? 'processing'));
+                    $order['courier'] = $order['courier_name'] ?? ($order['courier_partner'] ?? 'Delhivery Logistics');
+                    $order['awb'] = $order['tracking_number'] ?? ($order['awb_number'] ?? '');
                     $order['total'] = (float)($order['total_amount'] ?? 0);
                     $order['subtotal'] = (float)($order['subtotal'] ?? 0);
                     $order['discount'] = (float)($order['discount'] ?? 0);

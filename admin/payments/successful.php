@@ -32,6 +32,8 @@ if ($pdo !== null && !Database::isMockMode()) {
         }
     } catch (\Throwable $e) {}
 }
+
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +56,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
                         <span>Settled Payments Ledger</span>
-                        <span class="adm-badge success">₹<?= number_format($totalSettledAmount, 2) ?> Verified</span>
+                        <span class="adm-badge success"><?= $rupeeSvg ?> <?= number_format($totalSettledAmount, 2) ?> Verified</span>
                     </h1>
                     <p class="adm-page-subtitle">All 100% captured and verified transactions across Instant UPI, Cards, NetBanking, and COD.</p>
                 </div>
@@ -97,7 +99,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                                                 <?= strtoupper(htmlspecialchars($tx['gateway'])) ?>
                                             </span>
                                         </td>
-                                        <td><strong style="color:#15803D;">₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
+                                        <td><strong style="color:#15803D;"><?= $rupeeSvg ?> <?= number_format((float)$tx['amount'], 2) ?></strong></td>
                                         <td>
                                             <code style="font-size:0.75rem; color:#475569;"><?= htmlspecialchars($tx['utr_reference'] ?: ($tx['gateway_payment_id'] ?: 'CAPTURED_AUTO')) ?></code>
                                         </td>

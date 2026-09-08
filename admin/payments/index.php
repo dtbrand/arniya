@@ -78,6 +78,8 @@ if ($pdo !== null && !Database::isMockMode()) {
         error_log("Admin Payments index query error: " . $e->getMessage());
     }
 }
+
+$rupeeSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,7 +182,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹<?= number_format($totalCollections, 2) ?></div>
+                    <div class="adm-kpi-val"><?= $rupeeSvg ?> <?= number_format($totalCollections, 2) ?></div>
                     <div class="adm-kpi-bottom">
                         <span class="adm-kpi-delta up">Live Database Collections</span>
                     </div>
@@ -193,7 +195,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹<?= number_format($upiCollections, 2) ?></div>
+                    <div class="adm-kpi-val"><?= $rupeeSvg ?> <?= number_format($upiCollections, 2) ?></div>
                     <div class="adm-kpi-bottom">
                         <span class="adm-kpi-delta up">Direct 0% Fee UPI Transfers</span>
                     </div>
@@ -206,7 +208,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹<?= number_format($cardCollections, 2) ?></div>
+                    <div class="adm-kpi-val"><?= $rupeeSvg ?> <?= number_format($cardCollections, 2) ?></div>
                     <div class="adm-kpi-bottom">
                         <span class="adm-kpi-delta up">Razorpay &amp; Cashfree</span>
                     </div>
@@ -296,7 +298,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                                                 <?= strtoupper(htmlspecialchars($tx['gateway'])) ?>
                                             </span>
                                         </td>
-                                        <td><strong>₹<?= number_format((float)$tx['amount'], 2) ?></strong></td>
+                                        <td><strong><?= $rupeeSvg ?> <?= number_format((float)$tx['amount'], 2) ?></strong></td>
                                         <td>
                                             <?php 
                                              $statusBadge = 'gray';
