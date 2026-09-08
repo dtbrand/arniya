@@ -678,9 +678,9 @@ class OrderManager
     }
 
     /**
-     * Get orders by customer phone number
+     * Get orders by customer ID or customer phone number
      */
-    public static function getByPhone(string $phone): array
+    public static function getByCustomerOrPhone(int $customerId, string $phone): array
     {
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
@@ -689,12 +689,13 @@ class OrderManager
                 if (strlen($digits) > 10) {
                     $digits = substr($digits, -10);
                 }
-                if ($digits === '') {
-                    return [];
-                }
+                $phoneParam = !empty($digits) ? ('%' . $digits) : '---NO-PHONE---';
 
                 $stmt = $db->prepare("
                     SELECT o.*,
+                           COALESCE(o.fulfillment_status, o.order_status, 'processing') as status,
+                           COALESCE(o.courier_name, 'Delhivery Logistics') as courier,
+                           COALESCE(o.tracking_number, '') as awb,
                            CASE 
                                WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name 
                                WHEN c.name IS NOT NULL AND c.name != '' THEN c.name 
@@ -708,43 +709,57 @@ class OrderManager
                            (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as items_count
                     FROM orders o
                     LEFT JOIN customers c ON o.customer_id = c.id
-                    WHERE REPLACE(REPLACE(REPLACE(REPLACE(o.customer_phone, ' ', ''), '-', ''), '+91', ''), '+', '') LIKE ?
+                    WHERE (? > 0 AND o.customer_id = ?)
+                       OR REPLACE(REPLACE(REPLACE(REPLACE(o.customer_phone, ' ', ''), '-', ''), '+91', ''), '+', '') LIKE ?
                        OR o.customer_phone LIKE ?
-                    ORDER BY o.id DESC
+                    ORDER BY o.id DESC LIMIT 100
                 ");
-                $stmt->execute(['%' . $digits, '%' . $digits]);
-                $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                $stmt->execute([$customerId, $customerId, $phoneParam, $phoneParam]);
+                $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
 
                 // Fetch line items for each order
                 foreach ($orders as &$ord) {
-                    $iStmt = $db->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER BY id ASC");
-                    $iStmt->execute([(int)$ord['id']]);
+                    $orderId = (int)$ord['id'];
+                    $iStmt = $db->prepare("SELECT oi.*, p.primary_image FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ? ORDER BY oi.id ASC");
+                    $iStmt->execute([$orderId]);
                     $items = $iStmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
 
-                    // Link images if available
                     foreach ($items as &$it) {
-                        $pid = (int)($it['product_id'] ?? 0);
-                        if ($pid > 0) {
-                            try {
-                                $pStmt = $db->prepare("SELECT primary_image FROM products WHERE id = ? LIMIT 1");
-                                $pStmt->execute([$pid]);
-                                $it['img'] = $pStmt->fetchColumn() ?: '/assets/images/product1.png';
-                            } catch (\Throwable $pe) {
-                                $it['img'] = '/assets/images/product1.png';
-                            }
-                        } else {
-                            $it['img'] = '/assets/images/product1.png';
-                        }
+                        $it['img'] = !empty($it['primary_image']) ? $it['primary_image'] : '/assets/images/placeholder-product.svg';
                     }
+                    unset($it);
+
                     $ord['items'] = $items;
+                    $firstItem = $items[0] ?? [];
+                    $itemCount = count($items) > 0 ? count($items) : (int)($ord['items_count'] ?? 1);
+                    $ord['productName'] = !empty($firstItem['product_title'])
+                        ? ($firstItem['product_title'] . ($itemCount > 1 ? " (+".($itemCount-1)." more)" : ""))
+                        : ('Order #' . ($ord['order_number'] ?? $orderId));
+                    $ord['sku'] = (string)($firstItem['sku'] ?? ('SKU-' . $orderId));
+                    $ord['image'] = (string)($firstItem['img'] ?? '/assets/images/placeholder-product.svg');
+                    $ord['color'] = (string)($firstItem['variant_color'] ?? 'Standard');
+                    $ord['qty'] = $itemCount;
+                    $ord['total'] = (float)($ord['total_amount'] ?? 0);
+                    $ord['payment'] = (string)($ord['payment_method'] ?? 'Bank Transfer');
+                    $ord['date'] = date('d M Y, h:i A', strtotime($ord['created_at'] ?? 'now'));
                 }
+                unset($ord);
+
                 return $orders;
             } catch (\Exception $e) {
-                error_log("OrderManager::getByPhone error: " . $e->getMessage());
+                error_log("OrderManager::getByCustomerOrPhone error: " . $e->getMessage());
                 return [];
             }
         }
         return [];
+    }
+
+    /**
+     * Get orders by customer phone number
+     */
+    public static function getByPhone(string $phone): array
+    {
+        return self::getByCustomerOrPhone(0, $phone);
     }
 
     /**
@@ -869,20 +884,22 @@ class OrderManager
                     $stmt = $db->prepare("
                         UPDATE orders 
                         SET fulfillment_status = ?,
+                            order_status = ?,
                             tracking_number = COALESCE(?, tracking_number),
                             courier_name = COALESCE(?, courier_name)
                         WHERE id = ? OR order_number = ?
                     ");
-                    $res = $stmt->execute([$status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
+                    $res = $stmt->execute([$status, $status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
                 } else {
                     $stmt = $db->prepare("
                         UPDATE orders 
                         SET fulfillment_status = ?,
+                            order_status = ?,
                             tracking_number = COALESCE(?, tracking_number),
                             courier_name = COALESCE(?, courier_name)
                         WHERE order_number = ?
                     ");
-                    $res = $stmt->execute([$status, $trackingNumber, $courier, (string)$orderIdentifier]);
+                    $res = $stmt->execute([$status, $status, $trackingNumber, $courier, (string)$orderIdentifier]);
                 }
 
                 // 2. Log in order_status_history
@@ -901,6 +918,7 @@ class OrderManager
 
                 return $res;
             } catch (\Exception $e) {
+                error_log("OrderManager::updateStatus error: " . $e->getMessage());
                 return false;
             }
         }
@@ -928,24 +946,45 @@ class OrderManager
 
                 if ($order) {
                     $orderId = (int)$order['id'];
-                    $itemsStmt = $db->prepare("SELECT * FROM order_items WHERE order_id = ?");
+                    $itemsStmt = $db->prepare("
+                        SELECT oi.*, p.primary_image 
+                        FROM order_items oi 
+                        LEFT JOIN products p ON oi.product_id = p.id 
+                        WHERE oi.order_id = ? 
+                        ORDER BY oi.id ASC
+                    ");
                     $itemsStmt->execute([$orderId]);
-                    $order['items'] = $itemsStmt->fetchAll(\PDO::FETCH_ASSOC);
+                    $items = $itemsStmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+                    foreach ($items as &$it) {
+                        $it['img'] = !empty($it['primary_image']) ? $it['primary_image'] : '/assets/images/placeholder-product.svg';
+                    }
+                    unset($it);
+                    $order['items'] = $items;
 
-                    // Status history is optional — the live schema has no order_status_history
-                    // table, so a missing table must not blank out an otherwise-valid order.
+                    $order['status'] = $order['fulfillment_status'] ?? ($order['order_status'] ?? 'processing');
+                    $order['courier'] = $order['courier_name'] ?? 'Delhivery Logistics';
+                    $order['awb'] = $order['tracking_number'] ?? '';
+                    $order['total'] = (float)($order['total_amount'] ?? 0);
+                    $order['subtotal'] = (float)($order['subtotal'] ?? 0);
+                    $order['discount'] = (float)($order['discount'] ?? 0);
+                    $order['tax'] = (float)($order['gst_amount'] ?? 0);
+                    $order['payment'] = (string)($order['payment_method'] ?? 'Bank Transfer');
+                    $order['date'] = date('d M Y, h:i A', strtotime($order['created_at'] ?? 'now'));
+
+                    // Status history
                     $order['history'] = [];
                     try {
                         $histStmt = $db->prepare("SELECT * FROM order_status_history WHERE order_id = ? ORDER BY id ASC");
                         $histStmt->execute([$orderId]);
-                        $order['history'] = $histStmt->fetchAll(\PDO::FETCH_ASSOC);
+                        $order['history'] = $histStmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
                     } catch (\Exception $he) {
-                        // No history table in this deployment — leave as an empty timeline.
+                        $order['history'] = [];
                     }
 
                     return $order;
                 }
             } catch (\Exception $e) {
+                error_log("OrderManager::getOrderDetails error: " . $e->getMessage());
                 return null;
             }
         }

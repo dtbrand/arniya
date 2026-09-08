@@ -1725,53 +1725,110 @@
 
             if (!modal || !body) return;
 
-            if (title) title.textContent = `Order Details #${o.id}`;
+            var orderId = o.order_number || o.id || 'N/A';
+            if (title) title.textContent = `Order Details #${orderId}`;
+
+            var itemsHtml = '';
+            if (o.items && Array.isArray(o.items) && o.items.length > 0) {
+                itemsHtml = o.items.map(function(item) {
+                    var itImg = item.primary_image || item.image || '/assets/images/placeholder-product.svg';
+                    var itName = item.product_name || item.name || 'Handloom Silk Textile';
+                    var itSku = item.sku || ('SKU-' + (item.product_id || ''));
+                    var itQty = Number(item.quantity || item.qty || 1);
+                    var itPrice = Number(item.price || item.unit_price || 0);
+                    var itTotal = Number(item.total || (itPrice * itQty));
+                    var itVariant = [item.color, item.size].filter(Boolean).join(' / ') || 'Silk Assorted';
+
+                    return `
+                    <div style="display:flex; gap:12px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:12px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+                        <img src="${itImg}" alt="${itName}" style="width:64px; height:80px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
+                        <div style="flex:1; min-width:0;">
+                            <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${itName}</h4>
+                            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+                                <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">SKU: ${itSku}</span>
+                                <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">${itVariant}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="font-size:0.86rem; font-weight:800; color:var(--ws-gold-primary);">
+                                    ${itQty} Pcs <span style="font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);">(@ ₹${itPrice.toLocaleString('en-IN')})</span>
+                                </div>
+                                <div style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main);">
+                                    ₹${itTotal.toLocaleString('en-IN')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+            } else {
+                itemsHtml = `
+                <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+                    <img src="${o.image || '/assets/images/placeholder-product.svg'}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
+                    <div style="flex:1; min-width:0;">
+                        <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">SKU: ${o.sku || 'LOT-WS'}</span>
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">HSN: ${o.hsn || '5407'}</span>
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">${o.color || 'Silk Assorted'}</span>
+                        </div>
+                        <div style="font-size:0.88rem; font-weight:800; color:var(--ws-gold-primary);">
+                            ${o.qty || 1} Pcs Lot <span style="font-size:0.76rem; font-weight:600; color:var(--ws-text-muted);">(@ ₹${Number(o.unitPrice || o.total || 0).toLocaleString('en-IN')} / Pc)</span>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            var fullAddress = [o.shipping_address || o.address, o.shipping_city || o.city, o.shipping_state || o.state, o.shipping_pincode || o.pincode].filter(Boolean).join(', ');
+            var addressBlock = fullAddress ? `
+                <div style="background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:0.8rem;">
+                    <div style="color:var(--ws-text-muted); font-size:0.70rem; text-transform:uppercase; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:5px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Delivery Destination
+                    </div>
+                    <div style="font-weight:600; color:var(--ws-text-main); line-height:1.4;">${fullAddress}</div>
+                </div>` : '';
+
+            var orderStatus = o.status || o.fulfillment_status || 'Processing';
+            var courierName = o.courier || 'DT Express Logistics';
+            var awbNo = o.awb || o.tracking_number || '';
+            var courierDisplay = awbNo ? `${courierName} (AWB: ${awbNo})` : courierName;
+            var paymentMode = o.payment || o.payment_method || (o.payment_status ? (o.payment_status.toUpperCase() + ' Online') : 'Verified Prepaid');
+
             body.innerHTML = `
                 <!-- Consignment Status Banner -->
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
                     <div>
                         <div style="font-size:0.72rem; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; color:var(--ws-text-muted);">Consignment Placed</div>
-                        <div style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin-top:2px;">${o.date}</div>
+                        <div style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin-top:2px;">${o.date || o.created_at || 'Recently Placed'}</div>
                     </div>
                     <div style="text-align:right;">
                         <div style="font-size:0.72rem; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; color:var(--ws-text-muted); margin-bottom:3px;">Consignment Status</div>
-                        <span class="ws-status-badge ${o.status.toLowerCase()}" style="font-size:0.75rem; padding:4px 10px;">${o.status}</span>
+                        <span class="ws-status-badge ${orderStatus.toLowerCase().replace(/[^a-z0-9]/g, '-')}" style="font-size:0.75rem; padding:4px 10px;">${orderStatus}</span>
                     </div>
                 </div>
 
-                <!-- Product Details Box -->
-                <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
-                    <div style="flex:1; min-width:0;">
-                        <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
-                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">SKU: ${o.sku}</span>
-                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">HSN: ${o.hsn}</span>
-                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">${o.color || 'Silk Assorted'}</span>
-                        </div>
-                        <div style="font-size:0.88rem; font-weight:800; color:var(--ws-gold-primary);">
-                            ${o.qty} Pcs Lot <span style="font-size:0.76rem; font-weight:600; color:var(--ws-text-muted);">(@ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc)</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Product Items List -->
+                ${itemsHtml}
+
+                <!-- Delivery Address -->
+                ${addressBlock}
 
                 <!-- Price & Tax Breakdown Card -->
                 <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:10px; padding:14px 16px; margin-bottom:14px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
                         <span style="color:var(--ws-text-sub); font-weight:600;">Taxable Consignment Value</span>
-                        <span style="color:var(--ws-text-main); font-weight:700;">₹${Number(o.subtotal).toLocaleString('en-IN')}</span>
+                        <span style="color:var(--ws-text-main); font-weight:700;">₹${Number(o.subtotal || o.total || 0).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
                         <span style="color:var(--ws-text-sub); font-weight:600;">GST Input Tax (5% CGST + SGST)</span>
-                        <span style="color:#15803D; font-weight:700;">+₹${Number(o.tax).toLocaleString('en-IN')}</span>
+                        <span style="color:#15803D; font-weight:700;">+₹${Number(o.tax || 0).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
                         <span style="color:var(--ws-text-sub); font-weight:600;">Wholesale Volume Discount</span>
-                        <span style="color:#15803D; font-weight:700;">-₹${Number(o.discount).toLocaleString('en-IN')}</span>
+                        <span style="color:#15803D; font-weight:700;">-₹${Number(o.discount || 0).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; margin-top:4px; border-top:1.5px dashed var(--ws-border); font-size:1.1rem;">
                         <span style="font-weight:800; color:var(--ws-text-main);">Net Amount Paid</span>
-                        <span style="font-weight:900; color:var(--ws-gold-primary);">₹${Number(o.total).toLocaleString('en-IN')}</span>
+                        <span style="font-weight:900; color:var(--ws-gold-primary);">₹${Number(o.total || 0).toLocaleString('en-IN')}</span>
                     </div>
                 </div>
 
@@ -1779,11 +1836,11 @@
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:0.78rem; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
                     <div>
                         <div style="color:var(--ws-text-muted); font-size:0.70rem; text-transform:uppercase; font-weight:700;">Courier Partner</div>
-                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${o.courier} (AWB: ${o.awb})</div>
+                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${courierDisplay}</div>
                     </div>
                     <div>
                         <div style="color:var(--ws-text-muted); font-size:0.70rem; text-transform:uppercase; font-weight:700;">Payment Mode</div>
-                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${o.payment}</div>
+                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${paymentMode}</div>
                     </div>
                 </div>
             `;

@@ -118,18 +118,59 @@ try {
             }
             
             $targetPhone = (string)($currentUser['phone'] ?? '');
+            $targetId = (int)($currentUser['id'] ?? 0);
             
-            if (!empty($targetPhone)) {
-                $orders = OrderManager::getByPhone($targetPhone);
-                echo json_encode([
-                    'success' => true,
-                    'count'   => count($orders),
-                    'orders'  => $orders
-                ]);
+            $orders = OrderManager::getByCustomerOrPhone($targetId, $targetPhone);
+            echo json_encode([
+                'success' => true,
+                'count'   => count($orders),
+                'orders'  => $orders
+            ]);
+            exit;
+        }
+
+        // Single Order Details with full line items & timeline history
+        if ($action === 'details' || $action === 'get_order_details') {
+            $orderId = trim($_GET['order_id'] ?? ($_GET['id'] ?? ($_GET['order_number'] ?? '')));
+            if ($orderId === '') {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Order ID or order number required.']);
                 exit;
             }
 
-            echo json_encode(['success' => true, 'count' => 0, 'orders' => []]);
+            if (session_status() === PHP_SESSION_NONE) {
+                @session_start();
+            }
+            $currentUser = $_SESSION['user'] ?? null;
+            $isAdmin = dt_api_is_admin();
+
+            $order = OrderManager::getOrderDetails($orderId);
+            if (!$order) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'Order not found.']);
+                exit;
+            }
+
+            // Security verification: must be admin OR order owner
+            if (!$isAdmin) {
+                $userPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
+                $userId = (int)($currentUser['id'] ?? 0);
+                $digits = static function ($v) {
+                    $d = preg_replace('/\D+/', '', (string)$v);
+                    return strlen($d) > 10 ? substr($d, -10) : $d;
+                };
+
+                $isOwner = ($userId > 0 && (int)($order['customer_id'] ?? 0) === $userId)
+                    || (!empty($userPhone) && $digits($order['customer_phone'] ?? '') === $digits($userPhone));
+
+                if (!$isOwner) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Access denied to this order record.']);
+                    exit;
+                }
+            }
+
+            echo json_encode(['success' => true, 'order' => $order]);
             exit;
         }
 
@@ -193,6 +234,9 @@ try {
         $rawInput = file_get_contents('php://input');
         $jsonData = json_decode($rawInput, true);
         $data = is_array($jsonData) ? $jsonData : $_POST;
+        if (empty($data) && !empty($rawInput)) {
+            parse_str($rawInput, $data);
+        }
 
         $action = trim($data['action'] ?? 'create');
 
@@ -215,7 +259,14 @@ try {
             }
 
             $ok = OrderManager::updateStatus($orderId, $status, $tracking, $courier);
-            echo json_encode(['success' => $ok, 'order_id' => $orderId, 'status' => $status, 'message' => $ok ? 'Order status updated in live database.' : 'Failed to update order status.']);
+            $updatedOrder = $ok ? OrderManager::getOrderDetails($orderId) : null;
+            echo json_encode([
+                'success' => $ok, 
+                'order_id' => $orderId, 
+                'status' => $status, 
+                'order' => $updatedOrder,
+                'message' => $ok ? 'Order status updated in live database.' : 'Failed to update order status.'
+            ]);
             exit;
         }
 

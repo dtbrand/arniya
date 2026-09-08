@@ -58,32 +58,17 @@ try {
                 $cust = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($cust) {
-                    $orderStmt = $pdo->prepare("SELECT id, order_number, channel, total_amount, payment_status, status, items, shipping_address, created_at, tracking_number, courier FROM orders WHERE customer_id = ? OR phone = ? ORDER BY id DESC LIMIT 50");
-                    $orderStmt->execute([$userId, $cust['phone'] ?? '']);
-                    $rawOrders = $orderStmt->fetchAll(\PDO::FETCH_ASSOC);
+                    $orders = OrderManager::getByCustomerOrPhone($userId, $cust['phone'] ?? '');
 
                     $spend = 0.0;
                     $pending = 0;
-                    foreach ($rawOrders as $ro) {
+                    foreach ($orders as $ro) {
                         $amt = (float)($ro['total_amount'] ?? 0);
                         $spend += $amt;
                         $st = strtolower((string)($ro['status'] ?? ''));
-                        if (in_array($st, ['pending', 'processing', 'in_transit', 'dispatched'], true)) {
+                        if (in_array($st, ['pending', 'processing', 'unfulfilled', 'in_transit', 'dispatched', 'shipped'], true)) {
                             $pending++;
                         }
-                        $orders[] = [
-                            'id' => (int)$ro['id'],
-                            'order_number' => (string)($ro['order_number'] ?? ('DT-' . $ro['id'])),
-                            'channel' => (string)($ro['channel'] ?? 'retailer'),
-                            'total_amount' => $amt,
-                            'payment_status' => (string)($ro['payment_status'] ?? 'pending'),
-                            'status' => (string)($ro['status'] ?? 'pending'),
-                            'items_count' => is_array(json_decode($ro['items'] ?? '[]', true)) ? count(json_decode($ro['items'] ?? '[]', true)) : 1,
-                            'shipping_address' => (string)($ro['shipping_address'] ?? ''),
-                            'tracking_number' => (string)($ro['tracking_number'] ?? ''),
-                            'courier' => (string)($ro['courier'] ?? 'Delhivery / Blue Dart'),
-                            'date' => (string)($ro['created_at'] ?? '')
-                        ];
                     }
 
                     $kpis['total_orders'] = count($orders);
@@ -104,6 +89,42 @@ try {
             'user' => $cust,
             'kpis' => $kpis,
             'orders' => $orders
+        ]);
+        exit;
+    }
+
+    // ── 1B. GET RETAILER ORDERS (GET/POST) ──
+    if ($action === 'get_orders') {
+        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        $userPhone = (string)($currentUser['phone'] ?? ($data['phone'] ?? ($_GET['phone'] ?? '')));
+        $orders = OrderManager::getByCustomerOrPhone($userId, $userPhone);
+        echo json_encode([
+            'success' => true,
+            'count' => count($orders),
+            'orders' => $orders
+        ]);
+        exit;
+    }
+
+    // ── 1C. GET SINGLE ORDER DETAILS WITH LINE ITEMS & TIMELINE (GET/POST) ──
+    if ($action === 'get_order_details' || $action === 'track_order') {
+        $orderId = trim($data['order_id'] ?? ($data['id'] ?? ($_GET['id'] ?? ($_GET['order_id'] ?? ($_GET['order_number'] ?? '')))));
+        if (empty($orderId)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Order ID or order number is required']);
+            exit;
+        }
+
+        $order = OrderManager::getOrderDetails($orderId);
+        if (!$order) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'error' => 'Order not found']);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'order' => $order
         ]);
         exit;
     }

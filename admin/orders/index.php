@@ -90,8 +90,8 @@ window.dtAdminFetch = async function(url, options = {}) {
     if (csrfToken) {
         headers.set('X-CSRF-Token', csrfToken);
     }
-    if (!headers.has('Content-Type')) {
-        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    if (!(options.body instanceof FormData) && !headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json');
     }
     return fetch(url, { ...options, headers });
 };

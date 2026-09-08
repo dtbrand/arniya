@@ -96,17 +96,25 @@
             const notifyWA = document.getElementById('modalNotifyWhatsApp')?.checked;
 
             // Live API persistence to database
-            const formData = new FormData();
-            formData.append('action', 'update_status');
-            formData.append('order_id', orderId);
-            formData.append('status', newStatus);
-            formData.append('tracking_number', tracking);
-            formData.append('courier_name', carrier);
+            const payload = {
+                action: 'update_status',
+                order_id: orderId,
+                status: newStatus,
+                tracking_number: tracking,
+                courier_name: carrier
+            };
 
             dtAdminFetch('/api/orders.php', {
                 method: 'POST',
-                body: formData
-            }).then(r => r.json()).catch(err => console.log('Order status network sync:', err));
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(r => r.json()).then(res => {
+                if (res && res.success) {
+                    console.log('Order status updated live in database:', res);
+                } else {
+                    console.warn('Order status update warning:', res);
+                }
+            }).catch(err => console.log('Order status network sync:', err));
 
             // Update badge in table row or view page header
             const allBadges = document.querySelectorAll(`#statusBadge_${orderId}, #viewPageStatusBadge, .dt-status-badge[data-order-id="${orderId}"]`);
@@ -172,14 +180,17 @@
             const reason = document.getElementById('cancelReasonSelect')?.value || 'Customer Request';
 
             // Live API call
-            const formData = new FormData();
-            formData.append('action', 'update_status');
-            formData.append('order_id', orderId);
-            formData.append('status', 'cancelled');
+            const payload = {
+                action: 'update_status',
+                order_id: orderId,
+                status: 'cancelled',
+                reason: reason
+            };
 
             dtAdminFetch('/api/orders.php', {
                 method: 'POST',
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             }).then(r => r.json()).catch(err => console.log('Order cancel network sync:', err));
 
             const badge = document.getElementById(`statusBadge_${orderId}`);

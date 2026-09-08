@@ -42,63 +42,16 @@ if ($currentUser && !empty($currentUser['id'])) {
     if ($pdo !== null && !Database::isMockMode()) {
         try {
             $userPhone = $currentUser['phone'] ?? ($dbUser['phone'] ?? '');
-            $digits = preg_replace('/\D+/', '', (string)$userPhone);
-            if (strlen($digits) > 10) {
-                $digits = substr($digits, -10);
-            }
-            $phoneParam = !empty($digits) ? ('%' . $digits) : '---NO-PHONE---';
-
-            $orderStmt = $pdo->prepare("
-                SELECT o.*,
-                       CASE 
-                           WHEN o.customer_name IS NOT NULL AND o.customer_name != '' THEN o.customer_name 
-                           WHEN c.name IS NOT NULL AND c.name != '' THEN c.name 
-                           ELSE 'Valued Wholesaler' 
-                       END as display_customer_name,
-                       CASE 
-                           WHEN o.customer_phone IS NOT NULL AND o.customer_phone != '' THEN o.customer_phone 
-                           WHEN c.phone IS NOT NULL AND c.phone != '' THEN c.phone 
-                           ELSE '' 
-                       END as display_customer_phone,
-                       (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) as real_items_count
-                FROM orders o
-                LEFT JOIN customers c ON o.customer_id = c.id
-                WHERE o.customer_id = ?
-                   OR REPLACE(REPLACE(REPLACE(REPLACE(o.customer_phone, ' ', ''), '-', ''), '+91', ''), '+', '') LIKE ?
-                   OR o.customer_phone LIKE ?
-                ORDER BY o.id DESC LIMIT 100
-            ");
-            $orderStmt->execute([(int)$currentUser['id'], $phoneParam, $phoneParam]);
-            $rawOrders = $orderStmt->fetchAll(\PDO::FETCH_ASSOC);
+            $realOrders = OrderManager::getByCustomerOrPhone((int)$currentUser['id'], (string)$userPhone);
             $spend = 0.0;
             $pending = 0;
-            foreach ($rawOrders as $ro) {
-                $amt = (float)($ro['total_amount'] ?? 0);
+            foreach ($realOrders as $ro) {
+                $amt = (float)($ro['total_amount'] ?? ($ro['total'] ?? 0));
                 $spend += $amt;
                 $st = strtolower((string)($ro['fulfillment_status'] ?? ($ro['status'] ?? '')));
-                if (in_array($st, ['pending', 'processing', 'unfulfilled', 'in_transit', 'dispatched'], true)) {
+                if (in_array($st, ['pending', 'processing', 'unfulfilled', 'in_transit', 'dispatched', 'shipped'], true)) {
                     $pending++;
                 }
-                $itemCount = (int)($ro['real_items_count'] ?? 0);
-                if ($itemCount <= 0 && !empty($ro['items'])) {
-                    $parsed = json_decode($ro['items'], true);
-                    if (is_array($parsed)) $itemCount = count($parsed);
-                }
-                if ($itemCount <= 0) $itemCount = 1;
-
-                $realOrders[] = [
-                    'id' => (int)$ro['id'],
-                    'order_number' => (string)($ro['order_number'] ?? ('DT-WS-' . $ro['id'])),
-                    'channel' => (string)($ro['channel'] ?? 'wholesale'),
-                    'total_amount' => $amt,
-                    'payment_status' => (string)($ro['payment_status'] ?? 'paid'),
-                    'status' => (string)($ro['fulfillment_status'] ?? ($ro['status'] ?? 'processing')),
-                    'items_count' => $itemCount,
-                    'shipping_address' => (string)($ro['shipping_address'] ?? ($ro['address'] ?? '')),
-                    'tracking_number' => (string)($ro['tracking_number'] ?? ''),
-                    'courier' => (string)($ro['courier_name'] ?? ($ro['courier'] ?? 'VRL Freight / Delhivery')),
-                    'date' => (string)($ro['created_at'] ?? '')
-                ];
             }
             $realKpis['total_orders'] = count($realOrders);
             $realKpis['lifetime_spend'] = round($spend, 2);

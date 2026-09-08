@@ -1215,7 +1215,11 @@ window.paymentGatewaysConfig = <?php echo json_encode($paymentGateways); ?>;
         orderFormData.append('customer_name', fullName);
         orderFormData.append('customer_phone', whatsApp);
         orderFormData.append('payment_method', activePaymentMethod);
-        orderFormData.append('discount', appliedDiscountAmount);
+        var fullAddr = [address, city, state, pincode].filter(Boolean).join(', ');
+        orderFormData.append('shipping_address', fullAddr);
+        orderFormData.append('shipping_city', city);
+        orderFormData.append('shipping_state', state);
+        orderFormData.append('shipping_pincode', pincode);
         orderFormData.append('items', JSON.stringify(cart));
 
         fetch('/api/orders.php', { method: 'POST', body: orderFormData })
