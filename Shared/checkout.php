@@ -512,6 +512,20 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
     }
 }
 
+/* Manual Address Form Container (Collapsible) */
+.co-manual-address-form {
+    animation: dtFadeSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #FAF9F5;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1.5px dashed rgba(138, 104, 31, 0.32);
+    margin-bottom: 12px;
+}
+@keyframes dtFadeSlideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .co-address-card {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
@@ -1097,9 +1111,11 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
                             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             <h3 class="co-sec-title">2. Delivery Address</h3>
                         </div>
-                        <button type="button" class="co-btn-pale-mini" id="coNewAddressBtn" style="display:none;" onclick="window.coUseNewAddress()">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ New Address</span>
+                        <button type="button" class="co-btn-pale-mini" id="coNewAddressBtn" style="display:none;" onclick="window.coToggleNewAddress()">
+                            <span id="coNewAddressBtnIcon" style="display:inline-flex; align-items:center;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </span>
+                            <span id="coNewAddressBtnText">+ New Address</span>
                         </button>
                     </div>
 
@@ -1112,40 +1128,47 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
                         <div id="coSavedAddressesGrid" class="co-saved-addresses-grid"></div>
                     </div>
 
-                    <div class="co-input-group">
-                        <label class="co-label" for="coAddress">Address / Building / Street <span class="required">*</span></label>
-                        <input type="text" id="coAddress" class="co-input" placeholder="e.g. 402, Royal Residency, M.G. Road" required>
-                    </div>
-                    <div class="co-grid-2">
-                        <div class="co-input-group">
-                            <label class="co-label" for="coPincode">Pincode <span class="required">*</span></label>
-                            <input type="text" id="coPincode" class="co-input" placeholder="400001" maxlength="6" required>
+                    <!-- Manual Delivery Address Form (Collapsible when saved address is active) -->
+                    <div id="coManualAddressForm" class="co-manual-address-form" style="display:none;">
+                        <div style="font-size:0.75rem; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Enter Custom Delivery Address</span>
                         </div>
                         <div class="co-input-group">
-                            <label class="co-label" for="coCity">City <span class="required">*</span></label>
-                            <input type="text" id="coCity" class="co-input" placeholder="Mumbai" required>
+                            <label class="co-label" for="coAddress">Address / Building / Street <span class="required">*</span></label>
+                            <input type="text" id="coAddress" class="co-input" placeholder="e.g. 402, Royal Residency, M.G. Road" required>
                         </div>
-                    </div>
-                    <div class="co-grid-2">
-                        <div class="co-input-group">
-                            <label class="co-label" for="coState">State <span class="required">*</span></label>
-                            <input type="text" id="coState" class="co-input" placeholder="Maharashtra" required>
+                        <div class="co-grid-2">
+                            <div class="co-input-group">
+                                <label class="co-label" for="coPincode">Pincode <span class="required">*</span></label>
+                                <input type="text" id="coPincode" class="co-input" placeholder="400001" maxlength="6" required>
+                            </div>
+                            <div class="co-input-group">
+                                <label class="co-label" for="coCity">City <span class="required">*</span></label>
+                                <input type="text" id="coCity" class="co-input" placeholder="Mumbai" required>
+                            </div>
                         </div>
-                        <div class="co-input-group">
-                            <label class="co-label" for="coLandmark">Landmark (Optional)</label>
-                            <input type="text" id="coLandmark" class="co-input" placeholder="Near Golden Temple">
+                        <div class="co-grid-2">
+                            <div class="co-input-group">
+                                <label class="co-label" for="coState">State <span class="required">*</span></label>
+                                <input type="text" id="coState" class="co-input" placeholder="Maharashtra" required>
+                            </div>
+                            <div class="co-input-group">
+                                <label class="co-label" for="coLandmark">Landmark (Optional)</label>
+                                <input type="text" id="coLandmark" class="co-input" placeholder="Near Golden Temple">
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Save Address Checkbox Option -->
-                    <div id="coSaveAddressRow" class="co-save-address-row" style="display:none;">
-                        <label class="co-custom-checkbox-wrap">
-                            <input type="checkbox" id="coSaveAddressCheckbox" checked>
-                            <span class="co-checkbox-box">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </span>
-                            <span class="co-checkbox-text">Save this address to my account for future 1-click orders</span>
-                        </label>
+                        <!-- Save Address Checkbox Option -->
+                        <div id="coSaveAddressRow" class="co-save-address-row" style="display:none;">
+                            <label class="co-custom-checkbox-wrap">
+                                <input type="checkbox" id="coSaveAddressCheckbox" checked>
+                                <span class="co-checkbox-box">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                                <span class="co-checkbox-text">Save this address to my account for future 1-click orders</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="co-input-group" style="margin-top:10px;">
@@ -1483,6 +1506,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         var countPill = document.getElementById('coSavedCountPill');
         var grid = document.getElementById('coSavedAddressesGrid');
         var newBtn = document.getElementById('coNewAddressBtn');
+        var manualForm = document.getElementById('coManualAddressForm');
         var saveRow = document.getElementById('coSaveAddressRow');
 
         if (!savedSec || !grid) return;
@@ -1490,12 +1514,16 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         if (addresses.length === 0) {
             savedSec.style.display = 'none';
             if (newBtn) newBtn.style.display = 'none';
-            if (saveRow) saveRow.style.display = 'flex';
+            if (manualForm) manualForm.style.display = 'block';
+            if (saveRow && window.DT_LOGGED_USER) saveRow.style.display = 'flex';
             return;
         }
 
         savedSec.style.display = 'block';
-        if (newBtn) newBtn.style.display = 'inline-flex';
+        if (newBtn) {
+            newBtn.style.display = 'inline-flex';
+            resetNewAddressBtn();
+        }
         if (countPill) countPill.textContent = addresses.length + ' Saved';
 
         var html = '';
@@ -1577,6 +1605,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         var cityInput = document.getElementById('coCity');
         var stateInput = document.getElementById('coState');
         var landmarkInput = document.getElementById('coLandmark');
+        var manualForm = document.getElementById('coManualAddressForm');
         var saveRow = document.getElementById('coSaveAddressRow');
 
         var line1 = addr.address_line1 || addr.address || '';
@@ -1596,36 +1625,76 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
             document.getElementById('coWhatsApp').value = addr.phone.replace(/\D/g, '').slice(-10);
         }
 
+        // HIDE the manual address form when a saved address card is selected!
+        if (manualForm) manualForm.style.display = 'none';
         if (saveRow) saveRow.style.display = 'none';
+
+        resetNewAddressBtn();
     }
 
-    window.coUseNewAddress = function() {
-        var grid = document.getElementById('coSavedAddressesGrid');
-        if (grid) {
-            grid.querySelectorAll('.co-address-card').forEach(function(c) {
-                c.classList.remove('selected');
-            });
-        }
+    function resetNewAddressBtn() {
+        var txt = document.getElementById('coNewAddressBtnText');
+        var icon = document.getElementById('coNewAddressBtnIcon');
+        if (txt) txt.textContent = '+ New Address';
+        if (icon) icon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>';
+    }
 
-        var addrInput = document.getElementById('coAddress');
-        var pinInput = document.getElementById('coPincode');
-        var cityInput = document.getElementById('coCity');
-        var stateInput = document.getElementById('coState');
-        var landmarkInput = document.getElementById('coLandmark');
-        var saveRow = document.getElementById('coSaveAddressRow');
-        var saveCb = document.getElementById('coSaveAddressCheckbox');
+    window.coToggleNewAddress = function() {
+        var manualForm = document.getElementById('coManualAddressForm');
+        var isFormVisible = manualForm && manualForm.style.display === 'block';
 
-        if (addrInput) { addrInput.value = ''; addrInput.focus(); }
-        if (pinInput) pinInput.value = '';
-        if (cityInput) cityInput.value = '';
-        if (stateInput) stateInput.value = '';
-        if (landmarkInput) landmarkInput.value = '';
+        if (isFormVisible) {
+            // Switch back to the selected saved address
+            var addresses = window.DT_SAVED_ADDRESSES || [];
+            if (addresses.length > 0) {
+                var selectedIdx = 0;
+                var grid = document.getElementById('coSavedAddressesGrid');
+                if (grid) {
+                    var selCard = grid.querySelector('.co-address-card.selected');
+                    if (selCard) selectedIdx = parseInt(selCard.dataset.idx, 10);
+                }
+                selectAddressByIndex(selectedIdx);
+            }
+        } else {
+            // User wants to enter a new delivery address
+            var grid = document.getElementById('coSavedAddressesGrid');
+            if (grid) {
+                grid.querySelectorAll('.co-address-card').forEach(function(c) {
+                    c.classList.remove('selected');
+                });
+            }
 
-        if (saveRow && window.DT_LOGGED_USER) {
-            saveRow.style.display = 'flex';
-            if (saveCb) saveCb.checked = true;
+            var addrInput = document.getElementById('coAddress');
+            var pinInput = document.getElementById('coPincode');
+            var cityInput = document.getElementById('coCity');
+            var stateInput = document.getElementById('coState');
+            var landmarkInput = document.getElementById('coLandmark');
+            var saveRow = document.getElementById('coSaveAddressRow');
+            var saveCb = document.getElementById('coSaveAddressCheckbox');
+
+            if (addrInput) { addrInput.value = ''; }
+            if (pinInput) pinInput.value = '';
+            if (cityInput) cityInput.value = '';
+            if (stateInput) stateInput.value = '';
+            if (landmarkInput) landmarkInput.value = '';
+
+            // Reveal manual input form
+            if (manualForm) manualForm.style.display = 'block';
+            if (saveRow && window.DT_LOGGED_USER) {
+                saveRow.style.display = 'flex';
+                if (saveCb) saveCb.checked = true;
+            }
+
+            var txt = document.getElementById('coNewAddressBtnText');
+            var icon = document.getElementById('coNewAddressBtnIcon');
+            if (txt) txt.textContent = '← Use Saved Address';
+            if (icon) icon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>';
+
+            if (addrInput) addrInput.focus();
         }
     };
+
+    window.coUseNewAddress = window.coToggleNewAddress;
 
     function escapeHtml(str) {
         if (!str) return '';
