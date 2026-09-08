@@ -175,6 +175,13 @@ window.animateTargetGauge = animateTargetGauge;
             var userRaw = localStorage.getItem('dtbrands_user');
             var gateModal = document.getElementById('wsRoleGateModal');
 
+            if (!userRaw && window.b2bUser && window.b2bUser.id) {
+                try {
+                    localStorage.setItem('dtbrands_user', JSON.stringify(window.b2bUser));
+                    userRaw = localStorage.getItem('dtbrands_user');
+                } catch(e) {}
+            }
+
             if (!userRaw) {
                 if (gateModal) gateModal.classList.add('active');
                 return false;
@@ -2840,10 +2847,14 @@ window.animateTargetGauge = animateTargetGauge;
         /* ── Reseller Logout ── */
         function handleWholesalerLogout() {
             if (confirm('Are you sure you want to log out of the Reseller Portal?')) {
+                try {
+                    fetch('/api/auth.php?action=logout', { method: 'POST', credentials: 'same-origin' }).catch(function(){});
+                } catch(e) {}
                 localStorage.removeItem('dtbrands_user');
-                window.location.href = '/shop.php';
+                window.location.href = '/account.php';
             }
         };
+        window.handleWholesalerLogout = handleWholesalerLogout;
 
         /* ── Initialize Application ── */
         function initResellerApp() {

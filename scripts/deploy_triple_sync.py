@@ -15,6 +15,7 @@ FILES_TO_DEPLOY = [
     'api/auth.php',
     'api/customer_addresses.php',
     'Shared/checkout.php',
+    'account.php',
     'admin/orders/index.php',
     'admin/orders/components/order-table.php',
     'admin/orders/components/order-actions.php',

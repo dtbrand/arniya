@@ -51,6 +51,21 @@ try {
             'outstanding_balance' => 0.0
         ];
 
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type IN ('retailer', 'retail') LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) {
+                        $userId = (int)$pRow['id'];
+                    }
+                }
+            }
+        }
+
         if ($userId > 0 && $pdo !== null && !Database::isMockMode()) {
             try {
                 $stmt = $pdo->prepare("SELECT id, name, phone, email, type, city, state, tier, gstin, pan, credit_limit, outstanding_balance, kyc_status, created_at FROM customers WHERE id = ? LIMIT 1");
@@ -338,7 +353,19 @@ try {
 
     // ── 3B-3. GET ADDRESSES (GET/POST) ──
     if ($action === 'get_addresses') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type IN ('retailer', 'retail') LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) $userId = (int)$pRow['id'];
+                }
+            }
+        }
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in']);
@@ -351,7 +378,19 @@ try {
 
     // ── 3C. GET FRESH PROFILE DATA (GET/POST) ──
     if ($action === 'get_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type IN ('retailer', 'retail') LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) $userId = (int)$pRow['id'];
+                }
+            }
+        }
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in']);
@@ -443,56 +482,7 @@ try {
         exit;
     }
 
-    // ── 6. GET ORDER DETAILS (GET) ──
-    if ($action === 'get_order_details') {
-        $orderId = (int)($data['order_id'] ?? ($_GET['order_id'] ?? 0));
-        $orderNo = trim((string)($data['order_number'] ?? ($_GET['order_number'] ?? '')));
 
-        if ($orderId <= 0 && empty($orderNo)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'Order ID or Order Number required']);
-            exit;
-        }
-
-        $order = null;
-        if ($pdo !== null && !Database::isMockMode()) {
-            if ($orderId > 0) {
-                $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ? LIMIT 1");
-                $stmt->execute([$orderId]);
-            } else {
-                $stmt = $pdo->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
-                $stmt->execute([$orderNo]);
-            }
-            $order = $stmt->fetch(\PDO::FETCH_ASSOC);
-        }
-
-        if ($order) {
-            $items = json_decode($order['items'] ?? '[]', true) ?: [];
-            echo json_encode([
-                'success' => true,
-                'order' => [
-                    'id' => (int)$order['id'],
-                    'order_number' => (string)($order['order_number'] ?? ('DT-' . $order['id'])),
-                    'customer_id' => (int)($order['customer_id'] ?? 0),
-                    'customer_name' => (string)($order['customer_name'] ?? ($order['name'] ?? 'B2B Retailer')),
-                    'phone' => (string)($order['phone'] ?? ''),
-                    'total_amount' => (float)($order['total_amount'] ?? 0),
-                    'payment_method' => (string)($order['payment_method'] ?? 'UPI'),
-                    'payment_status' => (string)($order['payment_status'] ?? 'pending'),
-                    'status' => (string)($order['status'] ?? 'pending'),
-                    'shipping_address' => (string)($order['shipping_address'] ?? ''),
-                    'tracking_number' => (string)($order['tracking_number'] ?? ''),
-                    'courier' => (string)($order['courier'] ?? 'Delhivery Logistics'),
-                    'created_at' => (string)($order['created_at'] ?? ''),
-                    'items' => $items
-                ]
-            ]);
-        } else {
-            http_response_code(404);
-            echo json_encode(['success' => false, 'error' => 'Order not found']);
-        }
-        exit;
-    }
 
     // ── 7. EXPORT B2B LIVE CATALOG (JSON / CSV) ──
     if ($action === 'export_catalog') {

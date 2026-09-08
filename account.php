@@ -3008,9 +3008,17 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             var url = '/api/orders.php?action=my_orders' + (phone ? ('&phone=' + encodeURIComponent(phone)) : '');
 
             fetch(url, { credentials: 'same-origin' })
-                .then(function(res) { return res.json(); })
+                .then(function(res) {
+                    if (res.status === 401) {
+                        localStorage.removeItem('dtbrands_user');
+                        if (typeof window.checkUserAuth === 'function') window.checkUserAuth();
+                        return null;
+                    }
+                    return res.json();
+                })
                 .then(function(data) {
-                    if (!data || !data.success || !Array.isArray(data.orders) || data.orders.length === 0) {
+                    if (!data) return;
+                    if (!data.success || !Array.isArray(data.orders) || data.orders.length === 0) {
                         listEl.innerHTML = '<div style="padding: 32px 16px; text-align: center; background: #FAF8F4; border: 1.5px dashed #D4AF37; border-radius: 12px;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#8A681F" stroke-width="2" style="margin-bottom: 10px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><h4 style="margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 800; color: #181512;">No orders placed yet</h4><p style="margin: 0 0 16px 0; font-size: 0.82rem; color: #64748B;">Explore our pure handloom silk sarees, bridal lehengas, and designer fabrics.</p><a href="/shop.php" class="dt-btn-gold" style="display: inline-flex; width: auto; padding: 10px 24px; font-size: 0.84rem; text-decoration: none; margin: 0 auto;">Explore Luxury Collection <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>';
                         return;
                     }

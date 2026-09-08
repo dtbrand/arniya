@@ -52,6 +52,21 @@ try {
             'outstanding_balance' => 0.0
         ];
 
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type = 'wholesale' LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) {
+                        $userId = (int)$pRow['id'];
+                    }
+                }
+            }
+        }
+
         if ($userId > 0 && $pdo !== null && !Database::isMockMode()) {
             try {
                 $stmt = $pdo->prepare("SELECT id, name, phone, email, type, city, state, tier, gstin, pan, credit_limit, outstanding_balance, kyc_status, created_at FROM customers WHERE id = ? LIMIT 1");
@@ -406,7 +421,19 @@ try {
 
     // ── 3C-3. GET ADDRESSES (GET/POST) ──
     if ($action === 'get_addresses') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type = 'wholesale' LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) $userId = (int)$pRow['id'];
+                }
+            }
+        }
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in']);
@@ -419,7 +446,19 @@ try {
 
     // ── 3D. GET FRESH PROFILE DATA (GET/POST) ──
     if ($action === 'get_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+            $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            if (!empty($phoneInput)) {
+                $digits = preg_replace('/\D+/', '', $phoneInput);
+                if (strlen($digits) >= 10) {
+                    $pStmt = $pdo->prepare("SELECT id FROM customers WHERE phone LIKE ? AND type = 'wholesale' LIMIT 1");
+                    $pStmt->execute(['%' . substr($digits, -10)]);
+                    $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($pRow && !empty($pRow['id'])) $userId = (int)$pRow['id'];
+                }
+            }
+        }
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in']);

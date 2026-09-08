@@ -1870,6 +1870,15 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
 
         var fullAddr = [address, (landmark ? 'Near ' + landmark : ''), city, state, pincode].filter(Boolean).join(', ');
 
+        var resolvedChannel = 'retail';
+        if (window.location.pathname.indexOf('wholesale') !== -1 || (window.DT_LOGGED_USER && window.DT_LOGGED_USER.type === 'wholesale')) {
+            resolvedChannel = 'wholesale';
+        } else if (window.location.pathname.indexOf('retailer') !== -1 || (window.DT_LOGGED_USER && window.DT_LOGGED_USER.type === 'retailer')) {
+            resolvedChannel = 'retailer';
+        } else if (window.location.pathname.indexOf('reseller') !== -1 || (window.DT_LOGGED_USER && window.DT_LOGGED_USER.type === 'reseller')) {
+            resolvedChannel = 'reseller';
+        }
+
         var orderPayload = {
             order_number: orderNum,
             customer_name: fullName,
@@ -1877,6 +1886,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
             customer_email: email,
             gateway: activePaymentMethod,
             amount: grandTotal,
+            channel: resolvedChannel,
             address: fullAddr,
             city: city,
             state: state,
@@ -1922,6 +1932,20 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         orderFormData.append('action', 'create');
         orderFormData.append('customer_name', fullName);
         orderFormData.append('customer_phone', whatsApp);
+        orderFormData.append('channel', resolvedChannel);
+        if (window.DT_LOGGED_USER && window.DT_LOGGED_USER.id) {
+            orderFormData.append('customer_id', window.DT_LOGGED_USER.id);
+        }
+        if (email) {
+            orderFormData.append('customer_email', email);
+        }
+        if (note) {
+            orderFormData.append('note', note);
+        }
+        if (appliedCouponCode) {
+            orderFormData.append('coupon_code', appliedCouponCode);
+            orderFormData.append('discount', appliedDiscountAmount);
+        }
         orderFormData.append('payment_method', activePaymentMethod);
         orderFormData.append('shipping_address', fullAddr);
         orderFormData.append('shipping_city', city);

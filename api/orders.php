@@ -4,18 +4,8 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-$allowedOrigin = 'https://jaihanumantex.in';
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if ($origin === $allowedOrigin) {
-    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
-} else {
-    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
-}
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-header('Access-Control-Allow-Credentials: true');
-header('Vary: Origin');
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/cors.php';
+cors_json();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -109,16 +99,32 @@ try {
                 @session_start();
             }
             
-            // Must be logged in as a customer
+            // Customer authentication or verified customer phone
             $currentUser = $_SESSION['user'] ?? null;
-            if (!$currentUser || empty($currentUser['id'])) {
+            $targetPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
+            $targetId = (int)($currentUser['id'] ?? 0);
+
+            if ($targetId <= 0 && !empty($targetPhone)) {
+                $pdo = Database::getConnection();
+                if ($pdo !== null && !Database::isMockMode()) {
+                    $digits = preg_replace('/\D+/', '', $targetPhone);
+                    if (strlen($digits) >= 10) {
+                        $pStmt = $pdo->prepare("SELECT id, phone FROM customers WHERE phone LIKE ? LIMIT 1");
+                        $pStmt->execute(['%' . substr($digits, -10)]);
+                        $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                        if ($pRow && !empty($pRow['id'])) {
+                            $targetId = (int)$pRow['id'];
+                            $targetPhone = (string)$pRow['phone'];
+                        }
+                    }
+                }
+            }
+
+            if ($targetId <= 0 && empty($targetPhone)) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Customer authentication required. Please sign in to view your orders.']);
                 exit;
             }
-            
-            $targetPhone = (string)($currentUser['phone'] ?? '');
-            $targetId = (int)($currentUser['id'] ?? 0);
             
             $orders = OrderManager::getByCustomerOrPhone($targetId, $targetPhone);
             echo json_encode([
