@@ -28,6 +28,8 @@ urls = [
     ('https://harmitethnic.com/admin/reports/gst.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/reports/revenue.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/reports/sales.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/products/attributes/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/api/attributes.php', 200, 'json'),
     ('https://harmitethnic.com/api/shipping.php?action=get_rates', 200, 'json'),
     ('https://jaihanumantex.in/wholesale.php', 200, 'html'),
     ('https://jaihanumantex.in/retailer.php', 200, 'html'),
@@ -50,6 +52,8 @@ urls = [
     ('https://jaihanumantex.in/admin/reports/gst.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/reports/revenue.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/reports/sales.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/attributes/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/api/attributes.php', 200, 'json'),
     ('https://jaihanumantex.in/api/shipping.php?action=get_rates', 200, 'json'),
 ]
 

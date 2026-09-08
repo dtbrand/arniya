@@ -60,6 +60,10 @@ FILES_TO_DEPLOY = [
     'admin/reports/gst.php',
     'admin/reports/revenue.php',
     'admin/reports/sales.php',
+    'api/attributes.php',
+    '.user.ini',
+    'admin/products/attributes/index.php',
+    'admin/products/attributes/values.php',
 ]
 
 SERVERS = [
