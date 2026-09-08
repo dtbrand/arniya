@@ -427,19 +427,71 @@
         }
     };
 
-    // Reads the shopper's actual choice. Returns '' when the product has no size
-    // or colour variants at all -- the page then shows no selector, and the old
-    // 'Free Size' / 'Standard' placeholders travelled all the way into the cart
-    // line, the WhatsApp message and order_items for products that never had
-    // either attribute.
+    // MCQ Variant Selection handler
+    window.selectPdpMcqVariant = function(radioEl) {
+        if (!radioEl) return;
+        document.querySelectorAll('.pdp-mcq-card').forEach(function(card) {
+            card.classList.remove('active');
+            card.style.borderColor = '#E2E8F0';
+            card.style.background = '#FFFFFF';
+        });
+        var card = radioEl.closest('.pdp-mcq-card');
+        if (card) {
+            card.classList.add('active');
+            card.style.borderColor = '#8A681F';
+            card.style.background = '#FAF8F2';
+        }
+    };
+
+    // Reads the shopper's actual choice (MCQ, Full Set, or Normal Color+Size)
     function pdpSelection() {
+        var mcqRadio = document.querySelector('input[name="pdp_variant_mcq"]:checked');
+        if (mcqRadio) {
+            var vId = parseInt(mcqRadio.dataset.variantId, 10) || null;
+            return {
+                variant_id: vId,
+                sku: mcqRadio.dataset.sku || currentProduct.sku || '',
+                color: mcqRadio.dataset.color || '',
+                size: mcqRadio.dataset.size || '',
+                price: parseFloat(mcqRadio.dataset.price) || currentProduct.price || 0,
+                stock: parseInt(mcqRadio.dataset.stock, 10) || currentProduct.stock_qty || 0,
+                selling_type: currentProduct.selling_type || 'single_piece'
+            };
+        }
+
+        if ((currentProduct.selling_type || '') === 'full_set') {
+            return {
+                variant_id: null,
+                sku: currentProduct.sku || '',
+                color: 'All Configured Colors',
+                size: 'All Configured Sizes',
+                price: currentProduct.price || 0,
+                stock: currentProduct.stock_qty || 10,
+                selling_type: 'full_set'
+            };
+        }
+
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
         var sizeList = Array.isArray(currentProduct.size) ? currentProduct.size : [];
         var activeColorBtn = document.querySelector('.pdp-color-btn.active');
         var colorList = Array.isArray(currentProduct.colors) ? currentProduct.colors : [];
+        var chosenColor = activeColorBtn ? (activeColorBtn.dataset.color || '') : (colorList[0] || '');
+        var chosenSize = activeSizeBtn ? (activeSizeBtn.dataset.size || '') : (sizeList[0] || '');
+
+        var variants = Array.isArray(currentProduct.variants) ? currentProduct.variants : [];
+        var matched = variants.find(function(v) {
+            return (String(v.color || '').toLowerCase() === chosenColor.toLowerCase()) &&
+                   (String(v.size || '').toLowerCase() === chosenSize.toLowerCase());
+        });
+
         return {
-            size: activeSizeBtn ? (activeSizeBtn.dataset.size || '') : (sizeList[0] || ''),
-            color: activeColorBtn ? (activeColorBtn.dataset.color || '') : (colorList[0] || '')
+            variant_id: matched ? (matched.id || matched.variant_id || null) : null,
+            sku: (matched && matched.sku) ? matched.sku : (currentProduct.sku || ''),
+            color: chosenColor,
+            size: chosenSize,
+            price: (matched && matched.price) ? matched.price : (currentProduct.price || 0),
+            stock: (matched && matched.stock_qty !== undefined) ? matched.stock_qty : (currentProduct.stock_qty || 0),
+            selling_type: currentProduct.selling_type || 'single_piece'
         };
     }
     window.pdpSelection = pdpSelection;
@@ -472,28 +524,33 @@
     // Add To Bag Function (Integrates directly with Cart Drawer)
     window.handlePdpAddToCart = function() {
         var sel = pdpSelection();
+        var itemData = {
+            id: currentProduct.id,
+            product_id: currentProduct.id,
+            variant_id: sel.variant_id,
+            product_type: sel.selling_type,
+            selling_type: sel.selling_type,
+            name: currentProduct.name,
+            sku: sel.sku || currentProduct.sku,
+            image: currentProduct.image,
+            size: sel.size,
+            color: sel.color,
+            qty: currentQty,
+            price: sel.price || currentProduct.price,
+            stock: sel.stock
+        };
 
         if (typeof window.dtAddToCart === 'function') {
-            window.dtAddToCart(currentProduct.id, currentQty, { size: sel.size, color: sel.color });
+            window.dtAddToCart(itemData, currentQty, sel.size, sel.color);
         } else if (typeof window.addToCart === 'function') {
-            window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
+            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color });
         } else {
             // Local fallback
             try {
                 var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
-                cart.push({
-                    id: currentProduct.id,
-                    name: currentProduct.name,
-                    price: currentProduct.price,
-                    image: currentProduct.image,
-                    size: sel.size,
-                    color: sel.color,
-                    qty: currentQty
-                });
+                cart.push(itemData);
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
-            } catch {
-                // Storage quota exceeded or disabled
-            }
+            } catch (e) {}
         }
 
         window.showToast('Added ' + (currentProduct.name || 'item') + ' to Bag!');
@@ -506,11 +563,26 @@
     // Buy Now (Instant Checkout Flow)
     window.handlePdpBuyNow = function() {
         var sel = pdpSelection();
+        var itemData = {
+            id: currentProduct.id,
+            product_id: currentProduct.id,
+            variant_id: sel.variant_id,
+            product_type: sel.selling_type,
+            selling_type: sel.selling_type,
+            name: currentProduct.name,
+            sku: sel.sku || currentProduct.sku,
+            image: currentProduct.image,
+            size: sel.size,
+            color: sel.color,
+            qty: currentQty,
+            price: sel.price || currentProduct.price,
+            stock: sel.stock
+        };
 
         if (typeof window.dtAddToCart === 'function') {
-            window.dtAddToCart(currentProduct.id, currentQty, { size: sel.size, color: sel.color });
+            window.dtAddToCart(itemData, currentQty, sel.size, sel.color);
         } else if (typeof window.addToCart === 'function') {
-            window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
+            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color });
         }
 
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();

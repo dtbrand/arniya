@@ -157,16 +157,19 @@ class ProductCatalog
         }
 
         $variants = Database::query(
-            "SELECT product_id, color_name, size_name, sku, stock_qty, price, image
-             FROM product_variants WHERE product_id IN ($in) ORDER BY id ASC"
+            "SELECT * FROM product_variants WHERE product_id IN ($in) ORDER BY id ASC"
         );
         foreach ($variants as $v) {
             $out['variants'][(int)($v['product_id'] ?? 0)][] = [
+                'id' => (int)($v['id'] ?? 0),
+                'variant_id' => (int)($v['id'] ?? 0),
                 'sku' => trim((string)($v['sku'] ?? '')),
                 'color' => trim((string)($v['color_name'] ?? '')),
                 'size' => trim((string)($v['size_name'] ?? '')),
                 'stock_qty' => (int)($v['stock_qty'] ?? 0),
                 'price' => isset($v['price']) && $v['price'] !== null ? (float)$v['price'] : null,
+                'wholesale_price' => isset($v['wholesale_price']) && $v['wholesale_price'] !== null ? (float)$v['wholesale_price'] : null,
+                'reseller_price' => isset($v['reseller_price']) && $v['reseller_price'] !== null ? (float)$v['reseller_price'] : null,
                 'image' => self::mediaPath($v['image'] ?? '')
             ];
         }
@@ -662,6 +665,22 @@ class ProductCatalog
     {
         $all = self::getAll();
         return array_values(array_filter($all, function ($product) use ($criteria) {
+            // Role-based visibility enforcement
+            $role = strtolower(trim((string)($criteria['role'] ?? ($criteria['user_role'] ?? ''))));
+            if ($role === 'wholesaler') { $role = 'wholesale'; }
+            if ($role === 'retail') { $role = 'customer'; }
+            
+            // Guest, Customer, and Reseller cannot see Full Set products
+            if (in_array($role, ['guest', 'customer', 'reseller'], true)) {
+                if (($product['selling_type'] ?? 'single_piece') === 'full_set') {
+                    return false;
+                }
+            }
+
+            if (!empty($criteria['selling_type']) && ($product['selling_type'] ?? 'single_piece') !== $criteria['selling_type']) {
+                return false;
+            }
+
             if (!empty($criteria['category']) && strcasecmp($product['category'], $criteria['category']) !== 0) {
                 return false;
             }
@@ -685,6 +704,17 @@ class ProductCatalog
             }
             return true;
         }));
+    }
+
+    /**
+     * Get products filtered by user role visibility matrix
+     */
+    public static function getForRole(string $role = 'guest', array $criteria = []): array
+    {
+        $role = strtolower(trim($role));
+        if ($role === '' || $role === 'retail') { $role = 'customer'; }
+        $criteria['role'] = $role;
+        return self::filter($criteria);
     }
 
     // ─── Write helpers ──────────────────────────────────────────────────────

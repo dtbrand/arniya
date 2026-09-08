@@ -14,12 +14,22 @@ if (!file_exists(__DIR__ . '/.installed')) {
 
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
+use DTBrand\Auth;
 
-// ── Dynamic Database-First Catalog Loader ──
-$products = ProductCatalog::getAll();
+// ── Dynamic Database-First Catalog Loader with Role-Based Visibility ──
+$currentUser = Auth::getCurrentUser();
+$currentUserRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $currentUserRole = 'admin';
+} elseif ($currentUser) {
+    $currentUserRole = strtolower(trim((string)($currentUser['type'] ?? ($currentUser['role'] ?? 'customer'))));
+}
+
+$products = ProductCatalog::getForRole($currentUserRole);
 
 $dbCategories = [];
 $db = Database::getConnection();
@@ -33,7 +43,7 @@ $categoriesList = [];
 if (!empty($dbCategories)) {
     foreach ($dbCategories as $idx => $c) {
         $cName = $c['name'];
-        $cCount = count(ProductCatalog::filter(['category' => $cName]));
+        $cCount = count(ProductCatalog::filter(['category' => $cName, 'role' => $currentUserRole]));
         $categoriesList[] = [
             'name' => $cName,
             'slug' => $c['slug'] ?? strtolower(str_replace(' ', '-', $cName)),
@@ -49,7 +59,7 @@ if (!empty($dbCategories)) {
 if (empty($categoriesList)) {
     $fallbackCats = ProductCatalog::getCategories();
     foreach ($fallbackCats as $idx => $cName) {
-        $cCount = count(ProductCatalog::filter(['category' => $cName]));
+        $cCount = count(ProductCatalog::filter(['category' => $cName, 'role' => $currentUserRole]));
         $categoriesList[] = [
             'name' => $cName,
             'slug' => strtolower(str_replace(' ', '-', $cName)),

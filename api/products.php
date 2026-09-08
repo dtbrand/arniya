@@ -38,12 +38,21 @@ try {
         @session_start();
     }
     $currentUser = $_SESSION['user'] ?? null;
-    $userRole = strtolower(trim((string)($currentUser['type'] ?? 'guest')));
-    if ($userRole === '' || $userRole === 'customer') { $userRole = 'retail'; }
-    if (!in_array($userRole, ['retail', 'wholesale', 'reseller', 'retailer'], true)) {
-        $userRole = 'retail';
+    $sessionRole = strtolower(trim((string)($currentUser['role'] ?? ($currentUser['type'] ?? ''))));
+    $requestedRole = strtolower(trim((string)($_REQUEST['role'] ?? ($_REQUEST['channel'] ?? ''))));
+    if ($requestedRole === 'wholesaler') { $requestedRole = 'wholesale'; }
+
+    $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_SESSION['admin_user']);
+    if ($isAdmin) {
+        $userRole = 'admin';
+    } elseif ($requestedRole !== '' && in_array($requestedRole, ['wholesale', 'retailer', 'reseller', 'customer', 'retail'], true)) {
+        $userRole = ($requestedRole === 'retail' || $requestedRole === 'customer') ? 'retail' : $requestedRole;
+    } elseif ($sessionRole !== '') {
+        $userRole = ($sessionRole === 'wholesale' || $sessionRole === 'wholesaler') ? 'wholesale' : (($sessionRole === 'retailer' || $sessionRole === 'reseller') ? $sessionRole : 'retail');
+    } else {
+        $userRole = 'guest';
     }
-    $isTradeRole = in_array($userRole, ['wholesale', 'retailer'], true);
+    $isTradeRole = ($userRole === 'admin' || $userRole === 'wholesale' || $userRole === 'retailer');
 
     // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──
     if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
@@ -192,16 +201,16 @@ try {
             
             if ($isFullSet) {
                 if (!$isTradeRole) {
-                    $product['price'] = null;
-                    $product['trade_price'] = null;
-                    $product['wholesale_price'] = null;
-                    $product['reseller_price'] = null;
-                    $product['customer_price'] = null;
-                } else {
-                    $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                    $product['price'] = max(0, $basePrice - $saleDisc);
-                    $product['trade_price'] = $product['price'];
+                    http_response_code(403);
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
+                    ], JSON_PRETTY_PRINT);
+                    exit;
                 }
+                $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
+                $product['price'] = max(0, $basePrice - $saleDisc);
+                $product['trade_price'] = $product['price'];
             } else {
                 if ($userRole === 'reseller') {
                     $basePrice = (float)($product['reseller_price'] ?? $product['retail_price'] ?? 0);
@@ -249,16 +258,16 @@ try {
             
             if ($isFullSet) {
                 if (!$isTradeRole) {
-                    $product['price'] = null;
-                    $product['trade_price'] = null;
-                    $product['wholesale_price'] = null;
-                    $product['reseller_price'] = null;
-                    $product['customer_price'] = null;
-                } else {
-                    $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                    $product['price'] = max(0, $basePrice - $saleDisc);
-                    $product['trade_price'] = $product['price'];
+                    http_response_code(403);
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
+                    ], JSON_PRETTY_PRINT);
+                    exit;
                 }
+                $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
+                $product['price'] = max(0, $basePrice - $saleDisc);
+                $product['trade_price'] = $product['price'];
             } else {
                 if ($userRole === 'reseller') {
                     $basePrice = (float)($product['reseller_price'] ?? $product['retail_price'] ?? 0);
@@ -309,7 +318,15 @@ try {
         $criteria['max_price'] = $maxPrice;
     }
 
+    $criteria['role'] = $userRole;
     $products = ProductCatalog::filter($criteria);
+
+    // Completely omit full_set products for non-trade roles (Guest, Customer, Reseller)
+    if (!$isTradeRole) {
+        $products = array_values(array_filter($products, function($p) {
+            return ($p['selling_type'] ?? 'single_piece') !== 'full_set';
+        }));
+    }
 
     // Apply role-based price filtering
     $products = array_map(function($p) use ($userRole, $isTradeRole) {
@@ -317,18 +334,9 @@ try {
         
         // Determine the correct price for this user role
         if ($p['selling_type'] === 'full_set') {
-            // Full set products only visible to trade roles
-            if (!$isTradeRole) {
-                $p['price'] = null;
-                $p['trade_price'] = null;
-                $p['wholesale_price'] = null;
-                $p['reseller_price'] = null;
-                $p['customer_price'] = null;
-            } else {
-                $basePrice = (float)($p['wholesale_price'] ?? $p['retail_price'] ?? 0);
-                $p['price'] = max(0, $basePrice - $saleDisc);
-                $p['trade_price'] = $p['price'];
-            }
+            $basePrice = (float)($p['wholesale_price'] ?? $p['retail_price'] ?? 0);
+            $p['price'] = max(0, $basePrice - $saleDisc);
+            $p['trade_price'] = $p['price'];
         } else {
             // Single piece - role-based pricing
             if ($userRole === 'reseller') {

@@ -54,14 +54,24 @@ if (!$product) {
 require_once __DIR__ . '/src/Auth.php';
 $pdpUser = \DTBrand\Auth::getCurrentUser();
 $pdpUserRole = strtolower(trim((string)($pdpUser['type'] ?? 'guest')));
-if ($pdpUserRole === '' || $pdpUserRole === 'customer') { $pdpUserRole = 'retail'; }
-if (!in_array($pdpUserRole, ['retail', 'wholesale', 'reseller', 'retailer'], true)) {
-    $pdpUserRole = 'retail';
-}
-$isTradeRole = in_array($pdpUserRole, ['wholesale', 'retailer'], true);
+if ($pdpUserRole === 'wholesaler') { $pdpUserRole = 'wholesale'; }
+if ($pdpUserRole === '' || $pdpUserRole === 'retail') { $pdpUserRole = 'customer'; }
+
+$isAdmin = \DTBrand\Auth::isAdminLoggedIn();
+$isWholesale = ($pdpUserRole === 'wholesale');
+$isRetailer = ($pdpUserRole === 'retailer');
+$isReseller = ($pdpUserRole === 'reseller');
+$isTradeRole = ($isAdmin || $isWholesale || $isRetailer);
 
 $pSellingType = $product['selling_type'] ?? 'single_piece';
 $isFullSetProduct = ($pSellingType === 'full_set');
+
+// Strict Role Visibility Check: Full Set is accessible ONLY to Retailers, Wholesalers & Admins
+if ($isFullSetProduct && !$isTradeRole) {
+    http_response_code(403);
+    header('Location: /shop.php?restricted=full_set');
+    exit;
+}
 
 $pSaleDisc = (float)($product['sale_discount'] ?? ($product['sale_price'] ?? 0));
 
@@ -442,52 +452,96 @@ function pdp_relative_date(string $ts): string
             </div>
 
             <?php if ($isFullSetProduct): ?>
-                <?php if (!$isTradeRole): ?>
-                <!-- B2B Wholesale Exclusive Lock Card for Guest / Customer / Reseller -->
-                <div class="pdp-fullset-lock-card" style="background:#FAF8F2; border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; margin:14px 0;">
-                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                        <span style="display:inline-flex; align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg></span>
-                        <strong style="font-size:13px; color:#5A4210; text-transform:uppercase; letter-spacing:0.5px;">B2B Trade Full Set Exclusive</strong>
-                    </div>
-                    <p style="font-size:12px; color:#64748B; margin:0 0 12px; line-height:1.5;">
-                        This product is sold as a Complete Catalog Set (<?= $fullSetPieces ?> pieces) exclusively to verified <strong>Retailers &amp; Wholesalers</strong>. Retail customer purchasing is not available for full sets.
-                    </p>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <a href="/account?tab=b2b_apply" class="dt-btn dt-btn-gold" style="padding:7px 16px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-                            <span>Apply for Wholesale Account</span>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
-                        <a href="/account" class="dt-btn dt-btn-pale" style="padding:7px 16px; font-size:12px; text-decoration:none;">Sign In as Trade Partner</a>
-                    </div>
-                </div>
-                <?php else: ?>
-                <!-- Full Set Trade Breakdown Card for Retailer / Wholesaler -->
-                <div class="pdp-fullset-trade-card" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; color:#FAF5E8; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.35); padding-bottom:10px; margin-bottom:10px;">
+                <!-- Full Set MCQ Selection Card for Retailer / Wholesaler -->
+                <div class="pdp-mcq-fullset-section" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; color:#FAF5E8; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.35); padding-bottom:10px; margin-bottom:12px;">
                         <div style="display:flex; align-items:center; gap:8px;">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                            <strong style="font-size:13px; color:#FFE57F; letter-spacing:0.5px;">FULL SET INCLUSIONS (<?= $fullSetPieces ?> PIECES)</strong>
+                            <strong style="font-size:13px; color:#FFE57F; letter-spacing:0.5px;">B2B TRADE FULL SET (<?= $fullSetPieces ?> PIECES)</strong>
                         </div>
                         <span class="adm-badge gold" style="font-size:11px; padding:3px 10px;"><?= count($pColors) ?> Colors &bull; <?= $fullSetPieces ?> Pieces Total</span>
                     </div>
                     <div style="font-size:11px; color:#D6D3D1; margin-bottom:10px;">
-                        The Full Set bundle contains all <?= $fullSetPieces ?> configured Color &times; Size combinations. Set rate: <strong>₹<?= number_format($fullSetTotalRate) ?></strong> (₹<?= number_format($pPrice) ?> / piece):
+                        The Complete Catalog Set contains all <?= $fullSetPieces ?> configured Color &times; Size combinations. Set rate: <strong>₹<?= number_format($fullSetTotalRate) ?></strong> (₹<?= number_format($pPrice) ?> / piece):
                     </div>
-                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:6px; max-height:140px; overflow-y:auto; padding-right:4px;">
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:6px; max-height:160px; overflow-y:auto; padding-right:4px; margin-bottom:10px;">
                         <?php foreach ($product['full_set_variants'] ?? $product['variants'] as $fsv): ?>
-                        <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:4px; padding:4px 8px; font-size:11px;">
+                        <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:4px; padding:6px 8px; font-size:11px;">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span style="width:8px; height:8px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($fsv['color'] ?? '')) ?>; display:inline-block; border:1px solid #fff;"></span>
                             <strong style="color:#FAF5E8;"><?= htmlspecialchars($fsv['color'] ?? 'Standard') ?></strong>
                             <span style="color:#D4AF37;">/</span>
                             <span style="color:#D6D3D1;"><?= htmlspecialchars($fsv['size'] ?? 'Standard') ?></span>
+                            <?php if (!empty($fsv['sku'])): ?>
+                            <small style="color:#A8A29E; font-size:9.5px; margin-left:auto;"><?= htmlspecialchars($fsv['sku']) ?></small>
+                            <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
                     </div>
+                    <input type="hidden" name="pdp_selected_type" id="pdpSelectedType" value="full_set" />
                 </div>
-                <?php endif; ?>
+            <?php elseif ($isWholesale): ?>
+                <!-- Single Piece Mode for Wholesaler: Real Variant MCQ Selection -->
+                <div class="pdp-mcq-section" style="margin:16px 0;">
+                    <div class="pdp-section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span class="pdp-label-head" style="font-size:12px; font-weight:800; color:#5A4210; text-transform:uppercase; letter-spacing:0.5px;">
+                            SELECT VARIANT (WHOLESALE MCQ):
+                        </span>
+                        <span style="font-size:11px; color:#8A681F; font-weight:700;"><?= count($product['variants'] ?? []) ?> Available Variants</span>
+                    </div>
+                    <div class="pdp-mcq-grid" id="pdpMcqGrid" style="display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto; padding-right:4px;">
+                        <?php 
+                        $pVariants = $product['variants'] ?? [];
+                        if (empty($pVariants) && (!empty($pColors) || !empty($pSizes))) {
+                            $pVariants = [[
+                                'id' => 0,
+                                'color' => $pColors[0] ?? 'Standard',
+                                'size' => $pSizes[0] ?? 'Free Size',
+                                'sku' => $pSku,
+                                'stock_qty' => $pStockQty,
+                                'price' => $pPrice
+                            ]];
+                        }
+                        foreach ($pVariants as $vIdx => $vItem): 
+                            $vId = (int)($vItem['id'] ?? $vItem['variant_id'] ?? 0);
+                            $vColor = (string)($vItem['color'] ?? 'Standard');
+                            $vSize = (string)($vItem['size'] ?? 'Standard');
+                            $vSku = (string)($vItem['sku'] ?? $pSku);
+                            $vStock = (int)($vItem['stock_qty'] ?? 10);
+                            $vRate = isset($vItem['wholesale_price']) && (float)$vItem['wholesale_price'] > 0 ? (float)$vItem['wholesale_price'] : $pPrice;
+                        ?>
+                        <label class="pdp-mcq-card <?= $vIdx === 0 ? 'active' : '' ?>" style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border:1.5px solid <?= $vIdx === 0 ? '#8A681F' : '#E2E8F0' ?>; background:<?= $vIdx === 0 ? '#FAF8F2' : '#FFFFFF' ?>; border-radius:8px; cursor:pointer; transition:all 0.2s ease;">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="radio" name="pdp_variant_mcq" value="<?= $vId ?>" 
+                                       data-variant-id="<?= $vId ?>"
+                                       data-sku="<?= htmlspecialchars($vSku) ?>"
+                                       data-color="<?= htmlspecialchars($vColor) ?>"
+                                       data-size="<?= htmlspecialchars($vSize) ?>"
+                                       data-stock="<?= $vStock ?>"
+                                       data-price="<?= $vRate ?>"
+                                       <?= $vIdx === 0 ? 'checked' : '' ?>
+                                       onchange="selectPdpMcqVariant(this)"
+                                       style="accent-color:#8A681F; width:14px; height:14px; margin:0; cursor:pointer;">
+                                <span style="width:12px; height:12px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($vColor)) ?>; display:inline-block; border:1px solid #c4c4c4;"></span>
+                                <div style="display:flex; flex-direction:column; gap:1px;">
+                                    <strong style="font-size:12px; color:#181512;"><?= htmlspecialchars($vColor) ?> &bull; <?= htmlspecialchars($vSize) ?></strong>
+                                    <small style="font-size:10px; color:#64748B;">SKU: <?= htmlspecialchars($vSku) ?></small>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <?php if ($vStock > 0): ?>
+                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:2px 6px; font-weight:700; border-radius:3px;"><?= $vStock ?> in stock</span>
+                                <?php else: ?>
+                                <span class="adm-badge" style="background:#FEF2F2; color:#DC2626; font-size:10px; padding:2px 6px; font-weight:700; border-radius:3px;">Out of stock</span>
+                                <?php endif; ?>
+                                <strong style="font-size:12.5px; color:#8A681F;">₹<?= number_format($vRate) ?></strong>
+                            </div>
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             <?php else: ?>
-                <!-- Single Piece Mode: Colour Swatches -->
+                <!-- Single Piece Mode: Colour Swatches & Size Grid (Guest, Customer, Reseller, Retailer) -->
                 <?php if ($pColors !== []): ?>
                 <div class="pdp-color-section">
                     <div class="pdp-section-header">

@@ -20,7 +20,7 @@ try {
     $rawInput = file_get_contents('php://input');
     $data = json_decode($rawInput, true) ?: $_POST;
 
-    $items = $data['items'] ?? [];
+    $items = $data['items'] ?? ($data['cart'] ?? []);
     $rawUserType = strtolower(trim((string)($data['user_type'] ?? 'retail')));
     if ($rawUserType === 'customer' || $rawUserType === 'guest' || $rawUserType === '') {
         $userType = 'retail';
@@ -71,18 +71,22 @@ try {
             $validatedItems[] = [
                 'id' => $p['id'],
                 'product_id' => $p['id'],
+                'variant_id' => null,
+                'product_type' => 'full_set',
+                'selling_type' => 'full_set',
                 'name' => $p['name'],
                 'sku' => $p['sku'],
                 'image' => $p['image'],
-                'selling_type' => 'full_set',
                 'lot_type' => 'full_set',
                 'full_set_pieces' => $fullSetPieces,
                 'color' => 'All Configured Colors (' . count($p['colors']) . ')',
                 'size' => 'All Configured Sizes (' . count($p['sizes']) . ')',
                 'qty' => $qty,
+                'quantity' => $qty,
                 'pieces_count' => $totalPhysicalPieces,
                 'unit_price' => $unitPrice,
                 'set_price' => round($unitPrice * $fullSetPieces, 2),
+                'subtotal' => $itemTotal,
                 'total_price' => $itemTotal
             ];
         } else {
@@ -102,19 +106,52 @@ try {
             $subtotal += $itemTotal;
             $totalQty += $qty;
 
+            $chosenColor = trim((string)($item['color'] ?? ($p['colors'][0] ?? $p['color'] ?? '')));
+            $chosenSize = trim((string)($item['size'] ?? ($p['size'][0] ?? 'Free Size')));
+            $reqVarId = !empty($item['variant_id']) ? (int)$item['variant_id'] : 0;
+
+            // Resolve exact variant from DB variants array
+            $matchedVariant = null;
+            $variants = $p['variants'] ?? [];
+            if ($reqVarId > 0) {
+                foreach ($variants as $v) {
+                    if ((int)($v['id'] ?? 0) === $reqVarId) {
+                        $matchedVariant = $v;
+                        break;
+                    }
+                }
+            }
+            if (!$matchedVariant && ($chosenColor !== '' || $chosenSize !== '')) {
+                foreach ($variants as $v) {
+                    if (strcasecmp($v['color'], $chosenColor) === 0 && strcasecmp($v['size'], $chosenSize) === 0) {
+                        $matchedVariant = $v;
+                        break;
+                    }
+                }
+            }
+
+            $varId = $matchedVariant ? (int)($matchedVariant['id'] ?? 0) : ($reqVarId > 0 ? $reqVarId : null);
+            $itemSku = ($matchedVariant && !empty($matchedVariant['sku'])) ? $matchedVariant['sku'] : $p['sku'];
+            $itemColor = $matchedVariant ? $matchedVariant['color'] : $chosenColor;
+            $itemSize = $matchedVariant ? $matchedVariant['size'] : $chosenSize;
+
             $validatedItems[] = [
                 'id' => $p['id'],
                 'product_id' => $p['id'],
-                'name' => $p['name'],
-                'sku' => $p['sku'],
-                'image' => $p['image'],
+                'variant_id' => $varId,
+                'product_type' => 'single_piece',
                 'selling_type' => 'single_piece',
-                'color' => $item['color'] ?? ($p['colors'][0] ?? $p['color']),
-                'size' => $item['size'] ?? ($p['size'][0] ?? 'Free Size'),
+                'name' => $p['name'],
+                'sku' => $itemSku,
+                'image' => $p['image'],
+                'color' => $itemColor,
+                'size' => $itemSize,
                 'lot_type' => 'single',
                 'qty' => $qty,
+                'quantity' => $qty,
                 'pieces_count' => $qty,
                 'unit_price' => $unitPrice,
+                'subtotal' => $itemTotal,
                 'total_price' => $itemTotal
             ];
         }
@@ -150,6 +187,7 @@ try {
         'item_count' => count($validatedItems),
         'total_qty' => $totalQty,
         'items' => $validatedItems,
+        'cart' => $validatedItems,
         'pricing' => $calc,
         'free_shipping' => $qualifiesFree,
         'free_shipping_threshold' => $shipFreeAt,

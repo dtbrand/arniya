@@ -626,16 +626,33 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         }
 
         var imgPath = product.image || product.img || (Array.isArray(product.images) && product.images[0]) || '/assets/images/product1.png';
+        var pVariantId = (product && product.variant_id) ? parseInt(product.variant_id) : (typeof size === 'object' && size && size.variant_id ? parseInt(size.variant_id) : null);
+        var pProdId = parseInt(product.product_id || product.id);
+        var pSku = (product && product.sku) || (typeof size === 'object' && size && size.sku ? size.sku : '') || '';
+        var pType = product.product_type || (product.selling_type === 'set' ? 'full_set' : 'single_piece');
+        var pSellingType = product.selling_type || (pType === 'full_set' ? 'set' : 'single');
 
         var existing = window.cartState.find(function(item) {
-            return (String(item.id) === String(product.id)) && item.size == chosenSize && item.color == chosenColor;
+            if (pVariantId && item.variant_id) {
+                return parseInt(item.variant_id) === pVariantId;
+            }
+            return (parseInt(item.id || item.product_id) === pProdId) && item.size == chosenSize && item.color == chosenColor;
         });
 
         if (existing) {
             existing.qty += addQty;
+            if (pVariantId && !existing.variant_id) existing.variant_id = pVariantId;
+            if (pSku && !existing.sku) existing.sku = pSku;
+            if (pType && !existing.product_type) existing.product_type = pType;
+            if (pSellingType && !existing.selling_type) existing.selling_type = pSellingType;
         } else {
             window.cartState.push({
-                id: product.id,
+                id:           pProdId,
+                product_id:   pProdId,
+                variant_id:   pVariantId,
+                product_type: pType,
+                selling_type: pSellingType,
+                sku:          pSku,
                 name: product.name || product.title || 'Ethnic Attire',
                 price: parseInt(String(product.price).replace(/[^0-9]/g, ''), 10) || 2999,
                 old_price: product.old_price ? parseInt(String(product.old_price).replace(/[^0-9]/g, ''), 10) : null,

@@ -89,21 +89,44 @@
             // Fallback: read from data attributes on card
             p = { id: productIdOrObj, name: 'Product #' + productIdOrObj, price: 0, image: '/assets/images/product1.png' };
         }
-        qty = qty || 1;
+        qty = qty || (p.qty ? parseInt(p.qty) : 1);
+        var pSize = size || p.size || '';
+        var pColor = color || p.color || '';
+        var pVariantId = p.variant_id ? parseInt(p.variant_id) : null;
+        var pProdId = parseInt(p.product_id || p.id);
+        var pSku = p.sku || '';
+        var pType = p.product_type || (p.selling_type === 'set' ? 'full_set' : 'single_piece');
+        var pSellingType = p.selling_type || (pType === 'full_set' ? 'set' : 'single');
+
         var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
-        var idx  = cart.findIndex(function(x) { return parseInt(x.id) === parseInt(p.id) && (x.size || '') === (size || '') && (x.color || '') === (color || ''); });
+        var idx  = cart.findIndex(function(x) {
+            if (pVariantId && x.variant_id) {
+                return parseInt(x.variant_id) === pVariantId;
+            }
+            return parseInt(x.id || x.product_id) === pProdId && (x.size || '') === pSize && (x.color || '') === pColor;
+        });
+
         if (idx >= 0) {
             cart[idx].qty = (parseInt(cart[idx].qty) || 1) + qty;
+            if (pVariantId && !cart[idx].variant_id) cart[idx].variant_id = pVariantId;
+            if (pSku && !cart[idx].sku) cart[idx].sku = pSku;
+            if (pType && !cart[idx].product_type) cart[idx].product_type = pType;
+            if (pSellingType && !cart[idx].selling_type) cart[idx].selling_type = pSellingType;
         } else {
             cart.push({
-                id:    parseInt(p.id),
-                name:  p.name || p.title || 'Ethnic Wear',
-                price: parseFloat(p.price || p.selling_price || 0),
-                old_price: parseFloat(p.old_price || p.mrp || 0),
-                image: p.image || p.img || p.thumbnail || '/assets/images/product1.png',
-                size:  size  || p.size  || '',
-                color: color || p.color || '',
-                qty:   qty
+                id:           pProdId,
+                product_id:   pProdId,
+                variant_id:   pVariantId,
+                product_type: pType,
+                selling_type: pSellingType,
+                sku:          pSku,
+                name:         p.name || p.title || 'Ethnic Wear',
+                price:        parseFloat(p.price || p.selling_price || 0),
+                old_price:    parseFloat(p.old_price || p.mrp || 0),
+                image:        p.image || p.img || p.thumbnail || '/assets/images/product1.png',
+                size:         pSize,
+                color:        pColor,
+                qty:          qty
             });
         }
         localStorage.setItem('dtbrands_cart', JSON.stringify(cart));

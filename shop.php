@@ -7,12 +7,22 @@
 
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
+use DTBrand\Auth;
 
-// ── Dynamic Database-First Catalog Loader ──
-$allProducts = ProductCatalog::getAll();
+// ── Dynamic Database-First Catalog Loader with Role-Based Visibility ──
+$currentUser = Auth::getCurrentUser();
+$currentUserRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $currentUserRole = 'admin';
+} elseif ($currentUser) {
+    $currentUserRole = strtolower(trim((string)($currentUser['type'] ?? ($currentUser['role'] ?? 'customer'))));
+}
+
+$allProducts = ProductCatalog::getForRole($currentUserRole);
 $products = $allProducts;
 
 $selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : (isset($_GET['cat']) ? trim($_GET['cat']) : '');
@@ -62,6 +72,21 @@ $total_products = count($products);
 
 <!-- ════════════ PAGE ════════════ -->
 <div class="page-wrapper">
+
+    <?php if (isset($_GET['restricted']) && $_GET['restricted'] === 'full_set'): ?>
+    <div style="max-width: 1200px; margin: 16px auto 0; padding: 14px 20px; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 1.5px solid #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 14px; box-shadow: 0 4px 15px rgba(212,175,55,0.15);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <div>
+                <strong style="color: #111827; font-size: 0.92rem; display: block; font-family: 'Inter', sans-serif;">Wholesale Full Set Notice</strong>
+                <span style="color: #5A4210; font-size: 0.82rem; font-family: 'Inter', sans-serif;">Full Set catalog lots are exclusively available to verified Retail &amp; Wholesale partners. Please sign in with a wholesale account to access lot orders.</span>
+            </div>
+        </div>
+        <a href="/login.php" class="dt-btn dt-btn-gold" style="padding: 8px 18px; font-size: 0.8rem; text-decoration: none; white-space: nowrap;">Partner Sign In</a>
+    </div>
+    <?php endif; ?>
 
     <!-- ════ HERO PROMO BANNER SLIDER (Positioned above round sub-categories) ════ -->
     <section class="hero-banner-section" aria-label="Featured Collections">

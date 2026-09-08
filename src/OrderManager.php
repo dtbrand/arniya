@@ -532,8 +532,14 @@ class OrderManager
                 $hasVariantCols = self::tableHasColumn($pdo, 'order_items', 'variant_color')
                     && self::tableHasColumn($pdo, 'order_items', 'variant_size');
                 $hasSellingTypeCol = self::tableHasColumn($pdo, 'order_items', 'selling_type');
+                $hasVariantIdCol = self::tableHasColumn($pdo, 'order_items', 'variant_id');
 
-                if ($hasVariantCols && $hasSellingTypeCol) {
+                if ($hasVariantCols && $hasSellingTypeCol && $hasVariantIdCol) {
+                    $itemStmt = $pdo->prepare("
+                        INSERT INTO order_items (order_id, product_id, variant_id, product_title, sku, selling_type, variant_color, variant_size, unit_price, quantity, total_price)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ");
+                } elseif ($hasVariantCols && $hasSellingTypeCol) {
                     $itemStmt = $pdo->prepare("
                         INSERT INTO order_items (order_id, product_id, product_title, sku, selling_type, variant_color, variant_size, unit_price, quantity, total_price)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -552,6 +558,12 @@ class OrderManager
 
                 $stockStmt = $pdo->prepare("
                     UPDATE products
+                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    WHERE id = ?
+                ");
+
+                $variantByIdStockStmt = $pdo->prepare("
+                    UPDATE product_variants
                     SET stock_qty = GREATEST(0, stock_qty - ?)
                     WHERE id = ?
                 ");
@@ -585,7 +597,9 @@ class OrderManager
                         $vColor = 'All Configured Colors';
                         $vSize  = 'All Configured Sizes';
 
-                        if ($hasVariantCols && $hasSellingTypeCol) {
+                        if ($hasVariantCols && $hasSellingTypeCol && $hasVariantIdCol) {
+                            $itemStmt->execute([$dbOrderId, $prodId, null, $prodTitle, $prodSku, 'full_set', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } elseif ($hasVariantCols && $hasSellingTypeCol) {
                             $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, 'full_set', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
                         } elseif ($hasVariantCols) {
                             $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
@@ -601,8 +615,20 @@ class OrderManager
                         $totalItemPrice = round($unitPrice * $qty, 2);
                         $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
                         $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['free size', 'one size']);
+                        $varId  = !empty($it['variant_id']) ? (int)$it['variant_id'] : null;
 
-                        if ($hasVariantCols && $hasSellingTypeCol) {
+                        if (!$varId && !empty($it['variants']) && is_array($it['variants'])) {
+                            foreach ($it['variants'] as $vCandidate) {
+                                if (strcasecmp((string)($vCandidate['color_name'] ?? ''), $vColor) === 0 && strcasecmp((string)($vCandidate['size_name'] ?? ''), $vSize) === 0) {
+                                    $varId = (int)$vCandidate['id'];
+                                    break;
+                                }
+                            }
+                        }
+
+                        if ($hasVariantCols && $hasSellingTypeCol && $hasVariantIdCol) {
+                            $itemStmt->execute([$dbOrderId, $prodId, $varId, $prodTitle, $prodSku, 'single_piece', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } elseif ($hasVariantCols && $hasSellingTypeCol) {
                             $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, 'single_piece', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
                         } elseif ($hasVariantCols) {
                             $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
@@ -613,8 +639,10 @@ class OrderManager
                         // Decrement products table stock
                         $stockStmt->execute([$qty, $prodId]);
 
-                        // Decrement specific variant stock if color & size were specified
-                        if ($vColor !== '' && $vSize !== '') {
+                        // Decrement specific variant stock by ID if present, otherwise by color & size
+                        if ($varId && $varId > 0) {
+                            $variantByIdStockStmt->execute([$qty, $varId]);
+                        } elseif ($vColor !== '' && $vSize !== '') {
                             $variantStockStmt->execute([$qty, $prodId, $vColor, $vSize]);
                         }
                     }
