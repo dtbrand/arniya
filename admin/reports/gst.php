@@ -27,7 +27,7 @@ if ($liveDb) {
                    COALESCE(c.city, 'Surat') as customer_city
             FROM orders o
             LEFT JOIN customers c ON o.customer_id = c.id
-            WHERE o.fulfillment_status != 'cancelled'
+            WHERE COALESCE(o.fulfillment_status, o.order_status, 'processing') != 'cancelled'
             ORDER BY o.id DESC
         ");
 
@@ -67,7 +67,7 @@ if ($liveDb) {
             FROM order_items oi
             JOIN orders o ON oi.order_id = o.id
             LEFT JOIN products p ON oi.product_id = p.id
-            WHERE o.fulfillment_status != 'cancelled'
+            WHERE COALESCE(o.fulfillment_status, o.order_status, 'processing') != 'cancelled'
             GROUP BY hsn, category
             ORDER BY total_val DESC
         ");
@@ -129,6 +129,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'gstr1') {
 
 $page_title = "GST Tax Computation & GSTR-1 Filing";
 $active_nav = "reports";
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -204,22 +205,22 @@ $active_nav = "reports";
             <div class="dt-gst-kpi-grid">
                 <div class="dt-gst-kpi-card">
                     <div class="dt-gst-kpi-label">Total Taxable Turnover</div>
-                    <div class="dt-gst-kpi-val" style="color:#181512;">₹<?= number_format($totalTaxable) ?></div>
+                    <div class="dt-gst-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($totalTaxable) ?></div>
                     <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">Live Recorded Orders</div>
                 </div>
                 <div class="dt-gst-kpi-card">
                     <div class="dt-gst-kpi-label">Total GST Liability (5%)</div>
-                    <div class="dt-gst-kpi-val" style="color:#8A681F;">₹<?= number_format($totalGst) ?></div>
+                    <div class="dt-gst-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($totalGst) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">GST Rate 5% Handloom</div>
                 </div>
                 <div class="dt-gst-kpi-card">
                     <div class="dt-gst-kpi-label">Central &amp; State GST (CGST + SGST)</div>
-                    <div class="dt-gst-kpi-val" style="color:#181512;">₹<?= number_format($totalCgst + $totalSgst) ?></div>
+                    <div class="dt-gst-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($totalCgst + $totalSgst) ?></div>
                     <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">Intrastate Gujarat Dispatches</div>
                 </div>
                 <div class="dt-gst-kpi-card">
                     <div class="dt-gst-kpi-label">Integrated GST (IGST 5%)</div>
-                    <div class="dt-gst-kpi-val" style="color:#181512;">₹<?= number_format($totalIgst) ?></div>
+                    <div class="dt-gst-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($totalIgst) ?></div>
                     <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">Interstate Dispatches</div>
                 </div>
             </div>
@@ -254,9 +255,9 @@ $active_nav = "reports";
                                         <td><strong><?= htmlspecialchars($r['desc']) ?></strong></td>
                                         <td><?= htmlspecialchars($r['uqc']) ?></td>
                                         <td><?= number_format($r['qty']) ?></td>
-                                        <td>₹<?= number_format($r['taxable'], 2) ?></td>
+                                        <td><?= $rupeeSvg ?> <?= number_format($r['taxable'], 2) ?></td>
                                         <td><span class="adm-badge gold"><?= htmlspecialchars($r['rate']) ?></span></td>
-                                        <td style="text-align:right;"><strong style="color:#8A681F;">₹<?= number_format($r['tax_amount'], 2) ?></strong></td>
+                                        <td style="text-align:right;"><strong style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($r['tax_amount'], 2) ?></strong></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>

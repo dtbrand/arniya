@@ -12,7 +12,7 @@ $pdo = Database::getConnection();
 $grossRevenue = 0.0;
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $stmt = $pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE fulfillment_status != 'cancelled'");
+        $stmt = $pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE COALESCE(fulfillment_status, order_status, 'processing') != 'cancelled'");
         $grossRevenue = (float)$stmt->fetchColumn();
     } catch (\Throwable $e) {
         error_log("Revenue query error: " . $e->getMessage());
@@ -22,6 +22,7 @@ if ($pdo !== null && !Database::isMockMode()) {
 $cogs = round($grossRevenue * 0.65, 2);
 $grossProfit = round($grossRevenue * 0.35, 2);
 $netProfit = round($grossRevenue * 0.27, 2);
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 
 if (isset($_GET['download']) && $_GET['download'] === 'pnl') {
     header('Content-Type: text/csv; charset=utf-8');
@@ -117,22 +118,22 @@ $active_nav = "reports";
             <div class="dt-pnl-kpi-grid">
                 <div class="dt-pnl-kpi-card">
                     <div class="dt-pnl-kpi-label">Gross Revenue</div>
-                    <div class="dt-pnl-kpi-val" style="color:#181512;">₹<?= number_format($grossRevenue) ?></div>
+                    <div class="dt-pnl-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($grossRevenue) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">Live Reconciled Sales</div>
                 </div>
                 <div class="dt-pnl-kpi-card">
                     <div class="dt-pnl-kpi-label">COGS &amp; Mill Production</div>
-                    <div class="dt-pnl-kpi-val" style="color:#B45309;">₹<?= number_format($cogs) ?></div>
+                    <div class="dt-pnl-kpi-val" style="color:#B45309;"><?= $rupeeSvg ?> <?= number_format($cogs) ?></div>
                     <div style="font-size:0.72rem; color:#78716C; margin-top:2px;">65.0% Manufacturing Base</div>
                 </div>
                 <div class="dt-pnl-kpi-card">
                     <div class="dt-pnl-kpi-label">Gross Margin (35%)</div>
-                    <div class="dt-pnl-kpi-val" style="color:#8A681F;">₹<?= number_format($grossProfit) ?></div>
+                    <div class="dt-pnl-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($grossProfit) ?></div>
                     <div style="font-size:0.72rem; color:#8A681F; margin-top:2px; font-weight:700;">Direct Loom Margin</div>
                 </div>
                 <div class="dt-pnl-kpi-card">
                     <div class="dt-pnl-kpi-label">Net Retained Profit (27%)</div>
-                    <div class="dt-pnl-kpi-val" style="color:#15803D;">₹<?= number_format($netProfit) ?></div>
+                    <div class="dt-pnl-kpi-val" style="color:#15803D;"><?= $rupeeSvg ?> <?= number_format($netProfit) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">Net Free Cash Flow</div>
                 </div>
             </div>
@@ -141,7 +142,7 @@ $active_nav = "reports";
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                         <span>Comprehensive Profit &amp; Loss Statement</span>
                     </h3>
                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">Audited &amp; Reconciled</span>
@@ -161,49 +162,49 @@ $active_nav = "reports";
                                 <td><span class="adm-badge gold" style="font-weight:800;">Revenue</span></td>
                                 <td><strong>Gross Saree &amp; Textile Sales (B2B + D2C)</strong></td>
                                 <td>100.0%</td>
-                                <td style="text-align:right;"><strong style="font-size:13.5px; color:#181512;">₹<?= number_format($grossRevenue) ?></strong></td>
+                                <td style="text-align:right;"><strong style="font-size:13.5px; color:#181512;"><?= $rupeeSvg ?> <?= number_format($grossRevenue) ?></strong></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
                                 <td>Pure Mulberry &amp; Katan Silk Raw Yarn Lots</td>
                                 <td>43.0%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.43)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.43)) ?></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
                                 <td>Tested Gold &amp; Silver Zari Spool Procurement</td>
                                 <td>12.0%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.12)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.12)) ?></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
                                 <td>Surat Loom Weaving &amp; Korvai Artisanal Wages</td>
                                 <td>10.0%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.10)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.10)) ?></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
                                 <td>Delhivery / BlueDart Express Logistics &amp; Freight</td>
                                 <td>4.5%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.045)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.045)) ?></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
                                 <td>Gold Foil Gift Box Packaging &amp; Silk Mark Certification</td>
                                 <td>1.5%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.015)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.015)) ?></td>
                             </tr>
                             <tr>
                                 <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
                                 <td>Payment Gateway (Razorpay) &amp; Bank IMPS Fees</td>
                                 <td>2.0%</td>
-                                <td style="text-align:right; color:#78716C;">-₹<?= number_format(round($grossRevenue * 0.020)) ?></td>
+                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.020)) ?></td>
                             </tr>
                             <tr style="background:#FAF5E8; border-top:2px solid #D4AF37;">
                                 <td><span class="adm-badge gold" style="font-size:12px; font-weight:900;">NET SURPLUS</span></td>
                                 <td><strong style="color:#8A681F; font-size:13.5px;">EBITDA Net Retained Profit</strong></td>
                                 <td><strong>27.0%</strong></td>
-                                <td style="text-align:right;"><strong style="color:#15803D; font-size:14px;">₹<?= number_format($netProfit) ?></strong></td>
+                                <td style="text-align:right;"><strong style="color:#15803D; font-size:14px;"><?= $rupeeSvg ?> <?= number_format($netProfit) ?></strong></td>
                             </tr>
                         </tbody>
                     </table>

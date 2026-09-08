@@ -29,7 +29,7 @@ if ($liveDb) {
                    COUNT(*) as cnt, 
                    COALESCE(SUM(total_amount), 0) as rev 
             FROM orders 
-            WHERE fulfillment_status != 'cancelled' 
+            WHERE COALESCE(fulfillment_status, order_status, 'processing') != 'cancelled' 
             GROUP BY ch 
             ORDER BY rev DESC
         ");
@@ -86,6 +86,7 @@ if ($liveDb) {
 }
 
 $blendedAov = $totalOrders > 0 ? round($totalRevenue / $totalOrders, 2) : 0.0;
+$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 
 if (isset($_GET['download']) && $_GET['download'] === 'sales') {
     header('Content-Type: text/csv; charset=utf-8');
@@ -187,28 +188,28 @@ $active_nav = "reports";
             <div class="dt-sales-kpi-grid">
                 <div class="dt-sales-kpi-card">
                     <div class="dt-sales-kpi-label">B2B Wholesale Revenue</div>
-                    <div class="dt-sales-kpi-val" style="color:#8A681F;">₹<?= number_format($b2bRevenue) ?></div>
+                    <div class="dt-sales-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($b2bRevenue) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">
                         <?= $totalRevenue > 0 ? round(($b2bRevenue / $totalRevenue) * 100, 1) : 0 ?>% of Total • <?= number_format($b2bCount) ?> Lots
                     </div>
                 </div>
                 <div class="dt-sales-kpi-card">
                     <div class="dt-sales-kpi-label">D2C Retail Storefront</div>
-                    <div class="dt-sales-kpi-val" style="color:#181512;">₹<?= number_format($d2cRevenue) ?></div>
+                    <div class="dt-sales-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($d2cRevenue) ?></div>
                     <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">
                         <?= $totalRevenue > 0 ? round(($d2cRevenue / $totalRevenue) * 100, 1) : 0 ?>% of Total • <?= number_format($d2cCount) ?> Orders
                     </div>
                 </div>
                 <div class="dt-sales-kpi-card">
                     <div class="dt-sales-kpi-label">WhatsApp Resellers</div>
-                    <div class="dt-sales-kpi-val" style="color:#15803D;">₹<?= number_format($resellerRevenue) ?></div>
+                    <div class="dt-sales-kpi-val" style="color:#15803D;"><?= $rupeeSvg ?> <?= number_format($resellerRevenue) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">
                         <?= number_format($resellerCount) ?> VIP Inquiries Converted
                     </div>
                 </div>
                 <div class="dt-sales-kpi-card">
                     <div class="dt-sales-kpi-label">Blended Average Order Value</div>
-                    <div class="dt-sales-kpi-val" style="color:#181512;">₹<?= number_format($blendedAov) ?></div>
+                    <div class="dt-sales-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($blendedAov) ?></div>
                     <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">Across <?= number_format($totalOrders) ?> Recorded Orders</div>
                 </div>
             </div>
@@ -247,7 +248,7 @@ $active_nav = "reports";
                                             <div style="font-size:11px; color:#64748B;"><?= htmlspecialchars($cs['subtitle']) ?></div>
                                         </td>
                                         <td><span class="adm-badge" style="background:<?= $cs['badge_bg'] ?>; color:<?= $cs['badge_color'] ?>; font-weight:700;"><?= number_format($cs['count']) ?> Orders</span></td>
-                                        <td><strong style="color:<?= $cs['color'] ?>; font-size:13.5px;">₹<?= number_format($cs['revenue']) ?></strong></td>
+                                        <td><strong style="color:<?= $cs['color'] ?>; font-size:13.5px;"><?= $rupeeSvg ?> <?= number_format($cs['revenue']) ?></strong></td>
                                         <td>
                                             <div style="display:flex; align-items:center; gap:8px;">
                                                 <div style="flex:1; height:6px; background:#EAE5D9; border-radius:3px; overflow:hidden; min-width:60px;">
@@ -256,7 +257,7 @@ $active_nav = "reports";
                                                 <span style="font-size:11.5px; font-weight:700;"><?= $share ?>%</span>
                                             </div>
                                         </td>
-                                        <td><strong>₹<?= number_format($aov) ?></strong></td>
+                                        <td><strong><?= $rupeeSvg ?> <?= number_format($aov) ?></strong></td>
                                         <td style="text-align:right;"><span style="color:#15803D; font-weight:800;">Active Stream</span></td>
                                     </tr>
                                 <?php endforeach; ?>
