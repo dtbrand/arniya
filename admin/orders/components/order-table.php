@@ -41,6 +41,11 @@ $orders_list = OrderManager::getAll();
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('confirmed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Confirmed</button>
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('packed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Packed</button>
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('shipped')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Shipped</button>
+        <!-- Bulk Permanent Delete Button -->
+        <button type="button" class="dt-btn" onclick="window.DT_BULK_ACTIONS.executeBulkDelete()" style="height:32px; padding:0 12px; font-size:11px; font-weight:800; background:#DC2626; color:#FFFFFF; border:1px solid #B91C1C; border-radius:6px; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(220,38,38,0.25); cursor:pointer;" title="Permanently Delete Selected Orders from Database">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            <span>Delete Selected</span>
+        </button>
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.clearSelection()" style="height:32px; padding:0 10px; font-size:11px; font-weight:700; color:#DC2626; display:inline-flex; align-items:center; gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>Deselect</span></button>
     </div>
 </div>
@@ -143,12 +148,10 @@ $orders_list = OrderManager::getAll();
                             <button type="button" class="dt-action-btn packing" onclick="window.DT_ORDER_VIEW.openShippingLabelModal('<?php echo $o['id']; ?>')" title="Print Courier Shipping Label & Box Barcode">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             </button>
-                            <!-- 5. Cancel / Trash Action Modal Popup -->
-                            <?php if ($o['status'] !== 'cancelled' && $o['status'] !== 'delivered'): ?>
-                            <button type="button" class="dt-action-btn danger" onclick="window.DT_ORDER_STATUS.openCancelModal('<?php echo $o['id']; ?>')" title="Cancel Consignment Popup">
+                            <!-- 5. Permanent Delete Action Modal Popup -->
+                            <button type="button" class="dt-action-btn danger" onclick="window.DT_ORDER_STATUS.openDeleteModal('<?php echo $o['id']; ?>')" title="Permanently Delete Order from Database">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                             </button>
-                            <?php endif; ?>
                         </div>
                     </td>
                 </tr>

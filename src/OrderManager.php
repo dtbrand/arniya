@@ -992,25 +992,116 @@ class OrderManager
     }
 
     /**
-     * Delete Order permanently
+     * Delete Order permanently along with line items, status history, and transactions
      */
     public static function deleteOrder($orderId): bool
     {
+        $orderId = trim((string)$orderId);
+        if ($orderId === '') {
+            return false;
+        }
+
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
             try {
+                // 1. Locate the exact numerical ID and order_number
+                $orderRow = null;
                 if (is_numeric($orderId)) {
-                    $stmt = $db->prepare("DELETE FROM orders WHERE id = ? OR order_number = ?");
-                    return $stmt->execute([(int)$orderId, (string)$orderId]);
+                    $stmt = $db->prepare("SELECT id, order_number FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
+                    $stmt->execute([(int)$orderId, $orderId]);
+                    $orderRow = $stmt->fetch(\PDO::FETCH_ASSOC);
                 } else {
-                    $stmt = $db->prepare("DELETE FROM orders WHERE order_number = ?");
-                    return $stmt->execute([(string)$orderId]);
+                    $stmt = $db->prepare("SELECT id, order_number FROM orders WHERE order_number = ? LIMIT 1");
+                    $stmt->execute([$orderId]);
+                    $orderRow = $stmt->fetch(\PDO::FETCH_ASSOC);
                 }
+
+                if (!$orderRow) {
+                    // Try direct delete by order_number or id anyway
+                    if (is_numeric($orderId)) {
+                        $del = $db->prepare("DELETE FROM orders WHERE id = ? OR order_number = ?");
+                        $del->execute([(int)$orderId, $orderId]);
+                    } else {
+                        $del = $db->prepare("DELETE FROM orders WHERE order_number = ?");
+                        $del->execute([$orderId]);
+                    }
+                    return true;
+                }
+
+                $numericId = (int)$orderRow['id'];
+                $orderNumber = (string)$orderRow['order_number'];
+
+                $inTransaction = false;
+                try {
+                    $db->beginTransaction();
+                    $inTransaction = true;
+                } catch (\Throwable $te) {
+                    $inTransaction = false;
+                }
+
+                // 2. Cascade delete order_items
+                try {
+                    $itStmt = $db->prepare("DELETE FROM order_items WHERE order_id = ?");
+                    $itStmt->execute([$numericId]);
+                } catch (\Throwable $ie) {
+                    error_log("deleteOrder items warning: " . $ie->getMessage());
+                }
+
+                // 3. Cascade delete order_status_history
+                try {
+                    $histStmt = $db->prepare("DELETE FROM order_status_history WHERE order_id = ?");
+                    $histStmt->execute([$numericId]);
+                } catch (\Throwable $he) {}
+
+                // 4. Cascade delete payment_transactions if any
+                try {
+                    $txStmt = $db->prepare("DELETE FROM payment_transactions WHERE order_id = ? OR order_number = ?");
+                    $txStmt->execute([$numericId, $orderNumber]);
+                } catch (\Throwable $txe) {}
+
+                // 5. Delete order from orders table
+                $stmt = $db->prepare("DELETE FROM orders WHERE id = ?");
+                $ok = $stmt->execute([$numericId]);
+
+                if ($inTransaction) {
+                    $db->commit();
+                }
+
+                return $ok;
             } catch (\Exception $e) {
+                if (isset($inTransaction) && $inTransaction && $db->inTransaction()) {
+                    $db->rollBack();
+                }
+                error_log("OrderManager::deleteOrder error: " . $e->getMessage());
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * Bulk Delete Orders permanently
+     */
+    public static function bulkDeleteOrders(array $orderIds): array
+    {
+        $deletedCount = 0;
+        $deletedIds = [];
+
+        foreach ($orderIds as $rawId) {
+            $id = trim((string)$rawId);
+            if ($id === '') continue;
+
+            if (self::deleteOrder($id)) {
+                $deletedCount++;
+                $deletedIds[] = $id;
+            }
+        }
+
+        return [
+            'success' => $deletedCount > 0 || empty($orderIds),
+            'deleted_count' => $deletedCount,
+            'deleted_ids' => $deletedIds
+        ];
     }
 }
 

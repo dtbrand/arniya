@@ -563,6 +563,129 @@
             if (window.DT_ORDERS) {
                 window.DT_ORDERS.showToast(`Exporting ${selectedOrders.length} selected orders to CSV/Excel...`);
             }
+        },
+
+        executeBulkDelete: function() {
+            const selectedOrders = this.getSelectedOrders();
+            if (selectedOrders.length === 0) {
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please select at least 1 order to delete');
+                return;
+            }
+
+            const modal = document.getElementById('bulkDeleteOrderModal');
+            if (modal) {
+                const countEl = document.getElementById('bulkDeleteCountText');
+                if (countEl) {
+                    countEl.textContent = `${selectedOrders.length} selected order${selectedOrders.length > 1 ? 's' : ''}`;
+                }
+                modal.style.display = 'flex';
+            }
+        },
+
+        closeBulkDeleteModal: function() {
+            const modal = document.getElementById('bulkDeleteOrderModal');
+            if (modal) modal.style.display = 'none';
+        },
+
+        confirmBulkDelete: function() {
+            const checkedBoxes = document.querySelectorAll('.dt-order-check:checked');
+            if (checkedBoxes.length === 0) {
+                this.closeBulkDeleteModal();
+                return;
+            }
+
+            const ids = [];
+            checkedBoxes.forEach(cb => {
+                const row = cb.closest('tr');
+                if (row) {
+                    const id = row.getAttribute('data-id') || row.querySelector('.dt-order-id-link')?.textContent?.trim();
+                    if (id) ids.push(id);
+                }
+            });
+
+            if (ids.length === 0) {
+                this.closeBulkDeleteModal();
+                return;
+            }
+
+            const modal = document.getElementById('bulkDeleteOrderModal');
+            const submitBtn = modal?.querySelector('.dt-btn[onclick*="confirmBulkDelete"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.6';
+                submitBtn.innerHTML = '<span class="dt-spin" style="display:inline-block; width:12px; height:12px; border:2px solid #FFF; border-top-color:transparent; border-radius:50%; animation:dtSpin 0.6s linear infinite;"></span> <span>Purging Records...</span>';
+            }
+
+            const dtAdminFetch = window.dtAdminFetch || fetch;
+
+            dtAdminFetch('/api/orders.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'bulk_delete',
+                    order_ids: ids
+                })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span>Permanently Delete Selected</span>';
+                }
+
+                if (res && res.success) {
+                    const deletedIds = (res.deleted_ids && res.deleted_ids.length > 0) ? res.deleted_ids : ids;
+
+                    // 1. Animate and remove all deleted rows from the DOM
+                    deletedIds.forEach(id => {
+                        const row = document.querySelector(`tr.dt-order-row[data-id="${id}"]`);
+                        const detailsRow = document.getElementById(`detailsRow_${id}`);
+                        if (row) {
+                            row.setAttribute('data-deleted', 'true');
+                            row.style.transition = 'all 0.3s ease';
+                            row.style.opacity = '0';
+                            row.style.transform = 'translateX(20px)';
+                            row.style.background = '#FEE2E2';
+                            setTimeout(() => {
+                                row.remove();
+                                if (detailsRow) detailsRow.remove();
+                            }, 300);
+                        } else if (detailsRow) {
+                            detailsRow.remove();
+                        }
+                    });
+
+                    // 2. Clear bulk selection state and reset bulk bar
+                    this.clearSelection();
+
+                    // 3. Synchronize in-memory orders and all page counters in real-time
+                    if (window.DT_ORDERS && typeof window.DT_ORDERS.syncCountersAfterDeletion === 'function') {
+                        window.DT_ORDERS.syncCountersAfterDeletion(deletedIds);
+                    }
+
+                    // 4. Close modal and show feedback toast
+                    this.closeBulkDeleteModal();
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast(`Successfully permanently deleted ${deletedIds.length} order(s) from live database.`);
+                    }
+                } else {
+                    const msg = (res && res.message) ? res.message : 'Bulk deletion failed.';
+                    alert('Error: ' + msg);
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast(`Bulk Delete Error: ${msg}`);
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Bulk delete error:', err);
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = '<span>Permanently Delete Selected</span>';
+                }
+                alert('Network error while performing bulk delete: ' + err.message);
+            });
         }
     };
 })();

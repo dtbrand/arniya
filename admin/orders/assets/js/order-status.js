@@ -208,6 +208,101 @@
             if (window.DT_ORDERS) {
                 window.DT_ORDERS.showToast(`Order ${orderId} cancelled (${reason})`);
             }
+        },
+
+        openDeleteModal: function(orderId) {
+            const modal = document.getElementById('deleteOrderModal');
+            if (modal) {
+                orderId = (orderId || '').trim();
+                const idTextEl = document.getElementById('deleteModalOrderIdText');
+                if (idTextEl) idTextEl.textContent = orderId;
+                const warnEl = document.getElementById('deleteModalOrderIdWarning');
+                if (warnEl) warnEl.textContent = orderId;
+                modal.style.display = 'flex';
+            }
+        },
+
+        closeDeleteModal: function() {
+            const modal = document.getElementById('deleteOrderModal');
+            if (modal) modal.style.display = 'none';
+        },
+
+        confirmDeleteOrder: function() {
+            const orderId = document.getElementById('deleteModalOrderIdText')?.textContent?.trim();
+            if (!orderId) return;
+
+            const modal = document.getElementById('deleteOrderModal');
+            const submitBtn = modal?.querySelector('.dt-btn[onclick*="confirmDeleteOrder"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.6';
+                submitBtn.innerHTML = '<span class="dt-spin" style="display:inline-block; width:12px; height:12px; border:2px solid #FFF; border-top-color:transparent; border-radius:50%; animation:dtSpin 0.6s linear infinite;"></span> <span>Deleting...</span>';
+            }
+
+            const payload = {
+                action: 'delete',
+                order_id: orderId
+            };
+
+            dtAdminFetch('/api/orders.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span>Permanently Delete</span>';
+                }
+
+                if (res && res.success) {
+                    // 1. Immediately animate and remove the row from DOM
+                    const row = document.querySelector(`tr.dt-order-row[data-id="${orderId}"]`);
+                    const detailsRow = document.getElementById(`detailsRow_${orderId}`);
+
+                    if (row) {
+                        row.setAttribute('data-deleted', 'true');
+                        row.style.transition = 'all 0.3s ease';
+                        row.style.opacity = '0';
+                        row.style.transform = 'translateX(20px)';
+                        row.style.background = '#FEE2E2';
+                        setTimeout(() => {
+                            row.remove();
+                            if (detailsRow) detailsRow.remove();
+                        }, 300);
+                    } else if (detailsRow) {
+                        detailsRow.remove();
+                    }
+
+                    // 2. Synchronize all counters and status flow pills in real time
+                    if (window.DT_ORDERS && typeof window.DT_ORDERS.syncCountersAfterDeletion === 'function') {
+                        window.DT_ORDERS.syncCountersAfterDeletion([orderId]);
+                    }
+
+                    // 3. Close modal & display luxury feedback toast
+                    this.closeDeleteModal();
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast(`Order ${orderId} permanently deleted from live database.`);
+                    }
+                } else {
+                    const msg = (res && res.message) ? res.message : 'Failed to delete order.';
+                    alert('Deletion failed: ' + msg);
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast(`Deletion Error: ${msg}`);
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Delete order error:', err);
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.innerHTML = '<span>Permanently Delete</span>';
+                }
+                alert('Network error while deleting order: ' + err.message);
+            });
         }
     };
 })();

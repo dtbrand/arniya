@@ -270,7 +270,7 @@ try {
             exit;
         }
 
-        // Delete Order
+        // Delete Order (Single)
         if ($action === 'delete') {
             // Admin-only, and irreversible.
             dt_api_require_admin('delete an order');
@@ -283,6 +283,28 @@ try {
             }
             $ok = OrderManager::deleteOrder($orderId);
             echo json_encode(['success' => $ok, 'order_id' => $orderId, 'message' => $ok ? 'Order permanently removed from database.' : 'Failed to remove order.']);
+            exit;
+        }
+
+        // Bulk Delete Orders (Multi-Select)
+        if ($action === 'bulk_delete') {
+            dt_api_require_admin('bulk delete orders');
+
+            $orderIds = $data['order_ids'] ?? ($data['ids'] ?? []);
+            if (!is_array($orderIds) || empty($orderIds)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Valid array of order IDs required for bulk deletion.']);
+                exit;
+            }
+            $result = OrderManager::bulkDeleteOrders($orderIds);
+            echo json_encode([
+                'success' => $result['success'],
+                'deleted_count' => $result['deleted_count'],
+                'deleted_ids' => $result['deleted_ids'],
+                'message' => $result['success']
+                    ? "Successfully permanently deleted {$result['deleted_count']} order(s) from database."
+                    : 'Failed to delete some or all selected orders.'
+            ]);
             exit;
         }
 

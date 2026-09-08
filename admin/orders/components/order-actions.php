@@ -184,6 +184,78 @@
     </div>
 </div>
 
+<!-- ══ Permanent Delete Order Modal (Single Order) ══ -->
+<div id="deleteOrderModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_STATUS.closeDeleteModal()">
+    <div style="background:#FFFFFF; border:1.5px solid #EF4444; border-radius:12px; width:95%; max-width:480px; box-shadow:0 12px 40px rgba(0,0,0,0.35); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
+        <div style="padding:14px 18px; background:#FEF2F2; border-bottom:1.5px solid #FECACA; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:32px; height:32px; border-radius:8px; background:#FEE2E2; border:1px solid #FCA5A5; display:flex; align-items:center; justify-content:center; color:#DC2626;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </div>
+                <div>
+                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#991B1B;">Permanently Delete Order</h3>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="deleteModalOrderIdText" style="color:#DC2626; font-weight:800;">—</strong></p>
+                </div>
+            </div>
+            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="window.DT_ORDER_STATUS.closeDeleteModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Close Modal">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div style="padding:18px 20px; display:flex; flex-direction:column; gap:12px; font-size:12.5px; color:#181512;">
+            <div style="background:#FFF1F2; border:1px solid #FDA4AF; border-radius:8px; padding:12px 14px; color:#9F1239; font-size:12px; line-height:1.5;">
+                <strong>Warning: Irreversible Database Action</strong><br>
+                This will completely and permanently remove order <strong id="deleteModalOrderIdWarning" style="font-weight:800; color:#991B1B;">—</strong>, all associated line items, status logs, and payment records from the live MySQL database.
+            </div>
+            <p style="margin:0; font-size:11.5px; color:#64748B;">
+                Are you sure you want to proceed with permanent deletion? This action cannot be rolled back.
+            </p>
+        </div>
+        <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:flex-end; gap:8px;">
+            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.closeDeleteModal()" style="height:34px; padding:0 14px; font-size:11.5px;">Keep Order</button>
+            <button type="button" class="dt-btn" onclick="window.DT_ORDER_STATUS.confirmDeleteOrder()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800; background:#DC2626; color:#FFFFFF; border:1px solid #B91C1C; border-radius:6px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(220,38,38,0.3); cursor:pointer;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Permanently Delete</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Bulk Delete Orders Modal (Multi-Select) ══ -->
+<div id="bulkDeleteOrderModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_BULK_ACTIONS.closeBulkDeleteModal()">
+    <div style="background:#FFFFFF; border:1.5px solid #EF4444; border-radius:12px; width:95%; max-width:480px; box-shadow:0 12px 40px rgba(0,0,0,0.35); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
+        <div style="padding:14px 18px; background:#FEF2F2; border-bottom:1.5px solid #FECACA; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:32px; height:32px; border-radius:8px; background:#FEE2E2; border:1px solid #FCA5A5; display:flex; align-items:center; justify-content:center; color:#DC2626;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </div>
+                <div>
+                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#991B1B;">Bulk Delete Orders Confirmation</h3>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Multi-Select Purge</p>
+                </div>
+            </div>
+            <button type="button" class="dt-btn dt-btn-pale dt-modal-close-btn" onclick="window.DT_BULK_ACTIONS.closeBulkDeleteModal()" style="width:28px; height:28px; border-radius:6px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Close Modal">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div style="padding:18px 20px; display:flex; flex-direction:column; gap:12px; font-size:12.5px; color:#181512;">
+            <div style="background:#FFF1F2; border:1px solid #FDA4AF; border-radius:8px; padding:12px 14px; color:#9F1239; font-size:12px; line-height:1.5;">
+                <strong>Warning: Permanent Database Purge</strong><br>
+                You are about to permanently delete <strong id="bulkDeleteCountText" style="font-weight:800; color:#991B1B;">0 orders</strong> from the live MySQL database. All corresponding items, inventory allocations, and timeline histories will be completely purged.
+            </div>
+            <p style="margin:0; font-size:11.5px; color:#64748B;">
+                This operation is irreversible. Are you sure you want to proceed?
+            </p>
+        </div>
+        <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:flex-end; gap:8px;">
+            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.closeBulkDeleteModal()" style="height:34px; padding:0 14px; font-size:11.5px;">Cancel</button>
+            <button type="button" class="dt-btn" onclick="window.DT_BULK_ACTIONS.confirmBulkDelete()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800; background:#DC2626; color:#FFFFFF; border:1px solid #B91C1C; border-radius:6px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(220,38,38,0.3); cursor:pointer;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Permanently Delete Selected</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- ══ GST Tax Invoice Preview Modal ══ -->
 <div id="orderInvoiceModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeInvoiceModal()">
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
