@@ -18,7 +18,7 @@ if (!$pdo || Database::isMockMode()) {
     exit;
 }
 
-$tables = ['addresses', 'order_items', 'orders', 'customers', 'products', 'product_variants'];
+$tables = ['addresses', 'order_items', 'orders', 'customers', 'products', 'product_variants', 'customer_notes', 'product_attributes', 'product_brands', 'payment_transactions'];
 $schema = [];
 
 foreach ($tables as $t) {

@@ -64,6 +64,9 @@ FILES_TO_DEPLOY = [
     '.user.ini',
     'admin/products/attributes/index.php',
     'admin/products/attributes/values.php',
+    'api/cors.php',
+    'api/customer_notes.php',
+    'admin/orders/export.php',
 ]
 
 SERVERS = [
