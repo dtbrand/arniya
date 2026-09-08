@@ -48,13 +48,14 @@ $deliveredPct = count($sumOrders) > 0 ? round(($delivered / count($sumOrders)) *
 $cancelledPct = count($sumOrders) > 0 ? round(($cancelled / count($sumOrders)) * 100, 1) : null;
 $outstanding = $sumCust !== null ? (float)($sumCust['outstanding_balance'] ?? 0) : 0;
 $creditLimit = $sumCust !== null ? (float)($sumCust['credit_limit'] ?? 0) : 0;
+$rupeeSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 
 <!-- ══ FINANCIAL 4-STAT STRIP ══ -->
 <div class="dt-cust-fin-strip">
     <div class="dt-cust-fin-box">
         <span class="dt-cust-fin-label">LIFETIME SPEND</span>
-        <span class="dt-cust-fin-val" style="color:#8A681F;">₹<?php echo number_format($spend); ?></span>
+        <span class="dt-cust-fin-val" style="color:#8A681F;"><?php echo $rupeeSvg; ?><?php echo number_format($spend); ?></span>
         <span style="font-size:0.65rem; color:#78716C; font-weight:600;">Paid &amp; credit orders</span>
     </div>
 
@@ -72,7 +73,7 @@ $creditLimit = $sumCust !== null ? (float)($sumCust['credit_limit'] ?? 0) : 0;
 
     <div class="dt-cust-fin-box">
         <span class="dt-cust-fin-label">AVG ORDER VALUE</span>
-        <span class="dt-cust-fin-val">₹<?php echo number_format($aov); ?></span>
+        <span class="dt-cust-fin-val"><?php echo $rupeeSvg; ?><?php echo number_format($aov); ?></span>
         <span style="font-size:0.65rem; color:#78716C; font-weight:600;">
             <?php echo $orderCount > 0 ? 'Across ' . number_format($orderCount) . ' orders' : 'No orders yet'; ?>
         </span>
@@ -83,10 +84,10 @@ $creditLimit = $sumCust !== null ? (float)($sumCust['credit_limit'] ?? 0) : 0;
               // computed. Outstanding balance is a real column and is what an
               // admin looking at a trade account actually needs here. ?>
         <span class="dt-cust-fin-label">OUTSTANDING</span>
-        <span class="dt-cust-fin-val" style="color:<?php echo $outstanding > 0 ? '#B45309' : '#15803D'; ?>;">₹<?php echo number_format($outstanding); ?></span>
+        <span class="dt-cust-fin-val" style="color:<?php echo $outstanding > 0 ? '#B45309' : '#15803D'; ?>;"><?php echo $rupeeSvg; ?><?php echo number_format($outstanding); ?></span>
         <span style="font-size:0.65rem; color:#78716C; font-weight:600;">
             <?php if ($creditLimit > 0): ?>
-                of ₹<?php echo number_format($creditLimit); ?> credit limit
+                of <?php echo $rupeeSvg; ?><?php echo number_format($creditLimit); ?> credit limit
             <?php elseif ($cancelledPct !== null && $cancelledPct > 0): ?>
                 <?php echo $cancelledPct; ?>% cancelled
             <?php else: ?>

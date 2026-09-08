@@ -67,6 +67,16 @@ FILES_TO_DEPLOY = [
     'api/cors.php',
     'api/customer_notes.php',
     'admin/orders/export.php',
+    'admin/customers/index.php',
+    'admin/customers/view.php',
+    'admin/customers/components/customer-summary.php',
+    'admin/customers/components/customer-stats.php',
+    'admin/customers/components/customer-profile.php',
+    'admin/customers/components/customer-orders.php',
+    'admin/customers/components/customer-activity.php',
+    'admin/customers/components/customer-notes.php',
+    'admin/customers/components/customer-table.php',
+    'admin/customers/assets/js/customer-list.js',
 ]
 
 SERVERS = [

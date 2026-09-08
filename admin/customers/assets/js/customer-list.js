@@ -81,10 +81,11 @@
     let pageSize = 10;
     let currentSort = { col: 'id', dir: 'desc' };
 
-    // Format Currency Helper
+    // Format Currency Helper with 100% Real Vector Indian Rupee SVG Standard
+    const RUPEE_SVG_12 = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:1px;" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
     function formatRupee(num) {
-        if (!num || isNaN(num)) return '₹0';
-        return '₹' + Number(num).toLocaleString('en-IN');
+        if (!num || isNaN(num)) return '<span style="display:inline-flex; align-items:center;">' + RUPEE_SVG_12 + '0</span>';
+        return '<span style="display:inline-flex; align-items:center;">' + RUPEE_SVG_12 + Number(num).toLocaleString('en-IN') + '</span>';
     }
 
     // Render Table Rows Dynamically

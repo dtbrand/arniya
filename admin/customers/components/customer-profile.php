@@ -221,8 +221,9 @@ $initials = strtoupper(
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                 <span style="font-size:0.72rem; color:#78716C; font-weight:600;">Credit Line</span>
+                <?php $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>'; ?>
                 <strong style="font-size:0.72rem; color:<?= $cOutstanding >= $cCredit && $cCredit > 0 ? '#B45309' : '#181512'; ?>;">
-                    ₹<?php echo number_format($cOutstanding); ?> / ₹<?php echo number_format($cCredit); ?>
+                    <?php echo $rupeeSvg . number_format($cOutstanding); ?> / <?php echo $rupeeSvg . number_format($cCredit); ?>
                 </strong>
             </div>
         </div>

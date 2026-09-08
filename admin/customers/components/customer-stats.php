@@ -163,7 +163,8 @@ $tradeCust = $wholesaleCust + $resellerCust;
                 </svg>
             </div>
         </div>
-        <div class="dt-cust-kpi-val" style="color:#15803D;">₹<?php echo number_format($totalLifetimeSpend); ?></div>
+        <?php $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>'; ?>
+        <div class="dt-cust-kpi-val" style="color:#15803D;"><?php echo $rupeeSvg; ?><?php echo number_format($totalLifetimeSpend); ?></div>
         <div class="dt-cust-kpi-bot">
             <span class="dt-cust-kpi-delta">Sum of lifetime_spend</span>
             <span style="color:#78716C;">Across <?php echo number_format($totalCust); ?> accounts</span>

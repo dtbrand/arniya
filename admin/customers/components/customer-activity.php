@@ -23,13 +23,14 @@ use DTBrand\CustomerManager;
 $actCustId = (int)preg_replace('/[^0-9]/', '', isset($_GET['id']) ? (string)$_GET['id'] : '');
 $actCust = isset($dossierCustomer) ? $dossierCustomer : ($actCustId > 0 ? CustomerManager::getById($actCustId) : null);
 $actOrders = (isset($dossierOrders) && is_array($dossierOrders)) ? $dossierOrders : [];
+$rupeeSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 
 $events = [];
 
 foreach ($actOrders as $o) {
     $ts = !empty($o['created_at']) ? strtotime($o['created_at']) : 0;
     if ($ts <= 0) continue;
-    $meta = ['₹' . number_format((float)($o['total_amount'] ?? 0))];
+    $meta = [$rupeeSvg . number_format((float)($o['total_amount'] ?? 0))];
     if (!empty($o['payment_method'])) {
         $meta[] = strtoupper((string)$o['payment_method']) . ' · ' . ucfirst((string)($o['payment_status'] ?? ''));
     }
@@ -95,7 +96,7 @@ usort($events, function ($a, $b) { return $b['ts'] <=> $a['ts']; });
             <div class="dt-cust-timeline-meta">
                 <span><?php echo date('d M Y \a\t h:i A', $ev['ts']); ?></span>
                 <?php foreach ($ev['meta'] as $m): ?>
-                    <span>• <?php echo htmlspecialchars($m); ?></span>
+                    <span>• <?php echo (strpos($m, '<svg') !== false) ? $m : htmlspecialchars($m); ?></span>
                 <?php endforeach; ?>
             </div>
         </div>
