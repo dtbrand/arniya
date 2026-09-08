@@ -101,12 +101,17 @@
 
         executeBulkStatus: function(newStatus) {
             const checked = document.querySelectorAll('.dt-order-check:checked');
-            if (checked.length === 0) return;
+            if (checked.length === 0) {
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please select at least 1 order to update status', 'warning');
+                return;
+            }
 
+            const ids = [];
             checked.forEach(cb => {
                 const row = cb.closest('tr');
                 if (row) {
-                    const id = row.getAttribute('data-id');
+                    const id = row.getAttribute('data-id') || row.querySelector('.dt-order-id-link')?.textContent?.trim();
+                    if (id) ids.push(id);
                     const badge = row.querySelector('.dt-status-badge');
                     if (badge) {
                         badge.className = `dt-status-badge ${newStatus}`;
@@ -119,9 +124,36 @@
                 }
             });
 
-            if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`${checked.length} orders updated to ${newStatus.toUpperCase()}`);
-            }
+            if (ids.length === 0) return;
+
+            const dtAdminFetch = window.dtAdminFetch || fetch;
+            dtAdminFetch('/api/orders.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'bulk_update_status',
+                    order_ids: ids,
+                    status: newStatus
+                })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res && res.success) {
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast(`Updated ${res.updated_count || ids.length} order(s) to ${newStatus.replace(/_/g, ' ').toUpperCase()} in live database!`, 'success');
+                    }
+                } else {
+                    if (window.DT_ORDERS) {
+                        window.DT_ORDERS.showToast((res && res.message) ? res.message : 'Failed to update order status on server', 'danger');
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Bulk update status error:', err);
+                if (window.DT_ORDERS) {
+                    window.DT_ORDERS.showToast('Network error while updating order status on server', 'danger');
+                }
+            });
         },
 
         executeBulkPrintLabels: function() {
@@ -556,12 +588,45 @@
         executeBulkExport: function() {
             const selectedOrders = this.getSelectedOrders();
             if (selectedOrders.length === 0) {
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please select at least 1 order to export');
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please select at least 1 order to export', 'warning');
                 return;
             }
 
+            const headers = ['Order ID', 'Date', 'Customer Name', 'Phone', 'Items Count', 'Total Amount (INR)', 'Status', 'Courier', 'Tracking AWB'];
+            const rows = selectedOrders.map(o => [
+                o.id || '',
+                o.date || '',
+                o.customer || '',
+                o.phone || '',
+                o.items_count || '1 pcs',
+                o.amount || 0,
+                o.status || 'pending',
+                o.shipping || 'Logistics Partner',
+                o.tracking || '—'
+            ]);
+
+            const csvRows = [headers.join(',')];
+            rows.forEach(r => {
+                const escaped = r.map(field => {
+                    const str = String(field == null ? '' : field);
+                    return `"${str.replace(/"/g, '""')}"`;
+                });
+                csvRows.push(escaped.join(','));
+            });
+
+            const csvString = csvRows.join('\r\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `DT_Orders_Export_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`Exporting ${selectedOrders.length} selected orders to CSV/Excel...`);
+                window.DT_ORDERS.showToast(`Exported ${selectedOrders.length} selected orders to CSV!`, 'success');
             }
         },
 

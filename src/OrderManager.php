@@ -1296,6 +1296,32 @@ class OrderManager
             'deleted_ids' => $deletedIds
         ];
     }
+
+    /**
+     * Bulk Update Orders status
+     */
+    public static function bulkUpdateStatus(array $orderIds, string $status, ?string $tracking = null, ?string $courier = null): array
+    {
+        $updatedCount = 0;
+        $updatedIds = [];
+
+        foreach ($orderIds as $rawId) {
+            $id = trim((string)$rawId);
+            if ($id === '') continue;
+
+            if (self::updateStatus($id, $status, $tracking, $courier)) {
+                $updatedCount++;
+                $updatedIds[] = $id;
+            }
+        }
+
+        return [
+            'success' => $updatedCount > 0 || empty($orderIds),
+            'updated_count' => $updatedCount,
+            'updated_ids' => $updatedIds,
+            'status' => $status
+        ];
+    }
 }
 
 

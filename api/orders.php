@@ -314,6 +314,30 @@ try {
             exit;
         }
 
+        // Bulk Update Status (Multi-Select)
+        if ($action === 'bulk_update_status') {
+            dt_api_require_admin('bulk update order status');
+
+            $orderIds = $data['order_ids'] ?? ($data['ids'] ?? []);
+            $status = trim($data['status'] ?? 'processing');
+
+            if (!is_array($orderIds) || empty($orderIds)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Valid array of order IDs required for bulk update.']);
+                exit;
+            }
+
+            $result = OrderManager::bulkUpdateStatus($orderIds, $status);
+            echo json_encode([
+                'success' => $result['success'],
+                'updated_count' => $result['updated_count'],
+                'updated_ids' => $result['updated_ids'],
+                'status' => $status,
+                'message' => "Successfully updated {$result['updated_count']} order(s) to " . strtoupper(str_replace('_', ' ', $status)) . " in live database."
+            ]);
+            exit;
+        }
+
         // Create Order
         if (!empty($data['items']) && is_string($data['items'])) {
             $data['items'] = json_decode($data['items'], true);
