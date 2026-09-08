@@ -305,6 +305,10 @@ try {
     if (!empty($category) && strtolower($category) !== 'all') {
         $criteria['category'] = $category;
     }
+    $brandParam = trim((string)($_GET['brand'] ?? ''));
+    if (!empty($brandParam) && strtolower($brandParam) !== 'all') {
+        $criteria['brand'] = $brandParam;
+    }
     if (!empty($fabric)) {
         $criteria['fabric'] = $fabric;
     }

@@ -16,6 +16,22 @@ $totalProductsCount = count($productsList);
 $categoriesList = ProductCatalog::getCategories();
 $totalCategoriesCount = count($categoriesList);
 
+$brandsList = [];
+$pdo = Database::getConnection();
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $brandsList = Database::query("SELECT id, name, slug FROM product_brands WHERE status = 'active' ORDER BY name ASC");
+    } catch (\Throwable $e) {}
+}
+if (empty($brandsList)) {
+    $brandsList = [
+        ['name' => "DT Brand's"],
+        ['name' => "Jai Hanuman Tex"],
+        ['name' => "Harmit Ethnic"],
+        ['name' => "Virasat Silk Mills"]
+    ];
+}
+
 $totalCatalogValuation = 0;
 $totalUnitsInStock = 0;
 $lowStockCount = 0;
@@ -385,9 +401,9 @@ $active_subnav = "";
 
                     <select class="wp-select" id="wpBrandFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:110px;">
                         <option value="">Filter by brand</option>
-                        <option value="DT Signature">DT Signature</option>
-                        <option value="Arniya Heritage">Arniya Heritage</option>
-                        <option value="Jai Hanuman Tex">Jai Hanuman Tex</option>
+                        <?php foreach ($brandsList as $bOpt): ?>
+                            <option value="<?= htmlspecialchars((string)$bOpt['name']) ?>"><?= htmlspecialchars((string)$bOpt['name']) ?></option>
+                        <?php endforeach; ?>
                     </select>
 
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="applyWpFilters()" style="height:28px; font-size:11px; padding:0 10px;">
@@ -451,8 +467,9 @@ $active_subnav = "";
                                 $wp = (float)($p['wholesale_price'] ?? 0);
                                 $rating = (float)($p['rating'] ?? 4.9);
                                 $revCount = (int)($p['reviews_count'] ?? 50);
+                                $brandName = !empty($p['brand']) ? $p['brand'] : "DT Brand's";
                                 ?>
-                                <tr id="<?= $rowId ?>" data-cat="<?= htmlspecialchars($catName) ?>" data-brand="DT Signature" data-stock="<?= $isOut ? 'Out of stock' : ($isLow ? 'Low stock' : 'In stock') ?>" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                <tr id="<?= $rowId ?>" data-cat="<?= htmlspecialchars($catName) ?>" data-brand="<?= htmlspecialchars($brandName) ?>" data-stock="<?= $isOut ? 'Out of stock' : ($isLow ? 'Low stock' : 'In stock') ?>" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                     <td style="text-align: center; padding:8px 6px;">
                                         <input type="checkbox" class="wp-row-check" value="<?= $p['id'] ?>" style="cursor:pointer; width:14px; height:14px;">
                                     </td>

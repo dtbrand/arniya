@@ -270,6 +270,7 @@ class ProductCatalog
             'title' => trim((string)($r['title'] ?? '')),
             'name' => trim((string)($r['title'] ?? '')),
             'slug' => trim((string)($r['slug'] ?? '')),
+            'brand' => trim((string)($r['brand'] ?? '')) ?: "DT Brand's",
             'category' => trim((string)($r['category_name'] ?? '')),
             'category_id' => (int)($r['category_id'] ?? 0),
             'fabric' => trim((string)($r['fabric'] ?? '')),
@@ -682,6 +683,9 @@ class ProductCatalog
             }
 
             if (!empty($criteria['category']) && strcasecmp($product['category'], $criteria['category']) !== 0) {
+                return false;
+            }
+            if (!empty($criteria['brand']) && strcasecmp((string)($product['brand'] ?? ''), $criteria['brand']) !== 0) {
                 return false;
             }
             if (!empty($criteria['fabric']) && strcasecmp($product['fabric'], $criteria['fabric']) !== 0) {
@@ -1241,7 +1245,7 @@ class ProductCatalog
                 $add('category_name', mb_substr($cat['name'], 0, 100));
             }
         }
-        foreach (['fabric', 'weave', 'zari_type', 'occasion'] as $col) {
+        foreach (['brand', 'fabric', 'weave', 'zari_type', 'occasion'] as $col) {
             if (isset($data[$col])) {
                 $add($col, mb_substr(trim((string)$data[$col]), 0, 100));
             }

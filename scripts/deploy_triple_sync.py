@@ -43,6 +43,9 @@ FILES_TO_DEPLOY = [
     'admin/orders/assets/js/bulk-actions.js',
     'admin/customers/components/customer-addresses.php',
     'admin/customers/assets/js/customer-view.js',
+    'api/brands.php',
+    'admin/products/index.php',
+    'admin/products/brands/index.php',
 ]
 
 SERVERS = [
