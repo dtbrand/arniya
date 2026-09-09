@@ -6,13 +6,28 @@
  */
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\ProductCatalog;
+use DTBrand\Auth;
 
-$dbProductsForWishlist = ProductCatalog::getAll();
+Auth::initSession();
+$wishlistCurrentUser = Auth::getCurrentUser();
+$wishlistRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $wishlistRole = 'admin';
+} elseif ($wishlistCurrentUser) {
+    $wishlistRole = strtolower(trim((string)($wishlistCurrentUser['type'] ?? ($wishlistCurrentUser['role'] ?? 'customer'))));
+}
+if ($wishlistRole === 'wholesaler') { $wishlistRole = 'wholesale'; }
+if ($wishlistRole === '' || $wishlistRole === 'retail') { $wishlistRole = 'customer'; }
+
+$dbProductsForWishlist = ProductCatalog::getForRole($wishlistRole);
 ?>
 <script>
-window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
+if (!window.allProducts || !window.allProducts.length) {
+    window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
+}
 </script>
 <style>
 /* ── Wishlist Drawer Base Styles ── */

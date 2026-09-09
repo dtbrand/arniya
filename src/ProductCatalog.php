@@ -790,14 +790,150 @@ class ProductCatalog
     }
 
     /**
-     * Get products filtered by user role visibility matrix
+     * Strict Role-Price Masking Helper (Section 7, 8, 12, 32: Zero Role-Price Leakage)
+     * Masks unauthorized prices according to the Master Price Matrix.
+     */
+    public static function maskRolePrices(array &$item, string $role, bool $isAdminUser = false): void
+    {
+        if ($isAdminUser) {
+            return;
+        }
+        $role = strtolower(trim($role));
+        if ($role === 'wholesaler') { $role = 'wholesale'; }
+        if ($role === '' || $role === 'retail') { $role = 'customer'; }
+
+        if ($role === 'guest' || $role === 'customer') {
+            $item['wholesale_price'] = null;
+            $item['reseller_price'] = null;
+            $item['retail_price'] = null;
+            $item['effective_retail_price'] = null;
+            $item['effective_wholesale_price'] = null;
+            $item['effective_reseller_price'] = null;
+            $item['effective_price'] = $item['effective_customer_price'] ?? $item['price'];
+            $item['boutique_margin'] = null;
+            $item['full_set_retailer_price'] = null;
+            $item['full_set_wholesale_price'] = null;
+            $item['full_set_retailer_sale_price'] = null;
+            $item['full_set_wholesale_sale_price'] = null;
+            $item['effective_full_set_retailer_price'] = null;
+            $item['effective_full_set_wholesale_price'] = null;
+            $item['trade_price'] = $item['price'];
+            if (!empty($item['variants']) && is_array($item['variants'])) {
+                foreach ($item['variants'] as &$v) {
+                    $v['retail_price'] = null;
+                    $v['retailer_price'] = null;
+                    $v['wholesale_price'] = null;
+                    $v['reseller_price'] = null;
+                    $v['retail_sale_price'] = null;
+                    $v['retailer_sale_price'] = null;
+                    $v['wholesale_sale_price'] = null;
+                    $v['reseller_sale_price'] = null;
+                    $v['full_set_retailer_price'] = null;
+                    $v['full_set_wholesale_price'] = null;
+                    $v['full_set_retailer_sale_price'] = null;
+                    $v['full_set_wholesale_sale_price'] = null;
+                }
+                unset($v);
+            }
+        } elseif ($role === 'reseller') {
+            $item['wholesale_price'] = null;
+            $item['effective_wholesale_price'] = null;
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['effective_customer_price'] = null;
+            $item['boutique_margin'] = null;
+            $item['full_set_retailer_price'] = null;
+            $item['full_set_wholesale_price'] = null;
+            $item['full_set_retailer_sale_price'] = null;
+            $item['full_set_wholesale_sale_price'] = null;
+            $item['effective_full_set_retailer_price'] = null;
+            $item['effective_full_set_wholesale_price'] = null;
+            if (!empty($item['variants']) && is_array($item['variants'])) {
+                foreach ($item['variants'] as &$v) {
+                    $v['wholesale_price'] = null;
+                    $v['wholesale_sale_price'] = null;
+                    $v['customer_price'] = null;
+                    $v['customer_sale_price'] = null;
+                    $v['full_set_retailer_price'] = null;
+                    $v['full_set_wholesale_price'] = null;
+                    $v['full_set_retailer_sale_price'] = null;
+                    $v['full_set_wholesale_sale_price'] = null;
+                }
+                unset($v);
+            }
+        } elseif ($role === 'retailer') {
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['effective_customer_price'] = null;
+            $item['wholesale_price'] = null;
+            $item['effective_wholesale_price'] = null;
+            $item['reseller_price'] = null;
+            $item['effective_reseller_price'] = null;
+            $item['full_set_wholesale_price'] = null;
+            $item['full_set_wholesale_sale_price'] = null;
+            $item['effective_full_set_wholesale_price'] = null;
+            if (!empty($item['variants']) && is_array($item['variants'])) {
+                foreach ($item['variants'] as &$v) {
+                    $v['wholesale_price'] = null;
+                    $v['wholesale_sale_price'] = null;
+                    $v['reseller_price'] = null;
+                    $v['reseller_sale_price'] = null;
+                    $v['customer_price'] = null;
+                    $v['customer_sale_price'] = null;
+                    $v['full_set_wholesale_price'] = null;
+                    $v['full_set_wholesale_sale_price'] = null;
+                }
+                unset($v);
+            }
+        } elseif ($role === 'wholesale') {
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['effective_customer_price'] = null;
+            $item['reseller_price'] = null;
+            $item['effective_reseller_price'] = null;
+            $item['full_set_retailer_price'] = null;
+            $item['full_set_retailer_sale_price'] = null;
+            $item['effective_full_set_retailer_price'] = null;
+            if (!empty($item['variants']) && is_array($item['variants'])) {
+                foreach ($item['variants'] as &$v) {
+                    $v['reseller_price'] = null;
+                    $v['reseller_sale_price'] = null;
+                    $v['customer_price'] = null;
+                    $v['customer_sale_price'] = null;
+                    $v['full_set_retailer_price'] = null;
+                    $v['full_set_retailer_sale_price'] = null;
+                }
+                unset($v);
+            }
+        }
+    }
+
+    /**
+     * Get products filtered by user role visibility matrix with masked pricing.
      */
     public static function getForRole(string $role = 'guest', array $criteria = []): array
     {
         $role = strtolower(trim($role));
+        if ($role === 'wholesaler') { $role = 'wholesale'; }
         if ($role === '' || $role === 'retail') { $role = 'customer'; }
         $criteria['role'] = $role;
-        return self::filter($criteria);
+        $items = self::filter($criteria);
+
+        $isAdmin = ($role === 'admin');
+        foreach ($items as &$item) {
+            $priceDisplay = self::getPriceDisplay($item, $role);
+            $item['price'] = $priceDisplay['effective_price'];
+            $item['base_price'] = $priceDisplay['base_price'];
+            $item['sale_price'] = $priceDisplay['sale_price'];
+            $item['show_sale'] = $priceDisplay['show_sale'];
+            $item['price_label'] = $priceDisplay['price_label'];
+            $item['effective_price'] = $priceDisplay['effective_price'];
+            $item['is_purchasable'] = $priceDisplay['is_purchasable'];
+            self::maskRolePrices($item, $role, $isAdmin);
+        }
+        unset($item);
+
+        return $items;
     }
 
     /**

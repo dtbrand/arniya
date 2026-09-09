@@ -6,13 +6,28 @@
  */
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\ProductCatalog;
+use DTBrand\Auth;
 
-$dbProductsForCart = ProductCatalog::getAll();
+Auth::initSession();
+$cartCurrentUser = Auth::getCurrentUser();
+$cartRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $cartRole = 'admin';
+} elseif ($cartCurrentUser) {
+    $cartRole = strtolower(trim((string)($cartCurrentUser['type'] ?? ($cartCurrentUser['role'] ?? 'customer'))));
+}
+if ($cartRole === 'wholesaler') { $cartRole = 'wholesale'; }
+if ($cartRole === '' || $cartRole === 'retail') { $cartRole = 'customer'; }
+
+$dbProductsForCart = ProductCatalog::getForRole($cartRole);
 ?>
 <script>
-window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
+if (!window.allProducts || !window.allProducts.length) {
+    window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
+}
 </script>
 <style>
 /* ── Cart Drawer Base Styles ── */

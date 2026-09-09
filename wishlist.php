@@ -7,9 +7,6 @@ $page_title = "My Wishlist & Saved Weaves";
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
 
-use DTBrand\ProductCatalog;
-
-$catalogProducts = ProductCatalog::getAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">

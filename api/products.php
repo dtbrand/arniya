@@ -56,31 +56,7 @@ try {
 
     // Strict Role-Price Masking Helper (Section 7, 8, 12, 32: Zero Role-Price Leakage)
     $maskRolePrices = static function(array &$item, string $role, bool $isAdminUser) {
-        if ($isAdminUser) return;
-        if ($role === 'guest' || $role === 'customer') {
-            $item['wholesale_price'] = null;
-            $item['reseller_price'] = null;
-            $item['retail_price'] = null;
-            $item['trade_price'] = $item['price'];
-        } elseif ($role === 'reseller') {
-            $item['wholesale_price'] = null;
-            $item['retail_price'] = null;
-            $item['customer_price'] = null;
-            $item['customer_sale_price'] = null;
-            $item['trade_price'] = $item['price'];
-        } elseif ($role === 'retailer') {
-            $item['wholesale_price'] = null;
-            $item['reseller_price'] = null;
-            $item['customer_price'] = null;
-            $item['customer_sale_price'] = null;
-            $item['trade_price'] = $item['price'];
-        } elseif ($role === 'wholesale') {
-            $item['reseller_price'] = null;
-            $item['retail_price'] = null;
-            $item['customer_price'] = null;
-            $item['customer_sale_price'] = null;
-            $item['trade_price'] = $item['price'];
-        }
+        ProductCatalog::maskRolePrices($item, $role, $isAdminUser);
     };
 
     // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──

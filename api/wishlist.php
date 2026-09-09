@@ -69,17 +69,8 @@ foreach ($_SESSION['wishlist_items'] as $id) {
         $p['effective_price'] = $priceDisplay['effective_price'];
         $p['is_purchasable'] = $priceDisplay['is_purchasable'];
         
-        // Hide trade prices from non-trade roles
-        $isTradeRole = in_array($userRole, ['admin', 'wholesale', 'retailer'], true);
-        if (!$isTradeRole) {
-            $p['wholesale_price'] = null;
-            $p['reseller_price'] = null;
-            $p['customer_price'] = null;
-            $p['customer_sale_price'] = null;
-            $p['trade_price'] = $p['price'];
-        } else {
-            $p['trade_price'] = $p['price'];
-        }
+        // Apply strict role-price masking (Sections 12 & 32: Zero Role-Price Leakage)
+        ProductCatalog::maskRolePrices($p, $userRole, ($userRole === 'admin'));
         
         $items[] = $p;
     }

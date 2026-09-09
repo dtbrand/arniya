@@ -328,6 +328,12 @@ class PaymentManagerTest extends TestCase
         // Verify product stock decremented from 100 to 85
         $stock = (int)$pdo->query("SELECT stock_qty FROM products WHERE id = 1")->fetchColumn();
         $this->assertEquals(85, $stock);
+
+        // Verify idempotency: duplicate webhook / callback must not double-decrement stock
+        $res2 = PaymentManager::markOrderPaidAndAdjustStock('DT-ORD-AUDIT-01', 'razorpay', 'pay_RAZORPAY_7788');
+        $this->assertTrue($res2);
+        $stockAfterRetry = (int)$pdo->query("SELECT stock_qty FROM products WHERE id = 1")->fetchColumn();
+        $this->assertEquals(85, $stockAfterRetry);
     }
 
     public function testInMemorySqliteSaveAndGetGatewayConfig(): void

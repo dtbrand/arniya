@@ -7,10 +7,23 @@
 $page_title = "Secure Luxury Checkout";
 require_once __DIR__ . '/src/ProductCatalog.php';
 require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
 
 use DTBrand\ProductCatalog;
+use DTBrand\Auth;
 
-$dbProductsForCheckout = ProductCatalog::getAll();
+Auth::initSession();
+$currentUser = Auth::getCurrentUser();
+$userRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $userRole = 'admin';
+} elseif ($currentUser) {
+    $userRole = strtolower(trim((string)($currentUser['type'] ?? ($currentUser['role'] ?? 'customer'))));
+}
+if ($userRole === 'wholesaler') { $userRole = 'wholesale'; }
+if ($userRole === '' || $userRole === 'retail') { $userRole = 'customer'; }
+
+$dbProductsForCheckout = ProductCatalog::getForRole($userRole);
 ?>
 <!DOCTYPE html>
 <html lang="en">

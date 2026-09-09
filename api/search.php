@@ -9,9 +9,22 @@ cors_json();
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\Database;
 use DTBrand\ProductCatalog;
+use DTBrand\Auth;
+
+Auth::initSession();
+$currentUser = Auth::getCurrentUser();
+$userRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $userRole = 'admin';
+} elseif ($currentUser) {
+    $userRole = strtolower(trim((string)($currentUser['type'] ?? ($currentUser['role'] ?? 'customer'))));
+}
+if ($userRole === 'wholesaler') { $userRole = 'wholesale'; }
+if ($userRole === '' || $userRole === 'retail') { $userRole = 'customer'; }
 
 $q = trim($_GET['q'] ?? ($_GET['query'] ?? ($_GET['search'] ?? '')));
 $category = trim($_GET['category'] ?? ($_GET['cat'] ?? ''));
@@ -40,7 +53,7 @@ if ($pdo !== null && !Database::isMockMode()) {
 }
 
 // 2. Fetch matching products or trending products if q is empty
-$all = ProductCatalog::getAll();
+$all = ProductCatalog::getForRole($userRole);
 $matchedProducts = [];
 
 $searchTokens = [];
@@ -97,10 +110,13 @@ foreach ($all as $p) {
     }
 
     $pName = (string)($p['title'] ?? ($p['name'] ?? ''));
-    $pPrice = (float)($p['price'] ?? ($p['customer_price'] ?? ($p['retail_price'] ?? 0)));
-    $pOldPrice = (float)($p['old_price'] ?? ($p['mrp'] ?? round($pPrice * 1.35)));
+    $pPrice = (float)($p['effective_price'] ?? ($p['price'] ?? 0));
+    $pOldPrice = (float)($p['base_price'] ?? ($p['old_price'] ?? ($p['mrp'] ?? round($pPrice * 1.35))));
     $pDiscPct = ($pOldPrice > $pPrice && $pOldPrice > 0) ? (int)round((($pOldPrice - $pPrice) / $pOldPrice) * 100) : 0;
     $pImg = !empty($p['image']) ? $p['image'] : (!empty($p['images'][0]) ? $p['images'][0] : '/assets/images/product1.png');
+
+    $isTradeUser = in_array($userRole, ['admin', 'wholesale'], true);
+    $wsPrice = ($isTradeUser && isset($p['wholesale_price'])) ? (float)$p['wholesale_price'] : null;
 
     $matchedProducts[] = [
         'id' => (int)$p['id'],
@@ -114,7 +130,7 @@ foreach ($all as $p) {
         'price' => $pPrice,
         'old_price' => $pOldPrice,
         'discount_pct' => $pDiscPct,
-        'wholesale_price' => (float)($p['wholesale_price'] ?? round($pPrice * 0.45)),
+        'wholesale_price' => $wsPrice,
         'image' => $pImg,
         'has_photo' => !empty($p['has_photo']) || !empty($p['image']),
         'badge' => (string)($p['badge'] ?? ''),

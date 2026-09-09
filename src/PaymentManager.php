@@ -432,6 +432,15 @@ class PaymentManager
         }
 
         try {
+            // Idempotency check (Section 23 & 34: Safe against duplicate callbacks)
+            $stmtCheck = $db->prepare("SELECT payment_status FROM `orders` WHERE `order_number` = :ord LIMIT 1");
+            $stmtCheck->execute([':ord' => $orderNumber]);
+            $currentStatus = $stmtCheck->fetchColumn();
+
+            if ($currentStatus === 'paid') {
+                return true;
+            }
+
             // 1. Update Order Table
             $stmtOrder = $db->prepare("
                 UPDATE `orders` 
@@ -447,47 +456,68 @@ class PaymentManager
                 ':ord'     => $orderNumber
             ]);
 
-            // 2. Fetch order items to decrement inventory stock safely
-            $stmtItems = $db->prepare("
-                SELECT `product_id`, `quantity` 
-                FROM `order_items` 
-                WHERE `order_id` = (SELECT `id` FROM `orders` WHERE `order_number` = :ord LIMIT 1)
-            ");
-            $stmtItems->execute([':ord' => $orderNumber]);
-            $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
-
-            if (!empty($items)) {
-                $col = 'stock_qty';
-                try {
-                    if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
-                        $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(\PDO::FETCH_ASSOC);
-                        $colNames = array_column($pInfo, 'name');
-                        if (in_array('stock_qty', $colNames, true)) {
-                            $col = 'stock_qty';
-                        } elseif (in_array('stock', $colNames, true)) {
-                            $col = 'stock';
-                        }
-                    } else {
-                        $check = $db->query("SHOW COLUMNS FROM `products` LIKE 'stock_qty'");
-                        if ($check && !$check->fetch()) {
-                            $col = 'stock';
-                        }
-                    }
-                } catch (\Throwable $te) {
-                    $col = 'stock_qty';
+            // 2. Fetch order items to decrement inventory stock safely (if not already reserved)
+            $alreadyDecremented = false;
+            try {
+                $checkNotes = $db->prepare("SELECT notes FROM `orders` WHERE `order_number` = :ord LIMIT 1");
+                $checkNotes->execute([':ord' => $orderNumber]);
+                $orderNotes = (string)$checkNotes->fetchColumn();
+                if (strpos($orderNotes, '[stock_reserved]') !== false) {
+                    $alreadyDecremented = true;
                 }
+            } catch (\Throwable $ne) {}
 
-                $stmtDec = $db->prepare("
-                    UPDATE `products` 
-                    SET `{$col}` = GREATEST(0, `{$col}` - :qty)
-                    WHERE `id` = :pid
+            if (!$alreadyDecremented) {
+                $stmtItems = $db->prepare("
+                    SELECT `product_id`, `quantity` 
+                    FROM `order_items` 
+                    WHERE `order_id` = (SELECT `id` FROM `orders` WHERE `order_number` = :ord LIMIT 1)
                 ");
-                foreach ($items as $item) {
-                    $pid = (int)($item['product_id'] ?? 0);
-                    $qty = (int)($item['quantity'] ?? 1);
-                    if ($pid > 0 && $qty > 0) {
-                        $stmtDec->execute([':qty' => $qty, ':pid' => $pid]);
+                $stmtItems->execute([':ord' => $orderNumber]);
+                $items = $stmtItems->fetchAll(PDO::FETCH_ASSOC);
+
+                if (!empty($items)) {
+                    $col = 'stock_qty';
+                    try {
+                        if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                            $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(\PDO::FETCH_ASSOC);
+                            $colNames = array_column($pInfo, 'name');
+                            if (in_array('stock_qty', $colNames, true)) {
+                                $col = 'stock_qty';
+                            } elseif (in_array('stock', $colNames, true)) {
+                                $col = 'stock';
+                            }
+                        } else {
+                            $check = $db->query("SHOW COLUMNS FROM `products` LIKE 'stock_qty'");
+                            if ($check && !$check->fetch()) {
+                                $col = 'stock';
+                            }
+                        }
+                    } catch (\Throwable $te) {
+                        $col = 'stock_qty';
                     }
+
+                    $stmtDec = $db->prepare("
+                        UPDATE `products` 
+                        SET `{$col}` = GREATEST(0, `{$col}` - :qty)
+                        WHERE `id` = :pid
+                    ");
+                    foreach ($items as $item) {
+                        $pid = (int)($item['product_id'] ?? 0);
+                        $qty = (int)($item['quantity'] ?? 1);
+                        if ($pid > 0 && $qty > 0) {
+                            $stmtDec->execute([':qty' => $qty, ':pid' => $pid]);
+                        }
+                    }
+
+                    // Mark as stock reserved in notes to prevent any future decrement
+                    try {
+                        $isSqlite = ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite');
+                        $updNoteSql = $isSqlite
+                            ? "UPDATE `orders` SET `notes` = COALESCE(`notes`, '') || ' [stock_reserved]' WHERE `order_number` = :ord"
+                            : "UPDATE `orders` SET `notes` = CASE WHEN `notes` IS NULL OR `notes` = '' THEN '[stock_reserved]' ELSE CONCAT(`notes`, ' [stock_reserved]') END WHERE `order_number` = :ord";
+                        $db->prepare($updNoteSql)->execute([':ord' => $orderNumber]);
+                    } catch (\Throwable $noteEx) {}
                 }
             }
 

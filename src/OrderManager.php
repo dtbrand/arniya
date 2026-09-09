@@ -560,6 +560,12 @@ class OrderManager
                     $orderParams[] = $shippingAddress;
                 }
 
+                if (self::ordersHasColumn($pdo, 'notes')) {
+                    $cols .= ", notes";
+                    $vals .= ", ?";
+                    $orderParams[] = '[stock_reserved]';
+                }
+
                 $stmt = $pdo->prepare("INSERT INTO orders ({$cols}, created_at) VALUES ({$vals}, NOW())");
                 $stmt->execute($orderParams);
                 $dbOrderId = (int)$pdo->lastInsertId();

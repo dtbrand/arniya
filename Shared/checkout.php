@@ -26,7 +26,16 @@ if ($coCurrentUser && !empty($coCurrentUser['id'])) {
     $coSavedAddresses = Auth::getCustomerAddresses($coCustomerId);
 }
 
-$dbProductsForCheckout = ProductCatalog::getAll();
+$coRole = 'guest';
+if (Auth::isAdminLoggedIn()) {
+    $coRole = 'admin';
+} elseif ($coCurrentUser) {
+    $coRole = strtolower(trim((string)($coCurrentUser['type'] ?? ($coCurrentUser['role'] ?? 'customer'))));
+}
+if ($coRole === 'wholesaler') { $coRole = 'wholesale'; }
+if ($coRole === '' || $coRole === 'retail') { $coRole = 'customer'; }
+
+$dbProductsForCheckout = ProductCatalog::getForRole($coRole);
 $paymentGateways = PaymentManager::getPublicConfig();
 ?>
 <script>
