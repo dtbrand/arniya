@@ -4,25 +4,10 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
+require_once __DIR__ . '/cors.php';
+cors_json();
+
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-
-$allowedOrigin = 'https://jaihanumantex.in';
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if ($origin === $allowedOrigin) {
-    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
-} else {
-    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
-}
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-header('Access-Control-Allow-Credentials: true');
-header('Vary: Origin');
-header('Content-Type: application/json; charset=utf-8');
-
-if ($method === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';

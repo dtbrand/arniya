@@ -26,7 +26,14 @@ function cors_headers(): void
     if (in_array($origin, $allowedOrigins, true)) {
         header('Access-Control-Allow-Origin: ' . $origin);
     } else {
-        header('Access-Control-Allow-Origin: https://harmitethnic.com');
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+        $selfOrigin = rtrim($proto . $host, '/');
+        if ($host !== '' && in_array($selfOrigin, $allowedOrigins, true)) {
+            header('Access-Control-Allow-Origin: ' . $selfOrigin);
+        } else {
+            header('Access-Control-Allow-Origin: https://jaihanumantex.in');
+        }
     }
 
     
