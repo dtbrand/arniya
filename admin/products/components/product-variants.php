@@ -130,7 +130,7 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.25); padding-bottom:6px; margin-bottom:6px;">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        <strong style="font-size:11.5px; letter-spacing:0.3px; color:#FFE57F;">FULL SET DYNAMIC PREVIEW</strong>
+                        <strong style="font-size:11.5px; letter-spacing:0.3px; color:#FFE57F;" id="dtFsPreviewTitle">FULL SET DYNAMIC PREVIEW</strong>
                     </div>
                     <div style="display:flex; align-items:center; gap:10px; font-size:11px;">
                         <span>Colors: <strong id="dtFsPreviewColorsCount" style="color:#D4AF37;">0</strong></span>
@@ -138,7 +138,7 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                         <span class="adm-badge gold" style="font-size:10px; padding:2px 8px; font-weight:800;" id="dtFsPreviewPieceBadge">0 Pieces / Set</span>
                     </div>
                 </div>
-                <div style="font-size:10px; color:#D6D3D1; margin-bottom:6px; line-height:1.3;">
+                <div id="dtFsPreviewDesc" style="font-size:10px; color:#D6D3D1; margin-bottom:6px; line-height:1.3;">
                     100% active Color &times; Size variant combinations included in this wholesale trade catalog bundle:
                 </div>
                 <div id="dtFsPreviewItemsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:4px; max-height:120px; overflow-y:auto; padding-right:4px;">

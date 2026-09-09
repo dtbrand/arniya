@@ -370,16 +370,33 @@
 
         var colCount = Object.keys(colorsSet).length;
         var varCount = validVariants.length;
-        var pieceCount = varCount; // 1 full set = count of active distinct color-size variants
+        var pieceCount = varCount; // 1 full set / MCQ = count of active distinct color-size variants
 
+        var radFull = el('pFormSellingTypeFull');
+        var isFullSet = radFull && radFull.checked;
+
+        var elTitle = el('dtFsPreviewTitle');
+        var elDesc = el('dtFsPreviewDesc');
         var elCol = el('dtFsPreviewColorsCount');
         var elVar = el('dtFsPreviewVariantsCount');
         var elBadge = el('dtFsPreviewPieceBadge');
         var elList = el('dtFsPreviewItemsList');
 
+        if (elTitle) {
+            elTitle.textContent = isFullSet ? 'FULL SET DYNAMIC PREVIEW' : 'WHOLESALER MCQ DYNAMIC PREVIEW';
+        }
+        if (elDesc) {
+            elDesc.textContent = isFullSet
+                ? '100% active Color × Size variant combinations included in this wholesale trade catalog bundle:'
+                : 'Wholesaler single-piece order commitment = Available Colors × Available Sizes (' + pieceCount + ' pieces minimum lot order):';
+        }
         if (elCol) { elCol.textContent = colCount; }
         if (elVar) { elVar.textContent = varCount; }
-        if (elBadge) { elBadge.textContent = pieceCount + ' Piece' + (pieceCount === 1 ? '' : 's') + ' / Set'; }
+        if (elBadge) {
+            elBadge.textContent = isFullSet
+                ? (pieceCount + ' Piece' + (pieceCount === 1 ? '' : 's') + ' / Set')
+                : ('Wholesaler MCQ: ' + pieceCount + ' Pcs / Lot');
+        }
 
         if (elList) {
             if (!validVariants.length) {
