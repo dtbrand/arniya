@@ -611,6 +611,15 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         }
         if (!product) return;
 
+        // Use role-based price from product data
+        var unitPrice = product.price || product.effective_price || product.effective_customer_price || product.effective_retail_price || product.effective_wholesale_price || product.effective_reseller_price || 0;
+        // If price not available in product, fall back to retail_price - sale_discount
+        if (!unitPrice || unitPrice === 0) {
+            var saleDisc = product.sale_discount || product.sale_price || 0;
+            var retail = product.retail_price || product.price || 0;
+            unitPrice = Math.max(0, retail - saleDisc);
+        }
+
         var addQty = 1;
         var chosenSize = '';
         var chosenColor = '';
@@ -654,7 +663,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 selling_type: pSellingType,
                 sku:          pSku,
                 name: product.name || product.title || 'Ethnic Attire',
-                price: parseInt(String(product.price).replace(/[^0-9]/g, ''), 10) || 2999,
+                price: unitPrice,
                 old_price: product.old_price ? parseInt(String(product.old_price).replace(/[^0-9]/g, ''), 10) : null,
                 image: imgPath,
                 size: chosenSize,

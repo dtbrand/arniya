@@ -27,6 +27,7 @@ try {
     } else {
         $userType = $rawUserType;
     }
+    if ($userType === 'wholesaler') { $userType = 'wholesale'; }
     $isTradeUser = in_array($userType, ['wholesale', 'retailer'], true);
     $couponCode = trim($data['coupon'] ?? '');
 
@@ -58,8 +59,8 @@ try {
                 exit;
             }
 
-            $baseUnitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
-            $unitPrice = max(0, $baseUnitPrice - $saleDisc);
+            // Use ProductCatalog::resolvePrice for correct price
+            $unitPrice = ProductCatalog::resolvePrice($p, $userType);
             $variants = $p['full_set_variants'] ?? $p['variants'] ?? [];
             $fullSetPieces = max(1, count($variants));
             $itemTotal = round($unitPrice * $fullSetPieces * $qty, 2);
@@ -90,17 +91,22 @@ try {
                 'total_price' => $itemTotal
             ];
         } else {
-            // Single Piece Role Pricing
-            if ($userType === 'reseller') {
-                $basePrice = (float)($p['reseller_price'] > 0 ? $p['reseller_price'] : $p['retail_price']);
-            } elseif ($userType === 'wholesale') {
-                $basePrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
-            } elseif ($userType === 'retailer') {
-                $basePrice = (float)($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']);
-            } else { // guest / retail customer
-                $basePrice = (float)($p['customer_price'] > 0 ? $p['customer_price'] : ($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']));
+            // Single Piece Role Pricing - Use ProductCatalog::resolvePrice
+            $unitPrice = ProductCatalog::resolvePrice($p, $userType);
+
+            // Wholesaler MCQ Validation
+            if ($userType === 'wholesale') {
+                $mcqResult = ProductCatalog::calculateWholesalerMcq($p);
+                $requiredMcq = $mcqResult['mcq'];
+                if ($requiredMcq > 0 && $qty < $requiredMcq) {
+                    http_response_code(400);
+                    echo json_encode([
+                        'success' => false,
+                        'message' => "Wholesale MCQ for '{$p['name']}' requires {$requiredMcq} pieces (all color × size combinations), but {$qty} requested."
+                    ], JSON_PRETTY_PRINT);
+                    exit;
+                }
             }
-            $unitPrice = max(0, $basePrice - $saleDisc);
 
             $itemTotal = round($unitPrice * $qty, 2);
             $subtotal += $itemTotal;

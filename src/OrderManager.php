@@ -148,7 +148,7 @@ class OrderManager
 
         try {
             $stmt = $pdo->prepare(
-                "SELECT id, sku, title, mrp, retail_price, customer_price, sale_price, wholesale_price, reseller_price, stock_qty, status, selling_type
+                "SELECT id, sku, title, mrp, retail_price, customer_price, customer_sale_price, sale_price, wholesale_price, reseller_price, stock_qty, status, selling_type
                  FROM products WHERE id IN ({$placeholders})"
             );
             $stmt->execute($ids);
@@ -163,8 +163,13 @@ class OrderManager
             $saleDisc = (float)($row['sale_price'] ?? 0);
 
             if ($sellingType === 'full_set') {
-                $basePrice = (float)$row['wholesale_price'];
-                if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                if ($channel === 'retailer') {
+                    $basePrice = (float)($row['wholesale_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                } else { // wholesale
+                    $basePrice = (float)($row['wholesale_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                }
             } else {
                 if ($channel === 'wholesale') {
                     $basePrice = (float)$row['wholesale_price'];
@@ -175,9 +180,17 @@ class OrderManager
                 } elseif ($channel === 'retailer') {
                     $basePrice = (float)$row['retail_price'];
                     if ($basePrice <= 0) { $basePrice = (float)$row['wholesale_price']; }
-                } else { // guest / retail
-                    $basePrice = (float)($row['customer_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                } else { // guest / retail / customer
+                    // Use customer_sale_price if set, else customer_price - sale_discount, else retail_price - sale_discount
+                    $custSalePrice = (float)($row['customer_sale_price'] ?? 0);
+                    $custPrice = (float)($row['customer_price'] ?? 0);
+                    if ($custSalePrice > 0) {
+                        $basePrice = $custSalePrice;
+                    } elseif ($custPrice > 0) {
+                        $basePrice = max(0, $custPrice - $saleDisc);
+                    } else {
+                        $basePrice = (float)$row['retail_price'];
+                    }
                 }
             }
             if ($basePrice <= 0) {
@@ -251,6 +264,33 @@ class OrderManager
                 if ($sellingType === 'full_set' && !$isTradeChannel) {
                     $unavailable[] = $row['title'] . ' (Full Set products are exclusively available to verified Retailers & Wholesalers)';
                     continue;
+                }
+
+                // Wholesaler MCQ Validation for Single Piece
+                // Wholesaler must purchase the full MCQ (Available Colors × Available Sizes)
+                if ($sellingType === 'single_piece' && $channel === 'wholesale') {
+                    // Fetch variant count for this product (color × size combinations)
+                    try {
+                        $mcqStmt = $pdo->prepare("
+                            SELECT COUNT(DISTINCT CONCAT(COALESCE(color_name,''), '|', COALESCE(size_name,''))) as mcq
+                            FROM product_variants 
+                            WHERE product_id = ? 
+                              AND color_name IS NOT NULL AND color_name != '' 
+                              AND size_name IS NOT NULL AND size_name != ''
+                              AND status = 'active'
+                        ");
+                        $mcqStmt->execute([$prodId]);
+                        $mcqResult = $mcqStmt->fetch(\PDO::FETCH_ASSOC);
+                        $requiredMcq = (int)($mcqResult['mcq'] ?? 0);
+                        
+                        if ($requiredMcq > 0 && $qty < $requiredMcq) {
+                            $unavailable[] = $row['title'] . " (Wholesale MCQ requires {$requiredMcq} pieces — all color × size combinations, but {$qty} requested)";
+                            continue;
+                        }
+                    } catch (\Throwable $me) {
+                        // If MCQ check fails, log but don't block
+                        error_log("MCQ validation error for product {$prodId}: " . $me->getMessage());
+                    }
                 }
 
                 // Don't sell drafts, discontinued lines, or more than is on hand

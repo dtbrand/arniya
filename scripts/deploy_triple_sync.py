@@ -1,6 +1,7 @@
 import os
 import sys
 import ftplib
+import time
 
 FILES_TO_DEPLOY = [
     'src/Auth.php',
@@ -9,6 +10,7 @@ FILES_TO_DEPLOY = [
     'src/ProductCatalog.php',
     'api/_guard.php',
     'api/products.php',
+    'api/wishlist.php',
     'api/cart.php',
     'api/orders.php',
     'api/wholesale.php',
@@ -93,6 +95,7 @@ FILES_TO_DEPLOY = [
     'admin/customers/components/customer-notes.php',
     'admin/customers/components/customer-table.php',
     'admin/customers/assets/js/customer-list.js',
+    'database/migrations/2026_09_09_000001_add_master_price_fields.sql',
 ]
 
 SERVERS = [
@@ -131,16 +134,21 @@ def ensure_remote_dir(ftp, remote_dir):
             except Exception as e:
                 print(f"    [!] Could not create dir {current}: {e}")
 
+def connect_ftp(srv):
+    ftp = ftplib.FTP()
+    ftp.connect(srv['host'], srv['port'], timeout=30)
+    ftp.login(srv['user'], srv['pass'])
+    ftp.makepasv = lambda: ftplib.parse229(ftp.sendcmd('EPSV'), ftp.sock.getpeername())
+    return ftp
+
 def deploy_to_server(srv):
     print(f"\n{'='*60}")
     print(f"Deploying to {srv['name']} ({srv['user']})...")
     print(f"{'='*60}")
     
+    ftp = None
     try:
-        ftp = ftplib.FTP()
-        ftp.connect(srv['host'], srv['port'], timeout=30)
-        ftp.login(srv['user'], srv['pass'])
-        ftp.set_pasv(True)
+        ftp = connect_ftp(srv)
         print(f"[+] Logged in successfully. Current dir: {ftp.pwd()}")
     except Exception as e:
         print(f"[-] Login failed: {e}")
@@ -160,22 +168,47 @@ def deploy_to_server(srv):
         remote_dir = os.path.dirname(remote_full)
         remote_filename = os.path.basename(remote_full)
 
-        try:
-            ensure_remote_dir(ftp, remote_dir)
-            with open(local_path, 'rb') as fp:
-                ftp.storbinary(f"STOR {remote_filename}", fp)
-            
-            # verify size
-            remote_size = ftp.size(remote_filename)
-            local_size = os.path.getsize(local_path)
-            print(f"  [OK] {rel_path} -> {remote_filename} ({remote_size} bytes, local: {local_size} bytes)")
-            success_count += 1
-        except Exception as e:
-            print(f"  [FAIL] {rel_path}: {e}")
+        uploaded = False
+        for attempt in range(1, 4):
+            try:
+                if ftp is None:
+                    ftp = connect_ftp(srv)
+                ensure_remote_dir(ftp, remote_dir)
+                with open(local_path, 'rb') as fp:
+                    ftp.storbinary(f"STOR {remote_filename}", fp)
+                
+                # verify size
+                remote_size = ftp.size(remote_filename)
+                local_size = os.path.getsize(local_path)
+                print(f"  [OK] {rel_path} -> {remote_filename} ({remote_size} bytes, local: {local_size} bytes)")
+                success_count += 1
+                uploaded = True
+                break
+            except Exception as e:
+                print(f"  [ATTEMPT {attempt} FAILED] {rel_path}: {e}")
+                err_str = str(e)
+                if 'Temporary hidden file' in err_str:
+                    try:
+                        temp_file = f".in.{remote_filename}."
+                        ftp.delete(temp_file)
+                        print(f"  [CLEANED] Deleted stale temp file {temp_file}")
+                    except Exception:
+                        pass
+                try:
+                    if ftp:
+                        ftp.close()
+                except Exception:
+                    pass
+                ftp = None
+                time.sleep(1.5)
+
+        if not uploaded:
+            print(f"  [FAIL] {rel_path} could not be uploaded after 3 attempts.")
             fail_count += 1
 
     try:
-        ftp.quit()
+        if ftp:
+            ftp.quit()
     except Exception:
         pass
 

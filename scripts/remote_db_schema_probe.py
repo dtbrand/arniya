@@ -47,8 +47,10 @@ echo json_encode($schema, JSON_PRETTY_PRINT);
 """
 
 print("1. Uploading probe script to HarmitEthnic...")
-ftp = ftplib.FTP(FTP_HOST)
+ftp = ftplib.FTP()
+ftp.connect(FTP_HOST, 21, timeout=30)
 ftp.login(FTP_USER, FTP_PASS)
+ftp.makepasv = lambda: ftplib.parse229(ftp.sendcmd('EPSV'), ftp.sock.getpeername())
 ftp.cwd('/public_html')
 
 import io
@@ -73,8 +75,10 @@ try:
                     print(f"  • {c}")
 finally:
     print("\n3. Cleaning up temporary probe script...")
-    ftp = ftplib.FTP(FTP_HOST)
+    ftp = ftplib.FTP()
+    ftp.connect(FTP_HOST, 21, timeout=30)
     ftp.login(FTP_USER, FTP_PASS)
+    ftp.makepasv = lambda: ftplib.parse229(ftp.sendcmd('EPSV'), ftp.sock.getpeername())
     ftp.cwd('/public_html')
     try:
         ftp.delete('db_probe_temp.php')

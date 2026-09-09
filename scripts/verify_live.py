@@ -38,6 +38,11 @@ urls = [
     ('https://harmitethnic.com/admin/products/attributes/index.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/api/attributes.php', 200, 'json'),
     ('https://harmitethnic.com/api/shipping.php?action=get_rates', 200, 'json'),
+    ('https://harmitethnic.com/shop.php', 200, 'html'),
+    ('https://harmitethnic.com/product.php?id=13', 200, 'html'),
+    ('https://harmitethnic.com/api/products.php', 200, 'json'),
+    ('https://harmitethnic.com/api/cart.php', 200, 'json'),
+    ('https://harmitethnic.com/api/wishlist.php', 200, 'json'),
     ('https://jaihanumantex.in/wholesale.php', 200, 'html'),
     ('https://jaihanumantex.in/retailer.php', 200, 'html'),
     ('https://jaihanumantex.in/reseller.php', 200, 'html'),
@@ -69,6 +74,11 @@ urls = [
     ('https://jaihanumantex.in/api/attributes.php', 200, 'json'),
     ('https://jaihanumantex.in/api/brands.php', 200, 'json'),
     ('https://jaihanumantex.in/api/shipping.php?action=get_rates', 200, 'json'),
+    ('https://jaihanumantex.in/shop.php', 200, 'html'),
+    ('https://jaihanumantex.in/product.php?id=13', 200, 'html'),
+    ('https://jaihanumantex.in/api/products.php', 200, 'json'),
+    ('https://jaihanumantex.in/api/cart.php', 200, 'json'),
+    ('https://jaihanumantex.in/api/wishlist.php', 200, 'json'),
 ]
 
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')

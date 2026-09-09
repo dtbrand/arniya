@@ -195,44 +195,35 @@ try {
     if ($id > 0) {
         $product = ProductCatalog::getById($id);
         if ($product) {
-            // Apply role-based price filtering
-            $saleDisc = (float)($product['sale_price'] ?? $product['sale_discount'] ?? 0);
-            $isFullSet = ($product['selling_type'] ?? 'single_piece') === 'full_set';
+            // Apply role-based price filtering using centralized resolver
+            $priceDisplay = ProductCatalog::getPriceDisplay($product, $userRole);
             
-            if ($isFullSet) {
-                if (!$isTradeRole) {
-                    http_response_code(403);
-                    echo json_encode([
-                        'success' => false,
-                        'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
-                    ], JSON_PRETTY_PRINT);
-                    exit;
-                }
-                $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                $product['price'] = max(0, $basePrice - $saleDisc);
+            if (!$priceDisplay['is_purchasable']) {
+                http_response_code(403);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+            
+            $product['price'] = $priceDisplay['effective_price'];
+            $product['base_price'] = $priceDisplay['base_price'];
+            $product['sale_price'] = $priceDisplay['sale_price'];
+            $product['show_sale'] = $priceDisplay['show_sale'];
+            $product['price_label'] = $priceDisplay['price_label'];
+            $product['effective_price'] = $priceDisplay['effective_price'];
+            
+            // Hide trade prices from non-trade roles
+            if (!$isTradeRole) {
+                $product['wholesale_price'] = null;
+                $product['reseller_price'] = null;
+                $product['customer_price'] = null;
+                $product['customer_sale_price'] = null;
                 $product['trade_price'] = $product['price'];
             } else {
-                if ($userRole === 'reseller') {
-                    $basePrice = (float)($product['reseller_price'] ?? $product['retail_price'] ?? 0);
-                } elseif ($userRole === 'wholesale') {
-                    $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                } elseif ($userRole === 'retailer') {
-                    $basePrice = (float)($product['retail_price'] ?? $product['price'] ?? 0);
-                } else {
-                    $basePrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price'] ?? 0);
-                }
-                $product['price'] = max(0, $basePrice - $saleDisc);
-                
-                if (!$isTradeRole) {
-                    $product['wholesale_price'] = null;
-                    $product['reseller_price'] = null;
-                    $product['customer_price'] = null;
-                    $product['trade_price'] = $product['price'];
-                } else {
-                    $product['trade_price'] = max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
-                }
+                $product['trade_price'] = $product['price'];
             }
-            $product['effective_price'] = $product['price'];
             
             $recommendations = ProductCatalog::getRecommendations($id, 4);
             echo json_encode([
@@ -252,44 +243,35 @@ try {
     if (!empty($sku)) {
         $product = ProductCatalog::getBySku($sku);
         if ($product) {
-            // Apply role-based price filtering
-            $saleDisc = (float)($product['sale_price'] ?? $product['sale_discount'] ?? 0);
-            $isFullSet = ($product['selling_type'] ?? 'single_piece') === 'full_set';
+            // Apply role-based price filtering using centralized resolver
+            $priceDisplay = ProductCatalog::getPriceDisplay($product, $userRole);
             
-            if ($isFullSet) {
-                if (!$isTradeRole) {
-                    http_response_code(403);
-                    echo json_encode([
-                        'success' => false,
-                        'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
-                    ], JSON_PRETTY_PRINT);
-                    exit;
-                }
-                $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                $product['price'] = max(0, $basePrice - $saleDisc);
+            if (!$priceDisplay['is_purchasable']) {
+                http_response_code(403);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Full Set products are exclusively available to verified Retailers and Wholesalers.'
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+            
+            $product['price'] = $priceDisplay['effective_price'];
+            $product['base_price'] = $priceDisplay['base_price'];
+            $product['sale_price'] = $priceDisplay['sale_price'];
+            $product['show_sale'] = $priceDisplay['show_sale'];
+            $product['price_label'] = $priceDisplay['price_label'];
+            $product['effective_price'] = $priceDisplay['effective_price'];
+            
+            // Hide trade prices from non-trade roles
+            if (!$isTradeRole) {
+                $product['wholesale_price'] = null;
+                $product['reseller_price'] = null;
+                $product['customer_price'] = null;
+                $product['customer_sale_price'] = null;
                 $product['trade_price'] = $product['price'];
             } else {
-                if ($userRole === 'reseller') {
-                    $basePrice = (float)($product['reseller_price'] ?? $product['retail_price'] ?? 0);
-                } elseif ($userRole === 'wholesale') {
-                    $basePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? 0);
-                } elseif ($userRole === 'retailer') {
-                    $basePrice = (float)($product['retail_price'] ?? $product['price'] ?? 0);
-                } else {
-                    $basePrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price'] ?? 0);
-                }
-                $product['price'] = max(0, $basePrice - $saleDisc);
-                
-                if (!$isTradeRole) {
-                    $product['wholesale_price'] = null;
-                    $product['reseller_price'] = null;
-                    $product['customer_price'] = null;
-                    $product['trade_price'] = $product['price'];
-                } else {
-                    $product['trade_price'] = max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
-                }
+                $product['trade_price'] = $product['price'];
             }
-            $product['effective_price'] = $product['price'];
             
             echo json_encode(['success' => true, 'product' => $product], JSON_PRETTY_PRINT);
             exit;
@@ -332,40 +314,29 @@ try {
         }));
     }
 
-    // Apply role-based price filtering
+    // Apply role-based price filtering using centralized resolver
     $products = array_map(function($p) use ($userRole, $isTradeRole) {
-        $saleDisc = (float)($p['sale_price'] ?? $p['sale_discount'] ?? 0);
+        $priceDisplay = ProductCatalog::getPriceDisplay($p, $userRole);
         
-        // Determine the correct price for this user role
-        if ($p['selling_type'] === 'full_set') {
-            $basePrice = (float)($p['wholesale_price'] ?? $p['retail_price'] ?? 0);
-            $p['price'] = max(0, $basePrice - $saleDisc);
+        $p['price'] = $priceDisplay['effective_price'];
+        $p['base_price'] = $priceDisplay['base_price'];
+        $p['sale_price'] = $priceDisplay['sale_price'];
+        $p['show_sale'] = $priceDisplay['show_sale'];
+        $p['price_label'] = $priceDisplay['price_label'];
+        $p['effective_price'] = $priceDisplay['effective_price'];
+        $p['is_purchasable'] = $priceDisplay['is_purchasable'];
+        
+        // Hide trade prices from non-trade roles
+        if (!$isTradeRole) {
+            $p['wholesale_price'] = null;
+            $p['reseller_price'] = null;
+            $p['customer_price'] = null;
+            $p['customer_sale_price'] = null;
             $p['trade_price'] = $p['price'];
         } else {
-            // Single piece - role-based pricing
-            if ($userRole === 'reseller') {
-                $basePrice = (float)($p['reseller_price'] ?? $p['retail_price'] ?? 0);
-            } elseif ($userRole === 'wholesale') {
-                $basePrice = (float)($p['wholesale_price'] ?? $p['retail_price'] ?? 0);
-            } elseif ($userRole === 'retailer') {
-                $basePrice = (float)($p['retail_price'] ?? $p['price'] ?? 0);
-            } else { // guest / retail
-                $basePrice = (float)($p['customer_price'] ?? $p['retail_price'] ?? $p['price'] ?? 0);
-            }
-            $p['price'] = max(0, $basePrice - $saleDisc);
-            
-            // Hide trade prices from retail customers
-            if (!$isTradeRole) {
-                $p['wholesale_price'] = null;
-                $p['reseller_price'] = null;
-                $p['customer_price'] = null;
-                $p['trade_price'] = $p['price'];
-            } else {
-                $p['trade_price'] = max(0, (float)($p['retail_price'] ?? 0) - $saleDisc);
-            }
+            $p['trade_price'] = $p['price'];
         }
         
-        $p['effective_price'] = $p['price'];
         return $p;
     }, $products);
 

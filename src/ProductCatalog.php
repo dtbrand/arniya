@@ -167,9 +167,31 @@ class ProductCatalog
                 'color' => trim((string)($v['color_name'] ?? '')),
                 'size' => trim((string)($v['size_name'] ?? '')),
                 'stock_qty' => (int)($v['stock_qty'] ?? 0),
+                
+                // Single Piece Price Fields (per variant)
                 'price' => isset($v['price']) && $v['price'] !== null ? (float)$v['price'] : null,
+                'retail_price' => isset($v['retail_price']) && $v['retail_price'] !== null ? (float)$v['retail_price'] : (isset($v['retailer_price']) && $v['retailer_price'] !== null ? (float)$v['retailer_price'] : null),
+                'retailer_price' => isset($v['retailer_price']) && $v['retailer_price'] !== null ? (float)$v['retailer_price'] : (isset($v['retail_price']) && $v['retail_price'] !== null ? (float)$v['retail_price'] : null),
                 'wholesale_price' => isset($v['wholesale_price']) && $v['wholesale_price'] !== null ? (float)$v['wholesale_price'] : null,
                 'reseller_price' => isset($v['reseller_price']) && $v['reseller_price'] !== null ? (float)$v['reseller_price'] : null,
+                
+                // Single Piece Sale Price Fields (per variant)
+                'retail_sale_price' => isset($v['retail_sale_price']) && $v['retail_sale_price'] !== null ? (float)$v['retail_sale_price'] : (isset($v['retailer_sale_price']) && $v['retailer_sale_price'] !== null ? (float)$v['retailer_sale_price'] : null),
+                'retailer_sale_price' => isset($v['retailer_sale_price']) && $v['retailer_sale_price'] !== null ? (float)$v['retailer_sale_price'] : (isset($v['retail_sale_price']) && $v['retail_sale_price'] !== null ? (float)$v['retail_sale_price'] : null),
+                'wholesale_sale_price' => isset($v['wholesale_sale_price']) && $v['wholesale_sale_price'] !== null ? (float)$v['wholesale_sale_price'] : null,
+                'reseller_sale_price' => isset($v['reseller_sale_price']) && $v['reseller_sale_price'] !== null ? (float)$v['reseller_sale_price'] : null,
+                
+                // Customer Price Fields (per variant)
+                'customer_price' => isset($v['customer_price']) && $v['customer_price'] !== null ? (float)$v['customer_price'] : null,
+                'customer_sale_price' => isset($v['customer_sale_price']) && $v['customer_sale_price'] !== null ? (float)$v['customer_sale_price'] : null,
+                
+                // Full Set Price Fields (per variant)
+                'full_set_retailer_price' => isset($v['full_set_retailer_price']) && $v['full_set_retailer_price'] !== null ? (float)$v['full_set_retailer_price'] : null,
+                'full_set_wholesale_price' => isset($v['full_set_wholesale_price']) && $v['full_set_wholesale_price'] !== null ? (float)$v['full_set_wholesale_price'] : null,
+                'full_set_retailer_sale_price' => isset($v['full_set_retailer_sale_price']) && $v['full_set_retailer_sale_price'] !== null ? (float)$v['full_set_retailer_sale_price'] : null,
+                'full_set_wholesale_sale_price' => isset($v['full_set_wholesale_sale_price']) && $v['full_set_wholesale_sale_price'] !== null ? (float)$v['full_set_wholesale_sale_price'] : null,
+                
+                'selling_type' => trim((string)($v['selling_type'] ?? 'single_piece')),
                 'image' => self::mediaPath($v['image'] ?? '')
             ];
         }
@@ -249,20 +271,59 @@ class ProductCatalog
         $rc = (int)($review['count'] ?? 0);
 
         $sellingType = trim((string)($r['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+        
+        // Read all price fields per master specification
         $custPrice = (isset($r['customer_price']) && $r['customer_price'] !== null && (float)$r['customer_price'] > 0)
             ? (float)$r['customer_price'] : null;
+        $custSalePrice = (isset($r['customer_sale_price']) && $r['customer_sale_price'] !== null && (float)$r['customer_sale_price'] > 0)
+            ? (float)$r['customer_sale_price'] : null;
 
         $activeVariants = array_values(array_filter($variants, static function ($v) {
             return !empty($v['color']) || !empty($v['size']);
         }));
         $fullSetPieces = count($activeVariants);
 
+        // Wholesaler MCQ = Available Colors × Available Sizes (from variants with color AND size)
+        $wholesalerMcqVariants = array_values(array_filter($activeVariants, static function ($v) {
+            return !empty($v['color']) && !empty($v['size']);
+        }));
+        $wholesalerMcq = count($wholesalerMcqVariants);
+
         $saleDisc = (float)($r['sale_price'] ?? 0);
-        $effTrade = max(0, $retail - $saleDisc);
-        $effCust = ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - $saleDisc) : $effTrade;
-        $effWholesale = $wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effTrade;
-        $effReseller = $reseller > 0 ? max(0, $reseller - $saleDisc) : $effTrade;
-        $boutiqueMargin = max(0, $effCust - $effTrade);
+        
+        // MASTER PRICE MATRIX - Single Piece
+        // Guest/Customer: Customer Price (if set) else Retail Price; Customer Sale Price (if set) else Sale Price
+        // Retailer: Retail Price; Sale Price
+        // Reseller: Reseller Price; Sale Price  
+        // Wholesaler: Wholesale Price; Sale Price
+        
+        // Effective prices after sale discount
+        $effRetail = max(0, $retail - $saleDisc);
+        $effWholesale = $wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effRetail;
+        $effReseller = $reseller > 0 ? max(0, $reseller - $saleDisc) : $effRetail;
+        
+        // Customer/Guest effective price
+        if ($custSalePrice !== null && $custSalePrice > 0) {
+            // Customer Sale Price takes precedence
+            $effCustomer = max(0, $custSalePrice);
+        } elseif ($custPrice !== null && $custPrice > 0) {
+            $effCustomer = max(0, $custPrice - $saleDisc);
+        } else {
+            $effCustomer = $effRetail;
+        }
+
+        // Full Set effective prices (Retailer/Wholesaler only)
+        // For Full Set, the per-piece price is used, multiplied by full_set_pieces
+        $fullSetRetailerPrice = $retail; // Default to retail for full set
+        $fullSetWholesalePrice = $wholesale > 0 ? $wholesale : $retail;
+        $fullSetRetailerSalePrice = $saleDisc;
+        $fullSetWholesaleSalePrice = $saleDisc;
+
+        $boutiqueMargin = max(0, $effCustomer - $effRetail);
+
+        // Count available colors and sizes for MCQ calculation
+        $availableColors = array_values(array_filter(array_unique(array_map(function($v) { return $v['color']; }, $wholesalerMcqVariants))));
+        $availableSizes = array_values(array_filter(array_unique(array_map(function($v) { return $v['size']; }, $wholesalerMcqVariants))));
 
         return [
             'id' => $pid,
@@ -287,24 +348,45 @@ class ProductCatalog
             'selling_type' => $sellingType,
             'is_full_set' => ($sellingType === 'full_set'),
             'is_single_piece' => ($sellingType === 'single_piece'),
+            
+            // Single Piece Price Fields
             'customer_price' => $custPrice,
-            'full_set_pieces' => $fullSetPieces,
-            'full_set_variants' => $activeVariants,
-            'mrp' => $mrp,
-            'old_price' => $mrp,
-            'price' => $effCust,
-            'trade_price' => $effTrade,
+            'customer_sale_price' => $custSalePrice,
             'retail_price' => $retail,
-            'sale_price' => $saleDisc,
-            'sale_discount' => $saleDisc,
-            'effective_price' => $effTrade,
-            'effective_customer_price' => $effCust,
-            'effective_wholesale_price' => $effWholesale,
-            'effective_reseller_price' => $effReseller,
-            'boutique_margin' => $boutiqueMargin,
             'wholesale_price' => $wholesale,
             'reseller_price' => $reseller,
-            'reseller_profit' => ($reseller - $wholesale),
+            'sale_price' => $saleDisc,
+            'sale_discount' => $saleDisc,
+            
+            // Effective prices per role (after sale discount)
+            'effective_customer_price' => $effCustomer,
+            'effective_retail_price' => $effRetail,
+            'effective_wholesale_price' => $effWholesale,
+            'effective_reseller_price' => $effReseller,
+            
+            // Full Set Price Fields
+            'full_set_retailer_price' => $fullSetRetailerPrice,
+            'full_set_wholesale_price' => $fullSetWholesalePrice,
+            'full_set_retailer_sale_price' => $fullSetRetailerSalePrice,
+            'full_set_wholesale_sale_price' => $fullSetWholesaleSalePrice,
+            
+            // Effective full set prices
+            'effective_full_set_retailer_price' => max(0, $fullSetRetailerPrice - $fullSetRetailerSalePrice),
+            'effective_full_set_wholesale_price' => max(0, $fullSetWholesalePrice - $fullSetWholesaleSalePrice),
+            
+            'full_set_pieces' => $fullSetPieces,
+            'full_set_variants' => $activeVariants,
+            
+            // Wholesaler MCQ
+            'wholesaler_mcq' => $wholesalerMcq,
+            'wholesaler_mcq_colors' => $availableColors,
+            'wholesaler_mcq_sizes' => $availableSizes,
+            'wholesaler_mcq_variants' => $wholesalerMcqVariants,
+            
+            'mrp' => $mrp,
+            'old_price' => $mrp,
+            'price' => $effCustomer, // Default display price for Guest/Customer
+            'trade_price' => $effRetail,
             'discount' => $disc,
             'moq' => (int)($r['moq_full_set'] ?? 1),
             'stock_qty' => $stock,
@@ -321,8 +403,6 @@ class ProductCatalog
             'images' => $images,
             'video' => $videos[0] ?? '',
             'videos' => $videos,
-            // Player URLs, not the pasted watch links: an <iframe src> pointing
-            // at youtube.com/watch is refused by YouTube itself.
             'embed' => isset($embeds[0]) ? self::embedUrl($embeds[0]) : '',
             'embeds' => array_values(array_filter(array_map([self::class, 'embedUrl'], $embeds))),
             'embed_links' => $embeds,
@@ -721,6 +801,177 @@ class ProductCatalog
         return self::filter($criteria);
     }
 
+    /**
+     * Resolve the correct price for a product based on user role and product type
+     * MASTER PRICE MATRIX:
+     * 
+     * Single Piece:
+     * - Guest/Customer: Customer Price (fallback: Customer Sale Price, then Retail Price - Sale Discount)
+     * - Retailer: Retail Price (fallback: Retail Price - Sale Discount)
+     * - Reseller: Reseller Price (fallback: Reseller Price - Sale Discount)
+     * - Wholesaler: Wholesale Price (fallback: Wholesale Price - Sale Discount)
+     * 
+     * Full Set:
+     * - Retailer: Full Set Retailer Price (fallback: Full Set Retailer Price - Sale Discount)
+     * - Wholesaler: Full Set Wholesale Price (fallback: Full Set Wholesale Price - Sale Discount)
+     * - Guest/Customer/Reseller: Not purchasable
+     * 
+     * @param array $product Product data from getById/getBySlug/getAll
+     * @param string $role User role: guest, customer, retailer, reseller, wholesale
+     * @return float Effective price per unit (for full set, this is per-piece price)
+     */
+    public static function resolvePrice(array $product, string $role = 'guest'): float
+    {
+        $role = strtolower(trim($role));
+        if ($role === 'wholesaler') { $role = 'wholesale'; }
+        if ($role === '' || $role === 'retail') { $role = 'customer'; }
+        
+        $sellingType = $product['selling_type'] ?? 'single_piece';
+        $saleDisc = (float)($product['sale_price'] ?? $product['sale_discount'] ?? 0);
+        
+        if ($sellingType === 'full_set') {
+            // Full Set: Only Retailer and Wholesaler can purchase
+            if (!in_array($role, ['retailer', 'wholesale'], true)) {
+                return 0; // Not purchasable
+            }
+            if ($role === 'retailer') {
+                $basePrice = $product['full_set_retailer_price'] ?? $product['retail_price'] ?? 0;
+                $salePrice = $product['full_set_retailer_sale_price'] ?? $saleDisc;
+            } else { // wholesale
+                $basePrice = $product['full_set_wholesale_price'] ?? $product['wholesale_price'] ?? $product['retail_price'] ?? 0;
+                $salePrice = $product['full_set_wholesale_sale_price'] ?? $saleDisc;
+            }
+        } else {
+            // Single Piece
+            switch ($role) {
+                case 'guest':
+                case 'customer':
+                    // Customer Price > Customer Sale Price > Retail - Sale Discount
+                    if (isset($product['customer_sale_price']) && $product['customer_sale_price'] !== null && (float)$product['customer_sale_price'] > 0) {
+                        return max(0, (float)$product['customer_sale_price']);
+                    }
+                    if (isset($product['customer_price']) && $product['customer_price'] !== null && (float)$product['customer_price'] > 0) {
+                        return max(0, (float)$product['customer_price'] - $saleDisc);
+                    }
+                    return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
+                    
+                case 'retailer':
+                    return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
+                    
+                case 'reseller':
+                    return max(0, (float)($product['reseller_price'] ?? 0) - $saleDisc);
+                    
+                case 'wholesale':
+                    return max(0, (float)($product['wholesale_price'] ?? 0) - $saleDisc);
+                    
+                default:
+                    return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
+            }
+        }
+        
+        return max(0, $basePrice - $salePrice);
+    }
+
+    /**
+     * Get the correct price display fields for a product based on role
+     * Returns array with: base_price, sale_price, effective_price, price_label
+     */
+    public static function getPriceDisplay(array $product, string $role = 'guest'): array
+    {
+        $role = strtolower(trim($role));
+        if ($role === 'wholesaler') { $role = 'wholesale'; }
+        if ($role === '' || $role === 'retail') { $role = 'customer'; }
+        
+        $sellingType = $product['selling_type'] ?? 'single_piece';
+        $saleDisc = (float)($product['sale_price'] ?? $product['sale_discount'] ?? 0);
+        
+        $result = [
+            'base_price' => 0,
+            'sale_price' => $saleDisc,
+            'effective_price' => 0,
+            'price_label' => '',
+            'show_sale' => false,
+            'is_purchasable' => true
+        ];
+        
+        if ($sellingType === 'full_set') {
+            if (!in_array($role, ['retailer', 'wholesale'], true)) {
+                $result['is_purchasable'] = false;
+                $result['price_label'] = 'Trade Only';
+                return $result;
+            }
+            
+            if ($role === 'retailer') {
+                $result['base_price'] = (float)($product['full_set_retailer_price'] ?? $product['retail_price'] ?? 0);
+                $result['sale_price'] = (float)($product['full_set_retailer_sale_price'] ?? $saleDisc);
+                $result['price_label'] = 'Full Set / pc';
+            } else {
+                $result['base_price'] = (float)($product['full_set_wholesale_price'] ?? $product['wholesale_price'] ?? 0);
+                $result['sale_price'] = (float)($product['full_set_wholesale_sale_price'] ?? $saleDisc);
+                $result['price_label'] = 'Full Set / pc';
+            }
+        } else {
+            // Single Piece
+            switch ($role) {
+                case 'guest':
+                case 'customer':
+                    $result['base_price'] = (float)($product['customer_price'] ?? $product['retail_price'] ?? 0);
+                    if (isset($product['customer_sale_price']) && $product['customer_sale_price'] !== null && (float)$product['customer_sale_price'] > 0) {
+                        $result['sale_price'] = (float)$product['customer_sale_price'];
+                        $result['show_sale'] = true;
+                    }
+                    $result['price_label'] = 'Customer Price';
+                    break;
+                    
+                case 'retailer':
+                    $result['base_price'] = (float)($product['retail_price'] ?? 0);
+                    $result['price_label'] = 'Retail Price';
+                    break;
+                    
+                case 'reseller':
+                    $result['base_price'] = (float)($product['reseller_price'] ?? 0);
+                    $result['price_label'] = 'Reseller Price';
+                    break;
+                    
+                case 'wholesale':
+                    $result['base_price'] = (float)($product['wholesale_price'] ?? 0);
+                    $result['price_label'] = 'Wholesale Price';
+                    break;
+            }
+        }
+        
+        $result['effective_price'] = max(0, $result['base_price'] - $result['sale_price']);
+        $result['show_sale'] = $result['sale_price'] > 0 && $result['base_price'] > $result['sale_price'];
+        
+        return $result;
+    }
+
+    /**
+     * Calculate Wholesaler MCQ (Minimum Commitment Quantity) for Single Piece
+     * Formula: Available Colors × Available Sizes (from variants with both color AND size)
+     */
+    public static function calculateWholesalerMcq(array $product): array
+    {
+        $variants = $product['variants'] ?? [];
+        $validVariants = array_filter($variants, function ($v) {
+            return !empty($v['color']) && !empty($v['size']);
+        });
+        
+        $colors = array_values(array_unique(array_map(function($v) { return $v['color']; }, $validVariants)));
+        $sizes = array_values(array_unique(array_map(function($v) { return $v['size']; }, $validVariants)));
+        
+        $mcq = count($colors) * count($sizes);
+        
+        return [
+            'mcq' => $mcq,
+            'colors' => $colors,
+            'sizes' => $sizes,
+            'color_count' => count($colors),
+            'size_count' => count($sizes),
+            'variants' => array_values($validVariants)
+        ];
+    }
+
     // ─── Write helpers ──────────────────────────────────────────────────────
 
     /** The four values products.status may hold. */
@@ -963,15 +1214,41 @@ class ProductCatalog
                 $sku = strtoupper(($baseSku !== '' ? $baseSku : 'DT') . '-'
                     . ($tail !== '' ? substr($tail, 0, 14) : ('V' . ($i + 1))));
             }
-            $price = (isset($v['price']) && $v['price'] !== '' && (float)$v['price'] > 0)
-                ? (float)$v['price'] : null;
             $stock = (int)($v['stock_qty'] ?? $v['stock'] ?? 0);
             $vImg = self::storableMedia($v['image'] ?? '');
+            $sellingType = ($v['selling_type'] ?? 'single_piece') === 'full_set' ? 'full_set' : 'single_piece';
+
+            // Single Piece Price Fields
+            $retailPrice = (isset($v['retail_price']) && $v['retail_price'] !== '' && (float)$v['retail_price'] > 0) ? (float)$v['retail_price'] : ((isset($v['retailer_price']) && $v['retailer_price'] !== '' && (float)$v['retailer_price'] > 0) ? (float)$v['retailer_price'] : null);
+            $wholesalePrice = (isset($v['wholesale_price']) && $v['wholesale_price'] !== '' && (float)$v['wholesale_price'] > 0) ? (float)$v['wholesale_price'] : null;
+            $resellerPrice = (isset($v['reseller_price']) && $v['reseller_price'] !== '' && (float)$v['reseller_price'] > 0) ? (float)$v['reseller_price'] : null;
+            $price = (isset($v['price']) && $v['price'] !== '' && (float)$v['price'] > 0) ? (float)$v['price'] : $retailPrice;
+
+            // Single Piece Sale Price Fields
+            $retailSalePrice = (isset($v['retail_sale_price']) && $v['retail_sale_price'] !== '' && (float)$v['retail_sale_price'] > 0) ? (float)$v['retail_sale_price'] : ((isset($v['retailer_sale_price']) && $v['retailer_sale_price'] !== '' && (float)$v['retailer_sale_price'] > 0) ? (float)$v['retailer_sale_price'] : null);
+            $wholesaleSalePrice = (isset($v['wholesale_sale_price']) && $v['wholesale_sale_price'] !== '' && (float)$v['wholesale_sale_price'] > 0) ? (float)$v['wholesale_sale_price'] : null;
+            $resellerSalePrice = (isset($v['reseller_sale_price']) && $v['reseller_sale_price'] !== '' && (float)$v['reseller_sale_price'] > 0) ? (float)$v['reseller_sale_price'] : null;
+
+            // Customer Price Fields
+            $customerPrice = (isset($v['customer_price']) && $v['customer_price'] !== '' && (float)$v['customer_price'] > 0) ? (float)$v['customer_price'] : null;
+            $customerSalePrice = (isset($v['customer_sale_price']) && $v['customer_sale_price'] !== '' && (float)$v['customer_sale_price'] > 0) ? (float)$v['customer_sale_price'] : null;
+
+            // Full Set Price Fields
+            $fullSetRetailerPrice = (isset($v['full_set_retailer_price']) && $v['full_set_retailer_price'] !== '' && (float)$v['full_set_retailer_price'] > 0) ? (float)$v['full_set_retailer_price'] : null;
+            $fullSetWholesalePrice = (isset($v['full_set_wholesale_price']) && $v['full_set_wholesale_price'] !== '' && (float)$v['full_set_wholesale_price'] > 0) ? (float)$v['full_set_wholesale_price'] : null;
+            $fullSetRetailerSalePrice = (isset($v['full_set_retailer_sale_price']) && $v['full_set_retailer_sale_price'] !== '' && (float)$v['full_set_retailer_sale_price'] > 0) ? (float)$v['full_set_retailer_sale_price'] : null;
+            $fullSetWholesaleSalePrice = (isset($v['full_set_wholesale_sale_price']) && $v['full_set_wholesale_sale_price'] !== '' && (float)$v['full_set_wholesale_sale_price'] > 0) ? (float)$v['full_set_wholesale_sale_price'] : null;
 
             $ok = Database::execute(
                 "INSERT INTO product_variants
-                 (product_id, color_id, color_name, size_id, size_name, sku, stock_qty, price, image)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                 (product_id, color_id, color_name, size_id, size_name, sku, stock_qty, price,
+                  retail_price, retailer_price, wholesale_price, reseller_price,
+                  retail_sale_price, retailer_sale_price, wholesale_sale_price, reseller_sale_price,
+                  customer_price, customer_sale_price,
+                  full_set_retailer_price, full_set_wholesale_price,
+                  full_set_retailer_sale_price, full_set_wholesale_sale_price,
+                  selling_type, image)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                     $pid,
                     self::registerPaletteColor($color, trim((string)($v['hex'] ?? $v['hex_code'] ?? ''))),
@@ -981,6 +1258,21 @@ class ProductCatalog
                     mb_substr($sku, 0, 50),
                     max(0, $stock),
                     $price,
+                    $retailPrice,
+                    $retailPrice,
+                    $wholesalePrice,
+                    $resellerPrice,
+                    $retailSalePrice,
+                    $retailSalePrice,
+                    $wholesaleSalePrice,
+                    $resellerSalePrice,
+                    $customerPrice,
+                    $customerSalePrice,
+                    $fullSetRetailerPrice,
+                    $fullSetWholesalePrice,
+                    $fullSetRetailerSalePrice,
+                    $fullSetWholesaleSalePrice,
+                    $sellingType,
                     $vImg !== '' ? $vImg : null
                 ]
             );
@@ -1083,6 +1375,8 @@ class ProductCatalog
         $sellingType = (isset($data['selling_type']) && $data['selling_type'] === 'full_set') ? 'full_set' : 'single_piece';
         $custPrice = ($sellingType === 'single_piece' && isset($data['customer_price']) && (float)$data['customer_price'] > 0)
             ? (float)$data['customer_price'] : null;
+        $custSalePrice = ($sellingType === 'single_piece' && isset($data['customer_sale_price']) && (float)$data['customer_sale_price'] > 0)
+            ? (float)$data['customer_sale_price'] : null;
         $salePrice = isset($data['sale_price']) ? max(0, (float)$data['sale_price']) : (isset($data['sale_discount']) ? max(0, (float)$data['sale_discount']) : 0.0);
 
         try {
@@ -1092,7 +1386,7 @@ class ProductCatalog
             $stmt = $pdo->prepare(
                 "INSERT INTO products
                  (sku, title, slug, category_id, category_name, fabric, weave, zari_type,
-                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, sale_price, wholesale_price,
+                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, customer_sale_price, sale_price, wholesale_price,
                   reseller_price, moq_single, moq_half_set, moq_full_set, moq_master_bale,
                   stock_qty, rating, reviews_count, primary_image, badge, is_featured,
                   is_bestseller, status, selling_type, description, created_at)
@@ -1106,7 +1400,7 @@ class ProductCatalog
                 mb_substr(trim((string)($data['pallu_style'] ?? $data['border'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['blouse_piece'] ?? $data['blouse'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['occasion'] ?? '')), 0, 100),
-                $mrp, $retail, $custPrice, $salePrice, $wholesale, $reseller,
+                $mrp, $retail, $custPrice, $custSalePrice, $salePrice, $wholesale, $reseller,
                 max(1, (int)($data['moq_single'] ?? 1)),
                 max(0, (int)($data['moq_half_set'] ?? 0)),
                 max(0, (int)($data['moq_full_set'] ?? $data['moq'] ?? 0)),
@@ -1219,6 +1513,13 @@ class ProductCatalog
             if ($curSelling !== 'full_set') {
                 $cp = (float)$data['customer_price'];
                 $add('customer_price', $cp > 0 ? $cp : null);
+            }
+        }
+        if (isset($data['customer_sale_price'])) {
+            $curSelling = $data['selling_type'] ?? null;
+            if ($curSelling !== 'full_set') {
+                $csp = (float)$data['customer_sale_price'];
+                $add('customer_sale_price', $csp > 0 ? $csp : null);
             }
         }
         if (isset($data['sale_price']) || isset($data['sale_discount'])) {
@@ -1387,10 +1688,10 @@ class ProductCatalog
         $vals = [$newSku, $newTitle, $newSlug, 'draft', 0, 0];
         foreach ([
             'category_id', 'category_name', 'fabric', 'weave', 'zari_type', 'pallu_style',
-            'blouse_piece', 'occasion', 'mrp', 'retail_price', 'wholesale_price',
+            'blouse_piece', 'occasion', 'mrp', 'retail_price', 'customer_price', 'customer_sale_price', 'sale_price', 'wholesale_price',
             'reseller_price', 'moq_single', 'moq_half_set', 'moq_full_set',
             'moq_master_bale', 'stock_qty', 'primary_image', 'badge', 'is_featured',
-            'is_bestseller', 'description'
+            'is_bestseller', 'description', 'selling_type'
         ] as $col) {
             if (array_key_exists($col, $src)) {
                 $cols[] = $col;

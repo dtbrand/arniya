@@ -73,24 +73,20 @@ if ($isFullSetProduct && !$isTradeRole) {
     exit;
 }
 
-$pSaleDisc = (float)($product['sale_discount'] ?? ($product['sale_price'] ?? 0));
+// Use centralized price resolution from ProductCatalog
+$priceDisplay = ProductCatalog::getPriceDisplay($product, $pdpUserRole);
 
-// Role-based price resolution
-if ($pSellingType === 'single_piece') {
-    if ($pdpUserRole === 'reseller') {
-        $pBasePrice = (float)($product['reseller_price'] ?? $product['retail_price']);
-    } elseif ($pdpUserRole === 'wholesale') {
-        $pBasePrice = (float)($product['wholesale_price'] ?? $product['retail_price']);
-    } elseif ($pdpUserRole === 'retailer') {
-        $pBasePrice = (float)($product['retail_price'] ?? $product['price']);
-    } else { // Guest or Retail Customer
-        $pBasePrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price']);
-    }
-} else { // Full Set
-    $pBasePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? $product['price']);
+if (!$priceDisplay['is_purchasable']) {
+    http_response_code(403);
+    header('Location: /shop.php?restricted=full_set');
+    exit;
 }
 
-$pPrice = max(0, $pBasePrice - $pSaleDisc);
+$pPrice = $priceDisplay['effective_price'];
+$pBasePrice = $priceDisplay['base_price'];
+$pSaleDisc = $priceDisplay['sale_price'];
+$pShowSale = $priceDisplay['show_sale'];
+$pPriceLabel = $priceDisplay['price_label'];
 
 $pName        = $product['name'] !== '' ? $product['name'] : ($product['sku'] !== '' ? $product['sku'] : 'Untitled product');
 $pSku         = (string)$product['sku'];

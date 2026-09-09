@@ -205,9 +205,11 @@ if ($chartMaxVal <= 0) {
 $catalogProducts = [];
 foreach (ProductCatalog::getAll() as $dp) {
     $saleDisc = (float)($dp['sale_discount'] ?? ($dp['sale_price'] ?? 0));
-    $tradePrice = (float)($dp['effective_price'] ?? max(0, (float)($dp['retail_price'] ?? 0) - $saleDisc));
-    $custPrice = (float)($dp['effective_customer_price'] ?? ($dp['customer_price'] ?? $tradePrice));
-    $resellerPrice = (float)($dp['effective_reseller_price'] ?? $tradePrice);
+    
+    // Use centralized price resolver for Reseller role
+    $priceDisplay = ProductCatalog::getPriceDisplay($dp, 'reseller');
+    $resellerPrice = $priceDisplay['effective_price'];
+    $custPrice = (float)($dp['effective_customer_price'] ?? ($dp['customer_price'] ?? $resellerPrice));
     $resellerMargin = max(0, $custPrice - $resellerPrice);
     $colors  = array_values(array_filter(array_map('strval', (array)($dp['colors'] ?? [])), static fn($c) => trim($c) !== ''));
     $sizes   = array_values(array_filter(array_map('strval', (array)($dp['size'] ?? [])), static fn($s) => trim($s) !== ''));
@@ -228,13 +230,17 @@ foreach (ProductCatalog::getAll() as $dp) {
         'name'            => (string)($dp['name'] ?? ''),
         'slug'            => (string)($dp['slug'] ?? ''),
         'category'        => (string)($dp['category'] ?? ''),
-        'retail_price'    => $tradePrice,
-        'trade_price'     => $tradePrice,
+        'retail_price'    => $resellerPrice,
+        'trade_price'     => $resellerPrice,
         'customer_price'  => $custPrice,
         'reseller_price'  => $resellerPrice,
         'reseller_margin' => $resellerMargin,
-        'wholesale_price' => (float)($dp['effective_wholesale_price'] ?? $tradePrice),
+        'wholesale_price' => (float)($dp['effective_wholesale_price'] ?? $resellerPrice),
         'price'           => $resellerPrice,
+        'base_price'      => $priceDisplay['base_price'],
+        'sale_price'      => $priceDisplay['sale_price'],
+        'show_sale'       => $priceDisplay['show_sale'],
+        'price_label'     => $priceDisplay['price_label'],
         'sale_discount'   => $saleDisc,
         'moq'             => (int)($dp['moq'] ?? 0),
         'moq_lots'        => (array)($dp['moq_lots'] ?? []),

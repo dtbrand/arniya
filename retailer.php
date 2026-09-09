@@ -201,9 +201,12 @@ if (!empty($userSavedAddresses)) {
 $catalogProducts = [];
 foreach (ProductCatalog::getAll() as $dp) {
     $saleDisc = (float)($dp['sale_discount'] ?? ($dp['sale_price'] ?? 0));
-    $tradePrice = (float)($dp['effective_price'] ?? max(0, (float)($dp['retail_price'] ?? 0) - $saleDisc));
+    
+    // Use centralized price resolver for Retailer role
+    $priceDisplay = ProductCatalog::getPriceDisplay($dp, 'retailer');
+    $tradePrice = $priceDisplay['effective_price'];
     $custPrice = (float)($dp['effective_customer_price'] ?? ($dp['customer_price'] ?? $tradePrice));
-    $boutiqueMargin = (float)($dp['boutique_margin'] ?? max(0, $custPrice - $tradePrice));
+    $boutiqueMargin = max(0, $custPrice - $tradePrice);
     $colors  = array_values(array_filter(array_map('strval', (array)($dp['colors'] ?? [])), static fn($c) => trim($c) !== ''));
     $sizes   = array_values(array_filter(array_map('strval', (array)($dp['size'] ?? [])), static fn($s) => trim($s) !== ''));
 
@@ -230,6 +233,10 @@ foreach (ProductCatalog::getAll() as $dp) {
         'wholesale_price' => (float)($dp['effective_wholesale_price'] ?? $tradePrice),
         'reseller_price'  => (float)($dp['effective_reseller_price'] ?? $tradePrice),
         'price'           => $tradePrice,
+        'base_price'      => $priceDisplay['base_price'],
+        'sale_price'      => $priceDisplay['sale_price'],
+        'show_sale'       => $priceDisplay['show_sale'],
+        'price_label'     => $priceDisplay['price_label'],
         'sale_discount'   => $saleDisc,
         'moq'             => (int)($dp['moq'] ?? 0),
         'moq_lots'        => (array)($dp['moq_lots'] ?? []),

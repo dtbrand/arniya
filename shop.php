@@ -397,10 +397,15 @@ $total_products = count($products);
                 $pSizes      = array_values(array_filter((array)($p['size'] ?? []), static fn($s) => trim((string)$s) !== ''));
                 $size_str    = implode(',', $pSizes);
                 $pHasVideo   = !empty($p['has_video']);
-                $pSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
-                $pCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
-                $pDispPrice  = max(0, $pCustBase - $pSaleDisc);
-                $pStrikePrice = ($pSaleDisc > 0) ? $pCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
+                
+                // Use centralized price display resolver
+                $priceDisplay = ProductCatalog::getPriceDisplay($p, $currentUserRole);
+                $pDispPrice = $priceDisplay['effective_price'];
+                $pBasePrice = $priceDisplay['base_price'];
+                $pSaleDisc = $priceDisplay['sale_price'];
+                $pShowSale = $priceDisplay['show_sale'];
+                $pPriceLabel = $priceDisplay['price_label'];
+                $pStrikePrice = $pShowSale ? $pBasePrice : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
                 $pDiscountPct = ($pStrikePrice > $pDispPrice && $pStrikePrice > 0) ? (int)round((($pStrikePrice - $pDispPrice) / $pStrikePrice) * 100) : 0;
             ?>
             <article
