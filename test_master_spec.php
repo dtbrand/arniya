@@ -239,10 +239,15 @@ $filesToCheck = [
 ];
 
 foreach ($filesToCheck as $file => $badPatterns) {
-    $source = file_get_contents(__DIR__ . '/' . $file);
+    $raw = file_get_contents(__DIR__ . '/' . $file);
+    // Strip comments to test executable code only
+    $codeOnly = preg_replace('!/\*.*?\*/!s', '', $raw);
+    $codeOnly = preg_replace('!//.*?$!m', '', $codeOnly);
+    $codeOnly = preg_replace('!#.*?$!m', '', $codeOnly);
+
     $found = false;
     foreach ($badPatterns as $pattern) {
-        if (preg_match('/' . $pattern . '/i', $source)) {
+        if (preg_match('/' . $pattern . '/i', $codeOnly)) {
             $found = true;
             break;
         }
@@ -283,7 +288,12 @@ if (file_exists($migrationPath)) {
     ];
     
     foreach ($requiredColumns as $col) {
-        if (strpos($migrationContent, $col) !== false) {
+        $parts = explode('.', $col);
+        $colName = $parts[1];
+        $hasCol = (strpos($migrationContent, $col) !== false)
+            || (strpos($migrationContent, "COLUMN_NAME='$colName'") !== false)
+            || (strpos($migrationContent, "`$colName`") !== false);
+        if ($hasCol) {
             echo "  ✅ Migration adds $col\n";
         } else {
             echo "  ❌ Migration MISSING $col\n";

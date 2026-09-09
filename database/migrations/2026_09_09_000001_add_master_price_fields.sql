@@ -23,6 +23,11 @@ SET @x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DAT
 SET @s = IF(@x=0, 'ALTER TABLE `products` ADD COLUMN `sale_price` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `customer_sale_price`', 'SELECT 1');
 PREPARE _st FROM @s; EXECUTE _st; DEALLOCATE PREPARE _st;
 
+-- Ensure selling_type column exists on products
+SET @x = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='products' AND COLUMN_NAME='selling_type');
+SET @s = IF(@x=0, "ALTER TABLE `products` ADD COLUMN `selling_type` ENUM('single_piece','full_set') NOT NULL DEFAULT 'single_piece' AFTER `status`", 'SELECT 1');
+PREPARE _st FROM @s; EXECUTE _st; DEALLOCATE PREPARE _st;
+
 -- ════════════════════════════════════════════════════════════════════════════════════════
 -- 2. PRODUCT_VARIANTS TABLE — Add role-based price fields per master spec
 -- ════════════════════════════════════════════════════════════════════════════════════════
