@@ -109,6 +109,7 @@ FILES_TO_DEPLOY = [
     'admin/customers/assets/js/customer-list.js',
     'database/migrations/2026_09_09_000001_add_master_price_fields.sql',
     'includes/bootstrap.php',
+    'db_reset_migrations.php',
 ]
 
 SERVERS = [

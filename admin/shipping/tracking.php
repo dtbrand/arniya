@@ -26,7 +26,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                    COALESCE(c.city, 'Surat') as customer_city
             FROM orders o
             LEFT JOIN customers c ON o.customer_id = c.id
-            WHERE o.fulfillment_status != 'cancelled' OR o.fulfillment_status IS NULL
+            WHERE COALESCE(o.fulfillment_status, o.order_status, '') != 'cancelled'
             ORDER BY o.id DESC
             LIMIT 30
         ");

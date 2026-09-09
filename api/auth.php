@@ -110,7 +110,7 @@ try {
         exit;
     }
 
-    if ($action === 'set_default_address') {
+    if ($action === 'set_default_address' || $action === 'set_default_shipping' || $action === 'set_default') {
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -139,7 +139,7 @@ try {
         exit;
     }
 
-    if ($action === 'delete_address') {
+    if ($action === 'delete_address' || $action === 'delete') {
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -154,7 +154,26 @@ try {
         }
         $pdo = Database::getConnection();
         if ($pdo !== null) {
+            // Guard: prevent deleting customer's sole shipping address
+            $cntStmt = $pdo->prepare("SELECT COUNT(*) FROM addresses WHERE customer_id = ? AND address_type != 'billing'");
+            $cntStmt->execute([(int)$current['id']]);
+            if ((int)$cntStmt->fetchColumn() <= 1) {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Cannot delete your only saved shipping address. A customer must have at least one registered address.'
+                ]);
+                exit;
+            }
+
             $pdo->prepare("DELETE FROM addresses WHERE id = ? AND customer_id = ? AND address_type != 'billing'")->execute([$addressId, (int)$current['id']]);
+
+            // Promote remaining address if default was deleted
+            $defCheck = $pdo->prepare("SELECT COUNT(*) FROM addresses WHERE customer_id = ? AND is_default = 1 AND address_type != 'billing'");
+            $defCheck->execute([(int)$current['id']]);
+            if ((int)$defCheck->fetchColumn() === 0) {
+                $pdo->prepare("UPDATE addresses SET is_default = 1 WHERE customer_id = ? AND address_type != 'billing' ORDER BY id DESC LIMIT 1")->execute([(int)$current['id']]);
+            }
         }
         $addresses = Auth::getCustomerAddresses((int)$current['id']);
         echo json_encode(['success' => true, 'message' => 'Address deleted successfully.', 'addresses' => $addresses], JSON_PRETTY_PRINT);
