@@ -15,19 +15,41 @@ require_once __DIR__ . '/../src/DiscountEngine.php';
 use DTBrand\ProductCatalog;
 use DTBrand\PricingCalculator;
 use DTBrand\DiscountEngine;
+use DTBrand\Database;
 
 try {
     $rawInput = file_get_contents('php://input');
     $data = json_decode($rawInput, true) ?: $_POST;
 
     $items = $data['items'] ?? ($data['cart'] ?? []);
-    $rawUserType = strtolower(trim((string)($data['user_type'] ?? 'retail')));
-    if ($rawUserType === 'customer' || $rawUserType === 'guest' || $rawUserType === '') {
-        $userType = 'retail';
-    } else {
-        $userType = $rawUserType;
+
+    // Session-Authoritative Role Resolution (Section 14 & 33: Never trust client-submitted role)
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
     }
-    if ($userType === 'wholesaler') { $userType = 'wholesale'; }
+    $rawUserType = strtolower(trim((string)($data['user_type'] ?? '')));
+    if (!empty($_SESSION['admin_logged_in'])) {
+        $userType = in_array($rawUserType, ['wholesale', 'retailer', 'reseller', 'customer'], true) ? $rawUserType : 'wholesale';
+    } elseif (!empty($_SESSION['user']['id'])) {
+        $uid = (int)$_SESSION['user']['id'];
+        $db = Database::getConnection();
+        $verifiedType = 'customer';
+        if ($db) {
+            try {
+                $uStmt = $db->prepare("SELECT type, status FROM customers WHERE id = ? LIMIT 1");
+                $uStmt->execute([$uid]);
+                $uRow = $uStmt->fetch(\PDO::FETCH_ASSOC);
+                if ($uRow && ($uRow['status'] ?? '') === 'active') {
+                    $verifiedType = strtolower(trim((string)$uRow['type']));
+                }
+            } catch (\Throwable $e) {}
+        }
+        if ($verifiedType === 'wholesaler') { $verifiedType = 'wholesale'; }
+        if ($verifiedType === 'retail') { $verifiedType = 'customer'; }
+        $userType = in_array($verifiedType, ['wholesale', 'retailer', 'reseller'], true) ? $verifiedType : 'customer';
+    } else {
+        $userType = 'guest';
+    }
     $isTradeUser = in_array($userType, ['wholesale', 'retailer'], true);
     $couponCode = trim($data['coupon'] ?? '');
 
@@ -49,7 +71,7 @@ try {
         $saleDisc = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
 
         if ($isFullSet) {
-            // Full Set Role Security: Strictly Wholesaler or Retailer only
+            // Full Set Role Security: Strictly Wholesaler or Retailer only (Section 11 & 18)
             if (!$isTradeUser) {
                 http_response_code(403);
                 echo json_encode([
@@ -94,17 +116,21 @@ try {
             // Single Piece Role Pricing - Use ProductCatalog::resolvePrice
             $unitPrice = ProductCatalog::resolvePrice($p, $userType);
 
-            // Wholesaler MCQ Validation
+            // Wholesaler MCQ Validation for Single Piece (Section 6, 17, 33)
             if ($userType === 'wholesale') {
                 $mcqResult = ProductCatalog::calculateWholesalerMcq($p);
-                $requiredMcq = $mcqResult['mcq'];
-                if ($requiredMcq > 0 && $qty < $requiredMcq) {
-                    http_response_code(400);
-                    echo json_encode([
-                        'success' => false,
-                        'message' => "Wholesale MCQ for '{$p['name']}' requires {$requiredMcq} pieces (all color × size combinations), but {$qty} requested."
-                    ], JSON_PRETTY_PRINT);
-                    exit;
+                $requiredMcq = (int)($mcqResult['mcq'] ?? 0);
+                $colorsCount = (int)($mcqResult['color_count'] ?? 0);
+                $sizesCount = (int)($mcqResult['size_count'] ?? 0);
+                if ($requiredMcq > 0) {
+                    if ($qty < $requiredMcq || ($qty % $requiredMcq !== 0)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'message' => "Wholesale MCQ for '{$p['name']}' requires ordering in full lot multiples of {$requiredMcq} pieces ({$colorsCount} Colours × {$sizesCount} Sizes), but {$qty} requested."
+                        ], JSON_PRETTY_PRINT);
+                        exit;
+                    }
                 }
             }
 

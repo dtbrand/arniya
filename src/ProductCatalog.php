@@ -281,13 +281,14 @@ class ProductCatalog
         $activeVariants = array_values(array_filter($variants, static function ($v) {
             return !empty($v['color']) || !empty($v['size']);
         }));
-        $fullSetPieces = count($activeVariants);
+        $fullSetPieces = max(1, count($activeVariants));
 
-        // Wholesaler MCQ = Available Colors × Available Sizes (from variants with color AND size)
-        $wholesalerMcqVariants = array_values(array_filter($activeVariants, static function ($v) {
-            return !empty($v['color']) && !empty($v['size']);
-        }));
-        $wholesalerMcq = count($wholesalerMcqVariants);
+        // Wholesaler MCQ = Available Colors × Available Sizes (Unified with calculateWholesalerMcq)
+        $mcqData = self::calculateWholesalerMcq(['variants' => $variants]);
+        $wholesalerMcq = $mcqData['mcq'];
+        $availableColors = $mcqData['colors'];
+        $availableSizes = $mcqData['sizes'];
+        $wholesalerMcqVariants = $mcqData['variants'];
 
         $saleDisc = (float)($r['sale_price'] ?? 0);
         
@@ -320,10 +321,6 @@ class ProductCatalog
         $fullSetWholesaleSalePrice = $saleDisc;
 
         $boutiqueMargin = max(0, $effCustomer - $effRetail);
-
-        // Count available colors and sizes for MCQ calculation
-        $availableColors = array_values(array_filter(array_unique(array_map(function($v) { return $v['color']; }, $wholesalerMcqVariants))));
-        $availableSizes = array_values(array_filter(array_unique(array_map(function($v) { return $v['size']; }, $wholesalerMcqVariants))));
 
         return [
             'id' => $pid,
@@ -915,13 +912,26 @@ class ProductCatalog
             switch ($role) {
                 case 'guest':
                 case 'customer':
-                    $result['base_price'] = (float)($product['customer_price'] ?? $product['retail_price'] ?? 0);
+                    $basePrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)($product['mrp'] ?? 0); }
+                    $result['base_price'] = $basePrice;
+
                     if (isset($product['customer_sale_price']) && $product['customer_sale_price'] !== null && (float)$product['customer_sale_price'] > 0) {
-                        $result['sale_price'] = (float)$product['customer_sale_price'];
-                        $result['show_sale'] = true;
+                        $effCust = (float)$product['customer_sale_price'];
+                        $result['effective_price'] = $effCust;
+                        $result['sale_price'] = max(0, $basePrice - $effCust);
+                        $result['show_sale'] = ($basePrice > $effCust);
+                    } elseif ($saleDisc > 0) {
+                        $result['effective_price'] = max(0, $basePrice - $saleDisc);
+                        $result['sale_price'] = $saleDisc;
+                        $result['show_sale'] = ($basePrice > $saleDisc);
+                    } else {
+                        $result['effective_price'] = $basePrice;
+                        $result['sale_price'] = 0;
+                        $result['show_sale'] = false;
                     }
                     $result['price_label'] = 'Customer Price';
-                    break;
+                    return $result;
                     
                 case 'retailer':
                     $result['base_price'] = (float)($product['retail_price'] ?? 0);
@@ -930,11 +940,13 @@ class ProductCatalog
                     
                 case 'reseller':
                     $result['base_price'] = (float)($product['reseller_price'] ?? 0);
+                    if ($result['base_price'] <= 0) { $result['base_price'] = (float)($product['retail_price'] ?? 0); }
                     $result['price_label'] = 'Reseller Price';
                     break;
                     
                 case 'wholesale':
                     $result['base_price'] = (float)($product['wholesale_price'] ?? 0);
+                    if ($result['base_price'] <= 0) { $result['base_price'] = (float)($product['retail_price'] ?? 0); }
                     $result['price_label'] = 'Wholesale Price';
                     break;
             }
@@ -948,26 +960,62 @@ class ProductCatalog
 
     /**
      * Calculate Wholesaler MCQ (Minimum Commitment Quantity) for Single Piece
-     * Formula: Available Colors × Available Sizes (from variants with both color AND size)
+     * Formula: Available Colors × Available Sizes
+     * According to Section 6 of the Master Specification.
      */
     public static function calculateWholesalerMcq(array $product): array
     {
         $variants = $product['variants'] ?? [];
-        $validVariants = array_filter($variants, function ($v) {
-            return !empty($v['color']) && !empty($v['size']);
+        $validVariants = array_filter($variants, static function ($v) {
+            $c = trim((string)($v['color'] ?? $v['color_name'] ?? ''));
+            $s = trim((string)($v['size'] ?? $v['size_name'] ?? ''));
+            return $c !== '' || $s !== '';
         });
         
-        $colors = array_values(array_unique(array_map(function($v) { return $v['color']; }, $validVariants)));
-        $sizes = array_values(array_unique(array_map(function($v) { return $v['size']; }, $validVariants)));
+        $colors = array_values(array_filter(array_unique(array_map(static function($v) {
+            return trim((string)($v['color'] ?? $v['color_name'] ?? ''));
+        }, $validVariants))));
+
+        $sizes = array_values(array_filter(array_unique(array_map(static function($v) {
+            return trim((string)($v['size'] ?? $v['size_name'] ?? ''));
+        }, $validVariants))));
+
+        if (empty($colors) && !empty($product['colors'])) {
+            if (is_array($product['colors'])) {
+                $colors = array_values(array_filter(array_unique(array_map('trim', $product['colors']))));
+            } else {
+                $colors = array_values(array_filter(array_unique(array_map('trim', explode(',', (string)$product['colors'])))));
+            }
+        }
+
+        if (empty($sizes) && (!empty($product['size']) || !empty($product['sizes']))) {
+            $rawSizes = !empty($product['size']) ? $product['size'] : $product['sizes'];
+            if (is_array($rawSizes)) {
+                $sizes = array_values(array_filter(array_unique(array_map('trim', $rawSizes))));
+            } else {
+                $sizes = array_values(array_filter(array_unique(array_map('trim', explode(',', (string)$rawSizes)))));
+            }
+        }
         
-        $mcq = count($colors) * count($sizes);
+        $colorCount = count($colors);
+        $sizeCount = count($sizes);
+
+        if ($colorCount > 0 && $sizeCount > 0) {
+            $mcq = $colorCount * $sizeCount;
+        } elseif ($colorCount > 0) {
+            $mcq = $colorCount;
+        } elseif ($sizeCount > 0) {
+            $mcq = $sizeCount;
+        } else {
+            $mcq = max(1, count($validVariants));
+        }
         
         return [
             'mcq' => $mcq,
             'colors' => $colors,
             'sizes' => $sizes,
-            'color_count' => count($colors),
-            'size_count' => count($sizes),
+            'color_count' => $colorCount,
+            'size_count' => $sizeCount,
             'variants' => array_values($validVariants)
         ];
     }

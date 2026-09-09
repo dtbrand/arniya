@@ -164,39 +164,44 @@ class OrderManager
 
             if ($sellingType === 'full_set') {
                 if ($channel === 'retailer') {
-                    $basePrice = (float)($row['wholesale_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                    $basePrice = (float)($row['retail_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
                 } else { // wholesale
                     $basePrice = (float)($row['wholesale_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
                 }
+                if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                $price = max(0, $basePrice - $saleDisc);
             } else {
                 if ($channel === 'wholesale') {
-                    $basePrice = (float)$row['wholesale_price'];
-                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                    $basePrice = (float)($row['wholesale_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                    $price = max(0, $basePrice - $saleDisc);
                 } elseif ($channel === 'reseller') {
-                    $basePrice = (float)$row['reseller_price'];
-                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
+                    $basePrice = (float)($row['reseller_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                    $price = max(0, $basePrice - $saleDisc);
                 } elseif ($channel === 'retailer') {
-                    $basePrice = (float)$row['retail_price'];
-                    if ($basePrice <= 0) { $basePrice = (float)$row['wholesale_price']; }
-                } else { // guest / retail / customer
-                    // Use customer_sale_price if set, else customer_price - sale_discount, else retail_price - sale_discount
+                    $basePrice = (float)($row['retail_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
+                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                    $price = max(0, $basePrice - $saleDisc);
+                } else { // guest / customer
                     $custSalePrice = (float)($row['customer_sale_price'] ?? 0);
                     $custPrice = (float)($row['customer_price'] ?? 0);
                     if ($custSalePrice > 0) {
-                        $basePrice = $custSalePrice;
+                        $price = $custSalePrice;
                     } elseif ($custPrice > 0) {
-                        $basePrice = max(0, $custPrice - $saleDisc);
+                        $price = max(0, $custPrice - $saleDisc);
                     } else {
-                        $basePrice = (float)$row['retail_price'];
+                        $basePrice = (float)($row['retail_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
                     }
                 }
             }
-            if ($basePrice <= 0) {
-                $basePrice = (float)$row['mrp'];
-            }
-            $price = max(0, $basePrice - $saleDisc);
 
             // Fetch active variants for this product
             $vRows = [];
@@ -267,29 +272,18 @@ class OrderManager
                 }
 
                 // Wholesaler MCQ Validation for Single Piece
-                // Wholesaler must purchase the full MCQ (Available Colors × Available Sizes)
+                // Wholesaler must purchase the full MCQ (Available Colors × Available Sizes) or valid multiples
                 if ($sellingType === 'single_piece' && $channel === 'wholesale') {
-                    // Fetch variant count for this product (color × size combinations)
-                    try {
-                        $mcqStmt = $pdo->prepare("
-                            SELECT COUNT(DISTINCT CONCAT(COALESCE(color_name,''), '|', COALESCE(size_name,''))) as mcq
-                            FROM product_variants 
-                            WHERE product_id = ? 
-                              AND color_name IS NOT NULL AND color_name != '' 
-                              AND size_name IS NOT NULL AND size_name != ''
-                              AND status = 'active'
-                        ");
-                        $mcqStmt->execute([$prodId]);
-                        $mcqResult = $mcqStmt->fetch(\PDO::FETCH_ASSOC);
-                        $requiredMcq = (int)($mcqResult['mcq'] ?? 0);
-                        
-                        if ($requiredMcq > 0 && $qty < $requiredMcq) {
-                            $unavailable[] = $row['title'] . " (Wholesale MCQ requires {$requiredMcq} pieces — all color × size combinations, but {$qty} requested)";
+                    $mcqCalc = ProductCatalog::calculateWholesalerMcq(['variants' => $row['variants'] ?? []]);
+                    $requiredMcq = (int)($mcqCalc['mcq'] ?? 0);
+                    $colorsCount = (int)($mcqCalc['color_count'] ?? 0);
+                    $sizesCount = (int)($mcqCalc['size_count'] ?? 0);
+
+                    if ($requiredMcq > 0) {
+                        if ($qty < $requiredMcq || ($qty % $requiredMcq !== 0)) {
+                            $unavailable[] = $row['title'] . " (Wholesale MCQ requires full lot multiples of {$requiredMcq} pieces [{$colorsCount} Colours × {$sizesCount} Sizes], but {$qty} requested)";
                             continue;
                         }
-                    } catch (\Throwable $me) {
-                        // If MCQ check fails, log but don't block
-                        error_log("MCQ validation error for product {$prodId}: " . $me->getMessage());
                     }
                 }
 

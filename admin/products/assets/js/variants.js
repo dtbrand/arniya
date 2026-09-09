@@ -422,10 +422,14 @@
 
         var grpCustPrice = el('pGroupCustomerPrice');
         var inpCustPrice = el('pFormCustomerPrice');
+        var grpCustSalePrice = el('pGroupCustomerSalePrice');
+        var inpCustSalePrice = el('pFormCustomerSalePrice');
         var noteFullSet = el('pGroupFullSetPriceNote');
 
         if (grpCustPrice) { grpCustPrice.style.display = isFullSet ? 'none' : ''; }
         if (inpCustPrice) { inpCustPrice.disabled = isFullSet; }
+        if (grpCustSalePrice) { grpCustSalePrice.style.display = isFullSet ? 'none' : ''; }
+        if (inpCustSalePrice) { inpCustSalePrice.disabled = isFullSet; }
         if (noteFullSet) { noteFullSet.style.display = isFullSet ? '' : 'none'; }
 
         window.dtRecalculateFullSetPreview();

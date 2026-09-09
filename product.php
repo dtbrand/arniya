@@ -264,6 +264,9 @@ function pdp_relative_date(string $ts): string
         window.allProducts = <?php echo json_encode(array_values($catalogProducts), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
+        window.currentUserRole = <?php echo json_encode($pdpUserRole); ?>;
+        window.isWholesaleUser = <?php echo $isWholesale ? 'true' : 'false'; ?>;
+        window.wholesalerMcq = <?php echo (int)($product['wholesaler_mcq'] ?? 1); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
     </script>
@@ -477,64 +480,54 @@ function pdp_relative_date(string $ts): string
                     <input type="hidden" name="pdp_selected_type" id="pdpSelectedType" value="full_set" />
                 </div>
             <?php elseif ($isWholesale): ?>
-                <!-- Single Piece Mode for Wholesaler: Real Variant MCQ Selection -->
-                <div class="pdp-mcq-section" style="margin:16px 0;">
-                    <div class="pdp-section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span class="pdp-label-head" style="font-size:12px; font-weight:800; color:#5A4210; text-transform:uppercase; letter-spacing:0.5px;">
-                            SELECT VARIANT (WHOLESALE MCQ):
-                        </span>
-                        <span style="font-size:11px; color:#8A681F; font-weight:700;"><?= count($product['variants'] ?? []) ?> Available Variants</span>
+                <?php 
+                $wholesalerMcq = max(1, (int)($product['wholesaler_mcq'] ?? 1));
+                $mcqTotalLotRate = round($pPrice * $wholesalerMcq, 2);
+                ?>
+                <!-- Wholesale MCQ Lot Selection Box for Wholesaler -->
+                <div class="pdp-mcq-wholesale-section" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; color:#FAF5E8; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.35); padding-bottom:10px; margin-bottom:12px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            <strong style="font-size:13px; color:#FFE57F; letter-spacing:0.5px;">WHOLESALE MCQ LOT (<?= $wholesalerMcq ?> PIECES PER LOT)</strong>
+                        </div>
+                        <span class="adm-badge gold" style="font-size:11px; padding:3px 10px;"><?= count($pColors) ?> Colors &bull; <?= max(1, count($pSizes)) ?> Sizes &bull; <?= $wholesalerMcq ?> Pcs/Lot</span>
                     </div>
-                    <div class="pdp-mcq-grid" id="pdpMcqGrid" style="display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto; padding-right:4px;">
+                    <div style="font-size:11px; color:#D6D3D1; margin-bottom:10px;">
+                        Each wholesale lot contains all <?= $wholesalerMcq ?> configured Color &times; Size combinations. Rate: <strong>₹<?= number_format($pPrice) ?></strong> / piece (<strong>₹<?= number_format($mcqTotalLotRate) ?></strong> per lot):
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:6px; max-height:160px; overflow-y:auto; padding-right:4px; margin-bottom:10px;">
                         <?php 
                         $pVariants = $product['variants'] ?? [];
                         if (empty($pVariants) && (!empty($pColors) || !empty($pSizes))) {
-                            $pVariants = [[
-                                'id' => 0,
-                                'color' => $pColors[0] ?? 'Standard',
-                                'size' => $pSizes[0] ?? 'Free Size',
-                                'sku' => $pSku,
-                                'stock_qty' => $pStockQty,
-                                'price' => $pPrice
-                            ]];
+                            $colArr = !empty($pColors) ? $pColors : ['Standard'];
+                            $szArr  = !empty($pSizes) ? $pSizes : ['Free Size'];
+                            foreach ($colArr as $col) {
+                                foreach ($szArr as $sz) {
+                                    $pVariants[] = [
+                                        'color' => $col,
+                                        'size' => $sz,
+                                        'sku' => $pSku,
+                                        'stock_qty' => $pStockQty
+                                    ];
+                                }
+                            }
                         }
-                        foreach ($pVariants as $vIdx => $vItem): 
-                            $vId = (int)($vItem['id'] ?? $vItem['variant_id'] ?? 0);
-                            $vColor = (string)($vItem['color'] ?? 'Standard');
-                            $vSize = (string)($vItem['size'] ?? 'Standard');
-                            $vSku = (string)($vItem['sku'] ?? $pSku);
-                            $vStock = (int)($vItem['stock_qty'] ?? 10);
-                            $vRate = isset($vItem['wholesale_price']) && (float)$vItem['wholesale_price'] > 0 ? (float)$vItem['wholesale_price'] : $pPrice;
+                        foreach ($pVariants as $wsv): 
                         ?>
-                        <label class="pdp-mcq-card <?= $vIdx === 0 ? 'active' : '' ?>" style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border:1.5px solid <?= $vIdx === 0 ? '#8A681F' : '#E2E8F0' ?>; background:<?= $vIdx === 0 ? '#FAF8F2' : '#FFFFFF' ?>; border-radius:8px; cursor:pointer; transition:all 0.2s ease;">
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <input type="radio" name="pdp_variant_mcq" value="<?= $vId ?>" 
-                                       data-variant-id="<?= $vId ?>"
-                                       data-sku="<?= htmlspecialchars($vSku) ?>"
-                                       data-color="<?= htmlspecialchars($vColor) ?>"
-                                       data-size="<?= htmlspecialchars($vSize) ?>"
-                                       data-stock="<?= $vStock ?>"
-                                       data-price="<?= $vRate ?>"
-                                       <?= $vIdx === 0 ? 'checked' : '' ?>
-                                       onchange="selectPdpMcqVariant(this)"
-                                       style="accent-color:#8A681F; width:14px; height:14px; margin:0; cursor:pointer;">
-                                <span style="width:12px; height:12px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($vColor)) ?>; display:inline-block; border:1px solid #c4c4c4;"></span>
-                                <div style="display:flex; flex-direction:column; gap:1px;">
-                                    <strong style="font-size:12px; color:#181512;"><?= htmlspecialchars($vColor) ?> &bull; <?= htmlspecialchars($vSize) ?></strong>
-                                    <small style="font-size:10px; color:#64748B;">SKU: <?= htmlspecialchars($vSku) ?></small>
-                                </div>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <?php if ($vStock > 0): ?>
-                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:2px 6px; font-weight:700; border-radius:3px;"><?= $vStock ?> in stock</span>
-                                <?php else: ?>
-                                <span class="adm-badge" style="background:#FEF2F2; color:#DC2626; font-size:10px; padding:2px 6px; font-weight:700; border-radius:3px;">Out of stock</span>
-                                <?php endif; ?>
-                                <strong style="font-size:12.5px; color:#8A681F;">₹<?= number_format($vRate) ?></strong>
-                            </div>
-                        </label>
+                        <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:4px; padding:6px 8px; font-size:11px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span style="width:8px; height:8px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($wsv['color'] ?? '')) ?>; display:inline-block; border:1px solid #fff;"></span>
+                            <strong style="color:#FAF5E8;"><?= htmlspecialchars($wsv['color'] ?? 'Standard') ?></strong>
+                            <span style="color:#D4AF37;">/</span>
+                            <span style="color:#D6D3D1;"><?= htmlspecialchars($wsv['size'] ?? 'Standard') ?></span>
+                            <?php if (!empty($wsv['sku'])): ?>
+                            <small style="color:#A8A29E; font-size:9.5px; margin-left:auto;"><?= htmlspecialchars($wsv['sku']) ?></small>
+                            <?php endif; ?>
+                        </div>
                         <?php endforeach; ?>
                     </div>
+                    <input type="hidden" name="pdp_selected_type" id="pdpSelectedType" value="single_piece_mcq" />
                 </div>
             <?php else: ?>
                 <!-- Single Piece Mode: Colour Swatches & Size Grid (Guest, Customer, Reseller, Retailer) -->
@@ -606,15 +599,17 @@ function pdp_relative_date(string $ts): string
                 <?php else: ?>
                 <div class="pdp-qty-row">
                     <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em;">
-                        <?= $isFullSetProduct ? 'Quantity (Sets):' : 'Quantity:' ?>
+                        <?= $isFullSetProduct ? 'Quantity (Sets):' : ($isWholesale ? 'Quantity (Pieces):' : 'Quantity:') ?>
                     </span>
                     <div class="pdp-qty-box">
                         <button class="pdp-qty-btn" onclick="updatePdpQty(-1)">−</button>
-                        <span class="pdp-qty-num" id="pdpQtyVal">1</span>
+                        <span class="pdp-qty-num" id="pdpQtyVal"><?= ($isWholesale && !$isFullSetProduct) ? max(1, (int)($product['wholesaler_mcq'] ?? 1)) : 1 ?></span>
                         <button class="pdp-qty-btn" onclick="updatePdpQty(1)">+</button>
                     </div>
                     <?php if ($isFullSetProduct): ?>
                     <span style="font-size:0.72rem; font-weight:700; color:#8A681F;" id="pdpTotalPiecesBadge"><?= $fullSetPieces ?> physical pieces</span>
+                    <?php elseif ($isWholesale): ?>
+                    <span style="font-size:0.72rem; font-weight:700; color:#8A681F;" id="pdpTotalPiecesBadge"><?= max(1, (int)($product['wholesaler_mcq'] ?? 1)) ?> pieces (1 MCQ Lot)</span>
                     <?php elseif ($pStockQty > 0): ?>
                     <span style="font-size:0.72rem; font-weight:700; color:#15803D;"><?= (int)$pStockQty ?> in stock</span>
                     <?php endif; ?>
@@ -623,12 +618,12 @@ function pdp_relative_date(string $ts): string
                 <div class="pdp-btn-row">
                     <button class="pdp-atc-btn dt-btn dt-btn-gold" onclick="handlePdpAddToCart()">
                         <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                        <span><?= $isFullSetProduct ? 'Add Full Set To Bag' : 'Add To Bag' ?></span>
+                        <span><?= $isFullSetProduct ? 'Add Full Set To Bag' : ($isWholesale ? 'Add MCQ Lot To Bag' : 'Add To Bag') ?></span>
                     </button>
 
                     <button class="pdp-buy-btn dt-btn dt-btn-dark" onclick="handlePdpBuyNow()">
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span><?= $isFullSetProduct ? 'Buy Full Set Now' : 'Buy Now' ?></span>
+                        <span><?= $isFullSetProduct ? 'Buy Full Set Now' : ($isWholesale ? 'Buy MCQ Lot Now' : 'Buy Now') ?></span>
                     </button>
 
                     <button type="button" class="pdp-wish-btn dt-btn dt-btn-pale" id="pdpMainWishBtn" onclick="if(typeof window.dtToggleWishlist==='function'){window.dtToggleWishlist(<?= (int)$product['id'] ?>);}else if(typeof window.toggleWishlistProduct==='function'){window.toggleWishlistProduct(<?= (int)$product['id'] ?>);}" title="Save to Wishlist" style="padding:0 14px; min-width:48px; height:46px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">

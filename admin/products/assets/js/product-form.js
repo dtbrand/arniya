@@ -36,13 +36,14 @@
         var mrp = num('pFormMrp');
         var trade = num('pFormRetail');
         var cust = num('pFormCustomerPrice');
+        var custSale = num('pFormCustomerSalePrice');
         var saleDisc = num('pFormSalePrice');
         var wholesale = num('pFormWholesale');
         var reseller = num('pFormReseller');
 
         var effTrade = Math.max(0, trade - saleDisc);
         var baseCust = cust > 0 ? cust : trade;
-        var effCust = Math.max(0, baseCust - saleDisc);
+        var effCust = custSale > 0 ? custSale : Math.max(0, baseCust - saleDisc);
         var effWholesale = wholesale > 0 ? Math.max(0, wholesale - saleDisc) : effTrade;
         var effReseller = reseller > 0 ? Math.max(0, reseller - saleDisc) : effTrade;
         var boutiqueMargin = Math.max(0, effCust - effTrade);
@@ -61,7 +62,7 @@
         var elBadge = document.getElementById('pPrevDiscountBadge');
 
         if (elCustPrice) elCustPrice.textContent = '₹' + effCust.toLocaleString('en-IN');
-        if (elCustSub) elCustSub.textContent = saleDisc > 0 ? ('Save ₹' + saleDisc + ' Sale') : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate');
+        if (elCustSub) elCustSub.textContent = custSale > 0 ? ('Special Sale ₹' + custSale) : (saleDisc > 0 ? ('Save ₹' + saleDisc + ' Sale') : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate'));
 
         if (elRetPrice) elRetPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
         if (elRetSub) elRetSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
@@ -209,8 +210,10 @@
         // column NULL instead of storing a claim the admin never made.
         if (payload.selling_type === 'single_piece') {
             addIf(payload, 'customer_price', 'pFormCustomerPrice');
+            addIf(payload, 'customer_sale_price', 'pFormCustomerSalePrice');
         } else {
             payload.customer_price = null;
+            payload.customer_sale_price = null;
         }
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');

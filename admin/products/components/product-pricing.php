@@ -47,6 +47,19 @@ $fmt = static function ($v) {
                 <small style="font-size:10px; color:#64748B;">Customer-facing shopping price. If blank, uses Trade Price.</small>
             </div>
 
+            <!-- 2B. Customer Sale Price (For Guest & Retail End Consumers) -->
+            <div class="adm-form-group" id="pGroupCustomerSalePrice" style="<?php echo ($pfSellingType ?? 'single_piece') === 'full_set' ? 'display:none;' : ''; ?>">
+                <label class="adm-form-label" for="pFormCustomerSalePrice">
+                    Customer Sale Price &#8377; <span style="font-size:10px; font-weight:800; color:#15803D;">(Guest &amp; End Consumer Sale)</span>
+                </label>
+                <input type="number" min="0" step="1" id="pFormCustomerSalePrice" class="adm-form-input" style="font-weight:700; color:#15803D; font-size:13px;"
+                       placeholder="e.g. 750"
+                       value="<?php echo htmlspecialchars($fmt($prod['customer_sale_price'] ?? null)); ?>"
+                       <?php echo ($pfSellingType ?? 'single_piece') === 'full_set' ? 'disabled' : ''; ?>
+                       oninput="if (window.calcPricePreview) window.calcPricePreview();">
+                <small style="font-size:10px; color:#64748B;">Special discounted retail price. Precedes flat discount if set.</small>
+            </div>
+
             <!-- 3. Sale Price Discount (Flat Less Amount: 20, 30, 50, 100) -->
             <div class="adm-form-group">
                 <label class="adm-form-label" for="pFormSalePrice">

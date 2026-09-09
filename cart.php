@@ -177,10 +177,16 @@ $catalogProducts = ProductCatalog::getAll();
         var cart = readCart();
         if (inc !== null) {
             var i = parseInt(inc, 10);
-            if (cart[i]) { cart[i].qty = (cart[i].qty || 1) + 1; }
+            if (cart[i]) {
+                var step = Math.max(1, parseInt(cart[i].mcq, 10) || 1);
+                cart[i].qty = (cart[i].qty || 1) + step;
+            }
         } else if (dec !== null) {
             var j = parseInt(dec, 10);
-            if (cart[j]) { cart[j].qty = Math.max(1, (cart[j].qty || 1) - 1); }
+            if (cart[j]) {
+                var step = Math.max(1, parseInt(cart[j].mcq, 10) || 1);
+                cart[j].qty = Math.max(step, (cart[j].qty || 1) - step);
+            }
         } else if (rem !== null) {
             var k = parseInt(rem, 10);
             if (cart[k]) { cart.splice(k, 1); }

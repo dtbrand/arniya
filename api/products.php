@@ -33,7 +33,7 @@ use DTBrand\Database;
 
 try {
 
-    // ── Session init for role-based pricing ──
+    // ── Session init for role-based pricing (Section 12, 14, 32, 33) ──
     if (session_status() === PHP_SESSION_NONE) {
         @session_start();
     }
@@ -41,18 +41,47 @@ try {
     $sessionRole = strtolower(trim((string)($currentUser['role'] ?? ($currentUser['type'] ?? ''))));
     $requestedRole = strtolower(trim((string)($_REQUEST['role'] ?? ($_REQUEST['channel'] ?? ''))));
     if ($requestedRole === 'wholesaler') { $requestedRole = 'wholesale'; }
+    if ($requestedRole === 'retail') { $requestedRole = 'customer'; }
 
     $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_SESSION['admin_user']);
     if ($isAdmin) {
-        $userRole = 'admin';
-    } elseif ($requestedRole !== '' && in_array($requestedRole, ['wholesale', 'retailer', 'reseller', 'customer', 'retail'], true)) {
-        $userRole = ($requestedRole === 'retail' || $requestedRole === 'customer') ? 'retail' : $requestedRole;
+        $userRole = in_array($requestedRole, ['wholesale', 'retailer', 'reseller', 'customer', 'guest'], true) ? $requestedRole : 'admin';
     } elseif ($sessionRole !== '') {
-        $userRole = ($sessionRole === 'wholesale' || $sessionRole === 'wholesaler') ? 'wholesale' : (($sessionRole === 'retailer' || $sessionRole === 'reseller') ? $sessionRole : 'retail');
+        $verified = ($sessionRole === 'wholesale' || $sessionRole === 'wholesaler') ? 'wholesale' : (($sessionRole === 'retailer' || $sessionRole === 'reseller') ? $sessionRole : 'customer');
+        $userRole = $verified;
     } else {
         $userRole = 'guest';
     }
     $isTradeRole = ($userRole === 'admin' || $userRole === 'wholesale' || $userRole === 'retailer');
+
+    // Strict Role-Price Masking Helper (Section 7, 8, 12, 32: Zero Role-Price Leakage)
+    $maskRolePrices = static function(array &$item, string $role, bool $isAdminUser) {
+        if ($isAdminUser) return;
+        if ($role === 'guest' || $role === 'customer') {
+            $item['wholesale_price'] = null;
+            $item['reseller_price'] = null;
+            $item['retail_price'] = null;
+            $item['trade_price'] = $item['price'];
+        } elseif ($role === 'reseller') {
+            $item['wholesale_price'] = null;
+            $item['retail_price'] = null;
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['trade_price'] = $item['price'];
+        } elseif ($role === 'retailer') {
+            $item['wholesale_price'] = null;
+            $item['reseller_price'] = null;
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['trade_price'] = $item['price'];
+        } elseif ($role === 'wholesale') {
+            $item['reseller_price'] = null;
+            $item['retail_price'] = null;
+            $item['customer_price'] = null;
+            $item['customer_sale_price'] = null;
+            $item['trade_price'] = $item['price'];
+        }
+    };
 
     // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──
     if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
@@ -214,16 +243,8 @@ try {
             $product['price_label'] = $priceDisplay['price_label'];
             $product['effective_price'] = $priceDisplay['effective_price'];
             
-            // Hide trade prices from non-trade roles
-            if (!$isTradeRole) {
-                $product['wholesale_price'] = null;
-                $product['reseller_price'] = null;
-                $product['customer_price'] = null;
-                $product['customer_sale_price'] = null;
-                $product['trade_price'] = $product['price'];
-            } else {
-                $product['trade_price'] = $product['price'];
-            }
+            // Hide unauthorized prices according to Master Price Matrix
+            $maskRolePrices($product, $userRole, $isAdmin);
             
             $recommendations = ProductCatalog::getRecommendations($id, 4);
             echo json_encode([
@@ -262,16 +283,8 @@ try {
             $product['price_label'] = $priceDisplay['price_label'];
             $product['effective_price'] = $priceDisplay['effective_price'];
             
-            // Hide trade prices from non-trade roles
-            if (!$isTradeRole) {
-                $product['wholesale_price'] = null;
-                $product['reseller_price'] = null;
-                $product['customer_price'] = null;
-                $product['customer_sale_price'] = null;
-                $product['trade_price'] = $product['price'];
-            } else {
-                $product['trade_price'] = $product['price'];
-            }
+            // Hide unauthorized prices according to Master Price Matrix
+            $maskRolePrices($product, $userRole, $isAdmin);
             
             echo json_encode(['success' => true, 'product' => $product], JSON_PRETTY_PRINT);
             exit;
@@ -315,7 +328,7 @@ try {
     }
 
     // Apply role-based price filtering using centralized resolver
-    $products = array_map(function($p) use ($userRole, $isTradeRole) {
+    $products = array_map(function($p) use ($userRole, $isAdmin, $maskRolePrices) {
         $priceDisplay = ProductCatalog::getPriceDisplay($p, $userRole);
         
         $p['price'] = $priceDisplay['effective_price'];
@@ -326,16 +339,7 @@ try {
         $p['effective_price'] = $priceDisplay['effective_price'];
         $p['is_purchasable'] = $priceDisplay['is_purchasable'];
         
-        // Hide trade prices from non-trade roles
-        if (!$isTradeRole) {
-            $p['wholesale_price'] = null;
-            $p['reseller_price'] = null;
-            $p['customer_price'] = null;
-            $p['customer_sale_price'] = null;
-            $p['trade_price'] = $p['price'];
-        } else {
-            $p['trade_price'] = $p['price'];
-        }
+        $maskRolePrices($p, $userRole, $isAdmin);
         
         return $p;
     }, $products);

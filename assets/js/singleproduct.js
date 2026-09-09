@@ -403,18 +403,29 @@
     };
 
     // Quantity Counter
-    var currentQty = 1;
+    var mcqStep = (window.isWholesaleUser && currentProduct && (currentProduct.selling_type || 'single_piece') === 'single_piece')
+        ? Math.max(1, parseInt(currentProduct.wholesaler_mcq || window.wholesalerMcq, 10) || 1)
+        : 1;
+    var currentQty = mcqStep;
     window.updatePdpQty = function(delta) {
-        currentQty += delta;
-        if (currentQty < 1) currentQty = 1;
-        if (currentQty > 50) currentQty = 50;
+        var step = (window.isWholesaleUser && currentProduct && (currentProduct.selling_type || 'single_piece') === 'single_piece')
+            ? Math.max(1, parseInt(currentProduct.wholesaler_mcq || window.wholesalerMcq, 10) || 1)
+            : 1;
+        currentQty += delta * step;
+        if (currentQty < step) currentQty = step;
+        if (currentQty > 500) currentQty = 500;
         var qEl = document.getElementById('pdpQtyVal');
         if (qEl) qEl.textContent = currentQty;
 
         var fullSetBadge = document.getElementById('pdpTotalPiecesBadge');
-        if (fullSetBadge && currentProduct && currentProduct.selling_type === 'full_set') {
-            var pieces = currentProduct.full_set_pieces || (currentProduct.variants ? currentProduct.variants.length : 1);
-            fullSetBadge.textContent = (currentQty * pieces) + ' physical pieces';
+        if (fullSetBadge) {
+            if (currentProduct && currentProduct.selling_type === 'full_set') {
+                var pieces = currentProduct.full_set_pieces || (currentProduct.variants ? currentProduct.variants.length : 1);
+                fullSetBadge.textContent = (currentQty * pieces) + ' physical pieces';
+            } else if (window.isWholesaleUser && currentProduct && (currentProduct.selling_type || 'single_piece') === 'single_piece') {
+                var lots = Math.floor(currentQty / step);
+                fullSetBadge.textContent = currentQty + ' pieces (' + lots + (lots === 1 ? ' MCQ Lot' : ' MCQ Lots') + ')';
+            }
         }
     };
 
@@ -445,6 +456,22 @@
 
     // Reads the shopper's actual choice (MCQ, Full Set, or Normal Color+Size)
     function pdpSelection() {
+        if (window.isWholesaleUser && (currentProduct.selling_type || 'single_piece') === 'single_piece') {
+            var mcqCount = Math.max(1, parseInt(currentProduct.wholesaler_mcq || window.wholesalerMcq, 10) || 1);
+            var colCount = (currentProduct.colors && currentProduct.colors.length) ? currentProduct.colors.length : 1;
+            var szCount = (currentProduct.size && currentProduct.size.length) ? currentProduct.size.length : 1;
+            return {
+                variant_id: null,
+                sku: currentProduct.sku || '',
+                color: 'All Colors (' + colCount + ')',
+                size: 'All Sizes (' + szCount + ')',
+                price: currentProduct.price || 0,
+                stock: currentProduct.stock_qty || 100,
+                selling_type: 'single_piece',
+                mcq: mcqCount
+            };
+        }
+
         var mcqRadio = document.querySelector('input[name="pdp_variant_mcq"]:checked');
         if (mcqRadio) {
             var vId = parseInt(mcqRadio.dataset.variantId, 10) || null;
@@ -455,11 +482,13 @@
                 size: mcqRadio.dataset.size || '',
                 price: parseFloat(mcqRadio.dataset.price) || currentProduct.price || 0,
                 stock: parseInt(mcqRadio.dataset.stock, 10) || currentProduct.stock_qty || 0,
-                selling_type: currentProduct.selling_type || 'single_piece'
+                selling_type: currentProduct.selling_type || 'single_piece',
+                mcq: 1
             };
         }
 
         if ((currentProduct.selling_type || '') === 'full_set') {
+            var fPieces = currentProduct.full_set_pieces || (currentProduct.variants ? currentProduct.variants.length : 1);
             return {
                 variant_id: null,
                 sku: currentProduct.sku || '',
@@ -467,7 +496,8 @@
                 size: 'All Configured Sizes',
                 price: currentProduct.price || 0,
                 stock: currentProduct.stock_qty || 10,
-                selling_type: 'full_set'
+                selling_type: 'full_set',
+                mcq: fPieces
             };
         }
 
@@ -491,7 +521,8 @@
             size: chosenSize,
             price: (matched && matched.price) ? matched.price : (currentProduct.price || 0),
             stock: (matched && matched.stock_qty !== undefined) ? matched.stock_qty : (currentProduct.stock_qty || 0),
-            selling_type: currentProduct.selling_type || 'single_piece'
+            selling_type: currentProduct.selling_type || 'single_piece',
+            mcq: 1
         };
     }
     window.pdpSelection = pdpSelection;
@@ -518,7 +549,7 @@
                     txt.textContent = inWish ? 'Saved' : 'Wishlist';
                 }
             }
-        } catch(e) {}
+        } catch { /* ignore */ }
     };
 
     // Add To Bag Function (Integrates directly with Cart Drawer)
@@ -537,20 +568,21 @@
             color: sel.color,
             qty: currentQty,
             price: sel.price || currentProduct.price,
-            stock: sel.stock
+            stock: sel.stock,
+            mcq: sel.mcq || (currentProduct.selling_type === 'full_set' ? (currentProduct.full_set_pieces || 1) : 1)
         };
 
         if (typeof window.dtAddToCart === 'function') {
             window.dtAddToCart(itemData, currentQty, sel.size, sel.color);
         } else if (typeof window.addToCart === 'function') {
-            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color });
+            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color, mcq: itemData.mcq });
         } else {
             // Local fallback
             try {
                 var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
                 cart.push(itemData);
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
-            } catch (e) {}
+            } catch { /* ignore */ }
         }
 
         window.showToast('Added ' + (currentProduct.name || 'item') + ' to Bag!');
@@ -576,13 +608,14 @@
             color: sel.color,
             qty: currentQty,
             price: sel.price || currentProduct.price,
-            stock: sel.stock
+            stock: sel.stock,
+            mcq: sel.mcq || (currentProduct.selling_type === 'full_set' ? (currentProduct.full_set_pieces || 1) : 1)
         };
 
         if (typeof window.dtAddToCart === 'function') {
             window.dtAddToCart(itemData, currentQty, sel.size, sel.color);
         } else if (typeof window.addToCart === 'function') {
-            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color });
+            window.addToCart(itemData, { qty: currentQty, size: sel.size, color: sel.color, mcq: itemData.mcq });
         }
 
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();

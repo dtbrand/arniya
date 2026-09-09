@@ -120,7 +120,8 @@
     window.updateCartItemQty = function (idx, change) {
         var cart = window.getCart();
         if (!cart[idx]) return;
-        cart[idx].qty += change;
+        var step = Math.max(1, parseInt(cart[idx].mcq, 10) || 1);
+        cart[idx].qty += change * step;
         if (cart[idx].qty <= 0) {
             cart.splice(idx, 1);
         }
@@ -532,7 +533,7 @@
         var img = document.getElementById('dtQvMainImg');
         var vid = document.getElementById('dtQvMainVideo');
         var emb = document.getElementById('dtQvMainEmbed');
-        if (vid) { try { vid.pause(); } catch (e) {} }
+        if (vid) { try { vid.pause(); } catch { /* ignore */ } }
         if (emb) { emb.src = 'about:blank'; }
         qvShow(img, kind === 'image');
         qvShow(vid, kind === 'video');

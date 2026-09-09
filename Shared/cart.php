@@ -576,8 +576,9 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     };
 
     window.updateCartQty = function(idx, delta) {
-        if (!window.cartState[idx]) return;
-        window.cartState[idx].qty += delta;
+        if (!window.cartState || !window.cartState[idx]) return;
+        var step = Math.max(1, parseInt(window.cartState[idx].mcq, 10) || 1);
+        window.cartState[idx].qty += delta * step;
         if (window.cartState[idx].qty <= 0) {
             window.cartState.splice(idx, 1);
         }
@@ -648,12 +649,15 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             return (parseInt(item.id || item.product_id) === pProdId) && item.size == chosenSize && item.color == chosenColor;
         });
 
+        var itemMcq = (typeof size === 'object' && size && size.mcq) ? parseInt(size.mcq, 10) : (product.mcq || product.wholesaler_mcq ? parseInt(product.mcq || product.wholesaler_mcq, 10) : 1);
+
         if (existing) {
             existing.qty += addQty;
             if (pVariantId && !existing.variant_id) existing.variant_id = pVariantId;
             if (pSku && !existing.sku) existing.sku = pSku;
             if (pType && !existing.product_type) existing.product_type = pType;
             if (pSellingType && !existing.selling_type) existing.selling_type = pSellingType;
+            if (!existing.mcq || existing.mcq < itemMcq) existing.mcq = itemMcq;
         } else {
             window.cartState.push({
                 id:           pProdId,
@@ -668,7 +672,8 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 image: imgPath,
                 size: chosenSize,
                 color: chosenColor,
-                qty: addQty
+                qty: addQty,
+                mcq: itemMcq
             });
         }
         saveCart(window.cartState);
