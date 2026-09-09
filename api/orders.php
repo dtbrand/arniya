@@ -15,12 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
 require_once __DIR__ . '/../src/OrderManager.php';
+require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/_guard.php';
 
 use DTBrand\OrderManager;
 use DTBrand\Database;
+use DTBrand\Auth;
 
 try {
+    Auth::initSession();
     $method = $_SERVER['REQUEST_METHOD'];
 
     // Track order or list orders
@@ -95,12 +98,8 @@ try {
 
         // Customer Order History (My Orders) - Requires customer authentication
         if ($action === 'my_orders') {
-            if (session_status() === PHP_SESSION_NONE) {
-                @session_start();
-            }
-            
             // Customer authentication or verified customer phone
-            $currentUser = $_SESSION['user'] ?? null;
+            $currentUser = Auth::getCurrentUser();
             $targetPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
             $targetId = (int)($currentUser['id'] ?? 0);
 
@@ -144,10 +143,7 @@ try {
                 exit;
             }
 
-            if (session_status() === PHP_SESSION_NONE) {
-                @session_start();
-            }
-            $currentUser = $_SESSION['user'] ?? null;
+            $currentUser = Auth::getCurrentUser();
             $isAdmin = dt_api_is_admin();
 
             $order = OrderManager::getOrderDetails($orderId);
