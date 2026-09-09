@@ -71,6 +71,27 @@ $wholesalePrice = ProductCatalog::getPriceDisplay($singleProduct, 'wholesale');
 assertEqual($wholesalePrice['effective_price'], 350.0, 'Wholesaler effective_price (400 - 50 = 350)');
 assertEqual($wholesalePrice['base_price'], 400.0, 'Wholesaler base_price');
 
+// Unified B2B Trade Price (Master Spec Sections 7 & 8: wholesale_price & reseller_price omitted/null)
+$unifiedProduct = [
+    'id' => 103,
+    'selling_type' => 'single_piece',
+    'retail_price' => 500,
+    'customer_price' => 800,
+    'customer_sale_price' => 750,
+    'sale_price' => 50,
+    'colors' => ['Red', 'Green'],
+    'size' => ['M', 'L'],
+    'variants' => []
+];
+$uRetailer = ProductCatalog::getPriceDisplay($unifiedProduct, 'retailer');
+$uReseller = ProductCatalog::getPriceDisplay($unifiedProduct, 'reseller');
+$uWholesale = ProductCatalog::getPriceDisplay($unifiedProduct, 'wholesale');
+assertEqual($uRetailer['effective_price'], 450.0, 'Unified Retailer effective_price (500 - 50 = 450)');
+assertEqual($uReseller['effective_price'], 450.0, 'Unified Reseller effective_price defaults to retail_price (500 - 50 = 450)');
+assertEqual($uWholesale['effective_price'], 450.0, 'Unified Wholesaler effective_price defaults to retail_price (500 - 50 = 450)');
+assertEqual(ProductCatalog::resolvePrice($unifiedProduct, 'reseller'), 450.0, 'ProductCatalog::resolvePrice reseller defaults to retail_price');
+assertEqual(ProductCatalog::resolvePrice($unifiedProduct, 'wholesale'), 450.0, 'ProductCatalog::resolvePrice wholesaler defaults to retail_price');
+
 // ── Test 2: Full Set Product Access Barrier Matrix
 echo "\n[2] Testing Full Set Product Access Barrier Matrix...\n";
 

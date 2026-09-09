@@ -29,13 +29,13 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                 <span>B2B Trade Channel Pricing (Retailer &bull; Wholesaler &bull; Reseller)</span>
             </div>
 
-            <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px;">
+            <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                 <!-- 1. B2B Trade Base Price -->
                 <div class="adm-form-group">
                     <label class="adm-form-label" for="pFormRetail" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:800; white-space:nowrap;" id="pLabelRetailText">Price &#8377; <span style="color:#DC2626;">*</span></span>
+                        <span style="font-weight:800; white-space:nowrap;" id="pLabelRetailText"><?= $isFullSetMode ? 'Full Set Price &#8377;' : 'Price &#8377;' ?> <span style="color:#DC2626;">*</span></span>
                         <span id="pBadgeRetail" style="font-size:9.5px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px; white-space:nowrap; text-transform:none;">
-                            <?= $isFullSetMode ? 'Retailer Full Set Rate' : 'B2B Trade / Retailer' ?>
+                            <?= $isFullSetMode ? 'Retailer &amp; Wholesaler Rate' : 'B2B Trade Rate' ?>
                         </span>
                     </label>
                     <input type="number" min="0" step="1" id="pFormRetail" class="adm-form-input" style="font-weight:800; color:#181512; font-size:13px;"
@@ -43,36 +43,11 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                            value="<?php echo htmlspecialchars($fmt($prod['retail_price'] ?? ($prod['price'] ?? null))); ?>"
                            oninput="if (window.calcPricePreview) window.calcPricePreview();">
                     <small style="font-size:10px; color:#64748B;" id="pHelpRetail">
-                        <?= $isFullSetMode ? 'Master rate for Boutique Retailers.' : 'Base trade rate for Retailers (Boutiques), Resellers &amp; Wholesalers.' ?>
+                        <?= $isFullSetMode ? 'Master rate for Boutique Retailers and Wholesalers.' : 'Master B2B trade rate for Retailers (Boutique), Wholesalers &amp; Resellers.' ?>
                     </small>
                 </div>
 
-                <!-- 2. Wholesale Bulk Tier (Optional) -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormWholesale" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:700; white-space:nowrap;">Wholesale Tier &#8377;</span>
-                        <span style="font-size:9.5px; font-weight:700; color:#64748B; background:#F8FAFC; border:1px solid #E2E8F0; padding:1px 6px; border-radius:3px; white-space:nowrap; text-transform:none;">Optional</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormWholesale" class="adm-form-input" placeholder="e.g. 480"
-                           value="<?php echo htmlspecialchars($fmt($prod['wholesale_price'] ?? null)); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Bulk lots rate. Defaults to B2B Trade Price if blank.</small>
-                </div>
-
-                <!-- 3. Reseller Tier (Optional) -->
-                <div class="adm-form-group" id="pGroupReseller" style="<?php echo $isFullSetMode ? 'display:none;' : ''; ?>">
-                    <label class="adm-form-label" for="pFormReseller" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:700; white-space:nowrap;">Reseller Tier &#8377;</span>
-                        <span style="font-size:9.5px; font-weight:700; color:#64748B; background:#F8FAFC; border:1px solid #E2E8F0; padding:1px 6px; border-radius:3px; white-space:nowrap; text-transform:none;">Optional</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormReseller" class="adm-form-input" placeholder="e.g. 500"
-                           value="<?php echo htmlspecialchars($fmt($prod['reseller_price'] ?? null)); ?>"
-                           <?php echo $isFullSetMode ? 'disabled' : ''; ?>
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Dropship reseller rate. Defaults to B2B Trade Price if blank.</small>
-                </div>
-
-                <!-- 4. Sale Price Discount (Flat Less Amount) -->
+                <!-- 2. Sale Price Discount (Flat Less Amount) -->
                 <div class="adm-form-group">
                     <label class="adm-form-label" for="pFormSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
                         <span style="font-weight:700; color:#B45309; white-space:nowrap;">Sale Discount &#8377;</span>
@@ -82,7 +57,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                            placeholder="e.g. 50 (deducts ₹50 off)"
                            value="<?php echo htmlspecialchars($fmt($prod['sale_price'] ?? null)); ?>"
                            oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Flat deduction deducted from Trade &amp; Customer Price.</small>
+                    <small style="font-size:10px; color:#64748B;">Flat deduction deducted from B2B Trade &amp; Customer Price.</small>
                 </div>
             </div>
         </div>

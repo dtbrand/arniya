@@ -856,10 +856,14 @@ class ProductCatalog
                     return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
                     
                 case 'reseller':
-                    return max(0, (float)($product['reseller_price'] ?? 0) - $saleDisc);
+                    $resPrice = (float)($product['reseller_price'] ?? 0);
+                    if ($resPrice <= 0) { $resPrice = (float)($product['retail_price'] ?? 0); }
+                    return max(0, $resPrice - $saleDisc);
                     
                 case 'wholesale':
-                    return max(0, (float)($product['wholesale_price'] ?? 0) - $saleDisc);
+                    $whsPrice = (float)($product['wholesale_price'] ?? 0);
+                    if ($whsPrice <= 0) { $whsPrice = (float)($product['retail_price'] ?? 0); }
+                    return max(0, $whsPrice - $saleDisc);
                     
                 default:
                     return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
@@ -1573,6 +1577,12 @@ class ProductCatalog
         if (isset($data['sale_price']) || isset($data['sale_discount'])) {
             $sp = (float)($data['sale_price'] ?? $data['sale_discount'] ?? 0);
             $add('sale_price', max(0, $sp));
+        }
+        if (array_key_exists('wholesale_price', $data) && $data['wholesale_price'] === null) {
+            $add('wholesale_price', null);
+        }
+        if (array_key_exists('reseller_price', $data) && $data['reseller_price'] === null) {
+            $add('reseller_price', null);
         }
         foreach (['mrp', 'retail_price', 'wholesale_price', 'reseller_price'] as $col) {
             $present = isset($data[$col]) || ($col === 'retail_price' && isset($data['price']));

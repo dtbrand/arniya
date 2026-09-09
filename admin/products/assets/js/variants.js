@@ -424,16 +424,12 @@
         var inpCustPrice = el('pFormCustomerPrice');
         var grpCustSalePrice = el('pGroupCustomerSalePrice');
         var inpCustSalePrice = el('pFormCustomerSalePrice');
-        var grpReseller = el('pGroupReseller');
-        var inpReseller = el('pFormReseller');
         var noteFullSet = el('pGroupFullSetPriceNote');
 
         if (grpCustPrice) { grpCustPrice.style.display = isFullSet ? 'none' : ''; }
         if (inpCustPrice) { inpCustPrice.disabled = isFullSet; }
         if (grpCustSalePrice) { grpCustSalePrice.style.display = isFullSet ? 'none' : ''; }
         if (inpCustSalePrice) { inpCustSalePrice.disabled = isFullSet; }
-        if (grpReseller) { grpReseller.style.display = isFullSet ? 'none' : ''; }
-        if (inpReseller) { inpReseller.disabled = isFullSet; }
         if (noteFullSet) { noteFullSet.style.display = isFullSet ? '' : 'none'; }
 
         var lblRetail = el('pLabelRetailText');
@@ -445,12 +441,12 @@
                 : 'Price &#8377; <span style="color:#DC2626;">*</span>';
         }
         if (badgeRetail) {
-            badgeRetail.textContent = isFullSet ? 'Retailer Full Set Rate' : 'B2B Trade / Retailer';
+            badgeRetail.textContent = isFullSet ? 'Retailer & Wholesaler Rate' : 'B2B Trade Rate';
         }
         if (helpRetail) {
             helpRetail.textContent = isFullSet
-                ? 'Master rate for Boutique Retailers.'
-                : 'Base trade rate for Retailers (Boutiques), Resellers & Wholesalers.';
+                ? 'Master rate for Boutique Retailers and Wholesalers.'
+                : 'Master B2B trade rate for Retailers (Boutique), Wholesalers & Resellers.';
         }
 
         if (typeof window.calcPricePreview === 'function') {

@@ -41,14 +41,10 @@
         var cust = num('pFormCustomerPrice');
         var custSale = num('pFormCustomerSalePrice');
         var saleDisc = num('pFormSalePrice');
-        var wholesale = num('pFormWholesale');
-        var reseller = num('pFormReseller');
 
         var effTrade = Math.max(0, trade - saleDisc);
         var baseCust = cust > 0 ? cust : trade;
         var effCust = custSale > 0 ? custSale : Math.max(0, baseCust - saleDisc);
-        var effWholesale = wholesale > 0 ? Math.max(0, wholesale - saleDisc) : effTrade;
-        var effReseller = reseller > 0 ? Math.max(0, reseller - saleDisc) : effTrade;
         var boutiqueMargin = Math.max(0, effCust - effTrade);
         var marginPct = effCust > 0 ? Math.round((boutiqueMargin / effCust) * 100) : 0;
 
@@ -90,10 +86,10 @@
             }
 
             if (elWhsPrice) {
-                elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
+                elWhsPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
             }
             if (elWhsSub) {
-                elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'Full Set Rate (B2B)';
+                elWhsSub.textContent = saleDisc > 0 ? ('Full Set ₹' + trade + ' − ₹' + saleDisc) : 'Full Set Rate (B2B)';
             }
 
             if (elBoutiqueMargin) {
@@ -119,7 +115,7 @@
                 }
             }
         } else {
-            // Single Piece Mode: Active Customer, Retailer, Reseller & Wholesaler matrix
+            // Single Piece Mode: Unified B2B Trade Price across Retailer, Reseller & Wholesaler
             if (elCustPrice) {
                 elCustPrice.textContent = '₹' + effCust.toLocaleString('en-IN');
                 elCustPrice.style.color = '#34D399';
@@ -140,18 +136,18 @@
             }
 
             if (elResPrice) {
-                elResPrice.textContent = '₹' + effReseller.toLocaleString('en-IN');
+                elResPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
                 elResPrice.style.color = '#FAF5E8';
             }
             if (elResSub) {
-                elResSub.textContent = reseller > 0 ? 'Custom Reseller Rate' : 'B2B Trade Rate';
+                elResSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
             }
 
             if (elWhsPrice) {
-                elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
+                elWhsPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
             }
             if (elWhsSub) {
-                elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'B2B Trade Rate';
+                elWhsSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
             }
 
             if (elBoutiqueMargin) {
@@ -297,12 +293,14 @@
         if (payload.selling_type === 'single_piece') {
             addIf(payload, 'customer_price', 'pFormCustomerPrice');
             addIf(payload, 'customer_sale_price', 'pFormCustomerSalePrice');
-            addIf(payload, 'reseller_price', 'pFormReseller');
         } else {
             payload.customer_price = null;
             payload.customer_sale_price = null;
-            payload.reseller_price = null;
         }
+        // Wholesale and reseller tiers are removed; trade rate uses retail_price (Price)
+        payload.wholesale_price = null;
+        payload.reseller_price = null;
+
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');
         addIf(payload, 'fabric', 'pFormFabric');
@@ -310,7 +308,6 @@
         addIf(payload, 'description', 'pFormDesc');
         addIf(payload, 'mrp', 'pFormMrp');
         addIf(payload, 'sale_price', 'pFormSalePrice');
-        addIf(payload, 'wholesale_price', 'pFormWholesale');
         addIf(payload, 'badge', 'pFormBadge');
         addIf(payload, 'blouse_piece', 'pFormBlouse');
         addIf(payload, 'pallu_style', 'pFormPallu');
