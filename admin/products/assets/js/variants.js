@@ -424,14 +424,38 @@
         var inpCustPrice = el('pFormCustomerPrice');
         var grpCustSalePrice = el('pGroupCustomerSalePrice');
         var inpCustSalePrice = el('pFormCustomerSalePrice');
+        var grpReseller = el('pGroupReseller');
+        var inpReseller = el('pFormReseller');
         var noteFullSet = el('pGroupFullSetPriceNote');
 
         if (grpCustPrice) { grpCustPrice.style.display = isFullSet ? 'none' : ''; }
         if (inpCustPrice) { inpCustPrice.disabled = isFullSet; }
         if (grpCustSalePrice) { grpCustSalePrice.style.display = isFullSet ? 'none' : ''; }
         if (inpCustSalePrice) { inpCustSalePrice.disabled = isFullSet; }
+        if (grpReseller) { grpReseller.style.display = isFullSet ? 'none' : ''; }
+        if (inpReseller) { inpReseller.disabled = isFullSet; }
         if (noteFullSet) { noteFullSet.style.display = isFullSet ? '' : 'none'; }
 
+        var lblRetail = el('pLabelRetailText');
+        var badgeRetail = el('pBadgeRetail');
+        var helpRetail = el('pHelpRetail');
+        if (lblRetail) {
+            lblRetail.innerHTML = isFullSet
+                ? 'Full Set Price &#8377; <span style="color:#DC2626;">*</span>'
+                : 'Price &#8377; <span style="color:#DC2626;">*</span>';
+        }
+        if (badgeRetail) {
+            badgeRetail.textContent = isFullSet ? 'Retailer Full Set Rate' : 'B2B Trade / Retailer';
+        }
+        if (helpRetail) {
+            helpRetail.textContent = isFullSet
+                ? 'Master rate for Boutique Retailers.'
+                : 'Base trade rate for Retailers (Boutiques), Resellers & Wholesalers.';
+        }
+
+        if (typeof window.calcPricePreview === 'function') {
+            window.calcPricePreview();
+        }
         window.dtRecalculateFullSetPreview();
     };
 

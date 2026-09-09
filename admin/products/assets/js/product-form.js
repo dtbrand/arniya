@@ -33,6 +33,9 @@
     }
 
     window.calcPricePreview = function () {
+        var radSelling = document.querySelector('input[name="pFormSellingType"]:checked');
+        var isFullSet = (radSelling && radSelling.value === 'full_set');
+
         var mrp = num('pFormMrp');
         var trade = num('pFormRetail');
         var cust = num('pFormCustomerPrice');
@@ -61,34 +64,117 @@
         var elMarginPercent = document.getElementById('dispMarginPercent');
         var elBadge = document.getElementById('pPrevDiscountBadge');
 
-        if (elCustPrice) elCustPrice.textContent = '₹' + effCust.toLocaleString('en-IN');
-        if (elCustSub) elCustSub.textContent = custSale > 0 ? ('Special Sale ₹' + custSale) : (saleDisc > 0 ? ('Save ₹' + saleDisc + ' Sale') : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate'));
+        if (isFullSet) {
+            // Full Set Mode: B2B Retailers & Wholesalers only. Resellers and Customers are blocked.
+            if (elCustPrice) {
+                elCustPrice.textContent = 'N/A';
+                elCustPrice.style.color = '#94A3B8';
+            }
+            if (elCustSub) {
+                elCustSub.innerHTML = '<span style="color:#EF4444; font-weight:700;">Trade Only (Blocked)</span>';
+            }
 
-        if (elRetPrice) elRetPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
-        if (elRetSub) elRetSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
+            if (elRetPrice) {
+                elRetPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
+            }
+            if (elRetSub) {
+                elRetSub.textContent = saleDisc > 0 ? ('Full Set ₹' + trade + ' − ₹' + saleDisc) : 'Full Set Rate (B2B)';
+            }
 
-        if (elResPrice) elResPrice.textContent = '₹' + effReseller.toLocaleString('en-IN');
-        if (elResSub) elResSub.textContent = reseller > 0 ? 'Custom Reseller Rate' : 'B2B Trade Rate';
+            if (elResPrice) {
+                elResPrice.textContent = 'N/A';
+                elResPrice.style.color = '#94A3B8';
+            }
+            if (elResSub) {
+                elResSub.innerHTML = '<span style="color:#EF4444; font-weight:700;">Trade Only (Blocked)</span>';
+            }
 
-        if (elWhsPrice) elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
-        if (elWhsSub) elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'B2B Trade Rate';
+            if (elWhsPrice) {
+                elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
+            }
+            if (elWhsSub) {
+                elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'Full Set Rate (B2B)';
+            }
 
-        if (elBoutiqueMargin) elBoutiqueMargin.textContent = '₹' + boutiqueMargin.toLocaleString('en-IN') + '/pc';
-        if (elMarginPercent) elMarginPercent.textContent = marginPct + '% Profit Margin';
+            if (elBoutiqueMargin) {
+                elBoutiqueMargin.textContent = mrp > effTrade
+                    ? ('₹' + (mrp - effTrade).toLocaleString('en-IN') + '/pc')
+                    : 'B2B Trade Lot';
+            }
+            if (elMarginPercent) {
+                elMarginPercent.textContent = mrp > effTrade
+                    ? (Math.round(((mrp - effTrade) / mrp) * 100) + '% vs Catalog MRP')
+                    : 'Wholesale Lot';
+            }
 
-        if (elBadge) {
-            if (saleDisc > 0) {
-                elBadge.textContent = '₹' + saleDisc + ' Flat Discount Active';
-                elBadge.style.background = '#FCD34D';
-                elBadge.style.color = '#78350F';
-            } else if (mrp > effCust && mrp > 0) {
-                elBadge.textContent = Math.round(((mrp - effCust) / mrp) * 100) + '% Off MRP';
-                elBadge.style.background = '#E6CA65';
-                elBadge.style.color = '#181512';
-            } else {
-                elBadge.textContent = 'Standard Rate';
-                elBadge.style.background = '#E2E8F0';
-                elBadge.style.color = '#334155';
+            if (elBadge) {
+                if (saleDisc > 0) {
+                    elBadge.textContent = '₹' + saleDisc + ' Flat Discount Active';
+                    elBadge.style.background = '#FCD34D';
+                    elBadge.style.color = '#78350F';
+                } else {
+                    elBadge.textContent = 'B2B Full Set Catalog';
+                    elBadge.style.background = '#FAF5E8';
+                    elBadge.style.color = '#8A681F';
+                }
+            }
+        } else {
+            // Single Piece Mode: Active Customer, Retailer, Reseller & Wholesaler matrix
+            if (elCustPrice) {
+                elCustPrice.textContent = '₹' + effCust.toLocaleString('en-IN');
+                elCustPrice.style.color = '#34D399';
+            }
+            if (elCustSub) {
+                elCustSub.textContent = custSale > 0
+                    ? ('Special Sale ₹' + custSale)
+                    : (saleDisc > 0
+                        ? ('Save ₹' + saleDisc + ' Sale')
+                        : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate'));
+            }
+
+            if (elRetPrice) {
+                elRetPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
+            }
+            if (elRetSub) {
+                elRetSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
+            }
+
+            if (elResPrice) {
+                elResPrice.textContent = '₹' + effReseller.toLocaleString('en-IN');
+                elResPrice.style.color = '#FAF5E8';
+            }
+            if (elResSub) {
+                elResSub.textContent = reseller > 0 ? 'Custom Reseller Rate' : 'B2B Trade Rate';
+            }
+
+            if (elWhsPrice) {
+                elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
+            }
+            if (elWhsSub) {
+                elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'B2B Trade Rate';
+            }
+
+            if (elBoutiqueMargin) {
+                elBoutiqueMargin.textContent = '₹' + boutiqueMargin.toLocaleString('en-IN') + '/pc';
+            }
+            if (elMarginPercent) {
+                elMarginPercent.textContent = marginPct + '% Profit Margin';
+            }
+
+            if (elBadge) {
+                if (saleDisc > 0) {
+                    elBadge.textContent = '₹' + saleDisc + ' Flat Discount Active';
+                    elBadge.style.background = '#FCD34D';
+                    elBadge.style.color = '#78350F';
+                } else if (mrp > effCust && mrp > 0) {
+                    elBadge.textContent = Math.round(((mrp - effCust) / mrp) * 100) + '% Off MRP';
+                    elBadge.style.background = '#E6CA65';
+                    elBadge.style.color = '#181512';
+                } else {
+                    elBadge.textContent = 'Standard Rate';
+                    elBadge.style.background = '#E2E8F0';
+                    elBadge.style.color = '#334155';
+                }
             }
         }
     };
@@ -211,9 +297,11 @@
         if (payload.selling_type === 'single_piece') {
             addIf(payload, 'customer_price', 'pFormCustomerPrice');
             addIf(payload, 'customer_sale_price', 'pFormCustomerSalePrice');
+            addIf(payload, 'reseller_price', 'pFormReseller');
         } else {
             payload.customer_price = null;
             payload.customer_sale_price = null;
+            payload.reseller_price = null;
         }
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');
@@ -223,7 +311,6 @@
         addIf(payload, 'mrp', 'pFormMrp');
         addIf(payload, 'sale_price', 'pFormSalePrice');
         addIf(payload, 'wholesale_price', 'pFormWholesale');
-        addIf(payload, 'reseller_price', 'pFormReseller');
         addIf(payload, 'badge', 'pFormBadge');
         addIf(payload, 'blouse_piece', 'pFormBlouse');
         addIf(payload, 'pallu_style', 'pFormPallu');
