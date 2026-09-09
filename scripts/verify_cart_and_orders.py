@@ -31,14 +31,25 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
         else:
             print(f"Redirect handler got HTTP {e.code}")
 
-    # 2. Test api/cart.php sync preserving variant_id & metadata
+    # 2. Get Product 13 variant dynamically
+    prod_url = f"https://{domain}/api/products.php?action=get&id=13"
+    req_prod = urllib.request.Request(prod_url, headers={'User-Agent': 'Mozilla/5.0'})
+    with urllib.request.urlopen(req_prod, context=ctx) as p_res:
+        p_data = json.loads(p_res.read().decode('utf-8'))
+        active_variants = p_data.get('product', {}).get('variants', [])
+        target_variant = active_variants[0] if active_variants else {'id': 96, 'sku': 'DTB-SAR-001-ROY-1'}
+        target_variant_id = target_variant.get('id') or target_variant.get('variant_id') or 96
+        target_sku = target_variant.get('sku') or 'DTB-SAR-001-ROY-1'
+        stock_before = target_variant.get('stock_qty', 25)
+
+    # 3. Test api/cart.php sync preserving variant_id & metadata
     cart_items = [
         {
             'product_id': 13,
-            'variant_id': 57,
+            'variant_id': target_variant_id,
             'product_type': 'single_piece',
             'selling_type': 'single',
-            'sku': 'DTB-SAR-001-ROY-1',
+            'sku': target_sku,
             'color': 'Royal Crimson Red',
             'size': 'Free Size',
             'qty': 2,
@@ -55,17 +66,10 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
         assert len(items) > 0, "Expected cart items in response"
         item0 = items[0]
         print(f"    Line item: Variant ID={item0.get('variant_id')}, SKU={item0.get('sku')}, Qty={item0.get('qty')}, Unit Price={item0.get('price')}")
-        assert item0.get('variant_id') == 57, f"Expected variant_id=57, got {item0.get('variant_id')}"
-        assert item0.get('sku') == 'DTB-SAR-001-ROY-1', f"Expected SKU, got {item0.get('sku')}"
+        assert item0.get('variant_id') == target_variant_id, f"Expected variant_id={target_variant_id}, got {item0.get('variant_id')}"
+        assert item0.get('sku') == target_sku, f"Expected SKU {target_sku}, got {item0.get('sku')}"
 
-    # 3. Check stock of variant 57 before order
-    prod_url = f"https://{domain}/api/products.php?action=get&id=13"
-    req = urllib.request.Request(prod_url, headers={'User-Agent': 'Mozilla/5.0'})
-    with urllib.request.urlopen(req, context=ctx) as res:
-        prod_data = json.loads(res.read().decode('utf-8'))
-        v57 = next((v for v in prod_data.get('product', {}).get('variants', []) if v['id'] == 57), None)
-        stock_before = v57['stock_qty'] if v57 else 25
-        print(f"    Variant 57 stock before order: {stock_before}")
+    print(f"    Variant {target_variant_id} stock before order: {stock_before}")
 
     # 4. Test Order Placement via api/orders.php (Cash on Delivery)
     test_order_num = f"DT-TEST-{int(time.time())}-{domain[:4].upper()}"
@@ -84,10 +88,10 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
             {
                 'id': 13,
                 'product_id': 13,
-                'variant_id': 57,
+                'variant_id': target_variant_id,
                 'product_type': 'single_piece',
                 'selling_type': 'single',
-                'sku': 'DTB-SAR-001-ROY-1',
+                'sku': target_sku,
                 'name': 'Royal Heritage Kanjivaram Pure Zari Brocade Saree',
                 'color': 'Royal Crimson Red',
                 'size': 'Free Size',
@@ -111,9 +115,9 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
     # 5. Check stock after order placement & stock decrement
     with urllib.request.urlopen(urllib.request.Request(prod_url, headers={'User-Agent': 'Mozilla/5.0'}), context=ctx) as res:
         prod_data_after = json.loads(res.read().decode('utf-8'))
-        v57_after = next((v for v in prod_data_after.get('product', {}).get('variants', []) if v['id'] == 57), None)
-        stock_after = v57_after['stock_qty'] if v57_after else None
-        print(f"    Variant 57 stock after order: {stock_after}")
+        target_after = next((v for v in prod_data_after.get('product', {}).get('variants', []) if v['id'] == target_variant_id), None)
+        stock_after = target_after['stock_qty'] if target_after else None
+        print(f"    Variant {target_variant_id} stock after order: {stock_after}")
         if stock_before is not None and stock_after is not None:
             print(f">>> [PASS] Stock decremented by 2: {stock_before} -> {stock_after}")
             assert stock_after == stock_before - 2, f"Expected {stock_before - 2}, got {stock_after}"

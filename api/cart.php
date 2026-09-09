@@ -11,11 +11,13 @@ require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
 require_once __DIR__ . '/../src/DiscountEngine.php';
+require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\PricingCalculator;
 use DTBrand\DiscountEngine;
 use DTBrand\Database;
+use DTBrand\Auth;
 
 try {
     $rawInput = file_get_contents('php://input');
@@ -24,14 +26,13 @@ try {
     $items = $data['items'] ?? ($data['cart'] ?? []);
 
     // Session-Authoritative Role Resolution (Section 14 & 33: Never trust client-submitted role)
-    if (session_status() === PHP_SESSION_NONE) {
-        @session_start();
-    }
+    Auth::initSession();
+    $currentUser = Auth::getCurrentUser() ?? ($_SESSION['user'] ?? null);
     $rawUserType = strtolower(trim((string)($data['user_type'] ?? '')));
     if (!empty($_SESSION['admin_logged_in'])) {
         $userType = in_array($rawUserType, ['wholesale', 'retailer', 'reseller', 'customer'], true) ? $rawUserType : 'wholesale';
-    } elseif (!empty($_SESSION['user']['id'])) {
-        $uid = (int)$_SESSION['user']['id'];
+    } elseif (!empty($currentUser['id'])) {
+        $uid = (int)$currentUser['id'];
         $db = Database::getConnection();
         $verifiedType = 'customer';
         if ($db) {

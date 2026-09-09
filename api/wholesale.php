@@ -398,7 +398,7 @@ try {
     }
 
     // ── 3C-1. SET DEFAULT SHIPPING DESTINATION (POST) ──
-    if ($action === 'set_default_shipping') {
+    if ($action === 'set_default_shipping' || $action === 'set_default_address') {
         $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
@@ -416,7 +416,7 @@ try {
     }
 
     // ── 3C-2. DELETE ADDRESS (POST) ──
-    if ($action === 'delete_address') {
+    if ($action === 'delete_address' || $action === 'delete') {
         $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
@@ -425,7 +425,23 @@ try {
             exit;
         }
         if ($pdo !== null) {
+            $cntStmt = $pdo->prepare("SELECT COUNT(*) FROM addresses WHERE customer_id = ?");
+            $cntStmt->execute([$userId]);
+            $total = (int)$cntStmt->fetchColumn();
+            if ($total <= 1) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Cannot delete the only saved address. At least one registered address is required.']);
+                exit;
+            }
+
             $pdo->prepare("DELETE FROM addresses WHERE id = ? AND customer_id = ? AND address_type != 'billing'")->execute([$addressId, $userId]);
+
+            $defCheck = $pdo->prepare("SELECT id FROM addresses WHERE customer_id = ? AND is_default = 1 AND address_type != 'billing' LIMIT 1");
+            $defCheck->execute([$userId]);
+            if (!$defCheck->fetchColumn()) {
+                $promoteStmt = $pdo->prepare("UPDATE addresses SET is_default = 1 WHERE customer_id = ? AND address_type != 'billing' ORDER BY id DESC LIMIT 1");
+                $promoteStmt->execute([$userId]);
+            }
         }
         $addresses = Auth::getCustomerAddresses($userId);
         echo json_encode(['success' => true, 'message' => 'Address deleted successfully!', 'addresses' => $addresses]);

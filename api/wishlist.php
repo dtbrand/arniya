@@ -4,10 +4,6 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once __DIR__ . '/cors.php';
 cors_json();
 
@@ -16,6 +12,8 @@ require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Auth;
+
+Auth::initSession();
 
 if (!isset($_SESSION['wishlist_items'])) {
     $_SESSION['wishlist_items'] = [];

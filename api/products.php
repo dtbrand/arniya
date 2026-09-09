@@ -26,19 +26,19 @@ if ($method === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/_guard.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
+use DTBrand\Auth;
 
 try {
 
     // ── Session init for role-based pricing (Section 12, 14, 32, 33) ──
-    if (session_status() === PHP_SESSION_NONE) {
-        @session_start();
-    }
-    $currentUser = $_SESSION['user'] ?? null;
-    $sessionRole = strtolower(trim((string)($currentUser['role'] ?? ($currentUser['type'] ?? ''))));
+    Auth::initSession();
+    $currentUser = Auth::getCurrentUser() ?? ($_SESSION['user'] ?? null);
+    $sessionRole = strtolower(trim((string)($currentUser['type'] ?? ($currentUser['role'] ?? ''))));
     $requestedRole = strtolower(trim((string)($_REQUEST['role'] ?? ($_REQUEST['channel'] ?? ''))));
     if ($requestedRole === 'wholesaler') { $requestedRole = 'wholesale'; }
     if ($requestedRole === 'retail') { $requestedRole = 'customer'; }
