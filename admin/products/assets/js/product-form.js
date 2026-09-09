@@ -36,7 +36,6 @@
         var radSelling = document.querySelector('input[name="pFormSellingType"]:checked');
         var isFullSet = (radSelling && radSelling.value === 'full_set');
 
-        var mrp = num('pFormMrp');
         var trade = num('pFormRetail');
         var cust = num('pFormCustomerPrice');
         var custSale = num('pFormCustomerSalePrice');
@@ -93,14 +92,10 @@
             }
 
             if (elBoutiqueMargin) {
-                elBoutiqueMargin.textContent = mrp > effTrade
-                    ? ('₹' + (mrp - effTrade).toLocaleString('en-IN') + '/pc')
-                    : 'B2B Trade Lot';
+                elBoutiqueMargin.textContent = 'B2B Trade Lot';
             }
             if (elMarginPercent) {
-                elMarginPercent.textContent = mrp > effTrade
-                    ? (Math.round(((mrp - effTrade) / mrp) * 100) + '% vs Catalog MRP')
-                    : 'Wholesale Lot';
+                elMarginPercent.textContent = 'Wholesale Lot';
             }
 
             if (elBadge) {
@@ -125,7 +120,7 @@
                     ? ('Special Sale ₹' + custSale)
                     : (saleDisc > 0
                         ? ('Save ₹' + saleDisc + ' Sale')
-                        : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate'));
+                        : (baseCust > effCust ? ('Regular ₹' + baseCust.toLocaleString('en-IN')) : 'Standard Consumer Rate'));
             }
 
             if (elRetPrice) {
@@ -162,8 +157,8 @@
                     elBadge.textContent = '₹' + saleDisc + ' Flat Discount Active';
                     elBadge.style.background = '#FCD34D';
                     elBadge.style.color = '#78350F';
-                } else if (mrp > effCust && mrp > 0) {
-                    elBadge.textContent = Math.round(((mrp - effCust) / mrp) * 100) + '% Off MRP';
+                } else if (baseCust > effCust && baseCust > 0) {
+                    elBadge.textContent = Math.round(((baseCust - effCust) / baseCust) * 100) + '% Off Regular';
                     elBadge.style.background = '#E6CA65';
                     elBadge.style.color = '#181512';
                 } else {
@@ -297,16 +292,16 @@
             payload.customer_price = null;
             payload.customer_sale_price = null;
         }
-        // Wholesale and reseller tiers are removed; trade rate uses retail_price (Price)
+        // Wholesale, reseller and MRP tiers are removed; trade uses retail_price (Price)
         payload.wholesale_price = null;
         payload.reseller_price = null;
+        payload.mrp = null;
 
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');
         addIf(payload, 'fabric', 'pFormFabric');
         addIf(payload, 'weave', 'pFormWeave');
         addIf(payload, 'description', 'pFormDesc');
-        addIf(payload, 'mrp', 'pFormMrp');
         addIf(payload, 'sale_price', 'pFormSalePrice');
         addIf(payload, 'badge', 'pFormBadge');
         addIf(payload, 'blouse_piece', 'pFormBlouse');

@@ -62,11 +62,11 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
             </div>
         </div>
 
-        <!-- ══ 2. RETAIL CONSUMER PRICING & MRP VALUATION ══ -->
-        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px 14px;">
-            <div style="font-size:11px; font-weight:800; color:#1E293B; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+        <!-- ══ 2. RETAIL CONSUMER PRICING (GUEST & END CONSUMER) ══ -->
+        <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
+            <div style="font-size:11px; font-weight:800; color:#15803D; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span>Retail Consumer Pricing &amp; Struck-Through MRP</span>
+                <span>Retail Consumer Pricing (Guest &bull; End Consumer)</span>
             </div>
 
             <!-- Full Set Notice Banner -->
@@ -77,8 +77,8 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                 </div>
             </div>
 
-            <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px;">
-                <!-- 5. Customer Price (For Guest & Retail End Consumers) -->
+            <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+                <!-- 3. Customer Price (For Guest & Retail End Consumers) -->
                 <div class="adm-form-group" id="pGroupCustomerPrice" style="<?php echo $isFullSetMode ? 'display:none;' : ''; ?>">
                     <label class="adm-form-label" for="pFormCustomerPrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
                         <span style="font-weight:700; color:#15803D; white-space:nowrap;">Customer Price &#8377;</span>
@@ -92,7 +92,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                     <small style="font-size:10px; color:#64748B;">Customer shopping price. Defaults to Trade Price if blank.</small>
                 </div>
 
-                <!-- 6. Customer Sale Price (For Guest & Retail End Consumers) -->
+                <!-- 4. Customer Sale Price (For Guest & Retail End Consumers) -->
                 <div class="adm-form-group" id="pGroupCustomerSalePrice" style="<?php echo $isFullSetMode ? 'display:none;' : ''; ?>">
                     <label class="adm-form-label" for="pFormCustomerSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
                         <span style="font-weight:700; color:#15803D; white-space:nowrap;">Customer Sale Price &#8377;</span>
@@ -104,18 +104,6 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                            <?php echo $isFullSetMode ? 'disabled' : ''; ?>
                            oninput="if (window.calcPricePreview) window.calcPricePreview();">
                     <small style="font-size:10px; color:#64748B;">Special discounted retail price. Precedes flat discount if set.</small>
-                </div>
-
-                <!-- 7. MRP (Maximum Retail Struck-through Price) -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormMrp" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:700; white-space:nowrap;">MRP &#8377;</span>
-                        <span style="font-size:9.5px; font-weight:700; color:#64748B; background:#F1F5F9; padding:1px 6px; border-radius:3px; white-space:nowrap; text-transform:none;">Struck-Through</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormMrp" class="adm-form-input" placeholder="e.g. 1200"
-                           value="<?php echo htmlspecialchars($fmt($prod['mrp'] ?? null)); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Shown with strike-through for discount badge.</small>
                 </div>
             </div>
         </div>

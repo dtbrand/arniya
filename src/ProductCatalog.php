@@ -1584,6 +1584,9 @@ class ProductCatalog
         if (array_key_exists('reseller_price', $data) && $data['reseller_price'] === null) {
             $add('reseller_price', null);
         }
+        if (array_key_exists('mrp', $data) && $data['mrp'] === null) {
+            $add('mrp', null);
+        }
         foreach (['mrp', 'retail_price', 'wholesale_price', 'reseller_price'] as $col) {
             $present = isset($data[$col]) || ($col === 'retail_price' && isset($data['price']));
             if (!$present) {
