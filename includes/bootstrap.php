@@ -50,7 +50,13 @@ if (!defined('DT_ENV_LOADED')) {
 }
 
 // ── 4. Session (start if not already running) ──
-if (session_status() === PHP_SESSION_NONE) {
+$sessConfig = dirname(__DIR__) . '/config/session.php';
+if (file_exists($sessConfig)) {
+    require_once $sessConfig;
+}
+if (function_exists('dt_session_start')) {
+    dt_session_start();
+} elseif (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 86400,
         'path'     => '/',
