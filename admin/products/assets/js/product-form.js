@@ -286,12 +286,13 @@
         // entirely rather than sent as a guess, so ProductCatalog keeps the
         // column NULL instead of storing a claim the admin never made.
         if (payload.selling_type === 'single_piece') {
-            addIf(payload, 'customer_price', 'pFormCustomerPrice');
-            addIf(payload, 'customer_sale_price', 'pFormCustomerSalePrice');
+            payload.customer_price = val('pFormCustomerPrice') ? num('pFormCustomerPrice') : null;
+            payload.customer_sale_price = val('pFormCustomerSalePrice') ? num('pFormCustomerSalePrice') : null;
         } else {
             payload.customer_price = null;
             payload.customer_sale_price = null;
         }
+        payload.sale_price = val('pFormSalePrice') ? num('pFormSalePrice') : 0;
         // Wholesale, reseller and MRP tiers are removed; trade uses retail_price (Price)
         payload.wholesale_price = null;
         payload.reseller_price = null;
@@ -302,7 +303,6 @@
         addIf(payload, 'fabric', 'pFormFabric');
         addIf(payload, 'weave', 'pFormWeave');
         addIf(payload, 'description', 'pFormDesc');
-        addIf(payload, 'sale_price', 'pFormSalePrice');
         addIf(payload, 'badge', 'pFormBadge');
         addIf(payload, 'blouse_piece', 'pFormBlouse');
         addIf(payload, 'pallu_style', 'pFormPallu');

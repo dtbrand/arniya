@@ -409,13 +409,17 @@ class OrderManager
 
             // Step 2: Check for rapid double-click duplicate (exact same total & phone within 15 seconds)
             if (!$existing && empty($passedOrderNum) && !empty($last10Phone)) {
+                $isSqlite = ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite');
+                $timeClause = $isSqlite
+                    ? "created_at >= datetime('now', '-15 seconds')"
+                    : "created_at >= (NOW() - INTERVAL 15 SECOND)";
                 $dedupStmt = $pdo->prepare("
                     SELECT * FROM orders 
                     WHERE (customer_phone LIKE ? OR customer_phone = ?)
                       AND channel = ?
                       AND ABS(total_amount - ?) < 0.01
                       AND payment_status IN ('pending', 'unpaid')
-                      AND created_at >= (NOW() - INTERVAL 15 SECOND)
+                      AND {$timeClause}
                     ORDER BY id DESC LIMIT 1
                 ");
                 $dedupStmt->execute(['%' . $last10Phone, $cleanDigits, $channel, $grandTotal]);

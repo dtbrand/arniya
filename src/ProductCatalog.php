@@ -360,6 +360,8 @@ class ProductCatalog
             'effective_retail_price' => $effRetail,
             'effective_wholesale_price' => $effWholesale,
             'effective_reseller_price' => $effReseller,
+            'effective_price' => $effRetail,
+            'boutique_margin' => $boutiqueMargin,
             
             // Full Set Price Fields
             'full_set_retailer_price' => $fullSetRetailerPrice,
@@ -1442,7 +1444,7 @@ class ProductCatalog
                   reseller_price, moq_single, moq_half_set, moq_full_set, moq_master_bale,
                   stock_qty, rating, reviews_count, primary_image, badge, is_featured,
                   is_bestseller, status, selling_type, description, created_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
             );
             $stmt->execute([
                 $sku, $title, $slug, $cat['id'], $cat['name'],
@@ -1560,22 +1562,23 @@ class ProductCatalog
                 $add('customer_price', null);
             }
         }
-        if (isset($data['customer_price'])) {
+        if (array_key_exists('customer_price', $data)) {
             $curSelling = $data['selling_type'] ?? null;
             if ($curSelling !== 'full_set') {
-                $cp = (float)$data['customer_price'];
+                $cp = ($data['customer_price'] !== null && $data['customer_price'] !== '') ? (float)$data['customer_price'] : 0;
                 $add('customer_price', $cp > 0 ? $cp : null);
             }
         }
-        if (isset($data['customer_sale_price'])) {
+        if (array_key_exists('customer_sale_price', $data)) {
             $curSelling = $data['selling_type'] ?? null;
             if ($curSelling !== 'full_set') {
-                $csp = (float)$data['customer_sale_price'];
+                $csp = ($data['customer_sale_price'] !== null && $data['customer_sale_price'] !== '') ? (float)$data['customer_sale_price'] : 0;
                 $add('customer_sale_price', $csp > 0 ? $csp : null);
             }
         }
-        if (isset($data['sale_price']) || isset($data['sale_discount'])) {
-            $sp = (float)($data['sale_price'] ?? $data['sale_discount'] ?? 0);
+        if (array_key_exists('sale_price', $data) || array_key_exists('sale_discount', $data)) {
+            $rawSp = $data['sale_price'] ?? $data['sale_discount'] ?? null;
+            $sp = ($rawSp !== null && $rawSp !== '') ? (float)$rawSp : 0;
             $add('sale_price', max(0, $sp));
         }
         if (array_key_exists('wholesale_price', $data) && $data['wholesale_price'] === null) {

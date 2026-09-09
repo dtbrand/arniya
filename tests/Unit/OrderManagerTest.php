@@ -80,6 +80,7 @@ class OrderManagerTest extends TestCase
                 mrp REAL NOT NULL,
                 retail_price REAL NOT NULL,
                 customer_price REAL DEFAULT 0.0,
+                customer_sale_price REAL DEFAULT 0.0,
                 sale_price REAL DEFAULT 0.0,
                 wholesale_price REAL DEFAULT 0.0,
                 reseller_price REAL DEFAULT 0.0,
@@ -129,6 +130,7 @@ class OrderManagerTest extends TestCase
                 payment_method TEXT DEFAULT 'razorpay',
                 payment_status TEXT DEFAULT 'paid',
                 fulfillment_status TEXT DEFAULT 'processing',
+                order_status TEXT DEFAULT 'processing',
                 tracking_number TEXT DEFAULT '',
                 courier_name TEXT DEFAULT 'Delhivery Express',
                 created_at TEXT
