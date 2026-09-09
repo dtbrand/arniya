@@ -11,6 +11,7 @@ require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\Auth;
+use DTBrand\Database;
 
 try {
     $action = $_GET['action'] ?? ($_POST['action'] ?? 'session');
@@ -95,6 +96,10 @@ try {
             echo json_encode(['success' => false, 'message' => 'Please sign in to save address.']);
             exit;
         }
+        $targetId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
+        if ($targetId <= 0 || empty($data['id'])) {
+            $data['is_new'] = true;
+        }
         $res = Auth::saveAddress((int)$current['id'], $data);
         if (!$res['success']) {
             http_response_code(400);
@@ -102,6 +107,57 @@ try {
             $res['addresses'] = Auth::getCustomerAddresses((int)$current['id']);
         }
         echo json_encode($res, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'set_default_address') {
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to update default address.']);
+            exit;
+        }
+        $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
+        $type = ($data['type'] ?? 'shipping') === 'billing' ? 'billing' : 'shipping';
+        if ($addressId <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Valid address ID is required.']);
+            exit;
+        }
+        $pdo = Database::getConnection();
+        if ($pdo !== null) {
+            if ($type === 'billing') {
+                $pdo->prepare("UPDATE addresses SET is_billing_default = 0 WHERE customer_id = ?")->execute([(int)$current['id']]);
+                $pdo->prepare("UPDATE addresses SET is_billing_default = 1 WHERE id = ? AND customer_id = ?")->execute([$addressId, (int)$current['id']]);
+            } else {
+                $pdo->prepare("UPDATE addresses SET is_default = 0 WHERE customer_id = ? AND address_type != 'billing'")->execute([(int)$current['id']]);
+                $pdo->prepare("UPDATE addresses SET is_default = 1 WHERE id = ? AND customer_id = ?")->execute([$addressId, (int)$current['id']]);
+            }
+        }
+        $addresses = Auth::getCustomerAddresses((int)$current['id']);
+        echo json_encode(['success' => true, 'message' => 'Default ' . $type . ' address updated successfully.', 'addresses' => $addresses], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'delete_address') {
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to delete address.']);
+            exit;
+        }
+        $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
+        if ($addressId <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Valid address ID is required.']);
+            exit;
+        }
+        $pdo = Database::getConnection();
+        if ($pdo !== null) {
+            $pdo->prepare("DELETE FROM addresses WHERE id = ? AND customer_id = ? AND address_type != 'billing'")->execute([$addressId, (int)$current['id']]);
+        }
+        $addresses = Auth::getCustomerAddresses((int)$current['id']);
+        echo json_encode(['success' => true, 'message' => 'Address deleted successfully.', 'addresses' => $addresses], JSON_PRETTY_PRINT);
         exit;
     }
 

@@ -10,7 +10,11 @@ cors_json();
 require_once __DIR__ . '/../src/Database.php';
 use DTBrand\Database;
 
-$action = $_POST['action'] ?? $_GET['action'] ?? 'list';
+$rawInput = file_get_contents('php://input');
+$jsonBody = json_decode($rawInput, true);
+$data = is_array($jsonBody) ? array_merge($_POST, $jsonBody) : $_POST;
+
+$action = $data['action'] ?? ($_POST['action'] ?? ($_GET['action'] ?? 'list'));
 
 // Creating, renaming or deleting an attribute mutates the shared product
 // taxonomy, so it is admin-only. Reading the list stays public so storefront
@@ -23,16 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET' || in_array($action, ['create', 'update
 
 // Handle CREATE Attribute
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
-    $name = trim($_POST['name'] ?? '');
+    $name = trim($data['name'] ?? '');
     if (empty($name)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Attribute name is required']);
         exit;
     }
 
-    $slug = trim($_POST['slug'] ?? '') ?: strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
-    $type = trim($_POST['type'] ?? 'Text Badge / Pill');
-    $values = trim($_POST['values'] ?? '[]');
+    $slug = trim($data['slug'] ?? '') ?: strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
+    $type = trim($data['type'] ?? 'Text Badge / Pill');
+    $values = trim($data['values'] ?? '[]');
 
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
@@ -68,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
 
 // Handle UPDATE Attribute
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
-    $id = (int)($_POST['id'] ?? 0);
-    $name = trim($_POST['name'] ?? '');
-    $slug = trim($_POST['slug'] ?? '');
-    $type = trim($_POST['type'] ?? '');
+    $id = (int)($data['id'] ?? 0);
+    $name = trim($data['name'] ?? '');
+    $slug = trim($data['slug'] ?? '');
+    $type = trim($data['type'] ?? '');
 
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
@@ -100,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
 
 // Handle DELETE Attribute
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete') {
-    $id = (int)($_POST['id'] ?? 0);
+    $id = (int)($data['id'] ?? 0);
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
         try {
@@ -122,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete') {
 // [{"name":"Crimson Red","hex":"#991b1b"}, …]. Add/remove rewrite that JSON.
 $db = Database::getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($action === 'add_term' || $action === 'remove_term')) {
-    $id = (int)($_POST['id'] ?? 0);
+    $id = (int)($data['id'] ?? 0);
     if ($id <= 0) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Attribute id is required']);
@@ -147,19 +151,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($action === 'add_term' || $action 
         }
 
         if ($action === 'add_term') {
-            $termName = trim((string)($_POST['term_name'] ?? ''));
+            $termName = trim((string)($data['term_name'] ?? ''));
             if ($termName === '') {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Term name is required.']);
                 exit;
             }
-            $hex = trim((string)($_POST['hex'] ?? ''));
+            $hex = trim((string)($data['hex'] ?? ''));
             // A term may be a swatch (hex) or a plain value — both are valid.
             $terms[] = ['name' => $termName, 'hex' => $hex !== '' ? $hex : null];
             $msg = 'Term "' . $termName . '" added.';
         } else {
-            $termName = trim((string)($_POST['term_name'] ?? ''));
-            $hex = trim((string)($_POST['hex'] ?? ''));
+            $termName = trim((string)($data['term_name'] ?? ''));
+            $hex = trim((string)($data['hex'] ?? ''));
             $before = count($terms);
             $terms = array_values(array_filter($terms, static function (array $t) use ($termName, $hex): bool {
                 $sameName = strcasecmp((string)($t['name'] ?? ''), $termName) === 0;

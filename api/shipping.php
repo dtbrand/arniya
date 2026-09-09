@@ -341,40 +341,87 @@ try {
             exit;
         }
 
-        $events = [
-            [
+        $carrier = 'Delhivery Express';
+        $currentStatus = 'Dispatched';
+        $destination = 'India';
+        $orderRecord = null;
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $oStmt = $pdo->prepare("SELECT * FROM orders WHERE tracking_number = ? OR order_number = ? OR id = ? LIMIT 1");
+                $oStmt->execute([$awb, $awb, is_numeric($awb) ? (int)$awb : 0]);
+                $orderRecord = $oStmt->fetch(\PDO::FETCH_ASSOC);
+                if ($orderRecord) {
+                    if (!empty($orderRecord['courier_name'])) {
+                        $carrier = $orderRecord['courier_name'];
+                    }
+                    $st = strtolower($orderRecord['fulfillment_status'] ?? ($orderRecord['order_status'] ?? 'processing'));
+                    if ($st === 'delivered') {
+                        $currentStatus = 'Delivered';
+                    } elseif (in_array($st, ['shipped', 'in_transit', 'out_for_delivery'])) {
+                        $currentStatus = 'In Transit';
+                    } elseif ($st === 'dispatched') {
+                        $currentStatus = 'Dispatched';
+                    } else {
+                        $currentStatus = 'Processing at Depot';
+                    }
+                    if (!empty($orderRecord['shipping_address'])) {
+                        $parts = array_map('trim', explode(',', $orderRecord['shipping_address']));
+                        if (count($parts) >= 2) {
+                            $destination = trim(preg_replace('/\s*-\s*\d+/', '', $parts[count($parts) - 2]));
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        $events = [];
+        if ($currentStatus === 'Delivered') {
+            $events[] = [
                 'status' => 'Delivered',
-                'location' => 'Destination City Hub',
+                'location' => $destination . ' Hub',
                 'timestamp' => date('Y-m-d H:i:s', strtotime('-2 hours')),
-                'message' => 'Shipment delivered successfully. Verified via OTP.'
-            ],
-            [
+                'message' => 'Consignment delivered successfully. Verified via OTP/Signature.'
+            ];
+            $events[] = [
                 'status' => 'Out for Delivery',
-                'location' => 'Local Delivery Station',
+                'location' => $destination . ' Depot',
                 'timestamp' => date('Y-m-d H:i:s', strtotime('-6 hours')),
-                'message' => 'Courier rider dispatched with order parcel.'
-            ],
-            [
+                'message' => 'Courier courier agent dispatched for doorstep handover.'
+            ];
+        }
+        if (in_array($currentStatus, ['Delivered', 'In Transit'])) {
+            $events[] = [
                 'status' => 'In Transit',
-                'location' => 'Hub Sorting Facility',
+                'location' => $carrier . ' Logistics Corridor',
                 'timestamp' => date('Y-m-d H:i:s', strtotime('-1 day')),
-                'message' => 'Bag dispatched from Surat Logistics Center.'
-            ],
-            [
-                'status' => 'Manifested / Picked Up',
-                'location' => 'DT Brand Surat Mill Depot',
-                'timestamp' => date('Y-m-d H:i:s', strtotime('-2 days')),
-                'message' => 'Order packaged and handed over to courier partner.'
-            ]
+                'message' => 'Freight container en-route via express corridor.'
+            ];
+        }
+        $events[] = [
+            'status' => 'Dispatched',
+            'location' => 'Surat Central Depot (395002)',
+            'timestamp' => date('Y-m-d H:i:s', strtotime('-2 days')),
+            'message' => 'Manifested and handed over to ' . $carrier . '.'
+        ];
+        $events[] = [
+            'status' => 'Booked & Packed',
+            'location' => 'DT Brand Mill Depot, Surat',
+            'timestamp' => date('Y-m-d H:i:s', strtotime('-2 days -3 hours')),
+            'message' => 'Order verified, quality checked, and security packed.'
         ];
 
         echo json_encode([
             'success' => true,
             'awb' => $awb,
-            'carrier' => 'Delhivery Express',
-            'current_status' => 'Delivered',
+            'carrier' => $carrier,
+            'current_status' => $currentStatus,
+            'destination' => $destination,
             'origin' => 'Surat, Gujarat',
-            'events' => $events
+            'events' => $events,
+            'order_id' => $orderRecord ? (int)$orderRecord['id'] : null,
+            'order_number' => $orderRecord ? ($orderRecord['order_number'] ?? null) : null
         ], JSON_PRETTY_PRINT);
         exit;
     }
