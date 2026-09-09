@@ -16,9 +16,11 @@ $channelStats = [];
 $totalOrders = 0;
 $totalRevenue = 0.0;
 $b2bRevenue = 0.0;
+$retailerRevenue = 0.0;
 $d2cRevenue = 0.0;
 $resellerRevenue = 0.0;
 $b2bCount = 0;
+$retailerCount = 0;
 $d2cCount = 0;
 $resellerCount = 0;
 
@@ -50,12 +52,20 @@ if ($liveDb) {
 
             if (in_array($chKey, ['wholesale', 'b2b', 'trade'], true)) {
                 $name = 'B2B Wholesale Portal';
-                $sub = 'Surat factory bales, paithani sets & half-set lots';
+                $sub = 'Surat factory bales, paithani sets & wholesale lots';
                 $color = '#8A681F';
                 $badgeBg = '#FAF5E8';
                 $badgeColor = '#8A681F';
                 $b2bRevenue += $rev;
                 $b2bCount += $cnt;
+            } elseif (in_array($chKey, ['retailer', 'retail_trade'], true)) {
+                $name = 'B2B Retailer Trade';
+                $sub = 'Verified retailer shopkeepers, catalog orders & full sets';
+                $color = '#B45309';
+                $badgeBg = '#FEF3C7';
+                $badgeColor = '#B45309';
+                $retailerRevenue += $rev;
+                $retailerCount += $cnt;
             } elseif (in_array($chKey, ['reseller', 'whatsapp', 'social'], true)) {
                 $name = 'Reseller Network & WhatsApp';
                 $sub = 'Boutique resellers, social catalogs & margin share';
@@ -187,10 +197,10 @@ $active_nav = "reports";
             <!-- 4-Card Sales KPI Ribbon -->
             <div class="dt-sales-kpi-grid">
                 <div class="dt-sales-kpi-card">
-                    <div class="dt-sales-kpi-label">B2B Wholesale Revenue</div>
-                    <div class="dt-sales-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($b2bRevenue) ?></div>
+                    <div class="dt-sales-kpi-label">B2B Trade &amp; Wholesale</div>
+                    <div class="dt-sales-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($b2bRevenue + $retailerRevenue) ?></div>
                     <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">
-                        <?= $totalRevenue > 0 ? round(($b2bRevenue / $totalRevenue) * 100, 1) : 0 ?>% of Total • <?= number_format($b2bCount) ?> Lots
+                        <?= $totalRevenue > 0 ? round((($b2bRevenue + $retailerRevenue) / $totalRevenue) * 100, 1) : 0 ?>% of Total • <?= number_format($b2bCount + $retailerCount) ?> Trade Orders
                     </div>
                 </div>
                 <div class="dt-sales-kpi-card">
