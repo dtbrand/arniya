@@ -98,6 +98,7 @@ FILES_TO_DEPLOY = [
     'admin/orders/export.php',
     'admin/customers/index.php',
     'admin/customers/view.php',
+    'admin/customers/edit.php',
     'admin/customers/components/customer-summary.php',
     'admin/customers/components/customer-stats.php',
     'admin/customers/components/customer-profile.php',

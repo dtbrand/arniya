@@ -91,6 +91,11 @@ if ($method === 'POST') {
             ]);
         }
 
+        $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
+        if ($addressId <= 0) {
+            $data['is_new'] = true;
+        }
+
         $res = Auth::saveAddress($customerId, $data);
         if (!$res['success']) {
             dt_addr_json(400, $res);

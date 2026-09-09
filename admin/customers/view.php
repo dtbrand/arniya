@@ -6,9 +6,11 @@
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/Auth.php';
 require_once __DIR__ . '/../../src/CustomerManager.php';
 
 use DTBrand\Database;
+use DTBrand\Auth;
 use DTBrand\CustomerManager;
 
 // Accept "42" or "CUST-42". This used to default to the string 'CUST-1042',
@@ -46,16 +48,8 @@ if ($dossierCustomer !== null) {
         }
 
         try {
-            $stmt = $pdo->prepare("
-                SELECT `id`, `recipient_name`, `phone`, `address_line1`, `address_line2`,
-                       `city`, `state`, `pincode`, `address_type`, `is_default`
-                FROM `addresses`
-                WHERE `customer_id` = ?
-                ORDER BY `is_default` DESC, `id` ASC
-            ");
-            $stmt->execute([$customer_id]);
-            $dossierAddresses = $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
-        } catch (\Exception $e) {
+            $dossierAddresses = Auth::getCustomerAddresses($customer_id);
+        } catch (\Throwable $e) {
             $dossierAddresses = [];
         }
     }

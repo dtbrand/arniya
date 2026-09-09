@@ -161,6 +161,11 @@
     };
 
     window.openAdminEditAddressModal = function (addr) {
+        if (typeof addr === 'string') {
+            try { addr = JSON.parse(addr); } catch { return; }
+        } else if (addr && typeof addr.getAttribute === 'function') {
+            try { addr = JSON.parse(addr.getAttribute('data-addr') || '{}'); } catch { return; }
+        }
         var modal = document.getElementById('dtAdminAddressModal');
         if (!modal || !addr) return;
         var el = function (id) { return document.getElementById(id); };
@@ -238,6 +243,7 @@
             body: JSON.stringify({
                 action: 'save',
                 id: addrId,
+                is_new: addrId <= 0 ? 1 : 0,
                 customer_id: customerId,
                 address_type: type,
                 recipient_name: recipient,
@@ -362,5 +368,17 @@
                 toast('Could not connect to server.', 'danger');
             });
     };
+
+    // Auto switch tab from URL hash or query param if present
+    document.addEventListener('DOMContentLoaded', function () {
+        var hash = (window.location.hash || '').replace('#', '');
+        var urlTab = new URLSearchParams(window.location.search).get('tab') || hash;
+        if (urlTab) {
+            var targetBtn = document.querySelector('.dt-cust-tab-btn[onclick*="\'' + urlTab + '\'"]');
+            if (targetBtn) {
+                window.switchCustomerTab(urlTab, targetBtn);
+            }
+        }
+    });
 
 })();

@@ -735,7 +735,7 @@ class Auth
                 }
 
                 // 2. If no specific ID, find existing row by type (unless explicitly adding new)
-                $isAddNew = !empty($data['is_new']) || !empty($data['add_new']);
+                $isAddNew = !empty($data['is_new']) || !empty($data['add_new']) || (array_key_exists('id', $data) && (int)$data['id'] === 0);
                 if (!$existing && !$isAddNew) {
                     if ($type === 'billing') {
                         $checkStmt = $pdo->prepare("
@@ -850,15 +850,14 @@ class Auth
                             $custParams[] = $phone;
                         }
                     }
-                }
-
-                if ($city !== '') {
-                    $custUpdates[] = "`city` = ?";
-                    $custParams[] = $city;
-                }
-                if ($state !== '') {
-                    $custUpdates[] = "`state` = ?";
-                    $custParams[] = $state;
+                    if ($city !== '') {
+                        $custUpdates[] = "`city` = ?";
+                        $custParams[] = $city;
+                    }
+                    if ($state !== '') {
+                        $custUpdates[] = "`state` = ?";
+                        $custParams[] = $state;
+                    }
                 }
 
                 if (!empty($custUpdates)) {

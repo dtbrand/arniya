@@ -25,7 +25,9 @@ if (isset($dossierCustomer) && is_array($dossierCustomer)) {
 
 $addrRows = [];
 $pdo = Database::getConnection();
-if ($addrCustId > 0 && $pdo !== null && !Database::isMockMode()) {
+if (!empty($dossierAddresses) && is_array($dossierAddresses)) {
+    $addrRows = $dossierAddresses;
+} elseif ($addrCustId > 0 && $pdo !== null && !Database::isMockMode()) {
     try {
         $addrRows = Auth::getCustomerAddresses($addrCustId);
     } catch (\Throwable $e) {
@@ -426,7 +428,7 @@ if ($addrCustId > 0 && $pdo !== null && !Database::isMockMode()) {
             </div>
 
             <div class="dt-addr-actions">
-                <button type="button" class="dt-addr-act-btn edit" onclick='openAdminEditAddressModal(<?php echo $cardJson; ?>)'>
+                <button type="button" class="dt-addr-act-btn edit" data-addr="<?php echo $cardJson; ?>" onclick="openAdminEditAddressModal(this)">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     <span>Edit</span>
                 </button>
