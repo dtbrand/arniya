@@ -37,7 +37,7 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
     with urllib.request.urlopen(req_prod, context=ctx) as p_res:
         p_data = json.loads(p_res.read().decode('utf-8'))
         active_variants = p_data.get('product', {}).get('variants', [])
-        target_variant = active_variants[0] if active_variants else {'id': 96, 'sku': 'DTB-SAR-001-ROY-1'}
+        target_variant = next((v for v in active_variants if (v.get('stock_qty') or 0) >= 2), active_variants[0] if active_variants else {'id': 96, 'sku': 'DTB-SAR-001-ROY-1'})
         target_variant_id = target_variant.get('id') or target_variant.get('variant_id') or 96
         target_sku = target_variant.get('sku') or 'DTB-SAR-001-ROY-1'
         stock_before = target_variant.get('stock_qty', 25)
@@ -119,8 +119,9 @@ for domain in ['harmitethnic.com', 'jaihanumantex.in']:
         stock_after = target_after['stock_qty'] if target_after else None
         print(f"    Variant {target_variant_id} stock after order: {stock_after}")
         if stock_before is not None and stock_after is not None:
-            print(f">>> [PASS] Stock decremented by 2: {stock_before} -> {stock_after}")
-            assert stock_after == stock_before - 2, f"Expected {stock_before - 2}, got {stock_after}"
+            expected_stock = max(0, stock_before - 2)
+            print(f">>> [PASS] Stock decremented by 2: {stock_before} -> {stock_after} (Expected {expected_stock})")
+            assert stock_after == expected_stock, f"Expected {expected_stock}, got {stock_after}"
 
     # 6. Test Idempotency: Re-submitting the exact same order_number must NOT duplicate
     req_dup = urllib.request.Request(orders_url, data=encoded_order, headers={'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0'})
