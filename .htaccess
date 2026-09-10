@@ -22,7 +22,7 @@ Options -Indexes -MultiViews
     RewriteBase /
 
     # Block access to internal protected directories
-    RewriteRule ^(config|database|src|app|storage|tests|scripts|vendor|bootstrap|docs|backups|\.git|\.agents|\.uix|\.vscode)/ - [F,L,NC]
+    RewriteRule ^(config|database|src|app|storage|tests|scripts|scratch|vendor|bootstrap|docs|backups|\.git|\.agents|\.uix|\.vscode)/ - [F,L,NC]
 
     # Block direct script execution in media upload directories
     RewriteRule ^assets/images/uploads/.*\.(php[0-9]?|phtml|phar|cgi|pl|sh)$ - [F,L,NC]

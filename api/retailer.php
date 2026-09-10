@@ -270,39 +270,38 @@ try {
 
     // ── 3B. SAVE ADDRESS BOOK (POST) ──
     if ($action === 'save_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
 
-        // If not authenticated in session, resolve via phone number
+        // If not authenticated in session, check phone and guest flow
         if ($userId <= 0 && !empty($data['phone'])) {
-            $foundCust = CustomerManager::getByPhone((string)$data['phone']);
+            $phoneClean = trim((string)$data['phone']);
+            $foundCust = CustomerManager::getByPhone($phoneClean);
             if ($foundCust && !empty($foundCust['id'])) {
-                $userId = (int)$foundCust['id'];
-                $_SESSION['user'] = $foundCust;
-                $_SESSION['user_type'] = $foundCust['type'] ?? 'retailer';
-            }
-        }
-
-        // If still 0, resolve to default retailer customer
-        if ($userId <= 0 && $pdo !== null) {
-            $cCheck = $pdo->query("SELECT id FROM customers WHERE type IN ('retailer', 'retail') ORDER BY id ASC LIMIT 1");
-            $defaultRetailer = $cCheck ? $cCheck->fetch(\PDO::FETCH_ASSOC) : null;
-            if ($defaultRetailer && !empty($defaultRetailer['id'])) {
-                $userId = (int)$defaultRetailer['id'];
-            }
-        }
-
-        // If still 0, auto-create retailer record
-        if ($userId <= 0) {
-            $createRes = CustomerManager::create([
-                'name' => !empty($data['company_name']) ? $data['company_name'] : 'Retailer Partner',
-                'phone' => !empty($data['phone']) ? $data['phone'] : '917046363528',
-                'type' => 'retailer',
-                'city' => !empty($data['city']) ? $data['city'] : 'Surat',
-                'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
-                'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
-            ]);
-            if (!empty($createRes['id'])) {
-                $userId = (int)$createRes['id'];
+                // If customer account already exists, do not overwrite without authentication
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'An account with this phone already exists. Please sign in to update addresses.'
+                ]);
+                exit;
+            } else {
+                // Auto-create new customer record for guest retailer
+                $createRes = CustomerManager::create([
+                    'name' => !empty($data['company_name']) ? $data['company_name'] : (!empty($data['recipient_name']) ? $data['recipient_name'] : 'Retailer Partner'),
+                    'phone' => $phoneClean,
+                    'type' => 'retailer',
+                    'city' => !empty($data['city']) ? $data['city'] : 'Surat',
+                    'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
+                    'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
+                ]);
+                if (!empty($createRes['id'])) {
+                    $userId = (int)$createRes['id'];
+                    $freshCust = CustomerManager::getById($userId);
+                    $_SESSION['user'] = $freshCust;
+                    $_SESSION['user_type'] = 'retailer';
+                }
             }
         }
 
@@ -333,8 +332,10 @@ try {
     }
 
     // ── 3B-1. SET DEFAULT SHIPPING DESTINATION (POST) ──
-    if ($action === 'set_default_shipping') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+    if ($action === 'set_default_shipping' || $action === 'set_default_address') {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -351,8 +352,10 @@ try {
     }
 
     // ── 3B-2. DELETE ADDRESS (POST) ──
-    if ($action === 'delete_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+    if ($action === 'delete_address' || $action === 'delete') {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -360,7 +363,23 @@ try {
             exit;
         }
         if ($pdo !== null) {
+            $cntStmt = $pdo->prepare("SELECT COUNT(*) FROM addresses WHERE customer_id = ?");
+            $cntStmt->execute([$userId]);
+            $total = (int)$cntStmt->fetchColumn();
+            if ($total <= 1) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Cannot delete the only saved address. At least one registered address is required.']);
+                exit;
+            }
+
             $pdo->prepare("DELETE FROM addresses WHERE id = ? AND customer_id = ? AND address_type != 'billing'")->execute([$addressId, $userId]);
+
+            $defCheck = $pdo->prepare("SELECT id FROM addresses WHERE customer_id = ? AND is_default = 1 AND address_type != 'billing' LIMIT 1");
+            $defCheck->execute([$userId]);
+            if (!$defCheck->fetchColumn()) {
+                $promoteStmt = $pdo->prepare("UPDATE addresses SET is_default = 1 WHERE customer_id = ? AND address_type != 'billing' ORDER BY id DESC LIMIT 1");
+                $promoteStmt->execute([$userId]);
+            }
         }
         $addresses = Auth::getCustomerAddresses($userId);
         echo json_encode(['success' => true, 'message' => 'Address deleted successfully!', 'addresses' => $addresses]);
@@ -369,8 +388,10 @@ try {
 
     // ── 3B-3. GET ADDRESSES (GET/POST) ──
     if ($action === 'get_addresses') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -384,7 +405,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view addresses']);
             exit;
         }
         $addresses = Auth::getCustomerAddresses($userId);
@@ -394,8 +415,10 @@ try {
 
     // ── 3C. GET FRESH PROFILE DATA (GET/POST) ──
     if ($action === 'get_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -409,7 +432,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view profile']);
             exit;
         }
 
@@ -484,21 +507,19 @@ try {
         $cust = null;
 
         if (!empty($phone) && $pdo !== null && !Database::isMockMode()) {
-            $stmt = $pdo->prepare("SELECT id, name, phone, email, type, city, state, gstin, kyc_status, tier FROM customers WHERE phone = ? LIMIT 1");
+            $stmt = $pdo->prepare("SELECT id, kyc_status, status, tier FROM customers WHERE phone = ? LIMIT 1");
             $stmt->execute([$phone]);
             $cust = $stmt->fetch(\PDO::FETCH_ASSOC);
         }
 
         echo json_encode([
             'success' => true,
-            'customer' => $cust,
             'kyc_status' => $cust['kyc_status'] ?? 'unverified',
-            'is_verified' => (($cust['kyc_status'] ?? '') === 'verified' || ($cust['status'] ?? '') === 'active')
+            'is_verified' => (($cust['kyc_status'] ?? '') === 'verified' || ($cust['status'] ?? '') === 'active'),
+            'tier' => $cust['tier'] ?? null
         ]);
         exit;
     }
-
-
 
     // ── 7. EXPORT B2B LIVE CATALOG (JSON / CSV) ──
     if ($action === 'export_catalog') {
@@ -526,9 +547,11 @@ try {
             header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename="DT_Brands_B2B_Catalog_' . date('Ymd') . '.csv"');
             $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF");
             fputcsv($out, ['ID', 'SKU', 'Product Name', 'Category', 'Fabric', 'Retail Price (INR)', 'Wholesale Price (INR)', 'Reseller Price (INR)', 'MOQ', 'Stock Qty']);
             foreach ($catalog as $row) {
-                fputcsv($out, [
+                $sanitized = [];
+                foreach ([
                     $row['id'],
                     $row['sku'],
                     $row['name'],
@@ -539,7 +562,14 @@ try {
                     $row['reseller_price'],
                     $row['moq'],
                     $row['stock_qty']
-                ]);
+                ] as $val) {
+                    $sVal = (string)$val;
+                    if (isset($sVal[0]) && in_array($sVal[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+                        $sVal = "'" . $sVal;
+                    }
+                    $sanitized[] = $sVal;
+                }
+                fputcsv($out, $sanitized);
             }
             fclose($out);
             exit;

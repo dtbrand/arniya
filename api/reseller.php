@@ -341,39 +341,38 @@ try {
 
     // ── 3C. SAVE ADDRESS BOOK (POST) ──
     if ($action === 'save_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
 
-        // If not authenticated in session, resolve via phone number
+        // If not authenticated in session, check phone and guest flow
         if ($userId <= 0 && !empty($data['phone'])) {
-            $foundCust = CustomerManager::getByPhone((string)$data['phone']);
+            $phoneClean = trim((string)$data['phone']);
+            $foundCust = CustomerManager::getByPhone($phoneClean);
             if ($foundCust && !empty($foundCust['id'])) {
-                $userId = (int)$foundCust['id'];
-                $_SESSION['user'] = $foundCust;
-                $_SESSION['user_type'] = $foundCust['type'] ?? 'reseller';
-            }
-        }
-
-        // If still 0, resolve to default reseller customer
-        if ($userId <= 0 && $pdo !== null) {
-            $cCheck = $pdo->query("SELECT id FROM customers WHERE type = 'reseller' ORDER BY id ASC LIMIT 1");
-            $defaultReseller = $cCheck ? $cCheck->fetch(\PDO::FETCH_ASSOC) : null;
-            if ($defaultReseller && !empty($defaultReseller['id'])) {
-                $userId = (int)$defaultReseller['id'];
-            }
-        }
-
-        // If still 0, auto-create reseller record
-        if ($userId <= 0) {
-            $createRes = CustomerManager::create([
-                'name' => !empty($data['company_name']) ? $data['company_name'] : 'Reseller Partner',
-                'phone' => !empty($data['phone']) ? $data['phone'] : '917046363528',
-                'type' => 'reseller',
-                'city' => !empty($data['city']) ? $data['city'] : 'Surat',
-                'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
-                'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
-            ]);
-            if (!empty($createRes['id'])) {
-                $userId = (int)$createRes['id'];
+                // If customer account already exists, do not overwrite without authentication
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'An account with this phone already exists. Please sign in to update addresses.'
+                ]);
+                exit;
+            } else {
+                // Auto-create new customer record for guest reseller
+                $createRes = CustomerManager::create([
+                    'name' => !empty($data['company_name']) ? $data['company_name'] : (!empty($data['recipient_name']) ? $data['recipient_name'] : 'Reseller Partner'),
+                    'phone' => $phoneClean,
+                    'type' => 'reseller',
+                    'city' => !empty($data['city']) ? $data['city'] : 'Surat',
+                    'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
+                    'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
+                ]);
+                if (!empty($createRes['id'])) {
+                    $userId = (int)$createRes['id'];
+                    $freshCust = CustomerManager::getById($userId);
+                    $_SESSION['user'] = $freshCust;
+                    $_SESSION['user_type'] = 'reseller';
+                }
             }
         }
 
@@ -405,7 +404,9 @@ try {
 
     // ── 3C-1. SET DEFAULT SHIPPING DESTINATION (POST) ──
     if ($action === 'set_default_shipping' || $action === 'set_default_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -423,7 +424,9 @@ try {
 
     // ── 3C-2. DELETE ADDRESS (POST) ──
     if ($action === 'delete_address' || $action === 'delete') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -456,8 +459,10 @@ try {
 
     // ── 3C-3. GET ADDRESSES (GET/POST) ──
     if ($action === 'get_addresses') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -471,7 +476,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view addresses']);
             exit;
         }
         $addresses = Auth::getCustomerAddresses($userId);
@@ -481,8 +486,10 @@ try {
 
     // ── 3D. GET FRESH PROFILE DATA (GET/POST) ──
     if ($action === 'get_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -496,7 +503,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view profile']);
             exit;
         }
 

@@ -89,6 +89,63 @@ $res = testApiEndpoint(__DIR__ . '/../api/orders.php', 'GET', ['action' => 'my_o
 assert($res !== null && $res['success'] === false, "orders my_orders must fail for unauthenticated phone lookup");
 echo "✅ PASS: Unauthenticated orders.php my_orders with phone blocked.\n";
 
+// 9. Test unauthenticated get_profile with injected phone across all 3 portals
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'get_profile', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "retailer get_profile must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated retailer get_profile with phone blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'GET', ['action' => 'get_profile', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "wholesale get_profile must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated wholesale get_profile with phone blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'get_profile', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "reseller get_profile must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated reseller get_profile with phone blocked.\n";
+
+// 10. Test unauthenticated get_addresses with injected phone across all 3 portals
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'get_addresses', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "retailer get_addresses must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated retailer get_addresses with phone blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'GET', ['action' => 'get_addresses', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "wholesale get_addresses must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated wholesale get_addresses with phone blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'get_addresses', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "reseller get_addresses must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated reseller get_addresses with phone blocked.\n";
+
+// 11. Test unauthenticated set_default_shipping with arbitrary user_id tampering
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'POST', ['action' => 'set_default_shipping', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "retailer set_default_shipping must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated retailer set_default_shipping blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'POST', ['action' => 'set_default_shipping', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "wholesale set_default_shipping must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated wholesale set_default_shipping blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'POST', ['action' => 'set_default_shipping', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "reseller set_default_shipping must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated reseller set_default_shipping blocked.\n";
+
+// 12. Test unauthenticated delete_address with arbitrary user_id tampering
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'POST', ['action' => 'delete_address', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "retailer delete_address must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated retailer delete_address blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'POST', ['action' => 'delete_address', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "wholesale delete_address must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated wholesale delete_address blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'POST', ['action' => 'delete_address', 'user_id' => 9999, 'address_id' => 1]);
+assert($res !== null && $res['success'] === false, "reseller delete_address must fail for unauthenticated user");
+echo "✅ PASS: Unauthenticated reseller delete_address blocked.\n";
+
+// 13. Test retailer check_status returns only public verification status (no private PII dump)
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'check_status', 'phone' => '917046363528']);
+assert($res !== null && $res['success'] === true && !isset($res['customer']), "retailer check_status must not leak customer record");
+echo "✅ PASS: Retailer check_status does not leak full customer record.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
-echo "100% PASS: All B2B & Orders IDOR and unauthenticated attacks blocked!\n";
+echo "100% PASS: All B2B & Orders IDOR, PII leaks, and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";

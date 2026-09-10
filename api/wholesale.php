@@ -310,7 +310,9 @@ try {
 
     // ── 3B. UPDATE GST & TAX CONFIGURATION (POST) ──
     if ($action === 'update_gst' || $action === 'save_tax_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in to update tax profile']);
@@ -354,39 +356,38 @@ try {
 
     // ── 3C. SAVE ADDRESS BOOK (BILLING & DISPATCH) (POST) ──
     if ($action === 'save_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         
-        // If not authenticated in session, resolve via phone number
+        // If not authenticated in session, check phone and guest flow
         if ($userId <= 0 && !empty($data['phone'])) {
-            $foundCust = CustomerManager::getByPhone((string)$data['phone']);
+            $phoneClean = trim((string)$data['phone']);
+            $foundCust = CustomerManager::getByPhone($phoneClean);
             if ($foundCust && !empty($foundCust['id'])) {
-                $userId = (int)$foundCust['id'];
-                $_SESSION['user'] = $foundCust;
-                $_SESSION['user_type'] = $foundCust['type'] ?? 'wholesale';
-            }
-        }
-
-        // If still 0, resolve to the default wholesale customer
-        if ($userId <= 0 && $pdo !== null) {
-            $cCheck = $pdo->query("SELECT id FROM customers WHERE type = 'wholesale' ORDER BY id ASC LIMIT 1");
-            $defaultWholesaler = $cCheck ? $cCheck->fetch(\PDO::FETCH_ASSOC) : null;
-            if ($defaultWholesaler && !empty($defaultWholesaler['id'])) {
-                $userId = (int)$defaultWholesaler['id'];
-            }
-        }
-
-        // If still 0, auto-register customer so data is never dropped
-        if ($userId <= 0) {
-            $createRes = CustomerManager::create([
-                'name' => !empty($data['company_name']) ? $data['company_name'] : 'Wholesale Partner',
-                'phone' => !empty($data['phone']) ? $data['phone'] : '917046363528',
-                'type' => 'wholesale',
-                'city' => !empty($data['city']) ? $data['city'] : 'Surat',
-                'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
-                'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
-            ]);
-            if (!empty($createRes['id'])) {
-                $userId = (int)$createRes['id'];
+                // If customer account already exists, do not overwrite without authentication
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'An account with this phone already exists. Please sign in to update addresses.'
+                ]);
+                exit;
+            } else {
+                // Auto-create new customer record for guest wholesaler
+                $createRes = CustomerManager::create([
+                    'name' => !empty($data['company_name']) ? $data['company_name'] : (!empty($data['recipient_name']) ? $data['recipient_name'] : 'Wholesale Partner'),
+                    'phone' => $phoneClean,
+                    'type' => 'wholesale',
+                    'city' => !empty($data['city']) ? $data['city'] : 'Surat',
+                    'state' => !empty($data['state']) ? $data['state'] : 'Gujarat',
+                    'gstin' => !empty($data['gstin']) ? $data['gstin'] : ''
+                ]);
+                if (!empty($createRes['id'])) {
+                    $userId = (int)$createRes['id'];
+                    $freshCust = CustomerManager::getById($userId);
+                    $_SESSION['user'] = $freshCust;
+                    $_SESSION['user_type'] = 'wholesale';
+                }
             }
         }
 
@@ -418,7 +419,9 @@ try {
 
     // ── 3C-1. SET DEFAULT SHIPPING DESTINATION (POST) ──
     if ($action === 'set_default_shipping' || $action === 'set_default_address') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -436,7 +439,9 @@ try {
 
     // ── 3C-2. DELETE ADDRESS (POST) ──
     if ($action === 'delete_address' || $action === 'delete') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($data['customer_id'] ?? $authUserId)) : $authUserId;
         $addressId = (int)($data['id'] ?? ($data['address_id'] ?? 0));
         if ($userId <= 0 || $addressId <= 0) {
             http_response_code(400);
@@ -469,8 +474,10 @@ try {
 
     // ── 3C-3. GET ADDRESSES (GET/POST) ──
     if ($action === 'get_addresses') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -484,7 +491,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view addresses']);
             exit;
         }
         $addresses = Auth::getCustomerAddresses($userId);
@@ -494,8 +501,10 @@ try {
 
     // ── 3D. GET FRESH PROFILE DATA (GET/POST) ──
     if ($action === 'get_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -509,7 +518,7 @@ try {
         }
         if ($userId <= 0) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Please sign in']);
+            echo json_encode(['success' => false, 'error' => 'Please sign in to view profile']);
             exit;
         }
 
@@ -552,9 +561,11 @@ try {
             header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename="DT_Brands_Wholesale_Rate_Sheet_' . date('Ymd') . '.csv"');
             $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF");
             fputcsv($out, ['ID', 'SKU', 'Product Name', 'Category', 'Fabric', 'Wholesale Rate (INR/pc)', 'Half Set MOQ', 'Full Set MOQ', 'Master Bale MOQ', 'Stock Qty']);
             foreach ($catalog as $row) {
-                fputcsv($out, [
+                $sanitized = [];
+                foreach ([
                     $row['id'],
                     $row['sku'],
                     $row['name'],
@@ -565,7 +576,14 @@ try {
                     $row['full_set_moq'],
                     $row['master_bale_moq'],
                     $row['stock_qty']
-                ]);
+                ] as $val) {
+                    $sVal = (string)$val;
+                    if (isset($sVal[0]) && in_array($sVal[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+                        $sVal = "'" . $sVal;
+                    }
+                    $sanitized[] = $sVal;
+                }
+                fputcsv($out, $sanitized);
             }
             fclose($out);
             exit;
