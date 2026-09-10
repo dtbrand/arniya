@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * export.php — Order Export Studio & Real Data Exporter
@@ -75,16 +75,28 @@ if (isset($_GET['download']) && $_GET['download'] === '1') {
     $format = isset($_GET['format']) ? strtolower(trim($_GET['format'])) : 'csv';
     $filename_base = "DT_Brands_Orders_Export_" . date('Y-m-d');
 
+    $sanitizeCsv = static function ($val) {
+        $str = (string)$val;
+        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'" . $str;
+        }
+        return $str;
+    };
+
     if ($format === 'csv') {
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=' . $filename_base . '.csv');
         $out = fopen('php://output', 'w');
+        fputs($out, "\xEF\xBB\xBF");
         fputcsv($out, ['Order ID', 'Date & Time', 'Customer Name', 'Firm Name', 'Phone', 'City', 'State', 'Shipping Address', 'SKU', 'Items Summary', 'Total Qty', 'Taxable Valuation (INR)', 'CGST 2.5% (INR)', 'SGST 2.5% (INR)', 'Grand Total (INR)', 'Payment Mode', 'Payment Status', 'Carrier', 'Tracking No', 'Status', 'Channel']);
         foreach ($export_orders as $o) {
             fputcsv($out, [
-                $o['id'], $o['date'], $o['customer'], $o['firm'], $o['phone'], $o['city'], $o['state'], $o['shipping_address'],
-                $o['sku'], $o['items'], $o['qty'], number_format($o['taxable_amount'], 2, '.', ''), number_format($o['cgst'], 2, '.', ''), number_format($o['sgst'], 2, '.', ''),
-                number_format($o['total_amount'], 2, '.', ''), $o['payment_mode'], $o['payment_status'], $o['carrier'], $o['tracking'], $o['status'], $o['channel']
+                $sanitizeCsv($o['id']), $sanitizeCsv($o['date']), $sanitizeCsv($o['customer']), $sanitizeCsv($o['firm']),
+                $sanitizeCsv($o['phone']), $sanitizeCsv($o['city']), $sanitizeCsv($o['state']), $sanitizeCsv($o['shipping_address']),
+                $sanitizeCsv($o['sku']), $sanitizeCsv($o['items']), $o['qty'], number_format($o['taxable_amount'], 2, '.', ''),
+                number_format($o['cgst'], 2, '.', ''), number_format($o['sgst'], 2, '.', ''), number_format($o['total_amount'], 2, '.', ''),
+                $sanitizeCsv($o['payment_mode']), $sanitizeCsv($o['payment_status']), $sanitizeCsv($o['carrier']), $sanitizeCsv($o['tracking']),
+                $sanitizeCsv($o['status']), $sanitizeCsv($o['channel'])
             ]);
         }
         fclose($out);
@@ -357,11 +369,19 @@ function downloadCSVSpreadsheet(dataset) {
     csv += "DT BRAND'S & JAI HANUMAN TEX — MASTER WHOLESALE ORDERS MANIFEST\r\n";
     csv += "Export Date: " + new Date().toLocaleDateString('en-GB') + " • Surat Central Depot\r\n\r\n";
     
+    const sanitizeCsvCell = (v) => {
+        let s = String(v ?? '');
+        if (s.length > 0 && ['=', '+', '-', '@', '\t', '\r'].includes(s[0])) {
+            s = "'" + s;
+        }
+        return `"${s.replace(/"/g, '""')}"`;
+    };
+
     // Headers
     csv += "Order ID,Date & Time,Customer Name,Firm Name,Phone Number,City,State,Shipping Address,SKU,Items Summary,Qty (pcs),Taxable Valuation (INR),CGST 2.5% (INR),SGST 2.5% (INR),Grand Total (INR),Payment Mode,Payment Status,Carrier,Tracking No,Fulfillment Status,Channel\r\n";
     
     data.forEach(o => {
-        csv += `"${o.id}","${o.date}","${o.customer}","${o.firm}","${o.phone}","${o.city}","${o.state}","${o.shipping_address}","${o.sku}","${o.items}",${o.qty},${o.taxable_amount.toFixed(2)},${o.cgst.toFixed(2)},${o.sgst.toFixed(2)},${o.total_amount.toFixed(2)},"${o.payment_mode}","${o.payment_status}","${o.carrier}","${o.tracking}","${o.status}","${o.channel}"\r\n`;
+        csv += `${sanitizeCsvCell(o.id)},${sanitizeCsvCell(o.date)},${sanitizeCsvCell(o.customer)},${sanitizeCsvCell(o.firm)},${sanitizeCsvCell(o.phone)},${sanitizeCsvCell(o.city)},${sanitizeCsvCell(o.state)},${sanitizeCsvCell(o.shipping_address)},${sanitizeCsvCell(o.sku)},${sanitizeCsvCell(o.items)},${o.qty},${Number(o.taxable_amount).toFixed(2)},${Number(o.cgst).toFixed(2)},${Number(o.sgst).toFixed(2)},${Number(o.total_amount).toFixed(2)},${sanitizeCsvCell(o.payment_mode)},${sanitizeCsvCell(o.payment_status)},${sanitizeCsvCell(o.carrier)},${sanitizeCsvCell(o.tracking)},${sanitizeCsvCell(o.status)},${sanitizeCsvCell(o.channel)}\r\n`;
     });
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
