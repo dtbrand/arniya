@@ -84,31 +84,44 @@ urls = [
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')
 all_ok = True
 for u, expected_code, check_type in urls:
-    try:
-        req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-        with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
-            content = resp.read().decode('utf-8', errors='ignore')
-            status = resp.status
-            if check_type == 'json':
-                data = json.loads(content)
-                is_success = data.get('success', False)
-                print(f"[{status}] {u} -> success: {is_success}, keys: {list(data.keys())[:3]}")
-                if not is_success:
-                    all_ok = False
-            elif check_type == 'redirect_ok':
-                final_url = resp.geturl()
-                has_error = 'Fatal error' in content or 'Parse error' in content
-                print(f"[{status}] {u} -> Final: {final_url} (Error: {has_error})")
-                if has_error or status != 200:
-                    all_ok = False
-            else:
-                has_error = 'Fatal error' in content or 'Parse error' in content
-                print(f"[{status}] {u} -> Error: {has_error}, HTML length: {len(content)} bytes")
-                if has_error or status != 200:
-                    all_ok = False
-    except Exception as e:
-        print(f"[FAIL] {u}: {e}")
-        all_ok = False
+    success = False
+    for attempt in range(2):
+        try:
+            req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+            with urllib.request.urlopen(req, context=ctx, timeout=25) as resp:
+                content = resp.read().decode('utf-8', errors='ignore')
+                status = resp.status
+                if check_type == 'json':
+                    data = json.loads(content)
+                    is_success = data.get('success', False)
+                    print(f"[{status}] {u} -> success: {is_success}, keys: {list(data.keys())[:3]}")
+                    if is_success:
+                        success = True
+                    else:
+                        all_ok = False
+                elif check_type == 'redirect_ok':
+                    final_url = resp.geturl()
+                    has_error = 'Fatal error' in content or 'Parse error' in content
+                    print(f"[{status}] {u} -> Final: {final_url} (Error: {has_error})")
+                    if not has_error and status == 200:
+                        success = True
+                    else:
+                        all_ok = False
+                else:
+                    has_error = 'Fatal error' in content or 'Parse error' in content
+                    print(f"[{status}] {u} -> Error: {has_error}, HTML length: {len(content)} bytes")
+                    if not has_error and status == 200:
+                        success = True
+                    else:
+                        all_ok = False
+                break
+        except Exception as e:
+            if attempt == 0:
+                import time
+                time.sleep(1)
+                continue
+            print(f"[FAIL] {u}: {e}")
+            all_ok = False
 
 if all_ok:
     print('\n*** ALL PRODUCTION ENDPOINTS VERIFIED AND RESPONDING 200 OK! ***')
