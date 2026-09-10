@@ -120,6 +120,7 @@ FILES_TO_DEPLOY = [
     'database/migrations/2026_09_11_000001_add_full_price_matrix_columns.sql',
     'install.php',
     'includes/bootstrap.php',
+    'includes/header.php',
     'db_reset_migrations.php',
 ]
 

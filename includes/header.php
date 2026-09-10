@@ -120,7 +120,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
                         <span>Sign In / Register</span>
                     </a>
                     <div class="dt-drop-divider" id="dtDropDivider" style="display:none;"></div>
-                    <a href="javascript:void(0)" class="dt-drop-item" id="dtDropLogout" style="display:none; color:#DC2626;" onclick="localStorage.removeItem('dtbrands_user'); window.location.reload();">
+                    <a href="/logout.php" class="dt-drop-item" id="dtDropLogout" style="display:none; color:#DC2626;" onclick="try{localStorage.removeItem('dtbrands_user');localStorage.removeItem('dt_user');}catch(e){}">
                         <svg viewBox="0 0 24 24" style="stroke:#DC2626;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                         <span>Log Out</span>
                     </a>
