@@ -167,6 +167,32 @@ try {
             exit;
         }
 
+        // Security check: Must be admin OR order owner OR have provided matching phone
+        $isAdmin = dt_api_is_admin();
+        if (!$isAdmin) {
+            $authUserId = (int)($currentUser['id'] ?? 0);
+            $authPhone = (string)($currentUser['phone'] ?? '');
+            $inputPhone = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
+            $phoneToVerify = !empty($authPhone) ? $authPhone : $inputPhone;
+
+            $digits = static function ($v) {
+                $d = preg_replace('/\D+/', '', (string)$v);
+                return strlen($d) > 10 ? substr($d, -10) : $d;
+            };
+
+            $orderCustId = (int)($order['customer_id'] ?? 0);
+            $orderPhone = (string)($order['customer_phone'] ?? '');
+
+            $isOwner = ($authUserId > 0 && $orderCustId === $authUserId)
+                || (!empty($phoneToVerify) && !empty($orderPhone) && $digits($orderPhone) === $digits($phoneToVerify));
+
+            if (!$isOwner) {
+                http_response_code(403);
+                echo json_encode(['success' => false, 'error' => 'Access denied. Order details are restricted to the verified order owner.']);
+                exit;
+            }
+        }
+
         echo json_encode([
             'success' => true,
             'order' => $order

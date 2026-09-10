@@ -146,6 +146,19 @@ $res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'ch
 assert($res !== null && $res['success'] === true && !isset($res['customer']), "retailer check_status must not leak customer record");
 echo "✅ PASS: Retailer check_status does not leak full customer record.\n";
 
+// 14. Test unauthenticated get_order_details with arbitrary order_id tampering
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'get_order_details', 'order_id' => '1']);
+assert($res !== null && $res['success'] === false, "retailer get_order_details must fail for unauthenticated user without matching phone");
+echo "✅ PASS: Unauthenticated retailer get_order_details blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'GET', ['action' => 'get_order_details', 'order_id' => '1']);
+assert($res !== null && $res['success'] === false, "wholesale get_order_details must fail for unauthenticated user without matching phone");
+echo "✅ PASS: Unauthenticated wholesale get_order_details blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'get_order_details', 'order_id' => '1']);
+assert($res !== null && $res['success'] === false, "reseller get_order_details must fail for unauthenticated user without matching phone");
+echo "✅ PASS: Unauthenticated reseller get_order_details blocked.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
 echo "100% PASS: All B2B & Orders IDOR, PII leaks, and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";
