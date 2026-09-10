@@ -205,7 +205,9 @@ try {
             exit;
         }
 
-        $unitWholesalePrice = (float)($product['wholesale_price'] ?? ($product['effective_wholesale_price'] ?? 0));
+        $unitWholesalePrice = ($lotType === 'full_set' && !empty($product['full_set_wholesale_price']) && (float)$product['full_set_wholesale_price'] > 0)
+            ? (float)$product['full_set_wholesale_price']
+            : (float)($product['wholesale_price'] ?? ($product['effective_wholesale_price'] ?? 0));
         if ($unitWholesalePrice <= 0) {
             echo json_encode([
                 'success' => false,
