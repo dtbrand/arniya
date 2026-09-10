@@ -4,6 +4,7 @@ import ftplib
 import time
 
 FILES_TO_DEPLOY = [
+    '.htaccess',
     'src/Auth.php',
     'src/CustomerManager.php',
     'src/OrderManager.php',

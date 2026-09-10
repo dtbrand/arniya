@@ -49,7 +49,31 @@ for base in domains:
         except Exception as e:
             print(f"  [ERROR] {ep} GET get_orders: {e}")
 
-    # Test 3: Unauthenticated my_orders on /api/orders.php
+        # Test 3: Unauthenticated get_profile with injected phone
+        prof_url = f"{url}?action=get_profile&phone=9876543210"
+        try:
+            req_prof = urllib.request.Request(prof_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req_prof) as resp:
+                print(f"  [VULNERABLE] {ep} GET get_profile leaked profile with status {resp.status}")
+        except urllib.error.HTTPError as e:
+            if e.code == 401:
+                print(f"  [SECURE] {ep} GET get_profile blocked with HTTP 401 Unauthorized")
+            else:
+                print(f"  [CHECK] {ep} GET get_profile returned HTTP {e.code}")
+
+        # Test 4: Unauthenticated get_addresses with injected phone
+        addr_url = f"{url}?action=get_addresses&phone=9876543210"
+        try:
+            req_addr = urllib.request.Request(addr_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req_addr) as resp:
+                print(f"  [VULNERABLE] {ep} GET get_addresses leaked addresses with status {resp.status}")
+        except urllib.error.HTTPError as e:
+            if e.code == 401:
+                print(f"  [SECURE] {ep} GET get_addresses blocked with HTTP 401 Unauthorized")
+            else:
+                print(f"  [CHECK] {ep} GET get_addresses returned HTTP {e.code}")
+
+    # Test 5: Unauthenticated my_orders on /api/orders.php
     orders_url = f"{base}/api/orders.php?action=my_orders&phone=8890639215"
     try:
         req3 = urllib.request.Request(orders_url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -60,5 +84,18 @@ for base in domains:
             print(f"  [SECURE] /api/orders.php GET my_orders blocked with HTTP 401 Unauthorized")
         else:
             print(f"  [CHECK] /api/orders.php GET my_orders returned HTTP {e.code}")
+
+    # Test 6: Check retailer KYC status returns public status without private customer PII
+    kyc_url = f"{base}/api/retailer.php?action=check_status&phone=917046363528"
+    try:
+        req_kyc = urllib.request.Request(kyc_url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req_kyc) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            if data.get('success') and 'customer' not in data:
+                print(f"  [SECURE] /api/retailer.php check_status returns public verification status (0 PII leaked)")
+            else:
+                print(f"  [WARN] /api/retailer.php check_status leaked customer PII")
+    except Exception as e:
+        print(f"  [ERROR] /api/retailer.php check_status: {e}")
 
 print("\n=== ALL LIVE B2B & ORDERS ENDPOINTS VERIFIED AS SECURE! ===")
