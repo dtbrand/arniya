@@ -39,7 +39,9 @@ try {
 
     // ── 1. GET DASHBOARD & USER DATA (GET/POST) ──
     if ($action === 'get_dashboard') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
         $cust = null;
         $orders = [];
         $kpis = [
@@ -51,7 +53,7 @@ try {
             'outstanding_balance' => 0.0
         ];
 
-        if ($userId <= 0 && $pdo !== null && !Database::isMockMode()) {
+        if ($isAdmin && $userId <= 0 && $pdo !== null && !Database::isMockMode()) {
             $phoneInput = trim((string)($data['phone'] ?? ($_GET['phone'] ?? '')));
             if (!empty($phoneInput)) {
                 $digits = preg_replace('/\D+/', '', $phoneInput);
@@ -110,8 +112,20 @@ try {
 
     // ── 1B. GET RETAILER ORDERS (GET/POST) ──
     if ($action === 'get_orders') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? ($_GET['user_id'] ?? 0)));
-        $userPhone = (string)($currentUser['phone'] ?? ($data['phone'] ?? ($_GET['phone'] ?? '')));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($_GET['user_id'] ?? $authUserId)) : $authUserId;
+        $userPhone = $isAdmin ? (string)($data['phone'] ?? ($_GET['phone'] ?? ($currentUser['phone'] ?? ''))) : (string)($currentUser['phone'] ?? '');
+
+        if (!$isAdmin && $userId <= 0 && empty($userPhone)) {
+            echo json_encode([
+                'success' => true,
+                'count' => 0,
+                'orders' => []
+            ]);
+            exit;
+        }
+
         $orders = OrderManager::getByCustomerOrPhone($userId, $userPhone);
         echo json_encode([
             'success' => true,
@@ -146,7 +160,9 @@ try {
 
     // ── 2. UPDATE PROFILE & PASSWORD (POST) ──
     if ($action === 'update_profile') {
-        $userId = (int)($currentUser['id'] ?? ($data['user_id'] ?? 0));
+        $isAdmin = dt_api_is_admin();
+        $authUserId = (int)($currentUser['id'] ?? 0);
+        $userId = $isAdmin ? (int)($data['user_id'] ?? ($authUserId ?: 0)) : $authUserId;
         if ($userId <= 0) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Please sign in to update profile']);

@@ -55,8 +55,10 @@ define('DT_ADMIN_GUARD_RAN', true);
             return;
         }
 
-        $loggedIn = !empty($_SESSION['admin_logged_in'])
-            && $_SESSION['admin_logged_in'] === true;
+        $loggedIn = (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true)
+            || (!empty($_SESSION['admin_user']['id']))
+            || (!empty($_SESSION['user']['role']) && in_array(strtolower((string)$_SESSION['user']['role']), ['admin', 'super_admin'], true))
+            || (!empty($_SESSION['admin']) && is_array($_SESSION['admin']));
 
         if ($loggedIn) {
             return;

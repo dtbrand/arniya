@@ -54,6 +54,7 @@ FILES_TO_DEPLOY = [
     'admin/products/assets/js/variants.js',
     'tests/test_unit_pricing.php',
     'tests/test_guard_security.php',
+    'tests/test_b2b_api_security.php',
     'test_master_spec.php',
     'admin/orders/index.php',
     'admin/orders/pending.php',
