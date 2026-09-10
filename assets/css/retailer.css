@@ -5946,3 +5946,36 @@ padding-bottom: 4px !important;
     border-color: #8A681F !important;
     transform: translateY(-1px) !important;
 }
+
+/* ════ DT Brand's Master Gold & Platinum 360° Running Focus Line ════ */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to { --dt-border-angle: 360deg; }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35); }
+    100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6); }
+}
+
+.ws-search-input:focus,
+.ws-filter-select:focus,
+.ws-input:focus,
+.ws-modal-input:focus,
+.ws-lot-qty-input:focus,
+.ret-search-input:focus,
+.ret-filter-select:focus,
+.ret-input:focus,
+.ret-modal-input:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}

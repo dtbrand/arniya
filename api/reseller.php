@@ -210,6 +210,9 @@ try {
         $finalSellingPrice = $resellerBase + $marginAmount;
         $userName = $currentUser['name'] ?? 'Reseller Partner';
 
+        $siteHost = !empty($_SERVER['HTTP_HOST']) ? (($_SERVER['HTTPS'] ?? 'off') !== 'off' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] : (getenv('APP_URL') ?: 'https://jaihanumantex.in');
+        $shareUrl = rtrim($siteHost, '/') . "/product.php?id={$product['id']}&ref=reseller_" . ($currentUser['id'] ?? 'vip');
+
         echo json_encode([
             'success' => true,
             'product' => [
@@ -219,7 +222,7 @@ try {
                 'margin_percent' => $marginPercent,
                 'reseller_profit' => $marginAmount,
                 'final_customer_price' => $finalSellingPrice,
-                'smart_share_url' => "https://jaihanumantex.in/product.php?id={$product['id']}&ref=reseller_" . ($currentUser['id'] ?? 'vip'),
+                'smart_share_url' => $shareUrl,
                 'whatsapp_share_text' => "🌟 *Exclusive Pure Silk Handloom Collection* 🌟\n\n🛍️ *Product:* " . ($product['name'] ?? 'Silk Saree') . "\n✨ *Fabric:* " . ($product['fabric'] ?? 'Pure Silk') . "\n💰 *Special Boutique Price:* ₹" . number_format($finalSellingPrice) . " / pc (Free Delivery)\n\n📦 *Order Directly via WhatsApp:*\nhttps://wa.me/917046363528?text=" . urlencode("Hello, I want to order " . ($product['name'] ?? 'product') . " at Rs " . $finalSellingPrice . " via Reseller Partner.") . "\n\n— {$userName} (DT Brand's Verified Partner)"
             ]
         ]);
