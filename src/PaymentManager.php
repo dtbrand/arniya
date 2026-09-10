@@ -479,8 +479,8 @@ class PaymentManager
                 if (!empty($items)) {
                     $col = 'stock_qty';
                     try {
-                        if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
-                            $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(\PDO::FETCH_ASSOC);
+                        if ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                            $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(PDO::FETCH_ASSOC);
                             $colNames = array_column($pInfo, 'name');
                             if (in_array('stock_qty', $colNames, true)) {
                                 $col = 'stock_qty';
@@ -512,7 +512,7 @@ class PaymentManager
 
                     // Mark as stock reserved in notes to prevent any future decrement
                     try {
-                        $isSqlite = ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite');
+                        $isSqlite = ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite');
                         $updNoteSql = $isSqlite
                             ? "UPDATE `orders` SET `notes` = COALESCE(`notes`, '') || ' [stock_reserved]' WHERE `order_number` = :ord"
                             : "UPDATE `orders` SET `notes` = CASE WHEN `notes` IS NULL OR `notes` = '' THEN '[stock_reserved]' ELSE CONCAT(`notes`, ' [stock_reserved]') END WHERE `order_number` = :ord";
@@ -548,7 +548,7 @@ class PaymentManager
             $sortOrder = isset($data['sort_order']) ? (int)$data['sort_order'] : (int)($existing['sort_order'] ?? 0);
             $config = $data['config'] ?? ($existing['config'] ?? []);
 
-            if ($db->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+            if ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
                 $stmt = $db->prepare("
                     INSERT INTO `payment_gateways` (
                         `gateway_key`, `name`, `description`, `is_active`, `is_test_mode`, `is_recommended`, `config_json`, `sort_order`
