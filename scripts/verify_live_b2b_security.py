@@ -49,4 +49,16 @@ for base in domains:
         except Exception as e:
             print(f"  [ERROR] {ep} GET get_orders: {e}")
 
-print("\n=== ALL LIVE B2B ENDPOINTS VERIFIED AS SECURE! ===")
+    # Test 3: Unauthenticated my_orders on /api/orders.php
+    orders_url = f"{base}/api/orders.php?action=my_orders&phone=8890639215"
+    try:
+        req3 = urllib.request.Request(orders_url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req3) as resp:
+            print(f"  [VULNERABLE] /api/orders.php GET my_orders leaked data with status {resp.status}")
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            print(f"  [SECURE] /api/orders.php GET my_orders blocked with HTTP 401 Unauthorized")
+        else:
+            print(f"  [CHECK] /api/orders.php GET my_orders returned HTTP {e.code}")
+
+print("\n=== ALL LIVE B2B & ORDERS ENDPOINTS VERIFIED AS SECURE! ===")

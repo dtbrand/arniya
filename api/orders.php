@@ -98,28 +98,35 @@ try {
 
         // Customer Order History (My Orders) - Requires customer authentication
         if ($action === 'my_orders') {
-            // Customer authentication or verified customer phone
             $currentUser = Auth::getCurrentUser();
-            $targetPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
-            $targetId = (int)($currentUser['id'] ?? 0);
+            $isAdmin = dt_api_is_admin();
+            $authUserId = (int)($currentUser['id'] ?? 0);
 
-            if ($targetId <= 0 && !empty($targetPhone)) {
-                $pdo = Database::getConnection();
-                if ($pdo !== null && !Database::isMockMode()) {
-                    $digits = preg_replace('/\D+/', '', $targetPhone);
-                    if (strlen($digits) >= 10) {
-                        $pStmt = $pdo->prepare("SELECT id, phone FROM customers WHERE phone LIKE ? LIMIT 1");
-                        $pStmt->execute(['%' . substr($digits, -10)]);
-                        $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
-                        if ($pRow && !empty($pRow['id'])) {
-                            $targetId = (int)$pRow['id'];
-                            $targetPhone = (string)$pRow['phone'];
+            if ($isAdmin) {
+                $targetPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
+                $targetId = (int)($currentUser['id'] ?? ($_GET['customer_id'] ?? 0));
+
+                if ($targetId <= 0 && !empty($targetPhone)) {
+                    $pdo = Database::getConnection();
+                    if ($pdo !== null && !Database::isMockMode()) {
+                        $digits = preg_replace('/\D+/', '', $targetPhone);
+                        if (strlen($digits) >= 10) {
+                            $pStmt = $pdo->prepare("SELECT id, phone FROM customers WHERE phone LIKE ? LIMIT 1");
+                            $pStmt->execute(['%' . substr($digits, -10)]);
+                            $pRow = $pStmt->fetch(\PDO::FETCH_ASSOC);
+                            if ($pRow && !empty($pRow['id'])) {
+                                $targetId = (int)$pRow['id'];
+                                $targetPhone = (string)$pRow['phone'];
+                            }
                         }
                     }
                 }
+            } else {
+                $targetId = $authUserId;
+                $targetPhone = (string)($currentUser['phone'] ?? '');
             }
 
-            if ($targetId <= 0 && empty($targetPhone)) {
+            if ($targetId <= 0) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Customer authentication required. Please sign in to view your orders.']);
                 exit;

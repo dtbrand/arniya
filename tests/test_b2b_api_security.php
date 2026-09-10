@@ -84,6 +84,11 @@ $res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'ge
 assert($res !== null && $res['success'] === true && $res['is_logged_in'] === false, "reseller get_dashboard must return success=true, is_logged_in=false");
 echo "✅ PASS: Unauthenticated reseller get_dashboard returns success=true, is_logged_in=false.\n";
 
+// 8. Test unauthenticated my_orders with injected phone on orders.php
+$res = testApiEndpoint(__DIR__ . '/../api/orders.php', 'GET', ['action' => 'my_orders', 'phone' => '9876543210']);
+assert($res !== null && $res['success'] === false, "orders my_orders must fail for unauthenticated phone lookup");
+echo "✅ PASS: Unauthenticated orders.php my_orders with phone blocked.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
-echo "100% PASS: All B2B IDOR and unauthenticated attacks blocked!\n";
+echo "100% PASS: All B2B & Orders IDOR and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";
