@@ -9,6 +9,7 @@ cors_json();
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/Auth.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Auth;
 use DTBrand\Database;
@@ -222,11 +223,12 @@ try {
 
     if ($action === 'session') {
         $user = Auth::getCurrentUser();
-        $admin = $_SESSION['admin_user'] ?? null;
+        $isAdmin = dt_api_is_admin();
+        $admin = $_SESSION['admin_user'] ?? ($_SESSION['admin'] ?? null);
         echo json_encode([
             'authenticated' => ($user !== null),
             'user' => $user,
-            'admin_authenticated' => ($admin !== null),
+            'admin_authenticated' => $isAdmin,
             'admin' => $admin
         ], JSON_PRETTY_PRINT);
         exit;
