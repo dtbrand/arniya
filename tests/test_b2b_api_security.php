@@ -71,6 +71,19 @@ $res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', [
 assert($res !== null && $res['success'] === true && $res['count'] === 0, "Unauthenticated reseller get_orders with phone must return 0 orders");
 echo "✅ PASS: Unauthenticated reseller get_orders returns 0 orders for injected phone.\n";
 
+// 7. Test unauthenticated get_dashboard for retailer, wholesale, and reseller
+$res = testApiEndpoint(__DIR__ . '/../api/retailer.php', 'GET', ['action' => 'get_dashboard']);
+assert($res !== null && $res['success'] === true && $res['is_logged_in'] === false, "retailer get_dashboard must return success=true, is_logged_in=false");
+echo "✅ PASS: Unauthenticated retailer get_dashboard returns success=true, is_logged_in=false.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/wholesale.php', 'GET', ['action' => 'get_dashboard']);
+assert($res !== null && $res['success'] === true && $res['is_logged_in'] === false, "wholesale get_dashboard must return success=true, is_logged_in=false");
+echo "✅ PASS: Unauthenticated wholesale get_dashboard returns success=true, is_logged_in=false.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'get_dashboard']);
+assert($res !== null && $res['success'] === true && $res['is_logged_in'] === false, "reseller get_dashboard must return success=true, is_logged_in=false");
+echo "✅ PASS: Unauthenticated reseller get_dashboard returns success=true, is_logged_in=false.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
 echo "100% PASS: All B2B IDOR and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";

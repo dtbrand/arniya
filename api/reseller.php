@@ -20,6 +20,7 @@ require_once __DIR__ . '/../src/CustomerManager.php';
 require_once __DIR__ . '/../src/OrderManager.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Database;
 use DTBrand\Auth;
