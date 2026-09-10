@@ -5,7 +5,12 @@
  */
 
 // ── 1. Session must start before guard checks ──
-if (session_status() === PHP_SESSION_NONE) {
+if (file_exists(dirname(__DIR__) . '/config/session.php')) {
+    require_once dirname(__DIR__) . '/config/session.php';
+}
+if (function_exists('dt_session_start')) {
+    dt_session_start();
+} elseif (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 

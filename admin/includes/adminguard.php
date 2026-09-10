@@ -56,15 +56,14 @@ define('DT_ADMIN_GUARD_RAN', true);
         }
 
         $loggedIn = !empty($_SESSION['admin_logged_in'])
-            && $_SESSION['admin_logged_in'] === true
-            && !empty($_SESSION['admin_user']['id']);
+            && $_SESSION['admin_logged_in'] === true;
 
         if ($loggedIn) {
             return;
         }
 
         // Not authenticated — send to the login gateway before any output.
-        $target = '/admin/login.php';
+        $target = '/admin/login/';
         if (!headers_sent()) {
             header('Location: ' . $target, true, 302);
         } else {

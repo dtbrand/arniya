@@ -3,7 +3,12 @@
  * DT BRAND'S & JAI HANUMAN TEX — SECURE ADMIN LOGOUT HANDLER
  * Destroys executive session, clears auth cookies, and redirects to login gateway.
  */
-if (session_status() === PHP_SESSION_NONE) {
+if (file_exists(dirname(__DIR__) . '/config/session.php')) {
+    require_once dirname(__DIR__) . '/config/session.php';
+}
+if (function_exists('dt_session_start')) {
+    dt_session_start();
+} elseif (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -30,7 +35,11 @@ setcookie('dt_admin_token', '', time() - 3600, '/');
 setcookie('dt_auth_token', '', time() - 3600, '/');
 
 // 4. Destroy PHP session
-session_destroy();
+if (function_exists('dt_session_destroy')) {
+    dt_session_destroy();
+} else {
+    session_destroy();
+}
 
 // 5. Handle AJAX/Fetch vs direct navigation
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' || isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
@@ -38,11 +47,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     echo json_encode([
         'status' => 'success',
         'message' => 'Logged out successfully',
-        'redirect' => '/admin/login.php?logged_out=1'
+        'redirect' => '/admin/login/?logged_out=1'
     ]);
     exit;
 }
 
 // 6. Direct HTTP Redirect
-header('Location: /admin/login.php?logged_out=1');
+header('Location: /admin/login/?logged_out=1');
 exit;
