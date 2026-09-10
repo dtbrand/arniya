@@ -67,18 +67,6 @@ if (!function_exists('dt_api_is_admin')) {
             @session_start();
         }
 
-        // 4. Fallback check for same-origin requests originating from the admin console
-        $referer = (string)($_SERVER['HTTP_REFERER'] ?? '');
-        $host = (string)($_SERVER['HTTP_HOST'] ?? '');
-        if ($referer !== '' && strpos($referer, '/admin/') !== false) {
-            if ($host === '' || strpos($referer, $host) !== false) {
-                // Confirm request carries valid session cookie
-                if (!empty($_COOKIE['DTBRANDS_SESS']) || !empty($_COOKIE['PHPSESSID'])) {
-                    return true;
-                }
-            }
-        }
-
         return false;
     }
 }
