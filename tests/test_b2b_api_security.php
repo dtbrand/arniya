@@ -159,6 +159,16 @@ $res = testApiEndpoint(__DIR__ . '/../api/reseller.php', 'GET', ['action' => 'ge
 assert($res !== null && $res['success'] === false, "reseller get_order_details must fail for unauthenticated user without matching phone");
 echo "✅ PASS: Unauthenticated reseller get_order_details blocked.\n";
 
+// 15. Test unauthenticated auth.php session endpoint correctly reports admin_authenticated = false
+$res = testApiEndpoint(__DIR__ . '/../api/auth.php', 'GET', ['action' => 'session']);
+assert($res !== null && isset($res['admin_authenticated']) && $res['admin_authenticated'] === false, "auth session must report admin_authenticated=false for unauthenticated request");
+echo "✅ PASS: Unauthenticated auth session correctly reports admin_authenticated=false.\n";
+
+// 16. Test unauthenticated auth.php profile endpoint blocks access
+$res = testApiEndpoint(__DIR__ . '/../api/auth.php', 'GET', ['action' => 'profile']);
+assert($res !== null && $res['success'] === false, "auth profile must fail for unauthenticated request");
+echo "✅ PASS: Unauthenticated auth profile access blocked.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
 echo "100% PASS: All B2B & Orders IDOR, PII leaks, and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";

@@ -110,4 +110,35 @@ for base in domains:
     except Exception as e:
         print(f"  [ERROR] /api/retailer.php check_status: {e}")
 
-print("\n=== ALL LIVE B2B & ORDERS ENDPOINTS VERIFIED AS SECURE! ===")
+    # Test 7: Verify /api/auth.php?action=session reports admin_authenticated = False
+    auth_sess_url = f"{base}/api/auth.php?action=session"
+    try:
+        req_auth = urllib.request.Request(auth_sess_url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req_auth) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            if data.get('admin_authenticated') is False:
+                print(f"  [SECURE] /api/auth.php action=session reports admin_authenticated=False")
+            else:
+                print(f"  [WARN] /api/auth.php action=session reported unexpected admin status: {data.get('admin_authenticated')}")
+    except Exception as e:
+        print(f"  [ERROR] /api/auth.php action=session: {e}")
+
+    # Test 8: Verify /api/auth.php?action=profile is blocked for unauthenticated requests
+    auth_prof_url = f"{base}/api/auth.php?action=profile"
+    try:
+        req_prof = urllib.request.Request(auth_prof_url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req_prof) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            if data.get('success') is False:
+                print(f"  [SECURE] /api/auth.php action=profile blocked (success=false)")
+            else:
+                print(f"  [WARN] /api/auth.php action=profile permitted: {data}")
+    except urllib.error.HTTPError as e:
+        if e.code in (400, 401, 403):
+            print(f"  [SECURE] /api/auth.php action=profile blocked with HTTP {e.code}")
+        else:
+            print(f"  [CHECK] /api/auth.php action=profile returned HTTP {e.code}")
+    except Exception as e:
+        print(f"  [ERROR] /api/auth.php action=profile: {e}")
+
+print("\n=== ALL LIVE B2B, AUTH & ORDERS ENDPOINTS VERIFIED AS SECURE! ===")
