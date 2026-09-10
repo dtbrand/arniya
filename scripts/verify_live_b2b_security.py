@@ -73,6 +73,18 @@ for base in domains:
             else:
                 print(f"  [CHECK] {ep} GET get_addresses returned HTTP {e.code}")
 
+        # Test 4b: Unauthenticated get_order_details with arbitrary order_id
+        order_url = f"{url}?action=get_order_details&order_id=1"
+        try:
+            req_ord = urllib.request.Request(order_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req_ord) as resp:
+                print(f"  [VULNERABLE] {ep} GET get_order_details leaked order with status {resp.status}")
+        except urllib.error.HTTPError as e:
+            if e.code in (401, 403, 404):
+                print(f"  [SECURE] {ep} GET get_order_details blocked/no leakage with HTTP {e.code}")
+            else:
+                print(f"  [CHECK] {ep} GET get_order_details returned HTTP {e.code}")
+
     # Test 5: Unauthenticated my_orders on /api/orders.php
     orders_url = f"{base}/api/orders.php?action=my_orders&phone=8890639215"
     try:
