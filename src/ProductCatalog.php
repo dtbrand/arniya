@@ -19,10 +19,52 @@ class ProductCatalog
     /** Per-request memo: one page render calls getAll() many times over. */
     private static array $memo = [];
 
+    /** Cached list of column names present in the products table */
+    private static ?array $productTableColumns = null;
+
     /** Every write path calls this so the next read re-queries the database. */
     public static function invalidateCache(): void
     {
         self::$memo = [];
+        self::$productTableColumns = null;
+    }
+
+    /**
+     * Inspect and return an associative map of column names present in the products table.
+     */
+    public static function getProductTableColumns(): array
+    {
+        if (self::$productTableColumns !== null) {
+            return self::$productTableColumns;
+        }
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return [];
+        }
+        $cols = [];
+        try {
+            $driver = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
+            if ($driver === 'sqlite') {
+                $stmt = $pdo->query("PRAGMA table_info(products)");
+                while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                    if (isset($row['name'])) {
+                        $cols[$row['name']] = true;
+                    }
+                }
+            } else {
+                $stmt = $pdo->query("SHOW COLUMNS FROM products");
+                while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                    $field = $row['Field'] ?? ($row['field'] ?? null);
+                    if ($field) {
+                        $cols[$field] = true;
+                    }
+                }
+            }
+            self::$productTableColumns = $cols;
+        } catch (\Exception $e) {
+            self::$productTableColumns = [];
+        }
+        return self::$productTableColumns;
     }
 
     /**
@@ -292,16 +334,19 @@ class ProductCatalog
 
         $saleDisc = (float)($r['sale_price'] ?? 0);
         
+        // Specific role sale prices (Single Piece)
+        $retailerSalePrice = (isset($r['retailer_sale_price']) && $r['retailer_sale_price'] !== null && (float)$r['retailer_sale_price'] > 0)
+            ? (float)$r['retailer_sale_price'] : null;
+        $resellerSalePrice = (isset($r['reseller_sale_price']) && $r['reseller_sale_price'] !== null && (float)$r['reseller_sale_price'] > 0)
+            ? (float)$r['reseller_sale_price'] : null;
+        $wholesaleSalePrice = (isset($r['wholesale_sale_price']) && $r['wholesale_sale_price'] !== null && (float)$r['wholesale_sale_price'] > 0)
+            ? (float)$r['wholesale_sale_price'] : null;
+
         // MASTER PRICE MATRIX - Single Piece
-        // Guest/Customer: Customer Price (if set) else Retail Price; Customer Sale Price (if set) else Sale Price
-        // Retailer: Retail Price; Sale Price
-        // Reseller: Reseller Price; Sale Price  
-        // Wholesaler: Wholesale Price; Sale Price
-        
-        // Effective prices after sale discount
-        $effRetail = max(0, $retail - $saleDisc);
-        $effWholesale = $wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effRetail;
-        $effReseller = $reseller > 0 ? max(0, $reseller - $saleDisc) : $effRetail;
+        // Effective prices after flat sale discount or explicit role sale price
+        $effRetail = ($retailerSalePrice !== null) ? max(0, $retailerSalePrice) : max(0, $retail - $saleDisc);
+        $effWholesale = ($wholesaleSalePrice !== null) ? max(0, $wholesaleSalePrice) : ($wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effRetail);
+        $effReseller = ($resellerSalePrice !== null) ? max(0, $resellerSalePrice) : ($reseller > 0 ? max(0, $reseller - $saleDisc) : $effRetail);
         
         // Customer/Guest effective price
         if ($custSalePrice !== null && $custSalePrice > 0) {
@@ -315,10 +360,10 @@ class ProductCatalog
 
         // Full Set effective prices (Retailer/Wholesaler only)
         // For Full Set, the per-piece price is used, multiplied by full_set_pieces
-        $fullSetRetailerPrice = $retail; // Default to retail for full set
-        $fullSetWholesalePrice = $wholesale > 0 ? $wholesale : $retail;
-        $fullSetRetailerSalePrice = $saleDisc;
-        $fullSetWholesaleSalePrice = $saleDisc;
+        $fullSetRetailerPrice = (isset($r['full_set_retailer_price']) && (float)$r['full_set_retailer_price'] > 0) ? (float)$r['full_set_retailer_price'] : $retail;
+        $fullSetWholesalePrice = (isset($r['full_set_wholesale_price']) && (float)$r['full_set_wholesale_price'] > 0) ? (float)$r['full_set_wholesale_price'] : ($wholesale > 0 ? $wholesale : $retail);
+        $fullSetRetailerSalePrice = (isset($r['full_set_retailer_sale_price']) && (float)$r['full_set_retailer_sale_price'] > 0) ? (float)$r['full_set_retailer_sale_price'] : $saleDisc;
+        $fullSetWholesaleSalePrice = (isset($r['full_set_wholesale_sale_price']) && (float)$r['full_set_wholesale_sale_price'] > 0) ? (float)$r['full_set_wholesale_sale_price'] : $saleDisc;
 
         $boutiqueMargin = max(0, $effCustomer - $effRetail);
 
@@ -350,8 +395,11 @@ class ProductCatalog
             'customer_price' => $custPrice,
             'customer_sale_price' => $custSalePrice,
             'retail_price' => $retail,
+            'retailer_sale_price' => $retailerSalePrice,
             'wholesale_price' => $wholesale,
+            'wholesale_sale_price' => $wholesaleSalePrice,
             'reseller_price' => $reseller,
+            'reseller_sale_price' => $resellerSalePrice,
             'sale_price' => $saleDisc,
             'sale_discount' => $saleDisc,
             
@@ -804,12 +852,14 @@ class ProductCatalog
 
         if ($role === 'guest' || $role === 'customer') {
             $item['wholesale_price'] = null;
+            $item['wholesale_sale_price'] = null;
             $item['reseller_price'] = null;
+            $item['reseller_sale_price'] = null;
             $item['retail_price'] = null;
+            $item['retailer_sale_price'] = null;
             $item['effective_retail_price'] = null;
             $item['effective_wholesale_price'] = null;
-            $item['effective_reseller_price'] = null;
-            $item['effective_price'] = $item['effective_customer_price'] ?? $item['price'];
+            $item['effective_price'] = $item['effective_customer_price'] ?? ($item['price'] ?? 0);
             $item['boutique_margin'] = null;
             $item['full_set_retailer_price'] = null;
             $item['full_set_wholesale_price'] = null;
@@ -817,7 +867,7 @@ class ProductCatalog
             $item['full_set_wholesale_sale_price'] = null;
             $item['effective_full_set_retailer_price'] = null;
             $item['effective_full_set_wholesale_price'] = null;
-            $item['trade_price'] = $item['price'];
+            $item['trade_price'] = $item['price'] ?? ($item['effective_retail_price'] ?? 0);
             if (!empty($item['variants']) && is_array($item['variants'])) {
                 foreach ($item['variants'] as &$v) {
                     $v['retail_price'] = null;
@@ -837,6 +887,8 @@ class ProductCatalog
             }
         } elseif ($role === 'reseller') {
             $item['wholesale_price'] = null;
+            $item['wholesale_sale_price'] = null;
+            $item['retailer_sale_price'] = null;
             $item['effective_wholesale_price'] = null;
             $item['customer_price'] = null;
             $item['customer_sale_price'] = null;
@@ -866,8 +918,10 @@ class ProductCatalog
             $item['customer_sale_price'] = null;
             $item['effective_customer_price'] = null;
             $item['wholesale_price'] = null;
+            $item['wholesale_sale_price'] = null;
             $item['effective_wholesale_price'] = null;
             $item['reseller_price'] = null;
+            $item['reseller_sale_price'] = null;
             $item['effective_reseller_price'] = null;
             $item['full_set_wholesale_price'] = null;
             $item['full_set_wholesale_sale_price'] = null;
@@ -890,6 +944,8 @@ class ProductCatalog
             $item['customer_sale_price'] = null;
             $item['effective_customer_price'] = null;
             $item['reseller_price'] = null;
+            $item['reseller_sale_price'] = null;
+            $item['retailer_sale_price'] = null;
             $item['effective_reseller_price'] = null;
             $item['full_set_retailer_price'] = null;
             $item['full_set_retailer_sale_price'] = null;
@@ -970,12 +1026,13 @@ class ProductCatalog
                 return 0; // Not purchasable
             }
             if ($role === 'retailer') {
-                $basePrice = $product['full_set_retailer_price'] ?? $product['retail_price'] ?? 0;
-                $salePrice = $product['full_set_retailer_sale_price'] ?? $saleDisc;
+                $basePrice = (float)($product['full_set_retailer_price'] ?? $product['retail_price'] ?? 0);
+                $salePrice = (float)($product['full_set_retailer_sale_price'] ?? $saleDisc);
             } else { // wholesale
-                $basePrice = $product['full_set_wholesale_price'] ?? $product['wholesale_price'] ?? $product['retail_price'] ?? 0;
-                $salePrice = $product['full_set_wholesale_sale_price'] ?? $saleDisc;
+                $basePrice = (float)($product['full_set_wholesale_price'] ?? $product['wholesale_price'] ?? $product['retail_price'] ?? 0);
+                $salePrice = (float)($product['full_set_wholesale_sale_price'] ?? $saleDisc);
             }
+            return max(0, $basePrice - $salePrice);
         } else {
             // Single Piece
             switch ($role) {
@@ -991,14 +1048,23 @@ class ProductCatalog
                     return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
                     
                 case 'retailer':
+                    if (isset($product['retailer_sale_price']) && $product['retailer_sale_price'] !== null && (float)$product['retailer_sale_price'] > 0) {
+                        return max(0, (float)$product['retailer_sale_price']);
+                    }
                     return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
                     
                 case 'reseller':
+                    if (isset($product['reseller_sale_price']) && $product['reseller_sale_price'] !== null && (float)$product['reseller_sale_price'] > 0) {
+                        return max(0, (float)$product['reseller_sale_price']);
+                    }
                     $resPrice = (float)($product['reseller_price'] ?? 0);
                     if ($resPrice <= 0) { $resPrice = (float)($product['retail_price'] ?? 0); }
                     return max(0, $resPrice - $saleDisc);
                     
                 case 'wholesale':
+                    if (isset($product['wholesale_sale_price']) && $product['wholesale_sale_price'] !== null && (float)$product['wholesale_sale_price'] > 0) {
+                        return max(0, (float)$product['wholesale_sale_price']);
+                    }
                     $whsPrice = (float)($product['wholesale_price'] ?? 0);
                     if ($whsPrice <= 0) { $whsPrice = (float)($product['retail_price'] ?? 0); }
                     return max(0, $whsPrice - $saleDisc);
@@ -1007,8 +1073,6 @@ class ProductCatalog
                     return max(0, (float)($product['retail_price'] ?? 0) - $saleDisc);
             }
         }
-        
-        return max(0, $basePrice - $salePrice);
     }
 
     /**
@@ -1046,6 +1110,7 @@ class ProductCatalog
                 $result['price_label'] = 'Full Set / pc';
             } else {
                 $result['base_price'] = (float)($product['full_set_wholesale_price'] ?? $product['wholesale_price'] ?? 0);
+                if ($result['base_price'] <= 0) { $result['base_price'] = (float)($product['retail_price'] ?? 0); }
                 $result['sale_price'] = (float)($product['full_set_wholesale_sale_price'] ?? $saleDisc);
                 $result['price_label'] = 'Full Set / pc';
             }
@@ -1077,18 +1142,42 @@ class ProductCatalog
                     
                 case 'retailer':
                     $result['base_price'] = (float)($product['retail_price'] ?? 0);
+                    if (isset($product['retailer_sale_price']) && $product['retailer_sale_price'] !== null && (float)$product['retailer_sale_price'] > 0) {
+                        $eff = (float)$product['retailer_sale_price'];
+                        $result['effective_price'] = $eff;
+                        $result['sale_price'] = max(0, $result['base_price'] - $eff);
+                        $result['show_sale'] = ($result['base_price'] > $eff);
+                        $result['price_label'] = 'Retail Price';
+                        return $result;
+                    }
                     $result['price_label'] = 'Retail Price';
                     break;
                     
                 case 'reseller':
                     $result['base_price'] = (float)($product['reseller_price'] ?? 0);
                     if ($result['base_price'] <= 0) { $result['base_price'] = (float)($product['retail_price'] ?? 0); }
+                    if (isset($product['reseller_sale_price']) && $product['reseller_sale_price'] !== null && (float)$product['reseller_sale_price'] > 0) {
+                        $eff = (float)$product['reseller_sale_price'];
+                        $result['effective_price'] = $eff;
+                        $result['sale_price'] = max(0, $result['base_price'] - $eff);
+                        $result['show_sale'] = ($result['base_price'] > $eff);
+                        $result['price_label'] = 'Reseller Price';
+                        return $result;
+                    }
                     $result['price_label'] = 'Reseller Price';
                     break;
                     
                 case 'wholesale':
                     $result['base_price'] = (float)($product['wholesale_price'] ?? 0);
                     if ($result['base_price'] <= 0) { $result['base_price'] = (float)($product['retail_price'] ?? 0); }
+                    if (isset($product['wholesale_sale_price']) && $product['wholesale_sale_price'] !== null && (float)$product['wholesale_sale_price'] > 0) {
+                        $eff = (float)$product['wholesale_sale_price'];
+                        $result['effective_price'] = $eff;
+                        $result['sale_price'] = max(0, $result['base_price'] - $eff);
+                        $result['show_sale'] = ($result['base_price'] > $eff);
+                        $result['price_label'] = 'Wholesale Price';
+                        return $result;
+                    }
                     $result['price_label'] = 'Wholesale Price';
                     break;
             }
@@ -1569,41 +1658,79 @@ class ProductCatalog
             ? (float)$data['customer_sale_price'] : null;
         $salePrice = isset($data['sale_price']) ? max(0, (float)$data['sale_price']) : (isset($data['sale_discount']) ? max(0, (float)$data['sale_discount']) : 0.0);
 
+        $retailerSalePrice = isset($data['retailer_sale_price']) && (float)$data['retailer_sale_price'] > 0 ? (float)$data['retailer_sale_price'] : null;
+        $resellerSalePrice = ($sellingType === 'single_piece' && isset($data['reseller_sale_price']) && (float)$data['reseller_sale_price'] > 0) ? (float)$data['reseller_sale_price'] : null;
+        $wholesaleSalePrice = isset($data['wholesale_sale_price']) && (float)$data['wholesale_sale_price'] > 0 ? (float)$data['wholesale_sale_price'] : null;
+
+        $fullSetRetailerPrice = isset($data['full_set_retailer_price']) && (float)$data['full_set_retailer_price'] > 0 ? (float)$data['full_set_retailer_price'] : ($sellingType === 'full_set' ? $retail : null);
+        $fullSetRetailerSalePrice = isset($data['full_set_retailer_sale_price']) && (float)$data['full_set_retailer_sale_price'] > 0 ? (float)$data['full_set_retailer_sale_price'] : null;
+        $fullSetWholesalePrice = isset($data['full_set_wholesale_price']) && (float)$data['full_set_wholesale_price'] > 0 ? (float)$data['full_set_wholesale_price'] : ($sellingType === 'full_set' ? ($wholesale > 0 ? $wholesale : $retail) : null);
+        $fullSetWholesaleSalePrice = isset($data['full_set_wholesale_sale_price']) && (float)$data['full_set_wholesale_sale_price'] > 0 ? (float)$data['full_set_wholesale_sale_price'] : null;
+
+        if ($sellingType === 'full_set') {
+            $custPrice = null;
+            $custSalePrice = null;
+            $reseller = null;
+            $resellerSalePrice = null;
+        }
+
+        $tableCols = self::getProductTableColumns();
+        $cols = [
+            'sku' => $sku,
+            'title' => $title,
+            'slug' => $slug,
+            'category_id' => $cat['id'],
+            'category_name' => $cat['name'],
+            'fabric' => mb_substr(trim((string)($data['fabric'] ?? '')), 0, 100),
+            'weave' => mb_substr(trim((string)($data['weave'] ?? '')), 0, 100),
+            'zari_type' => mb_substr(trim((string)($data['zari_type'] ?? '')), 0, 100),
+            'pallu_style' => mb_substr(trim((string)($data['pallu_style'] ?? $data['border'] ?? '')), 0, 100),
+            'blouse_piece' => mb_substr(trim((string)($data['blouse_piece'] ?? $data['blouse'] ?? '')), 0, 100),
+            'occasion' => mb_substr(trim((string)($data['occasion'] ?? '')), 0, 100),
+            'mrp' => $mrp,
+            'retail_price' => $retail,
+            'customer_price' => $custPrice,
+            'customer_sale_price' => $custSalePrice,
+            'sale_price' => $salePrice,
+            'wholesale_price' => $wholesale,
+            'reseller_price' => $reseller,
+            'moq_single' => max(1, (int)($data['moq_single'] ?? 1)),
+            'moq_half_set' => max(0, (int)($data['moq_half_set'] ?? 0)),
+            'moq_full_set' => max(0, (int)($data['moq_full_set'] ?? $data['moq'] ?? 0)),
+            'moq_master_bale' => max(0, (int)($data['moq_master_bale'] ?? 0)),
+            'stock_qty' => max(0, (int)($data['stock_qty'] ?? 0)),
+            'rating' => 0,
+            'reviews_count' => 0,
+            'primary_image' => $primary,
+            'badge' => mb_substr(trim((string)($data['badge'] ?? '')), 0, 50),
+            'is_featured' => !empty($data['is_featured']) ? 1 : 0,
+            'is_bestseller' => !empty($data['is_bestseller']) ? 1 : 0,
+            'status' => $status,
+            'selling_type' => $sellingType,
+            'description' => trim((string)($data['description'] ?? ''))
+        ];
+
+        $extraCols = [
+            'retailer_sale_price' => $retailerSalePrice,
+            'reseller_sale_price' => $resellerSalePrice,
+            'wholesale_sale_price' => $wholesaleSalePrice,
+            'full_set_retailer_price' => $fullSetRetailerPrice,
+            'full_set_retailer_sale_price' => $fullSetRetailerSalePrice,
+            'full_set_wholesale_price' => $fullSetWholesalePrice,
+            'full_set_wholesale_sale_price' => $fullSetWholesaleSalePrice,
+        ];
+        foreach ($extraCols as $k => $v) {
+            if (!empty($tableCols) && isset($tableCols[$k])) {
+                $cols[$k] = $v;
+            }
+        }
+
         try {
-            // rating and reviews_count are written as 0 on purpose: the column
-            // DEFAULTs are 4.9 and 120, so every product used to be born
-            // claiming a rating from reviews that were never left.
-            $stmt = $pdo->prepare(
-                "INSERT INTO products
-                 (sku, title, slug, category_id, category_name, fabric, weave, zari_type,
-                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, customer_sale_price, sale_price, wholesale_price,
-                  reseller_price, moq_single, moq_half_set, moq_full_set, moq_master_bale,
-                  stock_qty, rating, reviews_count, primary_image, badge, is_featured,
-                  is_bestseller, status, selling_type, description, created_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
-            );
-            $stmt->execute([
-                $sku, $title, $slug, $cat['id'], $cat['name'],
-                mb_substr(trim((string)($data['fabric'] ?? '')), 0, 100),
-                mb_substr(trim((string)($data['weave'] ?? '')), 0, 100),
-                mb_substr(trim((string)($data['zari_type'] ?? '')), 0, 100),
-                mb_substr(trim((string)($data['pallu_style'] ?? $data['border'] ?? '')), 0, 100),
-                mb_substr(trim((string)($data['blouse_piece'] ?? $data['blouse'] ?? '')), 0, 100),
-                mb_substr(trim((string)($data['occasion'] ?? '')), 0, 100),
-                $mrp, $retail, $custPrice, $custSalePrice, $salePrice, $wholesale, $reseller,
-                max(1, (int)($data['moq_single'] ?? 1)),
-                max(0, (int)($data['moq_half_set'] ?? 0)),
-                max(0, (int)($data['moq_full_set'] ?? $data['moq'] ?? 0)),
-                max(0, (int)($data['moq_master_bale'] ?? 0)),
-                max(0, (int)($data['stock_qty'] ?? 0)),
-                $primary,
-                mb_substr(trim((string)($data['badge'] ?? '')), 0, 50),
-                !empty($data['is_featured']) ? 1 : 0,
-                !empty($data['is_bestseller']) ? 1 : 0,
-                $status,
-                $sellingType,
-                trim((string)($data['description'] ?? ''))
-            ]);
+            $colNames = array_keys($cols);
+            $placeholders = array_fill(0, count($colNames), '?');
+            $sql = "INSERT INTO products (" . implode(', ', $colNames) . ", created_at) VALUES (" . implode(', ', $placeholders) . ", NOW())";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array_values($cols));
             $newId = (int)$pdo->lastInsertId();
             if ($newId <= 0) {
                 return ['success' => false, 'message' => 'The product row was not written. Nothing was created.'];
@@ -1648,11 +1775,7 @@ class ProductCatalog
     /**
      * Update an existing product.
      *
-     * Every column the admin form can edit is handled here. The old version
-     * silently ignored slug, weave, category_id, the MOQ tiers, badge and all
-     * media/variant data, so those edits appeared to save and then reverted on
-     * reload. Media and variants are only touched when the payload actually
-     * carried them, so a quick stock edit cannot wipe a product's gallery.
+     * Every column the admin form can edit is handled here.
      */
     public static function update(int $id, array $data): array
     {
@@ -1691,11 +1814,32 @@ class ProductCatalog
                 $add('slug', self::uniqueSlug($slug, $id));
             }
         }
+
+        $tableCols = self::getProductTableColumns();
+
         if (isset($data['selling_type'])) {
             $st = ($data['selling_type'] === 'full_set') ? 'full_set' : 'single_piece';
             $add('selling_type', $st);
             if ($st === 'full_set') {
                 $add('customer_price', null);
+                $add('customer_sale_price', null);
+                $add('reseller_price', null);
+                if (!empty($tableCols) && isset($tableCols['reseller_sale_price'])) {
+                    $add('reseller_sale_price', null);
+                }
+            } else {
+                if (!empty($tableCols) && isset($tableCols['full_set_retailer_price'])) {
+                    $add('full_set_retailer_price', null);
+                }
+                if (!empty($tableCols) && isset($tableCols['full_set_retailer_sale_price'])) {
+                    $add('full_set_retailer_sale_price', null);
+                }
+                if (!empty($tableCols) && isset($tableCols['full_set_wholesale_price'])) {
+                    $add('full_set_wholesale_price', null);
+                }
+                if (!empty($tableCols) && isset($tableCols['full_set_wholesale_sale_price'])) {
+                    $add('full_set_wholesale_sale_price', null);
+                }
             }
         }
         if (array_key_exists('customer_price', $data)) {
@@ -1717,23 +1861,41 @@ class ProductCatalog
             $sp = ($rawSp !== null && $rawSp !== '') ? (float)$rawSp : 0;
             $add('sale_price', max(0, $sp));
         }
-        if (array_key_exists('wholesale_price', $data) && $data['wholesale_price'] === null) {
-            $add('wholesale_price', null);
-        }
-        if (array_key_exists('reseller_price', $data) && $data['reseller_price'] === null) {
-            $add('reseller_price', null);
-        }
-        if (array_key_exists('mrp', $data) && $data['mrp'] === null) {
-            $add('mrp', null);
-        }
-        foreach (['mrp', 'retail_price', 'wholesale_price', 'reseller_price'] as $col) {
-            $present = isset($data[$col]) || ($col === 'retail_price' && isset($data['price']));
-            if (!$present) {
+
+        $priceCols = [
+            'mrp', 'retail_price', 'wholesale_price', 'wholesale_sale_price',
+            'reseller_price', 'reseller_sale_price', 'retailer_sale_price',
+            'full_set_retailer_price', 'full_set_retailer_sale_price',
+            'full_set_wholesale_price', 'full_set_wholesale_sale_price'
+        ];
+        $extraPriceCols = [
+            'retailer_sale_price' => true,
+            'reseller_sale_price' => true,
+            'wholesale_sale_price' => true,
+            'full_set_retailer_price' => true,
+            'full_set_retailer_sale_price' => true,
+            'full_set_wholesale_price' => true,
+            'full_set_wholesale_sale_price' => true,
+        ];
+        foreach ($priceCols as $col) {
+            if (isset($extraPriceCols[$col])) {
+                if (empty($tableCols) || !isset($tableCols[$col])) {
+                    continue;
+                }
+            } elseif (!empty($tableCols) && !isset($tableCols[$col])) {
                 continue;
             }
-            $v = (float)($data[$col] ?? $data['price'] ?? 0);
-            if ($v > 0) {
-                $add($col, $v);
+            if (array_key_exists($col, $data)) {
+                $raw = $data[$col];
+                if ($raw === null || $raw === '') {
+                    $add($col, null);
+                } else {
+                    $v = (float)$raw;
+                    $add($col, $v > 0 ? $v : null);
+                }
+            } elseif ($col === 'retail_price' && isset($data['price'])) {
+                $v = (float)$data['price'];
+                if ($v > 0) { $add('retail_price', $v); }
             }
         }
         if (isset($data['stock_qty'])) {

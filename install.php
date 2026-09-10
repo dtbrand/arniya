@@ -55,15 +55,17 @@ function rate_limit(string $key, int $max = 10, int $window = 300): bool {
 // ─── ALREADY INSTALLED GUARD ────────────────────────────────────────────────
 $installedFile = __DIR__ . '/.installed';
 
-// If installed and user tries to re-access installer → show locked page
-if (file_exists($installedFile) && !isset($_GET['force'])) {
+// If installed → permanently lock installer with HTTP 403 Forbidden
+if (file_exists($installedFile)) {
+    http_response_code(403);
+    header('Content-Type: text/html; charset=utf-8');
     $installedData = @json_decode(file_get_contents($installedFile), true) ?? [];
     ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Already Installed — DT Brand's</title>
+    <title>Installer Locked — DT Brand's</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Cinzel:wght@700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +103,7 @@ if (file_exists($installedFile) && !isset($_GET['force'])) {
         .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184,134,11,0.4); }
         .btn-dark { background: linear-gradient(135deg, #181512, #2A241E); color: #FAF5E8; border: 1px solid #8A681F; }
         .btn-dark:hover { transform: translateY(-2px); border-color: #D4AF37; }
-        .warning { background: #FEF3C7; border: 1px solid #B45309; border-radius: 10px; padding: 12px 16px; font-size: 0.82rem; color: #92400E; margin-top: 16px; }
+        .security-lock { background: #DCFCE7; border: 1px solid #15803D; border-radius: 10px; padding: 12px 16px; font-size: 0.82rem; color: #166534; margin-top: 16px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -112,22 +114,19 @@ if (file_exists($installedFile) && !isset($_GET['force'])) {
             <polyline points="9 12 11 14 15 10"></polyline>
         </svg>
     </div>
-    <h1>Already Installed</h1>
-    <p>DT Brand's & Jai Hanuman Tex has already been installed and is live.</p>
+    <h1>System Installed &amp; Protected</h1>
+    <p>DT Brand's &amp; Jai Hanuman Tex is live. Re-installation is permanently disabled for production security.</p>
 
     <?php if (!empty($installedData)): ?>
     <div class="meta">
         <?php if (!empty($installedData['domain'])): ?>
-        <div class="meta-row"><span>Domain</span><strong><?= htmlspecialchars($installedData['domain']) ?></strong></div>
+        <div class="meta-row"><span>Environment</span><strong><?= htmlspecialchars($installedData['domain']) ?></strong></div>
         <?php endif; ?>
         <?php if (!empty($installedData['version'])): ?>
-        <div class="meta-row"><span>Version</span><strong>v<?= htmlspecialchars($installedData['version']) ?></strong></div>
+        <div class="meta-row"><span>System Core</span><strong>v<?= htmlspecialchars($installedData['version']) ?> Production</strong></div>
         <?php endif; ?>
         <?php if (!empty($installedData['installed_at'])): ?>
-        <div class="meta-row"><span>Installed On</span><strong><?= htmlspecialchars(date('d M Y, h:i A', strtotime($installedData['installed_at']))) ?></strong></div>
-        <?php endif; ?>
-        <?php if (!empty($installedData['admin_email'])): ?>
-        <div class="meta-row"><span>Admin Email</span><strong><?= htmlspecialchars($installedData['admin_email']) ?></strong></div>
+        <div class="meta-row"><span>Deployment</span><strong><?= htmlspecialchars(date('d M Y, h:i A', strtotime($installedData['installed_at']))) ?></strong></div>
         <?php endif; ?>
     </div>
     <?php endif; ?>
@@ -142,9 +141,8 @@ if (file_exists($installedFile) && !isset($_GET['force'])) {
             Admin Panel
         </a>
     </div>
-    <div class="warning">
-        ⚠️ <strong>Security:</strong> Please delete or rename <code>install.php</code> from your server.
-        If you need to reinstall, <a href="install.php?force=1" style="color:#92400E; font-weight:700;">click here</a> (dangerous — will overwrite settings).
+    <div class="security-lock">
+        &#128737;&#65039; <strong>Security Lockdown Active:</strong> HTTP 403 Forbidden. Installer access locked down.
     </div>
 </div>
 </body>

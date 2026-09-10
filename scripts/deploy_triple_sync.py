@@ -114,6 +114,8 @@ FILES_TO_DEPLOY = [
     'admin/customers/components/customer-table.php',
     'admin/customers/assets/js/customer-list.js',
     'database/migrations/2026_09_09_000001_add_master_price_fields.sql',
+    'database/migrations/2026_09_11_000001_add_full_price_matrix_columns.sql',
+    'install.php',
     'includes/bootstrap.php',
     'db_reset_migrations.php',
 ]

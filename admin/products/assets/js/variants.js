@@ -415,6 +415,9 @@
                 }).join('');
             }
         }
+        if (typeof window.calcPricePreview === 'function') {
+            window.calcPricePreview();
+        }
     };
 
     /** Selling type change switcher */
@@ -437,17 +440,12 @@
             cardFull.style.boxShadow = isFullSet ? '0 1px 4px rgba(138,104,31,0.12)' : 'none';
         }
 
-        var grpCustPrice = el('pGroupCustomerPrice');
-        var inpCustPrice = el('pFormCustomerPrice');
-        var grpCustSalePrice = el('pGroupCustomerSalePrice');
-        var inpCustSalePrice = el('pFormCustomerSalePrice');
-        var noteFullSet = el('pGroupFullSetPriceNote');
-
-        if (grpCustPrice) { grpCustPrice.style.display = isFullSet ? 'none' : ''; }
-        if (inpCustPrice) { inpCustPrice.disabled = isFullSet; }
-        if (grpCustSalePrice) { grpCustSalePrice.style.display = isFullSet ? 'none' : ''; }
-        if (inpCustSalePrice) { inpCustSalePrice.disabled = isFullSet; }
-        if (noteFullSet) { noteFullSet.style.display = isFullSet ? '' : 'none'; }
+        var grpSingle = el('pGroupSinglePieceMatrix');
+        var grpFull = el('pGroupFullSetMatrix');
+        var badgeMode = el('dtPricingModeBadge');
+        if (grpSingle) { grpSingle.style.display = isFullSet ? 'none' : 'flex'; }
+        if (grpFull) { grpFull.style.display = isFullSet ? 'flex' : 'none'; }
+        if (badgeMode) { badgeMode.textContent = isFullSet ? 'Full Set Catalog Matrix' : 'Single Piece Matrix'; }
 
         var lblRetail = el('pLabelRetailText');
         var badgeRetail = el('pBadgeRetail');

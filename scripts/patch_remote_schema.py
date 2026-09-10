@@ -56,6 +56,13 @@ function ensureIndex($pdo, $table, $indexName, $columns, &$results) {
 // 1. PRODUCTS TABLE
 ensureColumn($pdo, 'products', 'customer_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `customer_price`', $results);
 ensureColumn($pdo, 'products', 'sale_price', 'DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `customer_sale_price`', $results);
+ensureColumn($pdo, 'products', 'retailer_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `sale_price`', $results);
+ensureColumn($pdo, 'products', 'reseller_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `reseller_price`', $results);
+ensureColumn($pdo, 'products', 'wholesale_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `wholesale_price`', $results);
+ensureColumn($pdo, 'products', 'full_set_retailer_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `wholesale_sale_price`', $results);
+ensureColumn($pdo, 'products', 'full_set_retailer_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `full_set_retailer_price`', $results);
+ensureColumn($pdo, 'products', 'full_set_wholesale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `full_set_retailer_sale_price`', $results);
+ensureColumn($pdo, 'products', 'full_set_wholesale_sale_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `full_set_wholesale_price`', $results);
 
 // 2. PRODUCT_VARIANTS TABLE
 ensureColumn($pdo, 'product_variants', 'reseller_price', 'DECIMAL(10,2) NULL DEFAULT NULL AFTER `price`', $results);

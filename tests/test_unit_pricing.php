@@ -294,6 +294,71 @@ assertEqual($fsCust['is_purchasable'], false, 'Section 40: Customer cannot purch
 $fsReseller = ProductCatalog::getPriceDisplay($specFullSet, 'reseller');
 assertEqual($fsReseller['is_purchasable'], false, 'Section 40: Reseller cannot purchase full_set');
 
+// ── Test 6: Explicit Role Sale Prices & Full Set Matrix (Section 18 & 19)
+echo "\n[6] Testing Specific Role Sale Prices & Full Set Explicit Prices...\n";
+
+$prodWithRoleSale = [
+    'id' => 401,
+    'selling_type' => 'single_piece',
+    'retail_price' => 500,
+    'retailer_sale_price' => 420,
+    'reseller_price' => 460,
+    'reseller_sale_price' => 390,
+    'wholesale_price' => 410,
+    'wholesale_sale_price' => 330,
+    'customer_price' => 700,
+    'customer_sale_price' => 650,
+    'sale_price' => 10,
+    'variants' => []
+];
+
+$resRetailer = ProductCatalog::resolvePrice($prodWithRoleSale, 'retailer');
+assertEqual($resRetailer, 420.0, 'Explicit retailer_sale_price is 420');
+
+$resReseller = ProductCatalog::resolvePrice($prodWithRoleSale, 'reseller');
+assertEqual($resReseller, 390.0, 'Explicit reseller_sale_price is 390');
+
+$resWholesale = ProductCatalog::resolvePrice($prodWithRoleSale, 'wholesale');
+assertEqual($resWholesale, 330.0, 'Explicit wholesale_sale_price is 330');
+
+$resCustomer = ProductCatalog::resolvePrice($prodWithRoleSale, 'customer');
+assertEqual($resCustomer, 650.0, 'Explicit customer_sale_price is 650');
+
+// Full Set with explicit lot sale discounts
+$prodFullSetExplicit = [
+    'id' => 402,
+    'selling_type' => 'full_set',
+    'retail_price' => 600,
+    'full_set_retailer_price' => 550,
+    'full_set_retailer_sale_price' => 50,
+    'full_set_wholesale_price' => 480,
+    'full_set_wholesale_sale_price' => 60,
+    'variants' => []
+];
+
+$resFsRetailer = ProductCatalog::resolvePrice($prodFullSetExplicit, 'retailer');
+assertEqual($resFsRetailer, 500.0, 'Explicit full_set_retailer_price - sale (550 - 50 = 500)');
+
+$resFsWholesale = ProductCatalog::resolvePrice($prodFullSetExplicit, 'wholesale');
+assertEqual($resFsWholesale, 420.0, 'Explicit full_set_wholesale_price - sale (480 - 60 = 420)');
+
+// Test masking on specific role sale prices
+$maskedCust = $prodWithRoleSale;
+ProductCatalog::maskRolePrices($maskedCust, 'customer');
+assertEqual($maskedCust['retailer_sale_price'], null, 'Customer cannot see retailer_sale_price');
+assertEqual($maskedCust['reseller_sale_price'], null, 'Customer cannot see reseller_sale_price');
+assertEqual($maskedCust['wholesale_sale_price'], null, 'Customer cannot see wholesale_sale_price');
+
+$maskedReseller = $prodWithRoleSale;
+ProductCatalog::maskRolePrices($maskedReseller, 'reseller');
+assertEqual($maskedReseller['wholesale_sale_price'], null, 'Reseller cannot see wholesale_sale_price');
+assertEqual($maskedReseller['retailer_sale_price'], null, 'Reseller cannot see retailer_sale_price');
+
+$maskedWholesale = $prodWithRoleSale;
+ProductCatalog::maskRolePrices($maskedWholesale, 'wholesale');
+assertEqual($maskedWholesale['retailer_sale_price'], null, 'Wholesaler cannot see retailer_sale_price');
+assertEqual($maskedWholesale['reseller_sale_price'], null, 'Wholesaler cannot see reseller_sale_price');
+
 echo "\n═══════════════════════════════════════════════════════════\n";
 echo "RESULTS: $testsPassed Passed, $testsFailed Failed\n";
 echo "═══════════════════════════════════════════════════════════\n";
