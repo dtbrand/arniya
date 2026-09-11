@@ -191,6 +191,24 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'audit';
 } elseif (strpos($req_uri, '/payments/') !== false) {
     $current_subnav = 'index';
+} elseif (strpos($req_uri, '/marketing/sliders.php') !== false) {
+    $current_subnav = 'sliders';
+} elseif (strpos($req_uri, '/marketing/banners.php') !== false) {
+    $current_subnav = 'banners';
+} elseif (strpos($req_uri, '/marketing/homepage.php') !== false) {
+    $current_subnav = 'homepage';
+} elseif (strpos($req_uri, '/marketing/collections.php') !== false) {
+    $current_subnav = 'collections';
+} elseif (strpos($req_uri, '/marketing/curation.php') !== false) {
+    $current_subnav = 'curation';
+} elseif (strpos($req_uri, '/marketing/announcements.php') !== false) {
+    $current_subnav = 'announcements';
+} elseif (strpos($req_uri, '/marketing/seo.php') !== false) {
+    $current_subnav = 'seo';
+} elseif (strpos($req_uri, '/marketing/share-templates.php') !== false) {
+    $current_subnav = 'share-templates';
+} elseif (strpos($req_uri, '/marketing/social.php') !== false) {
+    $current_subnav = 'social';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
@@ -810,6 +828,60 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             </a>
                         </li>
                         <li>
+                            <a href="/admin/marketing/sliders.php" class="adm-nav-subitem <?php echo $current_subnav === 'sliders' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                <span>Hero Sliders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/banners.php" class="adm-nav-subitem <?php echo $current_subnav === 'banners' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Banners &amp; Promos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/homepage.php" class="adm-nav-subitem <?php echo $current_subnav === 'homepage' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                <span>Homepage Layout</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/collections.php" class="adm-nav-subitem <?php echo $current_subnav === 'collections' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <span>Curated Collections</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/curation.php" class="adm-nav-subitem <?php echo $current_subnav === 'curation' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Product Curation</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/announcements.php" class="adm-nav-subitem <?php echo $current_subnav === 'announcements' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                <span>Store Announcements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/seo.php" class="adm-nav-subitem <?php echo $current_subnav === 'seo' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <span>SEO &amp; OpenGraph</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/share-templates.php" class="adm-nav-subitem <?php echo $current_subnav === 'share-templates' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                                <span>Share Templates</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/social.php" class="adm-nav-subitem <?php echo $current_subnav === 'social' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                <span>Social &amp; Concierge</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/admin/marketing/coupons.php" class="adm-nav-subitem <?php echo $current_subnav === 'coupons' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                                 <span>Coupons Studio</span>
@@ -837,12 +909,6 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/marketing/audit.php" class="adm-nav-subitem <?php echo $current_subnav === 'audit' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                                 <span>Security Audit</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/marketing/banners.php" class="adm-nav-subitem <?php echo $current_subnav === 'banners' ? 'active' : ''; ?>">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span>Banners & Sliders</span>
                             </a>
                         </li>
                         <li>
