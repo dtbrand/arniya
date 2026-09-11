@@ -27,12 +27,14 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
         // at status='pending' and cannot sign in until an admin approves them, so
         // this badge is the only prompt that real buyers are waiting.
         $sb_pending_trade_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE `status` = 'pending'")->fetchColumn();
+        $sb_reviews_pending_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `reviews` WHERE `status` = 'pending'")->fetchColumn();
     } catch (\Exception $e) {
         $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
         $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
         $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
         $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
         $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
+        $sb_reviews_pending_count = 0;
     }
 } else {
     $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
@@ -40,6 +42,7 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
     $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
     $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
     $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
+    $sb_reviews_pending_count = 0;
 }
 
 
@@ -209,6 +212,16 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'share-templates';
 } elseif (strpos($req_uri, '/marketing/social.php') !== false) {
     $current_subnav = 'social';
+} elseif (strpos($req_uri, '/reviews/pending.php') !== false) {
+    $current_subnav = 'pending';
+} elseif (strpos($req_uri, '/reviews/approved.php') !== false) {
+    $current_subnav = 'approved';
+} elseif (strpos($req_uri, '/reviews/rejected.php') !== false) {
+    $current_subnav = 'rejected';
+} elseif (strpos($req_uri, '/reviews/audit.php') !== false) {
+    $current_subnav = 'audit';
+} elseif (strpos($req_uri, '/reviews/') !== false) {
+    $current_subnav = 'all';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
@@ -503,11 +516,52 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-label">Pricing & Discounts</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/admin/reviews/" class="adm-nav-item <?php echo $current_nav === 'reviews' ? 'active' : ''; ?>" id="navItem-reviews" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-reviews')) { switchAdmTab('reviews'); return false; }" data-title="Customer Reviews">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'reviews' ? 'open' : ''; ?>">
+                    <a href="/admin/reviews/" class="adm-nav-item <?php echo $current_nav === 'reviews' ? 'active' : ''; ?>" id="navItem-reviews" data-title="Customer Reviews">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span class="adm-nav-label">Reviews</span>
+                        <?php if (!empty($sb_reviews_pending_count) && $sb_reviews_pending_count > 0): ?>
+                            <span class="adm-nav-badge gold"><?php echo $sb_reviews_pending_count; ?></span>
+                        <?php endif; ?>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'reviews' ? 'open' : ''; ?>" id="admSubmenu-reviews">
+                        <li>
+                            <a href="/admin/reviews/" class="adm-nav-subitem <?php echo ($current_nav === 'reviews' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>All Reviews</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/reviews/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Pending Queue</span>
+                                <?php if (!empty($sb_reviews_pending_count) && $sb_reviews_pending_count > 0): ?>
+                                    <span class="adm-nav-badge gold"><?php echo $sb_reviews_pending_count; ?></span>
+                                <?php endif; ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/reviews/approved.php" class="adm-nav-subitem <?php echo $current_subnav === 'approved' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span>Approved &amp; Live</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/reviews/rejected.php" class="adm-nav-subitem <?php echo $current_subnav === 'rejected' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                <span>Rejected / Spam</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/reviews/audit.php" class="adm-nav-subitem <?php echo $current_subnav === 'audit' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <span>Moderation Audit</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
