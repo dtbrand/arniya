@@ -468,8 +468,23 @@ class PaymentManager
             } catch (\Throwable $ne) {}
 
             if (!$alreadyDecremented) {
+                $isSqlite = ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite');
+                $hasVarIdCol = true;
+                try {
+                    if ($isSqlite) {
+                        $oiInfo = $db->query("PRAGMA table_info(`order_items`)")->fetchAll(PDO::FETCH_ASSOC);
+                        $hasVarIdCol = in_array('variant_id', array_column($oiInfo, 'name'), true);
+                    } else {
+                        $checkOi = $db->query("SHOW COLUMNS FROM `order_items` LIKE 'variant_id'");
+                        $hasVarIdCol = ($checkOi && $checkOi->fetch());
+                    }
+                } catch (\Throwable $oe) {
+                    $hasVarIdCol = false;
+                }
+
+                $selectCols = $hasVarIdCol ? "`product_id`, `quantity`, `variant_id`" : "`product_id`, `quantity`";
                 $stmtItems = $db->prepare("
-                    SELECT `product_id`, `quantity` 
+                    SELECT {$selectCols} 
                     FROM `order_items` 
                     WHERE `order_id` = (SELECT `id` FROM `orders` WHERE `order_number` = :ord LIMIT 1)
                 ");
@@ -479,7 +494,7 @@ class PaymentManager
                 if (!empty($items)) {
                     $col = 'stock_qty';
                     try {
-                        if ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                        if ($isSqlite) {
                             $pInfo = $db->query("PRAGMA table_info(`products`)")->fetchAll(PDO::FETCH_ASSOC);
                             $colNames = array_column($pInfo, 'name');
                             if (in_array('stock_qty', $colNames, true)) {
@@ -497,22 +512,39 @@ class PaymentManager
                         $col = 'stock_qty';
                     }
 
+                    $safeStockExpr = $isSqlite ? "MAX(0, `{$col}` - :qty)" : "GREATEST(0, `{$col}` - :qty)";
                     $stmtDec = $db->prepare("
                         UPDATE `products` 
-                        SET `{$col}` = GREATEST(0, `{$col}` - :qty)
+                        SET `{$col}` = {$safeStockExpr}
                         WHERE `id` = :pid
                     ");
+
+                    $safeVarStockExpr = $isSqlite ? "MAX(0, `stock_qty` - :qty)" : "GREATEST(0, `stock_qty` - :qty)";
+                    $stmtDecVar = null;
+                    try {
+                        $stmtDecVar = $db->prepare("
+                            UPDATE `product_variants` 
+                            SET `stock_qty` = {$safeVarStockExpr}
+                            WHERE `id` = :vid
+                        ");
+                    } catch (\Throwable $ve) {}
+
                     foreach ($items as $item) {
                         $pid = (int)($item['product_id'] ?? 0);
                         $qty = (int)($item['quantity'] ?? 1);
+                        $vid = (int)($item['variant_id'] ?? 0);
                         if ($pid > 0 && $qty > 0) {
                             $stmtDec->execute([':qty' => $qty, ':pid' => $pid]);
+                        }
+                        if ($vid > 0 && $qty > 0 && $stmtDecVar !== null) {
+                            try {
+                                $stmtDecVar->execute([':qty' => $qty, ':vid' => $vid]);
+                            } catch (\Throwable $dve) {}
                         }
                     }
 
                     // Mark as stock reserved in notes to prevent any future decrement
                     try {
-                        $isSqlite = ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite');
                         $updNoteSql = $isSqlite
                             ? "UPDATE `orders` SET `notes` = COALESCE(`notes`, '') || ' [stock_reserved]' WHERE `order_number` = :ord"
                             : "UPDATE `orders` SET `notes` = CASE WHEN `notes` IS NULL OR `notes` = '' THEN '[stock_reserved]' ELSE CONCAT(`notes`, ' [stock_reserved]') END WHERE `order_number` = :ord";

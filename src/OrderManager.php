@@ -148,8 +148,7 @@ class OrderManager
 
         try {
             $stmt = $pdo->prepare(
-                "SELECT id, sku, title, mrp, retail_price, customer_price, customer_sale_price, sale_price, wholesale_price, reseller_price, stock_qty, status, selling_type
-                 FROM products WHERE id IN ({$placeholders})"
+                "SELECT * FROM products WHERE id IN ({$placeholders})"
             );
             $stmt->execute($ids);
             $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -164,30 +163,57 @@ class OrderManager
 
             if ($sellingType === 'full_set') {
                 if ($channel === 'retailer') {
-                    $basePrice = (float)($row['retail_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
+                    $fsRetSale = (isset($row['full_set_retailer_sale_price']) && (float)$row['full_set_retailer_sale_price'] > 0) ? (float)$row['full_set_retailer_sale_price'] : null;
+                    if ($fsRetSale !== null) {
+                        $price = max(0, $fsRetSale);
+                    } else {
+                        $basePrice = (isset($row['full_set_retailer_price']) && (float)$row['full_set_retailer_price'] > 0) ? (float)$row['full_set_retailer_price'] : (float)($row['retail_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
+                    }
                 } else { // wholesale
-                    $basePrice = (float)($row['wholesale_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                    $fsWsSale = (isset($row['full_set_wholesale_sale_price']) && (float)$row['full_set_wholesale_sale_price'] > 0) ? (float)$row['full_set_wholesale_sale_price'] : null;
+                    if ($fsWsSale !== null) {
+                        $price = max(0, $fsWsSale);
+                    } else {
+                        $basePrice = (isset($row['full_set_wholesale_price']) && (float)$row['full_set_wholesale_price'] > 0) ? (float)$row['full_set_wholesale_price'] : (float)($row['wholesale_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
+                    }
                 }
-                if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
-                $price = max(0, $basePrice - $saleDisc);
             } else {
                 if ($channel === 'wholesale') {
-                    $basePrice = (float)($row['wholesale_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
-                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
-                    $price = max(0, $basePrice - $saleDisc);
+                    $wsSale = (isset($row['wholesale_sale_price']) && (float)$row['wholesale_sale_price'] > 0) ? (float)$row['wholesale_sale_price'] : null;
+                    if ($wsSale !== null) {
+                        $price = max(0, $wsSale);
+                    } else {
+                        $basePrice = (float)($row['wholesale_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
+                    }
                 } elseif ($channel === 'reseller') {
-                    $basePrice = (float)($row['reseller_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
-                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
-                    $price = max(0, $basePrice - $saleDisc);
+                    $resSale = (isset($row['reseller_sale_price']) && (float)$row['reseller_sale_price'] > 0) ? (float)$row['reseller_sale_price'] : null;
+                    if ($resSale !== null) {
+                        $price = max(0, $resSale);
+                    } else {
+                        $basePrice = (float)($row['reseller_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['retail_price'] ?? 0); }
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
+                    }
                 } elseif ($channel === 'retailer') {
-                    $basePrice = (float)($row['retail_price'] ?? 0);
-                    if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
-                    if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
-                    $price = max(0, $basePrice - $saleDisc);
+                    $retSale = (isset($row['retailer_sale_price']) && (float)$row['retailer_sale_price'] > 0) ? (float)$row['retailer_sale_price'] : null;
+                    if ($retSale !== null) {
+                        $price = max(0, $retSale);
+                    } else {
+                        $basePrice = (float)($row['retail_price'] ?? 0);
+                        if ($basePrice <= 0) { $basePrice = (float)($row['wholesale_price'] ?? 0); }
+                        if ($basePrice <= 0) { $basePrice = (float)($row['mrp'] ?? 0); }
+                        $price = max(0, $basePrice - $saleDisc);
+                    }
                 } else { // guest / customer
                     $custSalePrice = (float)($row['customer_sale_price'] ?? 0);
                     $custPrice = (float)($row['customer_price'] ?? 0);
@@ -206,7 +232,7 @@ class OrderManager
             // Fetch active variants for this product
             $vRows = [];
             try {
-                $vStmt = $pdo->prepare("SELECT id, color_name, size_name, sku, stock_qty, price FROM product_variants WHERE product_id = ? ORDER BY id ASC");
+                $vStmt = $pdo->prepare("SELECT * FROM product_variants WHERE product_id = ? ORDER BY id ASC");
                 $vStmt->execute([(int)$row['id']]);
                 $vRows = $vStmt->fetchAll(\PDO::FETCH_ASSOC);
             } catch (\Throwable $ve) {
@@ -601,27 +627,30 @@ class OrderManager
                     ");
                 }
 
+                $isSqlite = ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite');
+                $safeStockExpr = $isSqlite ? "MAX(0, stock_qty - ?)" : "GREATEST(0, stock_qty - ?)";
+
                 $stockStmt = $pdo->prepare("
                     UPDATE products
-                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    SET stock_qty = {$safeStockExpr}
                     WHERE id = ?
                 ");
 
                 $variantByIdStockStmt = $pdo->prepare("
                     UPDATE product_variants
-                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    SET stock_qty = {$safeStockExpr}
                     WHERE id = ?
                 ");
 
                 $variantStockStmt = $pdo->prepare("
                     UPDATE product_variants
-                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    SET stock_qty = {$safeStockExpr}
                     WHERE product_id = ? AND LOWER(color_name) = LOWER(?) AND LOWER(size_name) = LOWER(?)
                 ");
 
                 $variantAllStockStmt = $pdo->prepare("
                     UPDATE product_variants
-                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    SET stock_qty = {$safeStockExpr}
                     WHERE product_id = ?
                 ");
 
