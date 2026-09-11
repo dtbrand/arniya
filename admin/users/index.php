@@ -1,83 +1,45 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
-
 /**
- * index.php — Admin Users & Role Permissions
- * DT Brand's & Jai Hanuman Tex
- *
- * The previous revision was a static mockup: two invented roster rows
- * ("Gautam Sethi / dispatch@…"), KPIs fabricated from nothing ("2 Accounts",
- * "4 Accounts", "1 Active", "2FA Active" — this app has no 2FA), an Invite
- * button that only raised a toast and Edit buttons that edited nothing.
- *
- * Everything now comes from the live `users` table (the same rows
- * Auth::adminLogin authenticates against) through /api/users.php, which is
- * admin-gated for reads and super-admin-gated for writes.
+ * index.php — Master Admin Security, Staff Accounts & Access Control Console
+ * DT Brand's & Jai Hanuman Tex — Live Production Architecture
+ * Section 34: Admin Users / Roles / Permissions
  */
+
+$__dtg = __DIR__ . '/../includes/adminguard.php';
+if (!is_file($__dtg)) {
+    $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+}
+if (is_file($__dtg)) require_once $__dtg;
+
 require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/AdminSecurityManager.php';
 
-use DTBrand\Database;
+use DTBrand\AdminSecurityManager;
 
-$page_title = "Admin Users & Role Permissions";
+$secManager = AdminSecurityManager::getInstance();
+$page_title = "Admin Security & Staff Access Console";
 $active_nav = "users";
+$current_subnav = "users";
 
-$accounts = [];
-$pdoUsers = Database::getConnection();
-if ($pdoUsers !== null && !Database::isMockMode()) {
-    try {
-        $accounts = Database::query(
-            "SELECT id, name, email, phone, role, status, last_login, created_at
-             FROM users ORDER BY (role = 'super_admin') DESC, id ASC"
-        );
-    } catch (\Throwable $e) {
-        $accounts = [];
-    }
-}
+$overview = $secManager->getSecurityOverview();
+$users = $secManager->getAdminUsers();
+$roles = $secManager->getRoles();
 
-$superAdmins = 0;
-$staff = 0;
-$activeLast24h = 0;
-foreach ($accounts as $a) {
-    if ($a['role'] === 'super_admin') $superAdmins++;
-    else $staff++;
-    if (!empty($a['last_login']) && strtotime((string)$a['last_login']) > (time() - 86400)) $activeLast24h++;
-}
-
-$roleLabels = [
-    'super_admin' => 'Super Admin (All Modules)',
-    'admin'       => 'Administrator',
-    'manager'     => 'Manager',
-    'staff'       => 'Staff',
-];
-
-$amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'super_admin';
-$myId = (int)($_SESSION['admin_user']['id'] ?? 0);
-
-function dt_users_timeago(?string $ts): string
-{
-    if (empty($ts)) return 'Never signed in';
-    $diff = time() - (int)strtotime($ts);
-    if ($diff < 120) return 'Just now';
-    if ($diff < 3600) return floor($diff / 60) . ' min ago';
-    if ($diff < 86400) return floor($diff / 3600) . ' hours ago';
-    return floor($diff / 86400) . ' days ago';
-}
+$sessionRole = strtolower((string)($_SESSION['admin_user']['role'] ?? $_SESSION['admin_role'] ?? 'admin'));
+$isSuper = ($sessionRole === 'super_admin');
+$currentAdminId = (int)($_SESSION['admin_user']['id'] ?? 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Users & Role Permissions - DT Brand's Admin</title>
+    <title>Admin Security & Staff Access - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <style>
-    .dt-u-modal { display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); backdrop-filter:blur(4px); z-index:9999999; align-items:center; justify-content:center; }
-    .dt-u-input { width:100%; height:34px; padding:0 10px; font-size:12.5px; color:#181512; background:#fff; border:1px solid #c3c4c7; border-radius:5px; box-sizing:border-box; outline:none; }
-    .dt-u-input:focus { border-color:#D4AF37 !important; box-shadow:0 0 0 3px rgba(212,175,55,0.18); }
-    </style>
+    <link rel="stylesheet" href="/admin/users/users.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -85,255 +47,341 @@ function dt_users_timeago(?string $ts): string
     <div class="adm-main">
         <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
+            
+            <!-- Page Header -->
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Admin Users &amp; Role Permissions</span>
-                        <span class="adm-badge gold"><?php echo $amSuper ? 'Super Admin' : ucfirst((string)($_SESSION['admin_user']['role'] ?? 'Admin')); ?></span>
+                        <span>Admin Security &amp; Staff Access</span>
+                        <span class="dt-badge gold"><?php echo $isSuper ? 'Super Admin' : ucfirst($sessionRole); ?></span>
                     </h1>
-                    <p class="adm-page-subtitle">Manage administrator credentials, manager logins, and staff permissions.</p>
+                    <p class="adm-page-subtitle">Governance of administrator credentials, granular role matrices, active sessions, and security audits.</p>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary dt-btn dt-btn-pale"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to Main Console</a>
-                </div>
-            </div>
-
-            <!-- KPI Metric Cards — live counts -->
-            <div class="adm-kpi-grid">
-                <div class="adm-kpi-card">
-                    <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Super Admins</span>
-                        <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        </div>
-                    </div>
-                    <div class="adm-kpi-val"><?php echo (int)$superAdmins; ?> Account<?php echo $superAdmins === 1 ? '' : 's'; ?></div>
-                    <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Full unrestricted access</span></div>
-                </div>
-
-                <div class="adm-kpi-card">
-                    <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Staff / Managers</span>
-                        <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </div>
-                    </div>
-                    <div class="adm-kpi-val"><?php echo (int)$staff; ?> Account<?php echo $staff === 1 ? '' : 's'; ?></div>
-                    <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Warehouse &amp; dispatch roles</span></div>
-                </div>
-
-                <div class="adm-kpi-card">
-                    <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Signed In (24h)</span>
-                        <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                        </div>
-                    </div>
-                    <div class="adm-kpi-val"><?php echo (int)$activeLast24h; ?></div>
-                    <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Based on real last_login</span></div>
-                </div>
-
-                <div class="adm-kpi-card">
-                    <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Password Security</span>
-                        <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        </div>
-                    </div>
-                    <div class="adm-kpi-val">Bcrypt</div>
-                    <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Hashed via password_hash</span></div>
-                </div>
-            </div>
-
-            <!-- Roster — live rows -->
-            <div class="adm-card">
-                <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Administrator &amp; Staff Roster</span></h3>
-                    <?php if ($amSuper): ?>
-                    <button class="adm-btn-primary" onclick="openUserModal('create')">+ Add Admin User</button>
+                <div class="adm-page-actions" style="display:flex; gap:10px; align-items:center;">
+                    <a href="/admin/users/login-audit.php" class="dt-btn-pale">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Login Audit
+                    </a>
+                    <?php if ($isSuper): ?>
+                    <button type="button" onclick="dtOpenModal('modalCreateUser')" class="dt-btn-gold">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        + Create Staff Account
+                    </button>
                     <?php endif; ?>
                 </div>
-                <div class="adm-table-responsive">
+            </div>
+
+            <!-- KPI Summary Ribbon -->
+            <div class="dt-kpi-grid">
+                <div class="dt-kpi-card gold-border">
+                    <div>
+                        <div class="dt-kpi-title">Staff Accounts</div>
+                        <div class="dt-kpi-value"><?php echo (int)$overview['total_staff']; ?></div>
+                        <div class="dt-kpi-sub">
+                            <span class="dt-badge success"><?php echo (int)$overview['active_staff']; ?> Active</span>
+                            <span>&bull; <?php echo (int)$overview['super_admin_count']; ?> Super Admin</span>
+                        </div>
+                    </div>
+                    <div class="dt-kpi-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card emerald-border">
+                    <div>
+                        <div class="dt-kpi-title">Active Sessions</div>
+                        <div class="dt-kpi-value"><?php echo (int)$overview['active_sessions']; ?></div>
+                        <div class="dt-kpi-sub">
+                            <span style="color:#15803D; font-weight:700;">Live Device Handshakes</span>
+                        </div>
+                    </div>
+                    <div class="dt-kpi-icon" style="background:#DCFCE7; color:#15803D;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card amber-border">
+                    <div>
+                        <div class="dt-kpi-title">24h Sign-Ins</div>
+                        <div class="dt-kpi-value"><?php echo (int)$overview['signins_24h']; ?></div>
+                        <div class="dt-kpi-sub">
+                            <span style="color:#B45309; font-weight:700;"><?php echo (int)$overview['failed_attempts_24h']; ?> Failed Attempts</span>
+                        </div>
+                    </div>
+                    <div class="dt-kpi-icon" style="background:#FEF3C7; color:#B45309;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card crimson-border">
+                    <div>
+                        <div class="dt-kpi-title">Security Health</div>
+                        <div class="dt-kpi-value"><?php echo (int)$overview['health_score']; ?>%</div>
+                        <div class="dt-kpi-sub">
+                            <span class="dt-badge <?php echo $overview['health_score'] >= 90 ? 'success' : 'warning'; ?>"><?php echo htmlspecialchars($overview['status_label']); ?></span>
+                        </div>
+                    </div>
+                    <div class="dt-kpi-icon" style="background:#FEF2F2; color:#DC2626;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Hub -->
+            <div class="dt-nav-cards-grid">
+                <a href="/admin/users/admins.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Admin Users</div>
+                    <div class="dt-nav-card-desc">Manage staff credentials, emails, phones, and invitations.</div>
+                </a>
+
+                <a href="/admin/users/roles.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Admin Roles</div>
+                    <div class="dt-nav-card-desc">Define privilege tiers, operational scopes, and role hierarchies.</div>
+                </a>
+
+                <a href="/admin/users/permissions.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Permissions Matrix</div>
+                    <div class="dt-nav-card-desc">Granular matrix of 16 permission actions across 14 modules.</div>
+                </a>
+
+                <a href="/admin/users/sessions.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Active Sessions</div>
+                    <div class="dt-nav-card-desc">Real-time device sessions with instant 1-click revocation.</div>
+                </a>
+
+                <a href="/admin/users/login-audit.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Login Audit</div>
+                    <div class="dt-nav-card-desc">Chronological login attempts, failure reasons, and IP logs.</div>
+                </a>
+
+                <a href="/admin/users/security-events.php" class="dt-nav-card">
+                    <div class="dt-nav-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <div class="dt-nav-card-title">Security Events</div>
+                    <div class="dt-nav-card-desc">High-priority alerts, policy changes, and tamper detection.</div>
+                </a>
+            </div>
+
+            <!-- Staff Accounts Roster Table -->
+            <div class="adm-card" style="margin-bottom:24px;">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h3 class="adm-card-title">
+                            <span>Administrator &amp; Staff Accounts Roster</span>
+                            <span class="dt-badge gold"><?php echo count($users); ?> Accounts</span>
+                        </h3>
+                        <p style="font-size:0.75rem; color:#64748B; margin-top:2px;">Live authenticated users enrolled in the system authentication engine.</p>
+                    </div>
+                    <?php if ($isSuper): ?>
+                    <button type="button" onclick="dtOpenModal('modalCreateUser')" class="dt-btn-gold">
+                        + Add Staff
+                    </button>
+                    <?php endif; ?>
+                </div>
+
+                <div class="adm-table-responsive" style="padding:0;">
                     <table class="adm-table">
                         <thead>
                             <tr>
-                                <th>Admin Name</th>
-                                <th>Email Address</th>
-                                <th>Role &amp; Permissions</th>
-                                <th>Last Login</th>
+                                <th>Staff Member</th>
+                                <th>Contact Details</th>
+                                <th>Role Privilege</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th>Active Sessions</th>
+                                <th>Last Activity</th>
+                                <th style="text-align:right;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($accounts)): ?>
-                                <tr><td colspan="6" style="padding:22px; text-align:center; color:#64748B;">No staff accounts found in the database yet. Use <strong>Add Admin User</strong> to create the first one.</td></tr>
+                            <?php if (empty($users)): ?>
+                            <tr><td colspan="7" style="text-align:center; padding:24px; color:#64748B;">No staff accounts found.</td></tr>
                             <?php else: ?>
-                                <?php foreach ($accounts as $a): $aid = (int)$a['id']; ?>
-                                <tr id="user-row-<?= $aid ?>">
-                                    <td><strong><?= htmlspecialchars((string)$a['name']) ?></strong><?php if ($aid === $myId): ?><br><small style="color:#8A681F;">You</small><?php endif; ?></td>
-                                    <td><?= htmlspecialchars((string)$a['email']) ?></td>
-                                    <td><span class="adm-badge <?= $a['role'] === 'super_admin' ? 'gold' : 'info' ?>"><?= htmlspecialchars($roleLabels[$a['role']] ?? $a['role']) ?></span></td>
-                                    <td><?= htmlspecialchars(dt_users_timeago((string)($a['last_login'] ?? ''))) ?></td>
-                                    <td><span class="adm-badge <?= ($a['status'] ?? '') === 'active' ? 'success' : '' ?>"><?= htmlspecialchars(ucfirst((string)$a['status'])) ?></span></td>
-                                    <td>
-                                        <?php if ($amSuper): ?>
-                                        <button class="adm-btn-secondary adm-btn-sm" onclick='openUserModal("edit", <?= json_encode([
-                                            'id' => $aid,
-                                            'name' => (string)$a['name'],
-                                            'email' => (string)$a['email'],
-                                            'role' => (string)$a['role'],
-                                            'status' => (string)$a['status'],
-                                        ], JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'>Edit</button>
-                                        <?php if ($aid !== $myId): ?>
-                                        <button class="adm-btn-secondary adm-btn-sm" style="color:#B91C1C; border-color:#FECACA;" onclick="deleteUser(<?= $aid ?>, '<?= htmlspecialchars(addslashes((string)$a['name']), ENT_QUOTES) ?>')">Delete</button>
+                            <?php foreach ($users as $u): ?>
+                            <tr>
+                                <td>
+                                    <div style="font-weight:800; color:#111827; font-size:0.92rem;"><?php echo htmlspecialchars((string)$u['name']); ?></div>
+                                    <div style="font-size:0.74rem; color:#64748B;">ID #<?php echo (int)$u['id']; ?></div>
+                                </td>
+                                <td>
+                                    <div style="font-weight:600; color:#1F2937;"><?php echo htmlspecialchars((string)$u['email']); ?></div>
+                                    <div style="font-size:0.74rem; color:#64748B;"><?php echo !empty($u['phone']) ? htmlspecialchars((string)$u['phone']) : 'No phone linked'; ?></div>
+                                </td>
+                                <td>
+                                    <span class="dt-badge <?php echo $u['role'] === 'super_admin' ? 'gold' : ($u['role'] === 'admin' ? 'info' : 'warning'); ?>">
+                                        <?php echo htmlspecialchars(ucwords(str_replace('_', ' ', (string)$u['role']))); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="dt-badge <?php echo ($u['status'] ?? 'active') === 'active' ? 'success' : 'danger'; ?>">
+                                        <?php echo htmlspecialchars(ucfirst((string)($u['status'] ?? 'active'))); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="dt-badge <?php echo ($u['active_sessions'] ?? 0) > 0 ? 'success' : 'info'; ?>">
+                                        <?php echo (int)($u['active_sessions'] ?? 0); ?> Active
+                                    </span>
+                                </td>
+                                <td>
+                                    <div style="font-weight:600; font-size:0.82rem; color:#334155;"><?php echo htmlspecialchars((string)$u['timeago']); ?></div>
+                                    <div style="font-size:0.72rem; color:#94A3B8;"><?php echo !empty($u['last_login']) ? date('d M Y, h:i A', strtotime((string)$u['last_login'])) : 'Never signed in'; ?></div>
+                                </td>
+                                <td style="text-align:right;">
+                                    <div style="display:inline-flex; gap:6px; align-items:center;">
+                                        <?php if ($isSuper): ?>
+                                        <button type="button" onclick="dtOpenEditUser(<?php echo (int)$u['id']; ?>, '<?php echo addslashes((string)$u['name']); ?>', '<?php echo addslashes((string)$u['email']); ?>', '<?php echo addslashes((string)($u['phone'] ?? '')); ?>', '<?php echo addslashes((string)$u['role']); ?>')" class="dt-btn-pale" title="Edit Profile">
+                                            Edit
+                                        </button>
+                                        <button type="button" onclick="dtOpenResetPassword(<?php echo (int)$u['id']; ?>, '<?php echo addslashes((string)$u['name']); ?>')" class="dt-btn-pale" title="Reset Password">
+                                            Password
+                                        </button>
+                                        <button type="button" onclick="dtToggleUserStatus(<?php echo (int)$u['id']; ?>)" class="dt-btn-pale" title="Toggle Status">
+                                            <?php echo ($u['status'] ?? 'active') === 'active' ? 'Deactivate' : 'Activate'; ?>
+                                        </button>
+                                        <?php if ((int)$u['id'] !== $currentAdminId && $u['role'] !== 'super_admin'): ?>
+                                        <button type="button" onclick="dtDeleteUser(<?php echo (int)$u['id']; ?>, '<?php echo addslashes((string)$u['name']); ?>')" class="dt-btn-danger" title="Delete Account">
+                                            Delete
+                                        </button>
                                         <?php endif; ?>
                                         <?php else: ?>
-                                        <span style="font-size:11px; color:#94A3B8;">Super Admin only</span>
+                                        <span style="font-size:0.75rem; color:#94A3B8; font-style:italic;">Protected</span>
                                         <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
-                <?php if (!$amSuper): ?>
-                <p style="font-size:11.5px; color:#94A3B8; padding:0 18px 12px;">Read-only view — creating, editing and deleting staff accounts requires a Super Admin login.</p>
-                <?php endif; ?>
             </div>
+
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 
-<!-- Add / Edit modal -->
-<div id="dtUserModal" class="dt-u-modal">
-    <div style="background:#fff; width:95%; max-width:460px; border-radius:10px; border:2px solid #D4AF37; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4);">
-        <div style="background:linear-gradient(135deg,#261C0E,#3A2C12 45%,#18120A); padding:14px 18px; border-bottom:2px solid #D4AF37;">
-            <h3 style="margin:0; font-size:15px; font-weight:800; color:#fff;" id="dtUserModalTitle">Add Admin User</h3>
+<!-- Modal: Create Admin User -->
+<div id="modalCreateUser" class="dt-modal">
+    <div class="dt-modal-content">
+        <div class="dt-modal-header">
+            <h3 class="dt-modal-title">+ Invite / Create Staff Account</h3>
+            <button type="button" onclick="dtCloseModal('modalCreateUser')" class="dt-modal-close">&times;</button>
         </div>
-        <div style="padding:18px 20px; display:flex; flex-direction:column; gap:12px;">
-            <input type="hidden" id="dtUserId" value="">
-            <div>
-                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Full Name *</label>
-                <input type="text" id="dtUserName" class="dt-u-input" placeholder="e.g. Gautam Sethi">
+        <form onsubmit="dtSubmitCreateUser(event)">
+            <div class="dt-form-group">
+                <label class="dt-form-label">Full Name</label>
+                <input type="text" name="name" class="dt-sec-input" placeholder="e.g., Rajesh Mehta" required>
             </div>
-            <div>
-                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Email (login) *</label>
-                <input type="email" id="dtUserEmail" class="dt-u-input" placeholder="name@jaihanumantex.in">
+            <div class="dt-form-group">
+                <label class="dt-form-label">Official Email Address</label>
+                <input type="email" name="email" class="dt-sec-input" placeholder="e.g., rajesh@dtbrand.in" required>
             </div>
-            <div>
-                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Role</label>
-                <select id="dtUserRole" class="dt-u-input">
-                    <option value="staff">Staff</option>
-                    <option value="manager">Manager</option>
-                    <option value="admin">Administrator</option>
-                    <option value="super_admin">Super Admin</option>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Phone Number (Optional)</label>
+                <input type="text" name="phone" class="dt-sec-input" placeholder="+91 98251 00000">
+            </div>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Assigned Role</label>
+                <select name="role" class="dt-sec-select" required>
+                    <option value="admin">Administrator (Catalog & Orders)</option>
+                    <option value="manager">Operations Manager (Dispatch & Inventory)</option>
+                    <option value="catalog_staff">Catalog Staff (Products & Media)</option>
+                    <option value="support_staff">Customer Support Staff (Concierge)</option>
+                    <option value="super_admin">Super Admin (Master Unrestricted)</option>
                 </select>
             </div>
-            <div id="dtUserStatusWrap">
-                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Status</label>
-                <select id="dtUserStatus" class="dt-u-input">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive (blocks sign-in)</option>
-                </select>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Initial Password (Min 8 Characters)</label>
+                <input type="password" name="password" class="dt-sec-input" placeholder="••••••••••••" minlength="8" required>
             </div>
-            <div id="dtUserPassWrap">
-                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Password * <span id="dtUserPassHint" style="color:#78716C; font-weight:600;">(min 8 characters)</span></label>
-                <input type="text" id="dtUserPass" class="dt-u-input" autocomplete="off" placeholder="Set a strong password">
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+                <button type="button" onclick="dtCloseModal('modalCreateUser')" class="dt-btn-pale">Cancel</button>
+                <button type="submit" class="dt-btn-gold">Create Account</button>
             </div>
-        </div>
-        <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:8px;">
-            <button class="adm-btn-secondary" onclick="closeUserModal()">Cancel</button>
-            <button class="adm-btn-primary" onclick="submitUserModal()">Save Account</button>
-        </div>
+        </form>
     </div>
 </div>
 
-<script>
-var DT_USER_IS_SUPER = <?= $amSuper ? 'true' : 'false' ?>;
+<!-- Modal: Edit Admin User -->
+<div id="modalEditUser" class="dt-modal">
+    <div class="dt-modal-content">
+        <div class="dt-modal-header">
+            <h3 class="dt-modal-title">Edit Staff Account</h3>
+            <button type="button" onclick="dtCloseModal('modalEditUser')" class="dt-modal-close">&times;</button>
+        </div>
+        <form onsubmit="dtSubmitEditUser(event)">
+            <input type="hidden" id="edit_user_id" name="id">
+            <div class="dt-form-group">
+                <label class="dt-form-label">Full Name</label>
+                <input type="text" id="edit_name" name="name" class="dt-sec-input" required>
+            </div>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Official Email</label>
+                <input type="email" id="edit_email" name="email" class="dt-sec-input" required>
+            </div>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Phone Number</label>
+                <input type="text" id="edit_phone" name="phone" class="dt-sec-input">
+            </div>
+            <div class="dt-form-group">
+                <label class="dt-form-label">Assigned Role</label>
+                <select id="edit_role" name="role" class="dt-sec-select" required>
+                    <option value="super_admin">Super Admin</option>
+                    <option value="admin">Administrator</option>
+                    <option value="manager">Operations Manager</option>
+                    <option value="catalog_staff">Catalog Staff</option>
+                    <option value="support_staff">Customer Support Staff</option>
+                </select>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+                <button type="button" onclick="dtCloseModal('modalEditUser')" class="dt-btn-pale">Cancel</button>
+                <button type="submit" class="dt-btn-gold">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-function openUserModal(mode, data) {
-    if (!DT_USER_IS_SUPER) { return; }
-    var title = document.getElementById('dtUserModalTitle');
-    document.getElementById('dtUserId').value = '';
-    document.getElementById('dtUserName').value = '';
-    document.getElementById('dtUserEmail').value = '';
-    document.getElementById('dtUserPass').value = '';
-    document.getElementById('dtUserRole').value = 'staff';
-    document.getElementById('dtUserStatus').value = 'active';
-    document.getElementById('dtUserEmail').readOnly = false;
-    if (mode === 'edit' && data) {
-        title.textContent = 'Edit Account: ' + data.name;
-        document.getElementById('dtUserId').value = data.id;
-        document.getElementById('dtUserName').value = data.name;
-        document.getElementById('dtUserEmail').value = data.email;
-        document.getElementById('dtUserEmail').readOnly = true; // login identity
-        document.getElementById('dtUserRole').value = data.role;
-        document.getElementById('dtUserStatus').value = data.status;
-        document.getElementById('dtUserPassHint').textContent = '(leave blank to keep current password)';
-    } else {
-        title.textContent = 'Add Admin User';
-        document.getElementById('dtUserPassHint').textContent = '(min 8 characters)';
-    }
-    document.getElementById('dtUserModal').style.display = 'flex';
-}
+<!-- Modal: Reset Password -->
+<div id="modalResetPassword" class="dt-modal">
+    <div class="dt-modal-content">
+        <div class="dt-modal-header">
+            <h3 class="dt-modal-title">Reset Staff Password</h3>
+            <button type="button" onclick="dtCloseModal('modalResetPassword')" class="dt-modal-close">&times;</button>
+        </div>
+        <form onsubmit="dtSubmitResetPassword(event)">
+            <input type="hidden" id="reset_user_id" name="id">
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:16px;">
+                Resetting password for: <strong id="reset_user_name_label" style="color:#111827;"></strong>.
+                All active sessions for this account will be automatically terminated.
+            </p>
+            <div class="dt-form-group">
+                <label class="dt-form-label">New Password (Min 8 Characters)</label>
+                <input type="password" id="reset_password" name="password" class="dt-sec-input" minlength="8" placeholder="••••••••••••" required>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+                <button type="button" onclick="dtCloseModal('modalResetPassword')" class="dt-btn-pale">Cancel</button>
+                <button type="submit" class="dt-btn-gold">Set New Password</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-function closeUserModal() {
-    document.getElementById('dtUserModal').style.display = 'none';
-}
-
-function submitUserModal() {
-    var id = document.getElementById('dtUserId').value;
-    var name = document.getElementById('dtUserName').value.trim();
-    var email = document.getElementById('dtUserEmail').value.trim();
-    var role = document.getElementById('dtUserRole').value;
-    var status = document.getElementById('dtUserStatus').value;
-    var pass = document.getElementById('dtUserPass').value;
-    var isEdit = id !== '';
-
-    if (!name) { showToastSafe('Name is required'); return; }
-    if (!isEdit && !email) { showToastSafe('Email is required'); return; }
-    if (!isEdit && pass.length < 8) { showToastSafe('Password must be at least 8 characters'); return; }
-
-    var params = new URLSearchParams();
-    params.append('action', isEdit ? 'update' : 'create');
-    if (isEdit) params.append('id', id);
-    params.append('name', name);
-    if (!isEdit) params.append('email', email);
-    params.append('role', role);
-    params.append('status', status);
-    if (pass !== '') params.append('password', pass);
-
-    fetch('/api/users.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-            if (d && d.success === false) { showToastSafe(d.message || 'Request failed'); return; }
-            window.location.reload();
-        })
-        .catch(function () { showToastSafe('Could not reach the server'); });
-}
-
-function deleteUser(id, name) {
-    if (!confirm('Delete the account "' + name + '"? This cannot be undone.')) return;
-    var params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-    fetch('/api/users.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-            if (d && d.success === false) { showToastSafe(d.message || 'Delete failed'); return; }
-            var row = document.getElementById('user-row-' + id);
-            if (row) row.remove();
-        })
-        .catch(function () { showToastSafe('Could not reach the server'); });
-}
-
-function showToastSafe(msg) {
-    if (typeof window.showToast === 'function') window.showToast(msg); else alert(msg);
-}
-</script>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/users/users.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

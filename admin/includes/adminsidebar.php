@@ -157,6 +157,20 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'returns';
 } elseif (strpos($req_uri, '/reports/export.php') !== false) {
     $current_subnav = 'export';
+} elseif (strpos($req_uri, '/users/admins.php') !== false) {
+    $current_subnav = 'admins';
+} elseif (strpos($req_uri, '/users/roles.php') !== false) {
+    $current_subnav = 'roles';
+} elseif (strpos($req_uri, '/users/permissions.php') !== false) {
+    $current_subnav = 'permissions';
+} elseif (strpos($req_uri, '/users/sessions.php') !== false) {
+    $current_subnav = 'sessions';
+} elseif (strpos($req_uri, '/users/login-audit.php') !== false) {
+    $current_subnav = 'login-audit';
+} elseif (strpos($req_uri, '/users/security-events.php') !== false) {
+    $current_subnav = 'security-events';
+} elseif (strpos($req_uri, '/users/') !== false) {
+    $current_subnav = 'overview';
 } elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
 } elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
@@ -1225,11 +1239,64 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                            <a href="/admin/users/" class="adm-nav-item <?php echo $current_nav === 'users' ? 'active' : ''; ?>" id="navItem-users" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-users')) { switchAdmTab('users'); return false; }" data-title="Admin Users & Roles">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
-                        <span class="adm-nav-label">Users & Roles</span>
+                <!-- ADMIN SECURITY & ROLES WITH SECTION 34 SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'users' ? 'open' : ''; ?>">
+                    <a href="/admin/users/" class="adm-nav-item <?php echo $current_nav === 'users' ? 'active' : ''; ?>" id="navItem-users" data-title="Admin Security & Roles">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span class="adm-nav-label">Admin Security</span>
+                        <span class="adm-nav-badge gold">RBAC</span>
+                        <span class="adm-nav-arrow-wrap">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-sub">
+                        <li>
+                            <a href="/admin/users/" class="adm-nav-subitem <?php echo ($current_nav === 'users' && ($current_subnav === 'overview' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Security Console</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/admins.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'admins') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>Admin Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/roles.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'roles') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Admin Roles</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/permissions.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'permissions') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <span>Permissions Matrix</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/sessions.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'sessions') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                <span>Active Sessions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/login-audit.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'login-audit') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Login Audit</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/users/security-events.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'security-events') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span>Security Events</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- INTEGRATIONS WITH SECTION 32 SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'integrations' ? 'open' : ''; ?>">

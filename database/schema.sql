@@ -342,6 +342,8 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX `idx_audit_action` (`action`),
     INDEX `idx_audit_entity` (`entity_type`, `entity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ── 19. INVENTORY LEDGER TABLE ──
 CREATE TABLE IF NOT EXISTS `inventory_ledger` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,

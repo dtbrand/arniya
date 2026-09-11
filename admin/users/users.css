@@ -1,1 +1,447 @@
-/* users.css - DT Brand's Admin Users Module Styles */
+/**
+ * users.css — DT Brand's & Jai Hanuman Tex Admin Security & Roles Stylesheet
+ * TailAdmin Benchmark Typography, Gold Gradients, Micro-Interactions & Responsive Tables
+ * Section 34: Admin Users / Roles / Permissions
+ */
+
+/* ── RUNNING FOCUS LINE ANIMATION ── */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to { --dt-border-angle: 360deg; }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35); }
+    100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6); }
+}
+
+.dt-sec-input:focus, .dt-sec-select:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* ── KPI RIBBON CARDS ── */
+.dt-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dt-kpi-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dt-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dt-kpi-card.gold-border {
+    border-left: 4px solid #D4AF37;
+}
+
+.dt-kpi-card.emerald-border {
+    border-left: 4px solid #16A34A;
+}
+
+.dt-kpi-card.amber-border {
+    border-left: 4px solid #D97706;
+}
+
+.dt-kpi-card.crimson-border {
+    border-left: 4px solid #DC2626;
+}
+
+.dt-kpi-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    margin-bottom: 6px;
+}
+
+.dt-kpi-value {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.dt-kpi-sub {
+    font-size: 0.76rem;
+    color: #94A3B8;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dt-kpi-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FAF5E8;
+    color: #8A681F;
+}
+
+/* ── QUICK NAV CARDS ── */
+.dt-nav-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.dt-nav-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    color: inherit;
+}
+
+.dt-nav-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+.dt-nav-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #FAF5E8;
+    color: #8A681F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.dt-nav-card-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.dt-nav-card-desc {
+    font-size: 0.74rem;
+    color: #64748B;
+    line-height: 1.4;
+}
+
+/* ── LUXURY BUTTONS ── */
+.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    border: 1px solid #8A681F !important;
+    color: #111827 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.011em !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48) !important;
+}
+
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    border: 1.2px solid #8A681F !important;
+    color: #FAF5E8 !important;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.dt-btn-dark:hover {
+    border-color: #D4AF37 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35) !important;
+}
+
+.dt-btn-pale {
+    background: #FAF5E8 !important;
+    border: 1px solid #D4AF37 !important;
+    color: #705114 !important;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: all 0.2s ease;
+}
+
+.dt-btn-pale:hover {
+    background: #F5ECCE !important;
+    color: #5A4210 !important;
+    border-color: #8A681F !important;
+    transform: translateY(-1px);
+}
+
+.dt-btn-danger {
+    background: #FEF2F2 !important;
+    border: 1px solid #FCA5A5 !important;
+    color: #DC2626 !important;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: all 0.2s ease;
+}
+
+.dt-btn-danger:hover {
+    background: #FEE2E2 !important;
+    border-color: #DC2626 !important;
+}
+
+/* ── STATUS BADGES ── */
+.dt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.dt-badge.gold {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+}
+
+.dt-badge.success {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.dt-badge.warning {
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FCD34D;
+}
+
+.dt-badge.danger {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FCA5A5;
+}
+
+.dt-badge.info {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #93C5FD;
+}
+
+/* ── PERMISSIONS MATRIX TABLE ── */
+.dt-perm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.dt-perm-table th, .dt-perm-table td {
+    padding: 10px 12px;
+    border: 1px solid #E2E8F0;
+    text-align: center;
+}
+
+.dt-perm-table th:first-child, .dt-perm-table td:first-child {
+    text-align: left;
+    font-weight: 700;
+    background: #FAFAFA;
+}
+
+.dt-perm-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.dt-perm-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #D4AF37;
+    cursor: pointer;
+}
+
+/* ── MODALS ── */
+.dt-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 999999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.dt-modal.active {
+    display: flex;
+}
+
+.dt-modal-content {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.dt-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.dt-modal-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+.dt-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #64748B;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.dt-form-group {
+    margin-bottom: 16px;
+}
+
+.dt-form-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-sec-input, .dt-sec-select {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 0.85rem;
+    color: #111827;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* ── SESSIONS LIST ── */
+.dt-session-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #FFFFFF;
+    transition: border-color 0.2s ease;
+}
+
+.dt-session-row.current {
+    border-color: #D4AF37;
+    background: #FCFAF5;
+}
+
+.dt-session-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.dt-session-device-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: #F1F5F9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+}
+
+.dt-session-row.current .dt-session-device-icon {
+    background: #FAF5E8;
+    color: #8A681F;
+}
