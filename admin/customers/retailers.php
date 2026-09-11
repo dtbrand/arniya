@@ -2,7 +2,7 @@
 /* DT admin access guard */ $__dtg = __DIR__ . '/../includes/adminguard.php'; if (!is_file($__dtg)) $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * index.php — Customer Management Master Dashboard & Directory
+ * retailers.php — Retailers & Boutiques Partner CRM Hub
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 require_once __DIR__ . '/../../src/CustomerManager.php';
@@ -12,12 +12,19 @@ use DTBrand\CustomerManager;
 use DTBrand\Database;
 
 $customersList = CustomerManager::getAll();
-$totalCustomersCount = count($customersList);
+$retailerCount = 0;
+$retailerSpend = 0.0;
+foreach ($customersList as $c) {
+    if (($c['type'] ?? '') === 'retailer') {
+        $retailerCount++;
+        $retailerSpend += (float)($c['lifetime_spend'] ?? 0);
+    }
+}
 
-$page_title = "Customer CRM & Directory";
+$page_title = "Retailers & Boutiques CRM";
 $active_nav = "customers";
-$active_subnav = "all";
-$active_filter = "all";
+$active_subnav = "retailers";
+$active_filter = "retailer";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,38 +47,35 @@ $active_filter = "all";
         <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
             
             <div class="dt-customers-container">
-                <!-- Page Header -->
                 <div class="dt-cust-head">
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
-                            <span>Customer CRM &amp; Shopper Directory</span>
-                            <span class="dt-cust-badge gold"><?php echo number_format($totalCustomersCount); ?> Shoppers</span>
+                            <span>Retailers &amp; Boutiques CRM</span>
+                            <span class="dt-cust-badge gold"><?php echo number_format($retailerCount); ?> Boutiques</span>
                         </h1>
-                        <p class="dt-cust-subtitle">Manage retail customer profiles, lifetime purchases, repeat loyalty, and 1-click WhatsApp connect.</p>
+                        <p class="dt-cust-subtitle">Manage registered retail showroom owners, boutique partners, and verified multi-brand outlets with Full Set and Single Piece catalog tiering.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <button type="button" class="dt-btn dt-btn-pale" onclick="window.location.reload();">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                            <span>Refresh</span>
-                        </button>
-                        <a href="/admin/customers/export.php" class="dt-btn dt-btn-gold">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            <span>Export All Shoppers</span>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>All Customers</span>
+                        </a>
+                        <a href="/admin/customers/export.php?type=retailer" class="dt-btn dt-btn-gold">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Export Retailers CSV</span>
+                        </a>
+                        <a href="/admin/customers/new.php?type=retailer" class="dt-btn dt-btn-dark">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>+ Add Retailer</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 8-Card KPI Ribbon & Flow Pills -->
                 <?php include __DIR__ . '/components/customer-stats.php'; ?>
-
-                <!-- Toolbar & Debounced Live Search -->
                 <?php include __DIR__ . '/components/customer-search.php'; ?>
-
-                <!-- Master Customers Table -->
                 <?php include __DIR__ . '/components/customer-table.php'; ?>
             </div>
 
-            <!-- Modals & Drawers -->
             <?php include __DIR__ . '/components/customer-filters.php'; ?>
             <?php include __DIR__ . '/components/customer-status.php'; ?>
             <?php include __DIR__ . '/components/bulk-actions.php'; ?>
@@ -89,5 +93,12 @@ $active_filter = "all";
 <script src="/admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/customer-status.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof filterCustomersByStatus === 'function') {
+        filterCustomersByStatus('retailer');
+    }
+});
+</script>
 </body>
 </html>

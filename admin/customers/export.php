@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = __DIR__ . '/../includes/adminguard.php'; if (!is_file($__dtg)) $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * export.php - Customer Export Studio (CSV / Excel / Print)
@@ -81,20 +81,32 @@ foreach ($customers as $c) {
 // returns, so `?? 4899` stamped every single row with a lifetime spend of
 // Rs 4,899, and `?? 1` gave every customer one order.
 if (isset($_GET['download']) && $_GET['download'] == '1') {
+    $filterType = isset($_GET['type']) ? trim((string)$_GET['type']) : '';
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=dt_customers_export_' . date('Y_m_d_His') . '.csv');
     $output = fopen('php://output', 'w');
+    echo "\xEF\xBB\xBF";
     fputcsv($output, ['Customer ID', 'Full Name', 'Phone', 'Email', 'Account Type', 'Tier',
                       'GSTIN', 'Total Orders', 'Lifetime Spend (INR)', 'Avg Order Value (INR)',
                       'Last Order', 'City', 'State', 'Pincode', 'Credit Limit (INR)',
                       'Outstanding (INR)', 'Status', 'Registered']);
     foreach ($exportRows as $r) {
-        fputcsv($output, [
+        if ($filterType !== '' && strtolower($r['type']) !== strtolower($filterType)) {
+            continue;
+        }
+        $row = [
             $r['id'], $r['name'], $r['phone'], $r['email'], $r['type'], $r['tier'],
             $r['gstin'], $r['orders'], $r['spend'], $r['aov'], $r['last_order'],
             $r['city'], $r['state'], $r['pincode'], $r['credit'], $r['balance'],
             $r['status'], $r['joined'],
-        ]);
+        ];
+        $sanitized = array_map(function($val) {
+            if (is_string($val) && preg_match('/^[=\+\-@\t\r]/', $val)) {
+                return "'" . $val;
+            }
+            return $val;
+        }, $row);
+        fputcsv($output, $sanitized);
     }
     fclose($output);
     exit;
@@ -105,7 +117,7 @@ if (isset($_GET['download']) && $_GET['download'] == '1') {
 // an admin chose a cohort believing it held over a thousand buyers.
 $cutoff60 = strtotime('-60 days');
 $scopeCounts = ['all' => count($exportRows), 'vip' => 0, 'frequent' => 0, 'gujarat' => 0,
-                'wholesale' => 0, 'reseller' => 0, 'retail' => 0, 'pending' => 0, 'dormant' => 0];
+                'wholesale' => 0, 'reseller' => 0, 'retailer' => 0, 'retail' => 0, 'pending' => 0, 'dormant' => 0];
 foreach ($exportRows as $r) {
     if (stripos($r['tier'], 'vip') !== false || $r['spend'] >= 25000) $scopeCounts['vip']++;
     if ($r['orders'] >= 3) $scopeCounts['frequent']++;
@@ -113,6 +125,7 @@ foreach ($exportRows as $r) {
     if ($st === 'GJ' || $st === 'GUJARAT') $scopeCounts['gujarat']++;
     if ($r['type'] === 'wholesale') $scopeCounts['wholesale']++;
     if ($r['type'] === 'reseller')  $scopeCounts['reseller']++;
+    if ($r['type'] === 'retailer')  $scopeCounts['retailer']++;
     if ($r['type'] === 'retail')    $scopeCounts['retail']++;
     if ($r['status'] === 'pending') $scopeCounts['pending']++;
     $lo = $r['last_order'] !== '' ? strtotime($r['last_order']) : false;
@@ -358,6 +371,7 @@ if (!array_key_exists($preScope, $scopeCounts)) { $preScope = 'all'; }
                                     'gujarat'   => 'Gujarat Buyers',
                                     'wholesale' => 'Wholesale Accounts',
                                     'reseller'  => 'Reseller Accounts',
+                                    'retailer'  => 'Retailers & Boutiques',
                                     'retail'    => 'Retail Shoppers',
                                     'pending'   => 'Awaiting Approval',
                                     'dormant'   => 'No Order in 60+ Days (includes never ordered)',
@@ -527,6 +541,7 @@ function filterCustomersByScope(scope) {
     if (scope === 'gujarat')   return exportRows.filter(c => ['GJ', 'GUJARAT'].indexOf(String(c.state).trim().toUpperCase()) !== -1);
     if (scope === 'wholesale') return exportRows.filter(c => c.type === 'wholesale');
     if (scope === 'reseller')  return exportRows.filter(c => c.type === 'reseller');
+    if (scope === 'retailer')  return exportRows.filter(c => c.type === 'retailer');
     if (scope === 'retail')    return exportRows.filter(c => c.type === 'retail');
     if (scope === 'pending')   return exportRows.filter(c => c.status === 'pending');
     if (scope === 'dormant')   return exportRows.filter(c => {

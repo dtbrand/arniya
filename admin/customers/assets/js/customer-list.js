@@ -331,6 +331,7 @@
         gujarat: 'Gujarat buyers',
         wholesale: 'Wholesale accounts',
         reseller: 'Reseller accounts',
+        retailer: 'Retailer & boutique accounts',
         retail: 'Retail shoppers',
         pending: 'Awaiting approval',
         suspended: 'Suspended accounts',
@@ -347,6 +348,7 @@
             case 'gujarat':   return function (c) { var s = c.state.toUpperCase(); return s === 'GJ' || s === 'GUJARAT'; };
             case 'wholesale':
             case 'reseller':
+            case 'retailer':
             case 'retail':    return function (c) { return c.type.toLowerCase() === key; };
             case 'pending':
             case 'suspended': return function (c) { return c.status === key; };
@@ -430,7 +432,7 @@
             currentList = masterCustomers.filter(c => c.status === 'pending');
         } else if (statusKey === 'inactive' || statusKey === 'suspended') {
             currentList = masterCustomers.filter(c => c.status === 'suspended');
-        } else if (statusKey === 'wholesale' || statusKey === 'reseller' || statusKey === 'retail') {
+        } else if (statusKey === 'wholesale' || statusKey === 'reseller' || statusKey === 'retailer' || statusKey === 'retail') {
             currentList = byType(statusKey);
         } else if (statusKey === 'new') {
             currentList = masterCustomers.filter(c => c.orders === 0);

@@ -469,6 +469,26 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             </a>
                         </li>
                         <li>
+                            <a href="/admin/customers/wholesalers.php" class="adm-nav-subitem <?php echo $current_subnav === 'wholesalers' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Wholesalers B2B</span>
+                                <span class="adm-nav-badge gold"><?php echo $sb_wholesale_count; ?></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/customers/resellers.php" class="adm-nav-subitem <?php echo $current_subnav === 'resellers' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>VIP Resellers</span>
+                                <span class="adm-nav-badge" style="background:#F3E8FF; color:#7E22CE;"><?php echo $sb_reseller_count; ?></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/customers/retailers.php" class="adm-nav-subitem <?php echo $current_subnav === 'retailers' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>Retailers &amp; Boutiques</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/admin/customers/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 12l2 2 4-4"></path><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.66 0 3.22.45 4.56 1.24"></path></svg>
                                 <span>Trade Approvals</span>
