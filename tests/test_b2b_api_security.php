@@ -169,6 +169,25 @@ $res = testApiEndpoint(__DIR__ . '/../api/auth.php', 'GET', ['action' => 'profil
 assert($res !== null && $res['success'] === false, "auth profile must fail for unauthenticated request");
 echo "✅ PASS: Unauthenticated auth profile access blocked.\n";
 
+// 17. Test unauthenticated customer_addresses.php blocked
+$res = testApiEndpoint(__DIR__ . '/../api/customer_addresses.php', 'GET', ['customer_id' => 1]);
+assert($res !== null && $res['success'] === false, "customer_addresses GET must fail for unauthenticated request");
+echo "✅ PASS: Unauthenticated customer_addresses GET blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/customer_addresses.php', 'POST', ['action' => 'save', 'customer_id' => 1]);
+assert($res !== null && $res['success'] === false, "customer_addresses POST must fail for unauthenticated request");
+echo "✅ PASS: Unauthenticated customer_addresses POST blocked.\n";
+
+// 18. Test unauthenticated customer_notes.php blocked
+$res = testApiEndpoint(__DIR__ . '/../api/customer_notes.php', 'GET', ['customer_id' => 1]);
+assert($res !== null && $res['success'] === false, "customer_notes GET must fail for unauthenticated request");
+echo "✅ PASS: Unauthenticated customer_notes GET blocked.\n";
+
+$res = testApiEndpoint(__DIR__ . '/../api/customer_notes.php', 'POST', ['action' => 'add_note', 'customer_id' => 1]);
+assert($res !== null && $res['success'] === false, "customer_notes POST must fail for unauthenticated request");
+echo "✅ PASS: Unauthenticated customer_notes POST blocked.\n";
+
 echo "═══════════════════════════════════════════════════════════\n";
 echo "100% PASS: All B2B & Orders IDOR, PII leaks, and unauthenticated attacks blocked!\n";
 echo "═══════════════════════════════════════════════════════════\n";
+
