@@ -1,10 +1,17 @@
 <?php
-/* DT admin access guard (auto-inserted) */ 
-$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; 
+/* DT admin access guard (auto-inserted with dual relative fallback) */
+$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+if (!is_file($__dtg)) {
+    $__dtg = __DIR__ . '/../includes/adminguard.php';
+    if (!is_file($__dtg)) {
+        $__dtg = dirname(__DIR__, 2) . '/admin/includes/adminguard.php';
+    }
+}
 if (is_file($__dtg)) require_once $__dtg;
 
 /**
  * refunds.php - DT Brand's Admin Refund Requests & Ledger
+ * Section 28 (Payment Admin)
  * DT Brand's & Jai Hanuman Tex
  */
 require_once __DIR__ . '/../../src/Database.php';
@@ -36,7 +43,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refund Requests & Ledger - DT Brand's Admin</title>
+    <title>Refund Requests &amp; Ledger — DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -54,14 +61,17 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                         <span>Refund Requests &amp; Ledger</span>
                         <span class="adm-badge gold"><?= count($refundsList) ?> Refunds</span>
                     </h1>
-                    <p class="adm-page-subtitle">Audit log of processed refunds, returns, and reversals.</p>
+                    <p class="adm-page-subtitle">Audit log of processed refunds, customer returns, and gateway chargebacks.</p>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>Back to Payments Suite</span>
+                <div class="adm-page-actions" style="display:flex; gap:8px;">
+                    <a href="/admin/payments/" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:6px 14px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Transactions Ledger</span>
                     </a>
-                    <a href="/admin" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">Main Console</a>
+                    <a href="/admin/payments/reconciliation.php" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:6px 14px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <span>Reconciliation</span>
+                    </a>
                 </div>
             </div>
 
@@ -80,6 +90,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                                 <th>Gateway Ref</th>
                                 <th>Refund Date</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,11 +104,17 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                                         <td><code><?= htmlspecialchars($r['gateway_payment_id'] ?: 'RF_DIRECT') ?></code></td>
                                         <td style="font-size:0.75rem; color:#64748B;"><?= date('d M Y', strtotime($r['created_at'])) ?></td>
                                         <td><span class="adm-badge danger">Refunded</span></td>
+                                        <td>
+                                            <a href="/admin/payments/view.php?id=<?= $r['id'] ?>" class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none; display:inline-flex; align-items:center; gap:4px; padding:3px 8px; font-size:0.72rem; font-weight:700;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>Inspect</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="7" style="text-align:center; padding:35px; color:#64748B;">
+                                    <td colspan="8" style="text-align:center; padding:35px; color:#64748B;">
                                         Zero refund requests or chargebacks logged in ledger.
                                     </td>
                                 </tr>

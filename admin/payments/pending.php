@@ -1,6 +1,12 @@
 <?php
-/* DT admin access guard (auto-inserted) */ 
-$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; 
+/* DT admin access guard (auto-inserted with dual relative fallback) */
+$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+if (!is_file($__dtg)) {
+    $__dtg = __DIR__ . '/../includes/adminguard.php';
+    if (!is_file($__dtg)) {
+        $__dtg = dirname(__DIR__, 2) . '/admin/includes/adminguard.php';
+    }
+}
 if (is_file($__dtg)) require_once $__dtg;
 
 /**

@@ -40,6 +40,21 @@ if (!PaymentManager::verifyRazorpayWebhookSignature($rawBody, $signature)) {
 
 $event = json_decode($rawBody, true) ?: [];
 $eventType = $event['event'] ?? '';
+$eventId = $_SERVER['HTTP_X_RAZORPAY_EVENT_ID'] ?? ($event['id'] ?? ($event['event_id'] ?? ''));
+
+// Section 28: Webhook Replay Protection & Idempotency Audit
+$webhookRec = PaymentManager::recordWebhookEvent('razorpay', $eventId, $eventType, $signature, $event, 'PROCESSED');
+if (!$webhookRec['idempotent'] || ($webhookRec['status'] ?? '') === 'REPLAY_IGNORED') {
+    http_response_code(200);
+    echo json_encode([
+        'status'  => 'success',
+        'event'   => $eventType,
+        'note'    => 'REPLAY_IGNORED',
+        'message' => 'Duplicate webhook event received and ignored. Stock not decremented.'
+    ]);
+    exit;
+}
+
 $payload = $event['payload']['payment']['entity'] ?? ($event['payload']['order']['entity'] ?? []);
 
 $paymentId = $payload['id'] ?? '';
@@ -53,7 +68,7 @@ $db = Database::getConnection();
 if (!empty($receipt)) {
     try {
         if ($eventType === 'payment.captured' || $eventType === 'order.paid') {
-            // 1. Mark order paid and adjust stock
+            // 1. Mark order paid and adjust stock (idempotent, prevents double decrement)
             PaymentManager::markOrderPaidAndAdjustStock($receipt, 'razorpay', $paymentId, $payload);
 
             // 2. Log / Update transaction audit ledger
@@ -66,10 +81,12 @@ if (!empty($receipt)) {
                 'status'              => 'captured',
                 'gateway_order_id'    => $orderId,
                 'gateway_payment_id'  => $paymentId,
+                'gateway_event_id'    => $eventId,
                 'webhook_payload'     => $event,
                 'notes'               => "Webhook event: {$eventType}"
             ]);
         } elseif ($eventType === 'payment.failed') {
+            $errorDesc = $payload['error_description'] ?? ($payload['error_reason'] ?? 'Payment failed');
             PaymentManager::recordTransaction([
                 'order_number'        => $receipt,
                 'gateway'             => 'razorpay',
@@ -77,10 +94,12 @@ if (!empty($receipt)) {
                 'amount'              => $amount,
                 'currency'            => $payload['currency'] ?? 'INR',
                 'status'              => 'failed',
+                'failure_reason'      => $errorDesc,
                 'gateway_order_id'    => $orderId,
                 'gateway_payment_id'  => $paymentId,
+                'gateway_event_id'    => $eventId,
                 'webhook_payload'     => $event,
-                'notes'               => "Payment failed: " . ($payload['error_description'] ?? 'Unknown error')
+                'notes'               => "Payment failed: {$errorDesc}"
             ]);
         }
     } catch (\Throwable $e) {
@@ -89,4 +108,4 @@ if (!empty($receipt)) {
 }
 
 http_response_code(200);
-echo json_encode(['status' => 'success', 'event' => $eventType]);
+echo json_encode(['status' => 'success', 'event' => $eventType, 'event_id' => $eventId]);

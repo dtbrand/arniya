@@ -381,21 +381,25 @@ class PaymentManager
         }
 
         try {
-            $stmt = $db->prepare("
-                INSERT INTO `payment_transactions` (
-                    `order_id`, `order_number`, `customer_id`, `customer_name`, `customer_phone`,
-                    `gateway`, `payment_method`, `amount`, `currency`, `status`,
-                    `gateway_order_id`, `gateway_payment_id`, `gateway_signature`,
-                    `utr_reference`, `webhook_payload`, `notes`
-                ) VALUES (
-                    :order_id, :order_number, :customer_id, :customer_name, :customer_phone,
-                    :gateway, :payment_method, :amount, :currency, :status,
-                    :gateway_order_id, :gateway_payment_id, :gateway_signature,
-                    :utr_reference, :webhook_payload, :notes
-                )
-            ");
+            $hasEventId = false;
+            $hasFailureReason = false;
+            try {
+                if ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                    $ptInfo = $db->query("PRAGMA table_info(`payment_transactions`)")->fetchAll(PDO::FETCH_ASSOC);
+                    $names = array_column($ptInfo, 'name');
+                    $hasEventId = in_array('gateway_event_id', $names, true);
+                    $hasFailureReason = in_array('failure_reason', $names, true);
+                } else {
+                    $c1 = $db->query("SHOW COLUMNS FROM `payment_transactions` LIKE 'gateway_event_id'");
+                    $hasEventId = ($c1 && $c1->fetch());
+                    $c2 = $db->query("SHOW COLUMNS FROM `payment_transactions` LIKE 'failure_reason'");
+                    $hasFailureReason = ($c2 && $c2->fetch());
+                }
+            } catch (\Throwable $pe) {}
 
-            $stmt->execute([
+            $extraCols = "";
+            $extraVals = "";
+            $params = [
                 ':order_id'           => $data['order_id'] ?? null,
                 ':order_number'       => $data['order_number'] ?? 'ORD-0',
                 ':customer_id'        => $data['customer_id'] ?? null,
@@ -412,8 +416,34 @@ class PaymentManager
                 ':utr_reference'      => $data['utr_reference'] ?? null,
                 ':webhook_payload'    => isset($data['webhook_payload']) ? (is_array($data['webhook_payload']) ? json_encode($data['webhook_payload']) : (string)$data['webhook_payload']) : null,
                 ':notes'              => $data['notes'] ?? null
-            ]);
+            ];
 
+            if ($hasEventId) {
+                $extraCols .= ", `gateway_event_id`";
+                $extraVals .= ", :gateway_event_id";
+                $params[':gateway_event_id'] = $data['gateway_event_id'] ?? null;
+            }
+            if ($hasFailureReason) {
+                $extraCols .= ", `failure_reason`";
+                $extraVals .= ", :failure_reason";
+                $params[':failure_reason'] = $data['failure_reason'] ?? null;
+            }
+
+            $stmt = $db->prepare("
+                INSERT INTO `payment_transactions` (
+                    `order_id`, `order_number`, `customer_id`, `customer_name`, `customer_phone`,
+                    `gateway`, `payment_method`, `amount`, `currency`, `status`,
+                    `gateway_order_id`, `gateway_payment_id`, `gateway_signature`,
+                    `utr_reference`, `webhook_payload`, `notes` {$extraCols}
+                ) VALUES (
+                    :order_id, :order_number, :customer_id, :customer_name, :customer_phone,
+                    :gateway, :payment_method, :amount, :currency, :status,
+                    :gateway_order_id, :gateway_payment_id, :gateway_signature,
+                    :utr_reference, :webhook_payload, :notes {$extraVals}
+                )
+            ");
+
+            $stmt->execute($params);
             return (int)$db->lastInsertId();
         } catch (\Throwable $e) {
             error_log("PaymentManager::recordTransaction error: " . $e->getMessage());
@@ -738,5 +768,242 @@ class PaymentManager
         ];
 
         return $list;
+    }
+
+    private static array $mockWebhooks = [];
+
+    /**
+     * Mask sensitive API key or secret for zero secret exposure
+     */
+    public static function maskSecret(?string $secret): string
+    {
+        if (empty($secret)) {
+            return '••••••••••••';
+        }
+        $len = strlen($secret);
+        if ($len <= 6) {
+            return '••••••••••••';
+        }
+        return '••••••••••••' . substr($secret, -4);
+    }
+
+    /**
+     * Check whether an incoming webhook event has already been processed (Idempotency Guard)
+     */
+    public static function isWebhookEventProcessed(string $gateway, string $eventId): bool
+    {
+        if (empty($eventId)) {
+            return false;
+        }
+        $db = Database::getConnection();
+        if ($db === null || Database::isMockMode()) {
+            return isset(self::$mockWebhooks[$gateway . ':' . $eventId]) && self::$mockWebhooks[$gateway . ':' . $eventId] === 'PROCESSED';
+        }
+
+        try {
+            // Check if table exists
+            $stmt = $db->prepare("SELECT COUNT(*) FROM `payment_webhooks` WHERE `gateway` = :gw AND `event_id` = :eid AND `status` = 'PROCESSED' LIMIT 1");
+            $stmt->execute([':gw' => $gateway, ':eid' => $eventId]);
+            return ((int)$stmt->fetchColumn() > 0);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Record incoming webhook event with deduplication and replay protection (Section 28)
+     */
+    public static function recordWebhookEvent(string $gateway, ?string $eventId, string $eventType, ?string $signature, $payload, string $status = 'PROCESSED', ?string $ipAddress = null): array
+    {
+        $db = Database::getConnection();
+        $payloadStr = is_array($payload) ? json_encode($payload) : (string)$payload;
+        $ip = $ipAddress ?: ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+
+        if (!empty($eventId) && self::isWebhookEventProcessed($gateway, $eventId)) {
+            // Log the duplicate attempt
+            try {
+                if ($db !== null && !Database::isMockMode()) {
+                    $db->prepare("
+                        INSERT INTO `payment_webhooks` 
+                        (`gateway`, `event_id`, `event_type`, `signature_header`, `payload_json`, `status`, `ip_address`, `processed_at`)
+                        VALUES (:gw, :eid, :etype, :sig, :payload, 'REPLAY_IGNORED', :ip, NOW())
+                    ")->execute([
+                        ':gw'      => $gateway,
+                        ':eid'     => $eventId,
+                        ':etype'   => $eventType,
+                        ':sig'     => $signature,
+                        ':payload' => $payloadStr,
+                        ':ip'      => $ip
+                    ]);
+                }
+            } catch (\Throwable $e) {}
+
+            return [
+                'idempotent' => false,
+                'status'     => 'REPLAY_IGNORED',
+                'event_id'   => $eventId,
+                'message'    => 'Duplicate webhook event ignored. Stock decrement skipped.'
+            ];
+        }
+
+        if (!empty($eventId)) {
+            self::$mockWebhooks[$gateway . ':' . $eventId] = $status;
+        }
+
+        try {
+            if ($db !== null && !Database::isMockMode()) {
+                $db->prepare("
+                    INSERT INTO `payment_webhooks` 
+                    (`gateway`, `event_id`, `event_type`, `signature_header`, `payload_json`, `status`, `ip_address`, `processed_at`)
+                    VALUES (:gw, :eid, :etype, :sig, :payload, :status, :ip, NOW())
+                ")->execute([
+                    ':gw'      => $gateway,
+                    ':eid'     => $eventId,
+                    ':etype'   => $eventType,
+                    ':sig'     => $signature,
+                    ':payload' => $payloadStr,
+                    ':status'  => $status,
+                    ':ip'      => $ip
+                ]);
+            }
+        } catch (\Throwable $e) {
+            error_log("PaymentManager::recordWebhookEvent error: " . $e->getMessage());
+        }
+
+        return [
+            'idempotent' => true,
+            'status'     => $status,
+            'event_id'   => $eventId,
+            'message'    => 'Webhook event recorded successfully.'
+        ];
+    }
+
+    /**
+     * 3-Way Financial Reconciliation Engine (Orders vs Payment Transactions vs Settlements)
+     */
+    public static function reconcileOrders(array $filters = []): array
+    {
+        $db = Database::getConnection();
+        if ($db === null || Database::isMockMode()) {
+            return [
+                'summary' => [
+                    'total_orders'         => 0,
+                    'reconciled_count'     => 0,
+                    'discrepancy_count'    => 0,
+                    'matched_amount'       => 0.0,
+                    'discrepancy_amount'   => 0.0,
+                    'unpaid_captured_count'=> 0
+                ],
+                'records' => []
+            ];
+        }
+
+        try {
+            $limit = isset($filters['limit']) ? (int)$filters['limit'] : 100;
+            $orderSql = "SELECT `id`, `order_number`, `total_amount`, `payment_status`, `payment_gateway`, `gateway_payment_id`, `created_at` 
+                         FROM `orders` ORDER BY `id` DESC LIMIT {$limit}";
+            $orders = $db->query($orderSql)->fetchAll(PDO::FETCH_ASSOC);
+
+            $records = [];
+            $totalOrders = count($orders);
+            $reconciledCount = 0;
+            $discrepancyCount = 0;
+            $matchedAmount = 0.0;
+            $discrepancyAmount = 0.0;
+            $unpaidCapturedCount = 0;
+
+            foreach ($orders as $ord) {
+                $orderNum = $ord['order_number'];
+                $orderAmt = (float)($ord['total_amount'] ?? 0);
+                $orderStatus = (string)($ord['payment_status'] ?? 'pending');
+
+                // Find corresponding captured transaction
+                $txStmt = $db->prepare("
+                    SELECT `id`, `amount`, `status`, `gateway`, `gateway_payment_id`, `utr_reference`, `created_at`
+                    FROM `payment_transactions` 
+                    WHERE `order_number` = :ord 
+                    ORDER BY `id` DESC LIMIT 1
+                ");
+                $txStmt->execute([':ord' => $orderNum]);
+                $tx = $txStmt->fetch(PDO::FETCH_ASSOC);
+
+                $txAmt = $tx ? (float)$tx['amount'] : 0.0;
+                $txStatus = $tx ? (string)$tx['status'] : 'none';
+                $txGateway = $tx ? (string)$tx['gateway'] : ($ord['payment_gateway'] ?: 'unknown');
+                $txRef = $tx ? ($tx['gateway_payment_id'] ?: $tx['utr_reference'] ?: '-') : '-';
+
+                $status = 'matched';
+                $diff = abs($orderAmt - $txAmt);
+                $note = 'Financial ledger verified';
+
+                if ($orderStatus === 'paid') {
+                    if (!$tx || $txStatus !== 'captured') {
+                        $status = 'missing_gateway';
+                        $note = 'Order marked paid in storefront, but no captured gateway transaction found';
+                        $discrepancyCount++;
+                        $discrepancyAmount += $orderAmt;
+                    } elseif ($diff > 0.05) {
+                        $status = 'discrepancy';
+                        $note = "Amount mismatch: Order is {$orderAmt}, Gateway captured {$txAmt}";
+                        $discrepancyCount++;
+                        $discrepancyAmount += $diff;
+                    } else {
+                        $reconciledCount++;
+                        $matchedAmount += $orderAmt;
+                    }
+                } else {
+                    if ($tx && $txStatus === 'captured') {
+                        $status = 'unpaid_order';
+                        $note = 'Payment was captured by gateway, but order status remains unpaid/pending!';
+                        $unpaidCapturedCount++;
+                        $discrepancyCount++;
+                        $discrepancyAmount += $txAmt;
+                    } else {
+                        $status = 'pending_unpaid';
+                        $note = 'Pending order and pending payment';
+                    }
+                }
+
+                $records[] = [
+                    'order_id'           => $ord['id'],
+                    'order_number'       => $orderNum,
+                    'order_amount'       => $orderAmt,
+                    'order_status'       => $orderStatus,
+                    'gateway'            => $txGateway,
+                    'gateway_amount'     => $txAmt,
+                    'gateway_status'     => $txStatus,
+                    'gateway_ref'        => $txRef,
+                    'discrepancy_amount' => $diff,
+                    'status'             => $status,
+                    'notes'              => $note,
+                    'date'               => $ord['created_at']
+                ];
+            }
+
+            return [
+                'summary' => [
+                    'total_orders'          => $totalOrders,
+                    'reconciled_count'      => $reconciledCount,
+                    'discrepancy_count'     => $discrepancyCount,
+                    'matched_amount'        => $matchedAmount,
+                    'discrepancy_amount'    => $discrepancyAmount,
+                    'unpaid_captured_count' => $unpaidCapturedCount
+                ],
+                'records' => $records
+            ];
+        } catch (\Throwable $e) {
+            error_log("PaymentManager::reconcileOrders error: " . $e->getMessage());
+            return [
+                'summary' => [
+                    'total_orders'         => 0,
+                    'reconciled_count'     => 0,
+                    'discrepancy_count'    => 0,
+                    'matched_amount'       => 0.0,
+                    'discrepancy_amount'   => 0.0,
+                    'unpaid_captured_count'=> 0
+                ],
+                'records' => []
+            ];
+        }
     }
 }
