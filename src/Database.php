@@ -63,17 +63,26 @@ class Database
             }
         }
 
-        $host     = getenv('DB_HOST')     ?: 'localhost';
-        $port     = getenv('DB_PORT')     ?: '3306';
-        $dbName   = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'u602484543_demodt121');
-        $username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'u602484543_demodt121');
-        $password = getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: 'Gautam@9006');
+        $cfg = [];
+        $cfgPath = dirname(__DIR__) . '/config/database.php';
+        if (file_exists($cfgPath)) {
+            $rawCfg = @include $cfgPath;
+            if (is_array($rawCfg) && isset($rawCfg['connections']['mysql'])) {
+                $cfg = $rawCfg['connections']['mysql'];
+            }
+        }
 
-        $candidates = [
+        $host     = getenv('DB_HOST')     ?: ($cfg['host'] ?? 'localhost');
+        $port     = getenv('DB_PORT')     ?: ($cfg['port'] ?? '3306');
+        $dbName   = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: ($cfg['database'] ?? 'u602484543_demodt121'));
+        $username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: ($cfg['username'] ?? 'u602484543_demodt121'));
+        $password = getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: ($cfg['password'] ?? 'Gautam@9006'));
+
+        $candidates = array_unique(array_filter([
             $host,
             'localhost',
             '127.0.0.1',
-        ];
+        ]));
 
         // Ensure both the configured and master production db name are attempted
         $dbCandidates = array_unique([$dbName, 'u602484543_demodt121']);

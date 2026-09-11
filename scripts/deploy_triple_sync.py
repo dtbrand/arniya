@@ -43,6 +43,7 @@ FILES_TO_DEPLOY = [
     'assets/css/wholesale.css',
     'assets/css/retailer.css',
     'config/session.php',
+    'config/database.php',
     'adminlogin.php',
     'admin.php',
     'admin/index.php',
