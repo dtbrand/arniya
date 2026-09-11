@@ -1,5 +1,11 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (hardened fallback) */
+$__dtg1 = __DIR__ . '/../includes/adminguard.php';
+$__dtg2 = __DIR__ . '/../../admin/includes/adminguard.php';
+$__dtg3 = (isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php' : '';
+if (is_file($__dtg1)) { require_once $__dtg1; }
+elseif (is_file($__dtg2)) { require_once $__dtg2; }
+elseif ($__dtg3 && is_file($__dtg3)) { require_once $__dtg3; }
 
 /**
  * index.php - DT Brand's Admin Marketing Module

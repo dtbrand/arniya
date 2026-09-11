@@ -143,6 +143,20 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/inventory/') !== false) {
     $current_subnav = 'overview';
+} elseif (strpos($req_uri, '/marketing/coupons.php') !== false) {
+    $current_subnav = 'coupons';
+} elseif (strpos($req_uri, '/marketing/discount-rules.php') !== false) {
+    $current_subnav = 'discount-rules';
+} elseif (strpos($req_uri, '/marketing/usage.php') !== false) {
+    $current_subnav = 'usage';
+} elseif (strpos($req_uri, '/marketing/expired.php') !== false) {
+    $current_subnav = 'expired';
+} elseif (strpos($req_uri, '/marketing/audit.php') !== false) {
+    $current_subnav = 'audit';
+} elseif (strpos($req_uri, '/marketing/banners.php') !== false) {
+    $current_subnav = 'banners';
+} elseif (strpos($req_uri, '/marketing/campaigns.php') !== false) {
+    $current_subnav = 'campaigns';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
@@ -689,11 +703,66 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         <div class="adm-nav-group">
             <div class="adm-nav-heading">MARKETING & CMS</div>
             <ul class="adm-nav-list">
-                <li>
-                    <a href="/admin/marketing/" class="adm-nav-item <?php echo $current_nav === 'marketing' ? 'active' : ''; ?>" id="navItem-marketing" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-marketing')) { switchAdmTab('marketing'); return false; }" data-title="Marketing & Campaigns">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <!-- MARKETING & OFFERS WITH SECTION 26 SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'marketing' ? 'open' : ''; ?>">
+                    <a href="/admin/marketing/" class="adm-nav-item <?php echo $current_nav === 'marketing' ? 'active' : ''; ?>" id="navItem-marketing" data-title="Marketing & Offers">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         <span class="adm-nav-label">Marketing & Offers</span>
+                        <span class="adm-nav-badge gold">PROMO</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'marketing' ? 'open' : ''; ?>" id="admSubmenu-marketing">
+                        <li>
+                            <a href="/admin/marketing/" class="adm-nav-subitem <?php echo ($current_nav === 'marketing' && empty($current_subnav)) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Overview Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/coupons.php" class="adm-nav-subitem <?php echo $current_subnav === 'coupons' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                <span>Coupons Studio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/discount-rules.php" class="adm-nav-subitem <?php echo $current_subnav === 'discount-rules' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Discount Rules</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/usage.php" class="adm-nav-subitem <?php echo $current_subnav === 'usage' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Usage Ledger</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/expired.php" class="adm-nav-subitem <?php echo $current_subnav === 'expired' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Expired Codes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/audit.php" class="adm-nav-subitem <?php echo $current_subnav === 'audit' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>Security Audit</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/banners.php" class="adm-nav-subitem <?php echo $current_subnav === 'banners' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Banners & Sliders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/marketing/campaigns.php" class="adm-nav-subitem <?php echo $current_subnav === 'campaigns' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                <span>Campaigns</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/admin/cms/" class="adm-nav-item <?php echo $current_nav === 'cms' ? 'active' : ''; ?>" id="navItem-cms" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-cms')) { switchAdmTab('cms'); return false; }" data-title="CMS Pages">

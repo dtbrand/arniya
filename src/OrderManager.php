@@ -17,45 +17,16 @@ class OrderManager
      * server-side computation — it mirrors dt_coupon_apply() in
      * /api/coupons.php so the storefront preview and the stored order always
      * agree, and a tampered client "discount" value can never be honoured.
-     * Returns 0.0 for any unknown / inactive / below-minimum / offline case.
      */
-    private static function resolveCouponDiscount(string $code, float $subtotal): float
+    private static function resolveCouponDiscount(string $code, float $subtotal, string $channel = 'all', ?string $customerPhone = null, ?int $customerId = null): float
     {
         $code = strtoupper(trim($code));
         if ($code === '') {
             return 0.0;
         }
-        $pdo = Database::getConnection();
-        if ($pdo === null || Database::isMockMode()) {
-            return 0.0;
-        }
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM `coupons` WHERE `code` = ? LIMIT 1");
-            $stmt->execute([$code]);
-            $c = $stmt->fetch(\PDO::FETCH_ASSOC);
-        } catch (\Throwable $e) {
-            return 0.0;
-        }
-        if (!$c || strtolower((string)($c['status'] ?? 'active')) !== 'active') {
-            return 0.0;
-        }
-        $min = (float)($c['min_order_value'] ?? 0);
-        if ($subtotal < $min) {
-            return 0.0;
-        }
-        $type = strtolower((string)($c['discount_type'] ?? 'percentage'));
-        $value = (float)($c['discount_value'] ?? 0);
-        $maxDiscount = (float)($c['max_discount'] ?? 0);
-        if ($type === 'percentage') {
-            $discount = $subtotal * ($value / 100.0);
-            if ($maxDiscount > 0) {
-                $discount = min($discount, $maxDiscount);
-            }
-        } else { // 'flat'
-            $discount = $value;
-        }
-        $discount = min($discount, $subtotal); // never exceed the bag value
-        return round($discount, 2);
+        require_once __DIR__ . '/DiscountEngine.php';
+        $res = DiscountEngine::applyCoupon($code, $subtotal, null, $channel, $customerPhone, $customerId);
+        return $res['valid'] ? (float)$res['discount'] : 0.0;
     }
 
     /**
@@ -386,12 +357,15 @@ class OrderManager
         // Discount is server-authoritative: never trust a client-supplied
         // amount. It is honoured only when a live, active coupon justifies it
         // for this subtotal. Offline/mock mode cannot verify against the DB, so
-        // the demo-only client value is merely clamped to a sane range.
         $couponCode = (string)($orderData['coupon_code'] ?? '');
+        $customerId = (int)($orderData['customer_id'] ?? 0);
+        $customerName = trim($orderData['customer_name'] ?? 'Direct Customer');
+        $customerPhone = trim($orderData['customer_phone'] ?? '');
+
         if (Database::isMockMode()) {
             $discount = max(0.0, min((float)($orderData['discount'] ?? 0.0), $subtotal));
         } else {
-            $discount = self::resolveCouponDiscount($couponCode, $subtotal);
+            $discount = self::resolveCouponDiscount($couponCode, $subtotal, $channel, $customerPhone, $customerId);
         }
         $shipping = (float)($orderData['shipping'] ?? 0.0);
         $gstRate = (float)($orderData['gst_rate'] ?? 5.0);
@@ -399,10 +373,6 @@ class OrderManager
         $calc = PricingCalculator::calculateOrderTotal($subtotal, $discount, $shipping, $gstRate);
         $grandTotal = (float)($calc['grand_total'] ?? $subtotal);
         $gstAmount = (float)($calc['gst_amount'] ?? $calc['gst'] ?? 0.0);
-
-        $customerId = (int)($orderData['customer_id'] ?? 0);
-        $customerName = trim($orderData['customer_name'] ?? 'Direct Customer');
-        $customerPhone = trim($orderData['customer_phone'] ?? '');
         $shippingAddress = trim((string)($orderData['shipping_address'] ?? ''));
         // $channel was already resolved from the session above — do not re-read
         // it from the request here.
@@ -754,6 +724,26 @@ class OrderManager
                             WHERE id = ?
                         ")->execute([$grandTotal, $customerId]);
                     } catch (\Exception $ce) {}
+                }
+
+                // Record verified coupon redemption in coupon_usages ledger
+                if ($discount > 0 && !empty($couponCode)) {
+                    try {
+                        require_once __DIR__ . '/DiscountEngine.php';
+                        DiscountEngine::recordRedemption(
+                            $couponCode,
+                            $dbOrderId,
+                            $orderNumber,
+                            $customerId,
+                            $customerPhone,
+                            $customerName,
+                            $discount,
+                            $subtotal,
+                            $channel
+                        );
+                    } catch (\Throwable $cpe) {
+                        error_log('[OrderManager] Coupon redemption record skipped: ' . $cpe->getMessage());
+                    }
                 }
 
                 $pdo->commit();
