@@ -330,18 +330,25 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- ── 18. AUDIT LOGS TABLE ──
 CREATE TABLE IF NOT EXISTS `audit_logs` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `correlation_id` VARCHAR(64) NULL,
     `user_id` INT DEFAULT NULL,
     `user_name` VARCHAR(100) DEFAULT 'system',
+    `actor_role` VARCHAR(50) DEFAULT 'admin',
     `action` VARCHAR(100) NOT NULL,
     `entity_type` VARCHAR(50) NOT NULL,
     `entity_id` VARCHAR(50) NOT NULL,
     `old_values` JSON DEFAULT NULL,
     `new_values` JSON DEFAULT NULL,
+    `status` ENUM('success', 'warning', 'failure') NOT NULL DEFAULT 'success',
+    `details` TEXT NULL,
     `ip_address` VARCHAR(45) DEFAULT NULL,
     `user_agent` VARCHAR(255) DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_audit_corr` (`correlation_id`),
     INDEX `idx_audit_action` (`action`),
-    INDEX `idx_audit_entity` (`entity_type`, `entity_id`)
+    INDEX `idx_audit_entity` (`entity_type`, `entity_id`),
+    INDEX `idx_audit_created` (`created_at`),
+    INDEX `idx_audit_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ── 19. INVENTORY LEDGER TABLE ──

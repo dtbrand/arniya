@@ -91,6 +91,8 @@ if (isset($active_nav) && !empty($active_nav)) {
     $current_nav = 'reports';
 } elseif (strpos($req_uri, '/users/') !== false) {
     $current_nav = 'users';
+} elseif (strpos($req_uri, '/audit/') !== false) {
+    $current_nav = 'audit';
 } elseif (strpos($req_uri, '/settings/') !== false) {
     $current_nav = 'settings';
 } elseif (strpos($req_uri, '/system/') !== false) {
@@ -171,6 +173,16 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'security-events';
 } elseif (strpos($req_uri, '/users/') !== false) {
     $current_subnav = 'overview';
+} elseif (strpos($req_uri, '/audit/security.php') !== false) {
+    $current_subnav = 'security';
+} elseif (strpos($req_uri, '/audit/products.php') !== false) {
+    $current_subnav = 'products';
+} elseif (strpos($req_uri, '/audit/orders.php') !== false) {
+    $current_subnav = 'orders';
+} elseif (strpos($req_uri, '/audit/details.php') !== false) {
+    $current_subnav = 'details';
+} elseif (strpos($req_uri, '/audit/') !== false) {
+    $current_subnav = 'index';
 } elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
 } elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
@@ -1294,6 +1306,51 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/users/security-events.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'security-events') ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                                 <span>Security Events</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- ENTERPRISE AUDIT LOGS WITH SECTION 35 SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'audit' ? 'open' : ''; ?>">
+                    <a href="/admin/audit/" class="adm-nav-item <?php echo $current_nav === 'audit' ? 'active' : ''; ?>" id="navItem-audit" data-title="Enterprise Audit Logs">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span class="adm-nav-label">Audit Logs</span>
+                        <span class="adm-nav-badge gold">AUDIT</span>
+                        <span class="adm-nav-arrow-wrap">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                    <ul class="adm-nav-sub">
+                        <li>
+                            <a href="/admin/audit/" class="adm-nav-subitem <?php echo ($current_nav === 'audit' && ($current_subnav === 'index' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Master Audit Feed</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/audit/security.php" class="adm-nav-subitem <?php echo ($current_nav === 'audit' && $current_subnav === 'security') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>Security &amp; Access</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/audit/products.php" class="adm-nav-subitem <?php echo ($current_nav === 'audit' && $current_subnav === 'products') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                <span>Catalog &amp; Pricing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/audit/orders.php" class="adm-nav-subitem <?php echo ($current_nav === 'audit' && $current_subnav === 'orders') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                <span>Orders &amp; Payments</span>
                             </a>
                         </li>
                     </ul>
