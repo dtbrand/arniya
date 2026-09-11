@@ -1,0 +1,50 @@
+# ==============================================================================
+# DT BRAND'S & JAI HANUMAN TEX — OFFICIAL SEARCH ENGINE DIRECTIVES (ROBOTS.TXT)
+# Version: 1.0 Enterprise Production Standard
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /product/
+Allow: /about-us
+Allow: /contact
+Allow: /terms
+Allow: /privacy
+Allow: /shipping
+Allow: /assets/
+Allow: /sitemap.xml
+
+# Disallow Administrative & Staff Portals
+Disallow: /admin/
+Disallow: /adminlogin.php
+Disallow: /admin.php
+
+# Disallow Private User Sessions, Cart & Checkout
+Disallow: /account
+Disallow: /account.php
+Disallow: /cart
+Disallow: /cart.php
+Disallow: /checkout
+Disallow: /checkout.php
+Disallow: /wishlist
+Disallow: /wishlist.php
+
+# Disallow Internal APIs & Protected Directories
+Disallow: /api/
+Disallow: /config/
+Disallow: /database/
+Disallow: /includes/
+Disallow: /src/
+Disallow: /tests/
+Disallow: /scripts/
+Disallow: /scratch/
+Disallow: /vendor/
+Disallow: /bootstrap/
+
+# Crawl Delay
+Crawl-delay: 1
+
+# Official Dynamic Sitemaps
+Sitemap: https://jaihanumantex.in/sitemap.xml
+Sitemap: https://harmitethnic.com/sitemap.xml

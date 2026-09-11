@@ -16,6 +16,26 @@ Options -Indexes -MultiViews
     </IfModule>
 </FilesMatch>
 
+# Allow public discovery endpoints
+<Files "sitemap.xml">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Files>
+<Files "robots.txt">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Files>
+
 # ── 2. REWRITE ENGINE & URL ROUTING ──
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -89,6 +109,7 @@ Options -Indexes -MultiViews
     RewriteRule ^terms/?$ terms.php [QSA,L]
     RewriteRule ^logout/?$ logout.php [QSA,L]
     RewriteRule ^health/?$ health.php [QSA,L]
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # ── 6. CLEAN API ROUTES ──
     # Nested two-segment API endpoints (e.g. /api/webhooks/razorpay, /api/payment/verify, /api/system/backup)

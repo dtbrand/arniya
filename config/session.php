@@ -43,9 +43,9 @@ if (session_status() === PHP_SESSION_NONE) {
     // SESSION ID SECURITY
     // ─────────────────────────────────────────────────────────────────────────────
     
-    // Use stronger hash for session IDs (PHP 7.1+)
-    ini_set('session.sid_length', '48');
-    ini_set('session.sid_bits_per_character', '6');
+    // Use stronger hash for session IDs (PHP 7.1+; deprecated in PHP 8.4+)
+    @ini_set('session.sid_length', '48');
+    @ini_set('session.sid_bits_per_character', '6');
     
     // Strict mode - only accept existing session IDs, never create new ones from URL
     ini_set('session.use_strict_mode', '1');
