@@ -42,6 +42,7 @@ FILES_TO_DEPLOY = [
     'assets/js/modals.js',
     'assets/css/wholesale.css',
     'assets/css/retailer.css',
+    'assets/css/reseller.css',
     'config/session.php',
     'config/database.php',
     'adminlogin.php',
