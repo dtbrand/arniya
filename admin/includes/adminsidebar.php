@@ -183,6 +183,30 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'details';
 } elseif (strpos($req_uri, '/audit/') !== false) {
     $current_subnav = 'index';
+} elseif (strpos($req_uri, '/system/health.php') !== false) {
+    $current_subnav = 'health';
+} elseif (strpos($req_uri, '/system/settings.php') !== false) {
+    $current_subnav = 'settings';
+} elseif (strpos($req_uri, '/system/environment.php') !== false) {
+    $current_subnav = 'environment';
+} elseif (strpos($req_uri, '/system/database.php') !== false) {
+    $current_subnav = 'database';
+} elseif (strpos($req_uri, '/system/migrations.php') !== false) {
+    $current_subnav = 'migrations';
+} elseif (strpos($req_uri, '/system/cache.php') !== false) {
+    $current_subnav = 'cache';
+} elseif (strpos($req_uri, '/system/storage.php') !== false) {
+    $current_subnav = 'storage';
+} elseif (strpos($req_uri, '/system/logs.php') !== false) {
+    $current_subnav = 'logs';
+} elseif (strpos($req_uri, '/system/cron.php') !== false) {
+    $current_subnav = 'cron';
+} elseif (strpos($req_uri, '/system/maintenance.php') !== false) {
+    $current_subnav = 'maintenance';
+} elseif (strpos($req_uri, '/system/feature-flags.php') !== false) {
+    $current_subnav = 'feature-flags';
+} elseif (strpos($req_uri, '/system/backups.php') !== false) {
+    $current_subnav = 'backups';
 } elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
 } elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
@@ -1421,11 +1445,94 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-label">Store Settings</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/admin/system/" class="adm-nav-item <?php echo $current_nav === 'system' ? 'active' : ''; ?>" id="navItem-system" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-system')) { switchAdmTab('system'); return false; }" data-title="System Health & API">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span class="adm-nav-label">System Health</span>
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'system' ? 'open' : ''; ?>">
+                    <a href="/admin/system/" class="adm-nav-item <?php echo $current_nav === 'system' ? 'active' : ''; ?>" id="navItem-system" data-title="System Admin Suite">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 1 1-14.14 0"></path><path d="M12 2v4"></path></svg>
+                        <span class="adm-nav-label">System Admin</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'system' ? 'open' : ''; ?>" id="admSubmenu-system">
+                        <li>
+                            <a href="/admin/system/" class="adm-nav-subitem <?php echo ($current_nav === 'system' && empty($current_subnav)) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Suite Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/health.php" class="adm-nav-subitem <?php echo $current_subnav === 'health' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                <span>Health Monitor</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/settings.php" class="adm-nav-subitem <?php echo $current_subnav === 'settings' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 1 1-14.14 0"></path></svg>
+                                <span>System Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/environment.php" class="adm-nav-subitem <?php echo $current_subnav === 'environment' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line></svg>
+                                <span>Environment</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/database.php" class="adm-nav-subitem <?php echo $current_subnav === 'database' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                                <span>DB Tools</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/migrations.php" class="adm-nav-subitem <?php echo $current_subnav === 'migrations' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <span>Migrations</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/cache.php" class="adm-nav-subitem <?php echo $current_subnav === 'cache' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                                <span>Cache</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/storage.php" class="adm-nav-subitem <?php echo $current_subnav === 'storage' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <span>Storage</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/logs.php" class="adm-nav-subitem <?php echo $current_subnav === 'logs' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <span>System Logs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/cron.php" class="adm-nav-subitem <?php echo $current_subnav === 'cron' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Cron Jobs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/maintenance.php" class="adm-nav-subitem <?php echo $current_subnav === 'maintenance' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                                <span>Maintenance</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/feature-flags.php" class="adm-nav-subitem <?php echo $current_subnav === 'feature-flags' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
+                                <span>Feature Flags</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/system/backups.php" class="adm-nav-subitem <?php echo $current_subnav === 'backups' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                                <span>DB Backups</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="javascript:void(0);" class="adm-nav-item adm-nav-logout-link" id="navItem-logout" onclick="window.dtAdminLogout(event);" data-title="Sign Out / Logout">
