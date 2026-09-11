@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * revenue.php — DT Brand's Master Revenue & Net Profit Statement Engine
@@ -28,15 +28,25 @@ if (isset($_GET['download']) && $_GET['download'] === 'pnl') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=DT_Brand_PnL_Statement_' . date('Y_m') . '.csv');
     $out = fopen('php://output', 'w');
+    fputs($out, "\xEF\xBB\xBF");
+
+    $sanitizeCsv = static function ($val) {
+        $str = (string)$val;
+        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'" . $str;
+        }
+        return $str;
+    };
+
     fputcsv($out, ['Financial Ledger Category', 'Description', 'Amount (INR)', '% of Gross Revenue', 'Status']);
-    fputcsv($out, ['Gross Saree & Kurtis Sales', 'B2B Wholesale + D2C Retail Invoice Total', number_format($grossRevenue, 2, '.', ''), '100.00%', 'Realized']);
-    fputcsv($out, ['Raw Silk & Yarn Sourcing', 'Mulberry and Katan pure silk yarn lots', number_format(round($grossRevenue * 0.43, 2), 2, '.', ''), '43.00%', 'Paid']);
-    fputcsv($out, ['Tested Gold Zari & Metallurgy', 'Tested gold and silver zari spool procurement', number_format(round($grossRevenue * 0.12, 2), 2, '.', ''), '12.00%', 'Paid']);
-    fputcsv($out, ['Weaving & Artisanal Wages', 'Surat powerloom & Varanasi handloom master weavers', number_format(round($grossRevenue * 0.10, 2), 2, '.', ''), '10.00%', 'Settled']);
-    fputcsv($out, ['Fulfillment & Freight Logistics', 'Delhivery, BlueDart, and TCI Freight transit', number_format(round($grossRevenue * 0.045, 2), 2, '.', ''), '4.50%', 'Paid']);
-    fputcsv($out, ['Packaging & Silk Mark Certification', 'Luxury gold foil boxes and Silk Mark tag fees', number_format(round($grossRevenue * 0.015, 2), 2, '.', ''), '1.50%', 'Paid']);
-    fputcsv($out, ['Payment Gateway & Banking Fees', 'Razorpay 2% processing & IMPS disbursement fees', number_format(round($grossRevenue * 0.020, 2), 2, '.', ''), '2.00%', 'Paid']);
-    fputcsv($out, ['NET RETAINED PROFIT', 'EBITDA Net Retained Earnings', number_format($netProfit, 2, '.', ''), '27.00%', 'Realized Surplus']);
+    fputcsv($out, [$sanitizeCsv('Gross Saree & Kurtis Sales'), $sanitizeCsv('B2B Wholesale + D2C Retail Invoice Total'), number_format($grossRevenue, 2, '.', ''), '100.00%', 'Realized']);
+    fputcsv($out, [$sanitizeCsv('Raw Silk & Yarn Sourcing'), $sanitizeCsv('Mulberry and Katan pure silk yarn lots'), number_format(round($grossRevenue * 0.43, 2), 2, '.', ''), '43.00%', 'Paid']);
+    fputcsv($out, [$sanitizeCsv('Tested Gold Zari & Metallurgy'), $sanitizeCsv('Tested gold and silver zari spool procurement'), number_format(round($grossRevenue * 0.12, 2), 2, '.', ''), '12.00%', 'Paid']);
+    fputcsv($out, [$sanitizeCsv('Weaving & Artisanal Wages'), $sanitizeCsv('Surat powerloom & Varanasi handloom master weavers'), number_format(round($grossRevenue * 0.10, 2), 2, '.', ''), '10.00%', 'Settled']);
+    fputcsv($out, [$sanitizeCsv('Fulfillment & Freight Logistics'), $sanitizeCsv('Delhivery, BlueDart, and TCI Freight transit'), number_format(round($grossRevenue * 0.045, 2), 2, '.', ''), '4.50%', 'Paid']);
+    fputcsv($out, [$sanitizeCsv('Packaging & Silk Mark Certification'), $sanitizeCsv('Luxury gold foil boxes and Silk Mark tag fees'), number_format(round($grossRevenue * 0.015, 2), 2, '.', ''), '1.50%', 'Paid']);
+    fputcsv($out, [$sanitizeCsv('Payment Gateway & Banking Fees'), $sanitizeCsv('Razorpay 2% processing & IMPS disbursement fees'), number_format(round($grossRevenue * 0.020, 2), 2, '.', ''), '2.00%', 'Paid']);
+    fputcsv($out, [$sanitizeCsv('NET RETAINED PROFIT'), $sanitizeCsv('EBITDA Net Retained Earnings'), number_format($netProfit, 2, '.', ''), '27.00%', 'Realized Surplus']);
     fclose($out);
     exit;
 }

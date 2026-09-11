@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * gst.php — DT Brand's Master GST Tax Computation & GSTR-1 Engine
@@ -62,40 +62,70 @@ if ($liveDb) {
             SELECT 
                 CASE WHEN p.hsn_code IS NOT NULL AND p.hsn_code != '' THEN p.hsn_code ELSE '5007' END as hsn,
                 COALESCE(p.category, 'Silk Sarees') as category,
+                COALESCE(c.state, 'Gujarat') as customer_state,
+                COALESCE(o.shipping_address, '') as shipping_address,
                 SUM(oi.quantity) as total_qty,
                 SUM(oi.total_price) as total_val
             FROM order_items oi
             JOIN orders o ON oi.order_id = o.id
+            LEFT JOIN customers c ON o.customer_id = c.id
             LEFT JOIN products p ON oi.product_id = p.id
             WHERE COALESCE(o.fulfillment_status, o.order_status, 'processing') != 'cancelled'
-            GROUP BY hsn, category
+            GROUP BY hsn, category, customer_state, shipping_address
             ORDER BY total_val DESC
         ");
 
         if (!empty($itemRows)) {
+            $hsnMap = [];
             foreach ($itemRows as $ir) {
                 $val = (float)$ir['total_val'];
                 $taxVal = round($val / 1.05, 2);
                 $taxAmt = round($val - $taxVal, 2);
-                $hsnCode = $ir['hsn'];
-                $desc = 'Woven Fabric of Pure Silk & Ethnic Sarees';
-                if ($hsnCode === '5208') $desc = 'Woven Handloom Fabrics of Pure Cotton';
-                elseif ($hsnCode === '6211') $desc = 'Designer Stitched Ethnic Apparel Sets';
-                elseif (!empty($ir['category'])) $desc = 'Ethnic Handloom ' . htmlspecialchars($ir['category']);
+                $hsnCode = (string)$ir['hsn'];
+                $qty = (int)$ir['total_qty'];
 
-                $hsnRows[] = [
-                    'hsn' => $hsnCode,
-                    'desc' => $desc,
-                    'uqc' => 'PCS',
-                    'qty' => (int)$ir['total_qty'],
-                    'taxable' => $taxVal,
-                    'rate' => '5.0%',
-                    'tax_amount' => $taxAmt,
-                    'cgst' => round($taxAmt / 2, 2),
-                    'sgst' => round($taxAmt / 2, 2),
-                    'igst' => 0.00
-                ];
+                $state = strtolower(trim($ir['customer_state'] ?? ''));
+                $shipping = strtolower(trim($ir['shipping_address'] ?? ''));
+                $isGujarat = ($state === 'gujarat' || $state === 'gj' || strpos($shipping, 'gujarat') !== false);
+
+                if ($isGujarat) {
+                    $cgst = round($taxAmt / 2, 2);
+                    $sgst = $taxAmt - $cgst;
+                    $igst = 0.0;
+                } else {
+                    $cgst = 0.0;
+                    $sgst = 0.0;
+                    $igst = $taxAmt;
+                }
+
+                if (!isset($hsnMap[$hsnCode])) {
+                    $desc = 'Woven Fabric of Pure Silk & Ethnic Sarees';
+                    if ($hsnCode === '5208') $desc = 'Woven Handloom Fabrics of Pure Cotton';
+                    elseif ($hsnCode === '6211') $desc = 'Designer Stitched Ethnic Apparel Sets';
+                    elseif (!empty($ir['category'])) $desc = 'Ethnic Handloom ' . htmlspecialchars($ir['category']);
+
+                    $hsnMap[$hsnCode] = [
+                        'hsn' => $hsnCode,
+                        'desc' => $desc,
+                        'uqc' => 'PCS',
+                        'qty' => 0,
+                        'taxable' => 0.0,
+                        'rate' => '5.0%',
+                        'tax_amount' => 0.0,
+                        'cgst' => 0.0,
+                        'sgst' => 0.0,
+                        'igst' => 0.0
+                    ];
+                }
+
+                $hsnMap[$hsnCode]['qty'] += $qty;
+                $hsnMap[$hsnCode]['taxable'] += $taxVal;
+                $hsnMap[$hsnCode]['tax_amount'] += $taxAmt;
+                $hsnMap[$hsnCode]['cgst'] += $cgst;
+                $hsnMap[$hsnCode]['sgst'] += $sgst;
+                $hsnMap[$hsnCode]['igst'] += $igst;
             }
+            $hsnRows = array_values($hsnMap);
         }
     } catch (\Throwable $e) {
         error_log("GST computation error: " . $e->getMessage());
@@ -106,16 +136,26 @@ if (isset($_GET['download']) && $_GET['download'] === 'gstr1') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=GSTR1_HSN_Summary_' . date('Y_m') . '.csv');
     $out = fopen('php://output', 'w');
+    fputs($out, "\xEF\xBB\xBF");
+
+    $sanitizeCsv = static function ($val) {
+        $str = (string)$val;
+        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'" . $str;
+        }
+        return $str;
+    };
+
     fputcsv($out, ['HSN Code', 'Description', 'UQC', 'Total Quantity', 'Total Taxable Value (INR)', 'Integrated Tax Rate', 'Integrated Tax Amount', 'Central Tax Amount', 'State Tax Amount', 'Cess Amount']);
     if (!empty($hsnRows)) {
         foreach ($hsnRows as $hr) {
             fputcsv($out, [
-                $hr['hsn'],
-                $hr['desc'],
-                $hr['uqc'],
+                $sanitizeCsv($hr['hsn']),
+                $sanitizeCsv($hr['desc']),
+                $sanitizeCsv($hr['uqc']),
                 $hr['qty'],
                 number_format($hr['taxable'], 2, '.', ''),
-                $hr['rate'],
+                $sanitizeCsv($hr['rate']),
                 number_format($hr['igst'], 2, '.', ''),
                 number_format($hr['cgst'], 2, '.', ''),
                 number_format($hr['sgst'], 2, '.', ''),

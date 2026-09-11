@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * sales.php — DT Brand's Master Sales Breakdown & Channel Analytics
@@ -102,16 +102,26 @@ if (isset($_GET['download']) && $_GET['download'] === 'sales') {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=DT_Channel_Sales_Report_' . date('Y_m') . '.csv');
     $out = fopen('php://output', 'w');
+    fputs($out, "\xEF\xBB\xBF");
+
+    $sanitizeCsv = static function ($val) {
+        $str = (string)$val;
+        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'" . $str;
+        }
+        return $str;
+    };
+
     fputcsv($out, ['Sales Channel', 'Total Orders', 'Gross Revenue (INR)', 'Channel Share %', 'Avg Order Value (AOV)', 'Status']);
     if (!empty($channelStats)) {
         foreach ($channelStats as $cs) {
             $share = $totalRevenue > 0 ? round(($cs['revenue'] / $totalRevenue) * 100, 2) : 0.0;
             $aov = $cs['count'] > 0 ? round($cs['revenue'] / $cs['count'], 2) : 0.0;
             fputcsv($out, [
-                $cs['name'],
+                $sanitizeCsv($cs['name']),
                 $cs['count'],
                 number_format($cs['revenue'], 2, '.', ''),
-                $share . '%',
+                $sanitizeCsv($share . '%'),
                 number_format($aov, 2, '.', ''),
                 'Active Stream'
             ]);
