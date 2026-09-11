@@ -1,6 +1,6 @@
 <?php
 /**
- * sales.php — DT Brand's & Jai Hanuman Tex Sales & Channel Analytics
+ * orders.php — DT Brand's & Jai Hanuman Tex Orders Funnel & Velocity Analytics
  * Section 33: Reports / Analytics & Export Suite
  */
 
@@ -17,13 +17,13 @@ require_once __DIR__ . '/../../src/ReportManager.php';
 use DTBrand\ReportManager;
 
 $range = isset($_GET['range']) ? trim($_GET['range']) : 'all';
-$channel = isset($_GET['channel']) ? trim($_GET['channel']) : 'all';
+$status = isset($_GET['status']) ? trim($_GET['status']) : 'all';
 
-$sales = ReportManager::getSalesReport($range, $channel);
+$ordersData = ReportManager::getOrdersReport($range, $status);
 
-$page_title = "Sales & Channel Analytics";
+$page_title = "Orders Funnel & Velocity Analytics";
 $active_nav = "reports";
-$current_subnav = "sales";
+$current_subnav = "orders";
 
 $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
@@ -49,19 +49,19 @@ $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Sales &amp; Channel Analytics</span>
-                        <span class="dt-badge gold">Channel Intelligence</span>
+                        <span>Orders Funnel &amp; Velocity</span>
+                        <span class="dt-badge blue">SLA Tracking</span>
                     </h1>
-                    <p class="adm-page-subtitle">Real-time revenue attribution across B2B Wholesale, B2B Retailer trade, Reseller networks, and Direct Storefront.</p>
+                    <p class="adm-page-subtitle">Track wholesale and retail order lifecycle from cart capture to packing, carrier dispatch, delivery, and returns.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:10px; align-items:center;">
                     <a href="/admin/reports/" class="dt-btn dt-btn-pale">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         All Reports
                     </a>
-                    <button type="button" class="dt-btn dt-btn-gold" data-export-type="sales" data-export-format="csv">
+                    <button type="button" class="dt-btn dt-btn-gold" data-export-type="orders" data-export-format="csv">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Export Sales CSV
+                        Export Orders CSV
                     </button>
                 </div>
             </div>
@@ -75,7 +75,6 @@ $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
                         <button type="button" class="dt-report-pill <?= $range === 'today' ? 'active' : '' ?>" data-range="today">Today</button>
                         <button type="button" class="dt-report-pill <?= $range === '7d' ? 'active' : '' ?>" data-range="7d">Last 7 Days</button>
                         <button type="button" class="dt-report-pill <?= $range === '30d' ? 'active' : '' ?>" data-range="30d">Last 30 Days</button>
-                        <button type="button" class="dt-report-pill <?= $range === 'mtd' ? 'active' : '' ?>" data-range="mtd">This Month</button>
                     </div>
                 </div>
                 <div class="dt-report-toolbar-right">
@@ -90,97 +89,95 @@ $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
             <div class="dt-report-kpi-grid">
                 <div class="dt-report-kpi-card">
                     <div class="dt-report-kpi-top">
-                        <span class="dt-report-kpi-label">Total Invoiced Sales</span>
+                        <span class="dt-report-kpi-label">Total Orders Recorded</span>
                         <div class="dt-report-kpi-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         </div>
                     </div>
-                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($sales['total_revenue']) ?></div>
+                    <div class="dt-report-kpi-val"><?= number_format($ordersData['total_orders']) ?></div>
                     <div class="dt-report-kpi-sub">
-                        <span class="dt-badge emerald"><?= number_format($sales['total_orders']) ?> Orders Recorded</span>
+                        <span class="dt-badge gold">Total Value: <?= $rupeeSvg ?> <?= number_format($ordersData['total_amount']) ?></span>
                     </div>
                 </div>
 
                 <div class="dt-report-kpi-card">
                     <div class="dt-report-kpi-top">
-                        <span class="dt-report-kpi-label">B2B Wholesale Share</span>
+                        <span class="dt-report-kpi-label">Fulfillment Success Rate</span>
                         <div class="dt-report-kpi-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         </div>
                     </div>
-                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($sales['channels']['wholesale']['revenue']) ?></div>
+                    <div class="dt-report-kpi-val"><?= $ordersData['fulfillment_rate'] ?>%</div>
                     <div class="dt-report-kpi-sub">
-                        <span class="dt-badge gold"><?= $sales['channels']['wholesale']['share'] ?>% of Total Sales</span>
+                        <span class="dt-badge emerald"><?= number_format($ordersData['funnel']['delivered']['count']) ?> Delivered</span>
                     </div>
                 </div>
 
                 <div class="dt-report-kpi-card">
                     <div class="dt-report-kpi-top">
-                        <span class="dt-report-kpi-label">Retailer Trade</span>
+                        <span class="dt-report-kpi-label">Active Queue (Transit/Processing)</span>
                         <div class="dt-report-kpi-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         </div>
                     </div>
-                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($sales['channels']['retailer']['revenue']) ?></div>
+                    <?php 
+                        $activeQueue = $ordersData['funnel']['new']['count'] + $ordersData['funnel']['processing']['count'] + $ordersData['funnel']['packed']['count'] + $ordersData['funnel']['shipped']['count'];
+                    ?>
+                    <div class="dt-report-kpi-val"><?= number_format($activeQueue) ?></div>
                     <div class="dt-report-kpi-sub">
-                        <span class="dt-badge amber"><?= $sales['channels']['retailer']['count'] ?> Orders Placed</span>
+                        <span class="dt-badge blue"><?= $ordersData['funnel']['shipped']['count'] ?> In Transit</span>
                     </div>
                 </div>
 
                 <div class="dt-report-kpi-card">
                     <div class="dt-report-kpi-top">
-                        <span class="dt-report-kpi-label">Reseller &amp; Social</span>
+                        <span class="dt-report-kpi-label">Cancellation Rate</span>
                         <div class="dt-report-kpi-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </div>
                     </div>
-                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($sales['channels']['reseller']['revenue']) ?></div>
+                    <div class="dt-report-kpi-val"><?= $ordersData['cancellation_rate'] ?>%</div>
                     <div class="dt-report-kpi-sub">
-                        <span class="dt-badge emerald">AOV: <?= $rupeeSvg ?> <?= number_format($sales['channels']['reseller']['aov']) ?></span>
+                        <span class="dt-badge crimson"><?= $ordersData['funnel']['cancelled']['count'] ?> Cancelled</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Channels Detail Table -->
+            <!-- Orders Funnel Stage Table -->
             <div class="dt-report-table-card">
                 <div class="dt-report-table-header">
                     <div class="dt-report-table-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        <span>Channel Matrix &amp; Unit Economics</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <span>Fulfillment Funnel Stages</span>
                     </div>
                 </div>
                 <div class="adm-table-responsive" style="overflow-x:auto;">
                     <table class="dt-report-table">
                         <thead>
                             <tr>
-                                <th>Channel</th>
-                                <th style="text-align:center;">Orders</th>
-                                <th style="text-align:right;">Gross Volume</th>
-                                <th style="text-align:right;">Average Order Value (AOV)</th>
-                                <th style="text-align:center;">Contribution Share</th>
-                                <th style="text-align:center;">Action</th>
+                                <th>Stage Code</th>
+                                <th>Stage Description</th>
+                                <th style="text-align:center;">Orders Volume</th>
+                                <th style="text-align:center;">Funnel Share</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($sales['channels'] as $code => $ch): ?>
+                            <?php foreach ($ordersData['funnel'] as $st => $item): 
+                                $share = $ordersData['total_orders'] > 0 ? round(($item['count'] / $ordersData['total_orders']) * 100, 1) : 0;
+                            ?>
                             <tr>
+                                <td style="font-weight:700; color:#111827; text-transform:uppercase;"><?= htmlspecialchars($st) ?></td>
                                 <td>
-                                    <div style="font-weight:700; color:#111827;"><?= htmlspecialchars($ch['name']) ?></div>
-                                    <div style="font-size:0.75rem; color:#64748B;">Identifier: <?= htmlspecialchars($code) ?></div>
+                                    <span style="font-weight:600; color:#334155;"><?= htmlspecialchars($item['label']) ?></span>
                                 </td>
-                                <td style="text-align:center; font-weight:700;"><?= number_format($ch['count']) ?></td>
-                                <td style="text-align:right; font-weight:800; color:#111827;"><?= $rupeeSvg ?> <?= number_format($ch['revenue']) ?></td>
-                                <td style="text-align:right; color:#475569; font-weight:600;"><?= $rupeeSvg ?> <?= number_format($ch['aov']) ?></td>
+                                <td style="text-align:center; font-weight:800; font-size:1rem; color:#111827;"><?= number_format($item['count']) ?></td>
                                 <td style="text-align:center;">
                                     <div style="display:flex; align-items:center; gap:8px; justify-content:center;">
-                                        <div class="dt-progress-bar-wrap" style="width:80px;">
-                                            <div class="dt-progress-bar-fill" style="width:<?= $ch['share'] ?>%; background:<?= $ch['color'] ?>;"></div>
+                                        <div class="dt-progress-bar-wrap" style="width:100px;">
+                                            <div class="dt-progress-bar-fill" style="width:<?= $share ?>%; background:<?= $item['color'] ?>;"></div>
                                         </div>
-                                        <span style="font-size:0.78rem; font-weight:800;"><?= $ch['share'] ?>%</span>
+                                        <span style="font-size:0.78rem; font-weight:800;"><?= $share ?>%</span>
                                     </div>
-                                </td>
-                                <td style="text-align:center;">
-                                    <a href="/api/reports.php?action=export&type=sales&channel=<?= urlencode($code) ?>&format=csv" class="dt-btn dt-btn-pale" style="padding:4px 8px; font-size:0.72rem;">CSV</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -189,41 +186,37 @@ $rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
                 </div>
             </div>
 
-            <!-- Daily Run Rate Trend Table -->
-            <?php if (!empty($sales['trend'])): ?>
+            <!-- Payment Capture Ledger Table -->
             <div class="dt-report-table-card">
                 <div class="dt-report-table-header">
                     <div class="dt-report-table-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                        <span>Daily Run Rate Trend Ledger</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        <span>Payment Status Settlement Ledger</span>
                     </div>
                 </div>
-                <div class="adm-table-responsive" style="overflow-x:auto; max-height:360px;">
+                <div class="adm-table-responsive" style="overflow-x:auto;">
                     <table class="dt-report-table">
                         <thead>
                             <tr>
-                                <th>Transaction Date</th>
-                                <th style="text-align:center;">Orders Placed</th>
-                                <th style="text-align:right;">Gross Sales Invoiced</th>
-                                <th style="text-align:right;">Day AOV</th>
+                                <th>Payment Status</th>
+                                <th style="text-align:center;">Orders</th>
+                                <th style="text-align:right;">Settled / Captured Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach (array_reverse($sales['trend']) as $t): 
-                                $dayAov = $t['cnt'] > 0 ? round($t['rev'] / $t['cnt'], 2) : 0;
-                            ?>
+                            <?php foreach ($ordersData['payment_status'] as $pst => $pItem): ?>
                             <tr>
-                                <td style="font-weight:700; color:#111827;"><?= htmlspecialchars($t['dt']) ?></td>
-                                <td style="text-align:center; font-weight:700;"><?= number_format($t['cnt']) ?></td>
-                                <td style="text-align:right; font-weight:800; color:#111827;"><?= $rupeeSvg ?> <?= number_format($t['rev']) ?></td>
-                                <td style="text-align:right; color:#475569;"><?= $rupeeSvg ?> <?= number_format($dayAov) ?></td>
+                                <td style="font-weight:700; color:#111827; text-transform:uppercase;">
+                                    <?= htmlspecialchars($pItem['label']) ?>
+                                </td>
+                                <td style="text-align:center; font-weight:700;"><?= number_format($pItem['count']) ?></td>
+                                <td style="text-align:right; font-weight:800; color:#111827;"><?= $rupeeSvg ?> <?= number_format($pItem['amount']) ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <?php endif; ?>
 
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>

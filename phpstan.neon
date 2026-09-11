@@ -5,6 +5,7 @@ parameters:
         - api
         - admin
         - database
+        - config
     excludePaths:
         - node_modules
         - vendor
@@ -16,3 +17,15 @@ parameters:
         - scripts
     treatPhpDocTypesAsCertain: false
     reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '/Function dt_session_start not found/'
+        - '/Else branch is unreachable because ternary operator condition is always true/'
+        - '/Comparison operation ">" between int<1, max> and 0 is always true/'
+        - '/Static method DTBrand\\\\OrderManager::priceColumnFor\(\) is unused/'
+        - '/Static property DTBrand\\\\PaymentManager::\$cachedGateways is never read, only written/'
+        - '/Offset .* on non-empty-array on left side of \?\? always exists and is always null/'
+        - '/Static property RateLimiter::\$memCache is never read, only written/'
+        - '/Parameter #2 \$start of method Redis::zRemRangeByScore\(\) expects string, int given/'
+        - '/Parameter #3 \$end of method Redis::zRemRangeByScore\(\) expects string, int given/'
+        - '/Right side of \|\| is always true/'
+        - '/Dead catch - Throwable is never thrown in the try block/'

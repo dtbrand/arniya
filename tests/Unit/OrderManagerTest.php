@@ -110,7 +110,29 @@ class OrderManagerTest extends TestCase
                 min_order_value REAL DEFAULT 0.0,
                 max_discount REAL DEFAULT 0.0,
                 status TEXT NOT NULL DEFAULT 'active',
+                usage_limit INTEGER DEFAULT 1000,
+                used_count INTEGER DEFAULT 0,
+                times_used INTEGER DEFAULT 0,
+                per_user_limit INTEGER DEFAULT 1,
+                channel TEXT DEFAULT 'all',
+                starts_at TEXT DEFAULT NULL,
+                expires_at TEXT DEFAULT NULL,
                 created_at TEXT
+            );
+
+            CREATE TABLE coupon_usages (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                coupon_id INTEGER NULL,
+                coupon_code TEXT NOT NULL,
+                order_id INTEGER NULL,
+                order_number TEXT NULL,
+                customer_id INTEGER NULL,
+                customer_phone TEXT NULL,
+                customer_name TEXT NULL,
+                order_subtotal REAL DEFAULT 0,
+                discount_amount REAL DEFAULT 0,
+                channel TEXT DEFAULT 'customer',
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
             );
 
             CREATE TABLE orders (

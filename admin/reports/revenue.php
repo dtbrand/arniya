@@ -1,102 +1,52 @@
 <?php
-/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
-
 /**
- * revenue.php — DT Brand's Master Revenue & Net Profit Statement Engine
- * DT Brand's & Jai Hanuman Tex — Pure Live Data Architecture
+ * revenue.php — DT Brand's & Jai Hanuman Tex Master Revenue & Net Profit Statement Engine
+ * Section 33: Reports / Analytics & Export Suite
  */
-require_once __DIR__ . '/../../src/Database.php';
-use DTBrand\Database;
 
-$pdo = Database::getConnection();
-$grossRevenue = 0.0;
-if ($pdo !== null && !Database::isMockMode()) {
-    try {
-        $stmt = $pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE COALESCE(fulfillment_status, order_status, 'processing') != 'cancelled'");
-        $grossRevenue = (float)$stmt->fetchColumn();
-    } catch (\Throwable $e) {
-        error_log("Revenue query error: " . $e->getMessage());
-    }
+/* DT admin access guard */
+$__dtg = __DIR__ . '/../includes/adminguard.php';
+if (!is_file($__dtg)) {
+    $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+}
+if (is_file($__dtg)) {
+    require_once $__dtg;
 }
 
-$cogs = round($grossRevenue * 0.65, 2);
-$grossProfit = round($grossRevenue * 0.35, 2);
-$netProfit = round($grossRevenue * 0.27, 2);
-$rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
+require_once __DIR__ . '/../../src/ReportManager.php';
+use DTBrand\ReportManager;
 
-if (isset($_GET['download']) && $_GET['download'] === 'pnl') {
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=DT_Brand_PnL_Statement_' . date('Y_m') . '.csv');
-    $out = fopen('php://output', 'w');
-    fputs($out, "\xEF\xBB\xBF");
+$range = isset($_GET['range']) ? trim($_GET['range']) : 'all';
 
-    $sanitizeCsv = static function ($val) {
-        $str = (string)$val;
-        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
-            return "'" . $str;
-        }
-        return $str;
-    };
-
-    fputcsv($out, ['Financial Ledger Category', 'Description', 'Amount (INR)', '% of Gross Revenue', 'Status']);
-    fputcsv($out, [$sanitizeCsv('Gross Saree & Kurtis Sales'), $sanitizeCsv('B2B Wholesale + D2C Retail Invoice Total'), number_format($grossRevenue, 2, '.', ''), '100.00%', 'Realized']);
-    fputcsv($out, [$sanitizeCsv('Raw Silk & Yarn Sourcing'), $sanitizeCsv('Mulberry and Katan pure silk yarn lots'), number_format(round($grossRevenue * 0.43, 2), 2, '.', ''), '43.00%', 'Paid']);
-    fputcsv($out, [$sanitizeCsv('Tested Gold Zari & Metallurgy'), $sanitizeCsv('Tested gold and silver zari spool procurement'), number_format(round($grossRevenue * 0.12, 2), 2, '.', ''), '12.00%', 'Paid']);
-    fputcsv($out, [$sanitizeCsv('Weaving & Artisanal Wages'), $sanitizeCsv('Surat powerloom & Varanasi handloom master weavers'), number_format(round($grossRevenue * 0.10, 2), 2, '.', ''), '10.00%', 'Settled']);
-    fputcsv($out, [$sanitizeCsv('Fulfillment & Freight Logistics'), $sanitizeCsv('Delhivery, BlueDart, and TCI Freight transit'), number_format(round($grossRevenue * 0.045, 2), 2, '.', ''), '4.50%', 'Paid']);
-    fputcsv($out, [$sanitizeCsv('Packaging & Silk Mark Certification'), $sanitizeCsv('Luxury gold foil boxes and Silk Mark tag fees'), number_format(round($grossRevenue * 0.015, 2), 2, '.', ''), '1.50%', 'Paid']);
-    fputcsv($out, [$sanitizeCsv('Payment Gateway & Banking Fees'), $sanitizeCsv('Razorpay 2% processing & IMPS disbursement fees'), number_format(round($grossRevenue * 0.020, 2), 2, '.', ''), '2.00%', 'Paid']);
-    fputcsv($out, [$sanitizeCsv('NET RETAINED PROFIT'), $sanitizeCsv('EBITDA Net Retained Earnings'), number_format($netProfit, 2, '.', ''), '27.00%', 'Realized Surplus']);
-    fclose($out);
+// Handle Direct CSV Export if requested
+if (isset($_GET['download']) && in_array($_GET['download'], ['pnl', 'csv', 'excel'], true)) {
+    if ($_GET['download'] === 'excel') {
+        ReportManager::exportToExcel('revenue', $range);
+    } else {
+        ReportManager::exportToCsv('revenue', $range);
+    }
     exit;
 }
 
+$revData = ReportManager::getRevenueReport($range);
+
 $page_title = "Revenue & Net Profit Statement";
 $active_nav = "reports";
+$current_subnav = "revenue";
+
+$rupeeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1.5px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $page_title; ?> — DT Brand's Admin</title>
+    <title><?= htmlspecialchars($page_title) ?> — DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <style>
-        .dt-pnl-kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        @media (max-width: 768px) {
-            .dt-pnl-kpi-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .dt-pnl-kpi-card {
-            background: #FFFFFF;
-            border: 1.5px solid #EAE5D9;
-            border-radius: 10px;
-            padding: 14px 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-        .dt-pnl-kpi-label {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: #78716C;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .dt-pnl-kpi-val {
-            font-size: 1.28rem;
-            font-weight: 900;
-            color: #181512;
-            margin-top: 4px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/admin/reports/reports.css?v=<?= time() ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -104,126 +54,176 @@ $active_nav = "reports";
     <div class="adm-main">
         <?php include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
-            <div class="adm-page-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            
+            <div class="adm-page-head">
                 <div class="adm-page-title-group">
-                    <h1 class="adm-page-title" style="display:flex; align-items:center; gap:8px; margin:0;">
+                    <h1 class="adm-page-title">
                         <span>Revenue &amp; Net Profit Statement</span>
-                        <span class="adm-badge gold" style="font-size:0.68rem;">EBITDA 27.0%</span>
+                        <span class="dt-badge emerald">P&amp;L Ledger</span>
                     </h1>
-                    <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Comprehensive profit and loss ledger accounting for raw silk yarn, gold zari sourcing, weaving wages, and retained surplus.</p>
+                    <p class="adm-page-subtitle">Comprehensive manufacturing P&amp;L analysis: raw silk lots, metallurgy zari, weaver wages, transit freight, and net operating margins.</p>
                 </div>
-                <div class="adm-page-actions" style="display:flex; gap:8px;">
-                    <a href="/admin/reports/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>Financial Reports</span>
+                <div class="adm-page-actions" style="display:flex; gap:10px; align-items:center;">
+                    <a href="/admin/reports/" class="dt-btn dt-btn-pale">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        All Reports
                     </a>
-                    <a href="/admin/reports/revenue.php?download=pnl" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <span>Download P&amp;L CSV</span>
+                    <a href="/admin/reports/revenue.php?download=pnl&range=<?= urlencode($range) ?>" class="dt-btn dt-btn-gold">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download P&amp;L Statement
                     </a>
                 </div>
             </div>
 
-            <!-- 4-Card P&L KPI Ribbon -->
-            <div class="dt-pnl-kpi-grid">
-                <div class="dt-pnl-kpi-card">
-                    <div class="dt-pnl-kpi-label">Gross Revenue</div>
-                    <div class="dt-pnl-kpi-val" style="color:#181512;"><?= $rupeeSvg ?> <?= number_format($grossRevenue) ?></div>
-                    <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">Live Reconciled Sales</div>
+            <!-- Toolbar -->
+            <div class="dt-report-toolbar">
+                <div class="dt-report-toolbar-left">
+                    <span style="font-size:0.8rem; font-weight:700; color:#64748B;">Time Window:</span>
+                    <div class="dt-report-pill-group">
+                        <button type="button" class="dt-report-pill <?= $range === 'all' ? 'active' : '' ?>" data-range="all">All Time</button>
+                        <button type="button" class="dt-report-pill <?= $range === 'today' ? 'active' : '' ?>" data-range="today">Today</button>
+                        <button type="button" class="dt-report-pill <?= $range === '7d' ? 'active' : '' ?>" data-range="7d">Last 7 Days</button>
+                        <button type="button" class="dt-report-pill <?= $range === '30d' ? 'active' : '' ?>" data-range="30d">Last 30 Days</button>
+                        <button type="button" class="dt-report-pill <?= $range === 'mtd' ? 'active' : '' ?>" data-range="mtd">This Month</button>
+                    </div>
                 </div>
-                <div class="dt-pnl-kpi-card">
-                    <div class="dt-pnl-kpi-label">COGS &amp; Mill Production</div>
-                    <div class="dt-pnl-kpi-val" style="color:#B45309;"><?= $rupeeSvg ?> <?= number_format($cogs) ?></div>
-                    <div style="font-size:0.72rem; color:#78716C; margin-top:2px;">65.0% Manufacturing Base</div>
-                </div>
-                <div class="dt-pnl-kpi-card">
-                    <div class="dt-pnl-kpi-label">Gross Margin (35%)</div>
-                    <div class="dt-pnl-kpi-val" style="color:#8A681F;"><?= $rupeeSvg ?> <?= number_format($grossProfit) ?></div>
-                    <div style="font-size:0.72rem; color:#8A681F; margin-top:2px; font-weight:700;">Direct Loom Margin</div>
-                </div>
-                <div class="dt-pnl-kpi-card">
-                    <div class="dt-pnl-kpi-label">Net Retained Profit (27%)</div>
-                    <div class="dt-pnl-kpi-val" style="color:#15803D;"><?= $rupeeSvg ?> <?= number_format($netProfit) ?></div>
-                    <div style="font-size:0.72rem; color:#15803D; margin-top:2px; font-weight:700;">Net Free Cash Flow</div>
+                <div class="dt-report-toolbar-right">
+                    <button type="button" class="dt-btn dt-btn-pale dt-print-trigger" style="padding:6px 12px; font-size:0.75rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Print Statement
+                    </button>
                 </div>
             </div>
 
-            <!-- Detailed P&L Line Items Table Card -->
-            <div class="adm-card">
-                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 class="adm-card-title" style="display:flex; align-items:center; gap:8px;">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
-                        <span>Comprehensive Profit &amp; Loss Statement</span>
-                    </h3>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11.5px;">Audited &amp; Reconciled</span>
+            <!-- Summary KPI Ribbon -->
+            <div class="dt-report-kpi-grid">
+                <div class="dt-report-kpi-card">
+                    <div class="dt-report-kpi-top">
+                        <span class="dt-report-kpi-label">Gross Billed Sales</span>
+                        <div class="dt-report-kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                        </div>
+                    </div>
+                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($revData['gross_revenue']) ?></div>
+                    <div class="dt-report-kpi-sub">
+                        <span class="dt-badge emerald">100.0% Gross Baseline</span>
+                    </div>
                 </div>
-                <div class="adm-table-responsive">
-                    <table class="adm-table">
+
+                <div class="dt-report-kpi-card">
+                    <div class="dt-report-kpi-top">
+                        <span class="dt-report-kpi-label">Total Manufacturing COGS</span>
+                        <div class="dt-report-kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                    </div>
+                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($revData['total_cogs']) ?></div>
+                    <div class="dt-report-kpi-sub">
+                        <span class="dt-badge amber">Direct Material &amp; Labor</span>
+                    </div>
+                </div>
+
+                <div class="dt-report-kpi-card">
+                    <div class="dt-report-kpi-top">
+                        <span class="dt-report-kpi-label">Gross Trading Margin</span>
+                        <div class="dt-report-kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        </div>
+                    </div>
+                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($revData['gross_profit']) ?></div>
+                    <div class="dt-report-kpi-sub">
+                        <span class="dt-badge gold"><?= $revData['gross_margin_pct'] ?>% Wholesale Margin</span>
+                    </div>
+                </div>
+
+                <div class="dt-report-kpi-card">
+                    <div class="dt-report-kpi-top">
+                        <span class="dt-report-kpi-label">EBITDA Net Retained Profit</span>
+                        <div class="dt-report-kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="dt-report-kpi-val"><?= $rupeeSvg ?> <?= number_format($revData['net_profit']) ?></div>
+                    <div class="dt-report-kpi-sub">
+                        <span class="dt-badge emerald"><?= $revData['net_margin_pct'] ?>% Net Operating Surplus</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Statement Ledger Table -->
+            <div class="dt-report-table-card">
+                <div class="dt-report-table-header">
+                    <div class="dt-report-table-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Executive Profit &amp; Loss Statement Ledger</span>
+                    </div>
+                </div>
+                <div class="adm-table-responsive" style="overflow-x:auto;">
+                    <table class="dt-report-table">
                         <thead>
                             <tr>
-                                <th>Ledger Head</th>
-                                <th>Line Item Breakdown Description</th>
-                                <th>Allocation %</th>
-                                <th style="text-align:right;">Subtotal Amount</th>
+                                <th>Ledger Account / Expense Category</th>
+                                <th>Operational Description</th>
+                                <th style="text-align:right;">Amount (INR)</th>
+                                <th style="text-align:center;">Share of Revenue</th>
+                                <th style="text-align:center;">Accounting Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr style="background:#F8FAFC; font-weight:800;">
+                                <td style="color:#111827;">GROSS BILLED REVENUE</td>
+                                <td style="color:#64748B;">B2B Wholesale + D2C Retail Invoiced Volume</td>
+                                <td style="text-align:right; color:#111827;"><?= $rupeeSvg ?> <?= number_format($revData['gross_revenue'], 2) ?></td>
+                                <td style="text-align:center;"><span class="dt-badge gold">100.0%</span></td>
+                                <td style="text-align:center;"><span class="dt-badge emerald">Realized</span></td>
+                            </tr>
+                            <?php foreach ($revData['cogs_items'] as $item): ?>
                             <tr>
-                                <td><span class="adm-badge gold" style="font-weight:800;">Revenue</span></td>
-                                <td><strong>Gross Saree &amp; Textile Sales (B2B + D2C)</strong></td>
-                                <td>100.0%</td>
-                                <td style="text-align:right;"><strong style="font-size:13.5px; color:#181512;"><?= $rupeeSvg ?> <?= number_format($grossRevenue) ?></strong></td>
+                                <td style="padding-left:28px; font-weight:600; color:#334155;"><?= htmlspecialchars($item['name']) ?></td>
+                                <td style="color:#64748B; font-size:0.78rem;"><?= htmlspecialchars($item['desc']) ?></td>
+                                <td style="text-align:right; color:#B45309; font-weight:700;">- <?= $rupeeSvg ?> <?= number_format($item['amount'], 2) ?></td>
+                                <td style="text-align:center; color:#64748B;"><?= $item['pct'] ?>%</td>
+                                <td style="text-align:center;"><span class="dt-badge blue">Disbursed</span></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <tr style="background:#FAF8F4; font-weight:800; border-top:2px solid #E6CA65;">
+                                <td style="color:#8A681F;">TOTAL COST OF GOODS SOLD (COGS)</td>
+                                <td style="color:#64748B;">Direct textile procurement &amp; artisanal production</td>
+                                <td style="text-align:right; color:#B45309;"><?= $rupeeSvg ?> <?= number_format($revData['total_cogs'], 2) ?></td>
+                                <td style="text-align:center;"><?= round(100 - $revData['gross_margin_pct'], 1) ?>%</td>
+                                <td style="text-align:center;"><span class="dt-badge amber">Settled</span></td>
+                            </tr>
+                            <tr style="background:#F0FDF4; font-weight:800;">
+                                <td style="color:#15803D;">GROSS TRADING PROFIT</td>
+                                <td style="color:#64748B;">Surat Depot Wholesale Trading Surplus</td>
+                                <td style="text-align:right; color:#15803D;"><?= $rupeeSvg ?> <?= number_format($revData['gross_profit'], 2) ?></td>
+                                <td style="text-align:center;"><span class="dt-badge gold"><?= $revData['gross_margin_pct'] ?>%</span></td>
+                                <td style="text-align:center;"><span class="dt-badge emerald">Retained</span></td>
                             </tr>
                             <tr>
-                                <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
-                                <td>Pure Mulberry &amp; Katan Silk Raw Yarn Lots</td>
-                                <td>43.0%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.43)) ?></td>
+                                <td style="padding-left:28px; font-weight:600; color:#334155;">Operating &amp; Depot Overheads</td>
+                                <td style="color:#64748B; font-size:0.78rem;">Surat depot lease, electricity, administrative staff, IT servers</td>
+                                <td style="text-align:right; color:#DC2626; font-weight:700;">- <?= $rupeeSvg ?> <?= number_format($revData['operating_expenses'], 2) ?></td>
+                                <td style="text-align:center; color:#64748B;">8.0%</td>
+                                <td style="text-align:center;"><span class="dt-badge blue">Paid</span></td>
                             </tr>
-                            <tr>
-                                <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
-                                <td>Tested Gold &amp; Silver Zari Spool Procurement</td>
-                                <td>12.0%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.12)) ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700;">Direct COGS</span></td>
-                                <td>Surat Loom Weaving &amp; Korvai Artisanal Wages</td>
-                                <td>10.0%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.10)) ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
-                                <td>Delhivery / BlueDart Express Logistics &amp; Freight</td>
-                                <td>4.5%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.045)) ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
-                                <td>Gold Foil Gift Box Packaging &amp; Silk Mark Certification</td>
-                                <td>1.5%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.015)) ?></td>
-                            </tr>
-                            <tr>
-                                <td><span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">Operating Opex</span></td>
-                                <td>Payment Gateway (Razorpay) &amp; Bank IMPS Fees</td>
-                                <td>2.0%</td>
-                                <td style="text-align:right; color:#78716C;">-<?= $rupeeSvg ?> <?= number_format(round($grossRevenue * 0.020)) ?></td>
-                            </tr>
-                            <tr style="background:#FAF5E8; border-top:2px solid #D4AF37;">
-                                <td><span class="adm-badge gold" style="font-size:12px; font-weight:900;">NET SURPLUS</span></td>
-                                <td><strong style="color:#8A681F; font-size:13.5px;">EBITDA Net Retained Profit</strong></td>
-                                <td><strong>27.0%</strong></td>
-                                <td style="text-align:right;"><strong style="color:#15803D; font-size:14px;"><?= $rupeeSvg ?> <?= number_format($netProfit) ?></strong></td>
+                            <tr style="background:#ECFDF5; font-weight:800; font-size:0.95rem; border-top:2px solid #15803D;">
+                                <td style="color:#111827;">NET RETAINED PROFIT (EBITDA)</td>
+                                <td style="color:#64748B;">Post-Operational Retained Net Earnings</td>
+                                <td style="text-align:right; color:#15803D;"><?= $rupeeSvg ?> <?= number_format($revData['net_profit'], 2) ?></td>
+                                <td style="text-align:center;"><span class="dt-badge emerald"><?= $revData['net_margin_pct'] ?>%</span></td>
+                                <td style="text-align:center;"><span class="dt-badge emerald">Surplus</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= time() ?>"></script>
+<script src="/admin/reports/reports.js?v=<?= time() ?>"></script>
 </body>
 </html>

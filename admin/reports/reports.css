@@ -1,1 +1,479 @@
-/* reports.css - DT Brand's Admin Reports Module Styles */
+/* ==========================================================================
+   reports.css — DT Brand's & Jai Hanuman Tex Reports & Analytics Design System
+   TailAdmin Benchmark Typography • Luxury Gold Accents • Fluid Responsive Layout
+   Section 33: Reports / Analytics & Export Suite
+   ========================================================================== */
+
+:root {
+    --dt-gold-primary: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-pale: #FAF5E8;
+    --dt-gold-border: #E6CA65;
+    --dt-dark-obsidian: #111827;
+    --dt-dark-surface: #1F2937;
+    --dt-text-muted: #64748B;
+    --dt-border-color: #E2E8F0;
+    --dt-emerald: #15803D;
+    --dt-emerald-light: #DCFCE7;
+    --dt-crimson: #DC2626;
+    --dt-crimson-light: #FEF2F2;
+    --dt-blue: #1D4ED8;
+    --dt-blue-light: #EFF6FF;
+    --dt-amber: #B45309;
+    --dt-amber-light: #FEF3C7;
+}
+
+/* ── Typography & Smooth Rendering ── */
+body, .adm-layout, .adm-content {
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    color: var(--dt-dark-obsidian);
+}
+
+/* ── Running Focus Line ── */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to { --dt-border-angle: 360deg; }
+}
+
+@keyframes dtGoldGlow {
+    0% { box-shadow: 0 0 6px rgba(212, 175, 55, 0.35); }
+    100% { box-shadow: 0 0 14px rgba(212, 175, 55, 0.65); }
+}
+
+.dt-report-filter-input:focus,
+.dt-report-select:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldGlow 1.5s ease-in-out infinite alternate !important;
+    color: var(--dt-dark-obsidian) !important;
+}
+
+/* ── Filter Toolbar ── */
+.dt-report-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border-color);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dt-report-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dt-report-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dt-report-pill-group {
+    display: inline-flex;
+    background: #F1F5F9;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+}
+
+.dt-report-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dt-report-pill:hover {
+    color: var(--dt-dark-obsidian);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.dt-report-pill.active {
+    background: #FFFFFF;
+    color: var(--dt-gold-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ── KPI Ribbon Grid ── */
+.dt-report-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dt-report-kpi-card {
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border-color);
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dt-report-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    border-color: #CBD5E1;
+}
+
+.dt-report-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--dt-gold-primary);
+}
+
+.dt-report-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.dt-report-kpi-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dt-text-muted);
+}
+
+.dt-report-kpi-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dt-report-kpi-val {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    line-height: 1.2;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dt-report-kpi-sub {
+    font-size: 0.78rem;
+    color: var(--dt-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ── Reports Navigation Cards Grid ── */
+.dt-report-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dt-report-nav-card {
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.dt-report-nav-card:hover {
+    border-color: var(--dt-gold-radiant);
+    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.12);
+    transform: translateY(-2px);
+}
+
+.dt-report-nav-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.dt-report-nav-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.dt-report-nav-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    margin-bottom: 4px;
+}
+
+.dt-report-nav-desc {
+    font-size: 0.78rem;
+    color: var(--dt-text-muted);
+    line-height: 1.4;
+}
+
+.dt-report-nav-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+    margin-top: 10px;
+}
+
+.dt-report-nav-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-report-nav-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--dt-gold-primary);
+}
+
+/* ── Data Tables ── */
+.dt-report-table-card {
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+}
+
+.dt-report-table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--dt-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAFAFA;
+}
+
+.dt-report-table-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    text-align: left;
+}
+
+.dt-report-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--dt-border-color);
+    white-space: nowrap;
+}
+
+.dt-report-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #F1F5F9;
+    color: var(--dt-dark-surface);
+    vertical-align: middle;
+}
+
+.dt-report-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dt-report-table tr:hover td {
+    background: #F8FAFC;
+}
+
+/* ── Progress & Sparkline Bars ── */
+.dt-progress-bar-wrap {
+    width: 100%;
+    height: 7px;
+    background: #E2E8F0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dt-progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #8A681F, #D4AF37);
+}
+
+/* ── Master Styled Buttons (Golden Mandate) ── */
+.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    border: 1px solid #8A681F !important;
+    color: #111827 !important;
+    font-weight: 800 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35) !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
+}
+
+.dt-btn-pale {
+    background: #FAF5E8 !important;
+    border: 1px solid #D4AF37 !important;
+    color: #705114 !important;
+    font-weight: 700 !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.dt-btn-pale:hover {
+    background: #F5ECCE !important;
+    color: #5A4210 !important;
+    border-color: #8A681F !important;
+    transform: translateY(-1px) !important;
+}
+
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    border: 1.2px solid #8A681F !important;
+    color: #FAF5E8 !important;
+    font-weight: 700 !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.dt-btn-dark:hover {
+    border-color: #D4AF37 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ── Badges ── */
+.dt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.dt-badge.gold { background: #FAF5E8; color: #8A681F; border: 1px solid #E6CA65; }
+.dt-badge.emerald { background: #DCFCE7; color: #15803D; }
+.dt-badge.crimson { background: #FEF2F2; color: #DC2626; }
+.dt-badge.blue { background: #EFF6FF; color: #1D4ED8; }
+.dt-badge.amber { background: #FEF3C7; color: #B45309; }
+
+/* ── Print Stylesheet for Clean PDF Generation ── */
+@media print {
+    body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        font-size: 10pt !important;
+    }
+    .adm-sidebar, .adm-header, .adm-page-actions, .dt-report-toolbar, .dt-btn-gold, .dt-btn-pale, .adm-footer {
+        display: none !important;
+    }
+    .adm-main, .adm-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    .dt-report-kpi-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+    .dt-report-table-card, .dt-report-kpi-card {
+        box-shadow: none !important;
+        border: 1px solid #CCCCCC !important;
+    }
+}
