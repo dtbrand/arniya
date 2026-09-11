@@ -342,6 +342,24 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX `idx_audit_action` (`action`),
     INDEX `idx_audit_entity` (`entity_type`, `entity_id`)
+-- ── 19. INVENTORY LEDGER TABLE ──
+CREATE TABLE IF NOT EXISTS `inventory_ledger` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL,
+    `variant_id` INT NULL DEFAULT NULL,
+    `sku` VARCHAR(100) NULL,
+    `movement_type` ENUM('inward', 'outward', 'adjustment', 'order_deduction', 'order_cancellation', 'audit') NOT NULL DEFAULT 'adjustment',
+    `previous_qty` INT NOT NULL DEFAULT 0,
+    `adjustment_qty` INT NOT NULL DEFAULT 0,
+    `new_qty` INT NOT NULL DEFAULT 0,
+    `reason` VARCHAR(255) NULL,
+    `reference_id` VARCHAR(100) NULL,
+    `operator` VARCHAR(100) NULL DEFAULT 'Admin',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_inv_product` (`product_id`),
+    INDEX `idx_inv_variant` (`variant_id`),
+    INDEX `idx_inv_movement` (`movement_type`),
+    INDEX `idx_inv_created` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

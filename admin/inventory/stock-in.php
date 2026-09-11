@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * stock-in.php - DT Brand's Admin Stock Inward Consignment Entry
@@ -12,6 +12,7 @@ use DTBrand\ProductCatalog;
 
 $page_title = "Stock Inward Consignment Entry";
 $active_nav = "inventory";
+$active_subnav = "stock-in";
 $products = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
@@ -59,6 +60,9 @@ $products = ProductCatalog::getAll(true);
                 </div>
             </div>
 
+            <!-- Submodule Navigation -->
+            <?php include_once __DIR__ . '/components/nav.php'; ?>
+
             <!-- Inward Entry Form Card -->
             <div class="adm-card" style="max-width:800px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
@@ -83,15 +87,15 @@ $products = ProductCatalog::getAll(true);
                         </div>
                         <div class="adm-form-group">
                             <label class="adm-form-label" style="font-weight:700; font-size:0.75rem; color:#181512; margin-bottom:4px; display:block;">Receiving Warehouse Depot</label>
-                            <select class="adm-form-select" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 10px;">
-                                <option>Surat Central Handloom Depot (Primary)</option>
-                                <option>Varanasi Silk Sourcing Warehouse</option>
-                                <option>Bhiwandi Western Hub</option>
+                            <select id="inwardDepotSelect" class="adm-form-select" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 10px;">
+                                <option value="Surat Central Handloom Depot (Ring Road)">Surat Central Handloom Depot (Ring Road)</option>
+                                <option value="Varanasi Silk Sourcing Warehouse">Varanasi Silk Sourcing Warehouse</option>
+                                <option value="Bhiwandi Western Hub">Bhiwandi Western Hub</option>
                             </select>
                         </div>
                         <div class="adm-form-group">
                             <label class="adm-form-label" style="font-weight:700; font-size:0.75rem; color:#181512; margin-bottom:4px; display:block;">Weaving Mill / Consignor Partner</label>
-                            <input type="text" class="adm-form-input" value="Jai Hanuman Tex Mills — Loom #4" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 12px; box-sizing:border-box;">
+                            <input type="text" id="inwardMillInput" class="adm-form-input" value="Jai Hanuman Tex Mills — Loom #4" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 12px; box-sizing:border-box;">
                         </div>
                     </div>
                     
@@ -117,20 +121,25 @@ function handleStockInward(e) {
     const selectedOpt = select.options[select.selectedIndex];
     const title = selectedOpt.getAttribute('data-title') || 'Product';
     const qty = parseInt(document.getElementById('inwardQty').value) || 50;
+    const mill = document.getElementById('inwardMillInput').value || 'Surat Looms';
+    const depot = document.getElementById('inwardDepotSelect').value || 'Surat Central Depot';
+    const reason = `Mill consignment from ${mill} received at ${depot}`;
 
     const params = new URLSearchParams();
     params.append('action', 'adjust_stock');
     params.append('id', id);
     params.append('adjustment', qty);
+    params.append('reason', reason);
+    params.append('movement_type', 'inward');
 
     fetch('/api/products.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`Successfully recorded +${qty} pcs for "${title}" in MySQL database!`);
+                window.showToast(`Successfully recorded +${qty} pcs for "${title}" into MySQL ledger!`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         })
         .catch(() => {
@@ -138,7 +147,7 @@ function handleStockInward(e) {
                 window.showToast(`Recorded +${qty} pcs inward consignment!`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         });
 }

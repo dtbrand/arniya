@@ -535,6 +535,23 @@ class PaymentManager
                         $vid = (int)($item['variant_id'] ?? 0);
                         if ($pid > 0 && $qty > 0) {
                             $stmtDec->execute([':qty' => $qty, ':pid' => $pid]);
+
+                            // Log to inventory_ledger
+                            try {
+                                $nowSql = $isSqlite ? "datetime('now')" : "NOW()";
+                                $db->prepare("
+                                    INSERT INTO `inventory_ledger` 
+                                    (`product_id`, `variant_id`, `sku`, `movement_type`, `previous_qty`, `adjustment_qty`, `new_qty`, `reason`, `reference_id`, `operator`, `created_at`)
+                                    SELECT `id`, :vid, `sku`, 'order_deduction', `{$col}` + :qty, -:qty, `{$col}`, :reason, :ref, 'System/PaymentManager', {$nowSql}
+                                    FROM `products` WHERE `id` = :pid LIMIT 1
+                                ")->execute([
+                                    ':vid' => $vid > 0 ? $vid : null,
+                                    ':qty' => $qty,
+                                    ':reason' => "Order #{$orderNumber} verified payment ({$gateway})",
+                                    ':ref' => $orderNumber,
+                                    ':pid' => $pid
+                                ]);
+                            } catch (\Throwable $le) {}
                         }
                         if ($vid > 0 && $qty > 0 && $stmtDecVar !== null) {
                             try {

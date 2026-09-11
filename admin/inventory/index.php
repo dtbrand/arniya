@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * index.php - DT Brand's Admin Inventory Module
@@ -37,6 +37,7 @@ $valFormatted = $totalInventoryValuation >= 100000
 
 $page_title = "Warehouse Inventory & Stock Adjuster";
 $active_nav = "inventory";
+$active_subnav = "overview";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,9 @@ $active_nav = "inventory";
                     </a>
                 </div>
             </div>
+
+            <!-- Submodule Navigation -->
+            <?php include_once __DIR__ . '/components/nav.php'; ?>
 
             <!-- KPI Metric Cards -->
             <div class="adm-kpi-grid">
@@ -136,8 +140,10 @@ $active_nav = "inventory";
                             <option value="Bhiwandi">Bhiwandi Depot</option>
                         </select>
                     </div>
-                    <div class="adm-page-actions">
-                        <a href="/admin/products/add.php" class="adm-btn-primary" style="text-decoration:none;">+ Stock Inward (Receive)</a>
+                    <div class="adm-page-actions" style="display:flex; gap:8px;">
+                        <a href="/admin/inventory/stock-in.php" class="dt-btn dt-btn-gold" style="text-decoration:none; height:34px; padding:0 12px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">+ Stock Inward</a>
+                        <a href="/admin/inventory/stock-out.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:34px; padding:0 12px; font-size:12px; font-weight:750; display:inline-flex; align-items:center; gap:6px;">- Stock Outward</a>
+                        <a href="/admin/inventory/export.php?download=1" class="dt-btn dt-btn-pale" style="text-decoration:none; height:34px; padding:0 12px; font-size:12px; font-weight:750; display:inline-flex; align-items:center; gap:6px;">Export CSV</a>
                     </div>
                 </div>
                 <div class="adm-table-responsive">
@@ -213,13 +219,26 @@ function quickAdjustStock(prodId, delta, sku) {
     }
 
     const params = new URLSearchParams();
-    params.append('action', 'update');
+    params.append('action', 'adjust_stock');
     params.append('id', prodId);
-    params.append('stock_qty', newQty);
+    params.append('adjustment', delta);
+    params.append('reason', `Quick ${delta > 0 ? '+' : ''}${delta} adjustment from warehouse table console`);
     fetch('/api/products.php', { method: 'POST', body: params })
-        .then(() => {
+        .then(res => res.json())
+        .then((data) => {
+            if (data && data.success && data.new_stock !== undefined) {
+                newQty = data.new_stock;
+                if (valEl) {
+                    valEl.textContent = newQty + ' units';
+                    valEl.style.color = newQty <= 15 ? '#DC2626' : '#15803D';
+                }
+                if (badgeEl) {
+                    badgeEl.className = 'adm-badge ' + (newQty <= 0 ? 'danger' : (newQty <= 15 ? 'warning' : 'success'));
+                    badgeEl.textContent = newQty <= 0 ? 'Out of Stock' : (newQty <= 15 ? 'Low Stock' : 'Healthy');
+                }
+            }
             if (typeof window.showToast === 'function') {
-                window.showToast(`Stock for ${sku} updated to ${newQty} units in database!`);
+                window.showToast(`Stock for ${sku} adjusted (${delta > 0 ? '+' : ''}${delta} pcs) and recorded in ledger!`);
             }
         })
         .catch(() => {});

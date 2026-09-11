@@ -2108,37 +2108,90 @@ class ProductCatalog
 
 
     /**
-     * Adjust stock quantity by delta (increment/decrement) in MySQL
+     * Adjust stock quantity by delta (increment/decrement) and log to inventory ledger
      */
-    public static function adjustStock(int $id, int $delta): array
-    {
+    public static function adjustStock(
+        int $id, 
+        int $delta, 
+        string $reason = '', 
+        string $operator = 'Admin', 
+        ?int $variantId = null, 
+        string $ref = '', 
+        string $movementType = ''
+    ): array {
         if ($id <= 0) {
             return ['success' => false, 'message' => 'Invalid product ID.'];
         }
 
         $pdo = Database::getConnection();
         if ($pdo === null || Database::isMockMode()) {
-            // Used to answer max(0, 50 + $delta) - a stock level for a product it
-            // had never read, reported to the admin as the new truth.
             return ['success' => false, 'message' => 'The database is not reachable, so stock was not changed.'];
         }
 
         try {
-            $stmt = $pdo->prepare("UPDATE products SET stock_qty = GREATEST(0, COALESCE(stock_qty, 0) + ?) WHERE id = ?");
-            $stmt->execute([$delta, $id]);
+            $isSqlite = ($pdo->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite');
 
-            $get = $pdo->prepare("SELECT stock_qty, title, sku FROM products WHERE id = ? LIMIT 1");
+            // Fetch current stock and product details
+            $get = $pdo->prepare("SELECT id, stock_qty, title, sku FROM products WHERE id = ? LIMIT 1");
             $get->execute([$id]);
             $row = $get->fetch();
             if (!$row) {
                 return ['success' => false, 'message' => 'Product #' . $id . ' does not exist.'];
             }
-            $newQty = (int)$row['stock_qty'];
+
+            $prevQty = (int)($row['stock_qty'] ?? 0);
+            $newQty = max(0, $prevQty + $delta);
+
+            $safeStockExpr = $isSqlite ? "MAX(0, COALESCE(stock_qty, 0) + ?)" : "GREATEST(0, COALESCE(stock_qty, 0) + ?)";
+            $stmt = $pdo->prepare("UPDATE products SET stock_qty = {$safeStockExpr} WHERE id = ?");
+            $stmt->execute([$delta, $id]);
+
             self::invalidateCache();
+
+            // Determine movement type
+            if ($movementType === '') {
+                $rLower = strtolower($reason);
+                if (strpos($rLower, 'inward') !== false || strpos($rLower, 'receive') !== false || strpos($rLower, 'consignment') !== false) {
+                    $movementType = 'inward';
+                } elseif (strpos($rLower, 'outward') !== false || strpos($rLower, 'dispatch') !== false) {
+                    $movementType = 'outward';
+                } elseif (strpos($rLower, 'audit') !== false || strpos($rLower, 'reconcil') !== false || strpos($rLower, 'physical count') !== false) {
+                    $movementType = 'adjustment';
+                } else {
+                    $movementType = $delta >= 0 ? 'inward' : 'outward';
+                }
+            }
+
+            // Insert into inventory_ledger
+            try {
+                $sku = (string)($row['sku'] ?? ('SKU-' . $id));
+                $nowExpr = $isSqlite ? "datetime('now')" : "NOW()";
+                $insLedger = $pdo->prepare("
+                    INSERT INTO inventory_ledger 
+                    (product_id, variant_id, sku, movement_type, previous_qty, adjustment_qty, new_qty, reason, reference_id, operator, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, {$nowExpr})
+                ");
+                $insLedger->execute([
+                    $id,
+                    $variantId,
+                    $sku,
+                    $movementType,
+                    $prevQty,
+                    $delta,
+                    $newQty,
+                    $reason ?: ($delta >= 0 ? "Stock increment (+{$delta})" : "Stock decrement ({$delta})"),
+                    $ref ?: null,
+                    $operator ?: 'Admin'
+                ]);
+            } catch (\Throwable $le) {
+                error_log("Inventory ledger insert error: " . $le->getMessage());
+            }
 
             return [
                 'success' => true,
                 'id' => $id,
+                'previous_stock' => $prevQty,
+                'adjustment' => $delta,
                 'new_stock' => $newQty,
                 'message' => "Stock adjusted by {$delta} (new total: {$newQty} units)."
             ];

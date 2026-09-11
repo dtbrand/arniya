@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * stock-out.php - DT Brand's Admin Stock Outward & Dispatch Log
@@ -13,6 +13,7 @@ use DTBrand\Database;
 
 $page_title = "Stock Outward & Dispatch Log";
 $active_nav = "inventory";
+$active_subnav = "stock-out";
 $products = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
@@ -59,6 +60,9 @@ $products = ProductCatalog::getAll(true);
                     </a>
                 </div>
             </div>
+
+            <!-- Submodule Navigation -->
+            <?php include_once __DIR__ . '/components/nav.php'; ?>
 
             <!-- Outward Dispatch Form Card -->
             <div class="adm-card" style="max-width:800px; margin-bottom:18px;">
@@ -175,20 +179,23 @@ function handleStockOutward(e) {
     const selectedOpt = select.options[select.selectedIndex];
     const title = selectedOpt.getAttribute('data-title') || 'Product';
     const qty = parseInt(document.getElementById('outwardQty').value) || 10;
+    const reason = document.getElementById('outwardReason').value || 'B2B Outward Dispatch';
 
     const params = new URLSearchParams();
     params.append('action', 'adjust_stock');
     params.append('id', id);
     params.append('adjustment', -qty);
+    params.append('reason', reason);
+    params.append('movement_type', 'outward');
 
     fetch('/api/products.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`Stock deducted -${qty} pcs for "${title}" in MySQL database.`);
+                window.showToast(`Stock deducted -${qty} pcs for "${title}" into MySQL ledger.`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         })
         .catch(() => {
@@ -196,7 +203,7 @@ function handleStockOutward(e) {
                 window.showToast(`Deducted -${qty} pcs outward dispatch.`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         });
 }

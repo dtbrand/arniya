@@ -96,7 +96,12 @@ try {
                 exit;
             }
             $delta = (int)($data['adjustment'] ?? $data['delta'] ?? 0);
-            $res = ProductCatalog::adjustStock($targetId, $delta);
+            $reason = trim((string)($data['reason'] ?? ''));
+            $operator = trim((string)($currentUser['name'] ?? ($currentUser['username'] ?? ($data['operator'] ?? 'Admin'))));
+            $movementType = trim((string)($data['movement_type'] ?? ''));
+            $ref = trim((string)($data['reference_id'] ?? ($data['ref'] ?? '')));
+            $variantId = !empty($data['variant_id']) ? (int)$data['variant_id'] : null;
+            $res = ProductCatalog::adjustStock($targetId, $delta, $reason, $operator, $variantId, $ref, $movementType);
             echo json_encode($res, JSON_PRETTY_PRINT);
             exit;
         }

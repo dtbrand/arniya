@@ -129,6 +129,20 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'segments';
 } elseif (strpos($req_uri, '/wholesale/analytics.php') !== false || strpos($req_uri, '/resellers/analytics.php') !== false) {
     $current_subnav = 'analytics';
+} elseif (strpos($req_uri, '/inventory/stock-in.php') !== false) {
+    $current_subnav = 'stock-in';
+} elseif (strpos($req_uri, '/inventory/stock-out.php') !== false) {
+    $current_subnav = 'stock-out';
+} elseif (strpos($req_uri, '/inventory/adjustment.php') !== false) {
+    $current_subnav = 'adjustment';
+} elseif (strpos($req_uri, '/inventory/low-stock.php') !== false) {
+    $current_subnav = 'low-stock';
+} elseif (strpos($req_uri, '/inventory/ledger.php') !== false) {
+    $current_subnav = 'ledger';
+} elseif (strpos($req_uri, '/inventory/export.php') !== false) {
+    $current_subnav = 'export';
+} elseif (strpos($req_uri, '/inventory/') !== false) {
+    $current_subnav = 'overview';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
@@ -514,11 +528,60 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         <div class="adm-nav-group">
             <div class="adm-nav-heading">LOGISTICS & STOCK</div>
             <ul class="adm-nav-list">
-                <li>
-                    <a href="/admin/inventory/" class="adm-nav-item <?php echo $current_nav === 'inventory' ? 'active' : ''; ?>" id="navItem-inventory" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-inventory')) { switchAdmTab('inventory'); return false; }" data-title="Warehouse Inventory">
+                <!-- INVENTORY & STOCK WITH SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'inventory' ? 'open' : ''; ?>">
+                    <a href="/admin/inventory/" class="adm-nav-item <?php echo $current_nav === 'inventory' ? 'active' : ''; ?>" id="navItem-inventory" data-title="Warehouse Inventory">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
-                        <span class="adm-nav-label">Inventory & Stock</span>
+                        <span class="adm-nav-label">Inventory &amp; Stock</span>
+                        <span class="adm-nav-badge gold">HUB</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'inventory' ? 'open' : ''; ?>" id="admSubmenu-inventory">
+                        <li>
+                            <a href="/admin/inventory/index.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && ($current_subnav === 'overview' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <span>Stock Overview</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/stock-in.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'stock-in') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Stock Inward</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/stock-out.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'stock-out') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <span>Stock Outward</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/adjustment.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'adjustment') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>
+                                <span>Reconciliation</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/low-stock.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'low-stock') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span>Low Stock Alarms</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/ledger.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'ledger') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <span>Movement Ledger</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/inventory/export.php" class="adm-nav-subitem <?php echo ($current_nav === 'inventory' && $current_subnav === 'export') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export Stock CSV</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/admin/shipping/" class="adm-nav-item <?php echo $current_nav === 'shipping' ? 'active' : ''; ?>" id="navItem-shipping" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-shipping')) { switchAdmTab('shipping'); return false; }" data-title="Shipping & Courier">

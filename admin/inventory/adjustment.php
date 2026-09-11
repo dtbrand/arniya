@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * adjustment.php - DT Brand's Admin Inventory Stock Reconciliation
@@ -12,6 +12,7 @@ use DTBrand\ProductCatalog;
 
 $page_title = "Inventory Stock Reconciliation";
 $active_nav = "inventory";
+$active_subnav = "adjustment";
 $products = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
@@ -59,6 +60,9 @@ $products = ProductCatalog::getAll(true);
                 </div>
             </div>
 
+            <!-- Submodule Navigation -->
+            <?php include_once __DIR__ . '/components/nav.php'; ?>
+
             <!-- Adjustment Entry Form Card -->
             <div class="adm-card" style="max-width:800px;">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
@@ -83,7 +87,7 @@ $products = ProductCatalog::getAll(true);
                         </div>
                         <div class="adm-form-group" style="grid-column:1 / -1;">
                             <label class="adm-form-label" style="font-weight:700; font-size:0.75rem; color:#181512; margin-bottom:4px; display:block;">Audit Reason / Observation Note</label>
-                            <input type="text" class="adm-form-input" value="Physical count discrepancy audit at Surat Hub" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 12px; box-sizing:border-box;">
+                            <input type="text" id="adjustReasonInput" class="adm-form-input" value="Physical count discrepancy audit at Surat Hub" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; font-weight:600; padding:0 12px; box-sizing:border-box;">
                         </div>
                     </div>
                     
@@ -109,20 +113,23 @@ function handleStockAdjustment(e) {
     const selectedOpt = select.options[select.selectedIndex];
     const title = selectedOpt.getAttribute('data-title') || 'Product';
     const qty = parseInt(document.getElementById('adjustQty').value) || 0;
+    const reason = document.getElementById('adjustReasonInput').value || 'Physical audit reconciliation';
 
     const params = new URLSearchParams();
     params.append('action', 'adjust_stock');
     params.append('id', id);
     params.append('adjustment', qty);
+    params.append('reason', reason);
+    params.append('movement_type', 'adjustment');
 
     fetch('/api/products.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
             if (typeof window.showToast === 'function') {
-                window.showToast(`Stock reconciled (${qty > 0 ? '+' : ''}${qty} pcs) for "${title}" in MySQL database!`);
+                window.showToast(`Stock reconciled (${qty > 0 ? '+' : ''}${qty} pcs) for "${title}" in MySQL ledger!`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         })
         .catch(() => {
@@ -130,7 +137,7 @@ function handleStockAdjustment(e) {
                 window.showToast(`Stock adjusted (${qty > 0 ? '+' : ''}${qty} pcs)!`);
             }
             setTimeout(() => {
-                window.location.href = '/admin/inventory/';
+                window.location.href = '/admin/inventory/ledger.php';
             }, 600);
         });
 }

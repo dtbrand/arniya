@@ -1,5 +1,5 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) { require_once $__dtg; } elseif (is_file(__DIR__ . '/../includes/adminguard.php')) { require_once __DIR__ . '/../includes/adminguard.php'; }
 
 /**
  * low-stock.php - DT Brand's Admin Low Stock & Critical Restock Alarms
@@ -12,6 +12,7 @@ use DTBrand\ProductCatalog;
 
 $page_title = "Low Stock & Critical Restock Alarms";
 $active_nav = "inventory";
+$active_subnav = "low-stock";
 
 $allProducts = ProductCatalog::getAll(true);
 $lowStockItems = [];
@@ -58,6 +59,9 @@ if (empty($lowStockItems) && !empty($allProducts)) {
                 </div>
             </div>
 
+            <!-- Submodule Navigation -->
+            <?php include_once __DIR__ . '/components/nav.php'; ?>
+
             <!-- Table Card -->
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
@@ -92,7 +96,12 @@ if (empty($lowStockItems) && !empty($allProducts)) {
                                         <strong style="color:<?= $isCritical ? '#DC2626' : '#B45309' ?>; font-size:13px;" id="stockQtyVal_<?= $item['id'] ?>"><?= $stock ?> units</strong>
                                     </td>
                                     <td><span style="color:#64748B; font-weight:600;">25 units</span></td>
-                                    <td><strong>₹<?= number_format((float)($item['price'] ?? 4490)) ?></strong></td>
+                                    <td>
+                                        <span style="display:inline-flex; align-items:center; gap:2px; font-weight:800; color:#181512;">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                            <span><?= number_format((float)($item['price'] ?? 4490)) ?></span>
+                                        </span>
+                                    </td>
                                     <td style="text-align:right;">
                                         <button type="button" class="dt-btn dt-btn-gold" style="height:28px; padding:0 12px; font-size:11.5px; font-weight:800;" onclick="reorderSingleSku(<?= $item['id'] ?>, '<?= addslashes($item['title'] ?? 'Product') ?>', 50)">
                                             Re-Order +50 pcs
@@ -115,6 +124,8 @@ function reorderSingleSku(id, title, qty) {
     params.append('action', 'adjust_stock');
     params.append('id', id);
     params.append('adjustment', qty);
+    params.append('reason', `Emergency loom re-order restock (+${qty} pcs) for critical SKU`);
+    params.append('movement_type', 'inward');
 
     fetch('/api/products.php', { method: 'POST', body: params })
         .then(res => res.json())
