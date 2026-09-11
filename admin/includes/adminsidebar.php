@@ -28,6 +28,7 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
         // this badge is the only prompt that real buyers are waiting.
         $sb_pending_trade_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE `status` = 'pending'")->fetchColumn();
         $sb_reviews_pending_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `reviews` WHERE `status` = 'pending'")->fetchColumn();
+        $sb_notif_failed_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `notification_logs` WHERE `status` = 'failed'")->fetchColumn();
     } catch (\Exception $e) {
         $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
         $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
@@ -35,6 +36,7 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
         $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
         $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
         $sb_reviews_pending_count = 0;
+        $sb_notif_failed_count = 2;
     }
 } else {
     $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
@@ -43,6 +45,7 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
     $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
     $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
     $sb_reviews_pending_count = 0;
+    $sb_notif_failed_count = 2;
 }
 
 
@@ -98,6 +101,22 @@ if (isset($active_nav) && !empty($active_nav)) {
 
 if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = $active_subnav;
+} elseif (strpos($req_uri, '/notifications/templates.php') !== false) {
+    $current_subnav = 'templates';
+} elseif (strpos($req_uri, '/notifications/email.php') !== false) {
+    $current_subnav = 'email';
+} elseif (strpos($req_uri, '/notifications/sms.php') !== false) {
+    $current_subnav = 'sms';
+} elseif (strpos($req_uri, '/notifications/whatsapp.php') !== false) {
+    $current_subnav = 'whatsapp';
+} elseif (strpos($req_uri, '/notifications/push.php') !== false) {
+    $current_subnav = 'push';
+} elseif (strpos($req_uri, '/notifications/logs.php') !== false) {
+    $current_subnav = 'logs';
+} elseif (strpos($req_uri, '/notifications/failed.php') !== false) {
+    $current_subnav = 'failed';
+} elseif (strpos($req_uri, '/notifications/providers.php') !== false) {
+    $current_subnav = 'providers';
 } elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
 } elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
@@ -985,11 +1004,76 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-label">Media Library</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/admin/notifications/" class="adm-nav-item <?php echo $current_nav === 'notifications' ? 'active' : ''; ?>" id="navItem-notifications" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-notifications')) { switchAdmTab('notifications'); return false; }" data-title="Notifications Hub">
+                <!-- NOTIFICATIONS WITH SECTION 31 SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'notifications' ? 'open' : ''; ?>">
+                    <a href="/admin/notifications/" class="adm-nav-item <?php echo $current_nav === 'notifications' ? 'active' : ''; ?>" id="navItem-notifications" data-title="Notifications Suite">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                         <span class="adm-nav-label">Notifications</span>
+                        <?php if ($sb_notif_failed_count > 0): ?>
+                            <span class="adm-nav-badge crimson" title="<?= $sb_notif_failed_count ?> failed messages in DLQ"><?= $sb_notif_failed_count ?>!</span>
+                        <?php else: ?>
+                            <span class="adm-nav-badge gold">HUB</span>
+                        <?php endif; ?>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'notifications' ? 'open' : ''; ?>" id="admSubmenu-notifications">
+                        <li>
+                            <a href="/admin/notifications/" class="adm-nav-subitem <?php echo ($current_nav === 'notifications' && empty($current_subnav)) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Overview Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/templates.php" class="adm-nav-subitem <?php echo $current_subnav === 'templates' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Templates Studio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/email.php" class="adm-nav-subitem <?php echo $current_subnav === 'email' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <span>Transactional Email</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/sms.php" class="adm-nav-subitem <?php echo $current_subnav === 'sms' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                                <span>DLT SMS Gateway</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/whatsapp.php" class="adm-nav-subitem <?php echo $current_subnav === 'whatsapp' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>WhatsApp Cloud API</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/push.php" class="adm-nav-subitem <?php echo $current_subnav === 'push' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                <span>Push &amp; Broadcast</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/logs.php" class="adm-nav-subitem <?php echo $current_subnav === 'logs' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Delivery Logs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/failed.php" class="adm-nav-subitem <?php echo $current_subnav === 'failed' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                <span>Failed &amp; Dead-Letter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/notifications/providers.php" class="adm-nav-subitem <?php echo $current_subnav === 'providers' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>Gateway Providers</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

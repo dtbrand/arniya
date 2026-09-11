@@ -74,7 +74,9 @@ function cors_preflight(): void
 function cors_json(): void
 {
     cors_headers();
-    header('Content-Type: application/json; charset=utf-8');
+    if (!headers_sent()) {
+        header('Content-Type: application/json; charset=utf-8');
+    }
 }
 
 // Call preflight handler immediately
