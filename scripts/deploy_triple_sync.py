@@ -122,6 +122,8 @@ FILES_TO_DEPLOY = [
     'includes/bootstrap.php',
     'includes/header.php',
     'db_reset_migrations.php',
+    'robots.txt',
+    'sitemap.php',
 ]
 
 SERVERS = [
@@ -194,8 +196,22 @@ def deploy_to_server(srv):
         remote_dir = os.path.dirname(remote_full)
         remote_filename = os.path.basename(remote_full)
 
+        local_size = os.path.getsize(local_path)
+        # Check if remote file already exists with identical size
+        try:
+            if ftp is None:
+                ftp = connect_ftp(srv)
+            ensure_remote_dir(ftp, remote_dir)
+            remote_size = ftp.size(remote_filename)
+            if remote_size == local_size and '--force' not in sys.argv:
+                print(f"  [UP-TO-DATE] {rel_path} ({remote_size} bytes)")
+                success_count += 1
+                continue
+        except Exception:
+            pass
+
         uploaded = False
-        for attempt in range(1, 4):
+        for attempt in range(1, 5):
             try:
                 if ftp is None:
                     ftp = connect_ftp(srv)
@@ -205,7 +221,6 @@ def deploy_to_server(srv):
                 
                 # verify size
                 remote_size = ftp.size(remote_filename)
-                local_size = os.path.getsize(local_path)
                 print(f"  [OK] {rel_path} -> {remote_filename} ({remote_size} bytes, local: {local_size} bytes)")
                 success_count += 1
                 uploaded = True
