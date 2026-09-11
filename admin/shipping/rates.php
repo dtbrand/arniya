@@ -1,15 +1,23 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */
+$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+if (is_file($__dtg)) {
+    require_once $__dtg;
+} else if (is_file(__DIR__ . '/../includes/adminguard.php')) {
+    require_once __DIR__ . '/../includes/adminguard.php';
+}
 
 /**
  * rates.php - DT Brand's Admin Shipping Rates & Pincode Matrix
- * DT Brand's & Jai Hanuman Tex
+ * Section 27: Shipping Admin Architecture & Logistics Suite
+ * DT Brand's & Jai Hanuman Tex — Surat Logistics Depot
  */
 require_once __DIR__ . '/../../src/Database.php';
 use DTBrand\Database;
 
 $page_title = "Shipping Freight Rates & Pincode Matrix";
 $active_nav = "shipping";
+$active_subnav = "rates";
 
 $defaultSlabs = [
     [
@@ -63,30 +71,30 @@ $slabs = $defaultSlabs;
 $pdo = Database::getConnection();
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $pdo->exec("CREATE TABLE IF NOT EXISTS `shipping_zone_rates` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `zone_code` VARCHAR(50) NOT NULL UNIQUE,
-            `zone_name` VARCHAR(150) NOT NULL,
-            `coverage` VARCHAR(255) NULL,
-            `base_rate` DECIMAL(10,2) NOT NULL DEFAULT 40.00,
-            `per_unit_rate` DECIMAL(10,2) NOT NULL DEFAULT 20.00,
-            `free_threshold` DECIMAL(10,2) NOT NULL DEFAULT 999.00,
-            `sla` VARCHAR(100) NOT NULL DEFAULT '24–48 Hours',
-            `is_active` TINYINT(1) DEFAULT 1,
-            `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-        $count = (int)$pdo->query("SELECT COUNT(*) FROM `shipping_zone_rates`")->fetchColumn();
-        if ($count === 0) {
-            $ins = $pdo->prepare("INSERT INTO `shipping_zone_rates` (zone_code, zone_name, coverage, base_rate, per_unit_rate, free_threshold, sla) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            foreach ($defaultSlabs as $d) {
-                $ins->execute([$d['zone_code'], $d['zone_name'], $d['coverage'], $d['base_rate'], $d['per_unit_rate'], $d['free_threshold'], $d['sla']]);
+        $hasZones = (int)$pdo->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='shipping_zones'")->fetchColumn();
+        if ($hasZones > 0) {
+            $rows = $pdo->query("SELECT * FROM `shipping_zones` WHERE is_active=1 ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
+            if (!empty($rows)) {
+                $slabs = array_map(function($r) {
+                    return [
+                        'zone_code' => $r['zone_code'],
+                        'zone_name' => $r['zone_name'],
+                        'coverage' => $r['city_names'] ?? ($r['state_names'] ?? ''),
+                        'base_rate' => (float)$r['base_rate'],
+                        'per_unit_rate' => (float)$r['per_unit_rate'],
+                        'free_threshold' => (float)$r['free_threshold'],
+                        'sla' => $r['sla'] ?? '2–4 Days'
+                    ];
+                }, $rows);
             }
-        }
-
-        $rows = $pdo->query("SELECT * FROM `shipping_zone_rates` ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
-        if (!empty($rows)) {
-            $slabs = $rows;
+        } else {
+            $hasRates = (int)$pdo->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='shipping_zone_rates'")->fetchColumn();
+            if ($hasRates > 0) {
+                $rows = $pdo->query("SELECT * FROM `shipping_zone_rates` ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
+                if (!empty($rows)) {
+                    $slabs = $rows;
+                }
+            }
         }
     } catch (\Throwable $e) {}
 }
@@ -101,7 +109,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
     <title>Shipping Rates &amp; Pincode Matrix - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <style>
         .dt-rate-group {
@@ -167,10 +175,14 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                     </h1>
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Define automated parcel freight rates based on delivery zone, parcel weight slabs, and free shipping triggers.</p>
                 </div>
-                <div class="adm-page-actions" style="display:flex; gap:8px;">
+                <div class="adm-page-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
                     <a href="/admin/shipping/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>Shipping Suite</span>
+                        <span>All Shipments</span>
+                    </a>
+                    <a href="/admin/shipping/zones.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                        <span>Zones Hub</span>
                     </a>
                     <button type="button" id="btnSaveRateMatrix" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;" onclick="saveShippingRateMatrix()">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -248,49 +260,44 @@ function showToastSafe(m) {
 
 function saveShippingRateMatrix() {
     var btn = document.getElementById('btnSaveRateMatrix');
-    if (btn) btn.disabled = true;
+    var originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Saving...</span>';
 
     var rows = document.querySelectorAll('#shippingRatesForm tbody tr');
     var rates = [];
 
     rows.forEach(function(r) {
-        var code = r.querySelector('.rate-zone-code').value;
-        var name = r.querySelector('.rate-zone-name').value;
-        var coverage = r.querySelector('.rate-coverage').value;
-        var base = parseFloat(r.querySelector('.rate-base').value) || 0;
-        var perUnit = parseFloat(r.querySelector('.rate-per-unit').value) || 0;
-        var free = parseFloat(r.querySelector('.rate-free-threshold').value) || 0;
-        var sla = r.querySelector('.rate-sla').value;
-
         rates.push({
-            zone_code: code,
-            zone_name: name,
-            coverage: coverage,
-            base_rate: base,
-            per_unit_rate: perUnit,
-            free_threshold: free,
-            sla: sla
+            zone_code: r.querySelector('.rate-zone-code').value,
+            zone_name: r.querySelector('.rate-zone-name').value,
+            coverage: r.querySelector('.rate-coverage').value,
+            base_rate: parseFloat(r.querySelector('.rate-base').value) || 0,
+            per_unit_rate: parseFloat(r.querySelector('.rate-per-unit').value) || 0,
+            free_threshold: parseFloat(r.querySelector('.rate-free-threshold').value) || 0,
+            sla: r.querySelector('.rate-sla').value
         });
     });
 
     fetch('/api/shipping.php?action=update_rates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
         body: JSON.stringify({ rates: rates })
     })
-    .then(function(res) { return res.json(); })
+    .then(function(r) { return r.json(); })
     .then(function(data) {
-        if (btn) btn.disabled = false;
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
         if (data.success) {
-            showToastSafe('All shipping zone rate slabs saved to database!');
+            showToastSafe('Rate Matrix Updated: ' + data.message);
         } else {
-            showToastSafe('Error: ' + (data.error || data.message || 'Failed to save rate matrix.'));
+            alert('Error: ' + (data.error || 'Failed to save shipping rates.'));
         }
     })
     .catch(function(err) {
-        if (btn) btn.disabled = false;
-        showToastSafe('Rate matrix saved locally. Live database sync confirmed.');
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        alert('Network Error: ' + err.message);
     });
 }
 </script>

@@ -1,9 +1,16 @@
 <?php
-/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+/* DT admin access guard (auto-inserted) */
+$__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/includes/adminguard.php';
+if (is_file($__dtg)) {
+    require_once $__dtg;
+} else if (is_file(__DIR__ . '/../includes/adminguard.php')) {
+    require_once __DIR__ . '/../includes/adminguard.php';
+}
 
 /**
  * index.php - DT Brand's Admin Shipping Module
- * DT Brand's & Jai Hanuman Tex
+ * Section 27: Shipping Admin Architecture & Logistics Suite
+ * DT Brand's & Jai Hanuman Tex — Surat Logistics Depot
  */
 require_once __DIR__ . '/../../src/OrderManager.php';
 require_once __DIR__ . '/../../src/Database.php';
@@ -13,12 +20,14 @@ use DTBrand\Database;
 
 $page_title = "Shipping Logistics & Courier Hub";
 $active_nav = "shipping";
+$active_subnav = "shipments";
 
 $pdo = Database::getConnection();
 $shipmentsList = [];
 $totalDispatches = 0;
 $inTransitCount = 0;
 $deliveredCount = 0;
+$exceptionCount = 0;
 
 if ($pdo !== null && !Database::isMockMode()) {
     try {
@@ -31,6 +40,8 @@ if ($pdo !== null && !Database::isMockMode()) {
                 $inTransitCount++;
             } elseif ($f === 'delivered') {
                 $deliveredCount++;
+            } elseif ($f === 'returned' || $f === 'cancelled' || $f === 'failed') {
+                $exceptionCount++;
             }
         }
     } catch (\Exception $e) {}
@@ -40,7 +51,8 @@ if (empty($shipmentsList)) {
     $shipmentsList = OrderManager::getAll();
     $totalDispatches = count($shipmentsList);
     $inTransitCount = max(1, (int)($totalDispatches * 0.4));
-    $deliveredCount = max(0, $totalDispatches - $inTransitCount);
+    $deliveredCount = max(0, $totalDispatches - $inTransitCount - 1);
+    $exceptionCount = 1;
 }
 
 $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; display:inline-block;"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>';
@@ -90,17 +102,25 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Manage Delhivery, BlueDart, DTDC, and TCI Freight cargo consignments with real-time tracking.</p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <a href="/admin/shipping/tracking.php" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-                        <span>Interactive Tracking Hub</span>
+                    <a href="/admin/shipping/labels.php" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        <span>Print Labels</span>
                     </a>
-                    <a href="/admin/shipping/methods.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                        <span>Couriers</span>
+                    <a href="/admin/shipping/tracking.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                        <span>Live Tracking</span>
+                    </a>
+                    <a href="/admin/shipping/zones.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                        <span>Zones</span>
                     </a>
                     <a href="/admin/shipping/rates.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                         <span>Rate Matrix</span>
+                    </a>
+                    <a href="/admin/shipping/exceptions.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span>NDR Exceptions</span>
                     </a>
                 </div>
             </div>
@@ -111,7 +131,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                     <div class="adm-kpi-top">
                         <span class="adm-kpi-label">Total Dispatches</span>
                         <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         </div>
                     </div>
                     <div class="adm-kpi-val"><?= $totalDispatches ?> Consignments</div>
@@ -155,7 +175,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                     </div>
                     <div class="adm-kpi-val"><?= $deliveredCount ?> Orders</div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up">Verified Doorstep Delivery</span>
+                        <span class="adm-kpi-delta up">Verified Doorstep Handover</span>
                     </div>
                 </div>
             </div>
@@ -167,7 +187,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                     <div style="display:flex; align-items:center; gap:8px;">
                         <a href="/admin/orders/export.php?download=1&format=csv" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            <span>Courier Manifest</span>
+                            <span>Courier Manifest CSV</span>
                         </a>
                     </div>
                 </div>
@@ -178,6 +198,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                         <button type="button" class="dt-filter-pill active" onclick="filterShipments('all', this)">All (<?= count($shipmentsList) ?>)</button>
                         <button type="button" class="dt-filter-pill" onclick="filterShipments('active', this)">In Transit / Active (<?= $inTransitCount ?>)</button>
                         <button type="button" class="dt-filter-pill" onclick="filterShipments('delivered', this)">Delivered (<?= $deliveredCount ?>)</button>
+                        <button type="button" class="dt-filter-pill" onclick="filterShipments('exception', this)">NDR / Exceptions (<?= $exceptionCount ?>)</button>
                     </div>
                     <div style="position:relative; width:260px;">
                         <input type="text" id="shipmentSearchInput" placeholder="Search AWB, Order #, Customer..." oninput="searchShipments(this.value)" style="width:100%; border:1px solid #D1D5DB; border-radius:6px; padding:6px 10px 6px 30px; font-size:12.5px;">
@@ -208,7 +229,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                                 $customer = $sh['customer_name'] ?? ($sh['customer'] ?? 'Direct Customer');
                                 $city = $sh['shipping_city'] ?? '';
                                 $fStatus = strtolower($sh['fulfillment_status'] ?? ($sh['order_status'] ?? ($sh['status'] ?? 'processing')));
-                                $badgeClass = $fStatus === 'delivered' ? 'success' : ($fStatus === 'cancelled' ? 'danger' : 'info');
+                                $badgeClass = $fStatus === 'delivered' ? 'success' : ($fStatus === 'cancelled' || $fStatus === 'returned' || $fStatus === 'failed' ? 'danger' : 'info');
                                 $orderTotal = (float)($sh['total_amount'] ?? 0);
                                 $orderId = (int)($sh['id'] ?? 0);
                                 
@@ -218,7 +239,7 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                                 } elseif (stripos($courier, 'tci') !== false) {
                                     $externalTrackUrl = 'https://tcil.com/tcil/tracking.html';
                                 } elseif (stripos($courier, 'dtdc') !== false) {
-                                    $externalTrackUrl = 'https://tracking.dtdc.com/ct糙/track';
+                                    $externalTrackUrl = 'https://tracking.dtdc.com/ct/track';
                                 }
                                 ?>
                                 <tr data-status="<?= htmlspecialchars($fStatus) ?>" data-text="<?= strtolower(htmlspecialchars($tracking . ' ' . $orderNum . ' ' . $courier . ' ' . $customer . ' ' . $city)) ?>">
@@ -255,6 +276,10 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
                                             <a class="dt-btn dt-btn-gold" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:800;" href="/admin/shipping/tracking.php?order_id=<?= $orderId ?>&awb=<?= urlencode($tracking) ?>">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
                                                 <span>Live Hub</span>
+                                            </a>
+                                            <a class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:700;" href="/admin/shipping/labels.php?order_id=<?= $orderId ?>" title="Generate 4x6 Thermal Label">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                                <span>Label</span>
                                             </a>
                                             <a class="dt-btn dt-btn-pale" style="height:26px; padding:0 6px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center;" target="_blank" rel="noopener" title="Open Courier Partner Tracking" href="<?= htmlspecialchars($externalTrackUrl) ?>">
                                                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -300,6 +325,8 @@ function applyShipmentFilters() {
             statusMatch = (status === 'processing' || status === 'dispatched' || status === 'in_transit' || status === 'out_for_delivery' || status === 'shipped');
         } else if (activeStatusFilter === 'delivered') {
             statusMatch = (status === 'delivered');
+        } else if (activeStatusFilter === 'exception') {
+            statusMatch = (status === 'returned' || status === 'cancelled' || status === 'failed');
         }
 
         var searchMatch = true;

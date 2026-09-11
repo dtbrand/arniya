@@ -157,6 +157,22 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'banners';
 } elseif (strpos($req_uri, '/marketing/campaigns.php') !== false) {
     $current_subnav = 'campaigns';
+} elseif (strpos($req_uri, '/shipping/zones.php') !== false) {
+    $current_subnav = 'zones';
+} elseif (strpos($req_uri, '/shipping/rates.php') !== false) {
+    $current_subnav = 'rates';
+} elseif (strpos($req_uri, '/shipping/methods.php') !== false) {
+    $current_subnav = 'methods';
+} elseif (strpos($req_uri, '/shipping/tracking.php') !== false) {
+    $current_subnav = 'tracking';
+} elseif (strpos($req_uri, '/shipping/labels.php') !== false) {
+    $current_subnav = 'labels';
+} elseif (strpos($req_uri, '/shipping/exceptions.php') !== false) {
+    $current_subnav = 'exceptions';
+} elseif (strpos($req_uri, '/shipping/audit.php') !== false) {
+    $current_subnav = 'audit';
+} elseif (strpos($req_uri, '/shipping/') !== false) {
+    $current_subnav = 'shipments';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
 } elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
@@ -617,11 +633,66 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/admin/shipping/" class="adm-nav-item <?php echo $current_nav === 'shipping' ? 'active' : ''; ?>" id="navItem-shipping" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-shipping')) { switchAdmTab('shipping'); return false; }" data-title="Shipping & Courier">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <!-- SHIPPING LOGISTICS WITH EXPANDABLE SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'shipping' ? 'open' : ''; ?>">
+                    <a href="/admin/shipping/" class="adm-nav-item <?php echo $current_nav === 'shipping' ? 'active' : ''; ?>" id="navItem-shipping" data-title="Shipping Logistics">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span class="adm-nav-label">Shipping Logistics</span>
+                        <span class="adm-nav-badge gold">LOGISTICS</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'shipping' ? 'open' : ''; ?>" id="admSubmenu-shipping">
+                        <li>
+                            <a href="/admin/shipping/index.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && ($current_subnav === 'shipments' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                <span>All Shipments</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/zones.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'zones') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                <span>Zones & Geography</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/rates.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'rates') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                <span>Freight Rates Matrix</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/methods.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'methods') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Carrier Partners (API)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/tracking.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'tracking') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                                <span>Live Tracking Console</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/labels.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'labels') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                <span>Labels & Manifest</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/exceptions.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'exceptions') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#DC2626" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span>Delivery Exceptions (NDR)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/shipping/audit.php" class="adm-nav-subitem <?php echo ($current_nav === 'shipping' && $current_subnav === 'audit') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>Shipping Audit & Health</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- PAYMENTS & GATEWAYS WITH LUXURY SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'payments' ? 'open' : ''; ?>">
