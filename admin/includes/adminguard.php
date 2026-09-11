@@ -47,11 +47,18 @@ define('DT_ADMIN_GUARD_RAN', true);
             return;
         }
 
-        // Exempt the public endpoints: any login or logout route. Kept generous
-        // on purpose — the cost of exempting an extra "login"-named page is tiny,
-        // whereas failing to exempt the real login page causes a redirect loop.
-        $haystack = $path . '|' . $script;
-        if (strpos($haystack, 'login') !== false || strpos($haystack, 'logout') !== false) {
+        // Exempt the public authentication endpoints: login and logout pages only.
+        // Do NOT exempt admin tools whose filename happens to contain 'login' (e.g. /admin/users/login-audit.php).
+        $isAuthRoute = (
+            $path === '/admin/login.php' ||
+            $path === '/admin/logout.php' ||
+            strpos($path, '/admin/login/') === 0 ||
+            strpos($path, '/admin/logout/') === 0 ||
+            $script === '/admin/login.php' ||
+            $script === '/admin/logout.php' ||
+            strpos($script, '/admin/login/') === 0
+        );
+        if ($isAuthRoute) {
             return;
         }
 
