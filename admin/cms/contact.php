@@ -132,11 +132,11 @@ $gstin = getContactVal('contact_gstin', '24AAACG1289F1Z4', $contactSettings);
     </div>
 </div>
 <script>
-function showToastSafe(m) {
+function showToastSafe(m, type) {
     if (typeof window.showToast === "function") {
-        window.showToast(m);
+        window.showToast(m, type);
     } else {
-        alert(m);
+        console.warn(m);
     }
 }
 

@@ -270,9 +270,9 @@ Description: ..."></textarea>
 (function () {
     'use strict';
 
-    function toast(msg) {
-        if (typeof window.showToast === 'function') { window.showToast(msg); }
-        else { alert(msg); }
+    function toast(msg, type) {
+        if (typeof window.showToast === 'function') { window.showToast(msg, type); }
+        else { console.warn(msg); }
     }
 
     window.openAiImporterModal = function () {

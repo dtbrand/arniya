@@ -195,9 +195,9 @@ $approvedCount = count($approvedReviews);
 </div>
 
 <script>
-function toast(m) {
-    if (typeof window.showToast === 'function') window.showToast(m);
-    else alert(m);
+function toast(m, type) {
+    if (typeof window.showToast === 'function') window.showToast(m, type);
+    else console.warn(m);
 }
 
 function promptReply(id) {

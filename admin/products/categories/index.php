@@ -471,8 +471,8 @@ $catNextOrder++;
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 <script>
-function dtCatToast(msg) {
-    if (typeof window.showToast === 'function') { window.showToast(msg); } else { alert(msg); }
+function dtCatToast(msg, type) {
+    if (typeof window.showToast === 'function') { window.showToast(msg, type); } else { console.warn(msg); }
 }
 
 function toggleCatSearchClearBtn(val) {

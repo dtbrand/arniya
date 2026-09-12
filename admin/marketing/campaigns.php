@@ -255,7 +255,7 @@ function handleLaunchCampaign(e) {
 }
 </script>
 <script>
-function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+function showToastSafe(m, type) { if (typeof window.showToast === "function") window.showToast(m, type); else console.warn(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

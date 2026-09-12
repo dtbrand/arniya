@@ -9,16 +9,20 @@
         const checked = document.querySelectorAll('.dt-prod-row-check:checked');
         if (checked.length === 0) {
             if (typeof window.showToast === 'function') {
-                window.showToast('Please select at least one product.');
+                window.showToast('Please select at least one product.', 'warning');
             } else {
-                alert('Please select at least one product.');
+                console.warn('Please select at least one product.');
             }
             return;
         }
 
         const ids = Array.from(checked).map(cb => parseInt(cb.value || cb.dataset.id)).filter(id => !isNaN(id) && id > 0);
         if (ids.length === 0) {
-            alert('No valid product IDs selected.');
+            if (typeof window.showToast === 'function') {
+                window.showToast('No valid product IDs selected.', 'warning');
+            } else {
+                console.warn('No valid product IDs selected.');
+            }
             return;
         }
 
@@ -68,7 +72,11 @@
                 const bulkStrip = document.getElementById('dtBulkActionStrip');
                 if (bulkStrip) bulkStrip.classList.remove('open');
             } else {
-                alert('Action failed: ' + (res.message || 'Server error'));
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Action failed: ' + (res.message || 'Server error'), 'error');
+                } else {
+                    console.error('Action failed: ' + (res.message || 'Server error'));
+                }
             }
         })
         .catch(_err => {
@@ -81,7 +89,11 @@
     window.exportCurrentTable = function(filename) {
         const rows = document.querySelectorAll('#dtProductTableBody tr');
         if (rows.length === 0) {
-            alert('No data to export.');
+            if (typeof window.showToast === 'function') {
+                window.showToast('No data to export.', 'warning');
+            } else {
+                console.warn('No data to export.');
+            }
             return;
         }
 

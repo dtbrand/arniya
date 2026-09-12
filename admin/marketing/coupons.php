@@ -434,11 +434,11 @@ function closeCreateCouponModal() {
     if (m) m.style.display = 'none';
 }
 
-function dtCouponToast(message) {
+function dtCouponToast(message, type) {
     if (typeof window.showToast === 'function') {
-        window.showToast(message);
+        window.showToast(message, type);
     } else {
-        alert(message);
+        console.warn(message);
     }
 }
 

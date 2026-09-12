@@ -143,13 +143,28 @@ $storageFormatted = $totalBytes >= 1048576
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:14px;">
+                    <?php foreach ($filesList as $f): ?>
+                        <div style="border:1px solid #E5E1D7; border-radius:8px; overflow:hidden; background:#FAF8F4; text-align:center; transition:transform 0.15s ease;" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform='translateY(0)'">
+                            <img src="<?= htmlspecialchars($f['url']) ?>" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:130px; object-fit:cover; border-bottom:1px solid #E5E1D7;">
+                            <div style="padding:8px 6px;">
+                                <div style="font-size:0.72rem; font-weight:700; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="<?= htmlspecialchars($f['name']) ?>"><?= htmlspecialchars($f['name']) ?></div>
+                                <div style="font-size:0.65rem; color:#64748b; margin-top:2px;"><?= number_format($f['size'] / 1024, 1) ?> KB • <?= strtoupper($f['ext']) ?></div>
+                                <div style="margin-top:6px; display:flex; gap:4px; justify-content:center;">
+                                    <button type="button" class="adm-btn-secondary" style="padding:2px 6px; font-size:0.65rem;" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($f['url']) ?>'); window.showToast('Copied link to clipboard!');">Copy URL</button>
+                                    <a href="<?= htmlspecialchars($f['url']) ?>" target="_blank" class="adm-btn-primary" style="padding:2px 6px; font-size:0.65rem; text-decoration:none;">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 <script>
-function showToastSafe(m) { if (typeof window.showToast === "function") window.showToast(m); else alert(m); }
+function showToastSafe(m, type) { if (typeof window.showToast === "function") window.showToast(m, type); else console.warn(m); }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

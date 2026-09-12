@@ -468,7 +468,11 @@ function submitEditBrandModal() {
     const tier = document.getElementById('modalBrandTier').value;
     const tagline = document.getElementById('modalBrandTagline').value.trim();
     if (!name) { 
-        alert('Brand name is required');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Brand name is required', 'warning');
+        } else {
+            console.warn('Brand name is required');
+        }
         return; 
     }
 
@@ -488,9 +492,16 @@ function submitEditBrandModal() {
         .then(r => r.json())
         .then(res => {
             if (res.success) {
-                window.location.reload();
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Brand updated successfully!');
+                }
+                setTimeout(() => window.location.reload(), 500);
             } else {
-                alert(res.message || 'Error updating brand');
+                if (typeof window.showToast === 'function') {
+                    window.showToast(res.message || 'Error updating brand', 'error');
+                } else {
+                    console.error(res.message || 'Error updating brand');
+                }
             }
         })
         .catch(err => {
@@ -514,7 +525,11 @@ function submitNewBrand() {
     const tier = document.getElementById('newBrandTier').value;
     const tagline = document.getElementById('newBrandTagline').value.trim();
     if (!name) { 
-        alert('Brand name is required');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Brand name is required', 'warning');
+        } else {
+            console.warn('Brand name is required');
+        }
         return; 
     }
 
@@ -533,9 +548,16 @@ function submitNewBrand() {
         .then(r => r.json())
         .then(res => {
             if (res.success) {
-                window.location.reload();
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Brand created successfully!');
+                }
+                setTimeout(() => window.location.reload(), 500);
             } else {
-                alert(res.message || 'Error creating brand');
+                if (typeof window.showToast === 'function') {
+                    window.showToast(res.message || 'Error creating brand', 'error');
+                } else {
+                    console.error(res.message || 'Error creating brand');
+                }
             }
         })
         .catch(err => {

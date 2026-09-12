@@ -162,7 +162,7 @@ $amSuper = strtolower((string)($_SESSION['admin_user']['role'] ?? '')) === 'supe
 <script>
 function openCouponModal() { document.getElementById('dtCouponModal').style.display = 'flex'; }
 function closeCouponModal() { document.getElementById('dtCouponModal').style.display = 'none'; }
-function showToastSafe(m) { if (typeof window.showToast === 'function') window.showToast(m); else alert(m); }
+function showToastSafe(m, type) { if (typeof window.showToast === 'function') window.showToast(m, type); else console.warn(m); }
 
 function submitCoupon() {
     var code = document.getElementById('cpCode').value.trim().toUpperCase();

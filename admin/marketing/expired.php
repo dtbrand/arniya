@@ -189,11 +189,11 @@ $rupeeSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke=
 </div>
 
 <script>
-function dtCouponToast(message) {
+function dtCouponToast(message, type) {
     if (typeof window.showToast === 'function') {
-        window.showToast(message);
+        window.showToast(message, type);
     } else {
-        alert(message);
+        console.warn(message);
     }
 }
 

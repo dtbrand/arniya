@@ -253,9 +253,9 @@ $rupeeSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke=
     </div>
 </div>
 <script>
-function showToastSafe(m) {
-    if (typeof window.showToast === "function") window.showToast(m);
-    else alert(m);
+function showToastSafe(m, type) {
+    if (typeof window.showToast === "function") window.showToast(m, type);
+    else console.warn(m);
 }
 
 function saveShippingRateMatrix() {
@@ -291,13 +291,13 @@ function saveShippingRateMatrix() {
         if (data.success) {
             showToastSafe('Rate Matrix Updated: ' + data.message);
         } else {
-            alert('Error: ' + (data.error || 'Failed to save shipping rates.'));
+            showToastSafe('Error: ' + (data.error || 'Failed to save shipping rates.'), 'error');
         }
     })
     .catch(function(err) {
         btn.disabled = false;
         btn.innerHTML = originalHtml;
-        alert('Network Error: ' + err.message);
+        showToastSafe('Network Error: ' + err.message, 'error');
     });
 }
 </script>

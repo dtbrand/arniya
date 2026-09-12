@@ -888,7 +888,11 @@ function saveProductQuickEdit(id) {
     const category = document.getElementById(`pqe-cat-${id}`)?.value || 'Silk Sarees';
 
     if (!title) {
-        alert('Please provide a product title');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Please provide a product title', 'warning');
+        } else {
+            console.warn('Please provide a product title');
+        }
         return;
     }
 
@@ -918,10 +922,18 @@ function saveProductQuickEdit(id) {
             }
             setTimeout(() => { window.location.reload(); }, 500);
         } else {
-            alert((res && res.message) ? res.message : 'Error updating product');
+            if (typeof window.showToast === 'function') {
+                window.showToast((res && res.message) ? res.message : 'Error updating product', 'error');
+            } else {
+                console.error((res && res.message) ? res.message : 'Error updating product');
+            }
         }
     }).catch(err => {
-        alert('Failed to save quick edit: ' + err.message);
+        if (typeof window.showToast === 'function') {
+            window.showToast('Failed to save quick edit: ' + err.message, 'error');
+        } else {
+            console.error('Failed to save quick edit: ' + err.message);
+        }
     });
 }
 
@@ -1157,12 +1169,20 @@ if (typeof window.showToast === 'function') {
                 window.location.reload();
             }, 400);
         } else {
-            alert('Error duplicating: ' + (data.message || 'Unknown error'));
+            if (typeof window.showToast === 'function') {
+                window.showToast('Error duplicating: ' + (data.message || 'Unknown error'), 'error');
+            } else {
+                console.error('Error duplicating: ' + (data.message || 'Unknown error'));
+            }
         }
     })
     .catch(err => {
         console.error(err);
-        alert('Network error while duplicating product');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Network error while duplicating product', 'error');
+        } else {
+            console.error('Network error while duplicating product');
+        }
     });
 }
 

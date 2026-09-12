@@ -61,7 +61,11 @@
                     setTimeout(() => row.remove(), 300);
                 }
             } else {
-                alert('Delete failed: ' + (res.message || 'Server error'));
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Delete failed: ' + (res.message || 'Server error'), 'error');
+                } else {
+                    console.error('Delete failed: ' + (res.message || 'Server error'));
+                }
             }
         })
         .catch(_err => {
@@ -86,10 +90,20 @@
                 }
                 setTimeout(() => window.location.reload(), 600);
             } else {
-                alert('Duplicate failed: ' + (res.message || 'Server error'));
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Duplicate failed: ' + (res.message || 'Server error'), 'error');
+                } else {
+                    console.error('Duplicate failed: ' + (res.message || 'Server error'));
+                }
             }
         })
-        .catch(() => alert('Network error duplicating product.'));
+        .catch(() => {
+            if (typeof window.showToast === 'function') {
+                window.showToast('Network error duplicating product.', 'error');
+            } else {
+                console.error('Network error duplicating product.');
+            }
+        });
     };
 })();
 

@@ -78,7 +78,7 @@ function dtSettingsSave(btn) {
     })
     .catch(function () { btn.disabled = false; showToastSafe('Could not reach the server'); });
 }
-function showToastSafe(m) { if (typeof window.showToast === 'function') window.showToast(m); else alert(m); }
+function showToastSafe(m, type) { if (typeof window.showToast === 'function') window.showToast(m, type); else console.warn(m); }
 </script>
 HTML;
 }
