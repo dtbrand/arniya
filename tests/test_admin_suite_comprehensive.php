@@ -14,6 +14,7 @@ require_once __DIR__ . '/../src/CustomerManager.php';
 require_once __DIR__ . '/../src/OrderManager.php';
 require_once __DIR__ . '/../src/ReviewManager.php';
 require_once __DIR__ . '/../src/DiscountEngine.php';
+require_once __DIR__ . '/../src/Auth.php';
 
 use DTBrand\Database;
 use DTBrand\ProductCatalog;
@@ -21,6 +22,7 @@ use DTBrand\CustomerManager;
 use DTBrand\OrderManager;
 use DTBrand\ReviewManager;
 use DTBrand\DiscountEngine;
+use DTBrand\Auth;
 
 $passed = 0;
 $failed = 0;
@@ -496,6 +498,48 @@ assertTest("ReviewManager::getReviews retrieves approved reviews list", is_array
 
 $auditLogs = ReviewManager::getAuditLogs(10);
 assertTest("ReviewManager::getAuditLogs retrieves moderation audit trail", is_array($auditLogs));
+
+// ============================================================================
+// 8. CUSTOMER ADDRESS BOOK & MULTI-DESTINATION MANAGEMENT TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "8. CUSTOMER ADDRESS BOOK & MULTI-DESTINATION MANAGEMENT TEST\n";
+echo "================================================================================\n";
+
+// 1. Save warehouse shipping address
+$addrRes1 = Auth::saveAddress(1, [
+    'recipient_name' => 'Surat Central Depot Godown',
+    'phone' => '+91 91704 63528',
+    'address_line1' => 'Plot 88, GIDC Industrial Estate, Pandesara',
+    'address_line2' => 'Behind Central Bank',
+    'city' => 'Surat',
+    'state' => 'Gujarat',
+    'pincode' => '394221',
+    'address_type' => 'warehouse',
+    'is_default' => 0
+]);
+assertTest("Auth::saveAddress saves customer warehouse destination", isset($addrRes1['success']) && $addrRes1['success'] === true, json_encode($addrRes1));
+
+// 2. Save official billing address
+$addrRes2 = Auth::saveAddress(1, [
+    'recipient_name' => 'Rajesh Wholesalers Corporate HQ',
+    'phone' => '+91 98250 12345',
+    'address_line1' => 'Shop 104, Millennium Textile Market, Ring Road',
+    'address_line2' => 'Tower A, 1st Floor',
+    'city' => 'Surat',
+    'state' => 'Gujarat',
+    'pincode' => '395002',
+    'address_type' => 'billing',
+    'is_default' => 1
+]);
+assertTest("Auth::saveAddress saves customer official billing address", isset($addrRes2['success']) && $addrRes2['success'] === true, json_encode($addrRes2));
+
+// 3. Retrieve all saved addresses
+$allAddresses = Auth::getCustomerAddresses(1);
+assertTest("Auth::getCustomerAddresses retrieves all saved addresses", is_array($allAddresses) && count($allAddresses) >= 2);
+assertTest("First address in list is designated billing address", isset($allAddresses[0]['address_type']) && $allAddresses[0]['address_type'] === 'billing');
+assertTest("Billing address has is_default set to 1", !empty($allAddresses[0]['is_default']));
+
 
 
 echo "\n================================================================================\n";
