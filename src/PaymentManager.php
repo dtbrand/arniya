@@ -489,13 +489,25 @@ class PaymentManager
             // 2. Fetch order items to decrement inventory stock safely (if not already reserved)
             $alreadyDecremented = false;
             try {
-                $checkNotes = $db->prepare("SELECT notes FROM `orders` WHERE `order_number` = :ord LIMIT 1");
+                $checkNotes = $db->prepare("SELECT notes, stock_decremented FROM `orders` WHERE `order_number` = :ord LIMIT 1");
                 $checkNotes->execute([':ord' => $orderNumber]);
-                $orderNotes = (string)$checkNotes->fetchColumn();
-                if (strpos($orderNotes, '[stock_reserved]') !== false) {
-                    $alreadyDecremented = true;
+                $orderRow = $checkNotes->fetch(PDO::FETCH_ASSOC);
+                if ($orderRow) {
+                    if (!empty($orderRow['stock_decremented']) || (isset($orderRow['notes']) && strpos((string)$orderRow['notes'], '[stock_reserved]') !== false)) {
+                        $alreadyDecremented = true;
+                    }
                 }
-            } catch (\Throwable $ne) {}
+            } catch (\Throwable $ne) {
+                // Fallback to notes query if stock_decremented column is not yet present
+                try {
+                    $fallbackNotes = $db->prepare("SELECT notes FROM `orders` WHERE `order_number` = :ord LIMIT 1");
+                    $fallbackNotes->execute([':ord' => $orderNumber]);
+                    $orderNotes = (string)$fallbackNotes->fetchColumn();
+                    if (strpos($orderNotes, '[stock_reserved]') !== false) {
+                        $alreadyDecremented = true;
+                    }
+                } catch (\Throwable $fe) {}
+            }
 
             if (!$alreadyDecremented) {
                 $isSqlite = ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite');
@@ -546,7 +558,7 @@ class PaymentManager
                     $stmtDec = $db->prepare("
                         UPDATE `products` 
                         SET `{$col}` = {$safeStockExpr}
-                        WHERE `id` = :pid
+                        WHERE `id` = :pid AND `{$col}` >= :qty
                     ");
 
                     $safeVarStockExpr = $isSqlite ? "MAX(0, `stock_qty` - :qty)" : "GREATEST(0, `stock_qty` - :qty)";
@@ -555,7 +567,7 @@ class PaymentManager
                         $stmtDecVar = $db->prepare("
                             UPDATE `product_variants` 
                             SET `stock_qty` = {$safeVarStockExpr}
-                            WHERE `id` = :vid
+                            WHERE `id` = :vid AND `stock_qty` >= :qty
                         ");
                     } catch (\Throwable $ve) {}
 
@@ -590,13 +602,17 @@ class PaymentManager
                         }
                     }
 
-                    // Mark as stock reserved in notes to prevent any future decrement
+                    // Mark as stock decremented & reserved to prevent any future duplicate decrement
                     try {
                         $updNoteSql = $isSqlite
-                            ? "UPDATE `orders` SET `notes` = COALESCE(`notes`, '') || ' [stock_reserved]' WHERE `order_number` = :ord"
-                            : "UPDATE `orders` SET `notes` = CASE WHEN `notes` IS NULL OR `notes` = '' THEN '[stock_reserved]' ELSE CONCAT(`notes`, ' [stock_reserved]') END WHERE `order_number` = :ord";
+                            ? "UPDATE `orders` SET `stock_decremented` = 1, `notes` = COALESCE(`notes`, '') || ' [stock_reserved]' WHERE `order_number` = :ord"
+                            : "UPDATE `orders` SET `stock_decremented` = 1, `notes` = CASE WHEN `notes` IS NULL OR `notes` = '' THEN '[stock_reserved]' ELSE CONCAT(`notes`, ' [stock_reserved]') END WHERE `order_number` = :ord";
                         $db->prepare($updNoteSql)->execute([':ord' => $orderNumber]);
-                    } catch (\Throwable $noteEx) {}
+                    } catch (\Throwable $noteEx) {
+                        try {
+                            $db->prepare("UPDATE `orders` SET `notes` = CONCAT(COALESCE(`notes`, ''), ' [stock_reserved]') WHERE `order_number` = :ord")->execute([':ord' => $orderNumber]);
+                        } catch (\Throwable $fEx) {}
+                    }
                 }
             }
 

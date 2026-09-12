@@ -54,6 +54,14 @@ class Money
     }
 
     /**
+     * Create Money instance from float value (alias of fromDecimal).
+     */
+    public static function fromFloat(float $amount, string $currency = 'INR'): self
+    {
+        return self::fromDecimal($amount, $currency);
+    }
+
+    /**
      * Create zero amount Money instance.
      */
     public static function zero(string $currency = 'INR'): self
@@ -70,9 +78,25 @@ class Money
     }
 
     /**
+     * Get integer minor units (paise alias).
+     */
+    public function toPaise(): int
+    {
+        return $this->paise;
+    }
+
+    /**
      * Get float decimal representation.
      */
     public function getAmount(): float
+    {
+        return round($this->paise / 100, 2);
+    }
+
+    /**
+     * Get float decimal representation (alias).
+     */
+    public function toFloat(): float
     {
         return round($this->paise / 100, 2);
     }

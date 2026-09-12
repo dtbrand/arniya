@@ -12,6 +12,11 @@ require_once __DIR__ . '/PricingCalculator.php';
 class OrderManager
 {
     /**
+     * In-memory cache for idempotency keys when in mock/offline mode or testing
+     */
+    private static array $mockIdempotencyCache = [];
+
+    /**
      * Resolve the real discount a coupon grants for a given subtotal, read
      * straight from the live `coupons` table. This is the authoritative
      * server-side computation — it mirrors dt_coupon_apply() in
@@ -239,6 +244,12 @@ class OrderManager
     {
         $orderNumber = !empty($orderData['order_number']) ? trim((string)$orderData['order_number']) : ('DT-ORD-' . strtoupper(substr(uniqid(), -6)));
         $items = $orderData['items'] ?? [];
+        $idempotencyKey = trim((string)($orderData['idempotency_key'] ?? ''));
+
+        // Fast-path idempotency check from in-memory cache
+        if ($idempotencyKey !== '' && isset(self::$mockIdempotencyCache[$idempotencyKey])) {
+            return self::$mockIdempotencyCache[$idempotencyKey];
+        }
 
         $pdo = Database::getConnection();
         $liveDb = ($pdo !== null && !Database::isMockMode());
@@ -404,8 +415,22 @@ class OrderManager
 
             $existing = null;
 
+            // Step 0: Check by idempotency_key if provided
+            if ($idempotencyKey !== '') {
+                try {
+                    if (self::ordersHasColumn($pdo, 'idempotency_key')) {
+                        $idemStmt = $pdo->prepare("SELECT * FROM orders WHERE idempotency_key = ? LIMIT 1");
+                        $idemStmt->execute([$idempotencyKey]);
+                        $foundIdem = $idemStmt->fetch(\PDO::FETCH_ASSOC);
+                        if ($foundIdem) {
+                            $existing = $foundIdem;
+                        }
+                    }
+                } catch (\Throwable $ie) {}
+            }
+
             // Step 1: Check by explicit order_number if provided
-            if (!empty($passedOrderNum)) {
+            if (!$existing && !empty($passedOrderNum)) {
                 $checkStmt = $pdo->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
                 $checkStmt->execute([$passedOrderNum]);
                 $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
@@ -452,7 +477,7 @@ class OrderManager
                     error_log('DT Order deduplication update failed: ' . $uex->getMessage());
                 }
 
-                return [
+                $reusedPayload = [
                     'success' => true,
                     'id' => $dbOrderId,
                     'order_number' => $orderNumber,
@@ -472,6 +497,10 @@ class OrderManager
                     'reused' => true,
                     'message' => 'Active order session reused and updated.'
                 ];
+                if ($idempotencyKey !== '') {
+                    self::$mockIdempotencyCache[$idempotencyKey] = $reusedPayload;
+                }
+                return $reusedPayload;
             }
         }
 
@@ -570,6 +599,17 @@ class OrderManager
                     $orderParams[] = '[stock_reserved]';
                 }
 
+                if ($idempotencyKey !== '' && self::ordersHasColumn($pdo, 'idempotency_key')) {
+                    $cols .= ", idempotency_key";
+                    $vals .= ", ?";
+                    $orderParams[] = $idempotencyKey;
+                }
+
+                if (self::ordersHasColumn($pdo, 'stock_decremented')) {
+                    $cols .= ", stock_decremented";
+                    $vals .= ", 1";
+                }
+
                 $stmt = $pdo->prepare("INSERT INTO orders ({$cols}, created_at) VALUES ({$vals}, NOW())");
                 $stmt->execute($orderParams);
                 $dbOrderId = (int)$pdo->lastInsertId();
@@ -611,25 +651,25 @@ class OrderManager
                 $stockStmt = $pdo->prepare("
                     UPDATE products
                     SET stock_qty = {$safeStockExpr}
-                    WHERE id = ?
+                    WHERE id = ? AND stock_qty >= ?
                 ");
 
                 $variantByIdStockStmt = $pdo->prepare("
                     UPDATE product_variants
                     SET stock_qty = {$safeStockExpr}
-                    WHERE id = ?
+                    WHERE id = ? AND stock_qty >= ?
                 ");
 
                 $variantStockStmt = $pdo->prepare("
                     UPDATE product_variants
                     SET stock_qty = {$safeStockExpr}
-                    WHERE product_id = ? AND LOWER(color_name) = LOWER(?) AND LOWER(size_name) = LOWER(?)
+                    WHERE product_id = ? AND LOWER(color_name) = LOWER(?) AND LOWER(size_name) = LOWER(?) AND stock_qty >= ?
                 ");
 
                 $variantAllStockStmt = $pdo->prepare("
                     UPDATE product_variants
                     SET stock_qty = {$safeStockExpr}
-                    WHERE product_id = ?
+                    WHERE product_id = ? AND stock_qty >= ?
                 ");
 
                 foreach ($items as $it) {
@@ -660,9 +700,9 @@ class OrderManager
                         }
 
                         // Decrement products table stock
-                        $stockStmt->execute([$totalPhysicalQty, $prodId]);
+                        $stockStmt->execute([$totalPhysicalQty, $prodId, $totalPhysicalQty]);
                         // Decrement each variant in product_variants
-                        $variantAllStockStmt->execute([$qty, $prodId]);
+                        $variantAllStockStmt->execute([$qty, $prodId, $qty]);
                     } else {
                         $totalItemPrice = round($unitPrice * $qty, 2);
                         $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
@@ -711,13 +751,13 @@ class OrderManager
                         }
 
                         // Decrement products table stock
-                        $stockStmt->execute([$qty, $prodId]);
+                        $stockStmt->execute([$qty, $prodId, $qty]);
 
                         // Decrement specific variant stock by ID if present, otherwise by color & size
                         if ($varId && $varId > 0) {
-                            $variantByIdStockStmt->execute([$qty, $varId]);
+                            $variantByIdStockStmt->execute([$qty, $varId, $qty]);
                         } elseif ($vColor !== '' && $vSize !== '') {
-                            $variantStockStmt->execute([$qty, $prodId, $vColor, $vSize]);
+                            $variantStockStmt->execute([$qty, $prodId, $vColor, $vSize, $qty]);
                         }
                     }
                 }
@@ -764,8 +804,9 @@ class OrderManager
             }
         }
 
-        return [
-            'success' => ($dbOrderId > 0),
+        $isSuccess = $liveDb ? ($dbOrderId > 0) : true;
+        $orderResultPayload = [
+            'success' => $isSuccess,
             'id' => $dbOrderId,
             'db_error' => $dbError ?? null,
             'order_number' => $orderNumber,
@@ -783,6 +824,12 @@ class OrderManager
             'created_at' => date('Y-m-d H:i:s'),
             'whatsapp_notice' => self::generateWhatsAppNotice($orderNumber, $grandTotal, $customerName)
         ];
+
+        if ($idempotencyKey !== '') {
+            self::$mockIdempotencyCache[$idempotencyKey] = $orderResultPayload;
+        }
+
+        return $orderResultPayload;
     }
 
     /**

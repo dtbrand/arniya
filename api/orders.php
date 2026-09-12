@@ -15,10 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
 require_once __DIR__ . '/../src/OrderManager.php';
+require_once __DIR__ . '/../src/CheckoutManager.php';
 require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/_guard.php';
 
 use DTBrand\OrderManager;
+use DTBrand\CheckoutManager;
 use DTBrand\Database;
 use DTBrand\Auth;
 
@@ -349,6 +351,45 @@ try {
         if (empty($data['items']) || !is_array($data['items'])) {
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Order must contain items array.']);
+            exit;
+        }
+
+        // Check if full checkout payload with shipping address is submitted
+        $isFullCheckout = !empty($data['customer_phone']) && (!empty($data['shipping_address']) || !empty($data['address']));
+        if ($isFullCheckout && !dt_api_is_admin()) {
+            $idempotencyKey = trim((string)($data['idempotency_key'] ?? ''));
+            if (empty($idempotencyKey)) {
+                $hdrKey = $_SERVER['HTTP_IDEMPOTENCY_KEY'] ?? ($_SERVER['HTTP_X_IDEMPOTENCY_KEY'] ?? '');
+                $idempotencyKey = trim((string)$hdrKey);
+            }
+
+            $checkoutRes = CheckoutManager::processCheckout($data, $idempotencyKey ?: null);
+            if (!empty($checkoutRes['success'])) {
+                echo json_encode([
+                    'success' => true,
+                    'order'   => [
+                        'id'             => $checkoutRes['order_id'],
+                        'order_number'   => $checkoutRes['order_number'],
+                        'customer_name'  => $checkoutRes['customer_name'],
+                        'customer_phone' => $checkoutRes['customer_phone'],
+                        'total_amount'   => $checkoutRes['grand_total'],
+                        'payment_method' => $checkoutRes['payment_method'],
+                        'payment_status' => $checkoutRes['payment_status'],
+                        'pricing'        => $checkoutRes['pricing'],
+                        'reused'         => $checkoutRes['reused_session']
+                    ],
+                    'checkout' => $checkoutRes,
+                    'message'  => $checkoutRes['message']
+                ], JSON_PRETTY_PRINT);
+            } else {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'step'    => $checkoutRes['step'] ?? null,
+                    'message' => $checkoutRes['error'] ?? 'Checkout validation failed.',
+                    'errors'  => $checkoutRes['errors'] ?? [$checkoutRes['error'] ?? 'Validation error']
+                ], JSON_PRETTY_PRINT);
+            }
             exit;
         }
 
