@@ -492,13 +492,16 @@ class ReviewManager
                 if ($row && $row['total'] > 0) {
                     $total = (int)$row['total'];
                     $verified = (int)($row['verified_count'] ?? 0);
+                    $avgRating = round((float)($row['avg_rating'] ?? 5.0), 1);
                     return [
                         'total' => $total,
+                        'total_reviews' => $total,
                         'pending' => (int)($row['pending'] ?? 0),
                         'approved' => (int)($row['approved'] ?? 0),
                         'rejected' => (int)($row['rejected'] ?? 0),
                         'flagged' => (int)($row['flagged'] ?? 0),
-                        'avg_rating' => round((float)($row['avg_rating'] ?? 5.0), 1),
+                        'avg_rating' => $avgRating,
+                        'average_rating' => $avgRating,
                         'five_star' => (int)($row['five_star'] ?? 0),
                         'verified_percentage' => $total > 0 ? round(($verified / $total) * 100, 1) : 100.0,
                         'replied_count' => (int)($row['replied_count'] ?? 0)
@@ -543,11 +546,13 @@ class ReviewManager
 
         return [
             'total' => $total,
+            'total_reviews' => $total,
             'pending' => $pending,
             'approved' => $approved,
             'rejected' => $rejected,
             'flagged' => $flagged,
             'avg_rating' => $avg,
+            'average_rating' => $avg,
             'five_star' => $fiveStar,
             'verified_percentage' => $total > 0 ? round(($verifiedCount / $total) * 100, 1) : 100.0,
             'replied_count' => $repliedCount

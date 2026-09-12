@@ -1293,11 +1293,11 @@
             var s = document.getElementById('customStartDate').value;
             var e = document.getElementById('customEndDate').value;
             if (!s || !e) {
-                alert('Please select both start and end dates.');
+                if (typeof window.showWsToast === 'function') window.showWsToast('Please select both start and end dates.', 'error');
                 return;
             }
             if (new Date(s) > new Date(e)) {
-                alert('Start date cannot be after end date.');
+                if (typeof window.showWsToast === 'function') window.showWsToast('Start date cannot be after end date.', 'error');
                 return;
             }
 
@@ -1706,7 +1706,10 @@
             var category = document.getElementById('ticketCategory').value;
             var message = document.getElementById('ticketMessage').value.trim();
 
-            if (!message) { alert('Please enter issue narrative'); return; }
+            if (!message) {
+                if (typeof window.showWsToast === 'function') window.showWsToast('Please enter issue narrative', 'error');
+                return;
+            }
 
             var newTicket = {
                 id: 'TCK-' + Math.floor(100 + Math.random() * 900),
@@ -3605,7 +3608,7 @@
             var input = document.getElementById('wsTopupAmountInput');
             var amount = Number(input ? input.value : 50000);
             if (!amount || amount < 1000) {
-                alert('Please enter a valid recharge amount (min ₹1,000)');
+                if (typeof window.showWsToast === 'function') window.showWsToast('Please enter a valid recharge amount (min ₹1,000)', 'error');
                 return;
             }
             closeWalletTopupModal();

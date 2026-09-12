@@ -591,7 +591,9 @@ function quickTrack(awb, orderId) {
 
 function quickUpdateStatus(newStatus) {
     if (!currentTrackedOrder || !currentTrackedOrder.id) {
-        alert('Please select an active order from the table to update status.');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Please select an active order from the table to update status.');
+        }
         return;
     }
 
@@ -628,7 +630,9 @@ function quickUpdateStatus(newStatus) {
                 window.showToast('Order #' + orderId + ' updated to ' + newStatus.toUpperCase());
             }
         } else {
-            alert('Failed to update status: ' + (res.message || 'Unknown error'));
+            if (typeof window.showToast === 'function') {
+                window.showToast('Failed to update status: ' + (res.message || 'Unknown error'));
+            }
         }
     })
     .catch(function(err) {

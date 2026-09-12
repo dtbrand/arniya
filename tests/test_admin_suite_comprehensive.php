@@ -274,6 +274,16 @@ if ($activePdo === null || Database::isMockMode()) {
             verified_buyer INTEGER DEFAULT 1,
             created_at TEXT
         );
+        CREATE TABLE IF NOT EXISTS review_audit_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            review_id INTEGER,
+            action TEXT,
+            moderator_name TEXT,
+            reason TEXT,
+            previous_status TEXT,
+            new_status TEXT,
+            created_at TEXT
+        );
         CREATE TABLE IF NOT EXISTS coupons (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             code TEXT UNIQUE,
@@ -443,6 +453,50 @@ if ($testOrderId > 0) {
 } else {
     assertTest("Order creation returned valid ID", false, "ID was " . $testOrderId);
 }
+
+// ============================================================================
+// 6. B2B PRICING CALCULATOR & COUPON ENGINE VALIDATION TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "6. B2B PRICING CALCULATOR & COUPON ENGINE VALIDATION TEST\n";
+echo "================================================================================\n";
+
+require_once __DIR__ . '/../src/PricingCalculator.php';
+use DTBrand\PricingCalculator;
+
+// 1. Coupon validation for FESTIVE25
+$couponRes = DiscountEngine::validateCoupon('FESTIVE25', 2500.00);
+assertTest("DiscountEngine::validateCoupon validates FESTIVE25", isset($couponRes['valid']) && $couponRes['valid'] === true, json_encode($couponRes));
+assertTest("FESTIVE25 applies 25% discount (₹625.00 on ₹2500.00)", (float)($couponRes['discount'] ?? 0) === 625.0);
+
+// 2. Pricing calculation with GST and discount
+$calcRes = PricingCalculator::calculateOrderTotal(2500.00, (float)($couponRes['discount'] ?? 0), 100.00, 5.0);
+assertTest("PricingCalculator computes taxable amount correctly (₹1875.00)", (float)($calcRes['taxable'] ?? 0) === 1875.0);
+assertTest("PricingCalculator computes 5% GST correctly (₹93.75)", (float)($calcRes['gst_amount'] ?? 0) === 93.75);
+assertTest("PricingCalculator computes grand total correctly (₹2068.75)", (float)($calcRes['grand_total'] ?? 0) === 2068.75);
+assertTest("PricingCalculator outputs real SVG Rupee symbol in formatted total", strpos($calcRes['formatted_grand_total'] ?? '', '<svg') !== false);
+
+// 3. Wholesale tier pricing
+$wsTierPrice = PricingCalculator::calculateWholesalePrice(1000.00, 15.0);
+assertTest("PricingCalculator calculates wholesale tier price (15% off ₹1000 = ₹850)", $wsTierPrice === 850.0);
+
+// ============================================================================
+// 7. REVIEW MODERATION & INSPECTION ENGINE VALIDATION TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "7. REVIEW MODERATION & INSPECTION ENGINE VALIDATION TEST\n";
+echo "================================================================================\n";
+
+$revStats = ReviewManager::getReviewStats();
+assertTest("ReviewManager::getReviewStats returns total count", isset($revStats['total_reviews']) && is_numeric($revStats['total_reviews']));
+assertTest("ReviewManager::getReviewStats returns average rating", isset($revStats['average_rating']) && is_numeric($revStats['average_rating']));
+
+$approvedReviews = ReviewManager::getReviews(['status' => 'approved', 'limit' => 10]);
+assertTest("ReviewManager::getReviews retrieves approved reviews list", is_array($approvedReviews));
+
+$auditLogs = ReviewManager::getAuditLogs(10);
+assertTest("ReviewManager::getAuditLogs retrieves moderation audit trail", is_array($auditLogs));
+
 
 echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
