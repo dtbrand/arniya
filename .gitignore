@@ -41,6 +41,8 @@ temp_*
 *.tmp
 scratch/
 coverage/
+__pycache__/
+*.pyc
 
 # OS Specific
 Thumbs.db
