@@ -667,11 +667,52 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/admin/pricing/" class="adm-nav-item <?php echo $current_nav === 'pricing' ? 'active' : ''; ?>" id="navItem-pricing" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-pricing')) { switchAdmTab('pricing'); return false; }" data-title="Multi-Tier Pricing">
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'pricing' ? 'open' : ''; ?>">
+                    <a href="/admin/pricing/" class="adm-nav-item <?php echo $current_nav === 'pricing' ? 'active' : ''; ?>" id="navItem-pricing" data-title="Multi-Tier Pricing">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
-                        <span class="adm-nav-label">Pricing & Discounts</span>
+                        <span class="adm-nav-label">Pricing &amp; Discounts</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'pricing' ? 'open' : ''; ?>" id="admSubmenu-pricing">
+                        <li>
+                            <a href="/admin/pricing/" class="adm-nav-subitem <?php echo ($current_nav === 'pricing' && ($current_subnav === 'index' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>Pricing Overview</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pricing/wholesale.php" class="adm-nav-subitem <?php echo $current_subnav === 'wholesale' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                <span>Wholesale Tiers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pricing/reseller.php" class="adm-nav-subitem <?php echo $current_subnav === 'reseller' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>Reseller Hub Rates</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pricing/retail.php" class="adm-nav-subitem <?php echo $current_subnav === 'retail' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                <span>Retailer Pricing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pricing/discounts.php" class="adm-nav-subitem <?php echo $current_subnav === 'discounts' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="9" y1="15" x2="15" y2="9"></line><circle cx="9.5" cy="9.5" r=".5"></circle><circle cx="14.5" cy="14.5" r=".5"></circle></svg>
+                                <span>Discounts &amp; Coupons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pricing/history.php" class="adm-nav-subitem <?php echo $current_subnav === 'history' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Price History Ledger</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'reviews' ? 'open' : ''; ?>">
                     <a href="/admin/reviews/" class="adm-nav-item <?php echo $current_nav === 'reviews' ? 'active' : ''; ?>" id="navItem-reviews" data-title="Customer Reviews">

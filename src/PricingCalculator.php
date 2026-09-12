@@ -41,22 +41,35 @@ class PricingCalculator
     }
 
     /**
-     * Calculate Net Total with GST and Gateway Fees
+     * Convert float/string into authoritative Money instance
+     */
+    public static function toMoney(float|string|int $amount, string $currency = 'INR'): Money
+    {
+        return Money::fromDecimal($amount, $currency);
+    }
+
+    /**
+     * Calculate Net Total with GST and Gateway Fees using exact Money arithmetic
      */
     public static function calculateOrderTotal(float $subtotal, float $discount = 0.0, float $shipping = 0.0, float $gstRate = 5.0): array
     {
-        $taxable = max(0.0, $subtotal - $discount);
-        $gst = self::calculateGst($taxable, $gstRate);
-        $grandTotal = round($taxable + $gst + $shipping, 2);
+        $subMoney = Money::fromDecimal($subtotal);
+        $discMoney = Money::fromDecimal($discount);
+        $shipMoney = Money::fromDecimal($shipping);
+
+        $taxableMoney = $subMoney->greaterThan($discMoney) ? $subMoney->subtract($discMoney) : Money::zero();
+        $gstMoney = $taxableMoney->percentage($gstRate);
+        $grandTotalMoney = $taxableMoney->add($gstMoney)->add($shipMoney);
 
         return [
-            'subtotal' => round($subtotal, 2),
-            'discount' => round($discount, 2),
-            'taxable' => round($taxable, 2),
-            'gst' => $gst,
-            'gst_amount' => $gst,
-            'shipping' => round($shipping, 2),
-            'grand_total' => $grandTotal
+            'subtotal' => $subMoney->getAmount(),
+            'discount' => $discMoney->getAmount(),
+            'taxable' => $taxableMoney->getAmount(),
+            'gst' => $gstMoney->getAmount(),
+            'gst_amount' => $gstMoney->getAmount(),
+            'shipping' => $shipMoney->getAmount(),
+            'grand_total' => $grandTotalMoney->getAmount(),
+            'formatted_grand_total' => $grandTotalMoney->formatWithSvg()
         ];
     }
 
