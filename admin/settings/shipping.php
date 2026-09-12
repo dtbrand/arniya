@@ -11,7 +11,6 @@ require_once __DIR__ . '/_shared.php';
  * api/settings.php — these keys back the shipping quote logic (free-shipping
  * threshold, flat rates per channel) that api/shipping.php consults.
  */
-require_once __DIR__ . '/_shared.php';
 
 $page_title = "Shipping & Fulfilment Settings";
 $active_nav = "settings";
@@ -29,15 +28,15 @@ $dtKeys = ['warehouse_address', 'warehouse_city', 'warehouse_state', 'warehouse_
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
-require_once __DIR__ . '/_shared.php'; echo time(); ?>">
+echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
     <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminheader.php'; ?>
+include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -57,7 +56,7 @@ require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/admi
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Dispatch Origin</span></h3>
                     <?php
-require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
+echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group full" style="grid-column:1/-1;">
@@ -106,12 +105,12 @@ require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
 
         </main>
         <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 <?php
-require_once __DIR__ . '/_shared.php'; echo dt_set_save_script($dtKeys); ?>
+echo dt_set_save_script($dtKeys); ?>
 <script src="/admin/assets/js/admin.js?v=<?php
-require_once __DIR__ . '/_shared.php'; echo time(); ?>"></script>
+echo time(); ?>"></script>
 </body>
 </html>

@@ -135,6 +135,14 @@ class CustomerManager
     }
 
     /**
+     * Alias for getById for clean API ergonomics
+     */
+    public static function get(int $id): ?array
+    {
+        return self::getById($id);
+    }
+
+    /**
      * Look up customer by phone number
      */
     public static function getByPhone(string $phone): ?array

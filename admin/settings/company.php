@@ -11,7 +11,6 @@ require_once __DIR__ . '/_shared.php';
  * via api/settings.php. The GSTIN field starts EMPTY — a legal tax number
  * must never ship as a plausible-looking placeholder.
  */
-require_once __DIR__ . '/_shared.php';
 
 $page_title = "Company & Legal Business Profile";
 $active_nav = "settings";
@@ -27,15 +26,15 @@ $dtKeys = ['company_legal_name', 'company_gstin', 'company_pan', 'company_addres
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
-require_once __DIR__ . '/_shared.php'; echo time(); ?>">
+echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
     <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
+include_once __DIR__ . '/../includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminheader.php'; ?>
+include_once __DIR__ . '/../includes/adminheader.php'; ?>
         <main class="adm-content">
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
@@ -55,7 +54,7 @@ require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/admi
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Legal Company Information</span></h3>
                     <?php
-require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
+echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group">
@@ -84,23 +83,23 @@ require_once __DIR__ . '/_shared.php'; echo dt_set_save_button(); ?>
                     </div>
                 </div>
                 <?php
-require_once __DIR__ . '/_shared.php'; if (dt_set('company_gstin', '') === ''): ?>
+if (dt_set('company_gstin', '') === ''): ?>
                 <p style="font-size:11.5px; color:#B45309; padding:0 18px 12px; display:flex; align-items:center; gap:6px;">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     <span>No GSTIN on file — B2B order invoices will print without a tax number until it is saved here.</span>
                 </p>
                 <?php
-require_once __DIR__ . '/_shared.php'; endif; ?>
+endif; ?>
             </div>
 
         </main>
         <?php
-require_once __DIR__ . '/_shared.php'; include_once __DIR__ . '/../includes/adminfooter.php'; ?>
+include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
 <?php
-require_once __DIR__ . '/_shared.php'; echo dt_set_save_script($dtKeys); ?>
+echo dt_set_save_script($dtKeys); ?>
 <script src="/admin/assets/js/admin.js?v=<?php
-require_once __DIR__ . '/_shared.php'; echo time(); ?>"></script>
+echo time(); ?>"></script>
 </body>
 </html>

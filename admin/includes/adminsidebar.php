@@ -107,6 +107,38 @@ if (isset($active_nav) && !empty($active_nav)) {
 
 if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = $active_subnav;
+} elseif (strpos($req_uri, '/reports/gst.php') !== false) {
+    $current_subnav = 'gst';
+} elseif (strpos($req_uri, '/users/activity-logs.php') !== false) {
+    $current_subnav = 'activity-logs';
+} elseif (strpos($req_uri, '/whatsapp/broadcast.php') !== false) {
+    $current_subnav = 'broadcast';
+} elseif (strpos($req_uri, '/whatsapp/leads.php') !== false) {
+    $current_subnav = 'leads';
+} elseif (strpos($req_uri, '/whatsapp/templates.php') !== false) {
+    $current_subnav = 'templates';
+} elseif (strpos($req_uri, '/whatsapp/chat.php') !== false) {
+    $current_subnav = 'chat';
+} elseif (strpos($req_uri, '/whatsapp/') !== false) {
+    $current_subnav = 'chat';
+} elseif (strpos($req_uri, '/settings/general.php') !== false) {
+    $current_subnav = 'general';
+} elseif (strpos($req_uri, '/settings/company.php') !== false) {
+    $current_subnav = 'company';
+} elseif (strpos($req_uri, '/settings/payment.php') !== false) {
+    $current_subnav = 'payment';
+} elseif (strpos($req_uri, '/settings/shipping.php') !== false) {
+    $current_subnav = 'shipping';
+} elseif (strpos($req_uri, '/settings/') !== false) {
+    $current_subnav = 'overview';
+} elseif (strpos($req_uri, '/products/subcategories/') !== false) {
+    $current_subnav = 'subcategories';
+} elseif (strpos($req_uri, '/cms/homepage.php') !== false) {
+    $current_subnav = 'homepage';
+} elseif (strpos($req_uri, '/cms/about.php') !== false) {
+    $current_subnav = 'about';
+} elseif (strpos($req_uri, '/cms/contact.php') !== false) {
+    $current_subnav = 'contact';
 } elseif (strpos($req_uri, '/orders/create.php') !== false) {
     $current_subnav = 'create';
 } elseif (strpos($req_uri, '/orders/pending.php') !== false) {
@@ -414,12 +446,41 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-label">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/admin/whatsapp/" class="adm-nav-item <?php echo $current_nav === 'whatsapp' ? 'active' : ''; ?>" id="navItem-whatsapp" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-whatsapp')) { switchAdmTab('whatsapp'); return false; }" data-title="WhatsApp CRM">
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'whatsapp' ? 'open' : ''; ?>">
+                    <a href="/admin/whatsapp/" class="adm-nav-item <?php echo $current_nav === 'whatsapp' ? 'active' : ''; ?>" id="navItem-whatsapp" data-title="WhatsApp CRM Suite">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span class="adm-nav-label">WhatsApp CRM</span>
                         <span class="adm-nav-badge green">LIVE</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'whatsapp' ? 'open' : ''; ?>" id="admSubmenu-whatsapp">
+                        <li>
+                            <a href="/admin/whatsapp/" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && ($current_subnav === 'chat' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Live Concierge &amp; Chat</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/whatsapp/broadcast.php" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'broadcast') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                <span>Broadcast Studio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/whatsapp/leads.php" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'leads') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                <span>Lead Pipeline &amp; Enquiries</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/whatsapp/templates.php" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'templates') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                <span>Message Templates</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -457,6 +518,12 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/products/categories/" class="adm-nav-subitem <?php echo $current_subnav === 'categories' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>Categories</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/products/subcategories/" class="adm-nav-subitem <?php echo $current_subnav === 'subcategories' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>
+                                <span>Subcategories</span>
                             </a>
                         </li>
                         <li>
@@ -1171,11 +1238,35 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/admin/cms/" class="adm-nav-item <?php echo $current_nav === 'cms' ? 'active' : ''; ?>" id="navItem-cms" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-cms')) { switchAdmTab('cms'); return false; }" data-title="CMS Pages">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'cms' ? 'open' : ''; ?>">
+                    <a href="/admin/cms/" class="adm-nav-item <?php echo $current_nav === 'cms' ? 'active' : ''; ?>" id="navItem-cms" data-title="CMS & Storefront Pages">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                         <span class="adm-nav-label">CMS Pages</span>
+                        <span class="adm-nav-badge gold">PAGES</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'cms' ? 'open' : ''; ?>" id="admSubmenu-cms">
+                        <li>
+                            <a href="/admin/cms/homepage.php" class="adm-nav-subitem <?php echo ($current_nav === 'cms' && $current_subnav === 'homepage') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                <span>Homepage CMS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/cms/about.php" class="adm-nav-subitem <?php echo ($current_nav === 'cms' && $current_subnav === 'about') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                <span>About Us Page</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/cms/contact.php" class="adm-nav-subitem <?php echo ($current_nav === 'cms' && $current_subnav === 'contact') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span>Contact &amp; Showroom</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'media' ? 'open' : ''; ?>">
                     <a href="/admin/media/" class="adm-nav-item <?php echo $current_nav === 'media' ? 'active' : ''; ?>" id="navItem-media" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-media')) { switchAdmTab('media'); return false; }" data-title="Media Library">
@@ -1326,6 +1417,12 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             </a>
                         </li>
                         <li>
+                            <a href="/admin/reports/gst.php" class="adm-nav-subitem <?php echo ($current_nav === 'reports' && $current_subnav === 'gst') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>GST &amp; GSTR-1 Ledger</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/admin/reports/products.php" class="adm-nav-subitem <?php echo ($current_nav === 'reports' && $current_subnav === 'products') ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                                 <span>Products Performance</span>
@@ -1444,6 +1541,12 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                                 <span>Security Events</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="/admin/users/activity-logs.php" class="adm-nav-subitem <?php echo ($current_nav === 'users' && $current_subnav === 'activity-logs') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                <span>Audit &amp; Activity Logs</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <!-- ENTERPRISE AUDIT LOGS WITH SECTION 35 SUBMENU -->
@@ -1551,11 +1654,49 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/admin/settings/" class="adm-nav-item <?php echo $current_nav === 'settings' ? 'active' : ''; ?>" id="navItem-settings" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-settings')) { switchAdmTab('settings'); return false; }" data-title="Store Settings">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'settings' ? 'open' : ''; ?>">
+                    <a href="/admin/settings/" class="adm-nav-item <?php echo $current_nav === 'settings' ? 'active' : ''; ?>" id="navItem-settings" data-title="Store Settings & Configuration">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
                         <span class="adm-nav-label">Store Settings</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'settings' ? 'open' : ''; ?>" id="admSubmenu-settings">
+                        <li>
+                            <a href="/admin/settings/general.php" class="adm-nav-subitem <?php echo ($current_nav === 'settings' && $current_subnav === 'general') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                                <span>Store Profile &amp; General</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/settings/company.php" class="adm-nav-subitem <?php echo ($current_nav === 'settings' && $current_subnav === 'company') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                <span>Company &amp; Legal Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/settings/payment.php" class="adm-nav-subitem <?php echo ($current_nav === 'settings' && $current_subnav === 'payment') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                <span>Payment Gateways Setup</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/settings/shipping.php" class="adm-nav-subitem <?php echo ($current_nav === 'settings' && $current_subnav === 'shipping') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                <span>Shipping Logistics Setup</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/settings/" class="adm-nav-subitem <?php echo ($current_nav === 'settings' && ($current_subnav === 'overview' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Settings Overview Hub</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'system' ? 'open' : ''; ?>">
                     <a href="/admin/system/" class="adm-nav-item <?php echo $current_nav === 'system' ? 'active' : ''; ?>" id="navItem-system" data-title="System Admin Suite">

@@ -54,9 +54,13 @@ $active_filter = "all";
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                             <span>Refresh</span>
                         </button>
-                        <a href="/admin/customers/export.php" class="dt-btn dt-btn-gold">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            <span>Export All Shoppers</span>
+                        <a href="/admin/customers/new.php" class="dt-btn dt-btn-gold" style="text-decoration:none;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>+ Add Customer</span>
+                        </a>
+                        <a href="/admin/customers/export.php" class="dt-btn dt-btn-pale" style="text-decoration:none;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Export Shoppers</span>
                         </a>
                     </div>
                 </div>

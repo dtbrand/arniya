@@ -125,6 +125,37 @@
         runBulkStatus('suspended', 'suspended');
     };
 
+    window.bulkDeleteCustomers = function () {
+        var ids = selectedIds();
+        if (!ids || !ids.length) {
+            toast('Select at least one customer first.');
+            return;
+        }
+        if (!confirm('Are you sure you want to permanently delete ' + plural(ids.length, 'selected customer') + ' from the database? This action cannot be undone.')) {
+            return;
+        }
+        setBusy(true);
+        toast('Deleting ' + plural(ids.length, 'customer') + '…');
+
+        Promise.all(ids.map(function (id) {
+            var params = new URLSearchParams();
+            params.append('action', 'delete');
+            params.append('id', String(id));
+            return fetch('/api/customers.php', {
+                method: 'POST',
+                body: params,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function (res) { return res.json().catch(function () { return null; }); })
+              .then(function (json) { return !!(json && json.success); })
+              .catch(function () { return false; });
+        })).then(function (results) {
+            setBusy(false);
+            var done = results.filter(Boolean).length;
+            toast(plural(done, 'customer') + ' deleted permanently.');
+            setTimeout(function () { window.location.reload(); }, 600);
+        });
+    };
+
     window.bulkExportCustomers = function () {
         // This does not export the selection — export.php builds its file from a
         // cohort dropdown, not from checked rows. Say so rather than let a "0 of

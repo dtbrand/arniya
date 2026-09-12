@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                 'warehouse_address' => $address
             ];
             foreach ($settingsMap as $k => $v) {
-                $stmt = $pdo->prepare("INSERT INTO settings (`key`, `value`, `group_name`, `updated_at`) VALUES (?, ?, 'general', NOW()) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = NOW()");
+                $stmt = $pdo->prepare("INSERT INTO settings (`key_name`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = NOW()");
                 $stmt->execute([$k, $v]);
             }
             $message = "Settings updated successfully in database!";
@@ -49,13 +49,13 @@ $dbSettings = [
     'site_name' => "DT Brand's (Jai Hanuman Tex)",
     'support_email' => 'support@jaihanumantex.in',
     'whatsapp_number' => '+91 70463 63528',
-    'company_gstin' => '24AAACV1234F1Z5',
+    'company_gstin' => '',
     'warehouse_address' => 'Ring Road Textile Market, Surat, Gujarat - 395002'
 ];
 
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $rows = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $rows = $pdo->query("SELECT `key_name`, `value` FROM settings")->fetchAll(\PDO::FETCH_KEY_PAIR);
         if (!empty($rows)) {
             foreach ($rows as $k => $v) {
                 $dbSettings[$k] = $v;

@@ -189,6 +189,9 @@
                             <a href="/admin/customers/edit.php?id=${c.id}" class="dt-cust-act-btn edit" title="Edit Customer">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </a>
+                            <button type="button" class="dt-cust-act-btn danger" onclick="window.deleteCustomerSingle(${c.id}, '${esc(c.name).replace(/'/g, "\\'")}')" title="Permanently Delete Customer" style="background:#FEF2F2; color:#DC2626; border-color:#FCA5A5; cursor:pointer;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -583,6 +586,37 @@
         window.showToast(def === 'all'
             ? 'Filters cleared — showing all ' + masterCustomers.length + ' customers.'
             : 'Filters cleared — showing ' + currentList.length + ' of ' + masterCustomers.length + ' customers.');
+    };
+
+    window.deleteCustomerSingle = function (id, name) {
+        if (!confirm('Are you sure you want to permanently delete customer "' + name + '" from the database? This action cannot be undone.')) {
+            return;
+        }
+        var params = new URLSearchParams();
+        params.append('action', 'delete');
+        params.append('id', String(id));
+
+        fetch('/api/customers.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: params.toString()
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+            if (res && res.success) {
+                if (typeof window.showToast === 'function') window.showToast('Customer "' + name + '" permanently deleted.');
+                masterCustomers = masterCustomers.filter(function (c) { return c.id !== id; });
+                currentList = currentList.filter(function (c) { return c.id !== id; });
+                selectedIds.delete(id);
+                window.renderCustomersTable(currentPage);
+                updateBulkBar();
+            } else {
+                alert(res && res.message ? res.message : 'Failed to delete customer.');
+            }
+        })
+        .catch(function (err) {
+            alert('Network error deleting customer: ' + err.message);
+        });
     };
 
     // Auto-init on DOM load

@@ -358,6 +358,27 @@ class DiscountEngine
     }
 
     /**
+     * Retrieve all coupons for administrative overview and coupon management studio.
+     */
+    public static function getAllCoupons(int $limit = 100): array
+    {
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return [];
+        }
+
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM coupons ORDER BY id DESC LIMIT ?");
+            $stmt->bindValue(1, max(1, $limit), \PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+        } catch (\Throwable $e) {
+            error_log('[DiscountEngine] getAllCoupons failed: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
      * Format a luxury readable discount badge from coupon record.
      */
     public static function formatDiscountBadge(array $coupon): string
