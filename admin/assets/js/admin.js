@@ -1813,10 +1813,12 @@
                     if (typeof window.showToast === 'function') window.showToast('Duplicated. Reloading...');
                     setTimeout(function() { window.location.reload(); }, 500);
                 } else {
-                    alert('Could not duplicate: ' + ((data && data.message) || 'unknown error'));
+                    if (typeof window.showToast === 'function') window.showToast('Could not duplicate: ' + ((data && data.message) || 'unknown error'));
                 }
             })
-            .catch(function() { alert('Network error while duplicating the product.'); });
+            .catch(function() {
+                if (typeof window.showToast === 'function') window.showToast('Network error while duplicating the product.');
+            });
     };
 
     window.archiveProduct = function(id) {
@@ -1836,10 +1838,12 @@
                     if (typeof window.showToast === 'function') window.showToast('Product moved to draft.');
                     setTimeout(function() { window.location.reload(); }, 500);
                 } else {
-                    alert('Could not archive: ' + ((data && data.message) || 'unknown error'));
+                    if (typeof window.showToast === 'function') window.showToast('Could not archive: ' + ((data && data.message) || 'unknown error'));
                 }
             })
-            .catch(function() { alert('Network error while archiving the product.'); });
+            .catch(function() {
+                if (typeof window.showToast === 'function') window.showToast('Network error while archiving the product.');
+            });
     };
 
 })();

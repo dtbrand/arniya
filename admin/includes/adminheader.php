@@ -792,6 +792,31 @@ window.dtAdminFetch = window.dtAdminFetch || async function(url, options = {}) {
     }
     return fetch(url, { ...options, headers });
 };
+
+// Universal luxury toast notification engine for all admin pages
+window.showToast = window.showToast || function(msg, type) {
+    let box = document.getElementById('admToastBox');
+    if (!box) {
+        box = document.createElement('div');
+        box.id = 'admToastBox';
+        box.className = 'adm-toast-box';
+        box.style.cssText = 'position:fixed; top:24px; right:24px; z-index:9999999; display:flex; flex-direction:column; gap:10px; pointer-events:none;';
+        document.body.appendChild(box);
+    }
+    const toast = document.createElement('div');
+    toast.className = 'adm-toast';
+    const isErr = (type === 'error' || (typeof msg === 'string' && (msg.toLowerCase().includes('error') || msg.toLowerCase().includes('failed'))));
+    const bg = isErr ? '#DC2626' : '#181512';
+    const border = isErr ? '#B91C1C' : '#D4AF37';
+    toast.style.cssText = 'background:' + bg + '; color:#FAF5E8; border:1px solid ' + border + '; border-radius:8px; padding:12px 18px; font-weight:700; font-size:13px; font-family:"Plus Jakarta Sans", sans-serif; box-shadow:0 8px 24px rgba(0,0,0,0.3); pointer-events:auto; display:flex; align-items:center; gap:8px; transition:all 0.25s ease;';
+    toast.innerHTML = `<span style="display:inline-flex; align-items:center; color:${isErr ? '#FFF' : '#D4AF37'};"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span> <span>${msg}</span>`;
+    box.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 250);
+    }, 3200);
+};
 </script>
 <script>
 (function() {

@@ -228,17 +228,34 @@
             if (drawer) drawer.style.display = 'none';
         },
 
+        showRefundToast: function(msg) {
+            if (window.DT_ORDERS && typeof window.DT_ORDERS.showToast === 'function') {
+                window.DT_ORDERS.showToast(msg);
+                return;
+            }
+            var el = document.getElementById('dtAdminGlobalToast');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'dtAdminGlobalToast';
+                el.style.cssText = 'position:fixed; top:24px; right:24px; z-index:9999999; padding:12px 20px; border-radius:8px; font-weight:700; font-size:13px; font-family:"Plus Jakarta Sans", sans-serif; background:#181512; color:#FAF5E8; border:1px solid #D4AF37; box-shadow:0 8px 24px rgba(0,0,0,0.35); transition:all 0.3s ease; display:flex; align-items:center; gap:8px;';
+                document.body.appendChild(el);
+            }
+            el.textContent = msg;
+            el.style.opacity = '1';
+            el.style.display = 'flex';
+            setTimeout(function() {
+                el.style.opacity = '0';
+                setTimeout(function() { if (el) el.style.display = 'none'; }, 300);
+            }, 3200);
+        },
+
         confirmRefund: function() {
             const orderId = document.getElementById('refundOrderIdText')?.textContent || '';
             const amount = document.getElementById('refundAmountInput')?.value || '0';
             const method = document.getElementById('refundMethodSelect')?.value || 'Original Payment Gateway';
 
             this.closeRefundDrawer();
-            if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast('Refund of ₹' + Number(amount).toLocaleString('en-IN') + ' authorized via ' + method + ' for ' + orderId);
-            } else {
-                alert('Refund of ₹' + Number(amount).toLocaleString('en-IN') + ' authorized via ' + method + ' for ' + orderId);
-            }
+            this.showRefundToast('Refund of ₹' + Number(amount).toLocaleString('en-IN') + ' authorized via ' + method + ' for ' + orderId);
         },
 
         handleSearch: function(query) {
@@ -298,11 +315,7 @@
             }
 
             const msg = `Approved claim ${refundId} (₹${Number(amount).toLocaleString('en-IN')}) for ${customer}. Credit Note Issued.`;
-            if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(msg);
-            } else {
-                alert(msg);
-            }
+            this.showRefundToast(msg);
         },
 
         shareWhatsApp: function(refundId, amount, customer) {

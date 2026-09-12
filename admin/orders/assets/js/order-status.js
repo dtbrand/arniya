@@ -288,9 +288,8 @@
                     }
                 } else {
                     const msg = (res && res.message) ? res.message : 'Failed to delete order.';
-                    alert('Deletion failed: ' + msg);
                     if (window.DT_ORDERS) {
-                        window.DT_ORDERS.showToast(`Deletion Error: ${msg}`);
+                        window.DT_ORDERS.showToast(`Deletion Error: ${msg}`, 'error');
                     }
                 }
             })
@@ -301,7 +300,9 @@
                     submitBtn.style.opacity = '1';
                     submitBtn.innerHTML = '<span>Permanently Delete</span>';
                 }
-                alert('Network error while deleting order: ' + err.message);
+                if (window.DT_ORDERS) {
+                    window.DT_ORDERS.showToast(`Network error while deleting order: ${err.message}`, 'error');
+                }
             });
         }
     };

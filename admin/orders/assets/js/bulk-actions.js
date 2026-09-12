@@ -736,9 +736,8 @@
                     }
                 } else {
                     const msg = (res && res.message) ? res.message : 'Bulk deletion failed.';
-                    alert('Error: ' + msg);
                     if (window.DT_ORDERS) {
-                        window.DT_ORDERS.showToast(`Bulk Delete Error: ${msg}`);
+                        window.DT_ORDERS.showToast(`Bulk Delete Error: ${msg}`, 'error');
                     }
                 }
             })
@@ -749,7 +748,9 @@
                     submitBtn.style.opacity = '1';
                     submitBtn.innerHTML = '<span>Permanently Delete Selected</span>';
                 }
-                alert('Network error while performing bulk delete: ' + err.message);
+                if (window.DT_ORDERS) {
+                    window.DT_ORDERS.showToast(`Network error while performing bulk delete: ${err.message}`, 'error');
+                }
             });
         }
     };

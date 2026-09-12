@@ -337,10 +337,8 @@ function executeRealExport() {
     const data = getFilteredExportData();
 
     if (!data || data.length === 0) {
-        if (window.showToast) {
+        if (typeof window.showToast === 'function') {
             window.showToast("No orders found matching the selected export criteria.", "warning");
-        } else {
-            alert("No orders found matching the selected export criteria.");
         }
         return;
     }
