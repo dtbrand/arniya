@@ -371,4 +371,55 @@ CREATE TABLE IF NOT EXISTS `inventory_ledger` (
     INDEX `idx_inv_created` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ── 20. FEATURE FLAGS TABLE ──
+CREATE TABLE IF NOT EXISTS `feature_flags` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `flag_key` VARCHAR(64) NOT NULL UNIQUE,
+    `title` VARCHAR(128) NOT NULL,
+    `description` VARCHAR(255) NULL,
+    `is_enabled` TINYINT(1) NOT NULL DEFAULT 0,
+    `category` VARCHAR(64) NOT NULL DEFAULT 'core',
+    `updated_by` INT NULL,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_ff_key` (`flag_key`),
+    INDEX `idx_ff_enabled` (`is_enabled`),
+    INDEX `idx_ff_category` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 21. CRON / BACKGROUND JOBS REGISTRY TABLE ──
+CREATE TABLE IF NOT EXISTS `cron_jobs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `job_code` VARCHAR(64) NOT NULL UNIQUE,
+    `name` VARCHAR(128) NOT NULL,
+    `description` VARCHAR(255) NULL,
+    `schedule` VARCHAR(64) NOT NULL DEFAULT '0 * * * *',
+    `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+    `last_run_at` DATETIME NULL,
+    `next_run_at` DATETIME NULL,
+    `last_status` ENUM('idle', 'running', 'success', 'error') NOT NULL DEFAULT 'idle',
+    `last_error` TEXT NULL,
+    `last_duration_ms` INT NOT NULL DEFAULT 0,
+    `total_runs` INT NOT NULL DEFAULT 0,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_cron_code` (`job_code`),
+    INDEX `idx_cron_active` (`is_active`),
+    INDEX `idx_cron_status` (`last_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 22. STRUCTURED SYSTEM LOGS TABLE ──
+CREATE TABLE IF NOT EXISTS `system_logs` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `channel` VARCHAR(32) NOT NULL DEFAULT 'system',
+    `level` ENUM('DEBUG', 'INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL') NOT NULL DEFAULT 'INFO',
+    `message` TEXT NOT NULL,
+    `context` JSON NULL,
+    `ip_address` VARCHAR(45) NULL,
+    `user_agent` VARCHAR(255) NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_syslog_channel_level` (`channel`, `level`),
+    INDEX `idx_syslog_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;

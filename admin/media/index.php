@@ -123,8 +123,10 @@ $storageFormatted = $totalBytes >= 1048576
             <div class="adm-card">
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Media Gallery &amp; Asset Library</span></h3>
-                    <input type="file" id="mediaFileInput" style="display:none;" onchange="if(this.files.length){ showToastSafe('Use the dedicated uploader so files are stored and validated.'); setTimeout(function(){window.location.href='/admin/products/media/upload.php';}, 700); }" accept="image/*" multiple>
-                    <button class="adm-btn-primary" onclick="document.getElementById('mediaFileInput').click();">+ Upload New Media</button>
+                    <a href="/admin/media/upload.php" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px; text-decoration:none;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <span>Upload New Media</span>
+                    </a>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:14px;">
                     <?php foreach ($filesList as $f): ?>

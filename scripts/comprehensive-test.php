@@ -810,7 +810,6 @@ $frontendFiles = [
     'logout.php',
     'install.php',
     'dt_install_direct.php',
-    'dt_debug.php',
     'db_reset_migrations.php',
 ];
 
@@ -825,6 +824,11 @@ foreach ($frontendFiles as $file) {
         $runner->assertEquals(0, $lintReturn, "PHP lint failed: " . implode("\n", $lintOutput));
     });
 }
+
+$runner->run("Frontend Debug File Is Not Public: dt_debug.php", function() use ($runner) {
+    $path = __DIR__ . '/../dt_debug.php';
+    $runner->assertFalse(file_exists($path), 'Public debug file should remain removed from production builds.');
+});
 
 // ---- CONFIG FILE TESTS ----
 echo "\n⚙️ CONFIG FILE TESTS\n";

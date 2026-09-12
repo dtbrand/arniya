@@ -43,7 +43,15 @@ class OrderManager
         $allowed = ['retail', 'wholesale', 'reseller', 'retailer', 'whatsapp'];
 
         if (session_status() === PHP_SESSION_NONE) {
-            @session_start();
+            $sessionConfig = dirname(__DIR__) . '/config/session.php';
+            if (is_file($sessionConfig)) {
+                require_once $sessionConfig;
+            }
+            if (function_exists('dt_session_start')) {
+                dt_session_start();
+            } else {
+                @session_start();
+            }
         }
 
         if (!empty($_SESSION['admin_logged_in'])) {

@@ -293,7 +293,7 @@
     border-radius: 24px;
 }
 
-.itg-slider:before {
+.itg-slider::before {
     position: absolute;
     content: "";
     height: 18px;
@@ -310,7 +310,7 @@ input:checked + .itg-slider {
     background-color: #15803D;
 }
 
-input:checked + .itg-slider:before {
+input:checked + .itg-slider::before {
     transform: translateX(20px);
 }
 

@@ -112,6 +112,7 @@ Options -Indexes -MultiViews
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
     # ── 6. CLEAN API ROUTES ──
+    RewriteRule ^api/webhooks/?$ api/webhooks/index.php [QSA,L]
     # Nested two-segment API endpoints (e.g. /api/webhooks/razorpay, /api/payment/verify, /api/system/backup)
     RewriteRule ^api/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ api/$1/$2.php [QSA,L]
     # Single-segment API endpoints (e.g. /api/cart, /api/orders, /api/checkout)
@@ -119,6 +120,7 @@ Options -Indexes -MultiViews
 
     # ── 7. CLEAN ADMIN & AUTH ROUTES ──
     RewriteRule ^admin/login/?$ adminlogin.php [QSA,L]
+    RewriteRule ^admin/logout/?$ admin/logout.php [QSA,L]
     RewriteRule ^adminlogin/?$ adminlogin.php [QSA,L]
     RewriteRule ^login/?$ adminlogin.php [QSA,L]
     RewriteRule ^admin/?$ admin/index.php [QSA,L]

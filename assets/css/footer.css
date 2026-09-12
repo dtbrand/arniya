@@ -1,4 +1,4 @@
-   👑 MASTER LUXURY DESIGNER FOOTER (DESKTOP + TABLET + MOBILE)
+/* 👑 MASTER LUXURY DESIGNER FOOTER (DESKTOP + TABLET + MOBILE)
    DT Brand's & Jai Hanuman Tex — Surat Handloom Atelier
 ══════════════════════════════════════════════════════════════════ */
 .dt-master-footer {
@@ -7,7 +7,7 @@
     background: linear-gradient(180deg, #1C1814 0%, #14110E 40%, #0E0C0A 100%);
     border-top: 2px solid #8A681F;
     color: #E2E8F0;
-    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-family: var(--font-sans, Inter, sans-serif);
     margin-top: 36px;
     z-index: 10;
 }
@@ -26,7 +26,7 @@
 /* Gradient Glaze Edges on Mobile */
 .dt-footer-perks-ribbon::before,
 .dt-footer-perks-ribbon::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -191,7 +191,7 @@
     margin-bottom: 10px;
 }
 .dt-footer-logo-main {
-    font-family: var(--font-serif, 'Cinzel', serif);
+    font-family: var(--font-serif, Cinzel, serif);
     font-size: 1.35rem;
     font-weight: 900;
     color: #D4AF37;
@@ -276,7 +276,7 @@
     justify-content: space-between;
     width: 100%;
     margin-bottom: 14px;
-    font-family: var(--font-serif, 'Cinzel', serif);
+    font-family: var(--font-serif, Cinzel, serif);
     font-size: 0.96rem;
     font-weight: 800;
     color: #FFFFFF;
@@ -292,7 +292,7 @@
 
 .dt-acc-title-main {
     color: #FFFFFF;
-    font-family: var(--font-serif, 'Cinzel', serif);
+    font-family: var(--font-serif, Cinzel, serif);
     font-size: 0.96rem;
     font-weight: 800;
     letter-spacing: 0.03em;
@@ -780,7 +780,7 @@
     border: 1.5px solid #D4AF37;
     background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
     color: #FFFFFF;
-    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-family: var(--font-sans, Inter, sans-serif);
     font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 0.03em;

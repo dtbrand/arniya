@@ -10,6 +10,7 @@ composer.phar
 .vscode/
 .antigravity/
 .phpunit.cache/
+.phpunit-cache/
 .php-cs-fixer.cache
 .phpstan.cache/
 .eslintcache

@@ -68,11 +68,52 @@ if (session_status() === PHP_SESSION_NONE) {
     // SAVE PATH (use custom directory for better isolation)
     // ─────────────────────────────────────────────────────────────────────────────
     
-    $savePath = __DIR__ . '/../storage/sessions';
-    if (!is_dir($savePath)) {
-        @mkdir($savePath, 0750, true);
+    $configuredSavePath = trim((string)(getenv('DT_SESSION_SAVE_PATH') ?: ''));
+    $savePathCandidates = array_filter([
+        $configuredSavePath,
+        __DIR__ . '/../storage/sessions',
+        rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'dtbrands_sessions',
+    ]);
+
+    foreach ($savePathCandidates as $candidatePath) {
+        if (dt_session_directory_is_writable($candidatePath)) {
+            ini_set('session.save_path', $candidatePath);
+            break;
+        }
     }
-    ini_set('session.save_path', $savePath);
+}
+
+/**
+ * Verify a session directory can really accept files.
+ *
+ * PHP's is_writable() can be optimistic on Windows ACLs, so a tiny temp-file
+ * probe keeps CLI audits and production logins from selecting a broken path.
+ */
+function dt_session_directory_is_writable(string $path): bool
+{
+    $path = rtrim($path, "/\\");
+    if ($path === '') {
+        return false;
+    }
+
+    if (!is_dir($path) && !@mkdir($path, 0750, true) && !is_dir($path)) {
+        return false;
+    }
+
+    $realPath = realpath($path);
+    if ($realPath === false) {
+        return false;
+    }
+
+    $probe = @tempnam($realPath, 'dt_sess_');
+    if ($probe === false) {
+        return false;
+    }
+
+    $probeDir = realpath(dirname($probe));
+    @unlink($probe);
+
+    return $probeDir !== false && strcasecmp($probeDir, $realPath) === 0;
 }
 
 /**
@@ -82,14 +123,29 @@ if (session_status() === PHP_SESSION_NONE) {
 function dt_session_start(): void
 {
     if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+        if (PHP_SAPI === 'cli' && !empty($_SESSION)) {
+            // Unit tests and CLI probes often seed $_SESSION directly before
+            // exercising auth logic. Starting a failed file-backed session here
+            // would wipe those values, so preserve the in-memory request state.
+        } elseif (!@session_start()) {
+            error_log('DT session start failed; continuing with in-memory session state for this request.');
+            if (!isset($_SESSION) || !is_array($_SESSION)) {
+                $_SESSION = [];
+            }
+        }
+    }
+
+    if (!isset($_SESSION) || !is_array($_SESSION)) {
+        $_SESSION = [];
     }
     
     // Regenerate session ID periodically for security
     if (empty($_SESSION['_created'])) {
         $_SESSION['_created'] = time();
     } elseif (time() - $_SESSION['_created'] > 1800) { // 30 minutes
-        session_regenerate_id(true);
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
         $_SESSION['_created'] = time();
     }
     
