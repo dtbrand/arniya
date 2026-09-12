@@ -130,7 +130,7 @@ try {
 
             if ($targetId <= 0) {
                 http_response_code(401);
-                echo json_encode(['success' => false, 'message' => 'Customer authentication required. Please sign in to view your orders.']);
+                echo json_encode(['success' => false, 'error' => 'unauthorized', 'message' => 'Customer authentication required. Please sign in to view your orders.']);
                 exit;
             }
             
@@ -160,7 +160,7 @@ try {
                 $userId = (int)($currentUser['id'] ?? 0);
                 if ($userId <= 0) {
                     http_response_code(401);
-                    echo json_encode(['success' => false, 'message' => 'Sign in required to view order details. For guest order tracking, please use track order with order number and phone number.']);
+                    echo json_encode(['success' => false, 'error' => 'unauthorized', 'message' => 'Sign in required to view order details. For guest order tracking, please use track order with order number and phone number.']);
                     exit;
                 }
             }
