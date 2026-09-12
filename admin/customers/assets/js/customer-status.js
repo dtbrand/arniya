@@ -73,9 +73,9 @@
         badge.textContent = newStatus.toUpperCase();
     }
 
-    function toast(message) {
-        if (typeof window.showToast === 'function') { window.showToast(message); }
-        else { alert(message); }
+    function toast(message, type) {
+        if (typeof window.showToast === 'function') { window.showToast(message, type); }
+        else { console.warn(message); }
     }
 
 })();

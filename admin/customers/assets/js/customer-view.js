@@ -8,7 +8,7 @@
 
     function toast(message, kind) {
         if (typeof window.showToast === 'function') { window.showToast(message, kind); }
-        else { alert(message); }
+        else { console.warn(message); }
     }
 
     function esc(v) {

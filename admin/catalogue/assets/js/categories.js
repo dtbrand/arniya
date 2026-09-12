@@ -19,7 +19,8 @@ window.DT_CATEGORIES = {
         if (e) e.preventDefault();
         const name = document.getElementById('catName')?.value;
         if (!name) {
-            alert('Please enter Category Name');
+            if (typeof window.showToast === 'function') window.showToast('Please enter Category Name', 'warning');
+            else if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Please enter Category Name');
             return false;
         }
         window.DT_CATALOGUE.showToast('Category saved successfully!', 'gold');
@@ -85,7 +86,8 @@ window.DT_NAVIGATION = {
         const title = document.getElementById('newMenuTitle')?.value;
         const url = document.getElementById('newMenuUrl')?.value;
         if (!title) {
-            alert('Please enter Menu Item Label');
+            if (typeof window.showToast === 'function') window.showToast('Please enter Menu Item Label', 'warning');
+            else if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Please enter Menu Item Label');
             return;
         }
         const list = document.getElementById('navMenuList');

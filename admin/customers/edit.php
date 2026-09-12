@@ -731,9 +731,9 @@ $cust = [
 </div>
 
 <script>
-function dtCustomerToast(message) {
-    if (typeof window.showToast === 'function') { window.showToast(message); }
-    else { alert(message); }
+function dtCustomerToast(message, type) {
+    if (typeof window.showToast === 'function') { window.showToast(message, type); }
+    else { console.warn(message); }
 }
 
 /* Deactivating suspends the account, which blocks sign-in and (for a trade

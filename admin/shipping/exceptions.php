@@ -341,14 +341,14 @@ function submitResolution() {
     .then(function(r) { return r.json(); })
     .then(function(data) {
         if (data.success) {
-            alert('Exception Updated: ' + data.message);
-            window.location.reload();
+            if (typeof window.showToast === 'function') window.showToast('Exception Updated: ' + data.message, 'success');
+            setTimeout(function() { window.location.reload(); }, 600);
         } else {
-            alert('Error: ' + (data.error || 'Failed to update exception.'));
+            if (typeof window.showToast === 'function') window.showToast('Error: ' + (data.error || 'Failed to update exception.'), 'error');
         }
     })
     .catch(function(err) {
-        alert('Request failed: ' + err.message);
+        if (typeof window.showToast === 'function') window.showToast('Request failed: ' + err.message, 'error');
     });
 }
 </script>

@@ -359,15 +359,15 @@ function testCarrierHealth(carrierCode, btn) {
                 errorEl.innerText = 'None';
                 errorEl.style.color = '#15803D';
             }
-            alert('Carrier Diagnostics Passed: ' + data.message);
+            if (typeof window.showToast === 'function') window.showToast('Carrier Diagnostics Passed: ' + data.message, 'success');
         } else {
-            alert('Carrier Diagnostic Notice: ' + (data.error || 'Failed to ping carrier endpoint.'));
+            if (typeof window.showToast === 'function') window.showToast('Carrier Diagnostic Notice: ' + (data.error || 'Failed to ping carrier endpoint.'), 'warning');
         }
     })
     .catch(function(err) {
         btn.disabled = false;
         btn.innerHTML = originalHtml;
-        alert('Diagnostic ping completed (simulated test).');
+        if (typeof window.showToast === 'function') window.showToast('Diagnostic ping completed (simulated test).', 'info');
     });
 }
 
@@ -387,7 +387,7 @@ function copyWebhookUrl() {
     var input = document.getElementById('cfgWebhookUrl');
     input.select();
     navigator.clipboard.writeText(input.value).then(function() {
-        alert('Inbound webhook URL copied to clipboard.');
+        if (typeof window.showToast === 'function') window.showToast('Inbound webhook URL copied to clipboard.', 'success');
     });
 }
 </script>

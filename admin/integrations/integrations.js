@@ -27,14 +27,18 @@
                 btn.innerHTML = originalHtml;
             }
             if (data.success) {
-                alert(`✅ ${slug.toUpperCase()} CONNECTED!\n\nStatus: ${data.http_status} OK\nLatency: ${data.latency_ms} ms\nEndpoint: ${data.endpoint || 'Cloud Host'}\n\nDiagnosis:\n${data.diagnosis}`);
+                if (typeof window.showToast === 'function') {
+                    window.showToast(`${slug.toUpperCase()} Connected! Status: ${data.http_status} OK (${data.latency_ms} ms)`, 'success');
+                }
                 // Update latency badge on card if present
                 const latencyEl = document.getElementById(`latency-${slug}`);
                 if (latencyEl) {
                     latencyEl.textContent = `${data.latency_ms} ms`;
                 }
             } else {
-                alert(`❌ Connection Test Failed for ${slug}: ${data.message || 'Unknown error'}`);
+                var errNotice = `Connection Test Failed for ${slug}: ${data.message || 'Unknown error'}`;
+                if (typeof window.showToast === 'function') window.showToast(errNotice, 'error');
+                else console.warn(errNotice);
             }
         })
         .catch(err => {
@@ -42,7 +46,9 @@
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
             }
-            alert(`❌ Network error while testing ${slug}: ` + err.message);
+            var netErr = `Network error while testing ${slug}: ` + err.message;
+            if (typeof window.showToast === 'function') window.showToast(netErr, 'error');
+            else console.warn(netErr);
         });
     };
 
@@ -70,11 +76,15 @@
                     }
                 }
             } else {
-                alert('Failed to update status: ' + (data.message || 'Unknown error'));
+                var errNotice = 'Failed to update status: ' + (data.message || 'Unknown error');
+                if (typeof window.showToast === 'function') window.showToast(errNotice, 'error');
+                else console.warn(errNotice);
             }
         })
         .catch(err => {
-            alert('Error toggling integration: ' + err.message);
+            var netErr = 'Error toggling integration: ' + err.message;
+            if (typeof window.showToast === 'function') window.showToast(netErr, 'error');
+            else console.warn(netErr);
         });
     };
 
@@ -196,14 +206,18 @@
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                alert('✅ Credentials and configuration saved securely!\nExisting protected secrets were preserved.');
+                if (typeof window.showToast === 'function') window.showToast('Credentials and configuration saved securely!', 'success');
                 window.closeConfigModal();
             } else {
-                alert('❌ Failed to save config: ' + (data.message || 'Unknown error'));
+                var errNotice = 'Failed to save config: ' + (data.message || 'Unknown error');
+                if (typeof window.showToast === 'function') window.showToast(errNotice, 'error');
+                else console.warn(errNotice);
             }
         })
         .catch(err => {
-            alert('❌ Network error: ' + err.message);
+            var netErr = 'Network error: ' + err.message;
+            if (typeof window.showToast === 'function') window.showToast(netErr, 'error');
+            else console.warn(netErr);
         });
     };
 })();

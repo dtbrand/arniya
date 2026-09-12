@@ -24,7 +24,11 @@ function sysTab(id) {
 function sysDangerAction(action, label) {
     if (!confirm('⚠️  Danger: ' + label + '\n\nThis operation is irreversible. Continue to password verification?')) return;
     const modal = document.getElementById('sysDangerModal');
-    if (!modal) { alert('Security modal not found.'); return; }
+    if (!modal) {
+        if (typeof window.showToast === 'function') window.showToast('Security modal not found.', 'error');
+        else console.warn('Security modal not found.');
+        return;
+    }
     document.getElementById('sysDangerAction').value = action;
     document.getElementById('sysDangerLabel').textContent = label;
     document.getElementById('sysDangerPwd').value = '';

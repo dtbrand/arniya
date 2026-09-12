@@ -611,11 +611,15 @@
                 window.renderCustomersTable(currentPage);
                 updateBulkBar();
             } else {
-                alert(res && res.message ? res.message : 'Failed to delete customer.');
+                var errMsg = res && res.message ? res.message : 'Failed to delete customer.';
+                if (typeof window.showToast === 'function') window.showToast(errMsg, 'error');
+                else console.warn(errMsg);
             }
         })
         .catch(function (err) {
-            alert('Network error deleting customer: ' + err.message);
+            var netMsg = 'Network error deleting customer: ' + err.message;
+            if (typeof window.showToast === 'function') window.showToast(netMsg, 'error');
+            else console.warn(netMsg);
         });
     };
 

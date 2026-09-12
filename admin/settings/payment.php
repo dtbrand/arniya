@@ -587,12 +587,14 @@ function simulateTestWebhook(gateway) {
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            alert(`Success: ${data.message}\nOrder: ${data.order_number}\nTx ID: ${data.transaction_id}`);
+            if (typeof window.showToast === 'function') window.showToast(`Success: ${data.message} | Order: ${data.order_number} | Tx ID: ${data.transaction_id}`, 'success');
         } else {
-            alert('Simulation error: ' + (data.error || 'Failed'));
+            if (typeof window.showToast === 'function') window.showToast('Simulation error: ' + (data.error || 'Failed'), 'error');
         }
     })
-    .catch(err => alert('Communication error: ' + err.message));
+    .catch(err => {
+        if (typeof window.showToast === 'function') window.showToast('Communication error: ' + err.message, 'error');
+    });
 }
 
 function saveGatewayForm(e, gatewayKey) {
@@ -640,15 +642,15 @@ function saveGatewayForm(e, gatewayKey) {
         submitBtn.disabled = false;
         submitBtn.innerText = origText;
         if (data.success) {
-            alert('Settings saved successfully!');
+            if (typeof window.showToast === 'function') window.showToast('Settings saved successfully!', 'success');
         } else {
-            alert('Error saving settings: ' + (data.error || 'Unknown error'));
+            if (typeof window.showToast === 'function') window.showToast('Error saving settings: ' + (data.error || 'Unknown error'), 'error');
         }
     })
     .catch(err => {
         submitBtn.disabled = false;
         submitBtn.innerText = origText;
-        alert('Error communicating with server: ' + err.message);
+        if (typeof window.showToast === 'function') window.showToast('Error communicating with server: ' + err.message, 'error');
     });
 }
 </script>

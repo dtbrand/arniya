@@ -284,7 +284,7 @@ $rupeeSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke=
 function copyWebhookUrl() {
     var text = document.getElementById('webhookUrl').innerText;
     navigator.clipboard.writeText(text).then(function() {
-        alert("Webhook URL copied to clipboard!");
+        if (typeof window.showToast === 'function') window.showToast("Webhook URL copied to clipboard!", 'success');
     });
 }
 

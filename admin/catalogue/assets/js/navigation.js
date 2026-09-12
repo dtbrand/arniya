@@ -15,7 +15,8 @@ window.DT_NAVIGATION = {
         const titleInput = document.getElementById('newMenuTitle');
         const urlInput = document.getElementById('newMenuUrl');
         if (!titleInput || !titleInput.value.trim()) {
-            alert('Please enter a Link Label.');
+            if (typeof window.showToast === 'function') window.showToast('Please enter a Link Label.', 'warning');
+            else if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Please enter a Link Label.');
             return;
         }
 

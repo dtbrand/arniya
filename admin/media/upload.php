@@ -219,7 +219,7 @@ function dtUploadToast(message, isError) {
         return;
     }
     if (isError) {
-        alert(message);
+        console.warn(message);
     }
 }
 

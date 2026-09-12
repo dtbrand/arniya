@@ -25,9 +25,9 @@
 
     var pending = 0;
 
-    function toast(msg) {
-        if (typeof window.showToast === 'function') { window.showToast(msg); }
-        else { alert(msg); }
+    function toast(msg, type) {
+        if (typeof window.showToast === 'function') { window.showToast(msg, type); }
+        else { console.warn(msg); }
     }
 
     function el(id) { return document.getElementById(id); }

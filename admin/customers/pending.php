@@ -209,11 +209,11 @@ function dtDecideTradeAccount(id, newStatus, name, tierLabel) {
         });
 }
 
-function dtApprovalToast(message) {
+function dtApprovalToast(message, type) {
     if (typeof window.showToast === 'function') {
-        window.showToast(message);
+        window.showToast(message, type);
     } else {
-        alert(message);
+        console.warn(message);
     }
 }
 

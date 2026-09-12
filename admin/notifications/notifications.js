@@ -8,9 +8,9 @@
 
         showToast: function(message, type) {
             if (typeof window.showToast === 'function') {
-                window.showToast(message);
+                window.showToast(message, type);
             } else {
-                alert(message);
+                console.warn(message);
             }
         },
 

@@ -389,7 +389,7 @@ function dtGalleryToast(message, isError) {
         window.showToast(message, isError ? 'error' : 'success');
         return;
     }
-    alert(message);
+    console.warn(message);
 }
 
 function dtGalleryCopy(url) {

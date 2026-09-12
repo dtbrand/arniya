@@ -413,14 +413,14 @@ function saveZone() {
     .then(function(r) { return r.json(); })
     .then(function(data) {
         if (data.success) {
-            alert('Shipping Zone Saved: ' + data.message);
-            window.location.reload();
+            if (typeof window.showToast === 'function') window.showToast('Shipping Zone Saved: ' + data.message, 'success');
+            setTimeout(function() { window.location.reload(); }, 600);
         } else {
-            alert('Error: ' + (data.error || 'Failed to save zone.'));
+            if (typeof window.showToast === 'function') window.showToast('Error: ' + (data.error || 'Failed to save zone.'), 'error');
         }
     })
     .catch(function(err) {
-        alert('Request failed: ' + err.message);
+        if (typeof window.showToast === 'function') window.showToast('Request failed: ' + err.message, 'error');
     });
 }
 

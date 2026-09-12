@@ -359,9 +359,9 @@ $active_subnav = "new";
 </div>
 
 <script>
-function dtNewCustToast(message) {
-    if (typeof window.showToast === 'function') { window.showToast(message); }
-    else { alert(message); }
+function dtNewCustToast(message, type) {
+    if (typeof window.showToast === 'function') { window.showToast(message, type); }
+    else { console.warn(message); }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
