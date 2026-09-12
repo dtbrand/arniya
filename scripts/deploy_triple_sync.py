@@ -123,6 +123,10 @@ def deploy_to_server(srv, files):
         ftp.connect(srv['host'], srv['port'], timeout=30)
         ftp.login(srv['user'], srv['pass'])
         ftp.set_pasv(True)
+        try:
+            ftp.voidcmd('TYPE I')
+        except Exception:
+            pass
     except Exception as e:
         print(f"[-] Login failed: {e}")
         return False
@@ -137,6 +141,8 @@ def deploy_to_server(srv, files):
     skipped_count = 0
     failed_count = 0
 
+    force_all = '--force' in sys.argv
+
     for idx, rel_path in enumerate(files, 1):
         local_path = os.path.join(BASE_DIR, rel_path)
         if not os.path.isfile(local_path):
@@ -146,14 +152,15 @@ def deploy_to_server(srv, files):
         local_size = os.path.getsize(local_path)
         remote_path = rel_path.replace('\\', '/')
 
-        # Check if already identical on remote server
-        try:
-            rsize = ftp.size(remote_path)
-            if rsize == local_size:
-                skipped_count += 1
-                continue
-        except Exception:
-            pass
+        # Check if already identical on remote server (unless forced)
+        if not force_all:
+            try:
+                rsize = ftp.size(remote_path)
+                if rsize == local_size:
+                    skipped_count += 1
+                    continue
+            except Exception:
+                pass
 
         remote_dir = os.path.dirname(remote_path)
         uploaded = False
