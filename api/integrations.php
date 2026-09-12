@@ -7,49 +7,19 @@
  * Mandate: NEVER expose API secrets, passwords, tokens, or private keys.
  */
 
-if (!headers_sent()) {
-    header('Content-Type: application/json; charset=utf-8');
-}
+require_once __DIR__ . '/cors.php';
+cors_json();
 
-// Security Guard & Session
-$is_cli = (php_sapi_name() === 'cli' || empty($_SERVER['REMOTE_ADDR']));
-if (!$is_cli) {
-    $guardFile = __DIR__ . '/../admin/includes/adminguard.php';
-    if (!is_file($guardFile)) {
-        $guardFile = ($_SERVER['DOCUMENT_ROOT'] ?? '') . '/admin/includes/adminguard.php';
-    }
-    if (is_file($guardFile)) {
-        require_once $guardFile;
-    }
-}
+require_once __DIR__ . '/_guard.php';
+dt_api_require_admin('manage integrations');
 
-// Database Connection
-$pdo = null;
-$dbFile = __DIR__ . '/../config/database.php';
-if (!is_file($dbFile)) {
-    $dbFile = __DIR__ . '/../includes/db.php';
-}
-if (is_file($dbFile)) {
-    try {
-        require_once $dbFile;
-        if (isset($pdo) && $pdo instanceof PDO) {
-            // using existing $pdo
-        } elseif (isset($conn) && $conn instanceof PDO) {
-            $pdo = $conn;
-        } elseif (defined('DB_HOST') && defined('DB_NAME') && defined('DB_USER') && defined('DB_PASS')) {
-            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
-        }
-    } catch (Exception $e) {
-        $pdo = null;
-    }
-}
-
+require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/IntegrationManager.php';
+
+use DTBrand\Database;
 use DT\Services\IntegrationManager;
 
+$pdo = Database::getConnection();
 $manager = IntegrationManager::getInstance($pdo);
 
 // Request Parsing
@@ -66,6 +36,10 @@ if ($method === 'POST') {
 }
 
 $action = $_POST['action'] ?? ($_GET['action'] ?? 'stats');
+
+if ($method === 'POST' && in_array($action, ['toggle', 'save_config'], true)) {
+    dt_api_require_csrf();
+}
 
 try {
     switch ($action) {
@@ -161,9 +135,6 @@ try {
             echo json_encode(['success' => false, 'message' => 'Unknown action: ' . htmlspecialchars($action)]);
             break;
     }
-} catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
+} catch (\Throwable $e) {
+    dt_api_error_response($e, 500, 'integrations_api');
 }

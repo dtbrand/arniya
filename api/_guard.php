@@ -49,6 +49,9 @@ if (!function_exists('dt_api_is_admin')) {
         if (!empty($_SESSION['admin']) && is_array($_SESSION['admin'])) {
             return true;
         }
+        if (!empty($_SESSION['admin_user_id']) || !empty($_SESSION['admin_id'])) {
+            return true;
+        }
 
         // 3. Check if standard PHPSESSID has the session if different session_name was active
         if (!empty($_COOKIE['PHPSESSID']) && session_name() !== 'PHPSESSID') {
@@ -147,4 +150,38 @@ if (!function_exists('dt_api_require_csrf')) {
         exit;
     }
 }
+
+if (!function_exists('dt_api_error_response')) {
+    /**
+     * Return a standardized, safe JSON error response for uncaught exceptions.
+     * Generates a correlation request ID, logs diagnostic details internally,
+     * and guarantees that database credentials, SQL queries, and filesystem paths
+     * are never leaked to the public response.
+     */
+    function dt_api_error_response(\Throwable $e, int $httpCode = 500, string $context = '', bool $exit = true): void
+    {
+        $requestId = 'req_' . substr(md5(uniqid((string)mt_rand(), true)), 0, 12);
+        error_log("[{$requestId}] API Error in {$context}: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
+
+        if (!headers_sent()) {
+            http_response_code($httpCode);
+            header('Content-Type: application/json; charset=utf-8');
+        }
+
+        $isDev = in_array(strtolower((string)(getenv('APP_ENV') ?: (getenv('ENVIRONMENT') ?: ''))), ['local', 'development', 'dev', 'testing'], true);
+
+        echo json_encode([
+            'success'    => false,
+            'error'      => 'server_error',
+            'message'    => 'An unexpected system error occurred. Please try again shortly, or message our official WhatsApp concierge at +91 70463 63528.',
+            'request_id' => $requestId,
+            'detail'     => $isDev ? $e->getMessage() : null
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        if ($exit) {
+            exit;
+        }
+    }
+}
+
 

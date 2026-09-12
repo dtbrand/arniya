@@ -9,21 +9,15 @@ declare(strict_types=1);
  * All state-mutating calls require super_admin role + CSRF + audit trail.
  */
 
-require_once __DIR__ . '/../admin/includes/adminguard.php';
+require_once __DIR__ . '/cors.php';
+cors_json();
+
+require_once __DIR__ . '/_guard.php';
+dt_api_require_admin('access system governance');
+
 require_once __DIR__ . '/../src/SystemManager.php';
 
 use DTBrand\SystemManager;
-
-/* ── Guard: admin session required ──────────────────────── */
-if (empty($_SESSION['admin_user_id'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Authentication required.']);
-    exit;
-}
-
-/* ── CORS / Headers ──────────────────────────────────────── */
-header('Content-Type: application/json; charset=utf-8');
-header('X-Content-Type-Options: nosniff');
 
 /* ── Parse request ───────────────────────────────────────── */
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

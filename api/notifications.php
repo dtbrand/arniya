@@ -20,6 +20,9 @@ if ($method === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/Auth.php';
 require_once __DIR__ . '/../src/NotificationManager.php';
+require_once __DIR__ . '/_guard.php';
+
+dt_api_require_admin('manage notifications');
 
 use DTBrand\Database;
 use DTBrand\Auth;
@@ -277,7 +280,5 @@ try {
     exit;
 
 } catch (\Throwable $e) {
-    if (!headers_sent()) http_response_code(500);
-    echo json_encode(['success' => false, 'error' => 'Notification error: ' . $e->getMessage()]);
-    exit;
+    dt_api_error_response($e, 500, 'notifications_api');
 }

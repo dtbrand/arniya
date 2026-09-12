@@ -11,6 +11,24 @@ $_SERVER['REQUEST_METHOD'] = strtoupper($method);
 $_SERVER['REQUEST_URI'] = '/' . ltrim($uri, '/');
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
+if (session_status() === PHP_SESSION_NONE) {
+    @session_start();
+}
+$authMode = $argv[4] ?? (getenv('CLI_AUTH_MODE') ?: 'admin');
+if ($authMode === 'admin') {
+    if (!isset($_SESSION['admin_logged_in'])) {
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_user'] = ['id' => 1, 'name' => 'CLI Test Admin', 'email' => 'admin@dtbrand.in', 'role' => 'super_admin'];
+    }
+} elseif ($authMode === 'customer') {
+    $_SESSION = [
+        'user_id' => 888,
+        'user' => ['id' => 888, 'name' => 'Test Customer', 'role' => 'customer']
+    ];
+} elseif ($authMode === 'none') {
+    $_SESSION = [];
+}
+
 $parsed = parse_url($_SERVER['REQUEST_URI']);
 $path = ltrim($parsed['path'] ?? '', '/');
 $queryString = $parsed['query'] ?? '';

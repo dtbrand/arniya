@@ -3,7 +3,11 @@
  * api/seed_demo_catalog.php — Seed Master Categories, Subcategories & Demo Products
  * DT Brand's & Jai Hanuman Tex — Live Database Seeder
  */
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/cors.php';
+cors_json();
+
+require_once __DIR__ . '/_guard.php';
+dt_api_require_admin('seed demo catalog');
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
@@ -402,10 +406,6 @@ try {
         'seeded_products_count' => $insertedProducts
     ], JSON_PRETTY_PRINT);
 
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ], JSON_PRETTY_PRINT);
+} catch (\Throwable $e) {
+    dt_api_error_response($e, 500, 'seed_demo_catalog');
 }

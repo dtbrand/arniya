@@ -11,27 +11,17 @@ declare(strict_types=1);
  * api_keys, api_key_create, api_key_revoke.
  */
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/cors.php';
+cors_json();
 
-header('Content-Type: application/json; charset=utf-8');
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: SAMEORIGIN');
+require_once __DIR__ . '/_guard.php';
+dt_api_require_admin('access developer console');
 
 require_once __DIR__ . '/../src/DeveloperManager.php';
 require_once __DIR__ . '/../src/AuditManager.php';
 
 use DTBrand\DeveloperManager;
 use DTBrand\AuditManager;
-
-// Admin authentication gate
-$isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_SESSION['admin_user']) || !empty($_SESSION['user_id']);
-if (!$isAdmin) {
-    http_response_code(401);
-    echo json_encode(['status' => 'error', 'message' => 'Unauthorized: Administrator authentication required.'], JSON_UNESCAPED_SLASHES);
-    exit;
-}
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $action = $_GET['action'] ?? $_POST['action'] ?? 'telemetry';
@@ -287,9 +277,5 @@ try {
             break;
     }
 } catch (\Throwable $e) {
-    http_response_code(500);
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Internal server error: ' . $e->getMessage()
-    ], JSON_UNESCAPED_SLASHES);
+    dt_api_error_response($e, 500, 'developer_api');
 }

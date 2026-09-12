@@ -3,7 +3,8 @@
  * db_health.php — Enterprise Database Health & Auto-Migrator
  * DT Brand's & Jai Hanuman Tex
  */
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/cors.php';
+cors_json();
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
@@ -12,57 +13,18 @@ require_once __DIR__ . '/_guard.php';
 use DTBrand\Database;
 use DTBrand\ProductCatalog;
 
-// Admin-only. This endpoint can run migrations, ALTER the customers table and
-// INSERT into `users` (i.e. mint an admin account), so it is one of the most
-// powerful routes in the project.
-//
-// It used to be gated solely by a URL key compared against two string literals
-// held in this file:
-//     if ($key !== 'Gautam9006MasterInstall' && $key !== 'dt_audit_key_2026')
-// Those literals are committed to the repository, so the "secret" was public to
-// anyone who could read the source, and it travelled in the query string where
-// it lands in browser history, proxy logs and server access logs. It is now
-// gated by the same admin session as the console. The single caller is the
-// "View JSON Status" link on admin/system/index.php, which is a normal
-// same-origin navigation and so carries the session cookie.
 dt_api_require_admin('run database diagnostics');
 
-$diag = [];
-$candidates = [
-    ['host' => 'localhost', 'user' => 'u602484543_demodt121', 'pass' => 'Gautam@9006', 'db' => 'u602484543_demodt121'],
-    ['host' => '127.0.0.1', 'user' => 'u602484543_demodt121', 'pass' => 'Gautam@9006', 'db' => 'u602484543_demodt121'],
-    ['host' => '147.93.99.134', 'user' => 'u602484543_demodt121', 'pass' => 'Gautam@9006', 'db' => 'u602484543_demodt121'],
-];
+$pdo = Database::getConnection();
 
-$workingPdo = null;
-$workingConfig = null;
-
-foreach ($candidates as $cand) {
-    try {
-        $dsn = "mysql:host={$cand['host']};port=3306;dbname={$cand['db']};charset=utf8mb4";
-        $p = new PDO($dsn, $cand['user'], $cand['pass'], [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
-        $workingPdo = $p;
-        $workingConfig = $cand;
-        $diag[$cand['host']] = 'CONNECTED_SUCCESSFULLY';
-        break;
-    } catch (PDOException $e) {
-        $diag[$cand['host']] = $e->getMessage();
-    }
-}
-
-if ($workingPdo === null) {
+if ($pdo === null) {
+    http_response_code(500);
     echo json_encode([
         'success' => false,
-        'diagnostics' => $diag,
-        'message' => 'Could not connect to MySQL database via any candidate.'
+        'message' => 'Could not connect to MySQL database via configured credentials.'
     ], JSON_PRETTY_PRINT);
     exit;
 }
-
-$pdo = $workingPdo;
 
 $action = $_GET['action'] ?? 'status';
 
@@ -338,10 +300,5 @@ try {
         exit;
     }
 } catch (\Throwable $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage(),
-        'trace' => $e->getTraceAsString()
-    ], JSON_PRETTY_PRINT);
+    dt_api_error_response($e, 500, 'db_health_api');
 }

@@ -107,6 +107,5 @@ try {
     }
 
 } catch (\Throwable $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Upload Exception: ' . $e->getMessage()]);
+    dt_api_error_response($e, 500, 'upload_api');
 }

@@ -4,7 +4,17 @@
  */
 $_SERVER['REQUEST_METHOD'] = $argv[1] ?? 'POST';
 $action = $argv[2] ?? 'stats';
-$_POST = ['action' => $action];
+if (session_status() === PHP_SESSION_NONE) {
+    @session_start();
+}
+$_SESSION['admin_logged_in'] = true;
+$_SESSION['admin_user'] = ['id' => 1, 'name' => 'Admin'];
+$_SESSION['csrf_token'] = 'test_token_123';
+
+$_POST = [
+    'action' => $action,
+    'csrf_token' => 'test_token_123'
+];
 
 if ($action === 'send_test') {
     $_POST['channel'] = 'sms';

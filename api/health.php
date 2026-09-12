@@ -4,7 +4,8 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/cors.php';
+cors_json();
 header('Cache-Control: no-cache, no-store, must-revalidate');
 
 $startTime = microtime(true);
