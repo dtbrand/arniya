@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /**
  * test_admin_suite_comprehensive.php — Autonomous End-to-End Test Suite for Admin Console
  * DT Brand's & Jai Hanuman Tex
@@ -212,24 +213,53 @@ if ($activePdo === null || Database::isMockMode()) {
             customer_email TEXT,
             channel TEXT DEFAULT 'retail',
             shipping_address TEXT,
+            subtotal REAL DEFAULT 0,
+            discount REAL DEFAULT 0,
+            gst_rate REAL DEFAULT 5,
+            gst_amount REAL DEFAULT 0,
+            shipping_fee REAL DEFAULT 0,
             total_amount REAL,
             payment_method TEXT,
             payment_status TEXT,
             fulfillment_status TEXT,
             courier_name TEXT,
             tracking_number TEXT,
-            created_at TEXT
+            notes TEXT,
+            idempotency_key TEXT,
+            stock_decremented INTEGER DEFAULT 0,
+            created_at TEXT,
+            updated_at TEXT
         );
         CREATE TABLE IF NOT EXISTS order_items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             order_id INTEGER,
             product_id INTEGER,
+            variant_id INTEGER DEFAULT 0,
             product_title TEXT,
             sku TEXT,
+            selling_type TEXT DEFAULT 'single_piece',
             variant_color TEXT,
+            variant_size TEXT,
             quantity INTEGER,
             unit_price REAL,
-            subtotal REAL
+            subtotal REAL,
+            total_price REAL
+        );
+        CREATE TABLE IF NOT EXISTS order_status_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER,
+            status TEXT,
+            notes TEXT,
+            created_at TEXT
+        );
+        CREATE TABLE IF NOT EXISTS payment_transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER,
+            order_number TEXT,
+            transaction_id TEXT,
+            amount REAL,
+            status TEXT,
+            created_at TEXT
         );
         CREATE TABLE IF NOT EXISTS reviews (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -363,6 +393,58 @@ assertTest("admin/settings/index.php uses key_name", strpos($settingsContent, 'k
 assertTest("admin/settings/index.php does not reference non-existent column group_name", strpos($settingsContent, "'general', NOW()") === false);
 
 echo "\n================================================================================\n";
+echo "5. ORDER CRUD, STATUS & BULK OPERATIONS TEST\n";
+echo "================================================================================\n";
+
+// 1. Create a test order
+$testOrderData = [
+    'customer_name' => 'Agent Test Wholesale Partner',
+    'customer_phone' => '+91 91704 63528',
+    'customer_email' => 'agent.order.' . time() . '@jaihanumantex.in',
+    'channel' => 'retail',
+    'shipping_address' => 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002',
+    'payment_method' => 'direct_upi',
+    'payment_status' => 'pending',
+    'fulfillment_status' => 'processing',
+    'items' => [
+        [
+            'product_id' => 1,
+            'quantity' => 2
+        ]
+    ]
+];
+
+$orderRes = OrderManager::createOrder($testOrderData);
+assertTest("OrderManager::createOrder succeeds", isset($orderRes['success']) && $orderRes['success'] === true, json_encode($orderRes));
+
+$testOrderId = (int)($orderRes['id'] ?? 0);
+$testOrderNumber = (string)($orderRes['order_number'] ?? '');
+
+if ($testOrderId > 0) {
+    // 2. Details lookup
+    $details = OrderManager::getOrderDetails($testOrderId);
+    assertTest("OrderManager::getOrderDetails fetches full order details", $details !== null && ($details['order_number'] ?? '') === $testOrderNumber);
+
+    // 3. Update Status
+    $statusOk = OrderManager::updateStatus($testOrderId, 'shipped', 'AWB-TEST-9901', 'Delhivery Express');
+    assertTest("OrderManager::updateStatus updates tracking and fulfillment", $statusOk === true);
+
+    // 4. Bulk Update Status
+    $bulkUpdRes = OrderManager::bulkUpdateStatus([$testOrderId], 'delivered');
+    assertTest("OrderManager::bulkUpdateStatus updates order to delivered", isset($bulkUpdRes['success']) && $bulkUpdRes['success'] === true && ($bulkUpdRes['updated_count'] ?? 0) >= 1);
+
+    // 5. Delete Order
+    $deleteOrderOk = OrderManager::deleteOrder($testOrderId);
+    assertTest("OrderManager::deleteOrder permanently removes order", $deleteOrderOk === true);
+
+    // 6. Verify it is gone
+    $checkDeleted = OrderManager::getOrderDetails($testOrderId);
+    assertTest("Deleted order no longer found in database", $checkDeleted === null);
+} else {
+    assertTest("Order creation returned valid ID", false, "ID was " . $testOrderId);
+}
+
+echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
 echo "================================================================================\n";
 
@@ -376,3 +458,4 @@ if ($failed > 0) {
     echo "ALL TESTS PASSED SUCCESSFULLY! (100% SUITE PASS)\n";
     exit(0);
 }
+

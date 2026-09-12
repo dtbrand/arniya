@@ -2,6 +2,8 @@
 
 namespace DTBrand;
 
+require_once __DIR__ . '/Money.php';
+
 /**
  * PricingCalculator — Core B2B, Wholesale, and Retail Price Calculation Engine
  * DT Brand's & Jai Hanuman Tex

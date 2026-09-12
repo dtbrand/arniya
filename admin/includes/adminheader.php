@@ -779,6 +779,19 @@ if (class_exists('\DTBrand\Database')) {
 ?>
 <script>
 window.DT_ADMIN_CSRF_TOKEN = '<?php echo $adminCsrfToken; ?>';
+
+// Universal CSRF-protected admin API fetch utility
+window.dtAdminFetch = window.dtAdminFetch || async function(url, options = {}) {
+    const csrfToken = window.DT_ADMIN_CSRF_TOKEN || '';
+    const headers = new Headers(options.headers || {});
+    if (csrfToken) {
+        headers.set('X-CSRF-Token', csrfToken);
+    }
+    if (!(options.body instanceof FormData) && !headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    return fetch(url, { ...options, headers });
+};
 </script>
 <script>
 (function() {
