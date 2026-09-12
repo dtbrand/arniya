@@ -30,7 +30,7 @@
 
     var sourceRows = Array.isArray(window.dbCustomersData) ? window.dbCustomersData : [];
 
-    const masterCustomers = sourceRows.map(function (c) {
+    let masterCustomers = sourceRows.map(function (c) {
         var name = (c.name || '').trim();
         var parts = name.split(/\s+/);
         var initial = ((parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '')).toUpperCase();
@@ -596,7 +596,7 @@
         params.append('action', 'delete');
         params.append('id', String(id));
 
-        fetch('/api/customers.php', {
+        (window.dtAdminFetch || fetch)('/api/customers.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
             body: params.toString()

@@ -63,7 +63,7 @@
         const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
         if (submitBtn) { submitBtn.disabled = true; }
 
-        fetch('/api/customer_notes.php', {
+        (window.dtAdminFetch || fetch)('/api/customer_notes.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             credentials: 'same-origin',
@@ -236,7 +236,7 @@
             saveBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.5" style="animation: dtSpin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25" stroke="currentColor"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path></svg> <span>Saving...</span>';
         }
 
-        fetch('/api/customer_addresses.php', {
+        (window.dtAdminFetch || fetch)('/api/customer_addresses.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             credentials: 'same-origin',
@@ -284,7 +284,7 @@
 
     window.setCustomerDefaultShipping = function (addrId, customerId) {
         if (!addrId || !customerId) return;
-        fetch('/api/customer_addresses.php', {
+        (window.dtAdminFetch || fetch)('/api/customer_addresses.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             credentials: 'same-origin',
@@ -310,7 +310,7 @@
 
     window.setCustomerDefaultBilling = function (addrId, customerId) {
         if (!addrId || !customerId) return;
-        fetch('/api/customer_addresses.php', {
+        (window.dtAdminFetch || fetch)('/api/customer_addresses.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             credentials: 'same-origin',
@@ -338,7 +338,7 @@
         if (!addrId || !customerId) return;
         if (!confirm('Are you sure you want to remove this saved address?')) return;
 
-        fetch('/api/customer_addresses.php', {
+        (window.dtAdminFetch || fetch)('/api/customer_addresses.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             credentials: 'same-origin',

@@ -164,7 +164,7 @@ class CustomerManager
                        `status`, `created_at`
                 FROM `customers`
                 WHERE `phone` LIKE ? OR `phone` = ?
-                ORDER BY `id` DESC
+                ORDER BY (CASE WHEN `type` != 'retail' THEN 1 ELSE 0 END) DESC, (CASE WHEN `gstin` IS NOT NULL AND `gstin` != '' THEN 1 ELSE 0 END) DESC, `id` DESC
                 LIMIT 1
             ");
             $stmt->execute(['%' . $last10, $cleanPhone]);
@@ -226,9 +226,12 @@ class CustomerManager
             return ['success' => false, 'message' => 'The customer database is unavailable, so this customer was not created.'];
         }
 
+        $cleanDigits = preg_replace('/\D+/', '', $phone);
+        $last10 = strlen($cleanDigits) >= 10 ? substr($cleanDigits, -10) : $cleanDigits;
+
         try {
-            $chk = $pdo->prepare("SELECT id FROM customers WHERE phone = ? LIMIT 1");
-            $chk->execute([$phone]);
+            $chk = $pdo->prepare("SELECT id FROM customers WHERE phone = ? OR phone LIKE ? LIMIT 1");
+            $chk->execute([$phone, '%' . $last10]);
             if ($chk->fetch()) {
                 return ['success' => false, 'message' => 'Customer with this phone number already exists.'];
             }
