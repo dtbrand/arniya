@@ -155,6 +155,16 @@ try {
             $currentUser = Auth::getCurrentUser();
             $isAdmin = dt_api_is_admin();
 
+            // Unauthenticated visitors cannot view order details; require login immediately
+            if (!$isAdmin) {
+                $userId = (int)($currentUser['id'] ?? 0);
+                if ($userId <= 0) {
+                    http_response_code(401);
+                    echo json_encode(['success' => false, 'message' => 'Sign in required to view order details. For guest order tracking, please use track order with order number and phone number.']);
+                    exit;
+                }
+            }
+
             $order = OrderManager::getOrderDetails($orderId);
             if (!$order) {
                 http_response_code(404);
@@ -165,11 +175,6 @@ try {
             // Security verification: must be admin OR verified order owner
             if (!$isAdmin) {
                 $userId = (int)($currentUser['id'] ?? 0);
-                if ($userId <= 0) {
-                    http_response_code(401);
-                    echo json_encode(['success' => false, 'message' => 'Sign in required to view order details. For guest order tracking, please use track order with order number and phone number.']);
-                    exit;
-                }
 
                 $userPhone = (string)($currentUser['phone'] ?? '');
                 $digits = static function ($v) {
