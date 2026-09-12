@@ -65,6 +65,15 @@ class PaymentManager
     }
 
     /**
+     * Get gateway configuration array by key
+     */
+    public static function getConfig(string $key): array
+    {
+        $gw = self::getGateway($key);
+        return is_array($gw) && !empty($gw['config']) && is_array($gw['config']) ? $gw['config'] : [];
+    }
+
+    /**
      * Get safe public configuration payload for Storefront Checkout
      */
     public static function getPublicConfig(): array

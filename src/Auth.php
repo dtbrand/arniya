@@ -52,7 +52,7 @@ class Auth
             return ['success' => false, 'message' => 'Password must be at least 6 characters.'];
         }
 
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
         $pdo = Database::getConnection();
 
         // ── Direct Approved Protocol ──
@@ -190,23 +190,28 @@ class Auth
             }
         }
 
-        // Fallback session registration
-        $user = [
-            'id' => 999,
-            'name' => $name,
-            'phone' => $phone,
-            'email' => $email,
-            'type' => $grantType,
-            'tier' => 'Standard',
-            'city' => $city,
-            'state' => $state,
-            'status' => 'active'
-        ];
-        session_regenerate_id(true);
-        $_SESSION['user'] = $user;
-        $_SESSION['user_type'] = $grantType;
+        // Section 49: Production must fail closed when database/auth services fail.
+        // Do NOT create fake/synthetic active users as a production fallback.
+        if (Database::isMockMode()) {
+            $user = [
+                'id' => 999,
+                'name' => $name,
+                'phone' => $phone,
+                'email' => $email,
+                'type' => $grantType,
+                'tier' => 'Standard',
+                'city' => $city,
+                'state' => $state,
+                'status' => 'active'
+            ];
+            session_regenerate_id(true);
+            $_SESSION['user'] = $user;
+            $_SESSION['user_type'] = $grantType;
 
-        return ['success' => true, 'message' => 'Registration successful!', 'user' => $user];
+            return ['success' => true, 'message' => 'Registration successful (mock mode)!', 'user' => $user];
+        }
+
+        return ['success' => false, 'message' => 'Registration is temporarily unavailable. Please try again shortly.'];
     }
 
     /**
@@ -219,6 +224,19 @@ class Auth
         $identity = trim($identity);
         if (empty($identity) || empty($password)) {
             return ['success' => false, 'message' => 'Phone/email and password are required.'];
+        }
+
+        require_once __DIR__ . '/RateLimiter.php';
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $rateKey = $ip . ':' . strtolower($identity);
+        $rateCheck = \RateLimiter::check('login', $rateKey, 5, 15);
+        if (!$rateCheck['allowed']) {
+            return [
+                'success' => false,
+                'rate_limited' => true,
+                'retry_after' => $rateCheck['retry_after'],
+                'message' => "Too many failed login attempts. Please try again in {$rateCheck['retry_after']} minute(s)."
+            ];
         }
 
         $pdo = Database::getConnection();
@@ -246,8 +264,9 @@ class Auth
 
                 if ($customer) {
                     $hash = $customer['password_hash'] ?? '';
+                    // Section 49: Prevent account enumeration by using uniform error message
                     if (empty($hash)) {
-                        return ['success' => false, 'message' => 'No password is set for this account yet. Please use "Create Account" with this phone/email to set your password.'];
+                        return ['success' => false, 'message' => 'Invalid phone/email or password. Please try again.'];
                     }
                     $passwordValid = password_verify($password, $hash);
 
@@ -270,6 +289,8 @@ class Auth
                         session_regenerate_id(true);
                         $_SESSION['user'] = $user;
                         $_SESSION['user_type'] = $user['type'];
+
+                        \RateLimiter::clear('login', $rateKey);
 
                         try {
                             $pdo->prepare("UPDATE customers SET last_login = NOW() WHERE id = ?")->execute([$user['id']]);
@@ -304,6 +325,19 @@ class Auth
         $password = trim($password);
         if (empty($email) || empty($password)) {
             return ['success' => false, 'message' => 'Email and password required.'];
+        }
+
+        require_once __DIR__ . '/RateLimiter.php';
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $adminRateKey = $ip . ':' . strtolower($email);
+        $rateCheck = \RateLimiter::check('admin_login', $adminRateKey, 5, 15);
+        if (!$rateCheck['allowed']) {
+            return [
+                'success' => false,
+                'rate_limited' => true,
+                'retry_after' => $rateCheck['retry_after'],
+                'message' => "Too many failed login attempts. Please try again in {$rateCheck['retry_after']} minute(s)."
+            ];
         }
 
         // Resolve the configured master administrator credential. These are
@@ -431,6 +465,9 @@ class Auth
      */
     private static function startAdminSession(\PDO $pdo, int $id, string $name, string $email, string $role): array
     {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        \RateLimiter::clear('admin_login', $ip . ':' . strtolower($email));
+
         $admin = [
             'id' => $id,
             'name' => $name !== '' ? $name : 'Administrator',

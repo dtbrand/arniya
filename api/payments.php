@@ -17,11 +17,15 @@ if ($method === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/Auth.php';
 
+require_once __DIR__ . '/../src/PaymentManager.php';
+
 use DTBrand\Database;
 use DTBrand\Auth;
+use DTBrand\PaymentManager;
 
-$razorpayKeyId = getenv('RAZORPAY_KEY_ID') ?: 'rzp_live_dtbrand_hanuman';
-$razorpayKeySecret = getenv('RAZORPAY_KEY_SECRET') ?: 'dt_secret_key_prod_8892';
+$rpCfg = PaymentManager::getConfig('razorpay');
+$razorpayKeyId = !empty($rpCfg['key_id']) ? $rpCfg['key_id'] : (getenv('RAZORPAY_KEY_ID') ?: '');
+$razorpayKeySecret = !empty($rpCfg['key_secret']) ? $rpCfg['key_secret'] : (getenv('RAZORPAY_KEY_SECRET') ?: '');
 
 try {
     $rawInput = file_get_contents('php://input');

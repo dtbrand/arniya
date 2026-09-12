@@ -139,18 +139,35 @@ function dt_session_start(): void
         $_SESSION = [];
     }
     
-    // Regenerate session ID periodically for security
-    if (empty($_SESSION['_created'])) {
-        $_SESSION['_created'] = time();
-    } elseif (time() - $_SESSION['_created'] > 1800) { // 30 minutes
+    // Enforce idle timeout (2 hours / 7200s) and absolute timeout (12 hours / 43200s)
+    $now = time();
+    if (!empty($_SESSION['_last_activity']) && ($now - $_SESSION['_last_activity']) > 7200) {
+        // Idle timeout exceeded: invalidate existing session
+        $_SESSION = [];
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_regenerate_id(true);
         }
-        $_SESSION['_created'] = time();
+    }
+    if (!empty($_SESSION['_created']) && ($now - $_SESSION['_created']) > 43200) {
+        // Absolute timeout exceeded: invalidate existing session
+        $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
+    }
+
+    // Regenerate session ID periodically for security (every 30 minutes)
+    if (empty($_SESSION['_created'])) {
+        $_SESSION['_created'] = $now;
+    } elseif ($now - $_SESSION['_created'] > 1800) {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
+        $_SESSION['_created'] = $now;
     }
     
     // Mark session as active
-    $_SESSION['_last_activity'] = time();
+    $_SESSION['_last_activity'] = $now;
 }
 
 /**

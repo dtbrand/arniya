@@ -49,6 +49,7 @@ try {
     }
 
     if ($action === 'update_profile') {
+        dt_api_require_csrf(null, $data);
         // The customer id comes from the SERVER session only. Never from the
         // request body — otherwise any visitor could edit anyone's profile by
         // posting a different id.
@@ -91,6 +92,7 @@ try {
     }
 
     if ($action === 'save_address') {
+        dt_api_require_csrf(null, $data);
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -112,6 +114,7 @@ try {
     }
 
     if ($action === 'set_default_address' || $action === 'set_default_shipping' || $action === 'set_default') {
+        dt_api_require_csrf(null, $data);
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -141,6 +144,7 @@ try {
     }
 
     if ($action === 'delete_address' || $action === 'delete') {
+        dt_api_require_csrf(null, $data);
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -182,6 +186,7 @@ try {
     }
 
     if ($action === 'change_password') {
+        dt_api_require_csrf(null, $data);
         $current = Auth::getCurrentUser();
         if ($current === null || empty($current['id'])) {
             http_response_code(401);
@@ -225,11 +230,13 @@ try {
         $user = Auth::getCurrentUser();
         $isAdmin = dt_api_is_admin();
         $admin = $_SESSION['admin_user'] ?? ($_SESSION['admin'] ?? null);
+        $csrfToken = Auth::generateCsrfToken();
         echo json_encode([
             'authenticated' => ($user !== null),
             'user' => $user,
             'admin_authenticated' => $isAdmin,
-            'admin' => $admin
+            'admin' => $admin,
+            'csrf_token' => $csrfToken
         ], JSON_PRETTY_PRINT);
         exit;
     }

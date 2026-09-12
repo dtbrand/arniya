@@ -93,3 +93,58 @@ if (!function_exists('dt_api_require_admin')) {
         exit;
     }
 }
+
+if (!function_exists('dt_api_require_csrf')) {
+    /**
+     * Enforce CSRF token verification on mutating requests.
+     * Checks input payload ('csrf_token', '_csrf'), POST params, or HTTP headers.
+     */
+    function dt_api_require_csrf(?string $token = null, ?array $payload = null): void
+    {
+        $sessConfig = __DIR__ . '/../config/session.php';
+        if (file_exists($sessConfig)) {
+            require_once $sessConfig;
+        }
+
+        if ($token === null) {
+            if (!empty($payload['csrf_token'])) {
+                $token = (string)$payload['csrf_token'];
+            } elseif (!empty($payload['_csrf'])) {
+                $token = (string)$payload['_csrf'];
+            } elseif (!empty($_POST['csrf_token'])) {
+                $token = (string)$_POST['csrf_token'];
+            } elseif (!empty($_POST['_csrf'])) {
+                $token = (string)$_POST['_csrf'];
+            } elseif (!empty($_SERVER['HTTP_X_CSRF_TOKEN'])) {
+                $token = (string)$_SERVER['HTTP_X_CSRF_TOKEN'];
+            } elseif (!empty($_SERVER['HTTP_X_XSRF_TOKEN'])) {
+                $token = (string)$_SERVER['HTTP_X_XSRF_TOKEN'];
+            }
+        }
+
+        $isValid = false;
+        if (function_exists('dt_csrf_validate')) {
+            $isValid = dt_csrf_validate($token);
+        } elseif (class_exists('DTBrand\\Auth')) {
+            $isValid = \DTBrand\Auth::validateCsrfToken($token);
+        } elseif (!empty($_SESSION['csrf_token']) && !empty($token)) {
+            $isValid = hash_equals((string)$_SESSION['csrf_token'], (string)$token);
+        }
+
+        if ($isValid) {
+            return;
+        }
+
+        if (!headers_sent()) {
+            http_response_code(403);
+            header('Content-Type: application/json; charset=utf-8');
+        }
+        echo json_encode([
+            'success' => false,
+            'error'   => 'csrf_invalid',
+            'message' => 'Invalid or missing CSRF security token. Please refresh and try again.'
+        ]);
+        exit;
+    }
+}
+

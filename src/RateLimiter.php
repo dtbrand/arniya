@@ -29,9 +29,10 @@ class RateLimiter
         $cacheKey = "ratelimit:{$action}:{$key}";
         
         // Try Redis first
-        if (extension_loaded('redis')) {
+        if (extension_loaded('redis') && class_exists('Redis')) {
             try {
-                $redis = new Redis();
+                $redisClass = 'Redis';
+                $redis = new $redisClass();
                 $redis->connect('127.0.0.1', 6379, 1);
                 $redis->select(1); // Use DB 1 for rate limiting
                 
@@ -82,8 +83,8 @@ class RateLimiter
      */
     private static function checkFile(string $action, string $key, int $maxAttempts, int $windowSeconds, int $now): array
     {
-        $safeKey = preg_replace('/[^a-zA-Z0-9_:.-]/', '_', $key);
-        $file = sys_get_temp_dir() . "/ratelimit_{$action}_{$safeKey}.json";
+        $safeKey = md5($action . ':' . $key);
+        $file = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . "ratelimit_{$action}_{$safeKey}.json";
         
         $data = ['requests' => []];
         if (file_exists($file)) {
@@ -165,4 +166,35 @@ class RateLimiter
         
         return true;
     }
+
+    /**
+     * Reset/clear rate limit counter (e.g. after successful login)
+     */
+    public static function clear(string $action, string $key): void
+    {
+        $cacheKey = "ratelimit:{$action}:{$key}";
+        unset(self::$memCache[$cacheKey]);
+
+        // Clear Redis key
+        if (extension_loaded('redis') && class_exists('Redis')) {
+            try {
+                $redisClass = 'Redis';
+                $redis = new $redisClass();
+                $redis->connect('127.0.0.1', 6379, 1);
+                $redis->select(1);
+                $redis->del($cacheKey);
+            } catch (\Throwable $e) {}
+        }
+
+        // Clear file-based key
+        $safeKey = md5($action . ':' . $key);
+        $file = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . "ratelimit_{$action}_{$safeKey}.json";
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+    }
+}
+
+if (!class_exists('DTBrand\\RateLimiter', false)) {
+    class_alias('RateLimiter', 'DTBrand\\RateLimiter');
 }

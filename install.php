@@ -52,11 +52,16 @@ function rate_limit(string $key, int $max = 10, int $window = 300): bool {
     return true;
 }
 
-// ─── ALREADY INSTALLED GUARD ────────────────────────────────────────────────
+// ─── ALREADY INSTALLED / PRODUCTION GUARD ────────────────────────────────────
 $installedFile = __DIR__ . '/.installed';
+$isProdHost = isset($_SERVER['HTTP_HOST']) && (
+    strpos($_SERVER['HTTP_HOST'], 'jaihanumantex.in') !== false ||
+    strpos($_SERVER['HTTP_HOST'], 'harmitethnic.com') !== false
+);
+$isProdEnv = in_array(strtolower((string)(getenv('APP_ENV') ?: (getenv('ENVIRONMENT') ?: ''))), ['production', 'prod'], true);
 
-// If installed → permanently lock installer with HTTP 403 Forbidden
-if (file_exists($installedFile)) {
+// If installed or running on live production host → permanently lock installer with HTTP 403 Forbidden
+if (file_exists($installedFile) || $isProdHost || $isProdEnv) {
     http_response_code(403);
     header('Content-Type: text/html; charset=utf-8');
     $installedData = @json_decode(file_get_contents($installedFile), true) ?? [];
@@ -141,8 +146,11 @@ if (file_exists($installedFile)) {
             Admin Panel
         </a>
     </div>
-    <div class="security-lock">
-        &#128737;&#65039; <strong>Security Lockdown Active:</strong> HTTP 403 Forbidden. Installer access locked down.
+    <div class="security-lock" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span><strong>Security Lockdown Active:</strong> HTTP 403 Forbidden. Installer access locked down.</span>
     </div>
 </div>
 </body>

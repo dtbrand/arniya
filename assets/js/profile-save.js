@@ -83,9 +83,22 @@
         params.append('action', action);
         Object.keys(fields).forEach(function (k) { params.append(k, fields[k]); });
 
+        var csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                   (document.cookie.match(/(?:^|;\s*)dt_csrf=([^;]+)/) || [])[1] ||
+                   window.DT_CSRF_TOKEN || '';
+        if (csrf) {
+            params.append('csrf_token', decodeURIComponent(csrf));
+        }
+
+        var headers = {};
+        if (csrf) {
+            headers['X-CSRF-Token'] = decodeURIComponent(csrf);
+        }
+
         return fetch('/api/auth.php?action=' + encodeURIComponent(action), {
             method: 'POST',
             credentials: 'same-origin',
+            headers: headers,
             body: params
         }).then(function (res) {
             return res.json().catch(function () {

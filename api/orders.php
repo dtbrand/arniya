@@ -162,17 +162,24 @@ try {
                 exit;
             }
 
-            // Security verification: must be admin OR order owner
+            // Security verification: must be admin OR verified order owner
             if (!$isAdmin) {
-                $userPhone = (string)($currentUser['phone'] ?? ($_GET['phone'] ?? ''));
                 $userId = (int)($currentUser['id'] ?? 0);
+                if ($userId <= 0) {
+                    http_response_code(401);
+                    echo json_encode(['success' => false, 'message' => 'Sign in required to view order details. For guest order tracking, please use track order with order number and phone number.']);
+                    exit;
+                }
+
+                $userPhone = (string)($currentUser['phone'] ?? '');
                 $digits = static function ($v) {
                     $d = preg_replace('/\D+/', '', (string)$v);
                     return strlen($d) > 10 ? substr($d, -10) : $d;
                 };
 
-                $isOwner = ($userId > 0 && (int)($order['customer_id'] ?? 0) === $userId)
-                    || (!empty($userPhone) && $digits($order['customer_phone'] ?? '') === $digits($userPhone));
+                $orderCustId = (int)($order['customer_id'] ?? 0);
+                $isOwner = ($orderCustId === $userId)
+                    || (!empty($userPhone) && $digits($order['customer_phone'] ?? '') !== '' && $digits($order['customer_phone'] ?? '') === $digits($userPhone));
 
                 if (!$isOwner) {
                     http_response_code(403);
