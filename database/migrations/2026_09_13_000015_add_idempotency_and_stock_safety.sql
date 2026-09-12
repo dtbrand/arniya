@@ -46,6 +46,10 @@ CREATE TABLE IF NOT EXISTS `wishlist_items` (
     INDEX `idx_wishlist_product` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+SET @var_col_exists = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='wishlist_items' AND COLUMN_NAME='variant_id');
+SET @alter_var_sql = IF(@var_col_exists = 0, 'ALTER TABLE `wishlist_items` ADD COLUMN `variant_id` INT NULL DEFAULT NULL AFTER `product_id`', 'SELECT 1');
+PREPARE _st FROM @alter_var_sql; EXECUTE _st; DEALLOCATE PREPARE _st;
+
 SET @idx_exists = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='wishlist_items' AND INDEX_NAME='idx_wishlist_cust_prod');
 SET @idx_sql = IF(@idx_exists = 0, 'ALTER TABLE `wishlist_items` ADD INDEX `idx_wishlist_cust_prod` (`customer_id`, `product_id`, `variant_id`)', 'SELECT 1');
 PREPARE _st FROM @idx_sql; EXECUTE _st; DEALLOCATE PREPARE _st;
