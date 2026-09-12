@@ -97,7 +97,7 @@ if (isset($active_nav) && !empty($active_nav)) {
     $current_nav = 'settings';
 } elseif (strpos($req_uri, '/system/') !== false) {
     $current_nav = 'system';
-} elseif (strpos($req_uri, '/developer/') !== false) {
+} elseif (strpos($req_uri, '/developer/') !== false || strpos($req_uri, '/components/') !== false) {
     $current_nav = 'developer';
 } elseif (strpos($req_uri, '/whatsapp/') !== false) {
     $current_nav = 'whatsapp';
@@ -247,6 +247,8 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'migrations';
 } elseif (strpos($req_uri, '/developer/diagnostics.php') !== false) {
     $current_subnav = 'diagnostics';
+} elseif (strpos($req_uri, '/components/') !== false) {
+    $current_subnav = 'components';
 } elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
 } elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
@@ -1664,6 +1666,12 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/developer/diagnostics.php" class="adm-nav-subitem <?php echo $current_subnav === 'diagnostics' ? 'active' : ''; ?>">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                                 <span>System Diagnostics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/components/" class="adm-nav-subitem <?php echo $current_subnav === 'components' ? 'active' : ''; ?>">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                <span>UI Component Library</span>
                             </a>
                         </li>
                     </ul>
