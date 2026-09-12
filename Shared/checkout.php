@@ -1438,7 +1438,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
 
         var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         if (!cart || cart.length === 0) {
-            alert('Your shopping bag is empty! Add items to checkout.');
+            showCoNotice('Your shopping bag is empty! Add items to checkout.', false);
             return;
         }
 
@@ -1901,13 +1901,13 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         var landmark = document.getElementById('coLandmark') ? document.getElementById('coLandmark').value.trim() : '';
         var note = document.getElementById('coNote').value.trim();
 
-        if (!fullName) { alert('Please enter your Full Name.'); document.getElementById('coFullName').focus(); return; }
-        if (!whatsApp || whatsApp.length < 10) { alert('Please enter a valid 10-digit WhatsApp number.'); document.getElementById('coWhatsApp').focus(); return; }
-        if (!address) { alert('Please enter your Delivery Address.'); document.getElementById('coAddress').focus(); return; }
-        if (!pincode || pincode.length < 6) { alert('Please enter a valid 6-digit Pincode.'); document.getElementById('coPincode').focus(); return; }
+        if (!fullName) { showCoNotice('Please enter your Full Name.', false); document.getElementById('coFullName').focus(); return; }
+        if (!whatsApp || whatsApp.length < 10) { showCoNotice('Please enter a valid 10-digit WhatsApp number.', false); document.getElementById('coWhatsApp').focus(); return; }
+        if (!address) { showCoNotice('Please enter your Delivery Address.', false); document.getElementById('coAddress').focus(); return; }
+        if (!pincode || pincode.length < 6) { showCoNotice('Please enter a valid 6-digit Pincode.', false); document.getElementById('coPincode').focus(); return; }
 
         var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
-        if (cart.length === 0) { alert('Your bag is empty.'); return; }
+        if (cart.length === 0) { showCoNotice('Your bag is empty.', false); return; }
 
         // IMMEDIATE IN-FLIGHT LOCK: Prevent rapid double-clicks from creating duplicate orders
         coIsPlacingOrder = true;

@@ -1273,11 +1273,11 @@ window.animateTargetGauge = animateTargetGauge;
             var s = document.getElementById('customStartDate').value;
             var e = document.getElementById('customEndDate').value;
             if (!s || !e) {
-                alert('Please select both start and end dates.');
+                showWsToast('Please select both start and end dates.', 'error');
                 return;
             }
             if (new Date(s) > new Date(e)) {
-                alert('Start date cannot be after end date.');
+                showWsToast('Start date cannot be after end date.', 'error');
                 return;
             }
 
@@ -1687,7 +1687,7 @@ window.animateTargetGauge = animateTargetGauge;
             var category = document.getElementById('ticketCategory').value;
             var message = document.getElementById('ticketMessage').value.trim();
 
-            if (!message) { alert('Please enter issue narrative'); return; }
+            if (!message) { showWsToast('Please enter issue narrative.', 'error'); return; }
 
             var newTicket = {
                 id: 'TCK-' + Math.floor(100 + Math.random() * 900),
@@ -3498,7 +3498,7 @@ window.animateTargetGauge = animateTargetGauge;
             var input = document.getElementById('wsTopupAmountInput');
             var amount = Number(input ? input.value : 50000);
             if (!amount || amount < 1000) {
-                alert('Please enter a valid recharge amount (min ₹1,000)');
+                showWsToast('Please enter a valid recharge amount (min ₹1,000).', 'error');
                 return;
             }
             closeWalletTopupModal();
@@ -4907,15 +4907,15 @@ window.animateTargetGauge = animateTargetGauge;
             var status = document.getElementById('followupFormStatus').value || 'Pending';
 
             if (!custId) {
-                alert('Please select a customer.');
+                showWsToast('Please select a customer.', 'error');
                 return;
             }
             if (!date) {
-                alert('Please choose a follow-up date.');
+                showWsToast('Please choose a follow-up date.', 'error');
                 return;
             }
             if (!note) {
-                alert('Please describe the follow-up task note.');
+                showWsToast('Please describe the follow-up task note.', 'error');
                 return;
             }
 
@@ -4969,7 +4969,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             var phone = (c.whatsapp || c.mobile || '').replace(/[^0-9]/g, '');
             if (!phone) {
-                alert('WhatsApp number not found for ' + c.name);
+                showWsToast('WhatsApp number not found for ' + c.name, 'error');
                 return;
             }
 

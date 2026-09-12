@@ -1762,12 +1762,31 @@
             }
         };
 
+        function showAuthNotice(msg, isSuccess) {
+            var el = document.getElementById('dtAuthNoticeBanner');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'dtAuthNoticeBanner';
+                el.style.cssText = 'position:fixed; top:24px; left:50%; transform:translateX(-50%); z-index:9999999; padding:11px 22px; border-radius:8px; font-weight:700; font-size:13px; font-family:"Plus Jakarta Sans", sans-serif; box-shadow:0 8px 28px rgba(0,0,0,0.3); transition:all 0.3s ease; display:flex; align-items:center; gap:8px;';
+                document.body.appendChild(el);
+            }
+            el.style.background = isSuccess ? '#15803D' : '#DC2626';
+            el.style.color = '#FFFFFF';
+            el.textContent = msg;
+            el.style.opacity = '1';
+            el.style.display = 'flex';
+            setTimeout(function() {
+                el.style.opacity = '0';
+                setTimeout(function() { if (el) el.style.display = 'none'; }, 300);
+            }, 3200);
+        }
+
         window.handleLoginSubmit = function() {
             var input = document.getElementById('loginPhone').value.trim();
             var passEl = document.getElementById('loginPass');
             var pass = passEl ? passEl.value.trim() : '123456';
             if (!input) {
-                alert('Please enter your phone or email.');
+                showAuthNotice('Please enter your phone or email.', false);
                 return;
             }
 
@@ -1800,7 +1819,7 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
                     checkUserAuth();
                 } else {
-                    alert(data.message || 'Login failed.');
+                    showAuthNotice(data.message || 'Login failed.', false);
                 }
             })
             .catch(function(_err) {
@@ -1828,13 +1847,13 @@
             var pass = passEl ? passEl.value.trim() : '123456';
 
             if (!name) {
-                alert('Please enter your Full Name.');
+                showAuthNotice('Please enter your Full Name.', false);
                 return;
             }
 
             var expected = selectedCountry.digits || 10;
             if (!phone || phone.length !== expected) {
-                alert('Please enter a valid ' + expected + '-digit WhatsApp number for ' + selectedCountry.name + '.');
+                showAuthNotice('Please enter a valid ' + expected + '-digit WhatsApp number for ' + selectedCountry.name + '.', false);
                 document.getElementById('regPhone').focus();
                 return;
             }
@@ -1875,7 +1894,7 @@
                     localStorage.setItem('dtbrands_user', JSON.stringify(userData));
                     checkUserAuth();
                 } else {
-                    alert(data.message || 'Registration failed.');
+                    showAuthNotice(data.message || 'Registration failed.', false);
                 }
             })
             .catch(function(_err) {
@@ -1901,7 +1920,7 @@
 
             var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
             window.open(waUrl, '_blank');
-            alert('Password reset request initiated. Redirecting to WhatsApp Concierge.');
+            showAuthNotice('Password reset request initiated. Redirecting to WhatsApp Concierge.', true);
         };
 
         window.handleLogoutClick = function() {
