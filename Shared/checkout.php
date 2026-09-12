@@ -2126,10 +2126,33 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         }, 1000);
     }
 
+    function showCoNotice(msg, isSuccess) {
+        var el = document.getElementById('coUpiNoticeBanner');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'coUpiNoticeBanner';
+            el.style.cssText = 'position:fixed; top:24px; left:50%; transform:translateX(-50%); z-index:9999999; padding:11px 22px; border-radius:8px; font-weight:700; font-size:13px; font-family:"Plus Jakarta Sans", sans-serif; box-shadow:0 8px 28px rgba(0,0,0,0.3); transition:all 0.3s ease; display:flex; align-items:center; gap:8px;';
+            document.body.appendChild(el);
+        }
+        el.style.background = isSuccess ? '#15803D' : '#DC2626';
+        el.style.color = '#FFFFFF';
+        el.textContent = msg;
+        el.style.opacity = '1';
+        el.style.display = 'flex';
+        setTimeout(function() {
+            el.style.opacity = '0';
+            setTimeout(function() { if (el) el.style.display = 'none'; }, 300);
+        }, 3200);
+    }
+
     /* Copy UPI VPA */
     window.copyUpiVpa = function() {
         var vpa = document.getElementById('coUpiVpaText').textContent;
-        navigator.clipboard.writeText(vpa).then(() => alert('UPI ID ' + vpa + ' copied to clipboard!'));
+        navigator.clipboard.writeText(vpa).then(function() {
+            showCoNotice('UPI ID ' + vpa + ' copied to clipboard!', true);
+        }).catch(function() {
+            showCoNotice('UPI ID: ' + vpa, true);
+        });
     };
 
     /* Submit 12-Digit UTR */
@@ -2137,7 +2160,7 @@ window.DT_SAVED_ADDRESSES = <?php echo json_encode($coSavedAddresses ?? []); ?>;
         var utrInput = document.getElementById('coUpiUtrInput');
         var utr = utrInput ? utrInput.value.trim() : '';
         if (!utr || utr.length < 6) {
-            alert('Please enter your 12-digit UPI Transaction Reference / UTR Number.');
+            showCoNotice('Please enter your 12-digit UPI Transaction Reference / UTR Number.', false);
             if (utrInput) utrInput.focus();
             return;
         }

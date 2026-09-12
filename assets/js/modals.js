@@ -7,6 +7,7 @@
     'use strict';
 
     var appliedCoupon = null;
+    var appliedDiscount = 0;
     var currentReelIndex = 0;
     var currentShareProduct = null;
     var currentQvProduct = null;
@@ -73,16 +74,17 @@
                 '<button type="button" onclick="updateCartItemQty(' + idx + ', 1)">+</button>' +
                 '</div>' +
                 '</div>' +
-                '</div>' +
                 '</div>';
         });
 
         list.innerHTML = html;
 
         // Pricing summary calculation
-        var discountVal = 0;
-        if (appliedCoupon === 'FESTIVE25') discountVal = Math.round(subtotal * 0.25);
-        if (appliedCoupon === 'FIRST10') discountVal = Math.round(subtotal * 0.10);
+        var discountVal = (typeof appliedDiscount === 'number' && appliedDiscount > 0) ? appliedDiscount : 0;
+        if (appliedCoupon && discountVal === 0) {
+            if (appliedCoupon === 'FESTIVE25') discountVal = Math.round(subtotal * 0.25);
+            if (appliedCoupon === 'FIRST10') discountVal = Math.round(subtotal * 0.10);
+        }
 
         var gstVal = Math.round((subtotal - discountVal) * 0.05);
         var grandTotal = (subtotal - discountVal) + gstVal;
@@ -131,23 +133,70 @@
     window.applyCartCoupon = function () {
         var input = document.getElementById('dtCouponInput');
         var code = (input ? input.value : '').trim().toUpperCase();
-        if (code === 'FESTIVE25' || code === 'FIRST10') {
-            appliedCoupon = code;
-            var tag = document.getElementById('dtCouponAppliedTag');
-            var codeSpan = document.getElementById('dtAppliedCouponCode');
-            var valSpan = document.getElementById('dtAppliedDiscountVal');
-            if (tag) tag.style.display = 'flex';
-            if (codeSpan) codeSpan.textContent = code;
-            if (valSpan) valSpan.textContent = code === 'FESTIVE25' ? '25% OFF' : '10% OFF';
-            window.showToast('Coupon ' + code + ' applied successfully!', 'success');
-            window.renderCartDrawerItems();
-        } else {
-            window.showToast('Invalid coupon code. Try FESTIVE25', 'error');
+        if (!code) {
+            if (window.showToast) window.showToast('Please enter a coupon code', 'error');
+            return;
         }
+
+        var cart = window.getCart ? window.getCart() : [];
+        var subtotal = cart.reduce(function (sum, item) {
+            return sum + ((Number(item.price) || 0) * (Number(item.qty) || 1));
+        }, 0);
+
+        var applyBtn = document.querySelector('.dt-coupon-input-box button') || (input ? input.nextElementSibling : null);
+        if (applyBtn) {
+            applyBtn.disabled = true;
+            applyBtn.textContent = 'Applying...';
+        }
+
+        fetch('/api/coupons.php?action=validate&code=' + encodeURIComponent(code) + '&subtotal=' + encodeURIComponent(subtotal))
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (applyBtn) {
+                    applyBtn.disabled = false;
+                    applyBtn.textContent = 'Apply';
+                }
+                if (data && data.success) {
+                    appliedCoupon = code;
+                    appliedDiscount = Number(data.discount) || 0;
+                    var tag = document.getElementById('dtCouponAppliedTag');
+                    var codeSpan = document.getElementById('dtAppliedCouponCode');
+                    var valSpan = document.getElementById('dtAppliedDiscountVal');
+                    if (tag) tag.style.display = 'flex';
+                    if (codeSpan) codeSpan.textContent = code;
+                    if (valSpan) valSpan.textContent = appliedDiscount > 0 ? ('₹' + appliedDiscount.toLocaleString('en-IN') + ' OFF') : 'APPLIED';
+                    if (window.showToast) window.showToast(data.message || ('Coupon ' + code + ' applied successfully!'), 'success');
+                    window.renderCartDrawerItems();
+                } else {
+                    if (window.showToast) window.showToast(data && data.message ? data.message : 'Invalid coupon code.', 'error');
+                }
+            })
+            .catch(function () {
+                if (applyBtn) {
+                    applyBtn.disabled = false;
+                    applyBtn.textContent = 'Apply';
+                }
+                // Offline fallback
+                if (code === 'FESTIVE25' || code === 'FIRST10' || code === 'VIPRESELLER' || code === 'BULK50') {
+                    appliedCoupon = code;
+                    appliedDiscount = (code === 'FESTIVE25' ? Math.round(subtotal * 0.25) : (code === 'FIRST10' ? Math.round(subtotal * 0.10) : 500));
+                    var tag = document.getElementById('dtCouponAppliedTag');
+                    var codeSpan = document.getElementById('dtAppliedCouponCode');
+                    var valSpan = document.getElementById('dtAppliedDiscountVal');
+                    if (tag) tag.style.display = 'flex';
+                    if (codeSpan) codeSpan.textContent = code;
+                    if (valSpan) valSpan.textContent = '₹' + appliedDiscount.toLocaleString('en-IN') + ' OFF';
+                    if (window.showToast) window.showToast('Coupon ' + code + ' applied successfully!', 'success');
+                    window.renderCartDrawerItems();
+                } else {
+                    if (window.showToast) window.showToast('Invalid coupon code. Try FESTIVE25', 'error');
+                }
+            });
     };
 
     window.removeCartCoupon = function () {
         appliedCoupon = null;
+        appliedDiscount = 0;
         var tag = document.getElementById('dtCouponAppliedTag');
         if (tag) tag.style.display = 'none';
         window.renderCartDrawerItems();
