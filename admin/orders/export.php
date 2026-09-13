@@ -450,6 +450,12 @@ function downloadTallyXML(dataset) {
 function downloadPDFRegister(dataset) {
     const data = dataset || getFilteredExportData();
     const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        if (typeof window.showToast === 'function') {
+            window.showToast("Please allow popups to open the printable PDF register.", "warning");
+        }
+        return;
+    }
     let rowsHtml = '';
     data.forEach((o, idx) => {
         rowsHtml += `
