@@ -559,12 +559,13 @@ class ProductCatalog
         return $sku === '' ? null : self::fetchOneShaped('sku = ?', [$sku]);
     }
 
-    public static function getCategories(): array
+    public static function getCategories(bool $activeOnly = false): array
     {
         $names = [];
-        foreach (self::getCategoriesWithDetails() as $c) {
-            if ($c['name'] !== '') {
-                $names[] = $c['name'];
+        foreach (self::getCategoriesWithDetails($activeOnly) as $c) {
+            $name = trim((string)($c['name'] ?? ''));
+            if ($name !== '') {
+                $names[] = $name;
             }
         }
         return array_values(array_unique($names));
@@ -2372,13 +2373,28 @@ class ProductCatalog
             return ['success' => false, 'message' => 'Category name must contain at least one letter or number.'];
         }
 
-        // slug is UNIQUE: a duplicate used to surface as a raw SQL error.
+        // Check if category with exact name or slug already exists
+        $nameClash = Database::fetchOne("SELECT id, name, slug FROM categories WHERE LOWER(TRIM(name)) = LOWER(TRIM(?)) LIMIT 1", [$name]);
+        if (!empty($nameClash)) {
+            return [
+                'success' => true,
+                'id' => (int)$nameClash['id'],
+                'slug' => $nameClash['slug'],
+                'name' => $nameClash['name'],
+                'message' => 'Category "' . $nameClash['name'] . '" already exists (#' . $nameClash['id'] . ').',
+                'already_existed' => true
+            ];
+        }
+
+        // slug is UNIQUE: auto-resolve slug conflicts by appending a numeric counter
         $clash = Database::fetchOne("SELECT id, name FROM categories WHERE slug = ? LIMIT 1", [$slug]);
         if (!empty($clash)) {
-            return [
-                'success' => false,
-                'message' => 'A category with the URL "' . $slug . '" already exists ("' . $clash['name'] . '").'
-            ];
+            $baseSlug = $slug;
+            $suffix = 2;
+            while (!empty(Database::fetchOne("SELECT id FROM categories WHERE slug = ? LIMIT 1", [$slug]))) {
+                $slug = $baseSlug . '-' . $suffix;
+                $suffix++;
+            }
         }
 
         $order = (int)($data['display_order'] ?? 0);

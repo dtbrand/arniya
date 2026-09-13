@@ -20,8 +20,8 @@
  * assets/js/categories.js -> window.saveCategory(), which posts to
  * /api/categories.php and only reports success when the server says so.
  */
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/Database.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
 
 $page_title = "Add Category";
 $active_nav = "products";

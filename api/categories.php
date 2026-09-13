@@ -215,12 +215,18 @@ try {
 
     }
 
-    $categories = ProductCatalog::getCategoriesWithDetails();
+    $isAdmin = function_exists('dt_api_is_admin') && dt_api_is_admin();
+    $showAll = isset($_GET['all']) || isset($_GET['include_inactive']) || isset($_GET['admin']) || $isAdmin;
+    $categories = ProductCatalog::getCategoriesWithDetails(!$showAll);
+    $rawCategories = Database::query("SELECT id, name, slug, status, display_order FROM categories ORDER BY display_order ASC, id ASC");
+    $categoryNames = ProductCatalog::getCategories(false);
 
     echo json_encode([
         'success' => true,
         'count' => count($categories),
-        'categories' => $categories
+        'categories' => $categories,
+        'category_names' => $categoryNames,
+        'raw_categories' => $rawCategories
     ], JSON_PRETTY_PRINT);
 } catch (\Throwable $e) {
     http_response_code(500);
