@@ -200,9 +200,9 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════
-             3. SECTION 19: INTERACTIVE ROLE PREVIEW STUDIO
+             3. SECTION 19: INTERACTIVE ROLE PREVIEW STUDIO (HIDDEN)
         ════════════════════════════════════════════════════════════ -->
-        <div style="background:#FAF8F5; border:1.5px solid #D4AF37; border-radius:8px; padding:12px 14px;">
+        <div id="dtRolePreviewStudio" style="display:none !important; background:#FAF8F5; border:1.5px solid #D4AF37; border-radius:8px; padding:12px 14px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
                 <div style="font-size:11px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px; display:flex; align-items:center; gap:6px;">
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -262,9 +262,9 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════
-             4. SECTION 21: WHOLESALER MCQ ADMIN TOOL
+             4. SECTION 21: WHOLESALER MCQ ADMIN TOOL (HIDDEN)
         ════════════════════════════════════════════════════════════ -->
-        <div id="dtWholesalerMcqTool" style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
+        <div id="dtWholesalerMcqTool" style="display:none !important; background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
                 <div style="font-size:11px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px; display:flex; align-items:center; gap:6px;">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>

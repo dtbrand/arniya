@@ -125,8 +125,8 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                 Variant pricing automatically inherits rule-based prices from the Product Pricing Studio. Blank SKU is generated automatically from the base SKU on save. Stock is tracked per Color &times; Size variant.
             </div>
 
-            <!-- 3B. FULL SET DYNAMIC PREVIEW BOX (Compact Luxury) -->
-            <div id="dtFullSetPreviewCard" style="margin-top:10px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.2px solid #D4AF37; border-radius:6px; padding:8px 12px; color:#FAF5E8; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
+            <!-- 3B. FULL SET / WHOLESALER MCQ DYNAMIC PREVIEW BOX (HIDDEN) -->
+            <div id="dtFullSetPreviewCard" style="display:none !important; margin-top:10px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.2px solid #D4AF37; border-radius:6px; padding:8px 12px; color:#FAF5E8; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.25); padding-bottom:6px; margin-bottom:6px;">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
