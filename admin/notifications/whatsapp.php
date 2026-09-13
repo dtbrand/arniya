@@ -55,9 +55,18 @@ $waLogs = NotificationManager::getLogs(['channel' => 'whatsapp', 'limit' => 20])
                     </p>
                 </div>
                 <div class="adm-page-actions" style="display:flex; gap:8px;">
+                    <a href="/admin/whatsapp/templates.php?tab=gateway" class="dt-btn dt-btn-gold" style="text-decoration:none; height:34px; font-size:12px; font-weight:800;">Unified WhatsApp CRM &rarr;</a>
                     <a href="/admin/notifications/" class="dt-btn dt-btn-pale" style="text-decoration:none; height:34px; font-size:12px; font-weight:700;">&larr; Hub</a>
-                    <a href="/admin/notifications/templates.php?channel=whatsapp" class="dt-btn dt-btn-pale" style="text-decoration:none; height:34px; font-size:12px; font-weight:700;">WhatsApp Templates</a>
                 </div>
+            </div>
+
+            <!-- Unified WhatsApp CRM Notice Banner -->
+            <div class="adm-card" style="margin-bottom:18px; padding:12px 18px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <span style="font-size:12.5px; font-weight:700; color:#705114;">All WhatsApp options (Concierge, Broadcasts, Leads, HSM Templates &amp; Gateway) are unified into the Master WhatsApp CRM menu.</span>
+                </div>
+                <a href="/admin/whatsapp/templates.php?tab=gateway" class="dt-btn dt-btn-gold" style="height:28px; font-size:11px; text-decoration:none; font-weight:800; display:inline-flex; align-items:center; gap:4px;">Open in WhatsApp CRM &rarr;</a>
             </div>
 
             <!-- Meta Cloud Gateway Status Card -->

@@ -131,6 +131,12 @@ urls = [
     ('https://harmitethnic.com/admin/system/maintenance.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/system/feature-flags.php', 200, 'redirect_ok'),
     ('https://harmitethnic.com/admin/system/backups.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/whatsapp/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/whatsapp/broadcast.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/whatsapp/leads.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/whatsapp/templates.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/api/whatsapp.php?action=get_info', 200, 'json'),
+    ('https://harmitethnic.com/api/whatsapp.php?action=test_ping', 200, 'json'),
     ('https://jaihanumantex.in/admin/system/index.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/system/health.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/system/settings.php', 200, 'redirect_ok'),
@@ -144,7 +150,14 @@ urls = [
     ('https://jaihanumantex.in/admin/system/maintenance.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/system/feature-flags.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/system/backups.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/whatsapp/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/whatsapp/broadcast.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/whatsapp/leads.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/whatsapp/templates.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/api/whatsapp.php?action=get_info', 200, 'json'),
+    ('https://jaihanumantex.in/api/whatsapp.php?action=test_ping', 200, 'json'),
 ]
+
 
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')
 all_ok = True

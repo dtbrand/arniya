@@ -723,6 +723,75 @@ assertTest("Store Settings suite has zero raw confirm() dialogs", !$rawConfirmFo
 assertTest("Store Settings suite has zero raw alert() dialogs", !$rawAlertFound);
 
 echo "\n================================================================================\n";
+echo "12. WHATSAPP CRM SUITE & CLOUD API VERIFICATION\n";
+echo "================================================================================\n";
+
+$waFiles = [
+    'admin/whatsapp/index.php',
+    'admin/whatsapp/broadcast.php',
+    'admin/whatsapp/leads.php',
+    'admin/whatsapp/templates.php',
+    'admin/whatsapp/whatsapp.css',
+    'admin/whatsapp/whatsapp.js',
+    'api/whatsapp.php',
+    'api/whatsapp/audience.php',
+    'api/whatsapp/index.php'
+];
+
+foreach ($waFiles as $f) {
+    assertTest("WhatsApp suite file exists: {$f}", file_exists(__DIR__ . '/../' . $f));
+}
+
+// Subprocess runner for testing api/whatsapp.php
+function callWaApiSuite(array $params, string $method = 'GET'): array {
+    $descriptor = [0 => ["pipe", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]];
+    $cmd = 'php ' . escapeshellarg(__DIR__ . '/run_wa_action.php');
+    $proc = proc_open($cmd, $descriptor, $pipes);
+    if (!is_resource($proc)) return [];
+    fwrite($pipes[0], json_encode(['method' => $method, 'params' => $params]));
+    fclose($pipes[0]);
+    $out = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    proc_close($proc);
+    return json_decode($out, true) ?: [];
+}
+
+$waInfo = callWaApiSuite(['action' => 'get_info']);
+assertTest("WhatsApp API get_info returns success", ($waInfo['success'] ?? false) === true);
+assertTest("WhatsApp API official number is 917046363528", ($waInfo['whatsapp_number'] ?? '') === '917046363528');
+
+$waBcast = callWaApiSuite(['action' => 'broadcast', 'audience' => 'wholesale', 'message' => 'Festive Silk Alert'], 'POST');
+assertTest("WhatsApp API broadcast returns success and queued status", ($waBcast['success'] ?? false) === true && ($waBcast['status'] ?? '') === 'queued');
+assertTest("WhatsApp API broadcast returns recipient count", ($waBcast['recipients_count'] ?? 0) > 0);
+
+$waPing = callWaApiSuite(['action' => 'test_ping']);
+assertTest("WhatsApp API test_ping returns operational status", ($waPing['success'] ?? false) === true && ($waPing['status'] ?? '') === 'operational');
+
+$waTpls = callWaApiSuite(['action' => 'get_templates']);
+assertTest("WhatsApp API get_templates returns verified templates", ($waTpls['success'] ?? false) === true && count($waTpls['templates'] ?? []) >= 3);
+
+// Zero raw dialogs in WhatsApp CRM files
+$waRawConfirm = false;
+$waRawAlert = false;
+foreach ($waFiles as $f) {
+    if (!str_ends_with($f, '.php') && !str_ends_with($f, '.js')) continue;
+    $c = file_get_contents(__DIR__ . '/../' . $f);
+    if (preg_match('/(?<![a-zA-Z0-9_])confirm\s*\(/', $c)) $waRawConfirm = true;
+    if (preg_match('/(?<![a-zA-Z0-9_])alert\s*\(/', $c)) $waRawAlert = true;
+}
+assertTest("WhatsApp CRM suite has zero raw confirm() dialogs", !$waRawConfirm);
+assertTest("WhatsApp CRM suite has zero raw alert() dialogs", !$waRawAlert);
+
+// Sidebar Consolidation
+$sb = file_get_contents(__DIR__ . '/../admin/includes/adminsidebar.php');
+assertTest("Sidebar consolidates Master WhatsApp CRM", strpos($sb, 'id="navItem-whatsapp"') !== false);
+assertTest("Sidebar includes Broadcast Studio", strpos($sb, '/admin/whatsapp/broadcast.php') !== false);
+assertTest("Sidebar includes Lead Pipeline", strpos($sb, '/admin/whatsapp/leads.php') !== false);
+assertTest("Sidebar includes Message Templates & HSM", strpos($sb, '/admin/whatsapp/templates.php') !== false);
+assertTest("Sidebar includes Cloud API Gateway", strpos($sb, '/admin/whatsapp/templates.php?tab=gateway') !== false);
+
+echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
 echo "================================================================================\n";
 
@@ -736,4 +805,5 @@ if ($failed > 0) {
     echo "ALL TESTS PASSED SUCCESSFULLY! (100% SUITE PASS)\n";
     exit(0);
 }
+
 

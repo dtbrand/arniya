@@ -116,7 +116,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 } elseif (strpos($req_uri, '/whatsapp/leads.php') !== false) {
     $current_subnav = 'leads';
 } elseif (strpos($req_uri, '/whatsapp/templates.php') !== false) {
-    $current_subnav = 'templates';
+    $current_subnav = (isset($_GET['tab']) && $_GET['tab'] === 'gateway') ? 'gateway' : 'templates';
 } elseif (strpos($req_uri, '/whatsapp/chat.php') !== false) {
     $current_subnav = 'chat';
 } elseif (strpos($req_uri, '/whatsapp/') !== false) {
@@ -471,13 +471,19 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <li>
                             <a href="/admin/whatsapp/leads.php" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'leads') ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                                <span>Lead Pipeline &amp; Enquiries</span>
+                                <span>Lead Pipeline &amp; Outreach</span>
                             </a>
                         </li>
                         <li>
                             <a href="/admin/whatsapp/templates.php" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'templates') ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                                <span>Message Templates</span>
+                                <span>Message Templates &amp; HSM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/whatsapp/templates.php?tab=gateway" class="adm-nav-subitem <?php echo ($current_nav === 'whatsapp' && $current_subnav === 'gateway') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>Meta Cloud API Gateway</span>
                             </a>
                         </li>
                     </ul>
@@ -1337,9 +1343,9 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/notifications/whatsapp.php" class="adm-nav-subitem <?php echo $current_subnav === 'whatsapp' ? 'active' : ''; ?>">
+                            <a href="/admin/whatsapp/templates.php?tab=gateway" class="adm-nav-subitem" title="Unified in WhatsApp CRM Suite">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                <span>WhatsApp Cloud API</span>
+                                <span>WhatsApp CRM &amp; API</span>
                             </a>
                         </li>
                         <li>
