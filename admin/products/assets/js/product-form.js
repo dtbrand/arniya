@@ -557,6 +557,14 @@
 
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');
+        addIf(payload, 'subcategory', 'pFormSubCat');
+        var subCatEl = document.getElementById('pFormSubCat');
+        if (subCatEl && subCatEl.selectedIndex >= 0) {
+            var selectedSubOpt = subCatEl.options[subCatEl.selectedIndex];
+            if (selectedSubOpt && selectedSubOpt.getAttribute('data-id')) {
+                payload.subcategory_id = parseInt(selectedSubOpt.getAttribute('data-id'), 10) || null;
+            }
+        }
         addIf(payload, 'fabric', 'pFormFabric');
         addIf(payload, 'weave', 'pFormWeave');
         addIf(payload, 'description', 'pFormDesc');

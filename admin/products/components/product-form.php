@@ -42,6 +42,8 @@ $pfWeave = trim((string)($prod['weave'] ?? ''));
 $pfOccasion = trim((string)($prod['occasion'] ?? ''));
 $pfDesc = (string)($prod['description'] ?? '');
 $pfCat = trim((string)($prod['category'] ?? ($prod['category_name'] ?? '')));
+$pfSubCat = trim((string)($prod['subcategory'] ?? ($prod['subcategory_name'] ?? '')));
+$pfSubCatId = (int)($prod['subcategory_id'] ?? 0);
 $pfCats = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getCategories(false) : [];
 if (empty($pfCats) && class_exists('\DTBrand\Database')) {
     try {
@@ -71,6 +73,12 @@ if (class_exists('\DTBrand\Database')) {
                 }
             }
         }
+    } catch (\Throwable $e) {}
+}
+$pfAllSubCats = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getSubcategories(0, false) : [];
+if (empty($pfAllSubCats) && class_exists('\DTBrand\Database')) {
+    try {
+        $pfAllSubCats = \DTBrand\Database::query("SELECT s.id, s.category_id, s.name, s.slug, s.status, c.name AS category_name FROM subcategories s LEFT JOIN categories c ON c.id = s.category_id ORDER BY s.name ASC");
     } catch (\Throwable $e) {}
 }
 $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'single_piece';
@@ -137,6 +145,19 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                 <small style="font-size:10.5px; color:#646970;">Leave blank and one is generated from the title. Duplicates get a suffix.</small>
             </div>
             <div class="adm-form-group">
+                <label class="adm-form-label" for="pFormOccasion">Occasion</label>
+                <input type="text" id="pFormOccasion" class="adm-form-input" maxlength="100" list="dtOccasionPresets"
+                       placeholder="e.g. Bridal &amp; Festive" value="<?php echo htmlspecialchars($pfOccasion); ?>">
+                <datalist id="dtOccasionPresets">
+                    <option value="Bridal &amp; Wedding"></option>
+                    <option value="Festive"></option>
+                    <option value="Party Wear"></option>
+                    <option value="Daily Wear"></option>
+                    <option value="Office / Formal"></option>
+                    <option value="Temple &amp; Pooja"></option>
+                </datalist>
+            </div>
+            <div class="adm-form-group">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; flex-wrap:wrap; gap:6px;">
                     <label class="adm-form-label" for="pFormCat" style="margin:0;">Category <span style="color:#b32d2e;">*</span></label>
                     <div style="display:inline-flex; align-items:center; gap:6px;">
@@ -150,7 +171,7 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                         </button>
                     </div>
                 </div>
-                <select class="adm-form-select" id="pFormCat">
+                <select class="adm-form-select" id="pFormCat" onchange="if(window.dtOnCategoryChanged) window.dtOnCategoryChanged();">
                     <option value="" <?php echo $pfCat === '' ? 'selected' : ''; ?>>&mdash; Not chosen yet &mdash;</option>
                     <?php foreach ($pfCats as $c): ?>
                         <option value="<?php echo htmlspecialchars($c); ?>" <?php echo (strcasecmp($pfCat, $c) === 0) ? 'selected' : ''; ?>><?php echo htmlspecialchars($c); ?></option>
@@ -162,6 +183,42 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px; font-size:10.5px; color:#646970;">
                     <span>Live categories (<b id="dtCatCountBadge"><?php echo count($pfCats); ?></b> available). <a href="javascript:void(0)" onclick="dtOpenQuickAddCategoryModal()" style="color:#8A681F; font-weight:700;">+ Quick Add</a></span>
                     <a href="/admin/products/categories/" target="_blank" style="color:#8A681F; font-weight:700; text-decoration:none;">Manage Categories &nearr;</a>
+                </div>
+            </div>
+            <div class="adm-form-group">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; flex-wrap:wrap; gap:6px;">
+                    <label class="adm-form-label" for="pFormSubCat" style="margin:0;">Subcategory</label>
+                    <div style="display:inline-flex; align-items:center; gap:6px;">
+                        <button type="button" onclick="dtReloadSubcategoryOptions()" title="Reload subcategories from live database" style="background:transparent; border:none; cursor:pointer; color:#8A681F; padding:2px 4px; display:inline-flex; align-items:center; font-size:11px; font-weight:700; text-decoration:none;" id="btnReloadSubCats">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="margin-right:3px;"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                            <span>Refresh</span>
+                        </button>
+                        <button type="button" onclick="dtOpenQuickAddSubcategoryModal()" class="adm-btn-secondary" style="height:22px; padding:0 8px; font-size:10.5px; border-radius:4px; color:#8A681F; border-color:#D4AF37; background:#FAF5E8; display:inline-flex; align-items:center; gap:4px; font-weight:700; cursor:pointer;">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>+ Add Subcategory</span>
+                        </button>
+                    </div>
+                </div>
+                <select class="adm-form-select" id="pFormSubCat">
+                    <option value="" <?php echo $pfSubCat === '' ? 'selected' : ''; ?>>&mdash; None / Choose Subcategory &mdash;</option>
+                    <?php 
+                    $hasMatchedSubCat = false;
+                    foreach ($pfAllSubCats as $sc): 
+                        $scName = $sc['name'] ?? '';
+                        $scCatName = $sc['category_name'] ?? '';
+                        $scLabel = $scName . ($scCatName ? " ({$scCatName})" : '');
+                        $scIsSelected = (strcasecmp($pfSubCat, $scName) === 0 || ($pfSubCatId > 0 && (int)($sc['id'] ?? 0) === $pfSubCatId));
+                        if ($scIsSelected) $hasMatchedSubCat = true;
+                    ?>
+                        <option value="<?php echo htmlspecialchars($scName); ?>" data-cat="<?php echo htmlspecialchars(strtolower($scCatName)); ?>" data-cat-id="<?php echo (int)($sc['category_id'] ?? 0); ?>" data-id="<?php echo (int)($sc['id'] ?? 0); ?>" <?php echo $scIsSelected ? 'selected' : ''; ?>><?php echo htmlspecialchars($scLabel); ?></option>
+                    <?php endforeach; ?>
+                    <?php if ($pfSubCat !== '' && !$hasMatchedSubCat): ?>
+                        <option value="<?php echo htmlspecialchars($pfSubCat); ?>" selected><?php echo htmlspecialchars($pfSubCat); ?> (Current subcategory)</option>
+                    <?php endif; ?>
+                </select>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px; font-size:10.5px; color:#646970;">
+                    <span>Live subcategories (<b id="dtSubCatCountBadge"><?php echo count($pfAllSubCats); ?></b> available). <a href="javascript:void(0)" onclick="dtOpenQuickAddSubcategoryModal()" style="color:#8A681F; font-weight:700;">+ Quick Add</a></span>
+                    <a href="/admin/products/subcategories/" target="_blank" style="color:#8A681F; font-weight:700; text-decoration:none;">Manage Subcategories &nearr;</a>
                 </div>
             </div>
             <div class="adm-form-group">
@@ -191,19 +248,6 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
                     <option value="Plain Weave"></option>
                 </datalist>
                 <small style="font-size:10.5px; color:#646970;">Separate from Fabric because the shop shows both.</small>
-            </div>
-            <div class="adm-form-group">
-                <label class="adm-form-label" for="pFormOccasion">Occasion</label>
-                <input type="text" id="pFormOccasion" class="adm-form-input" maxlength="100" list="dtOccasionPresets"
-                       placeholder="e.g. Bridal &amp; Festive" value="<?php echo htmlspecialchars($pfOccasion); ?>">
-                <datalist id="dtOccasionPresets">
-                    <option value="Bridal &amp; Wedding"></option>
-                    <option value="Festive"></option>
-                    <option value="Party Wear"></option>
-                    <option value="Daily Wear"></option>
-                    <option value="Office / Formal"></option>
-                    <option value="Temple &amp; Pooja"></option>
-                </datalist>
             </div>
             <div class="adm-form-group full">
                 <label class="adm-form-label" for="pFormDesc">Full Product Description</label>
@@ -326,6 +370,67 @@ Description: ..."></textarea>
         </div>
     </div>
 </div>
+
+<!-- QUICK ADD SUBCATEGORY MODAL (WordPress/TailAdmin Luxury Standard) -->
+<div id="dtQuickAddSubCatModal" style="display:none; position:fixed; inset:0; background:rgba(17,24,39,0.7); backdrop-filter:blur(4px); z-index:999999; align-items:center; justify-content:center; padding:16px;">
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:10px; width:100%; max-width:480px; box-shadow:0 10px 30px rgba(0,0,0,0.35); overflow:hidden; animation:dtModalFadeIn 0.25s ease;">
+        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border-bottom:1.5px solid #D4AF37; padding:12px 18px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </div>
+                <div>
+                    <h3 style="margin:0; font-size:13.5px; font-weight:800; color:#FAF5E8; font-family:'Plus Jakarta Sans',sans-serif;">Add New Subcategory</h3>
+                    <p style="margin:0; font-size:10.5px; color:#D4AF37; font-weight:600;">Linked to parent category and instantly selectable</p>
+                </div>
+            </div>
+            <button type="button" class="dt-btn dt-btn-dark dt-modal-close-btn" onclick="dtCloseQuickAddSubcategoryModal()" aria-label="Close modal" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; padding:0; border-radius:5px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div style="padding:16px 18px; background:#FFFFFF;">
+            <div style="margin-bottom:12px;">
+                <label class="adm-form-label" for="dtQuickSubCatParent" style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:4px; display:block;">Parent Category <span style="color:#b32d2e;">*</span></label>
+                <select id="dtQuickSubCatParent" class="adm-form-select" style="width:100%;">
+                    <?php foreach ($pfCats as $c): ?>
+                        <option value="<?php echo htmlspecialchars($c); ?>" <?php echo (strcasecmp($pfCat, $c) === 0) ? 'selected' : ''; ?>><?php echo htmlspecialchars($c); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label class="adm-form-label" for="dtQuickSubCatName" style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:4px; display:block;">Subcategory Name <span style="color:#b32d2e;">*</span></label>
+                <input type="text" id="dtQuickSubCatName" class="adm-form-input" placeholder="e.g. Kanjivaram Pure Zari, Banarasi Kadwa Silk, Anarkali Suits" style="width:100%;" autocomplete="off" oninput="dtAutoGenerateQuickSubCatSlug()">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+                <div>
+                    <label class="adm-form-label" for="dtQuickSubCatSlug" style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:4px; display:block;">URL Slug</label>
+                    <input type="text" id="dtQuickSubCatSlug" class="adm-form-input" placeholder="kanjivaram-pure-zari" style="width:100%;" autocomplete="off">
+                </div>
+                <div>
+                    <label class="adm-form-label" for="dtQuickSubCatStatus" style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:4px; display:block;">Status</label>
+                    <select id="dtQuickSubCatStatus" class="adm-form-select" style="width:100%;">
+                        <option value="active" selected>Active (Visible)</option>
+                        <option value="inactive">Hidden (Draft)</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="adm-form-label" for="dtQuickSubCatDesc" style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:4px; display:block;">Description (Optional)</label>
+                <textarea id="dtQuickSubCatDesc" class="adm-form-textarea" rows="2" placeholder="Brief subcategory details for catalogue..." style="width:100%; resize:vertical;"></textarea>
+            </div>
+        </div>
+        <div style="background:#F8FAFC; padding:12px 18px; border-top:1px solid #E2E8F0; display:flex; justify-content:flex-end; align-items:center; gap:10px;">
+            <button type="button" class="dt-btn dt-btn-pale" onclick="dtCloseQuickAddSubcategoryModal()" style="height:32px; font-size:11.5px; padding:0 14px;">Cancel</button>
+            <button type="button" id="btnSaveQuickSubCategory" class="dt-btn dt-btn-gold" onclick="dtSaveQuickSubcategory()" style="height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px; padding:0 16px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Save &amp; Select</span>
+            </button>
+        </div>
+    </div>
+</div>
 <style>
 .dt-ai-magic-btn:hover {
     transform: translateY(-1px);
@@ -437,6 +542,7 @@ Description: ..."></textarea>
         // rejects a name with no matching option, so a paste can never file the
         // saree under a category nobody created — nor guess one from the fabric.
         fill('pFormCat', grab(raw, 'Category'), 'Category', filled);
+        fill('pFormSubCat', grab(raw, 'Subcategory|Sub\\s*Category|Sub-Category'), 'Subcategory', filled);
         fill('pFormFabric', found.fabric, 'Fabric', filled);
         fill('pFormWeave', found.weave, 'Weave', filled);
         fill('pFormOccasion', found.occasion, 'Occasion', filled);
@@ -647,5 +753,300 @@ Description: ..."></textarea>
             toast('Error reloading categories from database.', 'error');
         });
     };
+
+    window.DT_ALL_SUBCATEGORIES = <?php echo json_encode($pfAllSubCats, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?> || [];
+    window.DT_CURRENT_SUBCAT = <?php echo json_encode($pfSubCat); ?>;
+
+    window.dtFilterSubcategoriesByCategory = function (catName, retainVal) {
+        var subSelect = document.getElementById('pFormSubCat');
+        if (!subSelect) return;
+        var currentVal = (typeof retainVal !== 'undefined') ? retainVal : (subSelect.value || window.DT_CURRENT_SUBCAT || '');
+        var catClean = String(catName || '').trim().toLowerCase();
+
+        subSelect.innerHTML = '<option value="">&mdash; None / Choose Subcategory &mdash;</option>';
+
+        var all = window.DT_ALL_SUBCATEGORIES || [];
+        var matching = [];
+        var other = [];
+
+        for (var i = 0; i < all.length; i++) {
+            var item = all[i];
+            var itemCat = String(item.category_name || '').trim().toLowerCase();
+            if (!catClean || itemCat === catClean) {
+                matching.push(item);
+            } else {
+                other.push(item);
+            }
+        }
+
+        var foundCurrent = false;
+
+        // Render matching subcategories
+        if (matching.length > 0) {
+            var optGroupMain = (!catClean) ? null : document.createElement('optgroup');
+            if (optGroupMain) {
+                optGroupMain.label = (catName || 'Selected Category') + ' Subcategories (' + matching.length + ')';
+            }
+            for (var m = 0; m < matching.length; m++) {
+                var s = matching[m];
+                var opt = document.createElement('option');
+                opt.value = s.name;
+                opt.textContent = s.name + (!catClean && s.category_name ? (' (' + s.category_name + ')') : '');
+                opt.setAttribute('data-id', s.id);
+                opt.setAttribute('data-cat', (s.category_name || '').toLowerCase());
+                opt.setAttribute('data-cat-id', s.category_id || 0);
+                if (currentVal && String(s.name).toLowerCase() === currentVal.toLowerCase()) {
+                    opt.selected = true;
+                    foundCurrent = true;
+                }
+                if (optGroupMain) {
+                    optGroupMain.appendChild(opt);
+                } else {
+                    subSelect.appendChild(opt);
+                }
+            }
+            if (optGroupMain) {
+                subSelect.appendChild(optGroupMain);
+            }
+        }
+
+        // Render other subcategories in an optgroup if a category filter is active
+        if (catClean && other.length > 0) {
+            var optGroupOther = document.createElement('optgroup');
+            optGroupOther.label = 'Other Categories';
+            for (var o = 0; o < other.length; o++) {
+                var os = other[o];
+                var oopt = document.createElement('option');
+                oopt.value = os.name;
+                oopt.textContent = os.name + (os.category_name ? (' (' + os.category_name + ')') : '');
+                oopt.setAttribute('data-id', os.id);
+                oopt.setAttribute('data-cat', (os.category_name || '').toLowerCase());
+                oopt.setAttribute('data-cat-id', os.category_id || 0);
+                if (currentVal && String(os.name).toLowerCase() === currentVal.toLowerCase()) {
+                    oopt.selected = true;
+                    foundCurrent = true;
+                }
+                optGroupOther.appendChild(oopt);
+            }
+            subSelect.appendChild(optGroupOther);
+        }
+
+        // If currentVal was set but not in any list, append it as custom option
+        if (currentVal && !foundCurrent) {
+            var curOpt = document.createElement('option');
+            curOpt.value = currentVal;
+            curOpt.textContent = currentVal + ' (Current subcategory)';
+            curOpt.selected = true;
+            subSelect.appendChild(curOpt);
+        }
+
+        // Update count badge
+        var countBadge = document.getElementById('dtSubCatCountBadge');
+        if (countBadge) {
+            countBadge.textContent = catClean ? (matching.length + ' in ' + catName) : all.length;
+        }
+    };
+
+    window.dtOnCategoryChanged = function () {
+        var catSelect = document.getElementById('pFormCat');
+        var catName = catSelect ? catSelect.value : '';
+        window.dtFilterSubcategoriesByCategory(catName);
+        var modalParent = document.getElementById('dtQuickSubCatParent');
+        if (modalParent && catName) {
+            for (var i = 0; i < modalParent.options.length; i++) {
+                if (modalParent.options[i].value.toLowerCase() === catName.toLowerCase()) {
+                    modalParent.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    };
+
+    window.dtOpenQuickAddSubcategoryModal = function () {
+        var m = document.getElementById('dtQuickAddSubCatModal');
+        if (!m) return;
+        m.style.display = 'flex';
+        var catSelect = document.getElementById('pFormCat');
+        var modalParent = document.getElementById('dtQuickSubCatParent');
+        if (modalParent && catSelect && catSelect.value) {
+            for (var i = 0; i < modalParent.options.length; i++) {
+                if (modalParent.options[i].value.toLowerCase() === catSelect.value.toLowerCase()) {
+                    modalParent.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+        var nameInput = document.getElementById('dtQuickSubCatName');
+        if (nameInput) {
+            nameInput.value = '';
+            setTimeout(function () { nameInput.focus(); }, 50);
+        }
+        var slugInput = document.getElementById('dtQuickSubCatSlug');
+        if (slugInput) slugInput.value = '';
+        var descInput = document.getElementById('dtQuickSubCatDesc');
+        if (descInput) descInput.value = '';
+    };
+
+    window.dtCloseQuickAddSubcategoryModal = function () {
+        var m = document.getElementById('dtQuickAddSubCatModal');
+        if (m) m.style.display = 'none';
+    };
+
+    window.dtAutoGenerateQuickSubCatSlug = function () {
+        var n = document.getElementById('dtQuickSubCatName');
+        var s = document.getElementById('dtQuickSubCatSlug');
+        if (!n || !s) return;
+        s.value = String(n.value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    };
+
+    window.dtSaveQuickSubcategory = function () {
+        var nameInput = document.getElementById('dtQuickSubCatName');
+        var name = nameInput ? String(nameInput.value || '').trim() : '';
+        if (!name) {
+            toast('Please enter a subcategory name.', 'error');
+            if (nameInput) nameInput.focus();
+            return;
+        }
+        var parentSelect = document.getElementById('dtQuickSubCatParent');
+        var parentCatName = parentSelect ? String(parentSelect.value || '').trim() : '';
+        if (!parentCatName) {
+            toast('Please select a parent category.', 'error');
+            if (parentSelect) parentSelect.focus();
+            return;
+        }
+        var slugInput = document.getElementById('dtQuickSubCatSlug');
+        var slug = slugInput ? String(slugInput.value || '').trim() : '';
+        if (!slug) {
+            slug = String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
+        var statusInput = document.getElementById('dtQuickSubCatStatus');
+        var status = statusInput ? String(statusInput.value || 'active').trim() : 'active';
+        var descInput = document.getElementById('dtQuickSubCatDesc');
+        var desc = descInput ? String(descInput.value || '').trim() : '';
+
+        var btn = document.getElementById('btnSaveQuickSubCategory');
+        if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+        fetch('/api/categories.php', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+                action: 'create_subcategory',
+                name: name,
+                category_name: parentCatName,
+                slug: slug,
+                status: status,
+                description: desc
+            })
+        }).then(function (r) {
+            return r.json().catch(function () {
+                throw new Error('Server returned invalid response (HTTP ' + r.status + ')');
+            });
+        }).then(function (res) {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save &amp; Select</span>';
+            }
+            if (!res || !res.success) {
+                throw new Error((res && res.message) ? res.message : 'Failed to create subcategory.');
+            }
+
+            // Sync parent category to #pFormCat if not set or different
+            var pCatSelect = document.getElementById('pFormCat');
+            if (pCatSelect && (!pCatSelect.value || pCatSelect.value.toLowerCase() !== parentCatName.toLowerCase())) {
+                for (var ci = 0; ci < pCatSelect.options.length; ci++) {
+                    if (pCatSelect.options[ci].value.toLowerCase() === parentCatName.toLowerCase()) {
+                        pCatSelect.selectedIndex = ci;
+                        break;
+                    }
+                }
+            }
+
+            // Add new subcategory to window.DT_ALL_SUBCATEGORIES if not present
+            var newSubObj = {
+                id: res.id || 0,
+                name: name,
+                slug: slug,
+                status: status,
+                category_name: parentCatName,
+                category_id: res.category_id || 0
+            };
+            var exists = false;
+            for (var si = 0; si < window.DT_ALL_SUBCATEGORIES.length; si++) {
+                if (window.DT_ALL_SUBCATEGORIES[si].name.toLowerCase() === name.toLowerCase()) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                window.DT_ALL_SUBCATEGORIES.push(newSubObj);
+            }
+
+            // Re-filter and select the new subcategory
+            window.DT_CURRENT_SUBCAT = name;
+            window.dtFilterSubcategoriesByCategory(parentCatName, name);
+
+            window.dtCloseQuickAddSubcategoryModal();
+            toast(res.message || ('Subcategory "' + name + '" created and selected!'), 'success');
+        }).catch(function (err) {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Save &amp; Select</span>';
+            }
+            toast(err && err.message ? err.message : 'Error creating subcategory.', 'error');
+        });
+    };
+
+    window.dtReloadSubcategoryOptions = function () {
+        var btn = document.getElementById('btnReloadSubCats');
+        if (btn) {
+            btn.style.opacity = '0.5';
+            btn.style.pointerEvents = 'none';
+        }
+        var pCat = document.getElementById('pFormCat');
+        var catName = pCat ? pCat.value : '';
+
+        fetch('/api/categories.php?all=1', {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(function (r) { return r.json(); })
+        .then(function (data) {
+            if (btn) {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+            if (!data || !data.success) {
+                toast('Could not reload subcategories: ' + (data.message || 'API error'), 'error');
+                return;
+            }
+            if (data.subcategories && Array.isArray(data.subcategories)) {
+                window.DT_ALL_SUBCATEGORIES = data.subcategories;
+                window.dtFilterSubcategoriesByCategory(catName);
+                toast('Live subcategories reloaded (' + data.subcategories.length + ' available).', 'success');
+            }
+        }).catch(function (e) {
+            if (btn) {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+            toast('Error reloading subcategories from database.', 'error');
+        });
+    };
+
+    // Initial filter run on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            var initialCat = document.getElementById('pFormCat') ? document.getElementById('pFormCat').value : '';
+            window.dtFilterSubcategoriesByCategory(initialCat);
+        });
+    } else {
+        var initialCat = document.getElementById('pFormCat') ? document.getElementById('pFormCat').value : '';
+        window.dtFilterSubcategoriesByCategory(initialCat);
+    }
 })();
 </script>

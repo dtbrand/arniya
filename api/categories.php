@@ -40,38 +40,66 @@ try {
         if ($action === 'create_subcategory') {
             $name = trim((string)($data['name'] ?? ''));
             $categoryId = (int)($data['category_id'] ?? 0);
+            if ($categoryId <= 0 && (!empty($data['category']) || !empty($data['category_name']))) {
+                $cName = trim((string)($data['category'] ?? $data['category_name']));
+                $foundCat = Database::fetchOne('SELECT id FROM categories WHERE LOWER(TRIM(name)) = LOWER(TRIM(?)) LIMIT 1', [$cName]);
+                if (!empty($foundCat)) {
+                    $categoryId = (int)$foundCat['id'];
+                }
+            }
             if ($name === '' || $categoryId <= 0) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Subcategory name and parent category are required.'], JSON_PRETTY_PRINT);
                 exit;
             }
-            // The parent must exist — a dangling category_id would break the
-            // foreign key on strict engines and silently orphan the row on
-            // lenient ones.
-            $parent = Database::fetchOne('SELECT id FROM categories WHERE id = ? LIMIT 1', [$categoryId]);
+            // The parent must exist
+            $parent = Database::fetchOne('SELECT id, name FROM categories WHERE id = ? LIMIT 1', [$categoryId]);
             if (!$parent) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Parent category #' . $categoryId . ' does not exist.'], JSON_PRETTY_PRINT);
                 exit;
             }
+            // Check if subcategory with same name already exists under this parent category
+            $existingSub = Database::fetchOne('SELECT id, name, slug FROM subcategories WHERE category_id = ? AND LOWER(TRIM(name)) = LOWER(TRIM(?)) LIMIT 1', [$categoryId, $name]);
+            if (!empty($existingSub)) {
+                echo json_encode([
+                    'success' => true,
+                    'id' => (int)$existingSub['id'],
+                    'name' => $existingSub['name'],
+                    'slug' => $existingSub['slug'],
+                    'category_id' => $categoryId,
+                    'category_name' => $parent['name'],
+                    'message' => 'Subcategory "' . $existingSub['name'] . '" already exists under ' . $parent['name'] . '.',
+                    'already_existed' => true
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+
             $slug = strtolower(trim((string)preg_replace('/[^a-z0-9]+/i', '-', $name), '-'));
             if ($slug === '') {
                 $slug = 'subcat-' . time();
             }
-            // De-dupe the slug the same way categories do.
+            // De-dupe the slug
             $suffix = 2;
             $candidate = $slug;
             while (Database::fetchOne('SELECT id FROM subcategories WHERE slug = ? LIMIT 1', [$candidate])) {
                 $candidate = $slug . '-' . $suffix++;
             }
+            $desc = trim((string)($data['description'] ?? ''));
+            $status = strtolower(trim((string)($data['status'] ?? 'active'))) === 'inactive' ? 'inactive' : 'active';
             $ok = Database::execute(
-                'INSERT INTO subcategories (category_id, name, slug, status) VALUES (?, ?, ?, "active")',
-                [$categoryId, $name, $candidate]
+                'INSERT INTO subcategories (category_id, name, slug, description, status) VALUES (?, ?, ?, ?, ?)',
+                [$categoryId, $name, $candidate, $desc, $status]
             );
+            $newSubId = $ok ? (int)Database::getConnection()->lastInsertId() : 0;
             echo json_encode([
                 'success' => (bool)$ok,
-                'id' => $ok ? (int)Database::getConnection()->lastInsertId() : 0,
-                'message' => $ok ? 'Subcategory created.' : 'Could not create the subcategory.'
+                'id' => $newSubId,
+                'name' => $name,
+                'slug' => $candidate,
+                'category_id' => $categoryId,
+                'category_name' => $parent['name'],
+                'message' => $ok ? 'Subcategory "' . $name . '" created under ' . $parent['name'] . '.' : 'Could not create the subcategory.'
             ], JSON_PRETTY_PRINT);
             exit;
         }
@@ -220,13 +248,15 @@ try {
     $categories = ProductCatalog::getCategoriesWithDetails(!$showAll);
     $rawCategories = Database::query("SELECT id, name, slug, status, display_order FROM categories ORDER BY display_order ASC, id ASC");
     $categoryNames = ProductCatalog::getCategories(false);
+    $subcategories = ProductCatalog::getSubcategories(0, !$showAll);
 
     echo json_encode([
         'success' => true,
         'count' => count($categories),
         'categories' => $categories,
         'category_names' => $categoryNames,
-        'raw_categories' => $rawCategories
+        'raw_categories' => $rawCategories,
+        'subcategories' => $subcategories
     ], JSON_PRETTY_PRINT);
 } catch (\Throwable $e) {
     http_response_code(500);

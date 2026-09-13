@@ -376,6 +376,8 @@ class ProductCatalog
             'brand' => trim((string)($r['brand'] ?? '')) ?: "DT Brand's",
             'category' => trim((string)($r['category_name'] ?? '')),
             'category_id' => (int)($r['category_id'] ?? 0),
+            'subcategory' => trim((string)($r['subcategory'] ?? ($r['subcategory_name'] ?? ''))),
+            'subcategory_id' => (int)($r['subcategory_id'] ?? 0),
             'fabric' => trim((string)($r['fabric'] ?? '')),
             'weave' => trim((string)($r['weave'] ?? '')),
             'zari_type' => trim((string)($r['zari_type'] ?? '')),
@@ -649,7 +651,7 @@ class ProductCatalog
     /**
      * Get subcategories, optionally filtered by category_id.
      */
-    public static function getSubcategories(int $categoryId = 0, bool $activeOnly = true): array
+    public static function getSubcategories(int $categoryId = 0, bool $activeOnly = false): array
     {
         $pdo = Database::getConnection();
         if ($pdo === null || Database::isMockMode()) {
@@ -1326,6 +1328,50 @@ class ProductCatalog
         return ['id' => 0, 'name' => $name];
     }
 
+    /** 
+     * Resolve a submitted subcategory to a real subcategories row where one exists.
+     * @param mixed $idRaw
+     * @param mixed $nameRaw
+     * @param int $categoryId
+     */
+    public static function resolveSubcategory($idRaw, $nameRaw, int $categoryId = 0): array
+    {
+        $id = (int)$idRaw;
+        $name = trim((string)$nameRaw);
+
+        if ($id > 0) {
+            $row = Database::fetchOne("SELECT id, name, category_id FROM subcategories WHERE id = ? LIMIT 1", [$id]);
+            if (!empty($row)) {
+                return ['id' => (int)$row['id'], 'name' => trim((string)$row['name']), 'category_id' => (int)($row['category_id'] ?? 0)];
+            }
+        }
+        if ($name !== '') {
+            $sql = "SELECT id, name, category_id FROM subcategories WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))";
+            $params = [$name];
+            if ($categoryId > 0) {
+                $sql .= " AND category_id = ?";
+                $params[] = $categoryId;
+            }
+            $sql .= " LIMIT 1";
+            $row = Database::fetchOne($sql, $params);
+            if (!empty($row)) {
+                return ['id' => (int)$row['id'], 'name' => trim((string)$row['name']), 'category_id' => (int)($row['category_id'] ?? 0)];
+            }
+            if ($categoryId > 0) {
+                $rowAny = Database::fetchOne("SELECT id, name, category_id FROM subcategories WHERE LOWER(TRIM(name)) = LOWER(TRIM(?)) LIMIT 1", [$name]);
+                if (!empty($rowAny)) {
+                    return ['id' => (int)$rowAny['id'], 'name' => trim((string)$rowAny['name']), 'category_id' => (int)($rowAny['category_id'] ?? 0)];
+                }
+            }
+            $slug = self::slugify($name);
+            $rowSlug = Database::fetchOne("SELECT id, name, category_id FROM subcategories WHERE slug = ? LIMIT 1", [$slug]);
+            if (!empty($rowSlug)) {
+                return ['id' => (int)$rowSlug['id'], 'name' => trim((string)$rowSlug['name']), 'category_id' => (int)($rowSlug['category_id'] ?? 0)];
+            }
+        }
+        return ['id' => 0, 'name' => $name, 'category_id' => $categoryId];
+    }
+
     /** Pull the gallery / video / embed lists out of a submitted payload. */
     private static function readMediaPayload(array $data): array
     {
@@ -1647,6 +1693,7 @@ class ProductCatalog
         }
 
         $cat = self::resolveCategory($data['category_id'] ?? 0, $data['category'] ?? $data['category_name'] ?? '');
+        $subCat = self::resolveSubcategory($data['subcategory_id'] ?? 0, $data['subcategory'] ?? $data['subcategory_name'] ?? '', (int)($cat['id'] ?? 0));
         $sku = self::uniqueSku(trim((string)($data['sku'] ?? '')));
         $slug = self::uniqueSlug(self::slugify((string)($data['slug'] ?? '')) ?: self::slugify($title));
         $status = self::normaliseStatus($data['status'] ?? '') ?: 'in_stock';
@@ -1729,6 +1776,12 @@ class ProductCatalog
             if (!empty($tableCols) && isset($tableCols[$k])) {
                 $cols[$k] = $v;
             }
+        }
+        if (!empty($tableCols) && isset($tableCols['subcategory_id'])) {
+            $cols['subcategory_id'] = $subCat['id'] > 0 ? $subCat['id'] : null;
+        }
+        if (!empty($tableCols) && isset($tableCols['subcategory'])) {
+            $cols['subcategory'] = $subCat['name'] !== '' ? mb_substr($subCat['name'], 0, 100) : null;
         }
 
         try {
@@ -1912,6 +1965,16 @@ class ProductCatalog
             if ($cat['name'] !== '') {
                 $add('category_id', $cat['id']);
                 $add('category_name', mb_substr($cat['name'], 0, 100));
+            }
+        }
+        if (isset($data['subcategory_id']) || isset($data['subcategory']) || isset($data['subcategory_name'])) {
+            $currentCatId = isset($cat['id']) ? (int)$cat['id'] : (int)($data['category_id'] ?? 0);
+            $subCat = self::resolveSubcategory($data['subcategory_id'] ?? 0, $data['subcategory'] ?? $data['subcategory_name'] ?? '', $currentCatId);
+            if (!empty($tableCols) && isset($tableCols['subcategory_id'])) {
+                $add('subcategory_id', $subCat['id'] > 0 ? $subCat['id'] : null);
+            }
+            if (!empty($tableCols) && isset($tableCols['subcategory'])) {
+                $add('subcategory', $subCat['name'] !== '' ? mb_substr($subCat['name'], 0, 100) : null);
             }
         }
         foreach (['brand', 'fabric', 'weave', 'zari_type', 'occasion'] as $col) {
@@ -2282,6 +2345,17 @@ class ProductCatalog
                     $params[] = $cat['id'];
                     $fields[] = 'category_name = ?';
                     $params[] = mb_substr($cat['name'], 0, 100);
+                }
+            }
+            if (isset($data['subcategory']) || isset($data['subcategory_name']) || isset($data['subcategory_id'])) {
+                $subCat = self::resolveSubcategory($data['subcategory_id'] ?? 0, $data['subcategory'] ?? $data['subcategory_name'] ?? '', (int)($cat['id'] ?? 0));
+                if ($subCat['id'] > 0) {
+                    $fields[] = 'subcategory_id = ?';
+                    $params[] = $subCat['id'];
+                }
+                if ($subCat['name'] !== '') {
+                    $fields[] = 'subcategory = ?';
+                    $params[] = mb_substr($subCat['name'], 0, 100);
                 }
             }
             foreach (['is_featured', 'is_bestseller'] as $col) {
