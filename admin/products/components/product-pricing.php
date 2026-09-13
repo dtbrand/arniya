@@ -136,8 +136,8 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                     <div>
                         <div style="font-size:11.5px; font-weight:800; color:#92400E;">B2B Full Set Trade-Only Rule Active</div>
                         <div style="font-size:10.5px; color:#78350F; margin-top:2px;">
-                            Full Sets are sold exclusively in complete lots to verified trade partners (<strong>Wholesalers, Resellers &amp; Retailers</strong>).
-                            Guest &amp; Retail Customer access is strictly trade-blocked.
+                            Full Sets are sold exclusively in complete lots to verified trade partners (<strong>Retailers &amp; Wholesalers</strong>).
+                            Guest, Retail Customer &amp; Reseller access is strictly trade-blocked (Resellers are single-piece dropshippers).
                         </div>
                     </div>
                 </div>
@@ -145,22 +145,22 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
 
             <!-- Blocked / Authorized Indicators -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <div style="background:#F1F5F9; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; opacity:0.8;">
-                    <span style="font-size:11px; font-weight:700; color:#64748B;">Guest / Customer</span>
+                <div style="background:#F1F5F9; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; opacity:0.85;">
+                    <span style="font-size:11px; font-weight:700; color:#64748B;">Guest &bull; Customer &bull; Reseller</span>
                     <span style="font-size:9.5px; font-weight:800; color:#DC2626; background:#FEE2E2; padding:2px 6px; border-radius:3px;">BLOCKED (Trade Only)</span>
                 </div>
                 <div style="background:#DCFCE7; border:1px solid #16A34A; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between;">
-                    <span style="font-size:11px; font-weight:700; color:#15803D;">Wholesaler &bull; Reseller &bull; Retailer</span>
-                    <span style="font-size:9.5px; font-weight:800; color:#15803D; background:#DCFCE7; padding:2px 6px; border-radius:3px;">AUTHORIZED (B2B Trade)</span>
+                    <span style="font-size:11px; font-weight:700; color:#15803D;">Retailer (Boutique) &bull; Wholesaler</span>
+                    <span style="font-size:9.5px; font-weight:800; color:#15803D; background:#DCFCE7; padding:2px 6px; border-radius:3px;">AUTHORIZED (B2B Full Set)</span>
                 </div>
             </div>
 
-            <!-- Full Set Trade Inputs Grid (Only Price & Sale Price for Trade Partners) -->
+            <!-- Full Set Trade Inputs Grid (Only Price & Sale Price for Retailer & Wholesaler) -->
             <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
                 <div style="font-size:11px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
                     <span style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>Full Set Trade Rate (Wholesaler &bull; Reseller &bull; Retailer)</span>
+                        <span>Full Set Trade Rate (Retailer &bull; Wholesaler)</span>
                     </span>
                     <span style="font-size:9.5px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Complete Lot Rate</span>
                 </div>
@@ -176,7 +176,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                                placeholder="e.g. 600"
                                value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_price'] ?? ($prod['full_set_wholesale_price'] ?? ($prod['retail_price'] ?? null)))); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Per-piece rate charged to trade partners for the complete full set lot.</small>
+                        <small style="font-size:10px; color:#64748B;">Per-piece rate charged to Retailers and Wholesalers for the complete full set lot.</small>
                     </div>
 
                     <!-- Full Set Trade Sale Price -->
@@ -189,7 +189,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                                placeholder="e.g. 580"
                                value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_sale_price'] ?? ($prod['full_set_wholesale_sale_price'] ?? null))); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Promotional per-piece full set offer rate for trade partners.</small>
+                        <small style="font-size:10px; color:#64748B;">Promotional per-piece full set offer rate for Retailers and Wholesalers.</small>
                     </div>
                 </div>
 

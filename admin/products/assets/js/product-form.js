@@ -82,7 +82,7 @@
         var effCust = custSale > 0 ? custSale : Math.max(0, baseCust - saleDisc);
         var effTrade = retSale > 0 ? retSale : Math.max(0, baseRetail - saleDisc);
 
-        // Effective full set prices - Wholesaler, Reseller & Retailer share the full set rate
+        // Effective full set prices - Wholesaler & Retailer share the full set rate (Reseller blocked)
         var effFs = fsRetSale > 0 ? fsRetSale : Math.max(0, baseFsRet - saleDisc);
         var effFsRet = effFs;
 
@@ -108,7 +108,7 @@
         var elMarginPct = document.getElementById('dtPrevMarginPercent');
 
         if (isFullSet) {
-            // FULL SET MODE: Customer/Guest blocked; Wholesaler, Reseller & Retailer authorized
+            // FULL SET MODE: Customer, Guest & Reseller blocked; Wholesaler & Retailer authorized
             if (activeRole === 'guest' || activeRole === 'customer') {
                 if (elTitle) elTitle.textContent = (activeRole === 'guest' ? 'Guest' : 'Customer') + ' View — Trade Blocked';
                 if (elAccess) {
@@ -131,35 +131,26 @@
                 if (elMarginVal) { elMarginVal.textContent = 'N/A'; elMarginVal.style.color = '#94A3B8'; }
                 if (elMarginPct) elMarginPct.textContent = 'Trade restricted';
             } else if (activeRole === 'reseller') {
-                if (elTitle) elTitle.textContent = 'Reseller Storefront View';
+                if (elTitle) elTitle.textContent = 'Reseller Storefront View — Trade Blocked';
                 if (elAccess) {
-                    elAccess.textContent = 'Full Set Authorized';
-                    elAccess.style.background = '#DCFCE7';
-                    elAccess.style.color = '#15803D';
+                    elAccess.textContent = 'BLOCKED (Trade Only)';
+                    elAccess.style.background = '#FEE2E2';
+                    elAccess.style.color = '#DC2626';
                 }
                 if (elPill) {
-                    elPill.textContent = (fsRetSale > 0 || saleDisc > 0) ? 'Discount Active' : 'Full Set Rate';
-                    elPill.style.background = (fsRetSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
-                    elPill.style.color = (fsRetSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
+                    elPill.textContent = 'Single Piece Dropship Only';
+                    elPill.style.background = '#FEE2E2';
+                    elPill.style.color = '#DC2626';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effFs.toLocaleString('en-IN') + ' /pc';
-                    elEffPrice.style.color = '#34D399';
-                    elEffPrice.style.fontSize = '22px';
+                    elEffPrice.textContent = 'Access Restricted';
+                    elEffPrice.style.color = '#94A3B8';
+                    elEffPrice.style.fontSize = '16px';
                 }
-                if (elStrikePrice) {
-                    if (baseFsRet > effFs) {
-                        elStrikePrice.textContent = '₹' + baseFsRet.toLocaleString('en-IN');
-                        elStrikePrice.style.display = 'inline';
-                    } else {
-                        elStrikePrice.style.display = 'none';
-                    }
-                }
-                if (elSub) elSub.textContent = 'Per-piece rate charged for the complete set lot';
-                var resFsMargin = Math.max(0, baseCust - effFs);
-                var resFsPct = baseCust > 0 ? Math.round((resFsMargin / baseCust) * 100) : 0;
-                if (elMarginVal) { elMarginVal.textContent = '₹' + resFsMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
-                if (elMarginPct) elMarginPct.textContent = resFsPct + '% Margin Advantage';
+                if (elStrikePrice) { elStrikePrice.style.display = 'none'; }
+                if (elSub) elSub.textContent = 'Resellers sell single pieces with doorstep dropship. Full sets are strictly restricted to physical boutique retailers and wholesalers.';
+                if (elMarginVal) { elMarginVal.textContent = 'N/A'; elMarginVal.style.color = '#94A3B8'; }
+                if (elMarginPct) elMarginPct.textContent = 'Trade restricted';
             } else if (activeRole === 'retailer') {
                 if (elTitle) elTitle.textContent = 'Retailer (Boutique) Storefront View';
                 if (elAccess) {

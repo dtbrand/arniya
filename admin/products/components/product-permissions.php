@@ -51,7 +51,7 @@ $pmRow = static function (string $id, string $label, int $value, string $hint): 
             <?php
             $pmRow('pFormMoqSingle', 'Single piece MOQ', $pmSingle, 'Retail customers. 1 for a normal saree.');
             $pmRow('pFormMoqHalf', 'Half set (pieces)', $pmHalf, '0 hides the half-set option.');
-            $pmRow('pFormMoqFull', 'Full set (pieces)', $pmFull, 'The reseller / retailer lot.');
+            $pmRow('pFormMoqFull', 'Full set (pieces)', $pmFull, 'The boutique retailer / wholesaler lot.');
             $pmRow('pFormMoqBale', 'Master bale (pieces)', $pmBale, 'Wholesale mill lot.');
             ?>
         </div>
