@@ -52,7 +52,9 @@
     }
 
     async function devPost(action, data = {}) {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        const csrfToken = window.DT_ADMIN_CSRF_TOKEN || 
+            document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+            document.querySelector('input[name="csrf_token"]')?.value || '';
         const formData = new FormData();
         formData.append('action', action);
         formData.append('csrf_token', csrfToken);

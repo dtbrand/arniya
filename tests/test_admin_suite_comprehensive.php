@@ -540,7 +540,68 @@ assertTest("Auth::getCustomerAddresses retrieves all saved addresses", is_array(
 assertTest("First address in list is designated billing address", isset($allAddresses[0]['address_type']) && $allAddresses[0]['address_type'] === 'billing');
 assertTest("Billing address has is_default set to 1", !empty($allAddresses[0]['is_default']));
 
+// ============================================================================
+// 9. DEVELOPER & API ADMINISTRATION SUITE (SECTION 37) VALIDATION TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "9. DEVELOPER & API ADMINISTRATION SUITE (SECTION 37) VALIDATION TEST\n";
+echo "================================================================================\n";
 
+require_once __DIR__ . '/../src/DeveloperManager.php';
+use DTBrand\DeveloperManager;
+
+$devManager = DeveloperManager::getInstance();
+
+// 1. API Registry Catalog
+$registry = $devManager->getApiRegistry();
+assertTest("DeveloperManager::getApiRegistry returns non-empty catalog", is_array($registry) && count($registry) >= 10);
+assertTest("DeveloperManager::getApiRegistry contains /api/health.php", isset($registry['/api/health.php']));
+
+// 2. Base URL resolution & dynamic cURL snippet
+$baseUrl = DeveloperManager::getBaseUrl();
+assertTest("DeveloperManager::getBaseUrl returns valid URL format", filter_var($baseUrl, FILTER_VALIDATE_URL) !== false || strpos($baseUrl, 'http') === 0);
+$curlSnippet = $devManager->generateCurlSnippet('/api/health.php');
+assertTest("DeveloperManager::generateCurlSnippet outputs dynamic cURL command", strpos($curlSnippet, 'curl -X GET') !== false);
+
+// 3. API Health & Latency Telemetry
+$apiHealth = $devManager->getApiHealth();
+assertTest("DeveloperManager::getApiHealth computes health score", isset($apiHealth['health_score']) && is_numeric($apiHealth['health_score']));
+assertTest("DeveloperManager::getApiHealth computes uptime percent", isset($apiHealth['uptime_percent']) && is_numeric($apiHealth['uptime_percent']));
+
+// 4. Queue Stats & Job Execution
+$queueStats = $devManager->getQueueStats();
+assertTest("DeveloperManager::getQueueStats returns stats structure", isset($queueStats['pending']) && isset($queueStats['completed']));
+$queueJobs = $devManager->getQueueJobs('all', 10);
+assertTest("DeveloperManager::getQueueJobs returns job list", is_array($queueJobs));
+
+// 5. Webhook Events & Dispatch
+$webhooks = $devManager->getWebhookEvents();
+assertTest("DeveloperManager::getWebhookEvents returns event ledger", is_array($webhooks) && count($webhooks) >= 1);
+
+// 6. Route Map & Audit
+$routes = $devManager->getRouteMap();
+assertTest("DeveloperManager::getRouteMap returns comprehensive route table", is_array($routes) && count($routes) >= 20);
+
+// 7. Migrations Status & Normalized Ledger
+$migStatus = $devManager->getMigrationStatus();
+assertTest("DeveloperManager::getMigrationStatus returns total canonical migrations", isset($migStatus['total_canonical']) && $migStatus['total_canonical'] > 0);
+$migrationsList = $devManager->getMigrations();
+assertTest("DeveloperManager::getMigrations returns normalized migration list", is_array($migrationsList) && count($migrationsList) > 0);
+assertTest("First migration item has valid file, checksum, and status", !empty($migrationsList[0]['file']) && !empty($migrationsList[0]['checksum']) && !empty($migrationsList[0]['status']));
+
+// 8. Diagnostics Engine
+$diagnostics = $devManager->getDiagnostics();
+assertTest("DeveloperManager::getDiagnostics evaluates system health status", isset($diagnostics['overall_status']) && in_array($diagnostics['overall_status'], ['optimal', 'degraded', 'warning']));
+
+// 9. API Keys Lifecycle
+$apiKeys = $devManager->getApiKeys();
+assertTest("DeveloperManager::getApiKeys retrieves API key credentials", is_array($apiKeys));
+$testKey = $devManager->createApiKey('Test Suite Runner Key', 'read_only', ['catalog:read'], 60, 1);
+assertTest("DeveloperManager::createApiKey generates encrypted key record", isset($testKey['key_record']['id']) && !empty($testKey['plain_token']));
+if (!empty($testKey['key_record']['id'])) {
+    $revokeOk = $devManager->revokeApiKey((int)$testKey['key_record']['id']);
+    assertTest("DeveloperManager::revokeApiKey deactivates test key", $revokeOk === true);
+}
 
 echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";

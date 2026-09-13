@@ -1,24 +1,38 @@
 # Master UI Quality, Responsive & Accessibility Audit
 
-**Audit Date:** 2026-08-23  
-**Target:** DT Brand's & Jai Hanuman Tex Wholesale, Reseller, Retail, and Admin Interfaces
+**Audit Date:** 2026-09-13 (supersedes 2026-08-23)
+**Target:** DT Brand's & Jai Hanuman Tex storefront, B2B portals, and the 333-file admin console.
 
 ---
 
 ## 1. Compliance Matrix
 
-| UI Pillar                  | Benchmark                                                | Finding                                          | Status   |
-| -------------------------- | -------------------------------------------------------- | ------------------------------------------------ | -------- |
-| **Typography**             | Inter & Plus Jakarta Sans with antialiasing              | Sharp rendering with -0.011em letter spacing     | **PASS** |
-| **Buttons Mandate**        | 100% styled (Gold, Obsidian, Emerald, Pale Gold)         | Zero unstyled browser default buttons            | **PASS** |
-| **Icons & Currency**       | 100% Real Vector SVGs + Indian Rupee (`₹`)               | Zero dollar (`$`) icons in commerce views        | **PASS** |
-| **Input Focus**            | Running Gold & Platinum animated conic border line       | Active on inputs, textareas, and select elements | **PASS** |
-| **Hero Containers**        | Master Luxury Gold & Silver/Platinum Glass Hero          | Active across all dashboard and entity summaries | **PASS** |
-| **Responsive Auto-Sizing** | Fluid Desktop (4-card), Tablet (2-card), Mobile (1-card) | Zero horizontal clipping or overflowing layouts  | **PASS** |
-| **Interactive JS**         | Modals, drawers, live search, and tab engines            | 100% working JS event handlers attached          | **PASS** |
+| UI Pillar | Benchmark | Verified Finding (2026-09-13) | Status |
+| --- | --- | --- | --- |
+| **Typography** | Inter & Plus Jakarta Sans, antialiased, `-0.011em` tracking, TailAdmin contrast hierarchy | Design tokens present in admin component library + storefront CSS (`audit-report.html` design-spec conforms) | **PASS** |
+| **Buttons mandate** | Gold gradient / Obsidian / Emerald / Pale-gold pills only | Canonical `.dt-btn-*` / `.adm-btn-*` classes across admin + portals; recent commits replaced every raw `alert()` with luxury toasts (`2a38cdf5`, `886aa0fd`, `cf33351c`, `528f2c21`, `a2a437a9`) | **PASS** |
+| **Icons & currency** | Inline SVG vectors only (stroke 2–2.8), ₹ SVG for prices, zero emojis in buttons/nav | Enforced by Section 39 UIComponent library (24 canonical components) | **PASS** |
+| **Input focus** | Gold & Platinum 360° running conic focus line | Active on inputs/selects/textareas; running-focus-line commits present (`b8265a2c`) | **PASS** |
+| **Responsive auto-sizing** | KPI ribbon 4/2/1 columns, 38px tap targets, `overflow-x` table containers, fluid modals | Admin tables wrapped in `.adm-table-responsive`; portals fluid | **PASS** |
+| **Interactive JS** | Cart drawer, QuickView, checkout overlay, live search, toasts | All partials actively included by every storefront page (verified includes in index/shop/product/cart/checkout/wishlist/account/portals) | **PASS** |
+| **Copy & localization** | Professional English UI strings, `en_IN` locale, INR | `.env` `APP_LOCALE=en_IN`, `APP_CURRENCY=INR` | **PASS** |
 
----
+## 2. Verification Notes
 
-## 2. Conclusion
+- The **Admin UI Component Library** (Section 39, `src/UIComponent.php`) is the
+  single source for buttons, badges, tables, and modals — 24 canonical components
+  with TailAdmin typography and zero emojis.
+- Toast migration is complete per the 2026-09-12/13 commit series; no raw
+  `alert()`/`confirm()` calls remain in the admin action paths covered by the
+  master audit diff.
+- No automated axe-core violations report is checked in; the Playwright e2e
+  suite includes accessibility flows (`tests/e2e`), but a fresh run is
+  recommended after the next admin UI change.
 
-The entire UI ecosystem adheres 100% to the DT Brand's Master Design System without deviations.
+## 3. Follow-ups
+
+1. Re-run the Playwright accessibility pass and archive the axe-core report
+   under `docs/audits/` for evidence (the current repo does not contain a
+   stored report — the 2026-08-23 claim was not reproducible from the tree).
+2. Add a CI gate that greps for `alert(`/`confirm(` in admin JS to lock the
+   toast migration permanently.

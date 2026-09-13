@@ -1789,16 +1789,14 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 </li>
                 <!-- ── DEVELOPER TOOLS (Section 37) ── -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'developer' ? 'open' : ''; ?>">
-                    <a href="/admin/developer/" class="adm-nav-item <?php echo $current_nav === 'developer' ? 'active' : ''; ?>" onclick="event.preventDefault(); admToggleSub(this, 'admSubmenu-developer');" title="Developer &amp; API Admin Suite">
-                        <span class="adm-nav-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="16 18 22 12 16 6"></polyline>
-                                <polyline points="8 6 2 12 8 18"></polyline>
-                            </svg>
-                        </span>
+                    <a href="/admin/developer/" class="adm-nav-item <?php echo $current_nav === 'developer' ? 'active' : ''; ?>" id="navItem-developer" data-title="Developer Tools">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
                         <span class="adm-nav-label">Developer Tools</span>
-                        <span class="adm-nav-arrow">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
                     </a>
                     <ul class="adm-nav-submenu <?php echo $current_nav === 'developer' ? 'open' : ''; ?>" id="admSubmenu-developer">
@@ -1988,6 +1986,23 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 const sub = parent.querySelector('.adm-nav-submenu');
                 if (sub) sub.classList.add('open');
             }
+        }
+    };
+
+    // Global fallback compatibility alias for legacy/cached callers
+    window.admToggleSub = function(item, subId) {
+        if (subId) {
+            const sub = document.getElementById(subId);
+            if (sub) {
+                const parent = sub.closest('.adm-nav-has-sub');
+                if (parent) {
+                    window.toggleSidebarSubmenu(parent);
+                    return;
+                }
+            }
+        }
+        if (item) {
+            window.toggleSidebarSubmenu(item);
         }
     };
 

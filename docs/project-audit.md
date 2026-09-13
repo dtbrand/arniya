@@ -1,120 +1,88 @@
 # DT Brand's & Jai Hanuman Tex — Comprehensive Engineering System Audit
 
-**Document Version:** 1.0.0  
-**Generated Date:** 2026-08-23  
-**Target Platform:** PHP 8.2+ / Apache / MySQL (u602484543_arniya)  
-**Deployment Infrastructure:** Hostinger Live Production (FTP / HTTP 200) + GitHub Action CI/CD
+**Document Version:** 2.0.0
+**Audit Date:** 2026-09-13 (supersedes v1.0.0 of 2026-08-23)
+**Target Platform:** PHP 8.2+ / Apache / MySQL (Hostinger production)
+**Evidence base:** live `php -l`, PHPUnit (131/770), PHPStan level 1, git-tracked-file scan, tree verification — see `docs/audits/2026-09-13-master-audit.md` for the findings ledger.
 
 ---
 
 ## 1. Executive System Overview
 
-DT Brand's & Jai Hanuman Tex is an enterprise-grade luxury ethnic textile, wholesale, reseller, and retail commerce platform. It integrates a direct-to-consumer digital storefront with a comprehensive B2B partner distribution ecosystem and a real-time WhatsApp CRM control center.
+DT Brand's & Jai Hanuman Tex is an enterprise luxury ethnic textile commerce platform
+combining a direct-to-consumer storefront, a B2B partner ecosystem (wholesale,
+reseller, retailer), and a WhatsApp CRM hand-off — all served from a single
+PHP/MySQL/Apache tree deployed on Hostinger.
 
----
-
-## 2. Directory Tree & Architecture Topology
+## 2. Verified Tree Topology (2026-09-13)
 
 ```text
-c:\Users\sai\Desktop\WhatsApp CRM
-├── .github/                       # CI/CD Workflows, Dependabot, Issue & PR Templates
-├── .editorconfig                  # Code formatting standardization
-├── .gitignore                     # Security & secret exclusion rules
-├── .htaccess                      # Apache rewrite rules, Gzip compression & browser caching
-├── AGENTS.md                      # Master Autonomous AI Multi-Agent Directives & Quality Standard
-├── composer.json                  # PHP dependency management, scripts & PSR-4 autoloading
-├── package.json                   # JS/CSS developer tooling (ESLint, Prettier, Stylelint, Playwright)
-├── phpstan.neon                   # PHPStan static analysis configuration (Level 1)
-├── phpunit.xml                    # PHPUnit automated test suite runner
-├── database/                      # Database migrations, schema definitions, and migration runner
-├── docs/                          # Architecture, APIs (OpenAPI), disaster recovery, audits
-├── Frontend/                      # Frontend Application Modules
-│   ├── Admin/                     # Module 1–8 Enterprise Admin Suite & CRM Console
-│   │   ├── catalogue/             # Saree collections & seasonal lookbooks
-│   │   ├── customers/             # Customer profiles, segments, ledger & VIP tiers
-│   │   ├── dashboard/             # 12-Card KPI ribbon, sales charts & activity feeds
-│   │   ├── orders/                # Multi-channel orders, dispatches & invoice studio
-│   │   ├── pricing/               # MRP, wholesale, reseller & retail pricing matrices
-│   │   ├── products/              # Product catalog, attributes, categories & variants
-│   │   ├── resellers/             # Reseller partners, digital passes & commission ledgers
-│   │   ├── retail/                # Retail management suite, shopping bags & abandoned carts
-│   │   ├── reviews/               # Verified buyer reviews & rating analytics
-│   │   ├── system/                # Diagnostics, database optimization, logs & backups
-│   │   ├── whatsapp/              # WhatsApp CRM broadcasts, templates & order notices
-│   │   └── wholesale/             # B2B wholesale buyers, lot pricing & credit vouchers
-│   ├── Home/                      # Luxury ethnic flagship landing page
-│   ├── Reseller/                  # Reseller portal, smart share & catalogue generator
-│   ├── Retailer/                  # Retailer buyer catalog & order booking
-│   ├── Shop/                      # Full product showcase, multi-facet filtering & search
-│   ├── Single-Product/            # High-conversion single product page & WhatsApp enquiry
-│   └── Wholesale/                 # B2B wholesale portal with volume tiering
-├── Shared/                        # Shared Core Business Logic & Partials
-│   ├── Asset/                     # Shared branding assets, icons & media
-│   ├── Auth/                      # Account authentication, customer sign-in & sessions
-│   └── Includes/                  # Cart, checkout, quickview, smartshare & wishlist engines
-├── src/                           # Modern PSR-4 Encapsulated PHP Engines
-│   ├── PricingCalculator.php      # MRP, wholesale, GST, and net total computation
-│   └── DiscountEngine.php         # Coupon, promo code, and tiered discount validation
-├── tests/                         # Unit, Integration & E2E Automated Test Suites
-│   ├── Unit/                      # PHPUnit unit test cases
-│   └── e2e/                       # Playwright browser flows & axe-core accessibility
-└── scripts/                       # Deployment, backup, health check & log rotation utilities
+/                      # Web root — 24 storefront PHP pages
+├── admin/             # 333 PHP files across 26 modules (single adminguard entry)
+├── api/               # 43 endpoints + 18 sub-routers, _guard.php fails closed
+├── src/               # 25 PSR-4 engines (DTBrand\ namespace)
+├── Shared/            # Active storefront partials (cart, quickview, checkout…)
+├── includes/          # 14 storefront helpers
+├── config/            # 9 configuration files
+├── database/          # 25 lexicographic SQL migrations + runner
+├── tests/             # 36 test files (PHPUnit + section suites)
+├── scripts/           # 36 ops/deploy/verify utilities
+└── docs/              # This documentation set + audits + runbooks
 ```
 
----
+> v1.0.0 of this document described a `Frontend/` + `Shared/` dual layout.
+> That tree no longer exists: `Frontend/` routes are 301-redirected by
+> `.htaccess` to root pages, `DT Brand/` is empty (untracked), and `Shared/`
+> is an active partial library. `ARCHITECTURE.md` is the canonical reference.
 
-## 3. Database Architecture & Diagnostics
+## 3. Database Architecture
 
-- **Database Name:** `u602484543_demodt121` (MySQL / MariaDB)
-- **Table Structure:**
-  - `products`: Product master (SKU, title, fabric, MRP, cost, stock, status)
-  - `categories`: Hierarchical categories (Sarees, Silk, Cotton, Festive, Bridal)
-  - `customers`: Customer accounts (B2C retail, wholesale accounts, verified resellers)
-  - `orders`: Order headers (customer_id, channel, subtotal, discount, gst, total, status)
-  - `order_items`: Line items (order_id, product_id, sku, qty, price, total)
-  - `wholesale_accounts`: B2B wholesale credit limits, GST numbers, tier levels
-  - `reseller_profiles`: Reseller commission rates, margin sharing, payout ledgers
-  - `coupons`: Promotional discount codes, validity, max caps, usage limits
-  - `activity_logs`: User and system audit trail
+- **Database:** `u602484543_demodt121` (MySQL, utf8mb4) — 25 forward-only migrations.
+- **Core tables:** `products` (tiered price matrix: retail / wholesale / reseller),
+  `categories`, `subcategories`, `brands`, `attributes`, `product_media`,
+  `product_variants`, `product_reviews`, `orders`, `order_items`,
+  `order_status_history`, `coupons`, `coupon_usages`, `quotations`,
+  `payment_transactions`, `payment_gateways`, `payment_webhook_queue`,
+  `customers`, `customer_addresses`, `customer_notes`, `wallets`,
+  `wallet_transactions`, `wholesale_accounts`, `reseller_profiles`,
+  `inventory_ledger`, `shipping_zones`, `admins`, `admin_roles`,
+  `admin_permissions`, `admin_sessions`, `audit_logs`, `activity_logs`,
+  `settings`, `feature_flags`, `webhook_events_queue`, `price_history`.
+- Full reference with column details: `DATABASE.md`.
 
----
+## 4. Backend Engines (`src/`, PSR-4 `DTBrand\`)
 
-## 4. API & Integration Endpoints
+| Engine | Responsibility |
+| --- | --- |
+| `Database` | PDO singleton, `.env` loader, host-fallback, honest mock mode |
+| `ProductCatalog` / `OrderManager` / `CustomerManager` | Catalogue, transactional orders, CRM |
+| `PricingCalculator` / `Money` | Single source of truth for GST/shipping rounding; integer-paisa math |
+| `DiscountEngine` / `PaymentManager` / `InventoryManager` | Coupons + usage ledger, gateway capture + idempotency, stock ledger |
+| `Auth` / `AdminSecurityManager` / `RateLimiter` | Sessions, roles/permissions, sliding-window limits |
+| `AuditManager` | 15-domain audit trail, secret masking, JSON diff, correlation IDs |
+| Cart / Checkout / Content / Notification / Report / Review / System / Developer / Integration managers | Domain suites (Sections 25–40 of the master spec) |
 
-- **Admin Diagnostic Endpoints:**
-  - `GET /Frontend/Admin/system/database.php`: MySQL latency & table health
-  - `GET /Frontend/Admin/system/backups.php`: Snapshot status & backup integrity
-  - `GET /health.php`: JSON health endpoint returning system status
-- **E-Commerce Real-Time Routers:**
-  - `/Shared/Includes/cart.php`: Add, update, remove items, calculate totals
-  - `/Shared/Includes/checkout.php`: Multi-step checkout, address binding & order dispatch
-  - `/Shared/Includes/smartshare.php`: 1-Click WhatsApp catalog link generation
-  - `/Shared/Includes/quickview.php`: Instant product preview modal
+## 5. Quality Baseline (measured 2026-09-13)
 
----
+| Check | Result |
+| --- | --- |
+| `php -l` (root, src, api, config, includes, admin) | 0 errors |
+| PHPUnit | 131 tests / 770 assertions / 1 failure / 14 deprecations |
+| PHPStan level 1 | 22 errors (4 files) — all listed in the master audit |
+| CI | Lint + PHPUnit + PHPStan + ESLint/Stylelint + Playwright + CodeQL + Trivy + Scorecard |
 
-## 5. Security & Compliance Architecture
+## 6. Multi-Channel Security Model
 
-- **Session Handling:** `session_start()` with cookie parameters on authenticated routes.
-- **Data Protection:** No plaintext passwords or API keys stored in source code.
-- **Input Sanitization:** Parameter binding and type casting across controllers.
-- **Webhook Integrity:** HMAC-SHA256 signature verification on Razorpay and Cashfree webhooks.
-- **Least Privilege:** GitHub Actions restricted to `contents: read` by default.
+- Price tier resolved **server-side** from the session/customer row — a tampered
+  `channel=wholesale` payload cannot obtain bulk pricing.
+- `api/orders.php` details: HTTP 401 before any DB query (enumeration fixed).
+- Razorpay webhook: HMAC-SHA256 (`hash_equals`), idempotent on event id.
+- Payment capture: idempotent, single stock-decrement entry point
+  (`PaymentManager::markOrderPaidAndAdjustStock()`), full `payment_transactions` audit.
 
----
+## 7. Top Risks (full detail in master audit)
 
-## 6. Verification Status
-
-| Audit Item         | Finding                                                       | Status   |
-| ------------------ | ------------------------------------------------------------- | -------- |
-| Repository Tree    | 100% indexed, verified & documented                           | **PASS** |
-| PHP Architecture   | PHP 8.2 native, PSR-4 autoloading ready                       | **PASS** |
-| PHP Syntax Lint    | All PHP files validated cleanly (`php -l`)                    | **PASS** |
-| Unit & Integration | PHPUnit 10: 61 tests, 301 assertions passing (0 errors)       | **PASS** |
-| Browser E2E Suite  | Playwright: 58/58 tests (Desktop + Mobile Chrome) passing     | **PASS** |
-| Accessibility      | axe-core WCAG 2.1 AA audit: 0 critical violations             | **PASS** |
-| Live Smoke Tests   | All production endpoints verified (HTTP 200)                  | **PASS** |
-| JS/CSS Analysis    | ESLint v9 & Stylelint passing with 0 errors                   | **PASS** |
-| Vector SVG Mandate | 100% real vector SVG icons, zero emoji in UI buttons/nav      | **PASS** |
-| Styled Buttons     | 100% Master Gold, Dark Hero, Emerald & Pale Gold buttons      | **PASS** |
-| Production Server  | Hostinger Live Server (147.93.99.134) deployed & synchronized | **PASS** |
+1. 🔴 **C1** — Production credentials in 17 tracked files + PAT in remote URL → rotate + purge.
+2. 🔴 **C2** — `DTBrand\RateLimiter` fatal on the public auth API router.
+3. 🟠 — Cashfree webhook `$data` undefined; `AuditManager::log()` misuse in `api/developer.php`; `Shared/` web-reachable.
+4. 🟡 — DiscountEngine outage message, dead `isset($pdo)` guards, stale docs (refreshed here).

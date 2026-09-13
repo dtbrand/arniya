@@ -234,82 +234,147 @@ class DeveloperManager
         }
 
         try {
-            $this->pdo->exec("
-                CREATE TABLE IF NOT EXISTS `developer_api_keys` (
-                    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    `key_prefix` VARCHAR(16) NOT NULL,
-                    `key_hash` VARCHAR(64) NOT NULL UNIQUE,
-                    `name` VARCHAR(100) NOT NULL,
-                    `role` VARCHAR(50) NOT NULL DEFAULT 'read_only',
-                    `scopes_json` TEXT NULL,
-                    `rate_limit_rpm` INT NOT NULL DEFAULT 120,
-                    `last_used_at` DATETIME NULL,
-                    `expires_at` DATETIME NULL,
-                    `is_active` TINYINT(1) NOT NULL DEFAULT 1,
-                    `created_by` INT UNSIGNED NULL,
-                    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    INDEX `idx_dev_key_prefix` (`key_prefix`),
-                    INDEX `idx_dev_key_active` (`is_active`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            $driver = $this->pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
+            if ($driver === 'sqlite') {
+                $this->pdo->exec("
+                    CREATE TABLE IF NOT EXISTS developer_api_keys (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        key_prefix TEXT NOT NULL,
+                        key_hash TEXT NOT NULL UNIQUE,
+                        name TEXT NOT NULL,
+                        role TEXT NOT NULL DEFAULT 'read_only',
+                        scopes_json TEXT NULL,
+                        rate_limit_rpm INTEGER NOT NULL DEFAULT 120,
+                        last_used_at TEXT NULL,
+                        expires_at TEXT NULL,
+                        is_active INTEGER NOT NULL DEFAULT 1,
+                        created_by INTEGER NULL,
+                        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+                    );
+                    CREATE TABLE IF NOT EXISTS webhook_events (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        event_id TEXT NOT NULL UNIQUE,
+                        event_type TEXT NOT NULL,
+                        direction TEXT NOT NULL DEFAULT 'inbound',
+                        source_gateway TEXT NOT NULL DEFAULT 'system',
+                        target_url TEXT NULL,
+                        payload_json TEXT NULL,
+                        headers_json TEXT NULL,
+                        status TEXT NOT NULL DEFAULT 'pending',
+                        http_status INTEGER NULL,
+                        response_body TEXT NULL,
+                        attempts INTEGER NOT NULL DEFAULT 0,
+                        max_attempts INTEGER NOT NULL DEFAULT 5,
+                        next_retry_at TEXT NULL,
+                        signature TEXT NULL,
+                        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+                    );
+                    CREATE TABLE IF NOT EXISTS queue_jobs (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        job_id TEXT NOT NULL UNIQUE,
+                        queue_name TEXT NOT NULL DEFAULT 'default',
+                        job_type TEXT NOT NULL,
+                        payload_json TEXT NULL,
+                        status TEXT NOT NULL DEFAULT 'pending',
+                        attempts INTEGER NOT NULL DEFAULT 0,
+                        max_attempts INTEGER NOT NULL DEFAULT 3,
+                        reserved_at TEXT NULL,
+                        completed_at TEXT NULL,
+                        error_message TEXT NULL,
+                        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+                    );
+                    CREATE TABLE IF NOT EXISTS api_telemetry_logs (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        endpoint TEXT NOT NULL,
+                        method TEXT NOT NULL DEFAULT 'GET',
+                        status_code INTEGER NOT NULL DEFAULT 200,
+                        latency_ms INTEGER NOT NULL DEFAULT 45,
+                        ip_address TEXT NULL,
+                        user_agent TEXT NULL,
+                        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                    );
+                ");
+            } else {
+                $this->pdo->exec("
+                    CREATE TABLE IF NOT EXISTS `developer_api_keys` (
+                        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        `key_prefix` VARCHAR(16) NOT NULL,
+                        `key_hash` VARCHAR(64) NOT NULL UNIQUE,
+                        `name` VARCHAR(100) NOT NULL,
+                        `role` VARCHAR(50) NOT NULL DEFAULT 'read_only',
+                        `scopes_json` TEXT NULL,
+                        `rate_limit_rpm` INT NOT NULL DEFAULT 120,
+                        `last_used_at` DATETIME NULL,
+                        `expires_at` DATETIME NULL,
+                        `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+                        `created_by` INT UNSIGNED NULL,
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        INDEX `idx_dev_key_prefix` (`key_prefix`),
+                        INDEX `idx_dev_key_active` (`is_active`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-                CREATE TABLE IF NOT EXISTS `webhook_events` (
-                    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    `event_id` VARCHAR(64) NOT NULL UNIQUE,
-                    `event_type` VARCHAR(64) NOT NULL,
-                    `direction` ENUM('inbound', 'outbound') NOT NULL DEFAULT 'inbound',
-                    `source_gateway` VARCHAR(50) NOT NULL DEFAULT 'system',
-                    `target_url` VARCHAR(255) NULL,
-                    `payload_json` LONGTEXT NULL,
-                    `headers_json` TEXT NULL,
-                    `status` ENUM('pending', 'delivered', 'failed') NOT NULL DEFAULT 'pending',
-                    `http_status` INT NULL,
-                    `response_body` TEXT NULL,
-                    `attempts` INT NOT NULL DEFAULT 0,
-                    `max_attempts` INT NOT NULL DEFAULT 5,
-                    `next_retry_at` DATETIME NULL,
-                    `signature` VARCHAR(255) NULL,
-                    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    INDEX `idx_wh_type` (`event_type`),
-                    INDEX `idx_wh_status` (`status`),
-                    INDEX `idx_wh_gateway` (`source_gateway`),
-                    INDEX `idx_wh_created` (`created_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    CREATE TABLE IF NOT EXISTS `webhook_events` (
+                        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        `event_id` VARCHAR(64) NOT NULL UNIQUE,
+                        `event_type` VARCHAR(64) NOT NULL,
+                        `direction` ENUM('inbound', 'outbound') NOT NULL DEFAULT 'inbound',
+                        `source_gateway` VARCHAR(50) NOT NULL DEFAULT 'system',
+                        `target_url` VARCHAR(255) NULL,
+                        `payload_json` LONGTEXT NULL,
+                        `headers_json` TEXT NULL,
+                        `status` ENUM('pending', 'delivered', 'failed') NOT NULL DEFAULT 'pending',
+                        `http_status` INT NULL,
+                        `response_body` TEXT NULL,
+                        `attempts` INT NOT NULL DEFAULT 0,
+                        `max_attempts` INT NOT NULL DEFAULT 5,
+                        `next_retry_at` DATETIME NULL,
+                        `signature` VARCHAR(255) NULL,
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        INDEX `idx_wh_type` (`event_type`),
+                        INDEX `idx_wh_status` (`status`),
+                        INDEX `idx_wh_gateway` (`source_gateway`),
+                        INDEX `idx_wh_created` (`created_at`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-                CREATE TABLE IF NOT EXISTS `queue_jobs` (
-                    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    `job_id` VARCHAR(64) NOT NULL UNIQUE,
-                    `queue_name` VARCHAR(64) NOT NULL DEFAULT 'default',
-                    `job_type` VARCHAR(64) NOT NULL,
-                    `payload_json` LONGTEXT NULL,
-                    `status` ENUM('pending', 'running', 'completed', 'failed') NOT NULL DEFAULT 'pending',
-                    `attempts` INT NOT NULL DEFAULT 0,
-                    `max_attempts` INT NOT NULL DEFAULT 3,
-                    `reserved_at` DATETIME NULL,
-                    `completed_at` DATETIME NULL,
-                    `error_message` TEXT NULL,
-                    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    INDEX `idx_q_status` (`status`),
-                    INDEX `idx_q_queue` (`queue_name`),
-                    INDEX `idx_q_created` (`created_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    CREATE TABLE IF NOT EXISTS `queue_jobs` (
+                        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        `job_id` VARCHAR(64) NOT NULL UNIQUE,
+                        `queue_name` VARCHAR(64) NOT NULL DEFAULT 'default',
+                        `job_type` VARCHAR(64) NOT NULL,
+                        `payload_json` LONGTEXT NULL,
+                        `status` ENUM('pending', 'running', 'completed', 'failed') NOT NULL DEFAULT 'pending',
+                        `attempts` INT NOT NULL DEFAULT 0,
+                        `max_attempts` INT NOT NULL DEFAULT 3,
+                        `reserved_at` DATETIME NULL,
+                        `completed_at` DATETIME NULL,
+                        `error_message` TEXT NULL,
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        INDEX `idx_q_status` (`status`),
+                        INDEX `idx_q_queue` (`queue_name`),
+                        INDEX `idx_q_created` (`created_at`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-                CREATE TABLE IF NOT EXISTS `api_telemetry_logs` (
-                    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                    `endpoint` VARCHAR(255) NOT NULL,
-                    `method` VARCHAR(10) NOT NULL DEFAULT 'GET',
-                    `status_code` INT NOT NULL DEFAULT 200,
-                    `latency_ms` INT NOT NULL DEFAULT 45,
-                    `ip_address` VARCHAR(45) NULL,
-                    `user_agent` VARCHAR(255) NULL,
-                    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    INDEX `idx_telem_endpoint` (`endpoint`),
-                    INDEX `idx_telem_status` (`status_code`),
-                    INDEX `idx_telem_created` (`created_at`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            ");
+                    CREATE TABLE IF NOT EXISTS `api_telemetry_logs` (
+                        `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        `endpoint` VARCHAR(255) NOT NULL,
+                        `method` VARCHAR(10) NOT NULL DEFAULT 'GET',
+                        `status_code` INT NOT NULL DEFAULT 200,
+                        `latency_ms` INT NOT NULL DEFAULT 45,
+                        `ip_address` VARCHAR(45) NULL,
+                        `user_agent` VARCHAR(255) NULL,
+                        `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        INDEX `idx_telem_endpoint` (`endpoint`),
+                        INDEX `idx_telem_status` (`status_code`),
+                        INDEX `idx_telem_created` (`created_at`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                ");
+            }
         } catch (\Throwable $e) {
             error_log('[DeveloperManager] Table auto-create warning: ' . $e->getMessage());
         }
@@ -553,7 +618,28 @@ class DeveloperManager
      */
     public function getApiRegistry(): array
     {
-        return $this->mockApiRegistry;
+        $normalized = [];
+        foreach ($this->mockApiRegistry as $k => $v) {
+            $withSlash = '/' . ltrim((string)$k, '/');
+            $noSlash = ltrim((string)$k, '/');
+            $normalized[$withSlash] = $v;
+            $normalized[$noSlash] = $v;
+        }
+        return $normalized;
+    }
+
+    /**
+     * Get dynamic base URL for current environment
+     */
+    public static function getBaseUrl(): string
+    {
+        $host = $_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in';
+        $host = preg_replace('/:[0-9]+$/', '', (string)$host);
+        if (in_array($host, ['localhost', '127.0.0.1'], true)) {
+            $port = !empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] !== 80 ? ':' . $_SERVER['SERVER_PORT'] : '';
+            return 'http://' . $host . $port;
+        }
+        return 'https://' . ($host ?: 'jaihanumantex.in');
     }
 
     /**
@@ -561,13 +647,14 @@ class DeveloperManager
      */
     public function generateCurlSnippet(string $endpointKey): string
     {
+        $baseUrl = self::getBaseUrl();
         $api = $this->mockApiRegistry[$endpointKey] ?? null;
         if (!$api) {
-            return 'curl -X GET "https://jaihanumantex.in/' . ltrim($endpointKey, '/') . '"';
+            return 'curl -X GET "' . $baseUrl . '/' . ltrim($endpointKey, '/') . '"';
         }
 
         $method = $api['methods'][0] ?? 'GET';
-        $url = 'https://jaihanumantex.in' . $api['endpoint'];
+        $url = $baseUrl . $api['endpoint'];
         $headers = [
             'Accept: application/json',
             'Content-Type: application/json'
@@ -643,7 +730,8 @@ class DeveloperManager
 
         return [
             'health_score' => $healthScore,
-            'uptime_percent' => '99.98%',
+            'uptime_percent' => 99.98,
+            'uptime_percent_formatted' => '99.98%',
             'total_endpoints' => $totalEndpoints,
             'healthy_count' => $healthyCount,
             'avg_latency_ms' => $avgLatency,
@@ -827,6 +915,7 @@ class DeveloperManager
             'gateway' => $gateway,
             'algorithm' => 'sha256',
             'calculated_signature' => $calculatedHmac,
+            'computed_signature' => $calculatedHmac,
             'headers_format' => match ($gateway) {
                 'razorpay' => 'X-Razorpay-Signature: ' . $calculatedHmac,
                 'cashfree' => 'x-webhook-signature: ' . base64_encode($calculatedHmac),
@@ -1084,7 +1173,9 @@ class DeveloperManager
             'zip' => extension_loaded('zip')
         ];
 
+        $overallStatus = ($dbStatus === 'connected' || str_starts_with($dbStatus, 'connected')) ? 'optimal' : 'degraded';
         return [
+            'overall_status' => $overallStatus,
             'php_version' => PHP_VERSION,
             'server_os' => PHP_OS_FAMILY . ' (' . PHP_OS . ')',
             'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Hostinger/LiteSpeed Cloud',
@@ -1211,11 +1302,37 @@ class DeveloperManager
 
     /**
      * Get Schema Migrations status
-     * @return array<int,array<string,mixed>>
+     * @return array<string,mixed>
      */
     public function getMigrationStatus(): array
     {
         require_once __DIR__ . '/SystemManager.php';
         return SystemManager::getInstance($this->pdo)->getMigrationStatus();
+    }
+
+    /**
+     * Get canonical migrations array with normalized fields
+     * @return array<int,array<string,mixed>>
+     */
+    public function getMigrations(): array
+    {
+        require_once __DIR__ . '/SystemManager.php';
+        $status = SystemManager::getInstance($this->pdo)->getMigrationStatus();
+        $raw = $status['migrations'] ?? [];
+        $normalized = [];
+        foreach ($raw as $idx => $m) {
+            $normalized[] = [
+                'index' => $idx + 1,
+                'file' => $m['identifier'] ?? $m['file'] ?? basename($m['path'] ?? 'migration.sql'),
+                'path' => $m['path'] ?? '',
+                'size_bytes' => $m['size_bytes'] ?? 0,
+                'checksum' => $m['checksum'] ?? '',
+                'status' => $m['status'] ?? ($m['executed'] ?? false ? 'applied' : 'pending'),
+                'executed' => $m['executed'] ?? true,
+                'description' => $m['description'] ?? 'Canonical schema migration',
+                'executed_at' => $m['executed_at'] ?? 'Canonical Live'
+            ];
+        }
+        return $normalized;
     }
 }

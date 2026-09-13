@@ -135,7 +135,7 @@ try {
             }
 
             $res = $devManager->retryWebhook($eventId);
-            AuditManager::log('developer', 'webhook_retry', ['event_id' => $eventId, 'status' => 'success']);
+            AuditManager::logQuick('developer', 'webhook_retry', ['event_id' => $eventId, 'status' => 'success']);
 
             echo json_encode([
                 'status' => 'success',
@@ -174,11 +174,11 @@ try {
             $jobId = (string)($_POST['job_id'] ?? '');
             if (!empty($jobId)) {
                 $res = $devManager->runQueueJob($jobId);
-                AuditManager::log('developer', 'queue_job_run', ['job_id' => $jobId]);
+                AuditManager::logQuick('developer', 'queue_job_run', ['job_id' => $jobId]);
                 $msg = "Queue job {$jobId} processed successfully.";
             } else {
                 $res = $devManager->runAllPendingJobs();
-                AuditManager::log('developer', 'queue_run_all', ['processed' => $res['processed_count']]);
+                AuditManager::logQuick('developer', 'queue_run_all', ['processed' => $res['processed_count']]);
                 $msg = "Processed {$res['processed_count']} pending queue job(s).";
             }
 
@@ -198,7 +198,7 @@ try {
             }
 
             $res = $devManager->retryQueueJob($jobId);
-            AuditManager::log('developer', 'queue_job_retry', ['job_id' => $jobId]);
+            AuditManager::logQuick('developer', 'queue_job_retry', ['job_id' => $jobId]);
 
             echo json_encode([
                 'status' => 'success',
@@ -214,6 +214,19 @@ try {
                 'action' => 'routes',
                 'total_routes' => count($routes),
                 'routes' => $routes
+            ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            break;
+
+        case 'migrations':
+            $status = $devManager->getMigrationStatus();
+            $migrationsList = $devManager->getMigrations();
+            echo json_encode([
+                'status' => 'success',
+                'action' => 'migrations',
+                'data' => [
+                    'summary' => $status,
+                    'migrations' => $migrationsList
+                ]
             ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             break;
 
@@ -242,7 +255,7 @@ try {
             $rateLimit = (int)($_POST['rate_limit'] ?? 120);
 
             $newKey = $devManager->createApiKey($name, $role, $scopes, $rateLimit, (int)($_SESSION['user_id'] ?? 1));
-            AuditManager::log('developer', 'api_key_created', ['key_prefix' => $newKey['key_record']['key_prefix']]);
+            AuditManager::logQuick('developer', 'api_key_created', ['key_prefix' => $newKey['key_record']['key_prefix']]);
 
             echo json_encode([
                 'status' => 'success',
@@ -260,7 +273,7 @@ try {
             }
 
             $devManager->revokeApiKey($keyId);
-            AuditManager::log('developer', 'api_key_revoked', ['key_id' => $keyId]);
+            AuditManager::logQuick('developer', 'api_key_revoked', ['key_id' => $keyId]);
 
             echo json_encode([
                 'status' => 'success',

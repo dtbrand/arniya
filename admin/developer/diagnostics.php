@@ -319,6 +319,25 @@ $page_title = 'System Diagnostics & API Keys — DT Brand\'s Developer Studio';
     </div>
 </div>
 
+<!-- Revoke Confirmation Modal (Zero Raw Alert/Confirm) -->
+<div class="dev-modal-overlay" id="revokeKeyModal">
+    <div class="dev-modal-box" style="max-width:440px;">
+        <div class="dev-modal-header">
+            <h3>Revoke API Key</h3>
+            <button class="dev-modal-close" onclick="closeRevokeKeyModal()">&times;</button>
+        </div>
+        <div style="padding:16px 0;">
+            <p style="font-size:0.88rem; color:#374151; line-height:1.5; margin:0 0 16px;">
+                Are you sure you want to permanently revoke this API key? External systems and applications using it will lose access immediately.
+            </p>
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button class="dt-btn-pale" onclick="closeRevokeKeyModal()">Cancel</button>
+                <button class="dt-btn-danger" id="btnConfirmRevoke" style="background:#DC2626; color:#fff; border:none; padding:8px 18px; border-radius:6px; font-weight:700; cursor:pointer;" onclick="executeRevokeKey()">Revoke Key</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/admin/developer/developer.js?v=<?= time() ?>"></script>
 <script>
 function openCreateKeyModal() {
@@ -364,12 +383,39 @@ async function submitCreateKey() {
     }
 }
 
-async function revokeKey(id, btn) {
-    if (!confirm('Are you sure you want to permanently revoke this API key? Applications using it will lose access immediately.')) {
-        return;
+let pendingRevokeId = null;
+let pendingRevokeBtn = null;
+
+function revokeKey(id, btn) {
+    pendingRevokeId = id;
+    pendingRevokeBtn = btn;
+    const modal = document.getElementById('revokeKeyModal');
+    if (modal) modal.classList.add('active');
+}
+
+function closeRevokeKeyModal() {
+    const modal = document.getElementById('revokeKeyModal');
+    if (modal) modal.classList.remove('active');
+    pendingRevokeId = null;
+    pendingRevokeBtn = null;
+    const modalBtn = document.getElementById('btnConfirmRevoke');
+    if (modalBtn) {
+        modalBtn.disabled = false;
+        modalBtn.textContent = 'Revoke Key';
+    }
+}
+
+async function executeRevokeKey() {
+    const id = pendingRevokeId;
+    const btn = pendingRevokeBtn;
+    const modalBtn = document.getElementById('btnConfirmRevoke');
+    if (!id) return;
+
+    if (modalBtn) {
+        modalBtn.disabled = true;
+        modalBtn.textContent = 'Revoking...';
     }
 
-    if (btn) btn.disabled = true;
     try {
         const res = await DevStudio.post('api_key_revoke', { id });
         if (res.status === 'success') {
@@ -378,15 +424,22 @@ async function revokeKey(id, btn) {
             if (row) {
                 row.querySelector('.dev-status').className = 'dev-status dev-status-danger';
                 row.querySelector('.dev-status').textContent = 'Revoked';
-                btn.style.display = 'none';
+                if (btn) btn.style.display = 'none';
             }
+            closeRevokeKeyModal();
         } else {
             DevStudio.toast(res.message || 'Revocation failed', 'error');
-            if (btn) btn.disabled = false;
+            if (modalBtn) {
+                modalBtn.disabled = false;
+                modalBtn.textContent = 'Revoke Key';
+            }
         }
     } catch (e) {
         DevStudio.toast('Network error revoking key', 'error');
-        if (btn) btn.disabled = false;
+        if (modalBtn) {
+            modalBtn.disabled = false;
+            modalBtn.textContent = 'Revoke Key';
+        }
     }
 }
 </script>

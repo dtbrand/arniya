@@ -15,11 +15,12 @@ use DTBrand\Database;
 use DTBrand\DeveloperManager;
 use DTBrand\SystemManager;
 
-$sm = SystemManager::getInstance();
-$migrations = $sm->getMigrationStatus();
+$dev = DeveloperManager::getInstance();
+$migStatus = $dev->getMigrationStatus();
+$migrations = $dev->getMigrations();
 
-$totalMigrations = count($migrations);
-$appliedCount = count(array_filter($migrations, fn($m) => ($m['status'] ?? '') === 'applied'));
+$totalMigrations = (int)($migStatus['total_canonical'] ?? count($migrations));
+$appliedCount = (int)($migStatus['verified_count'] ?? count(array_filter($migrations, fn($m) => in_array($m['status'] ?? '', ['applied', 'verified'], true))));
 
 $active_nav = 'developer';
 $active_subnav = 'migrations';
@@ -139,31 +140,31 @@ $page_title = 'Schema Migration Status — DT Brand\'s Developer Studio';
                             </thead>
                             <tbody>
                                 <?php foreach ($migrations as $idx => $m):
-                                    $isApplied = ($m['status'] ?? '') === 'applied';
+                                    $isApplied = in_array($m['status'] ?? '', ['applied', 'verified'], true);
                                 ?>
                                 <tr>
-                                    <td><?= $idx + 1 ?></td>
+                                    <td><?= (int)$idx + 1 ?></td>
                                     <td>
-                                        <div class="dev-endpoint-code" style="font-weight:700;"><?= htmlspecialchars($m['file']) ?></div>
+                                        <div class="dev-endpoint-code" style="font-weight:700;"><?= htmlspecialchars((string)($m['file'] ?? '')) ?></div>
                                     </td>
                                     <td>
                                         <span style="font-size:0.84rem; font-weight:600; color:#1F2937;">
-                                            <?= htmlspecialchars($m['description'] ?? 'Schema migration') ?>
+                                            <?= htmlspecialchars((string)($m['description'] ?? 'Schema migration')) ?>
                                         </span>
                                     </td>
                                     <td>
                                         <span class="dev-status <?= $isApplied ? 'dev-status-success' : 'dev-status-warning' ?>">
-                                            <?= htmlspecialchars($m['status']) ?>
+                                            <?= htmlspecialchars((string)($m['status'] ?? 'pending')) ?>
                                         </span>
                                     </td>
                                     <td>
                                         <span style="font-family:monospace; font-size:0.75rem; color:#64748B;">
-                                            <?= htmlspecialchars(substr($m['checksum'] ?? md5($m['file']), 0, 12)) ?>...
+                                            <?= htmlspecialchars(substr((string)($m['checksum'] ?? md5((string)($m['file'] ?? ''))), 0, 12)) ?>...
                                         </span>
                                     </td>
                                     <td>
                                         <span style="font-size:0.78rem; color:#64748B;">
-                                            <?= htmlspecialchars($m['executed_at'] ?? date('Y-m-d H:i:s')) ?>
+                                            <?= htmlspecialchars((string)($m['executed_at'] ?? date('Y-m-d H:i:s'))) ?>
                                         </span>
                                     </td>
                                 </tr>

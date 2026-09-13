@@ -88,7 +88,7 @@ $page_title = 'API Registry & Catalog — DT Brand\'s Developer Studio';
                         <div style="display:flex; gap:8px;">
                             <span class="dev-status dev-status-info">Auth: Session / Bearer</span>
                             <span class="dev-status dev-status-success">Format: JSON</span>
-                            <span class="dev-status dev-status-warning">Base: https://jaihanumantex.in</span>
+                            <span class="dev-status dev-status-warning">Base: <?= htmlspecialchars(DeveloperManager::getBaseUrl()) ?></span>
                         </div>
                     </div>
                 </div>

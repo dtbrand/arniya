@@ -593,6 +593,24 @@ class AuditManager
         return $newId;
     }
 
+    /**
+     * Static quick logging helper
+     *
+     * @param string $entityType
+     * @param string $action
+     * @param array<string,mixed> $details
+     * @return int
+     */
+    public static function logQuick(string $entityType, string $action, array $details = []): int
+    {
+        return self::getInstance()->log([
+            'entity_type' => $entityType,
+            'action' => $action,
+            'details' => json_encode($details, JSON_UNESCAPED_SLASHES),
+            'new_values' => $details
+        ]);
+    }
+
     // ──────────────────────────────────────────────────────────────────────────
     // CONVENIENCE METHODS COVERING ALL 15 SPECIFICATION CATEGORIES
     // ──────────────────────────────────────────────────────────────────────────
