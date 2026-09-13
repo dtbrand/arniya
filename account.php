@@ -3086,12 +3086,36 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 });
         };
 
+        function showAccountNotice(msg, type) {
+            if (typeof window.showToast === 'function') {
+                window.showToast(msg, type || 'error');
+            } else {
+                var container = document.getElementById('dtToastContainer');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.id = 'dtToastContainer';
+                    container.className = 'dt-toast-container';
+                    document.body.appendChild(container);
+                }
+                var t = document.createElement('div');
+                t.className = 'dt-toast';
+                t.style.cssText = 'padding:12px 18px; background:#181512; color:#FAF5E8; border:1px solid #D4AF37; border-radius:10px; margin-bottom:10px; font-size:0.88rem; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,0.3); display:flex; align-items:center; gap:8px;';
+                t.innerHTML = '<span>' + msg + '</span>';
+                container.appendChild(t);
+                setTimeout(function() {
+                    t.style.opacity = '0';
+                    t.style.transition = 'opacity 0.3s ease';
+                    setTimeout(function() { t.remove(); }, 300);
+                }, 3500);
+            }
+        }
+
         window.handleLoginSubmit = function() {
             var input = document.getElementById('loginPhone').value.trim();
             var passEl = document.getElementById('loginPass');
             var pass = passEl ? passEl.value.trim() : '';
             if (!input || !pass) {
-                alert('Please enter your phone/email and password.');
+                showAccountNotice('Please enter your phone/email and password.', 'error');
                 return;
             }
 
@@ -3140,12 +3164,12 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         checkUserAuth();
                     }
                 } else {
-                    alert(data.message || 'Login failed. Please verify your credentials.');
+                    showAccountNotice(data.message || 'Login failed. Please verify your credentials.', 'error');
                 }
             })
             .catch(function() {
                 if (btn) btn.innerHTML = '<span>Sign In to Account</span>';
-                alert('Unable to reach server. Please check your connection.');
+                showAccountNotice('Unable to reach server. Please check your connection.', 'error');
             });
         };
 
@@ -3156,11 +3180,11 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             var passEl = document.getElementById('regPass');
             var pass = passEl ? passEl.value.trim() : '';
 
-            if (!name) { alert('Please enter your full name.'); return; }
-            if (pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+            if (!name) { showAccountNotice('Please enter your full name.', 'error'); return; }
+            if (pass.length < 6) { showAccountNotice('Password must be at least 6 characters.', 'error'); return; }
             var expected = selectedCountry.digits || 10;
             if (!phone || phone.length !== expected) {
-                alert('Please enter a valid ' + expected + '-digit WhatsApp number.');
+                showAccountNotice('Please enter a valid ' + expected + '-digit WhatsApp number.', 'error');
                 return;
             }
 
@@ -3225,14 +3249,14 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                         checkUserAuth();
                     }
                 } else if (data && data.already_registered && !data.success) {
-                    alert(data.message || 'This WhatsApp number is already registered. Switching to Sign In.');
+                    showAccountNotice(data.message || 'This WhatsApp number is already registered. Switching to Sign In.', 'error');
                     switchAuthTab('login');
                     var loginInput = document.getElementById('loginPhone');
                     var loginPassInput = document.getElementById('loginPass');
                     if (loginInput) loginInput.value = phone;
                     if (loginPassInput && pass) loginPassInput.value = pass;
                 } else {
-                    alert((data && data.message) ? data.message : 'Registration failed. Please check your details.');
+                    showAccountNotice((data && data.message) ? data.message : 'Registration failed. Please check your details.', 'error');
                 }
             })
             .catch(function() {
@@ -3240,7 +3264,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
                 if (submitSpan) {
                     submitSpan.textContent = (window.currentRegFlow === 'customer') ? 'Create Customer Account' : 'Create Business Account';
                 }
-                alert('Unable to reach server. Please try again.');
+                showAccountNotice('Unable to reach server. Please try again.', 'error');
             });
         };
 
@@ -3250,7 +3274,7 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
             if (!input) return;
             var waUrl = "https://api.whatsapp.com/send?phone=917046363528&text=" + encodeURIComponent("Hi DT Brand's, I need a password reset link for account: " + input);
             window.open(waUrl, '_blank');
-            alert('Password reset request sent to WhatsApp Concierge.');
+            showAccountNotice('Password reset request sent to WhatsApp Concierge.', 'success');
         };
 
         window.handleLogoutClick = function() {

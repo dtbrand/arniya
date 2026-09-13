@@ -603,16 +603,26 @@ $shVideo  = (string)($product['video'] ?? ($shVideos[0] ?? ''));
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(prodData.url).then(function() {
                 if (typeof window.showToast === 'function') {
-                    window.showToast('Product link copied');
+                    window.showToast('Product link copied to clipboard', 'success');
                 } else {
-                    alert('Product link copied:\n' + prodData.url);
+                    var c = document.getElementById('dtToastContainer');
+                    if (!c) { c = document.createElement('div'); c.id = 'dtToastContainer'; c.className = 'dt-toast-container'; document.body.appendChild(c); }
+                    var t = document.createElement('div');
+                    t.style.cssText = 'padding:10px 16px; background:#181512; color:#FAF5E8; border:1px solid #D4AF37; border-radius:8px; margin-bottom:8px; font-size:0.85rem; font-weight:600; box-shadow:0 6px 20px rgba(0,0,0,0.3);';
+                    t.textContent = 'Product link copied: ' + prodData.url;
+                    c.appendChild(t);
+                    setTimeout(function() { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(function(){ t.remove(); }, 300); }, 3500);
                 }
             }).catch(function() {
-                alert(prodData.url);
+                if (typeof window.showToast === 'function') {
+                    window.showToast(prodData.url, 'info');
+                }
             });
             return;
         }
-        alert(prodData.url);
+        if (typeof window.showToast === 'function') {
+            window.showToast(prodData.url, 'info');
+        }
     };
 
     /* ── Top Announcement Slider Engine ── */
