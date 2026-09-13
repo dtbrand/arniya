@@ -48,6 +48,7 @@ $waCfg = $waGate['config'] ?? [];
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?php echo time(); ?>">
     <style>
         .dt-pay-tab-nav {
             display: flex;
@@ -578,7 +579,22 @@ function copyText(text, btn) {
 }
 
 function simulateTestWebhook(gateway) {
-    if (!confirm(`Trigger simulated test webhook for gateway: ${gateway}?`)) return;
+    if (typeof window.dtShowConfirmModal === 'function') {
+        window.dtShowConfirmModal({
+            title: 'Simulate Webhook Delivery',
+            message: 'Trigger simulated payment capture webhook for <strong>' + gateway.toUpperCase() + '</strong> (Test Amount: ₹2,499.00)?',
+            confirmText: 'Trigger Webhook',
+            onConfirm: function() {
+                executeWebhookSimulation(gateway);
+            }
+        });
+    } else {
+        executeWebhookSimulation(gateway);
+    }
+}
+
+function executeWebhookSimulation(gateway) {
+    if (typeof window.showToast === 'function') window.showToast('Dispatching test webhook simulation...', 'info');
     fetch('/api/payment/test_webhook.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -654,6 +670,7 @@ function saveGatewayForm(e, gatewayKey) {
     });
 }
 </script>
+<script src="/admin/settings/settings.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

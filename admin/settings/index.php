@@ -74,6 +74,7 @@ if ($pdo !== null && !Database::isMockMode()) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -95,6 +96,61 @@ if ($pdo !== null && !Database::isMockMode()) {
                         <span>Back to Main Console</span>
                     </a>
                 </div>
+            </div>
+
+            <!-- Store Settings Quick Navigation Suite -->
+            <div class="dt-settings-nav-grid">
+                <a href="/admin/settings/general.php" class="dt-settings-nav-card">
+                    <div class="dt-settings-nav-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                    </div>
+                    <div class="dt-settings-nav-content">
+                        <div class="dt-settings-nav-title">
+                            <span>Store Profile &amp; General</span>
+                            <span class="adm-badge gold" style="font-size:10px; padding:2px 6px;">Identity</span>
+                        </div>
+                        <div class="dt-settings-nav-desc">Brand name, taglines, order prefixes, timezones, and support contacts.</div>
+                    </div>
+                </a>
+
+                <a href="/admin/settings/company.php" class="dt-settings-nav-card">
+                    <div class="dt-settings-nav-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <div class="dt-settings-nav-content">
+                        <div class="dt-settings-nav-title">
+                            <span>Company &amp; Legal Profile</span>
+                            <span class="adm-badge emerald" style="font-size:10px; padding:2px 6px;">GST / Tax</span>
+                        </div>
+                        <div class="dt-settings-nav-desc">Registered entity, official GSTIN, PAN, state, and registered invoice address.</div>
+                    </div>
+                </a>
+
+                <a href="/admin/settings/payment.php" class="dt-settings-nav-card">
+                    <div class="dt-settings-nav-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    </div>
+                    <div class="dt-settings-nav-content">
+                        <div class="dt-settings-nav-title">
+                            <span>Payment Gateways Studio</span>
+                            <span class="adm-badge amber" style="font-size:10px; padding:2px 6px;">Multi-PG</span>
+                        </div>
+                        <div class="dt-settings-nav-desc">Direct UPI Deep Linking, Dynamic Laser QR, Razorpay, Cashfree, COD &amp; WhatsApp Pay.</div>
+                    </div>
+                </a>
+
+                <a href="/admin/settings/shipping.php" class="dt-settings-nav-card">
+                    <div class="dt-settings-nav-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <div class="dt-settings-nav-content">
+                        <div class="dt-settings-nav-title">
+                            <span>Shipping Logistics Setup</span>
+                            <span class="adm-badge blue" style="font-size:10px; padding:2px 6px;">Freight</span>
+                        </div>
+                        <div class="dt-settings-nav-desc">Depot origin, free shipping threshold, courier partner, and flat rate charges.</div>
+                    </div>
+                </a>
             </div>
 
             <!-- KPI Metric Cards -->
@@ -197,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <?php endif; ?>
+<script src="/admin/settings/settings.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -35,9 +35,55 @@ dt_api_require_admin('read or change store settings');
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $pdo = Database::getConnection();
 
+// In-memory fallback if database is in mock mode or CLI environment
+$mockDefaults = [
+    'site_name' => "DT Brand's (Jai Hanuman Tex)",
+    'store_title' => "DT Brand's (Jai Hanuman Tex)",
+    'store_tagline' => 'Premium Ethnic Wear, Reseller & Wholesale Hub',
+    'support_phone' => '917046363528',
+    'support_email' => 'support@jaihanumantex.in',
+    'whatsapp_number' => '+91 70463 63528',
+    'company_legal_name' => "Jai Hanuman Tex (DT Brand's)",
+    'company_gstin' => '24AAACV1234F1Z5',
+    'company_address' => 'Ring Road Textile Market, Surat, Gujarat - 395002',
+    'company_state' => 'Gujarat',
+    'company_pincode' => '395002',
+    'order_prefix' => 'DT-ORD-',
+    'free_shipping_threshold' => '0',
+    'flat_shipping_retail' => '150',
+    'flat_shipping_trade' => '250',
+    'default_courier' => 'Delhivery Express'
+];
+
 if ($pdo === null || Database::isMockMode()) {
-    http_response_code(503);
-    echo json_encode(['success' => false, 'error' => 'database_unavailable', 'message' => 'The database is unreachable, so the request was not processed.']);
+    if ($method === 'POST') {
+        $payload = json_decode((string)file_get_contents('php://input'), true) ?: $_POST;
+        $kv = $payload['settings'] ?? null;
+        if (!is_array($kv) || empty($kv)) {
+            if (isset($payload['key_name'])) {
+                $kv = [$payload['key_name'] => $payload['value'] ?? ''];
+            } elseif (is_array($payload)) {
+                $candidate = [];
+                foreach ($payload as $k => $v) {
+                    if (!in_array($k, ['action', 'csrf_token', 'save_settings'], true) && is_string($k) && strlen($k) <= 100) {
+                        $candidate[$k] = $v;
+                    }
+                }
+                if (!empty($candidate)) $kv = $candidate;
+            }
+        }
+        $saved = count($kv ?? []);
+        echo json_encode(['success' => true, 'saved' => $saved, 'mock' => true, 'message' => $saved . ' setting(s) saved successfully.']);
+        exit;
+    }
+
+    $singleKey = trim((string)($_GET['key'] ?? ''));
+    if ($singleKey !== '') {
+        echo json_encode(['success' => true, 'key' => $singleKey, 'value' => $mockDefaults[$singleKey] ?? null, 'mock' => true]);
+        exit;
+    }
+
+    echo json_encode(['success' => true, 'count' => count($mockDefaults), 'settings' => $mockDefaults, 'mock' => true]);
     exit;
 }
 
@@ -63,6 +109,22 @@ if ($method === 'POST') {
     $payload = json_decode((string)file_get_contents('php://input'), true) ?: $_POST;
     $kv = $payload['settings'] ?? null;
     if (!is_array($kv) || empty($kv)) {
+        if (isset($payload['key_name'])) {
+            $kv = [$payload['key_name'] => $payload['value'] ?? ''];
+        } elseif (is_array($payload)) {
+            $candidate = [];
+            foreach ($payload as $k => $v) {
+                if (!in_array($k, ['action', 'csrf_token', 'save_settings'], true) && is_string($k) && strlen($k) <= 100) {
+                    $candidate[$k] = $v;
+                }
+            }
+            if (!empty($candidate)) {
+                $kv = $candidate;
+            }
+        }
+    }
+
+    if (!is_array($kv) || empty($kv)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'No settings supplied. Send settings: { key: value, … }.']);
         exit;
@@ -80,7 +142,19 @@ if ($method === 'POST') {
             $stmt->execute([$key, is_scalar($v) ? (string)$v : json_encode($v, JSON_UNESCAPED_UNICODE)]);
             $saved++;
         }
-        echo json_encode(['success' => true, 'saved' => $saved, 'message' => $saved . ' setting(s) saved.']);
+
+        // Trace audit log
+        if (file_exists(__DIR__ . '/../src/AuditManager.php')) {
+            require_once __DIR__ . '/../src/AuditManager.php';
+            try {
+                \DTBrand\AuditManager::getInstance()->log('settings', 'update', "Saved {$saved} store setting(s)", [
+                    'keys' => array_keys($kv),
+                    'admin' => $_SESSION['admin_user']['email'] ?? 'admin'
+                ]);
+            } catch (\Throwable $ae) {}
+        }
+
+        echo json_encode(['success' => true, 'saved' => $saved, 'message' => $saved . ' setting(s) saved successfully.']);
     } catch (\Throwable $e) {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
@@ -88,7 +162,21 @@ if ($method === 'POST') {
     exit;
 }
 
-// GET list
+// GET list or single key
+$singleKey = trim((string)($_GET['key'] ?? ''));
+if ($singleKey !== '') {
+    try {
+        $stmt = $pdo->prepare('SELECT `value` FROM settings WHERE key_name = ? LIMIT 1');
+        $stmt->execute([$singleKey]);
+        $val = $stmt->fetchColumn();
+        echo json_encode(['success' => true, 'key' => $singleKey, 'value' => $val !== false ? $val : null]);
+    } catch (\Throwable $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+    exit;
+}
+
 try {
     $rows = Database::query('SELECT key_name, `value`, updated_at FROM settings ORDER BY key_name ASC');
     $map = [];

@@ -664,6 +664,64 @@ assertTest("SystemManager::verifyDangerousOperation verifies super_admin passwor
 $optRes = $sysManager->optimizeDatabase();
 assertTest("SystemManager::optimizeDatabase defragments platform tables", $optRes === true);
 
+// ============================================================================
+// 11. STORE SETTINGS & MULTI-GATEWAY STUDIO (SECTION 34) VALIDATION TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "11. STORE SETTINGS & MULTI-GATEWAY STUDIO (SECTION 34) VALIDATION TEST\n";
+echo "================================================================================\n";
+
+// 1. Files & Structural Integrity
+$settingsFiles = [
+    'admin/settings/index.php',
+    'admin/settings/general.php',
+    'admin/settings/company.php',
+    'admin/settings/payment.php',
+    'admin/settings/shipping.php',
+    'admin/settings/_shared.php',
+    'admin/settings/settings.css',
+    'admin/settings/settings.js',
+    'api/settings.php'
+];
+foreach ($settingsFiles as $sf) {
+    assertTest("Settings file exists: {$sf}", file_exists(__DIR__ . '/../' . $sf));
+}
+
+// 2. Shared Loader & dt_set Helper
+require_once __DIR__ . '/../admin/settings/_shared.php';
+$testFallback = dt_set('non_existent_key_for_test', 'Default Value');
+assertTest("dt_set helper returns fallback when key absent", $testFallback === 'Default Value');
+
+// 3. Multi-Gateway Payment Configuration
+require_once __DIR__ . '/../src/PaymentManager.php';
+use DTBrand\PaymentManager;
+$gateways = PaymentManager::getAllGateways(false);
+assertTest("PaymentManager::getAllGateways returns registered gateways", is_array($gateways) && count($gateways) >= 4);
+assertTest("Direct UPI gateway is registered", isset($gateways['direct_upi']));
+assertTest("Razorpay gateway is registered", isset($gateways['razorpay']));
+assertTest("Cashfree gateway is registered", isset($gateways['cashfree']));
+assertTest("Cash on Delivery gateway is registered", isset($gateways['cod']));
+assertTest("WhatsApp Pay gateway is registered", isset($gateways['whatsapp_pay']));
+
+$upiVpa = $gateways['direct_upi']['config']['upi_vpa'] ?? $gateways['direct_upi']['config']['upi_id'] ?? '';
+assertTest("Direct UPI configured with official merchant VPA", strpos($upiVpa, '917046363528') !== false);
+
+// 4. Zero Raw Browser Dialog Guarantee
+$rawConfirmFound = false;
+$rawAlertFound = false;
+foreach ($settingsFiles as $sf) {
+    if (!str_ends_with($sf, '.php') && !str_ends_with($sf, '.js')) continue;
+    $content = file_get_contents(__DIR__ . '/../' . $sf);
+    if (preg_match('/(?<![a-zA-Z0-9_])confirm\s*\(/', $content)) {
+        $rawConfirmFound = true;
+    }
+    if (preg_match('/(?<![a-zA-Z0-9_])alert\s*\(/', $content)) {
+        $rawAlertFound = true;
+    }
+}
+assertTest("Store Settings suite has zero raw confirm() dialogs", !$rawConfirmFound);
+assertTest("Store Settings suite has zero raw alert() dialogs", !$rawAlertFound);
+
 echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
 echo "================================================================================\n";

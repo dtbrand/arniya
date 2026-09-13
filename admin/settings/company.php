@@ -25,8 +25,8 @@ $dtKeys = ['company_legal_name', 'company_gstin', 'company_pan', 'company_addres
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
-echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -99,7 +99,7 @@ include_once __DIR__ . '/../includes/adminfooter.php'; ?>
 </div>
 <?php
 echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php
-echo time(); ?>"></script>
+<script src="/admin/settings/settings.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

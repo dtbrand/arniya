@@ -27,8 +27,8 @@ $dtKeys = ['warehouse_address', 'warehouse_city', 'warehouse_state', 'warehouse_
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php
-echo time(); ?>">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -89,16 +89,43 @@ echo dt_set_save_button(); ?>
                 </div>
                 <div class="adm-form-grid">
                     <div class="adm-form-group">
-                        <label class="adm-form-label">Free Shipping Above (₹, 0 = never)</label>
-                        <input type="number" min="0" class="adm-form-input" id="dtSet-free_shipping_threshold" value="<?= htmlspecialchars(dt_set('free_shipping_threshold', '0')) ?>">
+                        <label class="adm-form-label" style="display:flex; align-items:center; gap:5px;">
+                            <span>Free Shipping Above Threshold</span>
+                            <span style="display:inline-flex; align-items:center; gap:2px; font-size:11px; color:#8A681F; font-weight:700;">
+                                (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg> 0 = Never)
+                            </span>
+                        </label>
+                        <div class="dt-currency-input-wrap">
+                            <span class="dt-currency-prefix">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                INR
+                            </span>
+                            <input type="number" min="0" id="dtSet-free_shipping_threshold" value="<?= htmlspecialchars(dt_set('free_shipping_threshold', '0')) ?>">
+                        </div>
                     </div>
                     <div class="adm-form-group">
-                        <label class="adm-form-label">Flat Rate — Retail (₹)</label>
-                        <input type="number" min="0" class="adm-form-input" id="dtSet-flat_shipping_retail" value="<?= htmlspecialchars(dt_set('flat_shipping_retail', '150')) ?>">
+                        <label class="adm-form-label" style="display:flex; align-items:center; gap:5px;">
+                            <span>Flat Rate — Retail Checkout</span>
+                        </label>
+                        <div class="dt-currency-input-wrap">
+                            <span class="dt-currency-prefix">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                INR
+                            </span>
+                            <input type="number" min="0" id="dtSet-flat_shipping_retail" value="<?= htmlspecialchars(dt_set('flat_shipping_retail', '150')) ?>">
+                        </div>
                     </div>
                     <div class="adm-form-group">
-                        <label class="adm-form-label">Flat Rate — Trade / B2B (₹)</label>
-                        <input type="number" min="0" class="adm-form-input" id="dtSet-flat_shipping_trade" value="<?= htmlspecialchars(dt_set('flat_shipping_trade', '250')) ?>">
+                        <label class="adm-form-label" style="display:flex; align-items:center; gap:5px;">
+                            <span>Flat Rate — Trade / B2B Wholesaler</span>
+                        </label>
+                        <div class="dt-currency-input-wrap">
+                            <span class="dt-currency-prefix">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                INR
+                            </span>
+                            <input type="number" min="0" id="dtSet-flat_shipping_trade" value="<?= htmlspecialchars(dt_set('flat_shipping_trade', '250')) ?>">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +137,7 @@ include_once __DIR__ . '/../includes/adminfooter.php'; ?>
 </div>
 <?php
 echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/assets/js/admin.js?v=<?php
-echo time(); ?>"></script>
+<script src="/admin/settings/settings.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

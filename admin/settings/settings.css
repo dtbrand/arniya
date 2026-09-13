@@ -1,1 +1,254 @@
-/* settings.css - DT Brand's Admin Settings Module Styles */
+/* settings.css — DT Brand's Store Settings & Configuration Studio */
+
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to { --dt-border-angle: 360deg; }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35); }
+    100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6); }
+}
+
+/* Master Running Focus Line */
+.adm-form-input:focus,
+.adm-form-textarea:focus,
+.adm-form-select:focus,
+.dt-input-field:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* Quick Navigation Studio Grid */
+.dt-settings-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dt-settings-nav-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: #FFFFFF;
+    border: 1.2px solid #E2E8F0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #1F2937;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dt-settings-nav-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(184, 134, 11, 0.12);
+}
+
+.dt-settings-nav-card.active {
+    border-color: #8A681F;
+    background: #FAF5E8;
+}
+
+.dt-settings-nav-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: transparent;
+    transition: background 0.2s ease;
+}
+
+.dt-settings-nav-card:hover::before,
+.dt-settings-nav-card.active::before {
+    background: linear-gradient(180deg, #8A681F 0%, #D4AF37 100%);
+}
+
+.dt-settings-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #FAF5E8;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #8A681F;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.dt-settings-nav-card:hover .dt-settings-nav-icon {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
+}
+
+.dt-settings-nav-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.dt-settings-nav-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dt-settings-nav-desc {
+    font-size: 0.78rem;
+    color: #64748B;
+    line-height: 1.35;
+}
+
+/* Styled Input with Real Vector Rupee Prefix */
+.dt-currency-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+    transition: all 0.2s ease;
+}
+
+.dt-currency-input-wrap:focus-within {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.dt-currency-prefix {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px;
+    background: #F8FAFC;
+    border-right: 1px solid #CBD5E1;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 700;
+    height: 38px;
+    user-select: none;
+}
+
+.dt-currency-input-wrap input {
+    flex: 1;
+    border: none !important;
+    outline: none !important;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    color: #111827;
+    background: transparent;
+    height: 38px;
+}
+
+/* Luxury Confirmation Modal */
+.dt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(17, 24, 39, 0.65);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 16px;
+}
+
+.dt-modal-overlay.active {
+    display: flex;
+    animation: dtModalFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dtModalFade {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.dt-modal-card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1.5px solid #D4AF37;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+}
+
+.dt-modal-head {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border-bottom: 1.5px solid #8A681F;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #FAF5E8;
+}
+
+.dt-modal-title {
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-modal-close {
+    background: transparent;
+    border: none;
+    color: #A3A3A3;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    border-radius: 4px;
+    transition: color 0.15s;
+}
+
+.dt-modal-close:hover {
+    color: #FFFFFF;
+}
+
+.dt-modal-body {
+    padding: 20px;
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.dt-modal-foot {
+    padding: 14px 20px;
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Fluid Auto-Sizing Adjustments */
+@media (max-width: 768px) {
+    .dt-settings-nav-grid {
+        grid-template-columns: 1fr;
+    }
+}
