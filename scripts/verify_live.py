@@ -156,6 +156,18 @@ urls = [
     ('https://jaihanumantex.in/admin/whatsapp/templates.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/api/whatsapp.php?action=get_info', 200, 'json'),
     ('https://jaihanumantex.in/api/whatsapp.php?action=test_ping', 200, 'json'),
+    ('https://harmitethnic.com/admin/products/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/products/add.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/products/categories/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/products/brands/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/products/reviews/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/notifications/whatsapp.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/add.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/categories/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/brands/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/products/reviews/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/notifications/whatsapp.php', 200, 'redirect_ok'),
 ]
 
 

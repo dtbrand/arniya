@@ -11,6 +11,10 @@ if (!is_file($__dtg)) {
 }
 if (is_file($__dtg)) require_once $__dtg;
 
+// Consolidate all WhatsApp operations into the unified master suite:
+header("Location: /admin/whatsapp/templates.php", true, 301);
+exit;
+
 require_once __DIR__ . '/../../src/Database.php';
 require_once __DIR__ . '/../../src/NotificationManager.php';
 

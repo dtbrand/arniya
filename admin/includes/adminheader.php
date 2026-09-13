@@ -613,11 +613,11 @@ $adminCsrfToken = dt_csrf_token();
                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.3" fill="none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
 
-            <!-- Live WhatsApp CRM Status Indicator -->
-            <div class="adm-live-wa-pill" title="WhatsApp Business Cloud Gateway Connected">
+            <!-- Live WhatsApp CRM Status Indicator (Unified WhatsApp CRM Suite Link) -->
+            <a href="/admin/whatsapp/" class="adm-live-wa-pill" title="WhatsApp Business Cloud Gateway Connected — Open CRM Suite" style="text-decoration:none; cursor:pointer;">
                 <span class="adm-pulse-dot"></span>
                 <span class="adm-wa-text">WhatsApp Live</span>
-            </div>
+            </a>
 
             <!-- Fast Action: Clear Cache & Purge Asset Memory -->
             <button type="button" class="adm-hdr-btn" id="admClearCacheBtn" onclick="window.dtAutoClearCache()" title="Purge Cache & Reload Fresh Assets">
@@ -636,9 +636,9 @@ $adminCsrfToken = dt_csrf_token();
                 <span class="adm-btn-text">Add Product</span>
             </a>
 
-            <!-- Fast Action: Broadcast -->
-            <button type="button" class="adm-btn-secondary" onclick="if(typeof switchAdmTab==='function') switchAdmTab('whatsapp'); else window.location.href = '/admin/whatsapp/';" title="Broadcast">
-                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <!-- Fast Action: Broadcast (Unified WhatsApp CRM) -->
+            <button type="button" class="adm-btn-secondary" onclick="window.location.href = '/admin/whatsapp/broadcast.php';" title="WhatsApp Campaign Broadcast Studio">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                 <span>Broadcast</span>
             </button>
 

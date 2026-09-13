@@ -38,41 +38,45 @@
     window.deleteProduct = function(id, name) {
         if (!id) return;
         const prodName = name || 'this product';
-        if (!confirm(`Are you sure you want to delete "${prodName}" from the catalog?`)) {
-            return;
-        }
-
-        fetch('/api/products.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'delete', id: parseInt(id) })
-        })
-        .then(r => r.json())
-        .then(res => {
-            if (res.success) {
-                if (typeof window.showToast === 'function') {
-                    window.showToast(`"${prodName}" removed from catalog!`);
-                }
-                const row = document.querySelector(`tr[data-product-id="${id}"]`) || document.querySelector(`.dt-prod-row-check[value="${id}"]`)?.closest('tr');
-                if (row) {
-                    row.style.transition = 'all 0.3s ease';
-                    row.style.opacity = '0';
-                    row.style.transform = 'scale(0.95)';
-                    setTimeout(() => row.remove(), 300);
-                }
-            } else {
-                if (typeof window.showToast === 'function') {
-                    window.showToast('Delete failed: ' + (res.message || 'Server error'), 'error');
+        const doDelete = function() {
+            fetch('/api/products.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'delete', id: parseInt(id) })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`"${prodName}" removed from catalog!`);
+                    }
+                    const row = document.getElementById(`row-prod-${id}`);
+                    if (row) {
+                        row.style.transition = 'all 0.3s ease';
+                        row.style.opacity = '0';
+                        row.style.transform = 'scale(0.95)';
+                        setTimeout(() => row.remove(), 300);
+                    }
                 } else {
-                    console.error('Delete failed: ' + (res.message || 'Server error'));
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(res.message || 'Error deleting product', 'error');
+                    }
                 }
-            }
-        })
-        .catch(_err => {
-            if (typeof window.showToast === 'function') {
-                window.showToast(`Product removed!`);
-            }
-        });
+            })
+            .catch(err => console.error('Delete error:', err));
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Delete Product',
+                `Are you sure you want to permanently delete "${prodName}" from the catalog?`,
+                doDelete,
+                'Delete Permanently',
+                true
+            );
+        } else {
+            doDelete();
+        }
     };
 
     window.duplicateProduct = function(id) {

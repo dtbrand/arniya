@@ -236,10 +236,24 @@ function submitTerm() {
 }
 
 function removeTerm(name, hex) {
-    if (!confirm('Remove term "' + name + '" from this attribute?')) return;
-    postTermAction('remove_term', name, hex);
+    const doRemove = function() {
+        postTermAction('remove_term', name, hex);
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Remove Term',
+            'Remove term "' + name + '" from this attribute?',
+            doRemove,
+            'Remove Term',
+            true
+        );
+    } else {
+        doRemove();
+    }
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

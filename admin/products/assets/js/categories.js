@@ -202,15 +202,26 @@
             toast('That category has no id, so it cannot be deleted.');
             return;
         }
-        if (!window.confirm('Delete this category? Products filed under it must be moved first.')) {
-            return;
+        var doDel = function () {
+            post({ action: 'delete', id: catId }).then(function (res) {
+                toast(res.message || 'Category deleted.');
+                setTimeout(function () { window.location.href = '/admin/products/categories/'; }, 700);
+            }).catch(function (err) {
+                toast(err && err.message ? err.message : 'The category was not deleted.');
+            });
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Delete Category',
+                'Delete this category? Products filed under it must be moved first.',
+                doDel,
+                'Delete Category',
+                true
+            );
+        } else {
+            doDel();
         }
-        post({ action: 'delete', id: catId }).then(function (res) {
-            toast(res.message || 'Category deleted.');
-            setTimeout(function () { window.location.href = '/admin/products/categories/'; }, 700);
-        }).catch(function (err) {
-            toast(err && err.message ? err.message : 'The category was not deleted.');
-        });
     };
 
     function wire() {

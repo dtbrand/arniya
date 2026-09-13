@@ -122,6 +122,7 @@ sort($curCategories);
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/products.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-card {
         background: #fff;
@@ -564,17 +565,30 @@ function handleCuratedBulkAction() {
         return;
     }
     if (action === 'remove') {
-        if (!confirm(`Remove ${selected.length} product(s) from this curated list?`)) return;
-        let done = 0;
-        selected.forEach(id => {
-            const params = new URLSearchParams();
-            params.append('action', 'quick_edit');
-            params.append('id', id);
-            params.append('is_featured', '0');
-            fetch('/api/products.php', { method: 'POST', body: params, credentials: 'same-origin' })
-                .then(() => { if (++done === selected.length) window.location.reload(); })
-                .catch(() => { if (++done === selected.length) window.location.reload(); });
-        });
+        const doRemoval = function() {
+            let done = 0;
+            selected.forEach(id => {
+                const params = new URLSearchParams();
+                params.append('action', 'quick_edit');
+                params.append('id', id);
+                params.append('is_featured', '0');
+                fetch('/api/products.php', { method: 'POST', body: params, credentials: 'same-origin' })
+                    .then(() => { if (++done === selected.length) window.location.reload(); })
+                    .catch(() => { if (++done === selected.length) window.location.reload(); });
+            });
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal({
+                title: 'Remove from Curated List',
+                message: `Are you sure you want to remove ${selected.length} product(s) from this curated list?`,
+                confirmText: 'Remove Products',
+                confirmClass: 'dt-btn-crimson',
+                onConfirm: doRemoval
+            });
+        } else {
+            doRemoval();
+        }
         return;
     }
     if (action === 'export') {
@@ -599,6 +613,7 @@ function handleCuratedBulkAction() {
    in /admin/assets/js/admin.js (loaded just below) fetches the product and
    opens WhatsApp. */
 </script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

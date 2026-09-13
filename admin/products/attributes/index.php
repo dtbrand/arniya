@@ -418,20 +418,34 @@ function submitNewAttribute() {
 }
 
 function deleteAttrRow(id) {
-    if (!confirm('Permanently delete this attribute and its saved terms?')) return;
-    const params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-    fetch('/api/attributes.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(r => r.json())
-        .then(data => {
-            if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed');
-                return;
-            }
-            window.location.reload();
-        })
-        .catch(() => window.location.reload());
+    const doDel = function() {
+        const params = new URLSearchParams();
+        params.append('action', 'delete');
+        params.append('id', id);
+        fetch('/api/attributes.php', { method: 'POST', body: params, credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.success === false) {
+                    if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed', 'error');
+                    return;
+                }
+                if (typeof window.showToast === 'function') window.showToast('Attribute deleted successfully.', 'success');
+                setTimeout(() => window.location.reload(), 400);
+            })
+            .catch(() => window.location.reload());
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Delete Attribute',
+            'Permanently delete this attribute and its saved terms?',
+            doDel,
+            'Delete Permanently',
+            true
+        );
+    } else {
+        doDel();
+    }
 }
 
 function openEditAttrModal(id, name, slug, type) {
@@ -487,19 +501,33 @@ function handleAttrBulkAction() {
         return;
     }
     if (action === 'delete') {
-        if (!confirm(`Delete ${ids.length} attribute(s) permanently?`)) return;
-        let done = 0;
-        ids.forEach(id => {
-            const params = new URLSearchParams();
-            params.append('action', 'delete');
-            params.append('id', id);
-            fetch('/api/attributes.php', { method: 'POST', body: params, credentials: 'same-origin' })
-                .then(() => { if (++done === ids.length) window.location.reload(); })
-                .catch(() => { if (++done === ids.length) window.location.reload(); });
-        });
+        const doBulkDel = function() {
+            let done = 0;
+            ids.forEach(id => {
+                const params = new URLSearchParams();
+                params.append('action', 'delete');
+                params.append('id', id);
+                fetch('/api/attributes.php', { method: 'POST', body: params, credentials: 'same-origin' })
+                    .then(() => { if (++done === ids.length) window.location.reload(); })
+                    .catch(() => { if (++done === ids.length) window.location.reload(); });
+            });
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Bulk Delete Attributes',
+                `Delete ${ids.length} attribute(s) permanently?`,
+                doBulkDel,
+                'Delete Permanently',
+                true
+            );
+            return;
+        }
+        doBulkDel();
     }
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

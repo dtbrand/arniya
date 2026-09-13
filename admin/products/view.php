@@ -185,6 +185,7 @@ $prod = [
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/product-view.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/products.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -386,5 +387,41 @@ $prod = [
     </div>
 </div>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
+<script>
+window.shareProductWhatsApp = function(prodId) {
+    var title = <?php echo json_encode($prod['name']); ?>;
+    var sku = <?php echo json_encode($prod['sku']); ?>;
+    var price = <?php echo json_encode($prod['retail_price']); ?>;
+    if (window.DTProducts && typeof window.DTProducts.shareWhatsApp === 'function') {
+        window.DTProducts.shareWhatsApp(title, sku, price);
+    } else {
+        var msg = encodeURIComponent('*DT Brand\'s Wholesale:* ' + title + ' (' + sku + ') - ' + price);
+        window.open('https://api.whatsapp.com/send?phone=917046363528&text=' + msg, '_blank');
+    }
+};
+
+window.archiveProduct = function(prodId) {
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Archive Product',
+            'Move this product to draft status? It will be hidden from live storefront and search.',
+            function() {
+                DTProducts.adminFetch('/api/products.php', {
+                    method: 'POST',
+                    body: 'action=toggle_status&id=' + encodeURIComponent(prodId) + '&status=draft'
+                })
+                .then(r => r.json())
+                .then(data => {
+                    DTProducts.showToast('Product moved to draft successfully.', 'success');
+                    setTimeout(() => window.location.reload(), 500);
+                });
+            },
+            'Archive Product',
+            false
+        );
+    }
+};
+</script>
 </body>
 </html>

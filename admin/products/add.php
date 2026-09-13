@@ -40,6 +40,7 @@ if ($cloned_id > 0) {
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/product-form.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/variants.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/products.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -108,5 +109,6 @@ if ($cloned_id > 0) {
 <script src="/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/variants.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

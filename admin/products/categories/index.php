@@ -617,19 +617,33 @@ function handleCatBulkAction() {
     for (var i = 0; i < checked.length; i++) { ids.push(parseInt(checked[i].value, 10) || 0); }
 
     if (action !== 'delete') { dtCatToast('"' + action + '" is not a bulk action this page supports.'); return; }
-    if (!window.confirm('Delete ' + ids.length + ' categor' + (ids.length === 1 ? 'y' : 'ies') + '? Any that still hold products will be kept.')) { return; }
-    if (typeof window.dtCatPost !== 'function') {
-        dtCatToast('The category script did not load, so nothing was deleted. Reload the page.');
-        return;
-    }
+    var doBulkDel = function () {
+        if (typeof window.dtCatPost !== 'function') {
+            dtCatToast('The category script did not load, so nothing was deleted. Reload the page.');
+            return;
+        }
 
-    window.dtCatPost({ action: 'bulk_delete', ids: ids }).then(function (res) {
-        dtCatToast(res.message || 'Done.');
-        setTimeout(function () { window.location.reload(); }, 900);
-    }).catch(function (err) {
-        dtCatToast(err && err.message ? err.message : 'No categories were deleted.');
-    });
+        window.dtCatPost({ action: 'bulk_delete', ids: ids }).then(function (res) {
+            dtCatToast(res.message || 'Done.');
+            setTimeout(function () { window.location.reload(); }, 900);
+        }).catch(function (err) {
+            dtCatToast(err && err.message ? err.message : 'No categories were deleted.');
+        });
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Bulk Delete Categories',
+            'Delete ' + ids.length + ' categor' + (ids.length === 1 ? 'y' : 'ies') + '? Any that still hold products will be kept.',
+            doBulkDel,
+            'Delete Categories',
+            true
+        );
+    } else {
+        doBulkDel();
+    }
 }
 </script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

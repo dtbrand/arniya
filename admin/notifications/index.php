@@ -147,7 +147,7 @@ $providers = NotificationManager::getProviders();
                     <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #EAE5D9; padding-top:12px; margin-top:10px;">
                         <span style="font-size:0.75rem; color:#64748B;">Total: <strong><?= $stats['channels']['whatsapp'] ?> msgs</strong></span>
                         <div style="display:flex; gap:6px;">
-                            <a href="/admin/notifications/whatsapp.php" class="dt-btn dt-btn-pale" style="height:28px; font-size:11px; font-weight:700; text-decoration:none;">Console</a>
+                            <a href="/admin/whatsapp/templates.php" class="dt-btn dt-btn-pale" style="height:28px; font-size:11px; font-weight:700; text-decoration:none;">Console</a>
                             <button type="button" class="dt-btn dt-btn-emerald" style="height:28px; font-size:11px; font-weight:700;" onclick="quickTestChannel('whatsapp')">Quick Test</button>
                         </div>
                     </div>

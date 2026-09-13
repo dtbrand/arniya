@@ -217,25 +217,39 @@ function copyMediaUrl(url) {
 }
 
 function deleteMediaFile(filename, btn) {
-    if (!confirm('Permanently delete "' + filename + '" from the server?')) return;
-    const params = new URLSearchParams();
-    params.append('filename', filename);
-    fetch('/api/media/delete.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(r => r.json())
-        .then(data => {
-            if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed');
-                return;
-            }
-            const card = btn.closest('.dt-media-card');
-            if (card) card.remove();
-            if (typeof window.showToast === 'function') window.showToast('"' + filename + '" deleted');
-        })
-        .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
-        });
+    const doDel = function() {
+        const params = new URLSearchParams();
+        params.append('filename', filename);
+        fetch('/api/media/delete.php', { method: 'POST', body: params, credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.success === false) {
+                    if (typeof window.showToast === 'function') window.showToast(data.message || 'Delete failed', 'error');
+                    return;
+                }
+                const card = btn.closest('.dt-media-card');
+                if (card) card.remove();
+                if (typeof window.showToast === 'function') window.showToast('"' + filename + '" deleted', 'success');
+            })
+            .catch(() => {
+                if (typeof window.showToast === 'function') window.showToast('Could not reach the server', 'error');
+            });
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Delete Media Asset',
+            'Permanently delete "' + filename + '" from the server?',
+            doDel,
+            'Delete Permanently',
+            true
+        );
+    } else {
+        doDel();
+    }
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

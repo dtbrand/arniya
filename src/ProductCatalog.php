@@ -850,6 +850,11 @@ class ProductCatalog
         if ($role === 'wholesaler') { $role = 'wholesale'; }
         if ($role === '' || $role === 'retail') { $role = 'customer'; }
 
+        $item['cost_price'] = null;
+        $item['cost'] = null;
+        $item['margin_amount'] = null;
+        $item['purchase_cost'] = null;
+
         if ($role === 'guest' || $role === 'customer') {
             $item['wholesale_price'] = null;
             $item['wholesale_sale_price'] = null;

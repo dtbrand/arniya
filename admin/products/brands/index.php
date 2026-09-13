@@ -567,13 +567,29 @@ function submitNewBrand() {
 }
 
 function deleteBrandRow(id) {
-    if (!confirm('Permanently delete this brand from the database?')) return;
-    const formData = new FormData();
-    formData.append('action', 'delete');
-    formData.append('id', id);
-    fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
-        .then(() => window.location.reload())
-        .catch(() => window.location.reload());
+    const doDel = function() {
+        const formData = new FormData();
+        formData.append('action', 'delete');
+        formData.append('id', id);
+        fetch('/api/brands.php', { method: 'POST', body: formData, credentials: 'same-origin' })
+            .then(() => {
+                if (typeof window.showToast === 'function') window.showToast('Brand deleted.', 'success');
+                setTimeout(() => window.location.reload(), 400);
+            })
+            .catch(() => window.location.reload());
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Delete Brand',
+            'Permanently delete this brand from the database?',
+            doDel,
+            'Delete Permanently',
+            true
+        );
+    } else {
+        doDel();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -586,5 +602,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

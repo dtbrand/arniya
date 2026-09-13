@@ -792,6 +792,142 @@ assertTest("Sidebar includes Message Templates & HSM", strpos($sb, '/admin/whats
 assertTest("Sidebar includes Cloud API Gateway", strpos($sb, '/admin/whatsapp/templates.php?tab=gateway') !== false);
 
 echo "\n================================================================================\n";
+echo "13. PRODUCTS MASTER CATALOG, UI & BACKEND API VERIFICATION\n";
+echo "================================================================================\n";
+
+require_once __DIR__ . '/../src/ProductCatalog.php';
+
+// 1. Files & Structural Integrity
+$prodFiles = [
+    'admin/products/index.php',
+    'admin/products/add.php',
+    'admin/products/edit.php',
+    'admin/products/view.php',
+    'admin/products/products.css',
+    'admin/products/products.js',
+    'admin/products/categories/index.php',
+    'admin/products/subcategories/index.php',
+    'admin/products/brands/index.php',
+    'admin/products/attributes/index.php',
+    'admin/products/reviews/index.php',
+    'admin/products/media/index.php',
+    'admin/products/best-sellers/index.php',
+    'admin/products/new-arrivals/index.php',
+    'admin/products/featured/index.php',
+    'api/products.php',
+    'api/categories.php',
+    'api/attributes.php',
+    'api/brands.php'
+];
+
+foreach ($prodFiles as $pf) {
+    assertTest("Product suite file exists: {$pf}", file_exists(__DIR__ . '/../' . $pf));
+}
+
+// 2. ProductCatalog Engine Verification
+$allProds = \DTBrand\ProductCatalog::getAll(true);
+assertTest("ProductCatalog::getAll returns non-empty catalog", is_array($allProds) && count($allProds) >= 1);
+
+$firstProd = $allProds[0] ?? [];
+$firstId = (int)($firstProd['id'] ?? 1);
+$fetchedProd = \DTBrand\ProductCatalog::getById($firstId);
+assertTest("ProductCatalog::getById retrieves product record", is_array($fetchedProd) && (int)($fetchedProd['id'] ?? 0) === $firstId);
+assertTest("Product has SKU and pricing fields", !empty($fetchedProd['sku']) && isset($fetchedProd['price']));
+
+// 3. Role Pricing Matrix & Price Resolution
+$custPrice = \DTBrand\ProductCatalog::resolvePrice($fetchedProd, 'customer');
+$retailPrice = \DTBrand\ProductCatalog::resolvePrice($fetchedProd, 'retailer');
+$resellPrice = \DTBrand\ProductCatalog::resolvePrice($fetchedProd, 'reseller');
+$wholesPrice = \DTBrand\ProductCatalog::resolvePrice($fetchedProd, 'wholesale');
+
+assertTest("resolvePrice resolves valid numeric prices for all roles", $custPrice > 0 && $retailPrice > 0 && $resellPrice > 0 && $wholesPrice > 0);
+assertTest("Wholesale price is <= customer retail price", $wholesPrice <= $custPrice);
+
+$displayPriceInfo = \DTBrand\ProductCatalog::getPriceDisplay($fetchedProd, 'customer');
+assertTest("getPriceDisplay returns array with effective_price", is_array($displayPriceInfo) && isset($displayPriceInfo['effective_price']));
+assertTest("getPriceDisplay effective_price matches resolvePrice", (float)$displayPriceInfo['effective_price'] === (float)$custPrice);
+
+// 4. Role-Price Masking (Zero Role-Price Leakage Guarantee)
+$sampleProduct = [
+    'id' => 999,
+    'name' => 'Sample Pure Silk Saree',
+    'retail_price' => 2500,
+    'reseller_price' => 1800,
+    'wholesale_price' => 1400,
+    'price' => 2500,
+    'cost_price' => 1100,
+    'margin_amount' => 1400
+];
+
+$maskedCustomer = $sampleProduct;
+\DTBrand\ProductCatalog::maskRolePrices($maskedCustomer, 'customer', false);
+assertTest("maskRolePrices hides wholesale price from customer", !isset($maskedCustomer['wholesale_price']));
+assertTest("maskRolePrices hides cost_price from customer", !isset($maskedCustomer['cost_price']));
+assertTest("maskRolePrices preserves retail customer price for customer", !empty($maskedCustomer['price']) || !empty($maskedCustomer['effective_price']));
+
+$adminCopy = $sampleProduct;
+\DTBrand\ProductCatalog::maskRolePrices($adminCopy, 'admin', true);
+assertTest("maskRolePrices preserves wholesale_price for admin", isset($adminCopy['wholesale_price']));
+assertTest("maskRolePrices preserves cost_price for admin", isset($adminCopy['cost_price']));
+
+// 5. Zero Raw Browser Dialog Guarantee across entire admin/products/
+$prodDir = __DIR__ . '/../admin/products';
+$rdi = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($prodDir));
+$prodRawConfirm = false;
+$prodRawAlert = false;
+foreach ($rdi as $file) {
+    if (!$file->isFile()) continue;
+    $ext = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+    if (!in_array($ext, ['php', 'js'])) continue;
+    $content = file_get_contents($file->getPathname());
+    // Strip multi-line comments and single-line comments before checking
+    $stripped = preg_replace('!/\*.*?\*/!s', '', $content);
+    $stripped = preg_replace('!//.*!', '', $stripped);
+    if (preg_match('/(?<![a-zA-Z0-9_])confirm\s*\(/', $stripped)) {
+        $prodRawConfirm = true;
+    }
+    if (preg_match('/(?<![a-zA-Z0-9_])alert\s*\(/', $stripped)) {
+        $prodRawAlert = true;
+    }
+}
+assertTest("admin/products suite has zero raw confirm() dialogs", !$prodRawConfirm);
+assertTest("admin/products suite has zero raw alert() dialogs", !$prodRawAlert);
+
+// 6. Unified WhatsApp Single-Menu Consolidation Guarantee
+$sidebarContent = file_get_contents(__DIR__ . '/../admin/includes/adminsidebar.php');
+// Ensure no active nav link points to old duplicate notifications/whatsapp.php
+$duplicateWaInSidebar = preg_match('/<a\s+href="[^"]*notifications\/whatsapp\.php"/', $sidebarContent);
+assertTest("adminsidebar.php contains ZERO duplicate notification WhatsApp links", !$duplicateWaInSidebar);
+
+$headerContent = file_get_contents(__DIR__ . '/../admin/includes/adminheader.php');
+assertTest("adminheader.php live WhatsApp pill routes to unified /admin/whatsapp/", strpos($headerContent, 'href="/admin/whatsapp/"') !== false);
+assertTest("adminheader.php broadcast button routes to /admin/whatsapp/broadcast.php", strpos($headerContent, '/admin/whatsapp/broadcast.php') !== false);
+
+$notifWaContent = file_get_contents(__DIR__ . '/../admin/notifications/whatsapp.php');
+assertTest("admin/notifications/whatsapp.php consolidates via 301 redirect to /admin/whatsapp/templates.php", strpos($notifWaContent, 'Location: /admin/whatsapp/templates.php') !== false);
+
+// 7. Subprocess API Verification for api/products.php
+function callProductApiSuite(array $params, string $method = 'GET', bool $isAdmin = false): array {
+    $descriptor = [0 => ["pipe", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]];
+    $cmd = 'php ' . escapeshellarg(__DIR__ . '/run_product_action.php');
+    $proc = proc_open($cmd, $descriptor, $pipes);
+    if (!is_resource($proc)) return [];
+    fwrite($pipes[0], json_encode(['method' => $method, 'params' => $params, 'is_admin' => $isAdmin]));
+    fclose($pipes[0]);
+    $out = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    proc_close($proc);
+    return json_decode($out, true) ?: [];
+}
+
+$prodApiList = callProductApiSuite(['limit' => 5], 'GET');
+assertTest("api/products.php GET list returns products payload", is_array($prodApiList) && (count($prodApiList) > 0 || !empty($prodApiList['products'])));
+
+$prodApiGet = callProductApiSuite(['id' => 1], 'GET');
+assertTest("api/products.php GET single product retrieves valid item", is_array($prodApiGet) && ((int)($prodApiGet['id'] ?? ($prodApiGet['product']['id'] ?? 0)) === 1));
+
+echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
 echo "================================================================================\n";
 

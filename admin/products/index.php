@@ -88,6 +88,7 @@ $active_subnav = "";
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/products.css?v=<?php echo time(); ?>">
     <style>
     /* Wholesale Desktop Specific Styling */
     .dt-kpi-ribbon {
@@ -1058,7 +1059,18 @@ function processBulkAction(action) {
     }
     else if (action === 'trash') {
         const ids = Array.from(selected).map(chk => chk.value);
-        if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected product(s) from the database and storefront?`)) {
+        if (window.DTProducts && typeof window.DTProducts.bulkDelete === 'function') {
+            window.DTProducts.bulkDelete(ids, function() {
+                selected.forEach(chk => {
+                    const row = chk.closest('tr');
+                    if (row) {
+                        row.style.transition = 'all 0.3s ease';
+                        row.style.opacity = '0';
+                        row.style.transform = 'scale(0.95)';
+                        setTimeout(() => row.remove(), 300);
+                    }
+                });
+            });
             return;
         }
 
@@ -1187,7 +1199,8 @@ if (typeof window.showToast === 'function') {
 }
 
 function trashProductRow(rowId, productName) {
-    if (!confirm('Are you sure you want to permanently delete "' + productName + '" from database and storefront?')) {
+    if (window.DTProducts && typeof window.DTProducts.trashProduct === 'function') {
+        window.DTProducts.trashProduct(rowId, productName);
         return;
     }
 
@@ -1218,6 +1231,10 @@ function trashProductRow(rowId, productName) {
 }
 
 function shareProductWhatsApp(productName, sku, wholesaleRate) {
+    if (window.DTProducts && typeof window.DTProducts.shareWhatsApp === 'function') {
+        window.DTProducts.shareWhatsApp(productName, sku, wholesaleRate);
+        return;
+    }
     const message = encodeURIComponent(`*DT BRAND'S & JAI HANUMAN TEX — WHOLESALE INQUIRY*\n\n` +
         `*Product:* ${productName}\n` +
         `*SKU:* ${sku}\n` +
@@ -1226,5 +1243,6 @@ function shareProductWhatsApp(productName, sku, wholesaleRate) {
     window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${message}`, '_blank');
 }
 </script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

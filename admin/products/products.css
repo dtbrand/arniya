@@ -1,1 +1,452 @@
-/* products.css - DT Brand's Admin Products Module Styles */
+/**
+ * products.css — DT Brand's & Jai Hanuman Tex Master Products Suite Stylesheet
+ * 100% Real Vector SVG Icon Standard | TailAdmin High Contrast | Master Gold Gradient
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap');
+
+:root {
+    --dt-gold: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-pale: #FAF5E8;
+    --dt-gold-deep: #5A4210;
+    --dt-obsidian: #181512;
+    --dt-obsidian-card: #221C16;
+    --dt-text-main: #111827;
+    --dt-text-body: #1F2937;
+    --dt-text-muted: #64748B;
+    --dt-border-soft: #E2E8F0;
+    --dt-border-gold: #D4AF37;
+    --dt-emerald: #15803D;
+    --dt-emerald-pale: #DCFCE7;
+    --dt-amber: #B45309;
+    --dt-amber-pale: #FEF3C7;
+    --dt-crimson: #DC2626;
+    --dt-crimson-pale: #FEF2F2;
+    --dt-blue: #1D4ED8;
+    --dt-blue-pale: #EFF6FF;
+    --dt-radius-sm: 6px;
+    --dt-radius-md: 8px;
+    --dt-radius-lg: 12px;
+}
+
+/* ── Typography & Rendering Base ── */
+.dt-products-container,
+.dt-products-container *,
+.dt-modal-backdrop,
+.dt-modal-backdrop * {
+    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    box-sizing: border-box;
+}
+
+/* ── 360° Running Focus Line Animation ── */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to { --dt-border-angle: 360deg; }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% { box-shadow: 0 0 8px rgba(212, 175, 55, 0.4), 0 0 16px rgba(226, 232, 240, 0.3); }
+    100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.7), 0 0 24px rgba(255, 255, 255, 0.55); }
+}
+
+.dt-input-field:focus,
+.wp-select:focus,
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* ── Master Button Hierarchy ── */
+.dt-btn-gold,
+.adm-btn-gold,
+.wp-button.primary.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    border: 1px solid #8A681F !important;
+    color: #111827 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.011em !important;
+    border-radius: var(--dt-radius-sm);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-btn-gold:hover,
+.adm-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
+}
+
+.dt-btn-dark,
+.adm-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    border: 1.2px solid #8A681F !important;
+    color: #FAF5E8 !important;
+    font-weight: 700 !important;
+    border-radius: var(--dt-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-btn-dark:hover,
+.adm-btn-dark:hover {
+    border-color: #D4AF37 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+
+.dt-btn-emerald,
+.adm-btn-emerald,
+.dt-btn-action-sm.emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%) !important;
+    border: 1px solid #166534 !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    border-radius: var(--dt-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-btn-emerald:hover,
+.adm-btn-emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(21,128,61,0.35);
+}
+
+.dt-btn-pale,
+.adm-btn-pale,
+.dt-btn-action-sm.pale-gold {
+    background: #FAF5E8 !important;
+    border: 1px solid #D4AF37 !important;
+    color: #705114 !important;
+    font-weight: 700 !important;
+    border-radius: var(--dt-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-btn-pale:hover,
+.adm-btn-pale:hover,
+.dt-btn-action-sm.pale-gold:hover {
+    background: #F5ECCE !important;
+    color: #5A4210 !important;
+    border-color: #8A681F !important;
+    transform: translateY(-1px);
+}
+
+.dt-btn-crimson,
+.dt-btn-action-sm.crimson {
+    background: #FEF2F2 !important;
+    border: 1px solid #F87171 !important;
+    color: #DC2626 !important;
+    font-weight: 700 !important;
+    border-radius: var(--dt-radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.dt-btn-crimson:hover {
+    background: #FEE2E2 !important;
+    border-color: #DC2626 !important;
+    transform: translateY(-1px);
+}
+
+/* ── Wholesale Desktop KPI Cards ── */
+.dt-kpi-ribbon {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.dt-kpi-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: var(--dt-radius-md);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+}
+.dt-kpi-card:hover {
+    border-color: var(--dt-gold-radiant);
+    box-shadow: 0 4px 14px rgba(212,175,55,0.18);
+    transform: translateY(-1.5px);
+}
+
+/* ── Real Indian Rupee Icon Vector Inline ── */
+.dt-rupee-icon {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: -0.15em;
+    stroke-width: 2.2;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ── High-Contrast Status Badges ── */
+.dt-badge-instock {
+    background: #DCFCE7;
+    color: #15803D;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.dt-badge-lowstock {
+    background: #FEF3C7;
+    color: #B45309;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.dt-badge-outofstock {
+    background: #FEF2F2;
+    color: #DC2626;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.dt-badge-draft {
+    background: #F1F5F9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.dt-badge-fullset {
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.dt-badge-single {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: #1D4ED8;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* ── Wholesale Grid View Cards ── */
+.dt-ws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+}
+.dt-ws-card {
+    background: #FFFFFF;
+    border: 1px solid #E2DFD7;
+    border-radius: var(--dt-radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    transition: all 0.22s ease;
+}
+.dt-ws-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 6px 18px rgba(184,134,11,0.14);
+    transform: translateY(-2px);
+}
+.dt-ws-card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: #F8FAFC;
+    transition: transform 0.3s ease;
+}
+.dt-ws-card:hover .dt-ws-card-img {
+    transform: scale(1.02);
+}
+
+/* ── TailAdmin Benchmarked Product Table ── */
+.dt-products-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FFFFFF;
+    border-radius: var(--dt-radius-md);
+    overflow: hidden;
+}
+.dt-products-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 10px 12px;
+    border-bottom: 1.5px solid #E2E8F0;
+    text-align: left;
+}
+.dt-products-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #F1F5F9;
+    color: #1F2937;
+    font-size: 12.5px;
+    vertical-align: middle;
+}
+.dt-products-table tr:hover td {
+    background: #FAF8F5;
+}
+
+/* ── Custom Styled Confirmation Modal (Zero Native confirm()) ── */
+.dt-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(24, 21, 18, 0.65);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 16px;
+}
+.dt-modal-dialog {
+    background: #FFFFFF;
+    border-radius: var(--dt-radius-lg);
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 1.5px solid #D4AF37;
+    overflow: hidden;
+    animation: dtModalIn 0.22s ease-out;
+}
+@keyframes dtModalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.dt-modal-header {
+    background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%),
+                linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
+    color: #FFFFFF;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #D4AF37;
+}
+.dt-modal-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FFFFFF;
+}
+.dt-modal-close {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.85;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.dt-modal-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+.dt-modal-body {
+    padding: 18px;
+    font-size: 13px;
+    color: #1F2937;
+    line-height: 1.5;
+}
+.dt-modal-footer {
+    background: #F8FAFC;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid #E2E8F0;
+}
+
+/* ── Responsive Rules ── */
+@media (max-width: 1024px) {
+    .dt-kpi-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 640px) {
+    .dt-kpi-ribbon {
+        grid-template-columns: 1fr;
+    }
+    .dt-ws-grid {
+        grid-template-columns: 1fr;
+    }
+    .dt-modal-dialog {
+        max-width: 96%;
+    }
+}

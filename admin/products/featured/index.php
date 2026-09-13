@@ -564,17 +564,30 @@ function handleCuratedBulkAction() {
         return;
     }
     if (action === 'remove') {
-        if (!confirm('Remove ' + selected.length + ' product(s) from the featured list? This clears their featured flag.')) return;
-        let done = 0;
-        selected.forEach(id => {
-            const params = new URLSearchParams();
-            params.append('action', 'quick_edit');
-            params.append('id', id);
-            params.append('is_featured', '0');
-            fetch('/api/products.php', { method: 'POST', body: params, credentials: 'same-origin' })
-                .then(() => { if (++done === selected.length) window.location.reload(); })
-                .catch(() => { if (++done === selected.length) window.location.reload(); });
-        });
+        const doRemove = function() {
+            let done = 0;
+            selected.forEach(id => {
+                const params = new URLSearchParams();
+                params.append('action', 'quick_edit');
+                params.append('id', id);
+                params.append('is_featured', '0');
+                fetch('/api/products.php', { method: 'POST', body: params, credentials: 'same-origin' })
+                    .then(() => { if (++done === selected.length) window.location.reload(); })
+                    .catch(() => { if (++done === selected.length) window.location.reload(); });
+            });
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Remove from Featured',
+                'Remove ' + selected.length + ' product(s) from the featured list? This clears their featured flag.',
+                doRemove,
+                'Remove from List',
+                true
+            );
+            return;
+        }
+        doRemove();
         return;
     }
     if (action === 'export') {

@@ -393,25 +393,40 @@ function toggleSelectAllReviews(master) {
 }
 
 function moderateReview(id, action) {
-    if (action === 'delete' && !confirm('Permanently delete review #' + id + '?')) return;
-    const params = new URLSearchParams();
-    params.append('action', action);
-    params.append('id', id);
-    fetch('/api/reviews.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(r => r.json())
-        .then(data => {
-            if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast(data.message || 'Action failed');
-                return;
-            }
-            const row = document.getElementById('review-row-' + id);
-            if (row) row.remove();
-            if (typeof window.showToast === 'function') window.showToast('Review ' + action + 'd successfully');
-            setTimeout(() => window.location.reload(), 400);
-        })
-        .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('Could not reach the server');
-        });
+    const doAction = function() {
+        const params = new URLSearchParams();
+        params.append('action', action);
+        params.append('id', id);
+        fetch('/api/reviews.php', { method: 'POST', body: params, credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.success === false) {
+                    if (typeof window.showToast === 'function') window.showToast(data.message || 'Action failed', 'error');
+                    return;
+                }
+                const row = document.getElementById('review-row-' + id);
+                if (row) row.remove();
+                if (typeof window.showToast === 'function') window.showToast('Review ' + action + 'd successfully', 'success');
+                setTimeout(() => window.location.reload(), 400);
+            })
+            .catch(() => {
+                if (typeof window.showToast === 'function') window.showToast('Could not reach the server', 'error');
+            });
+    };
+
+    if (action === 'delete') {
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Delete Review',
+                'Permanently delete review #' + id + '?',
+                doAction,
+                'Delete Permanently',
+                true
+            );
+            return;
+        }
+    }
+    doAction();
 }
 
 function handleBulkReviewAction() {
@@ -419,20 +434,35 @@ function handleBulkReviewAction() {
     if (!action) return;
     const ids = Array.from(document.querySelectorAll('.review-row-check:checked')).map(c => c.value);
     if (ids.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('Select at least one review');
+        if (typeof window.showToast === 'function') window.showToast('Select at least one review', 'warning');
         return;
     }
-    if (action === 'delete' && !confirm('Delete ' + ids.length + ' reviews permanently?')) return;
 
-    let done = 0;
-    ids.forEach(id => {
-        const params = new URLSearchParams();
-        params.append('action', action === 'unapprove' ? 'reject' : action);
-        params.append('id', id);
-        fetch('/api/reviews.php', { method: 'POST', body: params, credentials: 'same-origin' })
-            .then(() => { if (++done === ids.length) window.location.reload(); })
-            .catch(() => { if (++done === ids.length) window.location.reload(); });
-    });
+    const doBulk = function() {
+        let done = 0;
+        ids.forEach(id => {
+            const params = new URLSearchParams();
+            params.append('action', action === 'unapprove' ? 'reject' : action);
+            params.append('id', id);
+            fetch('/api/reviews.php', { method: 'POST', body: params, credentials: 'same-origin' })
+                .then(() => { if (++done === ids.length) window.location.reload(); })
+                .catch(() => { if (++done === ids.length) window.location.reload(); });
+        });
+    };
+
+    if (action === 'delete') {
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                'Bulk Delete Reviews',
+                'Delete ' + ids.length + ' reviews permanently?',
+                doBulk,
+                'Delete Permanently',
+                true
+            );
+            return;
+        }
+    }
+    doBulk();
 }
 
 function openAddReviewModal() {
@@ -496,5 +526,6 @@ function submitReply() {
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

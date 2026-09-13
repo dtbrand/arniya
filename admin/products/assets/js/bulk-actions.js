@@ -26,25 +26,22 @@
             return;
         }
 
-        if (!confirm(`Are you sure you want to perform "${action}" on ${ids.length} selected products?`)) {
-            return;
-        }
+        const doExecute = function() {
+            let payload = { action: 'bulk_delete', ids: ids };
 
-        let payload = { action: 'bulk_delete', ids: ids };
+            if (action === 'Activate') {
+                payload = { action: 'bulk_update_status', ids: ids, status: 'in_stock' };
+            } else if (action === 'Deactivate') {
+                payload = { action: 'bulk_update_status', ids: ids, status: 'draft' };
+            } else if (action === 'Delete') {
+                payload = { action: 'bulk_delete', ids: ids };
+            }
 
-        if (action === 'Activate') {
-            payload = { action: 'bulk_update_status', ids: ids, status: 'in_stock' };
-        } else if (action === 'Deactivate') {
-            payload = { action: 'bulk_update_status', ids: ids, status: 'draft' };
-        } else if (action === 'Delete') {
-            payload = { action: 'bulk_delete', ids: ids };
-        }
-
-        fetch('/api/products.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
+            fetch('/api/products.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
         .then(r => r.json())
         .then(res => {
             if (res.success) {
@@ -84,6 +81,19 @@
                 window.showToast(`Action "${action}" processed!`);
             }
         });
+        };
+
+        if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+            window.DTProducts.confirmModal(
+                `Bulk ${action}`,
+                `Are you sure you want to perform "${action}" on ${ids.length} selected products?`,
+                doExecute,
+                action === 'Delete' ? 'Delete Permanently' : 'Confirm',
+                action === 'Delete'
+            );
+        } else {
+            doExecute();
+        }
     };
 
     window.exportCurrentTable = function(filename) {

@@ -1,11 +1,12 @@
 /**
- * products.js — DT Brand's Products Module Master Controller
+ * products.js — DT Brand's & Jai Hanuman Tex Products Module Master Controller
  */
 (function() {
     'use strict';
-    window.DTProducts = window.DTProducts || {};
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DT Brand Products Module initialized');
-    });
+    if (!window.DTProducts) {
+        // Load master engine if not loaded yet
+        var s = document.createElement('script');
+        s.src = '/admin/products/products.js?v=' + Date.now();
+        document.head.appendChild(s);
+    }
 })();

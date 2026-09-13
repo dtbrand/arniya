@@ -208,22 +208,37 @@ function filterSubcatByParent(parent) {
 }
 
 function deleteSubcat(id, name) {
-    if (!confirm('Delete subcategory "' + name + '"? This cannot be undone.')) return;
-    const params = new URLSearchParams();
-    params.append('action', 'delete_subcategory');
-    params.append('id', id);
-    fetch('/api/categories.php', { method: 'POST', body: params, credentials: 'same-origin' })
-        .then(r => r.json())
-        .then(data => {
-            if (data && data.success === false) {
-                if (typeof window.showToast === 'function') window.showToast(data.message || 'Could not delete');
-                return;
-            }
-            window.location.reload();
-        })
-        .catch(() => window.location.reload());
+    const doDel = function() {
+        const params = new URLSearchParams();
+        params.append('action', 'delete_subcategory');
+        params.append('id', id);
+        fetch('/api/categories.php', { method: 'POST', body: params, credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(data => {
+                if (data && data.success === false) {
+                    if (typeof window.showToast === 'function') window.showToast(data.message || 'Could not delete', 'error');
+                    return;
+                }
+                if (typeof window.showToast === 'function') window.showToast('Subcategory deleted.', 'success');
+                setTimeout(() => window.location.reload(), 400);
+            })
+            .catch(() => window.location.reload());
+    };
+
+    if (window.DTProducts && typeof window.DTProducts.confirmModal === 'function') {
+        window.DTProducts.confirmModal(
+            'Delete Subcategory',
+            'Delete subcategory "' + name + '"? This cannot be undone.',
+            doDel,
+            'Delete Permanently',
+            true
+        );
+    } else {
+        doDel();
+    }
 }
 </script>
 <script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
