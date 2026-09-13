@@ -99,6 +99,22 @@ urls = [
     ('https://jaihanumantex.in/api/products.php', 200, 'json'),
     ('https://jaihanumantex.in/api/cart.php', 200, 'json'),
     ('https://jaihanumantex.in/api/wishlist.php', 200, 'json'),
+    ('https://harmitethnic.com/admin/developer/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/api-registry.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/api-health.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/webhooks.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/queue.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/routes.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/migrations.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/developer/diagnostics.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/api-registry.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/api-health.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/webhooks.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/queue.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/routes.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/migrations.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/developer/diagnostics.php', 200, 'redirect_ok'),
 ]
 
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')
