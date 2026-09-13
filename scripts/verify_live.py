@@ -1,6 +1,9 @@
 import urllib.request
 import json
 import ssl
+import sys
+
+sys.stdout.reconfigure(line_buffering=True)
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -115,6 +118,32 @@ urls = [
     ('https://jaihanumantex.in/admin/developer/routes.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/developer/migrations.php', 200, 'redirect_ok'),
     ('https://jaihanumantex.in/admin/developer/diagnostics.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/index.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/health.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/settings.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/environment.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/database.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/migrations.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/cache.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/storage.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/logs.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/cron.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/maintenance.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/feature-flags.php', 200, 'redirect_ok'),
+    ('https://harmitethnic.com/admin/system/backups.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/index.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/health.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/settings.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/environment.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/database.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/migrations.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/cache.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/storage.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/logs.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/cron.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/maintenance.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/feature-flags.php', 200, 'redirect_ok'),
+    ('https://jaihanumantex.in/admin/system/backups.php', 200, 'redirect_ok'),
 ]
 
 print('=== VERIFYING LIVE ENDPOINTS ON PRODUCTION SERVERS ===')
