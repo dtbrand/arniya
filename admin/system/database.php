@@ -39,10 +39,12 @@ if ($pdo !== null && !Database::isMockMode()) {
     } catch (\Exception $e) { $tables = []; }
 }
 
-function fmtB(int $b): string {
-    if ($b >= 1048576) return round($b/1048576,2).' MB';
-    if ($b >= 1024)    return round($b/1024,2).' KB';
-    return $b.' B';
+if (!function_exists('fmtB')) {
+    function fmtB(int $b): string {
+        if ($b >= 1048576) return round($b/1048576,2).' MB';
+        if ($b >= 1024)    return round($b/1024,2).' KB';
+        return $b.' B';
+    }
 }
 
 $active_nav    = 'system';
@@ -209,7 +211,7 @@ function filterTables() {
     });
 }
 async function sysDbOptimize() {
-    if (!confirm('Run OPTIMIZE TABLE on all tables? Tables may be briefly locked.')) return;
+    sysToast('Optimizing and defragmenting database tables…', 'info');
     try {
         const data = await sysPost('/api/system.php', { action: 'db_optimize', _csrf: '<?= htmlspecialchars($csrf) ?>' });
         sysToast(data.message || 'Done.', data.success ? 'success' : 'error');

@@ -603,6 +603,67 @@ if (!empty($testKey['key_record']['id'])) {
     assertTest("DeveloperManager::revokeApiKey deactivates test key", $revokeOk === true);
 }
 
+// ============================================================================
+// 10. SYSTEM GOVERNANCE & HIGH-AVAILABILITY SUITE (SECTION 36) VALIDATION TEST
+// ============================================================================
+echo "\n================================================================================\n";
+echo "10. SYSTEM GOVERNANCE & HIGH-AVAILABILITY SUITE (SECTION 36) VALIDATION TEST\n";
+echo "================================================================================\n";
+
+require_once __DIR__ . '/../src/SystemManager.php';
+use DTBrand\SystemManager;
+
+$sysManager = SystemManager::getInstance();
+assertTest("SystemManager::getInstance initializes singleton", $sysManager instanceof SystemManager);
+
+// 1. 8-Pillar Health Checks
+$health = $sysManager->runHealthChecks();
+assertTest("SystemManager::runHealthChecks returns 8 operational pillars", isset($health['pillars']) && count($health['pillars']) >= 8);
+assertTest("SystemManager::runHealthChecks computes overall status", isset($health['overall']) && in_array($health['overall'], ['pass', 'warn', 'fail']));
+
+// 2. Telemetry & Environment
+$envInfo = $sysManager->getEnvironmentInfo();
+assertTest("SystemManager::getEnvironmentInfo returns PHP runtime details", !empty($envInfo['php_version']) && !empty($envInfo['os']));
+
+// 3. Storage Analysis
+$storage = $sysManager->getStorageInfo();
+assertTest("SystemManager::getStorageInfo returns disk usage metrics", isset($storage['disk_free_gb']) && isset($storage['directories']));
+
+// 4. Migration Governance
+$migrations = $sysManager->getMigrationHistory();
+assertTest("SystemManager::getMigrationHistory returns verified migrations ledger", is_array($migrations) && count($migrations) > 0);
+assertTest("First migration history record has valid applied status", ($migrations[0]['status'] ?? '') === 'applied');
+
+// 5. Cache & OPcache
+$cacheStats = $sysManager->getCacheStats();
+assertTest("SystemManager::getCacheStats evaluates OPcache telemetry", isset($cacheStats['opcache']['enabled']));
+$purgeRes = $sysManager->purgeCache();
+assertTest("SystemManager::purgeCache purges OPcache and application cache", !empty($purgeRes['success']));
+
+// 6. Maintenance Mode Status & Toggle
+$maintStatus = $sysManager->getMaintenanceStatus();
+assertTest("SystemManager::getMaintenanceStatus returns active flag and message", isset($maintStatus['active']) && !empty($maintStatus['message']));
+
+// 7. Database Backups
+$backups = $sysManager->getBackupHistory();
+assertTest("SystemManager::getBackupHistory retrieves snapshot backups list", is_array($backups));
+
+// 8. Settings Management
+$settings = $sysManager->getSettings();
+assertTest("SystemManager::getSettings returns full configuration dictionary", is_array($settings) && isset($settings['general']));
+$generalSettings = $sysManager->getSettings('general');
+assertTest("SystemManager::getSettings('general') returns section array", is_array($generalSettings) && !empty($generalSettings['site_name']));
+
+// 9. Dangerous Operations Gatekeeper
+$_SESSION['admin_user'] = ['id' => 1, 'role' => 'super_admin', 'name' => 'Gautam Sethi'];
+$_SESSION['csrf_token'] = 'test_token_2026';
+$verifyDangerous = $sysManager->verifyDangerousOperation('maintenance_toggle', 'Gautam@9006', 'test_token_2026');
+assertTest("SystemManager::verifyDangerousOperation verifies super_admin password", !empty($verifyDangerous['verified']) && !empty($verifyDangerous['allowed']));
+
+// 10. Database Optimization
+$optRes = $sysManager->optimizeDatabase();
+assertTest("SystemManager::optimizeDatabase defragments platform tables", $optRes === true);
+
 echo "\n================================================================================\n";
 echo "SUMMARY: {$passed} PASSED, {$failed} FAILED\n";
 echo "================================================================================\n";

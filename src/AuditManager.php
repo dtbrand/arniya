@@ -514,13 +514,37 @@ class AuditManager
     }
 
     /**
-     * Master logging method
+     * Master logging method (supports both associative array and positional args)
      *
-     * @param array<string, mixed> $params
+     * @param array<string, mixed>|string $params
+     * @param mixed ...$args
      * @return int Inserted log ID
      */
-    public function log(array $params): int
+    public function log(array|string $params, ...$args): int
     {
+        if (is_string($params)) {
+            // Called with positional arguments: ($category, $action, $entityType, $entityId, $oldValues, $newValues, $status, $details, $userId)
+            $action = (string)($args[0] ?? $params);
+            $entityType = (string)($args[1] ?? $params);
+            $entityId = (string)($args[2] ?? '0');
+            $oldValues = $args[3] ?? null;
+            $newValues = $args[4] ?? null;
+            $status = (string)($args[5] ?? 'success');
+            $details = (string)($args[6] ?? '');
+            $userId = isset($args[7]) ? (int)$args[7] : null;
+
+            $params = [
+                'action' => $action,
+                'entity_type' => $entityType,
+                'entity_id' => $entityId,
+                'old_values' => $oldValues,
+                'new_values' => $newValues,
+                'status' => $status,
+                'details' => $details,
+                'user_id' => $userId
+            ];
+        }
+
         $action      = (string)($params['action'] ?? 'generic_action');
         $entityType  = (string)($params['entity_type'] ?? 'system');
         $entityId    = (string)($params['entity_id'] ?? '0');

@@ -17,7 +17,7 @@ $flash   = '';
 $flashType = 'success';
 
 /* ── Handle POST saves ── */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['section'])) {
     $section  = (string)$_POST['section'];
     $payload  = $_POST;
     unset($payload['section'], $payload['_csrf']);

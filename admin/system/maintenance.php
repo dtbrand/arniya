@@ -155,21 +155,46 @@ $page_title    = 'Maintenance Mode — DT Brand\'s';
 <script src="/admin/assets/js/admin.js?v=<?= time() ?>"></script>
 <script src="/admin/system/system.js?v=<?= time() ?>"></script>
 <script>
-async function sysToggleMaintenance(enable) {
-    if (!confirm((enable ? 'Enable' : 'Disable') + ' maintenance mode?')) return;
-    const pwd = prompt('Enter your admin password to confirm:');
-    if (!pwd) return;
-    try {
-        const data = await sysPost('/api/system.php', {
-            action: 'maintenance_toggle',
-            enable: enable ? 1 : 0,
-            password: pwd,
-            _csrf: '<?= htmlspecialchars($csrf) ?>'
-        });
-        sysToast(data.message || 'Done.', data.success ? 'success' : 'error');
-        if (data.success) setTimeout(() => location.reload(), 1400);
-    } catch (e) { sysToast('Operation failed.', 'error'); }
+let pendingMaintenanceEnable = false;
+
+function sysToggleMaintenance(enable) {
+    pendingMaintenanceEnable = enable;
+    const modal = document.getElementById('sysDangerModal');
+    if (!modal) return;
+    document.getElementById('sysDangerLabel').textContent = (enable ? 'Enable' : 'Disable') + ' site maintenance mode? Please enter your admin password to verify this security change.';
+    document.getElementById('sysDangerPwd').value = '';
+    modal.style.display = 'flex';
+    setTimeout(() => { const p = document.getElementById('sysDangerPwd'); if (p) p.focus(); }, 80);
 }
+
+function sysCloseDangerModal() {
+    const modal = document.getElementById('sysDangerModal');
+    if (modal) modal.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmBtn = document.getElementById('sysDangerConfirmBtn');
+    if (confirmBtn) {
+        confirmBtn.onclick = async function() {
+            const pwd = document.getElementById('sysDangerPwd').value;
+            if (!pwd) {
+                sysToast('Please enter your admin password.', 'warn');
+                return;
+            }
+            sysCloseDangerModal();
+            try {
+                const data = await sysPost('/api/system.php', {
+                    action: 'maintenance_toggle',
+                    enable: pendingMaintenanceEnable ? 1 : 0,
+                    password: pwd,
+                    _csrf: '<?= htmlspecialchars($csrf) ?>'
+                });
+                sysToast(data.message || 'Done.', data.success ? 'success' : 'error');
+                if (data.success) setTimeout(() => location.reload(), 1400);
+            } catch (e) { sysToast('Operation failed.', 'error'); }
+        };
+    }
+});
 
 async function saveMaintConfig() {
     const data = await sysPost('/api/system.php', {

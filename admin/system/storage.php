@@ -17,11 +17,13 @@ $active_subnav = 'storage';
 $page_title    = 'Storage & Uploads — DT Brand\'s';
 
 /* ── Format bytes helper ── */
-function fmtBytes(int $bytes): string {
-    if ($bytes >= 1073741824) return round($bytes / 1073741824, 2) . ' GB';
-    if ($bytes >= 1048576)    return round($bytes / 1048576, 2)    . ' MB';
-    if ($bytes >= 1024)       return round($bytes / 1024, 2)       . ' KB';
-    return $bytes . ' B';
+if (!function_exists('fmtBytes')) {
+    function fmtBytes(int $bytes): string {
+        if ($bytes >= 1073741824) return round($bytes / 1073741824, 2) . ' GB';
+        if ($bytes >= 1048576)    return round($bytes / 1048576, 2)    . ' MB';
+        if ($bytes >= 1024)       return round($bytes / 1024, 2)       . ' KB';
+        return $bytes . ' B';
+    }
 }
 
 /* ── Disk usage ── */

@@ -16,11 +16,13 @@ $_SESSION['csrf_token'] = $csrf;
 $backups = $sm->getBackupHistory();
 
 $totalSize = array_sum(array_column($backups, 'size_bytes'));
-function fmtBytes(int $b): string {
-    if ($b >= 1073741824) return round($b/1073741824,2).' GB';
-    if ($b >= 1048576)    return round($b/1048576,2).' MB';
-    if ($b >= 1024)       return round($b/1024,2).' KB';
-    return $b.' B';
+if (!function_exists('fmtBytes')) {
+    function fmtBytes(int $b): string {
+        if ($b >= 1073741824) return round($b/1073741824,2).' GB';
+        if ($b >= 1048576)    return round($b/1048576,2).' MB';
+        if ($b >= 1024)       return round($b/1024,2).' KB';
+        return $b.' B';
+    }
 }
 
 $active_nav    = 'system';
@@ -157,6 +159,26 @@ $page_title    = 'Database Backups — DT Brand\'s';
                 </div>
             </div>
 
+            <!-- Re-auth modal for deletion -->
+            <div id="sysDangerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center;">
+                <div style="background:#FFFFFF;border-radius:14px;padding:28px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+                    <h3 style="font-size:16px;font-weight:800;color:#DC2626;margin:0 0 6px;display:flex;align-items:center;gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Confirm Snapshot Deletion
+                    </h3>
+                    <p id="sysDangerLabel" style="font-size:13px;color:#64748B;margin:0 0 16px;"></p>
+                    <input type="hidden" id="sysDangerTargetFile" value="">
+                    <div class="sys-field" style="margin-bottom:14px;">
+                        <label class="sys-field-label">Admin Password (re-authentication)</label>
+                        <input type="password" id="sysDangerPwd" class="sys-input" autocomplete="current-password">
+                    </div>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button class="sys-btn-pale" onclick="sysCloseDangerModal()">Cancel</button>
+                        <button id="sysDangerConfirmBtn" class="sys-btn-danger" onclick="sysExecuteDeleteBackup()">Delete Permanently</button>
+                    </div>
+                </div>
+            </div>
+
         </main>
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
@@ -165,17 +187,38 @@ $page_title    = 'Database Backups — DT Brand\'s';
 <script src="/admin/system/system.js?v=<?= time() ?>"></script>
 <script>
 async function sysRunBackup() {
-    if (!confirm('Trigger a full database backup now?')) return;
+    sysToast('Initiating database snapshot backup…', 'info');
     try {
         const data = await sysPost('/api/system.php', { action: 'backup_run', _csrf: '<?= htmlspecialchars($csrf) ?>' });
         sysToast(data.message || 'Backup started.', data.success ? 'success' : 'error');
         if (data.success) setTimeout(() => location.reload(), 2000);
     } catch (e) { sysToast('Backup failed.', 'error'); }
 }
-async function sysDeleteBackup(file) {
+
+function sysDeleteBackup(file) {
     if (!file) return;
-    const pwd = prompt('Enter admin password to delete backup "' + file + '":');
-    if (!pwd) return;
+    const modal = document.getElementById('sysDangerModal');
+    if (!modal) return;
+    document.getElementById('sysDangerLabel').textContent = 'Permanently delete snapshot "' + file + '"? This operation cannot be reversed.';
+    document.getElementById('sysDangerTargetFile').value = file;
+    document.getElementById('sysDangerPwd').value = '';
+    modal.style.display = 'flex';
+    setTimeout(() => { const p = document.getElementById('sysDangerPwd'); if (p) p.focus(); }, 80);
+}
+
+function sysCloseDangerModal() {
+    const modal = document.getElementById('sysDangerModal');
+    if (modal) modal.style.display = 'none';
+}
+
+async function sysExecuteDeleteBackup() {
+    const file = document.getElementById('sysDangerTargetFile').value;
+    const pwd = document.getElementById('sysDangerPwd').value;
+    if (!pwd) {
+        sysToast('Please enter your admin password.', 'warn');
+        return;
+    }
+    sysCloseDangerModal();
     try {
         const data = await sysPost('/api/system.php', {
             action: 'backup_delete',

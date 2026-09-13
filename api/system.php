@@ -163,7 +163,7 @@ if ($method === 'POST') {
                 echo json_encode(['success' => false, 'message' => 'Cron job name required.']);
                 break;
             }
-            $result = $sm->runCronJob($job, $csrfToken);
+            $result = $sm->runCronJob($job);
             echo json_encode([
                 'success' => $result['success'],
                 'message' => $result['message'] ?? 'Cron job dispatched.',
@@ -196,10 +196,10 @@ if ($method === 'POST') {
             $enable = (bool)($_POST['enable'] ?? false);
             // Dangerous operation — requires re-auth password
             $password = trim((string)($_POST['password'] ?? ''));
-            $verify = $sm->verifyDangerousOperation($password, 'maintenance_toggle', $csrfToken);
-            if (!$verify['allowed']) {
+            $verify = $sm->verifyDangerousOperation('maintenance_toggle', $password, $csrfToken);
+            if (empty($verify['verified']) && empty($verify['allowed'])) {
                 http_response_code(403);
-                echo json_encode(['success' => false, 'message' => $verify['reason'] ?? 'Permission denied.']);
+                echo json_encode(['success' => false, 'message' => $verify['message'] ?? $verify['reason'] ?? 'Permission denied.']);
                 break;
             }
             $ok = $sm->setMaintenanceMode($enable);
@@ -222,10 +222,10 @@ if ($method === 'POST') {
         case 'backup_delete':
             $file     = trim((string)($_POST['file'] ?? ''));
             $password = trim((string)($_POST['password'] ?? ''));
-            $verify = $sm->verifyDangerousOperation($password, 'backup_delete', $csrfToken);
-            if (!$verify['allowed']) {
+            $verify = $sm->verifyDangerousOperation('backup_delete', $password, $csrfToken);
+            if (empty($verify['verified']) && empty($verify['allowed'])) {
                 http_response_code(403);
-                echo json_encode(['success' => false, 'message' => $verify['reason']]);
+                echo json_encode(['success' => false, 'message' => $verify['message'] ?? $verify['reason'] ?? 'Permission denied.']);
                 break;
             }
             $ok = $sm->deleteBackup($file);
@@ -239,10 +239,10 @@ if ($method === 'POST') {
         case 'logs_flush':
             $password = trim((string)($_POST['password'] ?? ''));
             $level    = trim((string)($_POST['level'] ?? ''));
-            $verify = $sm->verifyDangerousOperation($password, 'logs_flush', $csrfToken);
-            if (!$verify['allowed']) {
+            $verify = $sm->verifyDangerousOperation('logs_flush', $password, $csrfToken);
+            if (empty($verify['verified']) && empty($verify['allowed'])) {
                 http_response_code(403);
-                echo json_encode(['success' => false, 'message' => $verify['reason']]);
+                echo json_encode(['success' => false, 'message' => $verify['message'] ?? $verify['reason'] ?? 'Permission denied.']);
                 break;
             }
             $ok = $sm->flushSystemLogs($level ?: null);

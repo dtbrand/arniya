@@ -22,18 +22,20 @@ function sysTab(id) {
    DANGER OPERATION — show re-auth modal
 ══════════════════════════════════════════ */
 function sysDangerAction(action, label) {
-    if (!confirm('⚠️  Danger: ' + label + '\n\nThis operation is irreversible. Continue to password verification?')) return;
     const modal = document.getElementById('sysDangerModal');
     if (!modal) {
         if (typeof window.showToast === 'function') window.showToast('Security modal not found.', 'error');
         else console.warn('Security modal not found.');
         return;
     }
-    document.getElementById('sysDangerAction').value = action;
-    document.getElementById('sysDangerLabel').textContent = label;
-    document.getElementById('sysDangerPwd').value = '';
+    const act = document.getElementById('sysDangerAction');
+    if (act) act.value = action;
+    const lbl = document.getElementById('sysDangerLabel');
+    if (lbl) lbl.textContent = label;
+    const pwd = document.getElementById('sysDangerPwd');
+    if (pwd) pwd.value = '';
     modal.style.display = 'flex';
-    setTimeout(() => document.getElementById('sysDangerPwd').focus(), 80);
+    setTimeout(() => { if (pwd) pwd.focus(); }, 80);
 }
 function sysCloseDangerModal() {
     const modal = document.getElementById('sysDangerModal');
@@ -72,6 +74,12 @@ document.head.appendChild(style);
    AJAX HELPER — POST JSON
 ══════════════════════════════════════════ */
 async function sysPost(url, payload) {
+    if (payload && !payload._csrf) {
+        const csrfInput = document.querySelector('input[name="_csrf"]') || document.querySelector('meta[name="csrf-token"]');
+        if (csrfInput) {
+            payload._csrf = csrfInput.value || csrfInput.content || '';
+        }
+    }
     const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
@@ -128,8 +136,8 @@ async function sysFlagToggle(key, enabled) {
    CRON — MANUAL RUN
 ══════════════════════════════════════════ */
 async function sysCronRun(jobName) {
-    if (!confirm('Manually trigger cron job: ' + jobName + '?')) return;
     try {
+        sysToast('Triggering scheduled job: ' + jobName + '…', 'info');
         const data = await sysPost('/api/system.php', { action: 'cron_run', job: jobName });
         sysToast(data.message || 'Job queued.', data.success ? 'success' : 'error');
     } catch (e) {
@@ -190,11 +198,17 @@ function escHtml(s) {
    MAINTENANCE MODE
 ══════════════════════════════════════════ */
 async function sysToggleMaintenance(enable) {
-    const msg = enable
-        ? 'Enable MAINTENANCE MODE? Public-facing site will show a maintenance page.'
-        : 'Disable maintenance mode and restore public access?';
-    if (!confirm(msg)) return;
+    const modal = document.getElementById('sysDangerModal');
+    if (modal) {
+        document.getElementById('sysDangerLabel').textContent = (enable ? 'Enable' : 'Disable') + ' site maintenance mode? Please enter your admin password to verify this change.';
+        const pwd = document.getElementById('sysDangerPwd');
+        if (pwd) pwd.value = '';
+        modal.style.display = 'flex';
+        setTimeout(() => { if (pwd) pwd.focus(); }, 80);
+        return;
+    }
     try {
+        sysToast('Updating maintenance mode…', 'info');
         const data = await sysPost('/api/system.php', { action: 'maintenance_toggle', enable: enable ? 1 : 0 });
         sysToast(data.message || 'Maintenance mode updated.', data.success ? 'success' : 'error');
         if (data.success) setTimeout(() => location.reload(), 1200);
