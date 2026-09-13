@@ -34,7 +34,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                 <div style="font-size:11px; font-weight:800; color:#15803D; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
                     <span style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>1. Guest &amp; Retail Customer Tier</span>
+                        <span>1. Guest &amp; Customer Tier</span>
                     </span>
                     <span style="font-size:9.5px; font-weight:800; color:#15803D; background:#DCFCE7; padding:1px 6px; border-radius:3px;">Consumer Shopping Rate</span>
                 </div>
@@ -49,7 +49,7 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                                placeholder="e.g. 800"
                                value="<?php echo htmlspecialchars($fmt($prod['customer_price'] ?? null)); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Consumer shopping price. Defaults to Retail Price if empty.</small>
+                        <small style="font-size:10px; color:#64748B;">Consumer shopping price for Guest &amp; Customer users (defaults to Trade Price if empty).</small>
                     </div>
 
                     <!-- Customer Sale Price -->
@@ -62,48 +62,48 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                                placeholder="e.g. 750"
                                value="<?php echo htmlspecialchars($fmt($prod['customer_sale_price'] ?? null)); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Special discounted retail offer price (supersedes flat discount).</small>
+                        <small style="font-size:10px; color:#64748B;">Special discounted retail offer price for Guest &amp; Customer users.</small>
                     </div>
                 </div>
             </div>
 
-            <!-- B. Retailer (Boutique) Tier & Trade Base -->
+            <!-- B. Trade Partners Tier (Wholesaler • Reseller • Retailer) -->
             <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
                 <div style="font-size:11px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
                     <span style="display:flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        <span>2. Retailer (Boutique / Shop) Tier &bull; Master B2B Base</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path><path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"></path><circle cx="8" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
+                        <span>2. Trade Partners Tier (Wholesaler &bull; Reseller &bull; Retailer)</span>
                     </span>
-                    <span style="font-size:9.5px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Trade Anchor</span>
+                    <span style="font-size:9.5px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Unified Trade Rate</span>
                 </div>
                 <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-                    <!-- Retailer Price / Price (Required) -->
+                    <!-- Trade Price / Price (Required) -->
                     <div class="adm-form-group">
                         <label class="adm-form-label" for="pFormRetail" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:800; color:#181512;">Retailer Price (&#8377;) <span style="color:#DC2626;">*</span></span>
-                            <span style="font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Master Root</span>
+                            <span id="pLabelRetailText" style="font-weight:800; color:#181512;">Price (&#8377;) <span style="color:#DC2626;">*</span></span>
+                            <span id="pBadgeRetail" style="font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Wholesaler &bull; Reseller &bull; Retailer</span>
                         </label>
                         <input type="number" min="0" step="1" id="pFormRetail" class="adm-form-input" style="font-weight:800; color:#181512; font-size:13px;"
                                placeholder="e.g. 500" required
                                value="<?php echo htmlspecialchars($fmt($prod['retail_price'] ?? ($prod['price'] ?? null))); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Standard boutique procurement price &amp; master catalog base.</small>
+                        <small id="pHelpRetail" style="font-size:10px; color:#64748B;">Standard single piece trade price for Wholesalers, Resellers &amp; Retailers.</small>
                     </div>
 
-                    <!-- Retailer Sale Price (Explicit) -->
+                    <!-- Trade Sale Price -->
                     <div class="adm-form-group">
                         <label class="adm-form-label" for="pFormRetailerSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:700; color:#B45309;">Retailer Sale Price (&#8377;)</span>
-                            <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">B2B Offer</span>
+                            <span style="font-weight:700; color:#B45309;">Sale Price (&#8377;)</span>
+                            <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Trade Offer</span>
                         </label>
                         <input type="number" min="0" step="1" id="pFormRetailerSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
                                placeholder="e.g. 450"
-                               value="<?php echo htmlspecialchars($fmt($prod['retailer_sale_price'] ?? null)); ?>"
+                               value="<?php echo htmlspecialchars($fmt($prod['retailer_sale_price'] ?? ($prod['reseller_sale_price'] ?? ($prod['wholesale_sale_price'] ?? null)))); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Explicit promotional rate for Retailers (leave blank to use flat discount).</small>
+                        <small style="font-size:10px; color:#64748B;">Promotional trade sale offer price for Wholesalers, Resellers &amp; Retailers.</small>
                     </div>
 
-                    <!-- Flat Sale Discount -->
+                    <!-- Flat Sale Deduction -->
                     <div class="adm-form-group">
                         <label class="adm-form-label" for="pFormSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
                             <span style="font-weight:700; color:#B45309;">Flat Sale Deduction (&#8377;)</span>
@@ -113,85 +113,15 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                                placeholder="e.g. 50"
                                value="<?php echo htmlspecialchars($fmt($prod['sale_price'] ?? null)); ?>"
                                oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Fallback flat deduction deducted from trade tiers without explicit sale price.</small>
+                        <small style="font-size:10px; color:#64748B;">Fallback flat deduction deducted from trade price if explicit sale price is blank.</small>
                     </div>
                 </div>
-            </div>
 
-            <!-- C. Reseller Tier -->
-            <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
-                <div style="font-size:11px; font-weight:800; color:#705114; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
-                    <span style="display:flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#705114" stroke-width="2.2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path><path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"></path><circle cx="8" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
-                        <span>3. Reseller Tier (Dropshippers / Social Resellers)</span>
-                    </span>
-                    <span style="font-size:9.5px; font-weight:700; color:#705114; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Dropship Rate</span>
-                </div>
-                <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-                    <!-- Reseller Price -->
-                    <div class="adm-form-group">
-                        <label class="adm-form-label" for="pFormResellerPrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:700; color:#705114;">Reseller Price (&#8377;)</span>
-                            <span style="font-size:9px; font-weight:700; color:#64748B;">Base Reseller</span>
-                        </label>
-                        <input type="number" min="0" step="1" id="pFormResellerPrice" class="adm-form-input" style="font-weight:700; color:#705114; font-size:13px;"
-                               placeholder="e.g. 450 (defaults to Retail Price)"
-                               value="<?php echo htmlspecialchars($fmt($prod['reseller_price'] ?? null)); ?>"
-                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Reseller dropship rate. Defaults to Retailer Price if blank.</small>
-                    </div>
-
-                    <!-- Reseller Sale Price -->
-                    <div class="adm-form-group">
-                        <label class="adm-form-label" for="pFormResellerSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:700; color:#B45309;">Reseller Sale Price (&#8377;)</span>
-                            <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Sale Offer</span>
-                        </label>
-                        <input type="number" min="0" step="1" id="pFormResellerSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
-                               placeholder="e.g. 400"
-                               value="<?php echo htmlspecialchars($fmt($prod['reseller_sale_price'] ?? null)); ?>"
-                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Explicit promotional rate for verified Resellers.</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- D. Wholesaler Tier -->
-            <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
-                <div style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
-                    <span style="display:flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>4. Wholesaler Tier (Bulk Volume MCQ)</span>
-                    </span>
-                    <span style="font-size:9.5px; font-weight:800; color:#181512; background:#E2E8F0; padding:1px 6px; border-radius:3px;">Bulk Lot Rate</span>
-                </div>
-                <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-                    <!-- Wholesale Price -->
-                    <div class="adm-form-group">
-                        <label class="adm-form-label" for="pFormWholesalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:700; color:#181512;">Wholesale Price (&#8377;)</span>
-                            <span style="font-size:9px; font-weight:700; color:#64748B;">Base Wholesale</span>
-                        </label>
-                        <input type="number" min="0" step="1" id="pFormWholesalePrice" class="adm-form-input" style="font-weight:700; color:#181512; font-size:13px;"
-                               placeholder="e.g. 400 (defaults to Retail Price)"
-                               value="<?php echo htmlspecialchars($fmt($prod['wholesale_price'] ?? null)); ?>"
-                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Per-piece rate for Wholesaler MCQ lots. Defaults to Retailer Price if blank.</small>
-                    </div>
-
-                    <!-- Wholesale Sale Price -->
-                    <div class="adm-form-group">
-                        <label class="adm-form-label" for="pFormWholesaleSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                            <span style="font-weight:700; color:#B45309;">Wholesale Sale Price (&#8377;)</span>
-                            <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Sale Offer</span>
-                        </label>
-                        <input type="number" min="0" step="1" id="pFormWholesaleSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
-                               placeholder="e.g. 350"
-                               value="<?php echo htmlspecialchars($fmt($prod['wholesale_sale_price'] ?? null)); ?>"
-                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                        <small style="font-size:10px; color:#64748B;">Explicit promotional lot rate for verified Wholesalers.</small>
-                    </div>
-                </div>
+                <!-- Hidden inputs to maintain 100% backward compatibility with legacy scripts / API calls -->
+                <input type="hidden" id="pFormResellerPrice" value="<?php echo htmlspecialchars($fmt($prod['reseller_price'] ?? null)); ?>">
+                <input type="hidden" id="pFormResellerSalePrice" value="<?php echo htmlspecialchars($fmt($prod['reseller_sale_price'] ?? null)); ?>">
+                <input type="hidden" id="pFormWholesalePrice" value="<?php echo htmlspecialchars($fmt($prod['wholesale_price'] ?? null)); ?>">
+                <input type="hidden" id="pFormWholesaleSalePrice" value="<?php echo htmlspecialchars($fmt($prod['wholesale_sale_price'] ?? null)); ?>">
             </div>
         </div>
 
@@ -204,80 +134,68 @@ $isFullSetMode = ($pfSellingType ?? 'single_piece') === 'full_set';
                 <div style="display:flex; align-items:center; gap:8px;">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#B45309" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     <div>
-                        <div style="font-size:11.5px; font-weight:800; color:#92400E;">B2B Full Set Trade-Only Rule Active (Section 17)</div>
+                        <div style="font-size:11.5px; font-weight:800; color:#92400E;">B2B Full Set Trade-Only Rule Active</div>
                         <div style="font-size:10.5px; color:#78350F; margin-top:2px;">
-                            Full Sets are sold exclusively in complete lots to verified <strong>Retailers (Boutique)</strong> and <strong>Wholesalers</strong>.
-                            Customer (Guest) and Reseller access is strictly trade-blocked with zero price leakage.
+                            Full Sets are sold exclusively in complete lots to verified trade partners (<strong>Wholesalers, Resellers &amp; Retailers</strong>).
+                            Guest &amp; Retail Customer access is strictly trade-blocked.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Blocked Tiers Indicator -->
+            <!-- Blocked / Authorized Indicators -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                 <div style="background:#F1F5F9; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; opacity:0.8;">
                     <span style="font-size:11px; font-weight:700; color:#64748B;">Guest / Customer</span>
                     <span style="font-size:9.5px; font-weight:800; color:#DC2626; background:#FEE2E2; padding:2px 6px; border-radius:3px;">BLOCKED (Trade Only)</span>
                 </div>
-                <div style="background:#F1F5F9; border:1px dashed #CBD5E1; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; opacity:0.8;">
-                    <span style="font-size:11px; font-weight:700; color:#64748B;">Reseller</span>
-                    <span style="font-size:9.5px; font-weight:800; color:#DC2626; background:#FEE2E2; padding:2px 6px; border-radius:3px;">BLOCKED (Trade Only)</span>
+                <div style="background:#DCFCE7; border:1px solid #16A34A; border-radius:6px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between;">
+                    <span style="font-size:11px; font-weight:700; color:#15803D;">Wholesaler &bull; Reseller &bull; Retailer</span>
+                    <span style="font-size:9.5px; font-weight:800; color:#15803D; background:#DCFCE7; padding:2px 6px; border-radius:3px;">AUTHORIZED (B2B Trade)</span>
                 </div>
             </div>
 
-            <!-- Full Set Trade Inputs Grid -->
-            <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-                <!-- Full Set Retailer Price -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormFullSetRetailerPrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#8A681F;">Full Set Retailer Price (&#8377;) <span style="color:#DC2626;">*</span></span>
-                        <span style="font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Per Piece</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormFullSetRetailerPrice" class="adm-form-input" style="font-weight:800; color:#181512; font-size:13px;"
-                           placeholder="e.g. 600"
-                           value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_price'] ?? ($prod['retail_price'] ?? null))); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Per-piece rate charged to Boutique Retailers for the entire set.</small>
+            <!-- Full Set Trade Inputs Grid (Only Price & Sale Price for Trade Partners) -->
+            <div style="background:#FAF8F5; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px;">
+                <div style="font-size:11px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;">
+                    <span style="display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>Full Set Trade Rate (Wholesaler &bull; Reseller &bull; Retailer)</span>
+                    </span>
+                    <span style="font-size:9.5px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Complete Lot Rate</span>
                 </div>
 
-                <!-- Full Set Retailer Sale Price / Discount -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormFullSetRetailerSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:700; color:#B45309;">Retailer Set Sale Price (&#8377;)</span>
-                        <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Offer Rate</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormFullSetRetailerSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
-                           placeholder="e.g. 580"
-                           value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_sale_price'] ?? null)); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Promotional per-piece set rate for Retailers.</small>
+                <div class="adm-form-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                    <!-- Full Set Trade Price -->
+                    <div class="adm-form-group">
+                        <label class="adm-form-label" for="pFormFullSetRetailerPrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
+                            <span style="font-weight:800; color:#8A681F;">Full Set Price (&#8377;) <span style="color:#DC2626;">*</span></span>
+                            <span style="font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:3px;">Per Piece</span>
+                        </label>
+                        <input type="number" min="0" step="1" id="pFormFullSetRetailerPrice" class="adm-form-input" style="font-weight:800; color:#181512; font-size:13px;"
+                               placeholder="e.g. 600"
+                               value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_price'] ?? ($prod['full_set_wholesale_price'] ?? ($prod['retail_price'] ?? null)))); ?>"
+                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
+                        <small style="font-size:10px; color:#64748B;">Per-piece rate charged to trade partners for the complete full set lot.</small>
+                    </div>
+
+                    <!-- Full Set Trade Sale Price -->
+                    <div class="adm-form-group">
+                        <label class="adm-form-label" for="pFormFullSetRetailerSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
+                            <span style="font-weight:700; color:#B45309;">Full Set Sale Price (&#8377;)</span>
+                            <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Offer Rate</span>
+                        </label>
+                        <input type="number" min="0" step="1" id="pFormFullSetRetailerSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
+                               placeholder="e.g. 580"
+                               value="<?php echo htmlspecialchars($fmt($prod['full_set_retailer_sale_price'] ?? ($prod['full_set_wholesale_sale_price'] ?? null))); ?>"
+                               oninput="if (window.calcPricePreview) window.calcPricePreview();">
+                        <small style="font-size:10px; color:#64748B;">Promotional per-piece full set offer rate for trade partners.</small>
+                    </div>
                 </div>
 
-                <!-- Full Set Wholesale Price -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormFullSetWholesalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#181512;">Full Set Wholesale Price (&#8377;)</span>
-                        <span style="font-size:9px; font-weight:800; color:#181512; background:#E2E8F0; padding:1px 6px; border-radius:3px;">Bulk Rate</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormFullSetWholesalePrice" class="adm-form-input" style="font-weight:800; color:#181512; font-size:13px;"
-                           placeholder="e.g. 520"
-                           value="<?php echo htmlspecialchars($fmt($prod['full_set_wholesale_price'] ?? ($prod['wholesale_price'] ?? null))); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Per-piece volume rate charged to Wholesalers for full lot orders.</small>
-                </div>
-
-                <!-- Full Set Wholesale Sale Price -->
-                <div class="adm-form-group">
-                    <label class="adm-form-label" for="pFormFullSetWholesaleSalePrice" style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:4px;">
-                        <span style="font-weight:700; color:#B45309;">Wholesale Set Sale Price (&#8377;)</span>
-                        <span style="font-size:9px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 6px; border-radius:3px;">Offer Rate</span>
-                    </label>
-                    <input type="number" min="0" step="1" id="pFormFullSetWholesaleSalePrice" class="adm-form-input" style="font-weight:700; color:#B45309; font-size:13px;"
-                           placeholder="e.g. 500"
-                           value="<?php echo htmlspecialchars($fmt($prod['full_set_wholesale_sale_price'] ?? null)); ?>"
-                           oninput="if (window.calcPricePreview) window.calcPricePreview();">
-                    <small style="font-size:10px; color:#64748B;">Promotional per-piece set rate for Wholesalers.</small>
-                </div>
+                <!-- Hidden inputs for full set wholesale prices to keep 100% compatibility -->
+                <input type="hidden" id="pFormFullSetWholesalePrice" value="<?php echo htmlspecialchars($fmt($prod['full_set_wholesale_price'] ?? null)); ?>">
+                <input type="hidden" id="pFormFullSetWholesaleSalePrice" value="<?php echo htmlspecialchars($fmt($prod['full_set_wholesale_sale_price'] ?? null)); ?>">
             </div>
         </div>
 

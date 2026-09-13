@@ -68,35 +68,31 @@
         var retSale = num('pFormRetailerSalePrice');
         var cust = num('pFormCustomerPrice');
         var custSale = num('pFormCustomerSalePrice');
-        var res = num('pFormResellerPrice');
-        var resSale = num('pFormResellerSalePrice');
-        var whs = num('pFormWholesalePrice');
-        var whsSale = num('pFormWholesaleSalePrice');
         var saleDisc = num('pFormSalePrice');
 
         var fsRet = num('pFormFullSetRetailerPrice');
         var fsRetSale = num('pFormFullSetRetailerSalePrice');
-        var fsWhs = num('pFormFullSetWholesalePrice');
-        var fsWhsSale = num('pFormFullSetWholesaleSalePrice');
 
         // Defaults and base resolution
         var baseRetail = retail > 0 ? retail : 0;
         var baseCust = cust > 0 ? cust : baseRetail;
-        var baseRes = res > 0 ? res : baseRetail;
-        var baseWhs = whs > 0 ? whs : baseRetail;
-
         var baseFsRet = fsRet > 0 ? fsRet : baseRetail;
-        var baseFsWhs = fsWhs > 0 ? fsWhs : baseFsRet;
 
-        // Effective single piece prices
+        // Effective single piece prices - Retailer, Reseller & Wholesaler share the same trade rate
         var effCust = custSale > 0 ? custSale : Math.max(0, baseCust - saleDisc);
-        var effRet = retSale > 0 ? retSale : Math.max(0, baseRetail - saleDisc);
-        var effRes = resSale > 0 ? resSale : Math.max(0, baseRes - saleDisc);
-        var effWhs = whsSale > 0 ? whsSale : Math.max(0, baseWhs - saleDisc);
+        var effTrade = retSale > 0 ? retSale : Math.max(0, baseRetail - saleDisc);
 
-        // Effective full set prices
-        var effFsRet = fsRetSale > 0 ? fsRetSale : Math.max(0, baseFsRet - saleDisc);
-        var effFsWhs = fsWhsSale > 0 ? fsWhsSale : Math.max(0, baseFsWhs - saleDisc);
+        // Effective full set prices - Wholesaler, Reseller & Retailer share the full set rate
+        var effFs = fsRetSale > 0 ? fsRetSale : Math.max(0, baseFsRet - saleDisc);
+        var effFsRet = effFs;
+
+        // Auto-sync hidden input fields for 100% legacy/DOM compatibility
+        var elResP = document.getElementById('pFormResellerPrice'); if (elResP) elResP.value = retail > 0 ? retail : '';
+        var elWhsP = document.getElementById('pFormWholesalePrice'); if (elWhsP) elWhsP.value = retail > 0 ? retail : '';
+        var elResS = document.getElementById('pFormResellerSalePrice'); if (elResS) elResS.value = retSale > 0 ? retSale : '';
+        var elWhsS = document.getElementById('pFormWholesaleSalePrice'); if (elWhsS) elWhsS.value = retSale > 0 ? retSale : '';
+        var elFsWhsP = document.getElementById('pFormFullSetWholesalePrice'); if (elFsWhsP) elFsWhsP.value = fsRet > 0 ? fsRet : '';
+        var elFsWhsS = document.getElementById('pFormFullSetWholesaleSalePrice'); if (elFsWhsS) elFsWhsS.value = fsRetSale > 0 ? fsRetSale : '';
 
         // Active role
         var activeRole = window.dtCurrentPreviewRole || 'guest';
@@ -112,7 +108,7 @@
         var elMarginPct = document.getElementById('dtPrevMarginPercent');
 
         if (isFullSet) {
-            // FULL SET MODE: Customer & Reseller blocked; Retailer & Wholesaler authorized
+            // FULL SET MODE: Customer/Guest blocked; Wholesaler, Reseller & Retailer authorized
             if (activeRole === 'guest' || activeRole === 'customer') {
                 if (elTitle) elTitle.textContent = (activeRole === 'guest' ? 'Guest' : 'Customer') + ' View — Trade Blocked';
                 if (elAccess) {
@@ -131,30 +127,39 @@
                     elEffPrice.style.fontSize = '16px';
                 }
                 if (elStrikePrice) { elStrikePrice.style.display = 'none'; }
-                if (elSub) elSub.textContent = 'Full Sets are sold exclusively in complete lots to verified B2B Retailers & Wholesalers.';
+                if (elSub) elSub.textContent = 'Full Sets are sold exclusively in complete lots to verified trade partners.';
                 if (elMarginVal) { elMarginVal.textContent = 'N/A'; elMarginVal.style.color = '#94A3B8'; }
                 if (elMarginPct) elMarginPct.textContent = 'Trade restricted';
             } else if (activeRole === 'reseller') {
-                if (elTitle) elTitle.textContent = 'Reseller View — Trade Blocked';
+                if (elTitle) elTitle.textContent = 'Reseller Storefront View';
                 if (elAccess) {
-                    elAccess.textContent = 'BLOCKED (Trade Only)';
-                    elAccess.style.background = '#FEE2E2';
-                    elAccess.style.color = '#DC2626';
+                    elAccess.textContent = 'Full Set Authorized';
+                    elAccess.style.background = '#DCFCE7';
+                    elAccess.style.color = '#15803D';
                 }
                 if (elPill) {
-                    elPill.textContent = 'Single Piece Only';
-                    elPill.style.background = '#FEE2E2';
-                    elPill.style.color = '#DC2626';
+                    elPill.textContent = (fsRetSale > 0 || saleDisc > 0) ? 'Discount Active' : 'Full Set Rate';
+                    elPill.style.background = (fsRetSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
+                    elPill.style.color = (fsRetSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = 'Access Restricted';
-                    elEffPrice.style.color = '#94A3B8';
-                    elEffPrice.style.fontSize = '16px';
+                    elEffPrice.textContent = '₹' + effFs.toLocaleString('en-IN') + ' /pc';
+                    elEffPrice.style.color = '#34D399';
+                    elEffPrice.style.fontSize = '22px';
                 }
-                if (elStrikePrice) { elStrikePrice.style.display = 'none'; }
-                if (elSub) elSub.textContent = 'Resellers sell single pieces with doorstep dropship. Full sets are restricted to storefront boutiques.';
-                if (elMarginVal) { elMarginVal.textContent = 'N/A'; elMarginVal.style.color = '#94A3B8'; }
-                if (elMarginPct) elMarginPct.textContent = 'Trade restricted';
+                if (elStrikePrice) {
+                    if (baseFsRet > effFs) {
+                        elStrikePrice.textContent = '₹' + baseFsRet.toLocaleString('en-IN');
+                        elStrikePrice.style.display = 'inline';
+                    } else {
+                        elStrikePrice.style.display = 'none';
+                    }
+                }
+                if (elSub) elSub.textContent = 'Per-piece rate charged for the complete set lot';
+                var resFsMargin = Math.max(0, baseCust - effFs);
+                var resFsPct = baseCust > 0 ? Math.round((resFsMargin / baseCust) * 100) : 0;
+                if (elMarginVal) { elMarginVal.textContent = '₹' + resFsMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
+                if (elMarginPct) elMarginPct.textContent = resFsPct + '% Margin Advantage';
             } else if (activeRole === 'retailer') {
                 if (elTitle) elTitle.textContent = 'Retailer (Boutique) Storefront View';
                 if (elAccess) {
@@ -168,12 +173,12 @@
                     elPill.style.color = (fsRetSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effFsRet.toLocaleString('en-IN') + ' /pc';
+                    elEffPrice.textContent = '₹' + effFs.toLocaleString('en-IN') + ' /pc';
                     elEffPrice.style.color = '#34D399';
                     elEffPrice.style.fontSize = '22px';
                 }
                 if (elStrikePrice) {
-                    if (baseFsRet > effFsRet) {
+                    if (baseFsRet > effFs) {
                         elStrikePrice.textContent = '₹' + baseFsRet.toLocaleString('en-IN');
                         elStrikePrice.style.display = 'inline';
                     } else {
@@ -181,7 +186,7 @@
                     }
                 }
                 if (elSub) elSub.textContent = 'Per-piece rate charged for the complete set lot';
-                var retMargin = Math.max(0, baseCust - effFsRet);
+                var retMargin = Math.max(0, baseCust - effFs);
                 var retPct = baseCust > 0 ? Math.round((retMargin / baseCust) * 100) : 0;
                 if (elMarginVal) { elMarginVal.textContent = '₹' + retMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
                 if (elMarginPct) elMarginPct.textContent = retPct + '% Margin Advantage';
@@ -193,31 +198,31 @@
                     elAccess.style.color = '#15803D';
                 }
                 if (elPill) {
-                    elPill.textContent = (fsWhsSale > 0 || saleDisc > 0) ? 'Bulk Offer Active' : 'Bulk Lot Rate';
-                    elPill.style.background = (fsWhsSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
-                    elPill.style.color = (fsWhsSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
+                    elPill.textContent = (fsRetSale > 0 || saleDisc > 0) ? 'Bulk Offer Active' : 'Bulk Lot Rate';
+                    elPill.style.background = (fsRetSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
+                    elPill.style.color = (fsRetSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effFsWhs.toLocaleString('en-IN') + ' /pc';
+                    elEffPrice.textContent = '₹' + effFs.toLocaleString('en-IN') + ' /pc';
                     elEffPrice.style.color = '#34D399';
                     elEffPrice.style.fontSize = '22px';
                 }
                 if (elStrikePrice) {
-                    if (baseFsWhs > effFsWhs) {
-                        elStrikePrice.textContent = '₹' + baseFsWhs.toLocaleString('en-IN');
+                    if (baseFsRet > effFs) {
+                        elStrikePrice.textContent = '₹' + baseFsRet.toLocaleString('en-IN');
                         elStrikePrice.style.display = 'inline';
                     } else {
                         elStrikePrice.style.display = 'none';
                     }
                 }
                 if (elSub) elSub.textContent = 'Wholesaler master lot volume rate';
-                var whsMargin = Math.max(0, baseCust - effFsWhs);
+                var whsMargin = Math.max(0, baseCust - effFs);
                 var whsPct = baseCust > 0 ? Math.round((whsMargin / baseCust) * 100) : 0;
                 if (elMarginVal) { elMarginVal.textContent = '₹' + whsMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
                 if (elMarginPct) elMarginPct.textContent = whsPct + '% Volume Advantage';
             }
         } else {
-            // SINGLE PIECE MODE: All tiers authorized with their distinct pricing
+            // SINGLE PIECE MODE: Customer & Trade Partners (Wholesaler, Reseller & Retailer share same rate)
             if (activeRole === 'guest' || activeRole === 'customer') {
                 if (elTitle) elTitle.textContent = (activeRole === 'guest' ? 'Guest' : 'Customer') + ' Storefront View';
                 if (elAccess) {
@@ -260,12 +265,12 @@
                     elPill.style.color = (retSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effRet.toLocaleString('en-IN');
+                    elEffPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
                     elEffPrice.style.color = '#34D399';
                     elEffPrice.style.fontSize = '22px';
                 }
                 if (elStrikePrice) {
-                    if (baseRetail > effRet) {
+                    if (baseRetail > effTrade) {
                         elStrikePrice.textContent = '₹' + baseRetail.toLocaleString('en-IN');
                         elStrikePrice.style.display = 'inline';
                     } else {
@@ -273,70 +278,70 @@
                     }
                 }
                 if (elSub) elSub.textContent = 'Boutique single piece trade rate';
-                var rMargin = Math.max(0, effCust - effRet);
+                var rMargin = Math.max(0, effCust - effTrade);
                 var rPct = effCust > 0 ? Math.round((rMargin / effCust) * 100) : 0;
                 if (elMarginVal) { elMarginVal.textContent = '₹' + rMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
                 if (elMarginPct) elMarginPct.textContent = rPct + '% Boutique Profit Margin';
             } else if (activeRole === 'reseller') {
                 if (elTitle) elTitle.textContent = 'Reseller Storefront View';
                 if (elAccess) {
-                    elAccess.textContent = 'Dropship Authorized';
+                    elAccess.textContent = 'Trade Partner Authorized';
                     elAccess.style.background = '#DCFCE7';
                     elAccess.style.color = '#15803D';
                 }
                 if (elPill) {
-                    elPill.textContent = (resSale > 0 || saleDisc > 0) ? 'Dropship Offer' : 'Reseller Rate';
-                    elPill.style.background = (resSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
-                    elPill.style.color = (resSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
+                    elPill.textContent = (retSale > 0 || saleDisc > 0) ? 'Trade Offer' : 'B2B Trade Rate';
+                    elPill.style.background = (retSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
+                    elPill.style.color = (retSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effRes.toLocaleString('en-IN');
+                    elEffPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
                     elEffPrice.style.color = '#34D399';
                     elEffPrice.style.fontSize = '22px';
                 }
                 if (elStrikePrice) {
-                    if (baseRes > effRes) {
-                        elStrikePrice.textContent = '₹' + baseRes.toLocaleString('en-IN');
+                    if (baseRetail > effTrade) {
+                        elStrikePrice.textContent = '₹' + baseRetail.toLocaleString('en-IN');
                         elStrikePrice.style.display = 'inline';
                     } else {
                         elStrikePrice.style.display = 'none';
                     }
                 }
-                if (elSub) elSub.textContent = 'Reseller dropship per-piece price';
-                var resMargin = Math.max(0, effCust - effRes);
+                if (elSub) elSub.textContent = 'Reseller single piece trade rate';
+                var resMargin = Math.max(0, effCust - effTrade);
                 var resPct = effCust > 0 ? Math.round((resMargin / effCust) * 100) : 0;
                 if (elMarginVal) { elMarginVal.textContent = '₹' + resMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
-                if (elMarginPct) elMarginPct.textContent = resPct + '% Dropship Margin';
+                if (elMarginPct) elMarginPct.textContent = resPct + '% Reseller Margin';
             } else if (activeRole === 'wholesale') {
                 if (elTitle) elTitle.textContent = 'Wholesaler Storefront View';
                 if (elAccess) {
-                    elAccess.textContent = 'Bulk MOQ Authorized';
+                    elAccess.textContent = 'Trade Partner Authorized';
                     elAccess.style.background = '#DCFCE7';
                     elAccess.style.color = '#15803D';
                 }
                 if (elPill) {
-                    elPill.textContent = (whsSale > 0 || saleDisc > 0) ? 'Wholesale Offer' : 'Wholesale MOQ Rate';
-                    elPill.style.background = (whsSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
-                    elPill.style.color = (whsSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
+                    elPill.textContent = (retSale > 0 || saleDisc > 0) ? 'Trade Offer' : 'B2B Trade Rate';
+                    elPill.style.background = (retSale > 0 || saleDisc > 0) ? '#FCD34D' : '#FAF5E8';
+                    elPill.style.color = (retSale > 0 || saleDisc > 0) ? '#78350F' : '#8A681F';
                 }
                 if (elEffPrice) {
-                    elEffPrice.textContent = '₹' + effWhs.toLocaleString('en-IN');
+                    elEffPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
                     elEffPrice.style.color = '#34D399';
                     elEffPrice.style.fontSize = '22px';
                 }
                 if (elStrikePrice) {
-                    if (baseWhs > effWhs) {
-                        elStrikePrice.textContent = '₹' + baseWhs.toLocaleString('en-IN');
+                    if (baseRetail > effTrade) {
+                        elStrikePrice.textContent = '₹' + baseRetail.toLocaleString('en-IN');
                         elStrikePrice.style.display = 'inline';
                     } else {
                         elStrikePrice.style.display = 'none';
                     }
                 }
-                if (elSub) elSub.textContent = 'Per-piece rate for Wholesaler MOQ commitments';
-                var wMargin = Math.max(0, effCust - effWhs);
+                if (elSub) elSub.textContent = 'Wholesale single piece trade rate';
+                var wMargin = Math.max(0, effCust - effTrade);
                 var wPct = effCust > 0 ? Math.round((wMargin / effCust) * 100) : 0;
                 if (elMarginVal) { elMarginVal.textContent = '₹' + wMargin.toLocaleString('en-IN') + '/pc'; elMarginVal.style.color = '#FCD34D'; }
-                if (elMarginPct) elMarginPct.textContent = wPct + '% Wholesale Advantage';
+                if (elMarginPct) elMarginPct.textContent = wPct + '% Trade Advantage';
             }
         }
 
@@ -363,7 +368,7 @@
         var colCount = Object.keys(colorsMap).length || 1;
         var szCount = Object.keys(sizesMap).length || 1;
         var mcqPieces = (comboList.length > 0) ? comboList.length : (colCount * szCount);
-        var lotRate = isFullSet ? (effFsWhs > 0 ? effFsWhs : effFsRet) : (effWhs > 0 ? effWhs : effRet);
+        var lotRate = isFullSet ? effFsRet : effTrade;
         var lotValue = mcqPieces * lotRate;
 
         var elMcqCol = document.getElementById('dtMcqColorsCount');
@@ -524,18 +529,30 @@
 
         // Full price matrix mapping for single piece and full set
         if (payload.selling_type === 'single_piece') {
+            var tradePrice = num('pFormRetail');
+            var tradeSale = val('pFormRetailerSalePrice') ? num('pFormRetailerSalePrice') : null;
+            payload.retail_price = tradePrice;
+            payload.price = tradePrice;
+            payload.retailer_sale_price = tradeSale;
+            payload.reseller_price = tradePrice;
+            payload.reseller_sale_price = tradeSale;
+            payload.wholesale_price = tradePrice;
+            payload.wholesale_sale_price = tradeSale;
             payload.customer_price = val('pFormCustomerPrice') ? num('pFormCustomerPrice') : null;
             payload.customer_sale_price = val('pFormCustomerSalePrice') ? num('pFormCustomerSalePrice') : null;
-            payload.retailer_sale_price = val('pFormRetailerSalePrice') ? num('pFormRetailerSalePrice') : null;
-            payload.reseller_price = val('pFormResellerPrice') ? num('pFormResellerPrice') : null;
-            payload.reseller_sale_price = val('pFormResellerSalePrice') ? num('pFormResellerSalePrice') : null;
-            payload.wholesale_price = val('pFormWholesalePrice') ? num('pFormWholesalePrice') : null;
-            payload.wholesale_sale_price = val('pFormWholesaleSalePrice') ? num('pFormWholesaleSalePrice') : null;
             payload.full_set_retailer_price = null;
             payload.full_set_retailer_sale_price = null;
             payload.full_set_wholesale_price = null;
             payload.full_set_wholesale_sale_price = null;
         } else {
+            var fsPrice = num('pFormFullSetRetailerPrice') || retail;
+            var fsSale = val('pFormFullSetRetailerSalePrice') ? num('pFormFullSetRetailerSalePrice') : null;
+            payload.retail_price = fsPrice;
+            payload.price = fsPrice;
+            payload.full_set_retailer_price = fsPrice;
+            payload.full_set_retailer_sale_price = fsSale;
+            payload.full_set_wholesale_price = fsPrice;
+            payload.full_set_wholesale_sale_price = fsSale;
             payload.customer_price = null;
             payload.customer_sale_price = null;
             payload.retailer_sale_price = null;
@@ -543,10 +560,6 @@
             payload.reseller_sale_price = null;
             payload.wholesale_price = null;
             payload.wholesale_sale_price = null;
-            payload.full_set_retailer_price = val('pFormFullSetRetailerPrice') ? num('pFormFullSetRetailerPrice') : null;
-            payload.full_set_retailer_sale_price = val('pFormFullSetRetailerSalePrice') ? num('pFormFullSetRetailerSalePrice') : null;
-            payload.full_set_wholesale_price = val('pFormFullSetWholesalePrice') ? num('pFormFullSetWholesalePrice') : null;
-            payload.full_set_wholesale_sale_price = val('pFormFullSetWholesaleSalePrice') ? num('pFormFullSetWholesaleSalePrice') : null;
         }
         payload.sale_price = val('pFormSalePrice') ? num('pFormSalePrice') : 0;
         payload.mrp = null;
