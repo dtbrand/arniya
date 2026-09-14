@@ -29,8 +29,8 @@ if ($pdoSub !== null && !Database::isMockMode()) {
         $subcategories_list = Database::query(
             'SELECT s.id, s.name, s.slug, s.status, s.category_id,
                     c.name AS parent_name,
-                    (SELECT COUNT(*) FROM products p WHERE p.category_id = s.category_id) AS sku_count,
-                    (SELECT COALESCE(SUM(p2.stock_qty * p2.wholesale_price), 0) FROM products p2 WHERE p2.category_id = s.category_id) AS valuation
+                    (SELECT COUNT(*) FROM products p WHERE p.subcategory_id = s.id OR (p.category_id = s.category_id AND LOWER(TRIM(COALESCE(p.subcategory, \'\'))) = LOWER(TRIM(s.name)))) AS sku_count,
+                    (SELECT COALESCE(SUM(p2.stock_qty * p2.wholesale_price), 0) FROM products p2 WHERE p2.subcategory_id = s.id OR (p2.category_id = s.category_id AND LOWER(TRIM(COALESCE(p2.subcategory, \'\'))) = LOWER(TRIM(s.name)))) AS valuation
              FROM subcategories s
              LEFT JOIN categories c ON s.category_id = c.id
              ORDER BY c.display_order ASC, s.name ASC'

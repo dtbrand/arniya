@@ -65,6 +65,14 @@ class DiscountEngine
         $pdo = Database::getConnection();
         $dbCoupon = null;
 
+        if ($pdo === null && empty($availableCoupons)) {
+            return [
+                'valid' => false,
+                'discount' => 0.0,
+                'message' => 'Coupon service is currently unavailable. Please try again later.'
+            ];
+        }
+
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 $stmt = $pdo->prepare("SELECT * FROM coupons WHERE code = ? LIMIT 1");

@@ -1206,6 +1206,19 @@ class ProductCatalog
     {
         $variants = $product['variants'] ?? [];
         $validVariants = array_filter($variants, static function ($v) {
+            // Master Spec V2 Section 4: Do not count disabled, deleted, or inactive variants
+            if (isset($v['status']) && in_array(strtolower(trim((string)$v['status'])), ['disabled', 'inactive', 'draft', 'archived', 'deleted'], true)) {
+                return false;
+            }
+            if (isset($v['is_active']) && empty($v['is_active']) && $v['is_active'] !== 'active') {
+                return false;
+            }
+            if (isset($v['is_deleted']) && !empty($v['is_deleted'])) {
+                return false;
+            }
+            if (!empty($v['deleted_at'])) {
+                return false;
+            }
             $c = trim((string)($v['color'] ?? $v['color_name'] ?? ''));
             $s = trim((string)($v['size'] ?? $v['size_name'] ?? ''));
             return $c !== '' || $s !== '';

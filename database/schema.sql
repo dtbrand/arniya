@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS `products` (
     `slug` VARCHAR(255) NOT NULL UNIQUE,
     `category_id` INT DEFAULT 1,
     `category_name` VARCHAR(100) NOT NULL,
+    `subcategory_id` INT DEFAULT NULL,
+    `subcategory` VARCHAR(100) DEFAULT NULL,
     `fabric` VARCHAR(100) DEFAULT 'Pure Silk',
     `weave` VARCHAR(100) DEFAULT 'Handloom Brocade',
     `zari_type` VARCHAR(100) DEFAULT 'Tested Gold Zari',
