@@ -325,9 +325,12 @@ Following an exhaustive audit against Master Specification V2, all core pillars 
 | **Role Preview** | Real-time Storefront Preview Studio in Admin | **PASS (100%)** |
 | **Installer Security** | HTTP 403 Lockdown, No ?force Bypass, Zero Leakage | **PASS (100%)** |
 | **PHP Syntax** | 0 Syntax Errors across all files (`php -l`) | **PASS (100%)** |
+| **Subcategories Hierarchy** | Real `products.subcategory_id` mapping & accurate SKU/valuation aggregation | **PASS (100%)** |
+| **Preview Cards Control** | Sections 19 & 21 + Full Set Dynamic Preview safely hidden with 0 JS errors | **PASS (100%)** |
+| **Server-Side MCQ Guard** | Strict variant filtering (ignores disabled/inactive/deleted variants) | **PASS (100%)** |
 | **Unit Tests** | 69 / 69 Passing Assertions | **PASS (100%)** |
-| **PHPUnit Tests** | 131 / 131 Passing Tests (710 assertions) | **PASS (100%)** |
-| **Triple-Sync Deployment** | Local ➔ Git Origin Main ➔ Dual Hostinger FTP | **READY & VERIFIED** |
+| **PHPUnit Tests** | 131 / 131 Passing Tests (770 assertions, 0 errors, 0 failures) | **PASS (100%)** |
+| **Triple-Sync Deployment** | Local ➔ Git Origin Main ➔ Dual Hostinger Live FTP | **READY & VERIFIED** |
 
 ### 🏁 FINAL SYSTEM VERDICT:
 ```text
