@@ -44,14 +44,16 @@ $edit_sku = $prod['sku'] ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product — DT Brand's Admin</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/products/assets/css/product-form.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/products/assets/css/variants.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/products/products.css?v=<?php echo time(); ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?= @filemtime(__DIR__ . '/assets/css/wordpress-style.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/product-form.css?v=<?= @filemtime(__DIR__ . '/assets/css/product-form.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/variants.css?v=<?= @filemtime(__DIR__ . '/assets/css/variants.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/products/products.css?v=<?= @filemtime(__DIR__ . '/products.css') ?: '3.2.1' ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -109,11 +111,11 @@ $edit_sku = $prod['sku'] ?? '';
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/products/assets/js/variants.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/products/products.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/products/assets/js/product-gallery.js?v=<?= @filemtime(__DIR__ . '/assets/js/product-gallery.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/products/assets/js/variants.js?v=<?= @filemtime(__DIR__ . '/assets/js/variants.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/products/assets/js/product-form.js?v=<?= @filemtime(__DIR__ . '/assets/js/product-form.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/products/products.js?v=<?= @filemtime(__DIR__ . '/products.js') ?: '3.2.1' ?>"></script>
 <script>
 // The edit form used to open with an empty media panel and empty variants even
 // when the product had both in the database, so pressing Update wiped them.
