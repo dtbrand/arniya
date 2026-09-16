@@ -65,7 +65,28 @@ define('DT_ADMIN_GUARD_RAN', true);
         $loggedIn = (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true)
             || (!empty($_SESSION['admin_user']['id']))
             || (!empty($_SESSION['user']['role']) && in_array(strtolower((string)$_SESSION['user']['role']), ['admin', 'super_admin'], true))
-            || (!empty($_SESSION['admin']) && is_array($_SESSION['admin']));
+            || (!empty($_SESSION['admin']) && is_array($_SESSION['admin']))
+            || (!empty($_SESSION['admin_user_id']))
+            || (!empty($_SESSION['admin_id']));
+
+        // Fallback: check standard PHPSESSID if custom session name active
+        if (!$loggedIn && !empty($_COOKIE['PHPSESSID']) && session_name() !== 'PHPSESSID') {
+            $currName = session_name();
+            @session_write_close();
+            session_name('PHPSESSID');
+            @session_start();
+            $loggedIn = (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true)
+                || (!empty($_SESSION['admin_user']['id']))
+                || (!empty($_SESSION['user']['role']) && in_array(strtolower((string)$_SESSION['user']['role']), ['admin', 'super_admin'], true))
+                || (!empty($_SESSION['admin']) && is_array($_SESSION['admin']))
+                || (!empty($_SESSION['admin_user_id']))
+                || (!empty($_SESSION['admin_id']));
+            if (!$loggedIn) {
+                @session_write_close();
+                session_name($currName);
+                @session_start();
+            }
+        }
 
         if ($loggedIn) {
             return;
