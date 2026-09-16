@@ -76,6 +76,7 @@ SYNC_ROOT_FILES = [
     'track.php',
     'manifest.json',
     'robots.txt',
+    '.installed',
 ]
 
 EXCLUDE_EXTENSIONS = {'.pyc', '.log', '.tmp', '.zip'}
