@@ -340,6 +340,6 @@ function applyShipmentFilters() {
     });
 }
 </script>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
 </body>
 </html>

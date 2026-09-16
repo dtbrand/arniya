@@ -22,12 +22,14 @@ $dtKeys = ['store_title', 'store_tagline', 'support_phone', 'support_email', 'or
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store Settings - DT Brand's Admin</title>
+    <title>General Store Settings — DT Brand's Admin</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?php echo time(); ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/settings/settings.css?v=<?= @filemtime(__DIR__ . '/settings.css') ?: '3.2.1' ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -93,7 +95,7 @@ include_once __DIR__ . '/../includes/adminfooter.php'; ?>
 </div>
 <?php
 echo dt_set_save_script($dtKeys); ?>
-<script src="/admin/settings/settings.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/settings/settings.js?v=<?= @filemtime(__DIR__ . '/settings.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
 </body>
 </html>
