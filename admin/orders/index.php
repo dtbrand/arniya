@@ -102,11 +102,11 @@ window.dtAdminFetch = async function(url, options = {}) {
     return fetch(url, { ...options, headers });
 };
 </script>
-<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/order-list.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/order-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?= @filemtime(__DIR__ . '/assets/js/orders.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/order-view.js?v=<?= @filemtime(__DIR__ . '/assets/js/order-view.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/order-list.js?v=<?= @filemtime(__DIR__ . '/assets/js/order-list.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/order-filters.js?v=<?= @filemtime(__DIR__ . '/assets/js/order-filters.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/order-status.js?v=<?= @filemtime(__DIR__ . '/assets/js/order-status.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/bulk-actions.js?v=<?= @filemtime(__DIR__ . '/assets/js/bulk-actions.js') ?: '3.2.1' ?>"></script>
 </body>
 </html>

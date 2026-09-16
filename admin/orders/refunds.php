@@ -56,14 +56,16 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?> — DT Brand's Admin</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/orders/assets/css/refunds.css?v=<?php echo time(); ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?= @filemtime(__DIR__ . '/assets/css/orders.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?= @filemtime(__DIR__ . '/assets/css/order-list.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?= @filemtime(__DIR__ . '/assets/css/order-status.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/refunds.css?v=<?= @filemtime(__DIR__ . '/assets/css/refunds.css') ?: '3.2.1' ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -337,7 +339,7 @@ try {
     </div>
 </div>
 
-<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/orders/assets/js/refunds.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?= @filemtime(__DIR__ . '/assets/js/orders.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/orders/assets/js/refunds.js?v=<?= @filemtime(__DIR__ . '/assets/js/refunds.js') ?: '3.2.1' ?>"></script>
 </body>
 </html>
