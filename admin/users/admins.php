@@ -31,12 +31,14 @@ $currentAdminId = (int)($_SESSION['admin_user']['id'] ?? 1);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrator Accounts Roster - DT Brand's Admin</title>
+    <title>Administrator Accounts Roster — DT Brand's Admin</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/users/users.css?v=<?php echo time(); ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/users/users.css?v=<?= @filemtime(__DIR__ . '/users.css') ?: '3.2.1' ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -254,7 +256,8 @@ $currentAdminId = (int)($_SESSION['admin_user']['id'] ?? 1);
     </div>
 </div>
 
-<script src="/admin/users/users.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/users/users.js?v=<?= @filemtime(__DIR__ . '/users.js') ?: '3.2.1' ?>"></script>
 <script>
 function filterUserTable() {
     var q = document.getElementById('userSearchInput').value.toLowerCase();

@@ -56,11 +56,13 @@ $hasToken = trim((string)getenv('WHATSAPP_ACCESS_TOKEN')) !== ''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Broadcast Studio — DT Brand's &amp; Jai Hanuman Tex</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/admin/whatsapp/whatsapp.css?v=<?php echo time(); ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/whatsapp/whatsapp.css?v=<?= @filemtime(__DIR__ . '/whatsapp.css') ?: '3.2.1' ?>">
 </head>
 <body class="wa-suite">
 <div class="adm-layout">
@@ -209,8 +211,8 @@ $hasToken = trim((string)getenv('WHATSAPP_ACCESS_TOKEN')) !== ''
     </div>
 </div>
 
-<script src="/admin/assets/js/admin.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/whatsapp/whatsapp.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/whatsapp/whatsapp.js?v=<?= @filemtime(__DIR__ . '/whatsapp.js') ?: '3.2.1' ?>"></script>
 <script>
 function applyPresetTemplate() {
     const val = document.getElementById('dtPresetSelect').value;
