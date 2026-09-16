@@ -288,6 +288,12 @@ $footerCleanPhone = preg_replace('/[^0-9]/', '', $footerPhone) ?: '917046363528'
                             </a>
                         </li>
                         <li>
+                            <a href="/track.php">
+                                <span class="dt-sub-label"><span class="dt-sub-dot"></span>Live Order &amp; Dispatch Tracking</span>
+                                <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/shipping.php">
                                 <span class="dt-sub-label"><span class="dt-sub-dot"></span>GST Billing &amp; Transport Logistics</span>
                                 <svg class="dt-sub-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -370,6 +376,8 @@ $footerCleanPhone = preg_replace('/[^0-9]/', '', $footerPhone) ?: '917046363528'
                     <a href="/privacy.php">Privacy Policy</a>
                     <span class="dt-sep">&bull;</span>
                     <a href="/terms.php">Terms of Wholesale</a>
+                    <span class="dt-sep">&bull;</span>
+                    <a href="/track.php">Track Order</a>
                     <span class="dt-sep">&bull;</span>
                     <a href="/shipping.php">Shipping &amp; Logistics</a>
                     <span class="dt-sep">&bull;</span>

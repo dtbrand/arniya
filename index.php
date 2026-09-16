@@ -87,7 +87,9 @@ $total_products = count($products);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/assets/css/home.css?v=<?php echo time(); ?>">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
+    <link rel="stylesheet" href="/assets/css/home.css?v=<?php echo @filemtime(__DIR__ . '/assets/css/home.css') ?: '3.2.1'; ?>">
 
     <!-- ════════════ GLOBAL DATA BOOTSTRAP ════════════ -->
     <script>

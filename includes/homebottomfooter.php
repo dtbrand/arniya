@@ -989,6 +989,12 @@ $currentSubParam = $_GET['subcategory'] ?? ($_GET['sub'] ?? '');
                     </a>
                 </li>
                 <li>
+                    <a href="/track.php" class="home-menu-link <?= ($currentScript === 'track.php') ? 'active' : '' ?>">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>Track My Order</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/shipping.php" class="home-menu-link <?= ($currentScript === 'shipping.php') ? 'active' : '' ?>">
                         <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Shipping &amp; Logistics</span>

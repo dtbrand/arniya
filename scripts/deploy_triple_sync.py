@@ -73,6 +73,9 @@ SYNC_ROOT_FILES = [
     'install.php',
     'test_master_spec.php',
     'sitemap.php',
+    'track.php',
+    'manifest.json',
+    'robots.txt',
 ]
 
 EXCLUDE_EXTENSIONS = {'.pyc', '.log', '.tmp', '.zip'}

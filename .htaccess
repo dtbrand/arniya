@@ -35,6 +35,15 @@ Options -Indexes -MultiViews
         Allow from all
     </IfModule>
 </Files>
+<Files "manifest.json">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Files>
 
 # ── 2. REWRITE ENGINE & URL ROUTING ──
 <IfModule mod_rewrite.c>
@@ -107,6 +116,8 @@ Options -Indexes -MultiViews
     RewriteRule ^privacy/?$ privacy.php [QSA,L]
     RewriteRule ^shipping/?$ shipping.php [QSA,L]
     RewriteRule ^terms/?$ terms.php [QSA,L]
+    RewriteRule ^track/?$ track.php [QSA,L]
+    RewriteRule ^track/([a-zA-Z0-9_-]+)/?$ track.php?order=$1 [QSA,L]
     RewriteRule ^logout/?$ logout.php [QSA,L]
     RewriteRule ^health/?$ health.php [QSA,L]
     RewriteRule ^sitemap\.xml$ sitemap.php [L]

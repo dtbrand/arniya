@@ -251,11 +251,50 @@ function pdp_relative_date(string $ts): string
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title><?= htmlspecialchars($pName) ?> — DT Brand's | Ethnic Luxury</title>
 <meta name="description" content="<?= htmlspecialchars($pDescription !== '' ? mb_substr($pDescription, 0, 160) : trim($pName . ' — ' . $pCategory, ' —')) ?>" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="canonical" href="<?= htmlspecialchars('https://' . ($_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in') . '/product/' . ($product['slug'] ?? $product['id'])) ?>" />
+
+<!-- ════════════ OPEN GRAPH & SOCIAL META TAGS (WHATSAPP PREVIEWS) ════════════ -->
+<meta property="og:type" content="product" />
+<meta property="og:site_name" content="DT Brand's &amp; Jai Hanuman Tex" />
+<meta property="og:title" content="<?= htmlspecialchars($pName) ?>" />
+<meta property="og:description" content="<?= htmlspecialchars($pDescription !== '' ? mb_substr($pDescription, 0, 200) : 'Luxury handcrafted ethnic saree from Surat direct mill.') ?>" />
+<meta property="og:image" content="<?= htmlspecialchars(strpos($pdpPoster, 'http') === 0 ? $pdpPoster : ('https://' . ($_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in') . $pdpPoster)) ?>" />
+<meta property="og:url" content="<?= htmlspecialchars('https://' . ($_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in') . '/product/' . ($product['slug'] ?? $product['id'])) ?>" />
+<meta property="product:price:amount" content="<?= number_format($pPrice, 2, '.', '') ?>" />
+<meta property="product:price:currency" content="INR" />
+<meta property="product:availability" content="<?= $pInStock ? 'in stock' : 'out of stock' ?>" />
+
+<!-- ════════════ SCHEMA.ORG JSON-LD STRUCTURED DATA ════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": <?= json_encode($pName, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+  "image": <?= json_encode(strpos($pdpPoster, 'http') === 0 ? $pdpPoster : ('https://' . ($_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in') . $pdpPoster), JSON_UNESCAPED_SLASHES) ?>,
+  "description": <?= json_encode($pDescription !== '' ? mb_substr($pDescription, 0, 300) : $pName, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+  "sku": <?= json_encode($pSku) ?>,
+  "brand": {
+    "@type": "Brand",
+    "name": "DT Brand's & Jai Hanuman Tex"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "INR",
+    "price": "<?= number_format($pPrice, 2, '.', '') ?>",
+    "availability": "<?= $pInStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' ?>",
+    "url": <?= json_encode('https://' . ($_SERVER['HTTP_HOST'] ?? 'jaihanumantex.in') . '/product/' . ($product['slug'] ?? $product['id'])) ?>
+  }
+}
+</script>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#8A681F">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/assets/css/singleproduct.css?v=<?= time() ?>">
+<link rel="stylesheet" href="/assets/css/singleproduct.css?v=<?= @filemtime(__DIR__ . '/assets/css/singleproduct.css') ?: '3.2.1' ?>">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -1068,7 +1107,7 @@ function pdp_relative_date(string $ts): string
                         Need custom alterations or sizing advice?
                     </div>
                 </div>
-                <a href="https://wa.me/917046363528?text=<?= urlencode('Hello DT Brand Stylist, I need sizing assistance for product ID: ' . $pId) ?>" target="_blank" rel="noopener noreferrer" class="pdp-size-wa-btn">
+                <a href="https://wa.me/917046363528?text=<?= urlencode('Hello DT Brand Stylist, I need sizing assistance for product ID: ' . ($product['id'] ?? '')) ?>" target="_blank" rel="noopener noreferrer" class="pdp-size-wa-btn">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.95.56 3.77 1.53 5.31L2 22l4.82-1.5C8.32 21.46 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.42 14.19c-.23.64-1.32 1.25-1.84 1.32-.48.06-1.1.1-3.23-.78-2.56-1.06-4.22-3.66-4.35-3.83-.13-.17-1.04-1.38-1.04-2.63 0-1.25.66-1.86.89-2.12.23-.26.51-.32.68-.32.17 0 .34 0 .49.01.16.01.37-.06.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.45-.13.16-.28.36-.4.48-.13.13-.26.28-.11.54.15.26.67 1.11 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.06.15-.17.65-.76.82-1.02.17-.26.34-.22.58-.13.24.09 1.52.72 1.78.85.26.13.43.19.49.3.06.11.06.66-.17 1.3z"/></svg>
                     <span>Chat with Stylist</span>
                 </a>

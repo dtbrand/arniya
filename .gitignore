@@ -43,6 +43,8 @@ scratch/
 coverage/
 __pycache__/
 *.pyc
+*.sqlite
+database/*.sqlite
 
 # OS Specific
 Thumbs.db

@@ -37,6 +37,7 @@ $staticPages = [
     ['loc' => '/shop',       'priority' => '0.9', 'changefreq' => 'daily',   'lastmod' => $today],
     ['loc' => '/about-us',   'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => $today],
     ['loc' => '/contact',    'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => $today],
+    ['loc' => '/track',      'priority' => '0.7', 'changefreq' => 'weekly',  'lastmod' => $today],
     ['loc' => '/shipping',   'priority' => '0.5', 'changefreq' => 'monthly', 'lastmod' => $today],
     ['loc' => '/privacy',    'priority' => '0.5', 'changefreq' => 'monthly', 'lastmod' => $today],
     ['loc' => '/terms',      'priority' => '0.5', 'changefreq' => 'monthly', 'lastmod' => $today],
