@@ -61,11 +61,13 @@ $reportCatalog = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title) ?> — DT Brand's Admin</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/admin/reports/reports.css?v=<?= time() ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/../assets/css/admin.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/admin/reports/reports.css?v=<?= @filemtime(__DIR__ . '/reports.css') ?: '3.2.1' ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -189,7 +191,7 @@ $reportCatalog = [
         <?php include_once __DIR__ . '/../includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/admin/assets/js/admin.js?v=<?= time() ?>"></script>
-<script src="/admin/reports/reports.js?v=<?= time() ?>"></script>
+<script src="/admin/assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: '3.2.1' ?>"></script>
+<script src="/admin/reports/reports.js?v=<?= @filemtime(__DIR__ . '/reports.js') ?: '3.2.1' ?>"></script>
 </body>
 </html>
