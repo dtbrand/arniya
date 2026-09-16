@@ -31,11 +31,13 @@ $dbProductsForCheckout = ProductCatalog::getForRole($userRole);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?= $page_title ?> — DT Brand's Luxury Couture</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= @filemtime(__DIR__ . '/assets/css/shop.css') ?: '3.2.1' ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= @filemtime(__DIR__ . '/assets/css/header.css') ?: '3.2.1' ?>">
     <script>
     window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
     </script>

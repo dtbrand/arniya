@@ -19,13 +19,16 @@ $page_title = "My Account — DT Brand's | Ethnic Luxury";
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?php echo htmlspecialchars($page_title); ?></title>
     
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A681F">
+
     <!-- Google Fonts: Inter & Plus Jakarta Sans & Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Master Brand Theme CSS -->
-    <link rel="stylesheet" href="/assets/css/home.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/assets/css/home.css?v=<?php echo @filemtime(__DIR__ . '/assets/css/home.css') ?: '3.2.1'; ?>">
 
     <style>
         :root {

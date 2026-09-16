@@ -12,6 +12,7 @@ Allow: /contact
 Allow: /terms
 Allow: /privacy
 Allow: /shipping
+Allow: /track
 Allow: /assets/
 Allow: /sitemap.xml
 
